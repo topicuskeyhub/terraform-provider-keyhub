@@ -25,7 +25,7 @@ func AccountSchema() map[string]*schema.Schema {
 		},
 		"uuid": {
 			Type:     schema.TypeString,
-			Computed: true,
+			Required: true,
 		},
 		"username": {
 			Type:     schema.TypeString,

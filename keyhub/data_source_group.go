@@ -25,7 +25,7 @@ func GroupSchema() map[string]*schema.Schema {
 		},
 		"uuid": {
 			Type:     schema.TypeString,
-			Optional: true,
+			Required: true,
 		},
 		"name": {
 			Type:     schema.TypeString,

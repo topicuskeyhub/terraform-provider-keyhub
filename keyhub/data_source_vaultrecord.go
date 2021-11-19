@@ -26,11 +26,16 @@ func VaultRecordSchema() map[string]*schema.Schema {
 		},
 		"groupuuid": {
 			Type:     schema.TypeString,
-			Computed: true,
+			Required: true,
 		},
 		"uuid": {
 			Type:     schema.TypeString,
-			Computed: true,
+			Required: true,
+		},
+		"secrets": {
+			Type:     schema.TypeBool,
+			Optional: true,
+			Default:  false,
 		},
 		"name": {
 			Type:     schema.TypeString,
@@ -51,6 +56,30 @@ func VaultRecordSchema() map[string]*schema.Schema {
 			Computed: true,
 			Required: false,
 		},
+		"password": {
+			Type:      schema.TypeString,
+			Sensitive: true,
+			Computed:  true,
+			Required:  false,
+		},
+		"totp": {
+			Type:      schema.TypeString,
+			Sensitive: true,
+			Computed:  true,
+			Required:  false,
+		},
+		"file": {
+			Type:      schema.TypeString,
+			Sensitive: true,
+			Computed:  true,
+			Required:  false,
+		},
+		"comment": {
+			Type:      schema.TypeString,
+			Sensitive: true,
+			Computed:  true,
+			Required:  false,
+		},
 	}
 }
 
@@ -62,6 +91,7 @@ func dataSourceVaultRecordRead(ctx context.Context, d *schema.ResourceData, m in
 
 	groupUUID := d.Get("groupuuid").(string)
 	UUID := d.Get("uuid").(string)
+	secrets := d.Get("secrets").(bool)
 
 	group, err := client.Groups.Get(groupUUID)
 	if err != nil {
@@ -72,16 +102,16 @@ func dataSourceVaultRecordRead(ctx context.Context, d *schema.ResourceData, m in
 		})
 	}
 
-	vaultrecord, err := client.Vaults.GetRecord(group, UUID, keyhubmodel.RecordOptions{Secret: true})
+	vaultRecord, err := client.Vaults.GetRecord(group, UUID, keyhubmodel.RecordOptions{Secret: secrets})
 	if err != nil {
 		diags = append(diags, diag.Diagnostic{
 			Severity: diag.Error,
-			Summary:  "Could not GET vault record " + UUID,
+			Summary:  "Could not GET secrets of vault record " + UUID,
 			Detail:   err.Error(),
 		})
 	}
 
-	if err := d.Set("id", vaultrecord.Self().ID); err != nil {
+	if err := d.Set("id", vaultRecord.Self().ID); err != nil {
 		diags = append(diags, diag.Diagnostic{
 			Severity: diag.Error,
 			Summary:  "Could not set value for id",
@@ -95,35 +125,35 @@ func dataSourceVaultRecordRead(ctx context.Context, d *schema.ResourceData, m in
 			Detail:   err.Error(),
 		})
 	}
-	if err := d.Set("uuid", vaultrecord.UUID); err != nil {
+	if err := d.Set("uuid", vaultRecord.UUID); err != nil {
 		diags = append(diags, diag.Diagnostic{
 			Severity: diag.Error,
 			Summary:  "Could not set value for uuid",
 			Detail:   err.Error(),
 		})
 	}
-	if err := d.Set("name", vaultrecord.Name); err != nil {
+	if err := d.Set("name", vaultRecord.Name); err != nil {
 		diags = append(diags, diag.Diagnostic{
 			Severity: diag.Error,
 			Summary:  "Could not set value for name",
 			Detail:   err.Error(),
 		})
 	}
-	if err := d.Set("url", vaultrecord.URL); err != nil {
+	if err := d.Set("url", vaultRecord.URL); err != nil {
 		diags = append(diags, diag.Diagnostic{
 			Severity: diag.Error,
 			Summary:  "Could not set value for url",
 			Detail:   err.Error(),
 		})
 	}
-	if err := d.Set("username", vaultrecord.Username); err != nil {
+	if err := d.Set("username", vaultRecord.Username); err != nil {
 		diags = append(diags, diag.Diagnostic{
 			Severity: diag.Error,
 			Summary:  "Could not set value for username",
 			Detail:   err.Error(),
 		})
 	}
-	if err := d.Set("filename", vaultrecord.Filename); err != nil {
+	if err := d.Set("filename", vaultRecord.Filename); err != nil {
 		diags = append(diags, diag.Diagnostic{
 			Severity: diag.Error,
 			Summary:  "Could not set value for filename",
@@ -131,40 +161,47 @@ func dataSourceVaultRecordRead(ctx context.Context, d *schema.ResourceData, m in
 		})
 	}
 
-	if vaultrecord.AdditionalObjects != nil &&
-		vaultrecord.AdditionalObjects.Secret != nil {
+	if vaultRecord.AdditionalObjects == nil ||
+		vaultRecord.AdditionalObjects.Secret == nil {
+		diags = append(diags, diag.Diagnostic{
+			Severity: diag.Error,
+			Summary:  "Could not set secrets",
+			Detail:   err.Error(),
+		})
 
-		if err := d.Set("password", vaultrecord.AdditionalObjects.Secret.Password); err != nil {
-			diags = append(diags, diag.Diagnostic{
-				Severity: diag.Error,
-				Summary:  "Could not set value for password",
-				Detail:   err.Error(),
-			})
-		}
-		if err := d.Set("totp", vaultrecord.AdditionalObjects.Secret.Totp); err != nil {
-			diags = append(diags, diag.Diagnostic{
-				Severity: diag.Error,
-				Summary:  "Could not set value for totp",
-				Detail:   err.Error(),
-			})
-		}
-		// if err := d.Set("file", vaultrecord.AdditionalObjects.Secret.File); err != nil {
-		// diags = append(diags, diag.Diagnostic{
-		// 	Severity: diag.Error,
-		// 	Summary:  "Could not set value for file",
-		// 	Detail:   err.Error(),
-		// })
-		// }
-		if err := d.Set("comment", vaultrecord.AdditionalObjects.Secret.Comment); err != nil {
-			diags = append(diags, diag.Diagnostic{
-				Severity: diag.Error,
-				Summary:  "Could not set value for comment",
-				Detail:   err.Error(),
-			})
-		}
+		return diags
 	}
 
-	d.SetId(strconv.FormatInt(int64(vaultrecord.Self().ID), 10))
+	if err := d.Set("password", vaultRecord.AdditionalObjects.Secret.Password); err != nil {
+		diags = append(diags, diag.Diagnostic{
+			Severity: diag.Error,
+			Summary:  "Could not set value for password",
+			Detail:   err.Error(),
+		})
+	}
+	if err := d.Set("totp", vaultRecord.AdditionalObjects.Secret.Totp); err != nil {
+		diags = append(diags, diag.Diagnostic{
+			Severity: diag.Error,
+			Summary:  "Could not set value for totp",
+			Detail:   err.Error(),
+		})
+	}
+	// if err := d.Set("file", vaultRecord.AdditionalObjects.Secret.File); err != nil {
+	// diags = append(diags, diag.Diagnostic{
+	// 	Severity: diag.Error,
+	// 	Summary:  "Could not set value for file",
+	// 	Detail:   err.Error(),
+	// })
+	// }
+	if err := d.Set("comment", vaultRecord.AdditionalObjects.Secret.Comment); err != nil {
+		diags = append(diags, diag.Diagnostic{
+			Severity: diag.Error,
+			Summary:  "Could not set value for comment",
+			Detail:   err.Error(),
+		})
+	}
+
+	d.SetId(strconv.FormatInt(int64(vaultRecord.Self().ID), 10))
 
 	return diags
 }

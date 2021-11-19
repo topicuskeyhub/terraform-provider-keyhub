@@ -18,7 +18,7 @@ func dataSourceVaultRecords() *schema.Resource {
 		Schema: map[string]*schema.Schema{
 			"groupuuid": {
 				Type:     schema.TypeString,
-				Computed: true,
+				Required: true,
 			},
 			"vaultrecords": {
 				Type:     schema.TypeList,
@@ -47,7 +47,7 @@ func dataSourceVaultRecordsRead(ctx context.Context, d *schema.ResourceData, m i
 		})
 	}
 
-	vaultrecords, err := client.Vaults.List(group, keyhubmodel.RecordOptions{Secret: true})
+	vaultrecords, err := client.Vaults.List(group, keyhubmodel.RecordOptions{})
 	if err != nil {
 		diags = append(diags, diag.Diagnostic{
 			Severity: diag.Error,
@@ -103,15 +103,6 @@ func flattenVaultRecordData(vaultrecord *keyhubmodel.VaultRecord) map[string]int
 		data["url"] = vaultrecord.URL
 		data["username"] = vaultrecord.Username
 		data["filename"] = vaultrecord.Filename
-
-		if vaultrecord.AdditionalObjects != nil &&
-			vaultrecord.AdditionalObjects.Secret != nil {
-
-			data["password"] = vaultrecord.AdditionalObjects.Secret.Password
-			data["totp"] = vaultrecord.AdditionalObjects.Secret.Totp
-			// data["file"] = vaultrecord.AdditionalObjects.Secret.File
-			data["comment"] = vaultrecord.AdditionalObjects.Secret.Comment
-		}
 
 		return data
 	}
