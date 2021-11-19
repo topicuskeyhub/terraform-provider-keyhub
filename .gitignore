@@ -64,3 +64,4 @@ terraform.rc
 terraform
 
 example/.terraform*
+example/*.tf
