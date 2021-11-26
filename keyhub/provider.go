@@ -33,7 +33,9 @@ func Provider() *schema.Provider {
 			},
 		},
 		ConfigureContextFunc: providerConfigure,
-		ResourcesMap:         map[string]*schema.Resource{},
+		ResourcesMap: map[string]*schema.Resource{
+			"keyhub_vaultrecord": resourceVaultRecord(),
+		},
 		DataSourcesMap: map[string]*schema.Resource{
 			"keyhub_group":        dataSourceGroup(),
 			"keyhub_groups":       dataSourceGroups(),
