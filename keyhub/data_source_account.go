@@ -2,7 +2,6 @@ package keyhub
 
 import (
 	"context"
-	"strconv"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -83,7 +82,7 @@ func dataSourceAccountRead(ctx context.Context, d *schema.ResourceData, m interf
 		})
 	}
 
-	d.SetId(strconv.FormatInt(int64(account.Self().ID), 10))
+	d.SetId(account.UUID)
 
 	return diags
 }

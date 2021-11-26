@@ -2,7 +2,6 @@ package keyhub
 
 import (
 	"context"
-	"strconv"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -68,12 +67,12 @@ func VaultRecordSchema() map[string]*schema.Schema {
 			Computed:  true,
 			Required:  false,
 		},
-		"file": {
-			Type:      schema.TypeString,
-			Sensitive: true,
-			Computed:  true,
-			Required:  false,
-		},
+		// "file": {
+		// 	Type:      schema.TypeString,
+		// 	Sensitive: true,
+		// 	Computed:  true,
+		// 	Required:  false,
+		// },
 		"comment": {
 			Type:      schema.TypeString,
 			Sensitive: true,
@@ -201,7 +200,7 @@ func dataSourceVaultRecordRead(ctx context.Context, d *schema.ResourceData, m in
 		})
 	}
 
-	d.SetId(strconv.FormatInt(int64(vaultRecord.Self().ID), 10))
+	d.SetId(vaultRecord.UUID)
 
 	return diags
 }
