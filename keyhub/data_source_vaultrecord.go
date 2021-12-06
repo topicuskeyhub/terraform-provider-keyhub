@@ -2,6 +2,7 @@ package keyhub
 
 import (
 	"context"
+	"strconv"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -30,11 +31,6 @@ func VaultRecordSchema() map[string]*schema.Schema {
 		"uuid": {
 			Type:     schema.TypeString,
 			Required: true,
-		},
-		"secrets": {
-			Type:     schema.TypeBool,
-			Optional: true,
-			Default:  false,
 		},
 		"name": {
 			Type:     schema.TypeString,
@@ -82,32 +78,55 @@ func VaultRecordSchema() map[string]*schema.Schema {
 	}
 }
 
+//
+//This function will support both DataSource READ and Resource READ by checking for UUID and ID.
 func dataSourceVaultRecordRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := m.(*keyhub.Client)
 
 	// Warning or errors can be collected in a slice type
 	var diags diag.Diagnostics
+	vaultRecord := new(keyhubmodel.VaultRecord)
 
 	groupUUID := d.Get("groupuuid").(string)
-	UUID := d.Get("uuid").(string)
-	secrets := d.Get("secrets").(bool)
-
 	group, err := client.Groups.Get(groupUUID)
 	if err != nil {
 		diags = append(diags, diag.Diagnostic{
 			Severity: diag.Error,
-			Summary:  "Could not GET group " + groupUUID + " for vault record " + UUID,
+			Summary:  "Could not GET group " + groupUUID + " to READ vault record(s)",
 			Detail:   err.Error(),
 		})
 	}
 
-	vaultRecord, err := client.Vaults.GetRecord(group, UUID, keyhubmodel.RecordOptions{Secret: secrets})
-	if err != nil {
+	UUID, valueExists := d.GetOk("uuid")
+	if valueExists {
+		vaultRecord, err = client.Vaults.GetByUUID(group, UUID.(string), &keyhubmodel.VaultRecordAdditionalQueryParams{Secret: true})
+		if err != nil {
+			diags = append(diags, diag.Diagnostic{
+				Severity: diag.Error,
+				Summary:  "Could not GET vault record " + UUID.(string),
+				Detail:   err.Error(),
+			})
+		}
+	}
+	ID, err := strconv.ParseInt(d.Id(), 10, 64)
+	if err == nil {
+		vaultRecord, err = client.Vaults.GetByID(group, ID, &keyhubmodel.VaultRecordAdditionalQueryParams{Secret: true})
+		if err != nil {
+			diags = append(diags, diag.Diagnostic{
+				Severity: diag.Error,
+				Summary:  "Could not GET vault record " + d.Id(),
+				Detail:   err.Error(),
+			})
+		}
+	}
+
+	if vaultRecord == nil {
 		diags = append(diags, diag.Diagnostic{
 			Severity: diag.Error,
-			Summary:  "Could not GET secrets of vault record " + UUID,
+			Summary:  "Could not GET vault record either by UUID or ID",
 			Detail:   err.Error(),
 		})
+		return diags
 	}
 
 	if err := d.Set("id", vaultRecord.Self().ID); err != nil {
@@ -200,7 +219,8 @@ func dataSourceVaultRecordRead(ctx context.Context, d *schema.ResourceData, m in
 		})
 	}
 
-	d.SetId(vaultRecord.UUID)
+	// d.SetId(group.UUID + "/" + vaultRecord.UUID)
+	d.SetId(strconv.FormatInt(vaultRecord.Self().ID, 10))
 
 	return diags
 }

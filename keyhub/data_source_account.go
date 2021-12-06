@@ -2,6 +2,7 @@ package keyhub
 
 import (
 	"context"
+	"strconv"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -44,7 +45,7 @@ func dataSourceAccountRead(ctx context.Context, d *schema.ResourceData, m interf
 	var diags diag.Diagnostics
 
 	UUID := d.Get("uuid").(string)
-	account, err := client.Accounts.Get(UUID)
+	account, err := client.Accounts.GetByUUID(UUID)
 	if err != nil {
 		diags = append(diags, diag.Diagnostic{
 			Severity: diag.Error,
@@ -82,7 +83,8 @@ func dataSourceAccountRead(ctx context.Context, d *schema.ResourceData, m interf
 		})
 	}
 
-	d.SetId(account.UUID)
+	// d.SetId(account.UUID)
+	d.SetId(strconv.FormatInt(account.Self().ID, 10))
 
 	return diags
 }

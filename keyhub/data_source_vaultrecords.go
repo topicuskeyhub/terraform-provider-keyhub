@@ -47,7 +47,7 @@ func dataSourceVaultRecordsRead(ctx context.Context, d *schema.ResourceData, m i
 		})
 	}
 
-	vaultrecords, err := client.Vaults.List(group, keyhubmodel.RecordOptions{})
+	vaultrecords, err := client.Vaults.GetRecords(group)
 	if err != nil {
 		diags = append(diags, diag.Diagnostic{
 			Severity: diag.Error,

@@ -2,6 +2,7 @@ package keyhub
 
 import (
 	"context"
+	"strconv"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -13,7 +14,7 @@ import (
 func resourceVaultRecord() *schema.Resource {
 	return &schema.Resource{
 		CreateContext: resourceVaultRecordCreate,
-		ReadContext:   resourceVaultRecordRead,
+		ReadContext:   dataSourceVaultRecordRead, //we use the DataSource READ as it supports both data types
 		UpdateContext: resourceVaultRecordUpdate,
 		DeleteContext: resourceVaultRecordDelete,
 		Schema:        VaultRecordResourceSchema(),
@@ -23,7 +24,7 @@ func resourceVaultRecord() *schema.Resource {
 func VaultRecordResourceSchema() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"id": {
-			Type:     schema.TypeInt,
+			Type:     schema.TypeString,
 			Computed: true,
 		},
 		"groupuuid": {
@@ -32,6 +33,7 @@ func VaultRecordResourceSchema() map[string]*schema.Schema {
 		},
 		"uuid": {
 			Type:     schema.TypeString,
+			Computed: true,
 			Required: false,
 		},
 		"name": {
@@ -40,35 +42,35 @@ func VaultRecordResourceSchema() map[string]*schema.Schema {
 		},
 		"url": {
 			Type:     schema.TypeString,
-			Required: false,
+			Optional: true,
 		},
 		"username": {
 			Type:     schema.TypeString,
-			Required: false,
+			Optional: true,
 		},
 		"filename": {
 			Type:     schema.TypeString,
-			Required: false,
+			Optional: true,
 		},
 		"password": {
 			Type:      schema.TypeString,
 			Sensitive: true,
-			Required:  false,
+			Optional:  true,
 		},
 		"totp": {
 			Type:      schema.TypeString,
 			Sensitive: true,
-			Required:  false,
+			Optional:  true,
 		},
 		// "file": {
 		// 	Type:      schema.TypeString,
 		// 	Sensitive: true,
-		// 	Required:  false,
+		// Optional: true,
 		// },
 		"comment": {
 			Type:      schema.TypeString,
 			Sensitive: true,
-			Required:  false,
+			Optional:  true,
 		},
 	}
 }
@@ -89,47 +91,50 @@ func resourceVaultRecordCreate(ctx context.Context, d *schema.ResourceData, m in
 			Summary:  "Could not GET group " + groupUUID + " for new vault record " + name,
 			Detail:   err.Error(),
 		})
+		return diags
 	}
 
-	vaultRecord := new(keyhubmodel.VaultRecord)
-	vaultRecord.Name = d.Get("name").(string)
-	vaultRecord.URL = d.Get("url").(string)
-	vaultRecord.Username = d.Get("username").(string)
-	vaultRecord.Color = d.Get("color").(string)
-	vaultRecord.Filename = d.Get("filename").(string)
-
-	_, existsPassword := d.GetOk("password")
-	_, existsTotp := d.GetOk("totp")
-	// _, existsFile := d.GetOk("file")
-	_, existsComment := d.GetOk("comment")
-	if existsPassword || existsTotp || existsComment {
-		vaultRecord.AdditionalObjects = new(keyhubmodel.VaultRecordAdditionalObjects)
-		vaultRecord.AdditionalObjects.Secret = new(keyhubmodel.VaultRecordSecretAdditionalObject)
+	//query vaultrecords by name to prevent duplicates
+	existingVaultRecord, err := client.Vaults.List(group, &keyhubmodel.VaultRecordQueryParams{Name: name}, &keyhubmodel.VaultRecordAdditionalQueryParams{Secret: true})
+	if err != nil {
+		diags = append(diags, diag.Diagnostic{
+			Severity: diag.Error,
+			Summary:  "Could not CREATE vaultRecord in group " + groupUUID,
+			Detail:   err.Error(),
+		})
+		return diags
+	}
+	if len(existingVaultRecord) > 0 {
+		diags = append(diags, diag.Diagnostic{
+			Severity: diag.Error,
+			Summary:  "Could not CREATE vaultRecord",
+			Detail:   "Record with same name exists in group in group " + groupUUID,
+		})
+		return diags
 	}
 
-	if existsPassword {
-		vaultRecord.AdditionalObjects.Secret.Password = d.Get("password").(string)
-	}
-	if existsTotp {
-		vaultRecord.AdditionalObjects.Secret.Totp = d.Get("totp").(string)
-	}
-	// if existsFile {
-	// vaultRecord.AdditionalObjects.Secret.File = d.Get("file").(string)
-	// }
-	if existsComment {
-		vaultRecord.AdditionalObjects.Secret.Comment = d.Get("comment").(string)
+	secrets := &keyhubmodel.VaultRecordSecretAdditionalObject{}
+	vaultRecord := keyhubmodel.NewVaultRecord(name, secrets)
+
+	//copy schema data to model
+	//use generic copy method. also used in UPDATE.
+	vaultRecordSchemaToModel(d, vaultRecord, &diags)
+	if diags.HasError() {
+		return diags
 	}
 
-	client.Vaults.
+	newVaultRecord, err := client.Vaults.Create(group, vaultRecord)
+	if err != nil {
+		diags = append(diags, diag.Diagnostic{
+			Severity: diag.Error,
+			Summary:  "Could not CREATE vaultRecord in group " + groupUUID,
+			Detail:   err.Error(),
+		})
+		return diags
+	}
 
-	return diags
-}
-
-func resourceVaultRecordRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	client := m.(*keyhub.Client)
-
-	// Warning or errors can be collected in a slice type
-	var diags diag.Diagnostics
+	// d.SetId(group.UUID + "/" + newVaultRecord.UUID)
+	d.SetId(strconv.FormatInt(newVaultRecord.Self().ID, 10))
 
 	return diags
 }
@@ -140,7 +145,57 @@ func resourceVaultRecordUpdate(ctx context.Context, d *schema.ResourceData, m in
 	// Warning or errors can be collected in a slice type
 	var diags diag.Diagnostics
 
-	return resourceVaultRecordRead(ctx, d, m)
+	groupUUID := d.Get("groupuuid").(string)
+	ID, err := strconv.ParseInt(d.Id(), 10, 64)
+	if err != nil {
+		diags = append(diags, diag.Diagnostic{
+			Severity: diag.Error,
+			Summary:  "Could not parse ID " + d.Id(),
+			Detail:   err.Error(),
+		})
+		return diags
+	}
+
+	group, err := client.Groups.Get(groupUUID)
+	if err != nil {
+		diags = append(diags, diag.Diagnostic{
+			Severity: diag.Error,
+			Summary:  "Could not GET group " + groupUUID + " for vault record " + d.Id(),
+			Detail:   err.Error(),
+		})
+		return diags
+	}
+
+	vaultRecord, err := client.Vaults.GetByID(group, ID, &keyhubmodel.VaultRecordAdditionalQueryParams{Secret: true})
+	if err != nil {
+		diags = append(diags, diag.Diagnostic{
+			Severity: diag.Error,
+			Summary:  "Could not GET vault record " + d.Id(),
+			Detail:   err.Error(),
+		})
+		return diags
+	}
+
+	//copy schema data to model
+	//use generic copy method. also used in CREATE.
+	vaultRecordSchemaToModel(d, vaultRecord, &diags)
+	if diags.HasError() {
+		return diags
+	}
+
+	_, err = client.Vaults.Update(group, vaultRecord)
+	if err != nil {
+		diags = append(diags, diag.Diagnostic{
+			Severity: diag.Error,
+			Summary:  "Could not UPDATE vault record " + vaultRecord.UUID,
+			Detail:   err.Error(),
+		})
+		return diags
+	}
+
+	dataSourceVaultRecordRead(ctx, d, m)
+
+	return diags
 }
 
 func resourceVaultRecordDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
@@ -149,5 +204,79 @@ func resourceVaultRecordDelete(ctx context.Context, d *schema.ResourceData, m in
 	// Warning or errors can be collected in a slice type
 	var diags diag.Diagnostics
 
+	groupUUID := d.Get("groupuuid").(string)
+	UUID := d.Get("uuid").(string)
+
+	diags = append(diags, diag.Diagnostic{
+		Severity: diag.Warning,
+		Summary:  "Vault DELETE",
+		Detail:   UUID + "/" + d.Id(),
+	})
+
+	group, err := client.Groups.Get(groupUUID)
+	if err != nil {
+		diags = append(diags, diag.Diagnostic{
+			Severity: diag.Error,
+			Summary:  "Could not GET group " + groupUUID + " for vault record " + d.Id(),
+			Detail:   err.Error(),
+		})
+		return diags
+	}
+
+	err = client.Vaults.Delete(group, UUID)
+	if err != nil {
+		diags = append(diags, diag.Diagnostic{
+			Severity: diag.Error,
+			Summary:  "Could not DELETE vaultrecord " + d.Id(),
+			Detail:   err.Error(),
+		})
+		return diags
+	}
+
 	return diags
+}
+
+func vaultRecordSchemaToModel(d *schema.ResourceData, vaultRecord *keyhubmodel.VaultRecord, diags *diag.Diagnostics) {
+
+	value, valueExists := d.GetOk("name")
+	if valueExists {
+		vaultRecord.Name = value.(string)
+	}
+	value, valueExists = d.GetOk("url")
+	if valueExists {
+		vaultRecord.URL = value.(string)
+	}
+	value, valueExists = d.GetOk("username")
+	if valueExists {
+		vaultRecord.Username = value.(string)
+	}
+	value, valueExists = d.GetOk("color")
+	if valueExists {
+		vaultRecord.Color = value.(string)
+	}
+	value, valueExists = d.GetOk("filename")
+	if valueExists {
+		vaultRecord.Filename = value.(string)
+	}
+
+	value, valueExists = d.GetOk("password")
+	if valueExists {
+		val := value.(string)
+		vaultRecord.AdditionalObjects.Secret.Password = &val
+	}
+	value, valueExists = d.GetOk("totp")
+	if valueExists {
+		val := value.(string)
+		vaultRecord.AdditionalObjects.Secret.Totp = &val
+	}
+	// value, valueExists = d.GetOk("file")
+	// if valueExists {
+	// 	val := value.([]byte)
+	// 	vaultRecord.AdditionalObjects.Secret.File = &val
+	// }
+	value, valueExists = d.GetOk("comment")
+	if valueExists {
+		val := value.(string)
+		vaultRecord.AdditionalObjects.Secret.Comment = &val
+	}
 }

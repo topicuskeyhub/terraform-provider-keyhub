@@ -2,6 +2,7 @@ package keyhub
 
 import (
 	"context"
+	"strconv"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -40,7 +41,7 @@ func dataSourceGroupRead(ctx context.Context, d *schema.ResourceData, m interfac
 	var diags diag.Diagnostics
 
 	UUID := d.Get("uuid").(string)
-	group, err := client.Groups.Get(UUID)
+	group, err := client.Groups.GetByUUID(UUID)
 	if err != nil {
 		diags = append(diags, diag.Diagnostic{
 			Severity: diag.Error,
@@ -71,7 +72,8 @@ func dataSourceGroupRead(ctx context.Context, d *schema.ResourceData, m interfac
 		})
 	}
 
-	d.SetId(group.UUID)
+	// d.SetId(group.UUID)
+	d.SetId(strconv.FormatInt(group.Self().ID, 10))
 
 	return diags
 }
