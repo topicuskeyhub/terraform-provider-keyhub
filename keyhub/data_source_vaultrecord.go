@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
-	"github.com/topicuskeyhub/go-keyhub"
+	keyhubclient "github.com/topicuskeyhub/go-keyhub"
 	keyhubmodel "github.com/topicuskeyhub/go-keyhub/model"
 )
 
@@ -81,7 +81,7 @@ func VaultRecordSchema() map[string]*schema.Schema {
 //
 //This function will support both DataSource READ and Resource READ by checking for UUID and ID.
 func dataSourceVaultRecordRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	client := m.(*keyhub.Client)
+	client := m.(*keyhubclient.Client)
 
 	// Warning or errors can be collected in a slice type
 	var diags diag.Diagnostics

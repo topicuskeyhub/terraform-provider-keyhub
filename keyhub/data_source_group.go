@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
-	"github.com/topicuskeyhub/go-keyhub"
+	keyhubclient "github.com/topicuskeyhub/go-keyhub"
 )
 
 func dataSourceGroup() *schema.Resource {
@@ -35,7 +35,7 @@ func GroupSchema() map[string]*schema.Schema {
 }
 
 func dataSourceGroupRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-	client := m.(*keyhub.Client)
+	client := m.(*keyhubclient.Client)
 
 	// Warning or errors can be collected in a slice type
 	var diags diag.Diagnostics
