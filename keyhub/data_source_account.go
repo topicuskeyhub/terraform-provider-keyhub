@@ -20,7 +20,7 @@ func dataSourceAccount() *schema.Resource {
 func AccountSchema() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"id": {
-			Type:     schema.TypeInt,
+			Type:     schema.TypeString,
 			Computed: true,
 		},
 		"uuid": {
@@ -54,7 +54,8 @@ func dataSourceAccountRead(ctx context.Context, d *schema.ResourceData, m interf
 		})
 	}
 
-	if err := d.Set("id", account.Self().ID); err != nil {
+	idString := strconv.FormatInt(account.Self().ID, 10)
+	if err := d.Set("id", idString); err != nil {
 		diags = append(diags, diag.Diagnostic{
 			Severity: diag.Error,
 			Summary:  "Could not set value for id",
@@ -83,8 +84,7 @@ func dataSourceAccountRead(ctx context.Context, d *schema.ResourceData, m interf
 		})
 	}
 
-	// d.SetId(account.UUID)
-	d.SetId(strconv.FormatInt(account.Self().ID, 10))
+	d.SetId(idString)
 
 	return diags
 }

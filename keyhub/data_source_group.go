@@ -20,7 +20,7 @@ func dataSourceGroup() *schema.Resource {
 func GroupSchema() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"id": {
-			Type:     schema.TypeInt,
+			Type:     schema.TypeString,
 			Computed: true,
 		},
 		"uuid": {
@@ -50,7 +50,8 @@ func dataSourceGroupRead(ctx context.Context, d *schema.ResourceData, m interfac
 		})
 	}
 
-	if err := d.Set("id", group.Self().ID); err != nil {
+	idString := strconv.FormatInt(group.Self().ID, 10)
+	if err := d.Set("id", idString); err != nil {
 		diags = append(diags, diag.Diagnostic{
 			Severity: diag.Error,
 			Summary:  "Could not set value for id",
@@ -72,7 +73,6 @@ func dataSourceGroupRead(ctx context.Context, d *schema.ResourceData, m interfac
 		})
 	}
 
-	// d.SetId(group.UUID)
 	d.SetId(strconv.FormatInt(group.Self().ID, 10))
 
 	return diags

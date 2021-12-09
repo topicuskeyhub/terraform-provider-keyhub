@@ -21,7 +21,7 @@ func dataSourceVaultRecord() *schema.Resource {
 func VaultRecordSchema() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"id": {
-			Type:     schema.TypeInt,
+			Type:     schema.TypeString,
 			Computed: true,
 		},
 		"groupuuid": {
@@ -108,15 +108,24 @@ func dataSourceVaultRecordRead(ctx context.Context, d *schema.ResourceData, m in
 			})
 		}
 	}
-	ID, err := strconv.ParseInt(d.Id(), 10, 64)
-	if err == nil {
-		vaultRecord, err = client.Vaults.GetByID(group, ID, &keyhubmodel.VaultRecordAdditionalQueryParams{Secret: true})
-		if err != nil {
+
+	if d.Id() != "" {
+		ID, err := strconv.ParseInt(d.Id(), 10, 64)
+		if !valueExists && err != nil {
 			diags = append(diags, diag.Diagnostic{
 				Severity: diag.Error,
-				Summary:  "Could not GET vault record " + d.Id(),
+				Summary:  "Could not parse ID " + d.Id(),
 				Detail:   err.Error(),
 			})
+		} else {
+			vaultRecord, err = client.Vaults.GetByID(group, ID, &keyhubmodel.VaultRecordAdditionalQueryParams{Secret: true})
+			if err != nil {
+				diags = append(diags, diag.Diagnostic{
+					Severity: diag.Error,
+					Summary:  "Could not GET vault record " + d.Id(),
+					Detail:   err.Error(),
+				})
+			}
 		}
 	}
 
@@ -129,7 +138,8 @@ func dataSourceVaultRecordRead(ctx context.Context, d *schema.ResourceData, m in
 		return diags
 	}
 
-	if err := d.Set("id", vaultRecord.Self().ID); err != nil {
+	idString := strconv.FormatInt(vaultRecord.Self().ID, 10)
+	if err := d.Set("id", idString); err != nil {
 		diags = append(diags, diag.Diagnostic{
 			Severity: diag.Error,
 			Summary:  "Could not set value for id",
@@ -219,7 +229,6 @@ func dataSourceVaultRecordRead(ctx context.Context, d *schema.ResourceData, m in
 		})
 	}
 
-	// d.SetId(group.UUID + "/" + vaultRecord.UUID)
 	d.SetId(strconv.FormatInt(vaultRecord.Self().ID, 10))
 
 	return diags

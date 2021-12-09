@@ -75,7 +75,7 @@ func flattenAccountData(account *keyhubmodel.Account) map[string]interface{} {
 	if account != nil {
 		data := make(map[string]interface{})
 
-		data["id"] = account.Self().ID
+		data["id"] = strconv.FormatInt(account.Self().ID, 10)
 		data["uuid"] = account.UUID
 		data["username"] = account.Username
 		data["name"] = account.DisplayName

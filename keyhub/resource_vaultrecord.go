@@ -26,6 +26,7 @@ func VaultRecordResourceSchema() map[string]*schema.Schema {
 		"id": {
 			Type:     schema.TypeString,
 			Computed: true,
+			Required: false,
 		},
 		"groupuuid": {
 			Type:     schema.TypeString,
@@ -136,6 +137,8 @@ func resourceVaultRecordCreate(ctx context.Context, d *schema.ResourceData, m in
 	// d.SetId(group.UUID + "/" + newVaultRecord.UUID)
 	d.SetId(strconv.FormatInt(newVaultRecord.Self().ID, 10))
 
+	dataSourceVaultRecordRead(ctx, d, m)
+
 	return diags
 }
 
@@ -205,13 +208,15 @@ func resourceVaultRecordDelete(ctx context.Context, d *schema.ResourceData, m in
 	var diags diag.Diagnostics
 
 	groupUUID := d.Get("groupuuid").(string)
-	UUID := d.Get("uuid").(string)
-
-	diags = append(diags, diag.Diagnostic{
-		Severity: diag.Warning,
-		Summary:  "Vault DELETE",
-		Detail:   UUID + "/" + d.Id(),
-	})
+	ID, err := strconv.ParseInt(d.Id(), 10, 64)
+	if err != nil {
+		diags = append(diags, diag.Diagnostic{
+			Severity: diag.Error,
+			Summary:  "Could not parse ID " + d.Id(),
+			Detail:   err.Error(),
+		})
+		return diags
+	}
 
 	group, err := client.Groups.Get(groupUUID)
 	if err != nil {
@@ -223,7 +228,7 @@ func resourceVaultRecordDelete(ctx context.Context, d *schema.ResourceData, m in
 		return diags
 	}
 
-	err = client.Vaults.Delete(group, UUID)
+	err = client.Vaults.DeleteByID(group, ID)
 	if err != nil {
 		diags = append(diags, diag.Diagnostic{
 			Severity: diag.Error,
@@ -232,6 +237,10 @@ func resourceVaultRecordDelete(ctx context.Context, d *schema.ResourceData, m in
 		})
 		return diags
 	}
+
+	// d.SetId("") is automatically called assuming delete returns no errors, but
+	// it is added here for explicitness.
+	d.SetId("")
 
 	return diags
 }

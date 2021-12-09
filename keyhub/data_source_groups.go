@@ -75,7 +75,7 @@ func flattenGroupData(group *keyhubmodel.Group) map[string]interface{} {
 	if group != nil {
 		data := make(map[string]interface{})
 
-		data["id"] = group.Self().ID
+		data["id"] = strconv.FormatInt(group.Self().ID, 10)
 		data["uuid"] = group.UUID
 		data["name"] = group.Name
 

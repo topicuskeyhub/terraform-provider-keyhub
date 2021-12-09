@@ -97,7 +97,7 @@ func flattenVaultRecordData(vaultrecord *keyhubmodel.VaultRecord) map[string]int
 	if vaultrecord != nil {
 		data := make(map[string]interface{})
 
-		data["id"] = vaultrecord.Self().ID
+		data["id"] = strconv.FormatInt(vaultrecord.Self().ID, 10)
 		data["uuid"] = vaultrecord.UUID
 		data["name"] = vaultrecord.Name
 		data["url"] = vaultrecord.URL
