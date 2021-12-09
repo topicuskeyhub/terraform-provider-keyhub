@@ -5,9 +5,8 @@ import (
 	"net/http"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
-	"github.com/topicuskeyhub/go-keyhub"
-
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	keyhubclient "github.com/topicuskeyhub/go-keyhub"
 )
 
 // Provider -
@@ -77,7 +76,7 @@ func providerConfigure(ctx context.Context, d *schema.ResourceData) (interface{}
 		})
 	}
 
-	client, err := keyhub.NewClient(http.DefaultClient, issuer, clientid, clientsecret)
+	client, err := keyhubclient.NewClient(http.DefaultClient, issuer, clientid, clientsecret)
 	if err != nil {
 		diags = append(diags, diag.Diagnostic{
 			Severity: diag.Error,
