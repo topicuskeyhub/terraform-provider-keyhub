@@ -4,6 +4,7 @@ import (
 	"context"
 	"strconv"
 
+	"github.com/google/uuid"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	keyhubclient "github.com/topicuskeyhub/go-keyhub"
@@ -43,12 +44,21 @@ func dataSourceAccountRead(ctx context.Context, d *schema.ResourceData, m interf
 	// Warning or errors can be collected in a slice type
 	var diags diag.Diagnostics
 
-	UUID := d.Get("uuid").(string)
+	uuidString := d.Get("uuid").(string)
+	UUID, err := uuid.Parse(uuidString)
+	if err != nil {
+		diags = append(diags, diag.Diagnostic{
+			Severity: diag.Error,
+			Summary:  "Field 'uuid' is not a valid UUID",
+			Detail:   err.Error(),
+		})
+	}
+
 	account, err := client.Accounts.GetByUUID(UUID)
 	if err != nil {
 		diags = append(diags, diag.Diagnostic{
 			Severity: diag.Error,
-			Summary:  "Could not GET account " + UUID,
+			Summary:  "Could not GET account " + uuidString,
 			Detail:   err.Error(),
 		})
 	}

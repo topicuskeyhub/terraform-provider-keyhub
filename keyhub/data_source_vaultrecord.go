@@ -4,6 +4,7 @@ import (
 	"context"
 	"strconv"
 
+	"github.com/google/uuid"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
@@ -87,23 +88,40 @@ func dataSourceVaultRecordRead(ctx context.Context, d *schema.ResourceData, m in
 	var diags diag.Diagnostics
 	vaultRecord := new(keyhubmodel.VaultRecord)
 
-	groupUUID := d.Get("groupuuid").(string)
-	group, err := client.Groups.Get(groupUUID)
+	groupUUIDString := d.Get("groupuuid").(string)
+	groupUUID, err := uuid.Parse(groupUUIDString)
 	if err != nil {
 		diags = append(diags, diag.Diagnostic{
 			Severity: diag.Error,
-			Summary:  "Could not GET group " + groupUUID + " to READ vault record(s)",
+			Summary:  "Field 'groupuuid' is not a valid UUID",
+			Detail:   err.Error(),
+		})
+	}
+	group, err := client.Groups.GetByUUID(groupUUID)
+	if err != nil {
+		diags = append(diags, diag.Diagnostic{
+			Severity: diag.Error,
+			Summary:  "Could not GET group " + groupUUIDString + " to READ vault record(s)",
 			Detail:   err.Error(),
 		})
 	}
 
-	UUID, valueExists := d.GetOk("uuid")
+	uuidString, valueExists := d.GetOk("uuid")
 	if valueExists {
-		vaultRecord, err = client.Vaults.GetByUUID(group, UUID.(string), &keyhubmodel.VaultRecordAdditionalQueryParams{Secret: true})
+		UUID, err := uuid.Parse(uuidString.(string))
 		if err != nil {
 			diags = append(diags, diag.Diagnostic{
 				Severity: diag.Error,
-				Summary:  "Could not GET vault record " + UUID.(string),
+				Summary:  "Field 'uuid' is not a valid UUID",
+				Detail:   err.Error(),
+			})
+		}
+
+		vaultRecord, err = client.Vaults.GetByUUID(group, UUID, &keyhubmodel.VaultRecordAdditionalQueryParams{Secret: true})
+		if err != nil {
+			diags = append(diags, diag.Diagnostic{
+				Severity: diag.Error,
+				Summary:  "Could not GET vault record " + uuidString.(string),
 				Detail:   err.Error(),
 			})
 		}

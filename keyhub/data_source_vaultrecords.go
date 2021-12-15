@@ -5,6 +5,7 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/google/uuid"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
@@ -37,12 +38,20 @@ func dataSourceVaultRecordsRead(ctx context.Context, d *schema.ResourceData, m i
 	// Warning or errors can be collected in a slice type
 	var diags diag.Diagnostics
 
-	groupUUID := d.Get("groupuuid").(string)
-	group, err := client.Groups.Get(groupUUID)
+	groupUUIDString := d.Get("groupuuid").(string)
+	groupUUID, err := uuid.Parse(groupUUIDString)
 	if err != nil {
 		diags = append(diags, diag.Diagnostic{
 			Severity: diag.Error,
-			Summary:  "Could not GET group " + groupUUID + " for vault records",
+			Summary:  "Field 'groupuuid' is not a valid UUID",
+			Detail:   err.Error(),
+		})
+	}
+	group, err := client.Groups.GetByUUID(groupUUID)
+	if err != nil {
+		diags = append(diags, diag.Diagnostic{
+			Severity: diag.Error,
+			Summary:  "Could not GET group " + groupUUIDString + " for vault records",
 			Detail:   err.Error(),
 		})
 	}
@@ -51,7 +60,7 @@ func dataSourceVaultRecordsRead(ctx context.Context, d *schema.ResourceData, m i
 	if err != nil {
 		diags = append(diags, diag.Diagnostic{
 			Severity: diag.Error,
-			Summary:  "Could not GET vaultrecords of group " + groupUUID,
+			Summary:  "Could not GET vaultrecords of group " + groupUUIDString,
 			Detail:   err.Error(),
 		})
 	}
