@@ -8,23 +8,12 @@ Run the following command to build the provider
 $ go build -o terraform-provider-keyhub
 ```
 
-## Local release build
-
-```shell
-$ go install github.com/goreleaser/goreleaser@latest
-```
-
-```shell
-$ make release
-```
-
-You will find the releases in the `/dist` directory. You will need to rename the provider binary to `terraform-provider-keyhub` and move the binary into [the appropriate subdirectory within the user plugins directory](https://learn.hashicorp.com/tutorials/terraform/provider-use?in=terraform/providers#install-hashicups-provider).
 ## Test sample configuration
 
 First, build and install the provider.
 
 ```shell
-$ make install
+$ make
 ```
 
 Then, navigate to the `examples` directory. 
