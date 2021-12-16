@@ -10,15 +10,15 @@ description: |-
 
 This is the Topicus KeyHub Terraform Provider. It is used to interact with your Topicus KeyHub REST API.
 
-The provider allowd you to safely retreive accounts, groups and vaultrecords and store groups and vaultrecords.
+The provider allows you to safely retreive accounts, groups and vaultrecords and store groups and vaultrecords.
 
 
 ## Example Usage
 
 We'll assume your Topicus KeyHub installation is externally reachable via "https://keyhub.domain.com". Replace this URL with your actual installation URL.
 
-Create an OAuth2/OIDC Application through the console:
-https://keyhub.domain.com/console/admin/applications
+Create an OAuth2/OIDC Client Application through the console:
+https://keyhub.domain.com/console/access
 
 Write down the Client Identifier and Client Secret and use them in your terraform configuration. Do not keep your authentication credentials in HCL for production environments, use Terraform environment variables.
 
