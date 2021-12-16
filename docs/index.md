@@ -1,7 +1,6 @@
 --- 
 layout: ""
 page_title: "Topicus KeyHub Provider"
-subcategory: ""
 description: |-
   Terraform provider for interacting with your Topicus KeyHub REST API.
   
