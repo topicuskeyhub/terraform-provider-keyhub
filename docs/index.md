@@ -10,7 +10,7 @@ description: |-
 
 This is the Topicus KeyHub Terraform Provider. It is used to interact with your Topicus KeyHub REST API.
 
-The provider allows you to safely retreive accounts, groups and vaultrecords and store groups and vaultrecords.
+The provider allows you to safely retrieve accounts, groups and vaultrecords and store groups and vaultrecords.
 
 
 ## Example Usage

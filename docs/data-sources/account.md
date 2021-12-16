@@ -22,7 +22,7 @@ data "keyhub_account" "example" {
 
 ### Required
 
-- **uuid** (String) The UUID of the account you wish to retreive
+- **uuid** (String) The UUID of the account you wish to retrieve
 
 ### Read-Only
 

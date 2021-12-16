@@ -22,7 +22,7 @@ data "keyhub_group" "example" {
 
 ### Required
 
-- **uuid** (String) The UUID of the group you wish to retreive
+- **uuid** (String) The UUID of the group you wish to retrieve
 
 ### Read-Only
 

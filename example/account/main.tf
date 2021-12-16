@@ -19,7 +19,7 @@ provider "keyhub" {
 
 data "keyhub_accounts" "all" {}
 
-# Returns all accounts
+#Returns all accounts
 output "all_accounts" {
  value = data.keyhub_accounts.all.accounts
 }

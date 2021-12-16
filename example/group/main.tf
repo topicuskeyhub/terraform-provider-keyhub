@@ -23,7 +23,7 @@ provider "random" {
 
 data "keyhub_groups" "all" {}
 
-# Returns all groups
+#Returns all groups
 output "all_groups" {
  value = data.keyhub_groups.all.groups
 }

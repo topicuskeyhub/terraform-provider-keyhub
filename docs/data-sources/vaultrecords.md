@@ -22,7 +22,7 @@ data "keyhub_vaultrecords" "all" {
 
 ### Required
 
-- **groupuuid** (String) The group UUID of the vaultrecords you wish to retreive.
+- **groupuuid** (String) The group UUID of the vaultrecords you wish to retrieve.
 
 ### Optional
 

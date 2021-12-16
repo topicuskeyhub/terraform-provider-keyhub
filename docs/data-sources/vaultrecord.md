@@ -23,8 +23,8 @@ data "keyhub_vaultrecord" "example" {
 
 ### Required
 
-- **groupuuid** (String) The group UUID of the vaultrecord you wish to retreive
-- **uuid** (String) The UUID of the vaultrecord you wish to retreive
+- **groupuuid** (String) The group UUID of the vaultrecord you wish to retrieve
+- **uuid** (String) The UUID of the vaultrecord you wish to retrieve
 
 ### Read-Only
 
