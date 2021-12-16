@@ -14,12 +14,51 @@ import (
 
 func dataSourceVaultRecord() *schema.Resource {
 	return &schema.Resource{
-		ReadContext: dataSourceVaultRecordRead,
+		ReadContext: dataSourceVaultRecordsRead,
 		Schema:      VaultRecordSchema(),
 	}
 }
 
 func VaultRecordSchema() map[string]*schema.Schema {
+	baseSchema := VaultRecordBaseSchema()
+	secretsSchema := map[string]*schema.Schema{
+		"password": {
+			Type:      schema.TypeString,
+			Sensitive: true,
+			Computed:  true,
+			Required:  false,
+		},
+		"totp": {
+			Type:      schema.TypeString,
+			Sensitive: true,
+			Computed:  true,
+			Required:  false,
+		},
+		// "file":{
+		// 	Type:      schema.TypeString,
+		// 	Sensitive: true,
+		// 	Computed:  true,
+		// 	Required:  false,
+		// },
+		"comment": {
+			Type:      schema.TypeString,
+			Sensitive: true,
+			Computed:  true,
+			Required:  false,
+		}}
+
+	schema := map[string]*schema.Schema{}
+	for k, v := range baseSchema {
+		schema[k] = v
+	}
+	for k, v := range secretsSchema {
+		schema[k] = v
+	}
+
+	return schema
+}
+
+func VaultRecordBaseSchema() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"id": {
 			Type:     schema.TypeString,
@@ -51,30 +90,6 @@ func VaultRecordSchema() map[string]*schema.Schema {
 			Type:     schema.TypeString,
 			Computed: true,
 			Required: false,
-		},
-		"password": {
-			Type:      schema.TypeString,
-			Sensitive: true,
-			Computed:  true,
-			Required:  false,
-		},
-		"totp": {
-			Type:      schema.TypeString,
-			Sensitive: true,
-			Computed:  true,
-			Required:  false,
-		},
-		// "file": {
-		// 	Type:      schema.TypeString,
-		// 	Sensitive: true,
-		// 	Computed:  true,
-		// 	Required:  false,
-		// },
-		"comment": {
-			Type:      schema.TypeString,
-			Sensitive: true,
-			Computed:  true,
-			Required:  false,
 		},
 	}
 }

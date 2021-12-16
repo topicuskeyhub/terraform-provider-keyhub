@@ -43,7 +43,3 @@ Read-Only
 - **url** (String) The value of the URL field of the vaultrecord
 - **username** (String) The value of the Username field of the vaultrecord
 - **filename** (String)  The value of the Filename field of the vaultrecord
-
-- **comment** (String, Sensitive) The value of the Comment field of the vaultrecord. This value is sensitive as it might contain secret information.
-- **password** (String, Sensitive)  The value of the Password field of the vaultrecord. This value is sensitive as it might contain secret information.
-- **totp** (String, Sensitive)  The value of the Totp field of the vaultrecord. This value is sensitive as it might contain secret information.

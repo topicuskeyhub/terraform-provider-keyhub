@@ -25,7 +25,7 @@ func dataSourceVaultRecords() *schema.Resource {
 				Type:     schema.TypeList,
 				Computed: true,
 				Elem: &schema.Resource{
-					Schema: VaultRecordSchema(),
+					Schema: VaultRecordBaseSchema(),
 				},
 			},
 		},
