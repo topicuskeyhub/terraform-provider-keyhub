@@ -14,7 +14,7 @@ import (
 
 func dataSourceVaultRecord() *schema.Resource {
 	return &schema.Resource{
-		ReadContext: dataSourceVaultRecordsRead,
+		ReadContext: dataSourceVaultRecordRead,
 		Schema:      VaultRecordSchema(),
 	}
 }
