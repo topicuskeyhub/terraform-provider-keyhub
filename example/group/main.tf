@@ -2,7 +2,7 @@ terraform {
   required_providers {
     keyhub = {
       source  = "github.com/topicuskeyhub/keyhub"
-      version = "0.1"
+      version = "0.0.1"
     }
     random = {
       source = "hashicorp/random"
