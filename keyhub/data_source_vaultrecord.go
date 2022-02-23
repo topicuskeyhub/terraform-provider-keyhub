@@ -101,7 +101,7 @@ func dataSourceVaultRecordRead(ctx context.Context, d *schema.ResourceData, m in
 
 	// Warning or errors can be collected in a slice type
 	var diags diag.Diagnostics
-	vaultRecord := new(keyhubmodel.VaultRecord)
+	var vaultRecord *keyhubmodel.VaultRecord
 
 	groupUUIDString := d.Get("groupuuid").(string)
 	groupUUID, err := uuid.Parse(groupUUIDString)
@@ -151,6 +151,7 @@ func dataSourceVaultRecordRead(ctx context.Context, d *schema.ResourceData, m in
 				Detail:   err.Error(),
 			})
 		} else {
+			valueExists = true
 			vaultRecord, err = client.Vaults.GetByID(group, ID, &keyhubmodel.VaultRecordAdditionalQueryParams{Secret: true})
 			if err != nil {
 				diags = append(diags, diag.Diagnostic{
@@ -162,11 +163,11 @@ func dataSourceVaultRecordRead(ctx context.Context, d *schema.ResourceData, m in
 		}
 	}
 
-	if vaultRecord == nil {
+	if !valueExists {
 		diags = append(diags, diag.Diagnostic{
 			Severity: diag.Error,
 			Summary:  "Could not GET vault record either by UUID or ID",
-			Detail:   err.Error(),
+			Detail:   "",
 		})
 		return diags
 	}
@@ -226,8 +227,8 @@ func dataSourceVaultRecordRead(ctx context.Context, d *schema.ResourceData, m in
 		vaultRecord.AdditionalObjects.Secret == nil {
 		diags = append(diags, diag.Diagnostic{
 			Severity: diag.Error,
-			Summary:  "Could not set secrets",
-			Detail:   err.Error(),
+			Summary:  "Could not set secrets, AdditionalObject was not initialized",
+			Detail:   "",
 		})
 
 		return diags
