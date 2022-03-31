@@ -49,6 +49,7 @@ func dataSourceGroupRead(ctx context.Context, d *schema.ResourceData, m interfac
 			Summary:  "Field 'uuid' is not a valid UUID",
 			Detail:   err.Error(),
 		})
+		return diags
 	}
 
 	group, err := client.Groups.GetByUUID(UUID)
@@ -58,6 +59,7 @@ func dataSourceGroupRead(ctx context.Context, d *schema.ResourceData, m interfac
 			Summary:  "Could not GET group " + uuidString,
 			Detail:   err.Error(),
 		})
+		return diags
 	}
 
 	idString := strconv.FormatInt(group.Self().ID, 10)

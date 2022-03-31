@@ -93,6 +93,7 @@ func resourceVaultRecordCreate(ctx context.Context, d *schema.ResourceData, m in
 			Summary:  "Field 'groupuuid' is not a valid UUID",
 			Detail:   err.Error(),
 		})
+		return diags
 	}
 	group, err := client.Groups.GetByUUID(groupUUID)
 	if err != nil {
@@ -129,9 +130,6 @@ func resourceVaultRecordCreate(ctx context.Context, d *schema.ResourceData, m in
 	//copy schema data to model
 	//use generic copy method. also used in UPDATE.
 	vaultRecordSchemaToModel(d, vaultRecord, &diags)
-	if diags.HasError() {
-		return diags
-	}
 
 	newVaultRecord, err := client.Vaults.Create(group, vaultRecord)
 	if err != nil {
@@ -165,6 +163,7 @@ func resourceVaultRecordUpdate(ctx context.Context, d *schema.ResourceData, m in
 			Summary:  "Field 'groupuuid' is not a valid UUID",
 			Detail:   err.Error(),
 		})
+		return diags
 	}
 
 	ID, err := strconv.ParseInt(d.Id(), 10, 64)
@@ -200,9 +199,6 @@ func resourceVaultRecordUpdate(ctx context.Context, d *schema.ResourceData, m in
 	//copy schema data to model
 	//use generic copy method. also used in CREATE.
 	vaultRecordSchemaToModel(d, vaultRecord, &diags)
-	if diags.HasError() {
-		return diags
-	}
 
 	_, err = client.Vaults.Update(group, vaultRecord)
 	if err != nil {

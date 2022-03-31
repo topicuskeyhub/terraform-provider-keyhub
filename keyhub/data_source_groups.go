@@ -40,6 +40,7 @@ func dataSourceGroupsRead(ctx context.Context, d *schema.ResourceData, m interfa
 			Summary:  "Could not GET groups",
 			Detail:   err.Error(),
 		})
+		return diags
 	}
 
 	result := flattenGroupsData(&groups)

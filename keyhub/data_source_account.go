@@ -52,6 +52,7 @@ func dataSourceAccountRead(ctx context.Context, d *schema.ResourceData, m interf
 			Summary:  "Field 'uuid' is not a valid UUID",
 			Detail:   err.Error(),
 		})
+		return diags
 	}
 
 	account, err := client.Accounts.GetByUUID(UUID)
@@ -61,6 +62,7 @@ func dataSourceAccountRead(ctx context.Context, d *schema.ResourceData, m interf
 			Summary:  "Could not GET account " + uuidString,
 			Detail:   err.Error(),
 		})
+		return diags
 	}
 
 	idString := strconv.FormatInt(account.Self().ID, 10)

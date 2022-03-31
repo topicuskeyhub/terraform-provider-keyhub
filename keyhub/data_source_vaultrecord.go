@@ -111,6 +111,7 @@ func dataSourceVaultRecordRead(ctx context.Context, d *schema.ResourceData, m in
 			Summary:  "Field 'groupuuid' is not a valid UUID",
 			Detail:   err.Error(),
 		})
+		return diags
 	}
 	group, err := client.Groups.GetByUUID(groupUUID)
 	if err != nil {
@@ -119,6 +120,7 @@ func dataSourceVaultRecordRead(ctx context.Context, d *schema.ResourceData, m in
 			Summary:  "Could not GET group " + groupUUIDString + " to READ vault record(s)",
 			Detail:   err.Error(),
 		})
+		return diags
 	}
 
 	uuidString, valueExists := d.GetOk("uuid")
@@ -130,6 +132,7 @@ func dataSourceVaultRecordRead(ctx context.Context, d *schema.ResourceData, m in
 				Summary:  "Field 'uuid' is not a valid UUID",
 				Detail:   err.Error(),
 			})
+			return diags
 		}
 
 		vaultRecord, err = client.Vaults.GetByUUID(group, UUID, &keyhubmodel.VaultRecordAdditionalQueryParams{Secret: true})
@@ -139,18 +142,22 @@ func dataSourceVaultRecordRead(ctx context.Context, d *schema.ResourceData, m in
 				Summary:  "Could not GET vault record " + uuidString.(string),
 				Detail:   err.Error(),
 			})
+			return diags
 		}
 	}
 
 	if d.Id() != "" {
 		ID, err := strconv.ParseInt(d.Id(), 10, 64)
-		if !valueExists && err != nil {
+		if err != nil {
 			diags = append(diags, diag.Diagnostic{
 				Severity: diag.Error,
 				Summary:  "Could not parse ID " + d.Id(),
 				Detail:   err.Error(),
 			})
-		} else {
+			return diags
+		}
+
+		if !valueExists {
 			valueExists = true
 			vaultRecord, err = client.Vaults.GetByID(group, ID, &keyhubmodel.VaultRecordAdditionalQueryParams{Secret: true})
 			if err != nil {
@@ -159,17 +166,9 @@ func dataSourceVaultRecordRead(ctx context.Context, d *schema.ResourceData, m in
 					Summary:  "Could not GET vault record " + d.Id(),
 					Detail:   err.Error(),
 				})
+				return diags
 			}
 		}
-	}
-
-	if !valueExists {
-		diags = append(diags, diag.Diagnostic{
-			Severity: diag.Error,
-			Summary:  "Could not GET vault record either by UUID or ID",
-			Detail:   "",
-		})
-		return diags
 	}
 
 	idString := strconv.FormatInt(vaultRecord.Self().ID, 10)

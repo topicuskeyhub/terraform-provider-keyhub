@@ -83,6 +83,7 @@ func providerConfigure(ctx context.Context, d *schema.ResourceData) (interface{}
 			Summary:  "Unable to create Keyhub client",
 			Detail:   err.Error(),
 		})
+		return nil, diags
 	}
 
 	return client, diags

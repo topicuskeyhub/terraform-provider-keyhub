@@ -40,6 +40,7 @@ func dataSourceAccountsRead(ctx context.Context, d *schema.ResourceData, m inter
 			Summary:  "Could not GET accounts",
 			Detail:   err.Error(),
 		})
+		return diags
 	}
 
 	result := flattenAccountsData(&accounts)

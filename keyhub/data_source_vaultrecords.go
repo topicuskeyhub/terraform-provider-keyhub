@@ -46,6 +46,7 @@ func dataSourceVaultRecordsRead(ctx context.Context, d *schema.ResourceData, m i
 			Summary:  "Field 'groupuuid' is not a valid UUID",
 			Detail:   err.Error(),
 		})
+		return diags
 	}
 	group, err := client.Groups.GetByUUID(groupUUID)
 	if err != nil {
@@ -54,6 +55,7 @@ func dataSourceVaultRecordsRead(ctx context.Context, d *schema.ResourceData, m i
 			Summary:  "Could not GET group " + groupUUIDString + " for vault records",
 			Detail:   err.Error(),
 		})
+		return diags
 	}
 
 	vaultrecords, err := client.Vaults.GetRecords(group)
@@ -63,6 +65,7 @@ func dataSourceVaultRecordsRead(ctx context.Context, d *schema.ResourceData, m i
 			Summary:  "Could not GET vaultrecords of group " + groupUUIDString,
 			Detail:   err.Error(),
 		})
+		return diags
 	}
 
 	if err := d.Set("groupuuid", group.UUID); err != nil {
