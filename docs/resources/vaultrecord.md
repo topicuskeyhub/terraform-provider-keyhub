@@ -13,7 +13,7 @@ The vaultrecord resource allows you to store/retrieve/update/delete information 
 ## Example Usage
 
 ```terraform
-data "keyhub_vaultrecord" "example" {
+resource "keyhub_vaultrecord" "example" {
   groupuuid = "example"
   name = "Example"
   password = "Example"
