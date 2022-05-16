@@ -158,7 +158,6 @@ func dataSourceVaultRecordRead(ctx context.Context, d *schema.ResourceData, m in
 		}
 
 		if !valueExists {
-			valueExists = true
 			vaultRecord, err = client.Vaults.GetByID(group, ID, &keyhubmodel.VaultRecordAdditionalQueryParams{Secret: true})
 			if err != nil {
 				diags = append(diags, diag.Diagnostic{

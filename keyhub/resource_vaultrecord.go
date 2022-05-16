@@ -129,7 +129,7 @@ func resourceVaultRecordCreate(ctx context.Context, d *schema.ResourceData, m in
 
 	//copy schema data to model
 	//use generic copy method. also used in UPDATE.
-	vaultRecordSchemaToModel(d, vaultRecord, &diags)
+	vaultRecordSchemaToModel(d, vaultRecord)
 
 	newVaultRecord, err := client.Vaults.Create(group, vaultRecord)
 	if err != nil {
@@ -198,7 +198,7 @@ func resourceVaultRecordUpdate(ctx context.Context, d *schema.ResourceData, m in
 
 	//copy schema data to model
 	//use generic copy method. also used in CREATE.
-	vaultRecordSchemaToModel(d, vaultRecord, &diags)
+	vaultRecordSchemaToModel(d, vaultRecord)
 
 	_, err = client.Vaults.Update(group, vaultRecord)
 	if err != nil {
@@ -268,46 +268,46 @@ func resourceVaultRecordDelete(ctx context.Context, d *schema.ResourceData, m in
 	return diags
 }
 
-func vaultRecordSchemaToModel(d *schema.ResourceData, vaultRecord *keyhubmodel.VaultRecord, diags *diag.Diagnostics) {
+func vaultRecordSchemaToModel(d *schema.ResourceData, vaultRecord *keyhubmodel.VaultRecord) {
 
-	value, valueExists := d.GetOk("name")
-	if valueExists {
+	if d.HasChange("name") {
+		value := d.Get("name")
 		vaultRecord.Name = value.(string)
 	}
-	value, valueExists = d.GetOk("url")
-	if valueExists {
+	if d.HasChange("url") {
+		value := d.Get("url")
 		vaultRecord.URL = value.(string)
 	}
-	value, valueExists = d.GetOk("username")
-	if valueExists {
+	if d.HasChange("username") {
+		value := d.Get("username")
 		vaultRecord.Username = value.(string)
 	}
-	value, valueExists = d.GetOk("color")
-	if valueExists {
+	if d.HasChange("color") {
+		value := d.Get("color")
 		vaultRecord.Color = value.(string)
 	}
-	value, valueExists = d.GetOk("filename")
-	if valueExists {
+	if d.HasChange("filename") {
+		value := d.Get("filename")
 		vaultRecord.Filename = value.(string)
 	}
 
-	value, valueExists = d.GetOk("password")
-	if valueExists {
+	if d.HasChange("password") {
+		value := d.Get("password")
 		val := value.(string)
 		vaultRecord.AdditionalObjects.Secret.Password = &val
 	}
-	value, valueExists = d.GetOk("totp")
-	if valueExists {
+	if d.HasChange("totp") {
+		value := d.Get("totp")
 		val := value.(string)
 		vaultRecord.AdditionalObjects.Secret.Totp = &val
 	}
-	// value, valueExists = d.GetOk("file")
-	// if valueExists {
+	// if d.HasChange("file") {
+	// 	value := d.Get("file")
 	// 	val := value.([]byte)
 	// 	vaultRecord.AdditionalObjects.Secret.File = &val
 	// }
-	value, valueExists = d.GetOk("comment")
-	if valueExists {
+	if d.HasChange("comment") {
+		value := d.Get("comment")
 		val := value.(string)
 		vaultRecord.AdditionalObjects.Secret.Comment = &val
 	}
