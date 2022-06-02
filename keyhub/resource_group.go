@@ -21,7 +21,22 @@ func resourceGroup() *schema.Resource {
 		UpdateContext: resourceGroupUpdate,
 		DeleteContext: resourceGroupDelete,
 		Schema:        GroupResourceSchema(),
+		Importer: &schema.ResourceImporter{
+			StateContext: resourceGroupImportContext,
+		},
 	}
+}
+
+func resourceGroupImportContext(ctx context.Context, d *schema.ResourceData, m interface{}) ([]*schema.ResourceData, error) {
+
+	grpUuid, err := uuid.Parse(d.Id())
+	if err != nil {
+		return nil, fmt.Errorf("`%s` is not a valid uuid", d.Id())
+	}
+
+	d.Set("uuid", grpUuid.String())
+
+	return []*schema.ResourceData{d}, nil
 }
 
 func GroupResourceSchema() map[string]*schema.Schema {

@@ -61,3 +61,10 @@ resource "keyhub_group" "example" {
 - **uuid** (String) The UUID of the group 
 
 
+## Import
+
+KeyHub group can be imported using the uuid, e.g.
+
+```
+$ terraform import keyhub_group.example "00000000-0000-0000-0000-000000000000"
+```
