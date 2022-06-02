@@ -6,7 +6,7 @@ description: |-
   
 ---
 
-# keyhub_vaultrecord (Reource)
+# keyhub_vaultrecord (Resource)
 
 The vaultrecord resource allows you to store/retrieve/update/delete information about one KeyHub vaultrecord.
 
