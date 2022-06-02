@@ -170,25 +170,25 @@ func dataSourceGroupRead(ctx context.Context, d *schema.ResourceData, m interfac
 	}
 
 	// Bools
-	if err := d.Set("rotating_password_required", group.HideAuditTrail); err != nil {
+	if err := d.Set("rotating_password_required", group.RotatingPasswordRequired); err != nil {
 		diags = append(diags, NewDiagnosticSetError("rotating_password_required", err))
 	}
 	if err := d.Set("record_trail", group.HideAuditTrail); err != nil {
 		diags = append(diags, NewDiagnosticSetError("record_trail", err))
 	}
-	if err := d.Set("private_group", group.HideAuditTrail); err != nil {
+	if err := d.Set("private_group", group.PrivateGroup); err != nil {
 		diags = append(diags, NewDiagnosticSetError("private_group", err))
 	}
 	if err := d.Set("hide_audit_trail", group.HideAuditTrail); err != nil {
 		diags = append(diags, NewDiagnosticSetError("hide_audit_trail", err))
 	}
-	if err := d.Set("application_administration", group.HideAuditTrail); err != nil {
+	if err := d.Set("application_administration", group.ApplicationAdministration); err != nil {
 		diags = append(diags, NewDiagnosticSetError("application_administration", err))
 	}
-	if err := d.Set("auditor", group.HideAuditTrail); err != nil {
+	if err := d.Set("auditor", group.Auditor); err != nil {
 		diags = append(diags, NewDiagnosticSetError("auditor", err))
 	}
-	if err := d.Set("single_managed", group.HideAuditTrail); err != nil {
+	if err := d.Set("single_managed", group.SingleManaged); err != nil {
 		diags = append(diags, NewDiagnosticSetError("single_managed", err))
 	}
 	if group.AuthorizingGroupProvisioning != nil {
