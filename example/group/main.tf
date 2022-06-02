@@ -36,3 +36,27 @@ data "keyhub_group" "group" {
 output "group" {
  value = data.keyhub_group.group
 }
+
+#Create a group
+resource "keyhub_group" "new_group" {
+  name = "new_keyhub_group"
+
+  # UUID of keyhub user/account
+  member {
+    uuid = "00000000-0000-0000-0000-000000000000"
+    rights = "MANAGER"
+  }
+
+  audit_months = ["JANUARY"]
+
+  description = "This group is created by terraform"
+
+
+
+  # UUID of the group that should be set as authoring group
+  provisioning_auth_groupuuid = "00000000-0000-0000-0000-000000000000"
+  membership_auth_groupuuid   = "00000000-0000-0000-0000-000000000000"
+  auditing_auth_groupuuid     = "00000000-0000-0000-0000-000000000000"
+
+
+}
