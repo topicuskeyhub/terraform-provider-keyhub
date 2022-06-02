@@ -142,6 +142,10 @@ func GroupResourceSchema() map[string]*schema.Schema {
 			Type:     schema.TypeBool,
 			Optional: true,
 		},
+		"single_managed": {
+			Type:     schema.TypeBool,
+			Optional: true,
+		},
 		"provisioning_auth_groupuuid": {
 			Type:     schema.TypeString,
 			Optional: true,
