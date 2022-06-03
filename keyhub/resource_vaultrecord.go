@@ -2,6 +2,7 @@ package keyhub
 
 import (
 	"context"
+	"fmt"
 	"strconv"
 
 	"github.com/google/uuid"
@@ -19,7 +20,22 @@ func resourceVaultRecord() *schema.Resource {
 		UpdateContext: resourceVaultRecordUpdate,
 		DeleteContext: resourceVaultRecordDelete,
 		Schema:        VaultRecordResourceSchema(),
+		Importer: &schema.ResourceImporter{
+			StateContext: resourceVaultRecordImportContext,
+		},
 	}
+}
+
+func resourceVaultRecordImportContext(ctx context.Context, d *schema.ResourceData, m interface{}) ([]*schema.ResourceData, error) {
+
+	grpUuid, err := uuid.Parse(d.Id())
+	if err != nil {
+		return nil, fmt.Errorf("`%s` is not a valid uuid", d.Id())
+	}
+
+	d.Set("uuid", grpUuid.String())
+
+	return []*schema.ResourceData{d}, nil
 }
 
 func VaultRecordResourceSchema() map[string]*schema.Schema {
