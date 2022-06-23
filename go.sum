@@ -290,6 +290,8 @@ github.com/stretchr/testify v1.7.0 h1:nwc3DEeHmmLAfoZucVR881uASk0Mfjw8xYJ99tb5Cc
 github.com/stretchr/testify v1.7.0/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/h/Wwjteg=
 github.com/topicuskeyhub/go-keyhub v1.1.0 h1:mREICpIwcmcLxLbMhE9Tjj17cNNgWC6MQTMco5NmUJE=
 github.com/topicuskeyhub/go-keyhub v1.1.0/go.mod h1:l/203L0iEE1l/jQ3Kiz9kIKhdrO+fpjmaYY0+OpKfFE=
+github.com/topicuskeyhub/go-keyhub v1.1.1 h1:gLAGRnoMXCow2LAUZs5WrWLJTvHHFd5IE4TGzUb6Yl8=
+github.com/topicuskeyhub/go-keyhub v1.1.1/go.mod h1:l/203L0iEE1l/jQ3Kiz9kIKhdrO+fpjmaYY0+OpKfFE=
 github.com/vmihailenco/msgpack v3.3.3+incompatible/go.mod h1:fy3FlTQTDXWkZ7Bh6AcGMlsjHatGryHQYUTf1ShIgkk=
 github.com/vmihailenco/msgpack v4.0.4+incompatible h1:dSLoQfGFAo3F6OoNhwUmLwVgaUXK79GlxNBwueZn0xI=
 github.com/vmihailenco/msgpack v4.0.4+incompatible/go.mod h1:fy3FlTQTDXWkZ7Bh6AcGMlsjHatGryHQYUTf1ShIgkk=
