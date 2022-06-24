@@ -2,6 +2,8 @@ package keyhub
 
 import (
 	"context"
+	"encoding/base64"
+	"fmt"
 	"strconv"
 
 	"github.com/google/uuid"
@@ -64,11 +66,18 @@ func VaultRecordResourceSchema() map[string]*schema.Schema {
 			Sensitive: true,
 			Optional:  true,
 		},
-		// "file": {
-		// 	Type:      schema.TypeString,
-		// 	Sensitive: true,
-		// Optional: true,
-		// },
+		"file": {
+			Type:      schema.TypeString,
+			Sensitive: true,
+			Optional:  true,
+		},
+		"base64_encoded": {
+			Type:        schema.TypeBool,
+			Sensitive:   false,
+			Optional:    true,
+			Default:     false,
+			Description: "If true, the value of `file` must be base64 encoded",
+		},
 		"comment": {
 			Type:      schema.TypeString,
 			Sensitive: true,
@@ -309,11 +318,38 @@ func vaultRecordSchemaToModel(d *schema.ResourceData, vaultRecord *keyhubmodel.V
 		val := value.(string)
 		vaultRecord.AdditionalObjects.Secret.Totp = &val
 	}
-	// if d.HasChange("file") {
-	// 	value := d.Get("file")
-	// 	val := value.([]byte)
-	// 	vaultRecord.AdditionalObjects.Secret.File = &val
-	// }
+
+	if d.HasChanges("file", "base64_encoded") {
+		value := d.Get("file").(string)
+		isBase64 := d.Get("base64_encoded").(bool)
+
+		var rawValue []byte
+		var err error
+
+		if isBase64 {
+			rawValue, err = base64.StdEncoding.DecodeString(value)
+			if err != nil {
+				diags = append(diags, diag.Diagnostic{
+					Severity: diag.Error,
+					Summary:  "base64 decoding error for file",
+					Detail:   err.Error(),
+				})
+			}
+		} else {
+			rawValue = []byte(value)
+		}
+
+		// Check if file isn't larger than accepted by Keyhub before sending.
+		if len(rawValue) > 2*1024*1024 {
+			diags = append(diags, diag.Diagnostic{
+				Severity: diag.Error,
+				Summary:  "File exceeds limit of 2048 KiB",
+				Detail:   fmt.Sprintf("Size of file is %d KiB", len(rawValue)/1024),
+			})
+		}
+
+		vaultRecord.AdditionalObjects.Secret.File = &rawValue
+	}
 	if d.HasChange("comment") {
 		value := d.Get("comment")
 		val := value.(string)
