@@ -129,7 +129,10 @@ func resourceVaultRecordCreate(ctx context.Context, d *schema.ResourceData, m in
 
 	//copy schema data to model
 	//use generic copy method. also used in UPDATE.
-	vaultRecordSchemaToModel(d, vaultRecord)
+	diags = append(diags, vaultRecordSchemaToModel(d, vaultRecord)...)
+	if diags.HasError() {
+		return diags
+	}
 
 	newVaultRecord, err := client.Vaults.Create(group, vaultRecord)
 	if err != nil {
@@ -198,7 +201,10 @@ func resourceVaultRecordUpdate(ctx context.Context, d *schema.ResourceData, m in
 
 	//copy schema data to model
 	//use generic copy method. also used in CREATE.
-	vaultRecordSchemaToModel(d, vaultRecord)
+	diags = append(diags, vaultRecordSchemaToModel(d, vaultRecord)...)
+	if diags.HasError() {
+		return diags
+	}
 
 	_, err = client.Vaults.Update(group, vaultRecord)
 	if err != nil {
@@ -268,7 +274,9 @@ func resourceVaultRecordDelete(ctx context.Context, d *schema.ResourceData, m in
 	return diags
 }
 
-func vaultRecordSchemaToModel(d *schema.ResourceData, vaultRecord *keyhubmodel.VaultRecord) {
+func vaultRecordSchemaToModel(d *schema.ResourceData, vaultRecord *keyhubmodel.VaultRecord) diag.Diagnostics {
+
+	diags := diag.Diagnostics{}
 
 	if d.HasChange("name") {
 		value := d.Get("name")
@@ -311,4 +319,6 @@ func vaultRecordSchemaToModel(d *schema.ResourceData, vaultRecord *keyhubmodel.V
 		val := value.(string)
 		vaultRecord.AdditionalObjects.Secret.Comment = &val
 	}
+
+	return diags
 }
