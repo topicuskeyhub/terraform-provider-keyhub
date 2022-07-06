@@ -2,12 +2,13 @@ package keyhub
 
 import (
 	"context"
-	"regexp"
-	"strconv"
-
+	"encoding/base64"
+	"fmt"
 	"github.com/google/uuid"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"regexp"
+	"strconv"
 
 	keyhubclient "github.com/topicuskeyhub/go-keyhub"
 	keyhubmodel "github.com/topicuskeyhub/go-keyhub/model"
@@ -35,12 +36,19 @@ func VaultRecordSchema() map[string]*schema.Schema {
 			Computed:  true,
 			Required:  false,
 		},
-		// "file":{
-		// 	Type:      schema.TypeString,
-		// 	Sensitive: true,
-		// 	Computed:  true,
-		// 	Required:  false,
-		// },
+		"file": {
+			Type:      schema.TypeString,
+			Sensitive: true,
+			Computed:  true,
+			Required:  false,
+		},
+		"base64_encoded": {
+			Type:        schema.TypeBool,
+			Sensitive:   false,
+			Optional:    true,
+			Default:     false,
+			Description: "If true, the content of `file` will be base64 encoded",
+		},
 		"comment": {
 			Type:      schema.TypeString,
 			Sensitive: true,
@@ -182,7 +190,7 @@ func dataSourceVaultRecordRead(ctx context.Context, d *schema.ResourceData, m in
 				})
 				return diags
 			}
-			
+
 		}
 	}
 
@@ -289,13 +297,26 @@ func dataSourceVaultRecordRead(ctx context.Context, d *schema.ResourceData, m in
 			Detail:   err.Error(),
 		})
 	}
-	// if err := d.Set("file", vaultRecord.AdditionalObjects.Secret.File); err != nil {
-	// diags = append(diags, diag.Diagnostic{
-	// 	Severity: diag.Error,
-	// 	Summary:  "Could not set value for file",
-	// 	Detail:   err.Error(),
-	// })
-	// }
+
+	if vaultRecord.AdditionalObjects.Secret.File != nil {
+		var value string
+		value = fmt.Sprintf("%s", *vaultRecord.AdditionalObjects.Secret.File)
+
+		if encoded, ok := d.GetOk("base64_encoded"); ok {
+			if encoded.(bool) {
+				value = base64.StdEncoding.EncodeToString(*vaultRecord.AdditionalObjects.Secret.File)
+			}
+		}
+
+		if err := d.Set("file", value); err != nil {
+			diags = append(diags, diag.Diagnostic{
+				Severity: diag.Error,
+				Summary:  "Could not set value for file",
+				Detail:   err.Error(),
+			})
+		}
+	}
+
 	if err := d.Set("comment", vaultRecord.AdditionalObjects.Secret.Comment); err != nil {
 		diags = append(diags, diag.Diagnostic{
 			Severity: diag.Error,
