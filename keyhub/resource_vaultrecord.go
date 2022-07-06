@@ -34,7 +34,10 @@ func resourceVaultRecordImportContext(ctx context.Context, d *schema.ResourceDat
 		return nil, fmt.Errorf("`%s` is not a valid uuid", d.Id())
 	}
 
-	d.Set("uuid", grpUuid.String())
+	err = d.Set("uuid", grpUuid.String())
+	if err != nil {
+		return nil, fmt.Errorf("coult not set uuid: %s", err.Error())
+	}
 
 	return []*schema.ResourceData{d}, nil
 }
