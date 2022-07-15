@@ -23,8 +23,11 @@ data "keyhub_vaultrecord" "example" {
 
 ### Required
 
-- **groupuuid** (String) The group UUID of the vaultrecord you wish to retrieve
 - **uuid** (String) The UUID of the vaultrecord you wish to retrieve
+
+### Optional
+
+- **groupuuid** (String) The group UUID of the vaultrecord you wish to retrieve
 
 ### Read-Only
 
@@ -37,3 +40,11 @@ data "keyhub_vaultrecord" "example" {
 - **comment** (String, Sensitive) The value of the Comment field of the vaultrecord. This value is sensitive as it might contain secret information.
 - **password** (String, Sensitive)  The value of the Password field of the vaultrecord. This value is sensitive as it might contain secret information.
 - **totp** (String, Sensitive)  The value of the Totp field of the vaultrecord. This value is sensitive as it might contain secret information.
+
+## Import
+
+KeyHub group can be imported using the uuid, e.g.
+
+```
+$ terraform import keyhub_vaultrecord.example "00000000-0000-0000-0000-000000000000"
+```
