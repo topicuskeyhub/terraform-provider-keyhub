@@ -225,7 +225,7 @@ func flattenMembers(members *keyhubmodel.GroupAccountList) []interface{} {
 		return make([]interface{}, 0)
 	}
 
-	list := make([]interface{}, len(members.Items), len(members.Items))
+	list := make([]interface{}, len(members.Items))
 
 	for i, member := range members.Items {
 

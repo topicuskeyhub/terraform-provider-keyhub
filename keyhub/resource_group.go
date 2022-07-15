@@ -34,8 +34,10 @@ func resourceGroupImportContext(ctx context.Context, d *schema.ResourceData, m i
 		return nil, fmt.Errorf("`%s` is not a valid uuid", d.Id())
 	}
 
-	d.Set("uuid", grpUuid.String())
-
+	err = d.Set("uuid", grpUuid.String())
+	if err != nil {
+		return nil, fmt.Errorf("could not set `%s` as uuid", grpUuid.String())
+	}
 	return []*schema.ResourceData{d}, nil
 }
 
@@ -262,7 +264,7 @@ func resourceGroupCreate(ctx context.Context, d *schema.ResourceData, m interfac
 		if strUuid == "" {
 			continue
 		}
-		if d.HasChange(group_key) == false {
+		if !d.HasChange(group_key) {
 			continue
 		}
 		grpUuid, err := uuid.Parse(strUuid)
@@ -303,7 +305,14 @@ func resourceGroupCreate(ctx context.Context, d *schema.ResourceData, m interfac
 		return diags
 	}
 
-	d.Set("uuid", createdGroup.UUID)
+	err = d.Set("uuid", createdGroup.UUID)
+	if err != nil {
+		diags = append(diags, diag.Diagnostic{
+			Severity: diag.Error,
+			Summary:  "Could not set uuid",
+			Detail:   fmt.Sprintf("Value `%s` is not valid for uuid", createdGroup.UUID),
+		})
+	}
 	d.SetId(strconv.FormatInt(createdGroup.Self().ID, 10))
 
 	/*

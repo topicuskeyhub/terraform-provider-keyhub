@@ -3,7 +3,6 @@ package keyhub
 import (
 	"context"
 	"encoding/base64"
-	"fmt"
 	"github.com/google/uuid"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -300,7 +299,7 @@ func dataSourceVaultRecordRead(ctx context.Context, d *schema.ResourceData, m in
 
 	if vaultRecord.AdditionalObjects.Secret.File != nil {
 		var value string
-		value = fmt.Sprintf("%s", *vaultRecord.AdditionalObjects.Secret.File)
+		value = string(*vaultRecord.AdditionalObjects.Secret.File)
 
 		if encoded, ok := d.GetOk("base64_encoded"); ok {
 			if encoded.(bool) {
