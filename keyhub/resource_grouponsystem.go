@@ -206,7 +206,7 @@ func resourceGroupOnSystemRead(ctx context.Context, d *schema.ResourceData, m in
 
 	}
 
-	gos, err := client.Systems.GetGroupOnSystem(system, gosId)
+	gos, err := client.Systems.GetGroupOnSystem(system, gosId, nil)
 	if err != nil {
 		diags = append(diags, diag.Diagnostic{
 			Severity: diag.Error,
