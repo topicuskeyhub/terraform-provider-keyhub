@@ -42,16 +42,8 @@ locals {
   }
 
 
-  cluster      = "demo004"
+  cluster      = "demo005"
 
-}
-
-data "keyhub_group" "umbrella" {
-  uuid = local.uuids.umbrella
-}
-
-data "keyhub_provisionedsystem" "ldap" {
-  uuid = local.uuids.systemLDAP
 }
 
 resource "keyhub_clientapplication" "control" {
@@ -142,6 +134,7 @@ resource "keyhub_clientapplication" "argocd" {
     name = "groups"
     script = "return groups.map(function (group) {return group.uuid;});"
   }
+  depends_on = [keyhub_group.control]
 }
 
 resource "keyhub_vaultrecord" "argocd" {
@@ -149,6 +142,7 @@ resource "keyhub_vaultrecord" "argocd" {
   groupuuid = keyhub_group.prj_default.uuid
   username = keyhub_clientapplication.argocd.clientid
   password = keyhub_clientapplication.argocd.clientsecret
+  depends_on = [keyhub_group.prj_default, keyhub_clientapplication.argocd]
 }
 
 resource "keyhub_clientapplication" "proxy" {
@@ -165,6 +159,7 @@ resource "keyhub_clientapplication" "proxy" {
     name = "groups"
     script = "return groups.map(function (group) {return group.uuid;});"
   }
+  depends_on = [keyhub_group.control]
 }
 
 resource "keyhub_vaultrecord" "proxy" {
@@ -172,4 +167,5 @@ resource "keyhub_vaultrecord" "proxy" {
   groupuuid = keyhub_group.prj_default.uuid
   username = keyhub_clientapplication.proxy.clientid
   password = keyhub_clientapplication.proxy.clientsecret
+  depends_on = [keyhub_group.prj_default,keyhub_clientapplication.prj_default]
 }
