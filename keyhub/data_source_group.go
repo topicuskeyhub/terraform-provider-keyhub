@@ -209,8 +209,10 @@ func dataSourceGroupRead(ctx context.Context, d *schema.ResourceData, m interfac
 
 	if group.AdditionalObjects != nil {
 
-		if err := d.Set("member", flattenMembers(group.AdditionalObjects.Admins)); err != nil {
-			diags = append(diags, NewDiagnosticSetError("member", err))
+		if group.AdditionalObjects.Admins != nil {
+			if err := d.Set("member", flattenMembers(group.AdditionalObjects.Admins)); err != nil {
+				diags = append(diags, NewDiagnosticSetError("member", err))
+			}
 		}
 	}
 

@@ -8,10 +8,8 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
 	keyhubclient "github.com/topicuskeyhub/go-keyhub"
-	"strconv"
-	"strings"
-
 	keyhubmodel "github.com/topicuskeyhub/go-keyhub/model"
+	"strconv"
 )
 
 func resourceGroup() *schema.Resource {
@@ -73,8 +71,8 @@ func GroupResourceSchema() map[string]*schema.Schema {
 					"rights": {
 						Type:             schema.TypeString,
 						Optional:         true,
-						ValidateDiagFunc: validation.ToDiagFunc(validation.StringInSlice([]string{"manager", "normal"}, true)),
-						Default:          "manager",
+						Computed:         true,
+						ValidateDiagFunc: validation.ToDiagFunc(validation.StringInSlice([]string{keyhubmodel.GROUP_RIGHT_MANAGER, keyhubmodel.GROUP_RIGHT_MEMBER}, false)),
 					},
 					"name": {
 						Type:     schema.TypeString,
@@ -240,17 +238,11 @@ func resourceGroupCreate(ctx context.Context, d *schema.ResourceData, m interfac
 					Detail:   fmt.Sprintf("Could not find an account for member with uuid: %s", member["uuid"]),
 				})
 			} else {
-				switch strings.ToUpper(member["rights"].(string)) {
-				case keyhubmodel.GROUP_RIGHT_MANAGER:
-					newGroup.AddManager(kh_member)
+				switch member["rights"].(string) {
 				case keyhubmodel.GROUP_RIGHT_MEMBER:
 					newGroup.AddMember(kh_member)
 				default:
-					diags = append(diags, diag.Diagnostic{
-						Severity: diag.Error,
-						Summary:  "Unknown right",
-						Detail:   fmt.Sprintf("Unexpected rights given: %s", strings.ToUpper(member["rights"].(string))),
-					})
+					newGroup.AddManager(kh_member)
 				}
 			}
 		}
