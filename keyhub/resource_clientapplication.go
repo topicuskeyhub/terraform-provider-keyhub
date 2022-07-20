@@ -104,8 +104,9 @@ func ClientApplicationResourceSchema() map[string]*schema.Schema {
 			Computed: true,
 		},
 		"clientsecret": {
-			Type:     schema.TypeString,
-			Computed: true,
+			Type:      schema.TypeString,
+			Computed:  true,
+			Sensitive: true,
 		},
 
 		"is_sso": {
