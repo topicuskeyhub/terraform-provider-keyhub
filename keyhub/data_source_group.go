@@ -214,6 +214,14 @@ func dataSourceGroupRead(ctx context.Context, d *schema.ResourceData, m interfac
 				diags = append(diags, NewDiagnosticSetError("member", err))
 			}
 		}
+
+		if group.AdditionalObjects.ClientPermissions != nil {
+
+			if err := d.Set("client", flattenClientPermissions(group.AdditionalObjects.ClientPermissions)); err != nil {
+				diags = append(diags, NewDiagnosticSetError("client", err))
+			}
+		}
+
 	}
 
 	d.SetId(strconv.FormatInt(group.Self().ID, 10))
@@ -237,6 +245,39 @@ func flattenMembers(members *keyhubmodel.GroupAccountList) []interface{} {
 		m["name"] = member.DisplayName
 
 		list[i] = m
+
+	}
+
+	return list
+
+}
+
+func flattenClientPermissions(clientPermissions *keyhubmodel.ClientPermissionsWithClient) []interface{} {
+
+	if clientPermissions == nil {
+		return make([]interface{}, 0)
+	}
+
+	groupMap := map[string][]string{}
+
+	for _, perm := range clientPermissions.Items {
+		if _, ok := groupMap[perm.Client.UUID]; ok {
+			groupMap[perm.Client.UUID] = append(groupMap[perm.Client.UUID], string(perm.Value))
+		} else {
+			groupMap[perm.Client.UUID] = []string{string(perm.Value)}
+		}
+
+	}
+
+	list := make([]interface{}, len(groupMap))
+
+	for uuid, permissions := range groupMap {
+
+		p := make(map[string]interface{})
+		p["uuid"] = uuid
+		p["permissions"] = permissions
+
+		list = append(list, p)
 
 	}
 

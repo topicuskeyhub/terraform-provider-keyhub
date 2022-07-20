@@ -82,6 +82,46 @@ func GroupResourceSchema() map[string]*schema.Schema {
 			},
 		},
 
+		"client": {
+			Type:     schema.TypeSet,
+			Required: true,
+			Elem: &schema.Resource{
+				Schema: map[string]*schema.Schema{
+					"uuid": {
+						Type:             schema.TypeString,
+						Required:         true,
+						ValidateDiagFunc: validation.ToDiagFunc(validation.IsUUID),
+					},
+					"permissions": {
+						Type:     schema.TypeList,
+						Required: true,
+						Elem: &schema.Schema{
+							Type: schema.TypeString,
+							ValidateDiagFunc: validation.ToDiagFunc(
+								validation.StringInSlice(
+									[]string{
+										string(keyhubmodel.CLIENT_PERM_ACCOUNTS_QUERY),
+										string(keyhubmodel.CLIENT_PERM_ACCOUNTS_REMOVE),
+										string(keyhubmodel.CLIENT_PERM_GROUPONSYSTEM_CREATE),
+										string(keyhubmodel.CLIENT_PERM_GROUPS_CREATE),
+										string(keyhubmodel.CLIENT_PERM_GROUPS_VAULT_ACCESS_AFTER_CREATE),
+										string(keyhubmodel.CLIENT_PERM_GROUPS_GRANT_PERMISSIONS_AFTER_CREATE),
+										string(keyhubmodel.CLIENT_PERM_GROUPS_QUERY),
+										string(keyhubmodel.CLIENT_PERM_GROUP_FULL_VAULT_ACCESS),
+										string(keyhubmodel.CLIENT_PERM_GROUP_READ_CONTENTS),
+										string(keyhubmodel.CLIENT_PERM_GROUP_SET_AUTHORIZATION),
+										string(keyhubmodel.CLIENT_PERM_CLIENTS_CREATE),
+										string(keyhubmodel.CLIENT_PERM_CLIENTS_QUERY),
+									},
+									false,
+								),
+							),
+						},
+					},
+				},
+			},
+		},
+
 		"extended_access": {
 			Type:     schema.TypeString,
 			Optional: true,
@@ -245,6 +285,31 @@ func resourceGroupCreate(ctx context.Context, d *schema.ResourceData, m interfac
 					newGroup.AddManager(kh_member)
 				}
 			}
+		}
+	}
+
+	if d.HasChange("client") {
+		clients := d.Get("client").(*schema.Set)
+		for _, clientIface := range clients.List() {
+			permclient := clientIface.(map[string]interface{})
+
+			clientUuid := uuid.MustParse(permclient["uuid"].(string))
+
+			xClient, err := client.ClientApplications.GetByUUID(clientUuid)
+			if err != nil {
+				diags = append(diags, diag.Diagnostic{
+					Severity: diag.Error,
+					Summary:  "Could not get Client for setting permissions",
+					Detail:   fmt.Sprintf("Client uuid %s resulted in: %s", clientUuid.String(), err.Error()),
+				})
+			}
+
+			newPermissions := []keyhubmodel.Oauth2ClientPermissionValue{}
+			for _, permIface := range permclient["permissions"].([]interface{}) {
+				newPermissions = append(newPermissions, keyhubmodel.Oauth2ClientPermissionValue(permIface.(string)))
+			}
+
+			newGroup.GrantClientPermission(xClient, newPermissions...)
 		}
 	}
 
