@@ -348,7 +348,7 @@ func resourceGroupOnSystemCreate(ctx context.Context, d *schema.ResourceData, m 
 		if err != nil {
 			diags = append(diags, diag.Diagnostic{
 				Severity: diag.Error,
-				Summary:  "System does not exist",
+				Summary:  "Type is not valid",
 				Detail:   fmt.Sprintf("Could not set type with value: %s", typeName.(string)),
 			})
 			return diags
