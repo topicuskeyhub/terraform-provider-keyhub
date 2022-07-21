@@ -42,7 +42,7 @@ locals {
   }
 
 
-  cluster      = "demo005"
+  cluster      = "demo01"
 
 }
 

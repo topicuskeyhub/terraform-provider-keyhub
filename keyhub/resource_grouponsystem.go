@@ -27,17 +27,6 @@ func resourceGroupOnSystem() *schema.Resource {
 
 }
 
-/*
-
-	Type              GroupOnSystemType  `json:"type,omitempty"`
-	NameInSystem      string             `json:"nameInSystem,omitempty"`
-	ShortNameInSystem string             `json:"shortNameInSystem,omitempty"` // Read Only
-	DisplayName       string             `json:"displayName,omitempty"`
-	System            *ProvisionedSystem `json:"system,omitempty"`
-	Owner             *Group             `json:"owner,omitempty"`
-    Provgroups
-*/
-
 func GroupOnSystemResourceSchema() map[string]*schema.Schema {
 	resourceSchema := map[string]*schema.Schema{
 		"id": {
@@ -53,12 +42,6 @@ func GroupOnSystemResourceSchema() map[string]*schema.Schema {
 			Type:             schema.TypeString,
 			Required:         true,
 			ValidateDiagFunc: validation.ToDiagFunc(validation.IsUUID),
-		},
-
-		"name": {
-			Type:          schema.TypeString,
-			Optional:      true,
-			ConflictsWith: []string{"displayname", "nameinsystem"},
 		},
 
 		"type": {
@@ -80,21 +63,38 @@ func GroupOnSystemResourceSchema() map[string]*schema.Schema {
 			),
 		},
 
-		"nameinsystem": {
-			Type:         schema.TypeString,
-			RequiredWith: []string{"displayname"},
-			Optional:     true,
-			Computed:     true,
+		"name_in_system": {
+			Type:     schema.TypeString,
+			Required: true,
+			ValidateDiagFunc: validation.ToDiagFunc(func(i interface{}, k string) (warnings []string, errors []error) {
+				v, ok := i.(string)
+				if !ok {
+					errors = append(errors, fmt.Errorf("expected type of %s to be string", k))
+					return warnings, errors
+				}
+				min := 1
+				max := 255
+				if len(v) < min || len(v) > max {
+					errors = append(errors, fmt.Errorf("expected length of %s to be in the range (%d - %d), got %s", k, min, max, v))
+				}
+
+				if v != strings.ToLower(v) {
+					errors = append(errors, fmt.Errorf("expected value of %s to be in lowercase, got %s", k, v))
+				}
+
+				return warnings, errors
+			}),
+			DiffSuppressFunc: func(k, oldValue, newValue string, d *schema.ResourceData) bool {
+				return strings.HasPrefix(oldValue, "cn="+newValue+",")
+			},
 		},
-		"shortnameinsystem": {
+		"short_name_in_system": {
 			Type:     schema.TypeString,
 			Computed: true,
 		},
-		"displayname": {
-			Type:         schema.TypeString,
-			RequiredWith: []string{"nameinsystem"},
-			Optional:     true,
-			Computed:     true,
+		"display_name": {
+			Type:     schema.TypeString,
+			Optional: true,
 		},
 		"provgroup": {
 			Type:     schema.TypeSet,
@@ -219,21 +219,15 @@ func resourceGroupOnSystemRead(ctx context.Context, d *schema.ResourceData, m in
 		diags = append(diags, NewDiagnosticSetError("type", err))
 	}
 
-	if err := d.Set("nameinsystem", gos.NameInSystem); err != nil {
-		diags = append(diags, NewDiagnosticSetError("nameinsystem", err))
+	if err := d.Set("name_in_system", gos.NameInSystem); err != nil {
+		diags = append(diags, NewDiagnosticSetError("name_in_system", err))
 	}
-	if err := d.Set("shortnameinsystem", gos.ShortNameInSystem); err != nil {
-		diags = append(diags, NewDiagnosticSetError("shortnameinsystem", err))
+	if err := d.Set("short_name_in_system", gos.ShortNameInSystem); err != nil {
+		diags = append(diags, NewDiagnosticSetError("short_name_in_system", err))
 	}
-	if err := d.Set("displayname", gos.DisplayName); err != nil {
-		diags = append(diags, NewDiagnosticSetError("displayname", err))
+	if err := d.Set("display_name", gos.DisplayName); err != nil {
+		diags = append(diags, NewDiagnosticSetError("display_name", err))
 	}
-	if _, ok := d.GetOk("name"); !ok {
-		if err := d.Set("name", gos.DisplayName); err != nil {
-			diags = append(diags, NewDiagnosticSetError("name", err))
-		}
-	}
-
 	if gos.System != nil {
 		if err := d.Set("system", gos.System.UUID); err != nil {
 			diags = append(diags, NewDiagnosticSetError("system", err))
@@ -354,8 +348,12 @@ func resourceGroupOnSystemCreate(ctx context.Context, d *schema.ResourceData, m 
 		}
 	}
 
-	if name, ok := d.GetOk("name"); ok {
-		gos.SetName(name.(string))
+	if value, ok := d.GetOk("name_in_system"); ok {
+		gos.NameInSystem = value.(string)
+	}
+
+	if value, ok := d.GetOk("display_name"); ok {
+		gos.DisplayName = value.(string)
 	}
 
 	if _, ok := d.GetOk("provgroup"); ok {
@@ -437,10 +435,6 @@ func resourceGroupOnSystemUpdate(ctx context.Context, d *schema.ResourceData, m 
 		Summary:  "Cannot update a group on system",
 		Detail:   "Currently Keyhub doesn't allow a client to update a group on system after it's created, so any changes aren't stored",
 	})
-
-	if d.HasChange("name") {
-		d.Set("name", d.Get("name"))
-	}
 
 	resourceGroupOnSystemRead(ctx, d, m)
 

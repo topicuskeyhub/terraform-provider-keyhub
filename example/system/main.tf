@@ -49,13 +49,31 @@ data "keyhub_provisionedsystem" "ldap" {
   uuid = local.uuids.systemLDAP
 }
 
+#Create a group
+resource "keyhub_group" "new_group" {
+  name = "new_keyhub_group"
+
+  # UUID of keyhub user/account
+  member {
+    uuid = local.uuids.user1
+    rights = "MANAGER"
+  }
+
+  client {
+    uuid = local.uuids.baseclient
+    permissions = [ "GROUP_FULL_VAULT_ACCESS", "GROUP_READ_CONTENTS" ]
+  }
+
+  description = "This group is created by terraform"
+
+}
 
 resource "keyhub_grouponsystem" "umbrella" {
 
   type = "POSIX_GROUP"
   owner = data.keyhub_group.umbrella.uuid
   system = data.keyhub_provisionedsystem.ldap.uuid
-  name = "Umbrella"
+  name_in_system = "umbrella"
 
 }
 
@@ -63,24 +81,15 @@ resource "keyhub_grouponsystem" "umbrella_provgrps" {
   type = "POSIX_GROUP"
   owner = data.keyhub_group.umbrella.uuid
   system = data.keyhub_provisionedsystem.ldap.uuid
-  name = "Umbrella Prov"
+  name_in_system = "umbrella-prov"
 
   provgroup {
-    group = "ff3e8fa1-92bd-4149-91f1-d4b85d2387af"
+    group = keyhub_group.new_group.uuid
     securitylevel = "HIGH"
     static = false
   }
 
-  provgroup {
-    group = "8673c48c-c549-4b94-9752-486473b1030c"
-    securitylevel = "HIGH"
-    static = false
-  }
 }
-
-
-
-
 
 output "main" {
   value = {
