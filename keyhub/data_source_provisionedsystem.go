@@ -16,26 +16,6 @@ func dataSourceProvisionedSystem() *schema.Resource {
 	}
 }
 
-/*
-// ProvisionedAbstract Base parameters for ProvisionedSystems
-	Host                       string       `json:"host,omitempty"`
-	Port                       int          `json:"port,omitempty"`
-	FailoverHost               string       `json:"failoverHost,omitempty"`
-	TLS                        string       `json:"tls,omitempty"`
-	BaseDN                     string       `json:"baseDN,omitempty"`
-	BindDN                     string       `json:"bindDN,omitempty"`
-	BindPassword               string       `json:"bindPassword,omitempty"`
-	UserDN                     string       `json:"userDN,omitempty"`
-	GroupDN                    string       `json:"groupDN,omitempty"`
-	SshPublicKeySupported      bool         `json:"sshPublicKeySupported,omitempty"`
-	ObjectClasses              string       `json:"objectClasses,omitempty"`
-	TrustedCertificate         *Certificate `json:"trustedCertificate,omitempty"`
-	FailoverTrustedCertificate *Certificate `json:"failoverTrustedCertificate,omitempty"`
-	ClientCertificate          *Certificate `json:"clientCertificate,omitempty"`
-	Attributes                 interface{}  `json:"attributes,omitempty"`
-}
-*/
-
 func ProvisionedSystemSchema() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"id": {
