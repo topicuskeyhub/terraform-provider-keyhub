@@ -62,9 +62,8 @@ func GroupOnSystemResourceSchema() map[string]*schema.Schema {
 		},
 
 		"type": {
-			Type:          schema.TypeString,
-			Optional:      true,
-			ConflictsWith: []string{"displayname", "nameinsystem"},
+			Type:     schema.TypeString,
+			Optional: true,
 			ValidateDiagFunc: validation.ToDiagFunc(
 				validation.StringInSlice(
 					[]string{

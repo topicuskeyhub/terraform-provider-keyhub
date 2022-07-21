@@ -84,7 +84,7 @@ func GroupResourceSchema() map[string]*schema.Schema {
 
 		"client": {
 			Type:     schema.TypeSet,
-			Required: true,
+			Optional: true,
 			Elem: &schema.Resource{
 				Schema: map[string]*schema.Schema{
 					"uuid": {
