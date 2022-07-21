@@ -6,7 +6,7 @@ require github.com/hashicorp/terraform-plugin-sdk/v2 v2.16.0
 
 require (
 	github.com/google/uuid v1.3.0
-	github.com/topicuskeyhub/go-keyhub v1.1.1
+	github.com/topicuskeyhub/go-keyhub v1.2.0
 )
 
 require (

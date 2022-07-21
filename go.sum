@@ -298,6 +298,8 @@ github.com/topicuskeyhub/go-keyhub v1.1.0 h1:mREICpIwcmcLxLbMhE9Tjj17cNNgWC6MQTM
 github.com/topicuskeyhub/go-keyhub v1.1.0/go.mod h1:l/203L0iEE1l/jQ3Kiz9kIKhdrO+fpjmaYY0+OpKfFE=
 github.com/topicuskeyhub/go-keyhub v1.1.1 h1:gLAGRnoMXCow2LAUZs5WrWLJTvHHFd5IE4TGzUb6Yl8=
 github.com/topicuskeyhub/go-keyhub v1.1.1/go.mod h1:l/203L0iEE1l/jQ3Kiz9kIKhdrO+fpjmaYY0+OpKfFE=
+github.com/topicuskeyhub/go-keyhub v1.2.0 h1:8SDs0m4PuswQPNeppJRHuZWmxC6tTYGONpge8uuLKJA=
+github.com/topicuskeyhub/go-keyhub v1.2.0/go.mod h1:FVrZjmhkNnK9ePlDP8QwAhTny2k//2vQ3o8QfTxEmiI=
 github.com/vmihailenco/msgpack v3.3.3+incompatible/go.mod h1:fy3FlTQTDXWkZ7Bh6AcGMlsjHatGryHQYUTf1ShIgkk=
 github.com/vmihailenco/msgpack v4.0.4+incompatible h1:dSLoQfGFAo3F6OoNhwUmLwVgaUXK79GlxNBwueZn0xI=
 github.com/vmihailenco/msgpack v4.0.4+incompatible/go.mod h1:fy3FlTQTDXWkZ7Bh6AcGMlsjHatGryHQYUTf1ShIgkk=
