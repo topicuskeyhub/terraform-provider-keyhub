@@ -36,21 +36,21 @@ func print_schema(resource map[string]*schema.Schema) {
 		}
 	}
 
-	fmt.Println("## Schema\n")
+	fmt.Print("## Schema\n\n")
 	if len(required) > 0 {
-		fmt.Println("### Required\n")
+		fmt.Print("### Required\n\n")
 		print_params(required, false)
 	}
 	if len(optional) > 0 {
-		fmt.Println("### Optional\n")
+		fmt.Print("### Optional\n\n")
 		print_params(optional, false)
 	}
 	if len(readonly) > 0 {
-		fmt.Println("### Read-Only\n")
+		fmt.Print("### Read-Only\n\n")
 		print_params(readonly, false)
 	}
 	if len(block) > 0 {
-		fmt.Println("### Blocks\n")
+		fmt.Print("### Blocks\n\n")
 		print_block(block)
 	}
 
@@ -61,7 +61,7 @@ func print_params(params map[string]*schema.Schema, addRequired bool) {
 	var enum, required string
 
 	keys := make([]string, 0, len(params))
-	for k, _ := range params {
+	for k := range params {
 		keys = append(keys, k)
 	}
 	sort.Strings(keys)
