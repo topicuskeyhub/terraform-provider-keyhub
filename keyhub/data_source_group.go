@@ -261,12 +261,7 @@ func flattenClientPermissions(clientPermissions *keyhubmodel.ClientPermissionsWi
 	groupMap := map[string][]string{}
 
 	for _, perm := range clientPermissions.Items {
-		if _, ok := groupMap[perm.Client.UUID]; ok {
-			groupMap[perm.Client.UUID] = append(groupMap[perm.Client.UUID], string(perm.Value))
-		} else {
-			groupMap[perm.Client.UUID] = []string{string(perm.Value)}
-		}
-
+		groupMap[perm.Client.UUID] = append(groupMap[perm.Client.UUID], string(perm.Value))
 	}
 
 	list := make([]interface{}, len(groupMap))

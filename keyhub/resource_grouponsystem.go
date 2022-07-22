@@ -275,8 +275,7 @@ func resourceGroupOnSystemCreate(ctx context.Context, d *schema.ResourceData, m 
 	var uuidSystem uuid.UUID
 	var system *keyhubmodel.ProvisionedSystem
 
-	var gos *keyhubmodel.GroupOnSystem
-	gos = keyhubmodel.NewGroupOnSystem()
+	gos := keyhubmodel.NewGroupOnSystem()
 
 	if ownerUuid, ok := d.GetOk("owner"); ok {
 		uuidOwner, err = uuid.Parse(ownerUuid.(string))
@@ -407,21 +406,6 @@ func resourceGroupOnSystemCreate(ctx context.Context, d *schema.ResourceData, m 
 	diags = append(diags, resourceGroupOnSystemRead(ctx, d, m)...)
 
 	return diags
-}
-
-func resourceGroupOnSystemImportContext(ctx context.Context, d *schema.ResourceData, m interface{}) ([]*schema.ResourceData, error) {
-
-	grpUuid, err := uuid.Parse(d.Id())
-	if err != nil {
-		return nil, fmt.Errorf("`%s` is not a valid uuid", d.Id())
-	}
-
-	err = d.Set("uuid", grpUuid.String())
-	if err != nil {
-		return nil, fmt.Errorf("coult not set uuid: %s", err.Error())
-	}
-
-	return []*schema.ResourceData{d}, nil
 }
 
 func resourceGroupOnSystemUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {

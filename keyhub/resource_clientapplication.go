@@ -452,7 +452,14 @@ func resourceClientApplicationCreate(ctx context.Context, d *schema.ResourceData
 		if set.Len() > 0 {
 			for _, rawAttribute := range set.List() {
 				attribute := rawAttribute.(map[string]interface{})
-				clientApp.AddAttribute(attribute["name"].(string), attribute["script"].(string))
+				err := clientApp.AddAttribute(attribute["name"].(string), attribute["script"].(string))
+				if err != nil {
+					return append(diags, diag.Diagnostic{
+						Severity: diag.Error,
+						Summary:  "Could not set attribute",
+						Detail:   fmt.Sprintf("Setting the attribute '%s' returned an error: %s", attribute["name"].(string), err.Error()),
+					})
+				}
 			}
 		}
 	}
@@ -516,7 +523,7 @@ func resourceClientApplicationCreate(ctx context.Context, d *schema.ResourceData
 	}
 
 	if secret, err := newApp.GetSecret(); err == nil {
-		d.Set("clientsecret", secret)
+		err := d.Set("clientsecret", secret)
 		if err != nil {
 			diags = append(diags, diag.Diagnostic{
 				Severity: diag.Error,
