@@ -29,16 +29,19 @@ func resourceClientApplication() *schema.Resource {
 func ClientApplicationResourceSchema() map[string]*schema.Schema {
 	resourceSchema := map[string]*schema.Schema{
 		"id": {
-			Type:     schema.TypeString,
-			Computed: true,
+			Type:        schema.TypeString,
+			Computed:    true,
+			Description: "The value of the ID field of the client application",
 		},
 		"uuid": {
-			Type:     schema.TypeString,
-			Computed: true,
+			Type:        schema.TypeString,
+			Computed:    true,
+			Description: "The UUID of the created client application",
 		},
 		"name": {
-			Type:     schema.TypeString,
-			Required: true,
+			Type:        schema.TypeString,
+			Required:    true,
+			Description: "The name of the created client application",
 		},
 
 		"url": {
@@ -51,19 +54,20 @@ func ClientApplicationResourceSchema() map[string]*schema.Schema {
 			Type:             schema.TypeString,
 			Required:         true,
 			ValidateDiagFunc: validation.ToDiagFunc(validation.IsUUID),
-			Description:      "UUID of the group that is owner of the client",
+			Description:      "The UUID of the group that is owner of the client",
 		},
 		"technical_administrator": {
 			Type:             schema.TypeString,
 			Optional:         true,
 			Computed:         true,
 			ValidateDiagFunc: validation.ToDiagFunc(validation.IsUUID),
-			Description:      "UUID of the group that is technical administrator of the client, default to Owner",
+			Description:      "The UUID of the group that is technical administrator of the client, default to Owner",
 		},
 
 		"type": {
-			Type:     schema.TypeString,
-			Optional: true,
+			Type:        schema.TypeString,
+			Optional:    true,
+			Description: "The type of the client application. Possible values: `OAUTH2` (default), `LDAP`, `SAML2`",
 			ValidateDiagFunc: validation.ToDiagFunc(
 				validation.StringInSlice(
 					[]string{
@@ -78,9 +82,10 @@ func ClientApplicationResourceSchema() map[string]*schema.Schema {
 		},
 
 		"scopes": {
-			Type:     schema.TypeList,
-			Optional: true,
-			Computed: true,
+			Type:        schema.TypeList,
+			Optional:    true,
+			Computed:    true,
+			Description: "The Allowed scopes for the client application. For SSO applications this defaults to `profile`",
 			Elem: &schema.Schema{
 				Type: schema.TypeString,
 				ValidateDiagFunc: validation.ToDiagFunc(
@@ -100,91 +105,121 @@ func ClientApplicationResourceSchema() map[string]*schema.Schema {
 		},
 
 		"clientid": {
-			Type:     schema.TypeString,
-			Computed: true,
+			Type:        schema.TypeString,
+			Computed:    true,
+			Description: "The clientid (UUID) of the client application.",
 		},
 		"clientsecret": {
-			Type:      schema.TypeString,
-			Computed:  true,
-			Sensitive: true,
+			Type:        schema.TypeString,
+			Computed:    true,
+			Sensitive:   true,
+			Description: "The secret (UUID) of the client application.",
 		},
 
 		"is_sso": {
-			Type:     schema.TypeBool,
-			Optional: true,
-			Computed: true,
+			Type:        schema.TypeBool,
+			Optional:    true,
+			Computed:    true,
+			Description: "If set the client application is a Single Sign On application",
 		},
 
 		"attribute": {
-			Type:     schema.TypeSet,
-			Optional: true,
-			Computed: true,
+			Type:        schema.TypeSet,
+			Optional:    true,
+			Computed:    true,
+			Description: "The additional attributes which can be retrieved through userinfo ",
 			Elem: &schema.Resource{
 				Schema: map[string]*schema.Schema{
 					"name": {
-						Type:     schema.TypeString,
-						Required: true,
+						Type:        schema.TypeString,
+						Required:    true,
+						Description: "The name of the attribute",
 					},
 					"script": {
-						Type:     schema.TypeString,
-						Required: true,
+						Type:        schema.TypeString,
+						Required:    true,
+						Description: "The script defines the body of a `function (account, groups) { <SCRIPT> }` function, and is written in JavaScript using the ECMAScript 5 standard",
 					},
 				},
 			},
 		},
 
 		"confidential": {
-			Type:     schema.TypeBool,
-			Optional: true,
-			Computed: true,
+			Type:        schema.TypeBool,
+			Optional:    true,
+			Computed:    true,
+			Description: "A confidential (or trusted) OAUTH2 client is able to keep its credentials a secret",
 		},
 		"is_server2server": {
-			Type:     schema.TypeBool,
-			Optional: true,
+			Type:        schema.TypeBool,
+			Optional:    true,
+			Description: "The client is a code and implicit client",
 		},
 		"callback_uri": {
-			Type:     schema.TypeString,
-			Optional: true,
+			Type:        schema.TypeString,
+			Optional:    true,
+			Description: "The client is a code and implicit client",
 		},
 		"initiate_login_uri": {
-			Type:     schema.TypeString,
-			Optional: true,
+			Type:        schema.TypeString,
+			Optional:    true,
+			Description: "The URI within the application where a third party login can be started.",
 		},
 		"id_token_claims": {
-			Type:     schema.TypeString,
-			Optional: true,
+			Type:        schema.TypeString,
+			Optional:    true,
+			Description: "A space-separated list of claims. These claims are added to the 'id_token', even if the client does not explicitly request them to be added",
 		},
 		"show_landingpage": {
-			Type:     schema.TypeBool,
-			Optional: true,
+			Type:        schema.TypeBool,
+			Optional:    true,
+			Description: "Displays a landing page immediately after login and before redirecting to the SSO application",
 		},
 		"binddn": {
-			Type:     schema.TypeString,
-			Optional: true,
+			Type:        schema.TypeString,
+			Computed:    true,
+			Description: "The identifier of the application to be used by a simple bind",
 		},
 		"used_for_provisioning": {
-			Type:     schema.TypeBool,
-			Optional: true,
+			Type:        schema.TypeBool,
+			Optional:    true,
+			Description: "",
 		},
 		"client_certificate": {
-			Type:     schema.TypeString,
-			Optional: true,
+			Type:        schema.TypeString,
+			Optional:    true,
+			Description: "",
 		},
 		"metadata_url": {
-			Type:     schema.TypeString,
-			Optional: true,
+			Type:        schema.TypeString,
+			Optional:    true,
+			Description: "The URL to retrieve the SAML metadata from",
 		},
 		"metadata": {
-			Type:     schema.TypeString,
-			Optional: true,
+			Type:        schema.TypeString,
+			Optional:    true,
+			Description: "The metadata of the SAML application, use if metadata_url is not available ",
 		},
 		"subject_format": {
-			Type:     schema.TypeString,
-			Optional: true,
+			Type:        schema.TypeString,
+			Optional:    true,
+			Description: "Topicus KeyHub can deliver the subject in three formats: Primary identifier, UPN and username.",
+			ValidateDiagFunc: validation.ToDiagFunc(
+				validation.StringInSlice(
+					[]string{
+						keyhubmodel.CLIENT_SUBJECT_FORMAT_UPN,
+						keyhubmodel.CLIENT_SUBJECT_FORMAT_ID,
+						keyhubmodel.CLIENT_SUBJECT_FORMAT_USERNAME,
+						keyhubmodel.CLIENT_SUBJECT_FORMAT_EMAIL,
+					},
+					false,
+				),
+			),
 		},
 		"segments": {
-			Type:     schema.TypeString,
-			Optional: true,
+			Type:        schema.TypeString,
+			Optional:    true,
+			Description: "",
 		},
 	}
 

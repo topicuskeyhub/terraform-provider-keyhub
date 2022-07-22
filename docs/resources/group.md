@@ -30,35 +30,40 @@ resource "keyhub_group" "example" {
 
 ### Required
 
+- **member** (Block) At least one manager should be defined
 - **name** (String) The Name field of the group
-- **member** (Block) At least one manager should be defined. *Note:* KeyHub currently only supports one member.
 
 ### Optional
 
-- **description** (String) Group description
-
-- **extended_access** (String) Defines extended access. Possible values: `NOT_ALLOWED` (default), `ONE_WEEK`, `TWO_WEEKS` 
-- **vault_recovery** (String) Defines recovery strategy. Possible Values: `FULL` (default), `RECOVERY_KEY_ONLY`, `NONE`
-- **audit_months** (List of Strings) List of Months the group must be audited. Possible Values: `JANUARY`,`FEBRUARY`,`MARCH`,`APRIL`,`MAY`,`JUNE`,`JULY`,`AUGUST`,`SEPTEMBER`,`OCTOBER`,`NOVEMBER`,`DECEMBER` 
-
-
-- **rotating_password_required** (Bool) Required rotating password for members 
-- **record_trail** (Bool) Require a reason before activating a group
-- **private_group** (Bool) Set group to invite only
-- **hide_audit_trail** (Bool) Don't show audit trail in KeyHub Dashboard
 - **application_administration** (Bool) Group can be assign as managing group of an application
-- **auditor** (Bool) No idea.
+- **audit_months** (List) List of Months the group must be audited. Possible Values: `JANUARY`,`FEBRUARY`,`MARCH`,`APRIL`,`MAY`,`JUNE`,`JULY`,`AUGUST`,`SEPTEMBER`,`OCTOBER`,`NOVEMBER`,`DECEMBER`
+- **auditing_auth_groupuuid** (String) The UUID of the group to set as authorizing group for audits
+- **client** (Block) Grant clients permissions on the create group, (client used by terraform provider requires global `GROUPS_GRANT_PERMISSIONS_AFTER_CREATE` permission)
+- **description** (String) The description of the group
+- **extended_access** (String) Defines extended access. Possible values: `NOT_ALLOWED` (default), `ONE_WEEK`, `TWO_WEEKS`
+- **hide_audit_trail** (Bool) Don't show audit trail in KeyHub Dashboard
+- **membership_auth_groupuuid** (String) The UUID of the group to set as authorizing group for membership
+- **private_group** (Bool) Set group to invite only
+- **provisioning_auth_groupuuid** (String) The UUID of the group to set as authorizing group for provisioning
+- **record_trail** (Bool) Require a reason before activating a group
+- **rotating_password_required** (Bool) Required rotating password for members
+- **vault_recovery** (String) Defines recovery strategy. Possible Values: `FULL` (default), `RECOVERY_KEY_ONLY`, `NONE`
 
-
-- **provisioning_auth_groupuuid** (String) UUID of the group to set as authorizing group for provisioning
-- **membership_auth_groupuuid** (String) UUID of the group to set as authorizing group for membership
-- **auditing_auth_groupuuid** (String) UUID of the group to set as authorizing group for audits
-
- 
 ### Read-Only
 
 - **id** (String) The value of the ID field of the group
-- **uuid** (String) The UUID of the group 
+- **uuid** (String) The UUID of the group
+
+### Blocks
+
+The *member* block supports the following:
+- **name** (String) The name of the member
+- **rights** (String) The rights of the member. Possible values: `MANAGER` (default), `NORMAL`
+- **uuid** (String, Required) The uuid of the keyhub account to add as member
+
+The *client* block supports the following:
+- **permissions** (List, Required) List of permissions to grant the client application. Possible values: `GROUP_FULL_VAULT_ACCESS`, `GROUP_READ_CONTENTS`, `GROUP_SET_AUTHORIZATION`
+- **uuid** (String, Required) The UUID of the client application
 
 
 ## Import

@@ -30,23 +30,27 @@ func resourceGroupOnSystem() *schema.Resource {
 func GroupOnSystemResourceSchema() map[string]*schema.Schema {
 	resourceSchema := map[string]*schema.Schema{
 		"id": {
-			Type:     schema.TypeString,
-			Computed: true,
+			Type:        schema.TypeString,
+			Computed:    true,
+			Description: "Type of the resulting group in the provisioned system, for example: POSIX_GROUP for ldap.",
 		},
 		"system": {
 			Type:             schema.TypeString,
 			Required:         true,
 			ValidateDiagFunc: validation.ToDiagFunc(validation.IsUUID),
+			Description:      "The UUID of the provisioned system to create the group on",
 		},
 		"owner": {
 			Type:             schema.TypeString,
 			Required:         true,
 			ValidateDiagFunc: validation.ToDiagFunc(validation.IsUUID),
+			Description:      "The UUID of the group that will become owner of the grouponsystem",
 		},
 
 		"type": {
-			Type:     schema.TypeString,
-			Optional: true,
+			Type:        schema.TypeString,
+			Optional:    true,
+			Description: "Type of the resulting group in the provisioned system, for example: POSIX_GROUP for ldap.",
 			ValidateDiagFunc: validation.ToDiagFunc(
 				validation.StringInSlice(
 					[]string{
@@ -64,8 +68,9 @@ func GroupOnSystemResourceSchema() map[string]*schema.Schema {
 		},
 
 		"name_in_system": {
-			Type:     schema.TypeString,
-			Required: true,
+			Type:        schema.TypeString,
+			Required:    true,
+			Description: "The name in the system, value normally to CN of the DN (of the provisioned system). For example: `cn=umbrella,ou=group,dc=example,dc=com`",
 			ValidateDiagFunc: validation.ToDiagFunc(func(i interface{}, k string) (warnings []string, errors []error) {
 				v, ok := i.(string)
 				if !ok {
@@ -89,23 +94,27 @@ func GroupOnSystemResourceSchema() map[string]*schema.Schema {
 			},
 		},
 		"short_name_in_system": {
-			Type:     schema.TypeString,
-			Computed: true,
+			Type:        schema.TypeString,
+			Computed:    true,
+			Description: "common name part of the resulting DN. For example: `cn=umbrella`",
 		},
 		"display_name": {
-			Type:     schema.TypeString,
-			Optional: true,
+			Type:        schema.TypeString,
+			Optional:    true,
+			Description: "Display name of the group on provisioned system. (Only on systems that support a display name)",
 		},
 		"provgroup": {
-			Type:     schema.TypeSet,
-			Optional: true,
-			Computed: true,
+			Type:        schema.TypeSet,
+			Optional:    true,
+			Computed:    true,
+			Description: "Define the provisioning group for the grouponsystem, can be set multiple times. If omitted the owner group will be the provisioning group",
 			Elem: &schema.Resource{
 				Schema: map[string]*schema.Schema{
 					"group": {
 						Type:             schema.TypeString,
 						Required:         true,
 						ValidateDiagFunc: validation.ToDiagFunc(validation.IsUUID),
+						Description:      "The UUID of the group that will become a provisioning group for the grouponsystem",
 					},
 					"securitylevel": {
 						Type:     schema.TypeString,
@@ -120,12 +129,14 @@ func GroupOnSystemResourceSchema() map[string]*schema.Schema {
 								false,
 							),
 						),
-						Default: string(keyhubmodel.PRGRP_SECURITY_LEVEL_HIGH),
+						Default:     string(keyhubmodel.PRGRP_SECURITY_LEVEL_HIGH),
+						Description: "The security level. Possible values: `HIGH` (default), `MEDIUM`, `LOW`",
 					},
 					"static": {
-						Type:     schema.TypeBool,
-						Optional: true,
-						Default:  false,
+						Type:        schema.TypeBool,
+						Optional:    true,
+						Default:     false,
+						Description: "If set to true the group on system will be static provisioned",
 					},
 				},
 			},

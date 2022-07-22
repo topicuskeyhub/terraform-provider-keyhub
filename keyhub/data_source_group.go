@@ -75,6 +75,29 @@ func GroupSchema() map[string]*schema.Schema {
 			},
 		},
 
+		"client": {
+			Type:        schema.TypeSet,
+			Computed:    true,
+			Description: "Clients with permissions on the group",
+			Elem: &schema.Resource{
+				Schema: map[string]*schema.Schema{
+					"uuid": {
+						Type:        schema.TypeString,
+						Computed:    true,
+						Description: "The UUID of the client application",
+					},
+					"permissions": {
+						Type:        schema.TypeList,
+						Computed:    true,
+						Description: "List of permissions to grant the client application. Possible values: `GROUP_FULL_VAULT_ACCESS`, `GROUP_READ_CONTENTS`, `GROUP_SET_AUTHORIZATION`",
+						Elem: &schema.Schema{
+							Type: schema.TypeString,
+						},
+					},
+				},
+			},
+		},
+
 		"rotating_password_required": {
 			Type:     schema.TypeBool,
 			Computed: true,
@@ -191,6 +214,7 @@ func dataSourceGroupRead(ctx context.Context, d *schema.ResourceData, m interfac
 	if err := d.Set("single_managed", group.SingleManaged); err != nil {
 		diags = append(diags, NewDiagnosticSetError("single_managed", err))
 	}
+
 	if group.AuthorizingGroupProvisioning != nil {
 		if err := d.Set("provisioning_auth_groupuuid", group.AuthorizingGroupProvisioning.UUID); err != nil {
 			diags = append(diags, NewDiagnosticSetError("provisioning_auth_groupuuid", err))

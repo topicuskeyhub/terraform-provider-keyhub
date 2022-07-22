@@ -19,39 +19,47 @@ func dataSourceProvisionedSystem() *schema.Resource {
 func ProvisionedSystemSchema() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"id": {
-			Type:     schema.TypeString,
-			Computed: true,
+			Type:        schema.TypeString,
+			Computed:    true,
+			Description: "The value of the ID field of the provisioned system",
 		},
 		"uuid": {
-			Type:     schema.TypeString,
-			Required: true,
+			Type:        schema.TypeString,
+			Required:    true,
+			Description: "The UUID of the of the provisioned system",
 		},
 		"name": {
-			Type:     schema.TypeString,
-			Computed: true,
+			Type:        schema.TypeString,
+			Computed:    true,
+			Description: "The name of the provisioned system",
 		},
 		"type": {
-			Type:     schema.TypeString,
-			Computed: true,
+			Type:        schema.TypeString,
+			Computed:    true,
+			Description: "The type of the provisioned system",
 		},
 		"accountcount": {
-			Type:     schema.TypeInt,
-			Computed: true,
+			Type:        schema.TypeInt,
+			Computed:    true,
+			Description: "The amount of accounts on the provisioned system",
 		},
 		"usernameprefix": {
-			Type:     schema.TypeString,
-			Computed: true,
+			Type:        schema.TypeString,
+			Computed:    true,
+			Description: "The username prefix of the provisioned system",
 		},
 		"technicaladministrator": {
-			Type:     schema.TypeMap,
-			Computed: true,
+			Type:        schema.TypeMap,
+			Computed:    true,
+			Description: "The UUID and Name of the group that is set as the technical administrator",
 			Elem: &schema.Schema{
 				Type: schema.TypeString,
 			},
 		},
 		"externaluuid": {
-			Type:     schema.TypeString,
-			Computed: true,
+			Type:        schema.TypeString,
+			Computed:    true,
+			Description: "The external uuid of the provisioned system",
 		},
 	}
 }

@@ -42,59 +42,70 @@ func resourceGroupImportContext(ctx context.Context, d *schema.ResourceData, m i
 func GroupResourceSchema() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"id": {
-			Type:     schema.TypeString,
-			Computed: true,
+			Type:        schema.TypeString,
+			Computed:    true,
+			Description: "The value of the ID field of the group",
 		},
 		"uuid": {
-			Type:     schema.TypeString,
-			Computed: true,
+			Type:        schema.TypeString,
+			Computed:    true,
+			Description: "The UUID of the group",
 		},
 		"name": {
-			Type:     schema.TypeString,
-			Required: true,
+			Type:        schema.TypeString,
+			Required:    true,
+			Description: "The Name field of the group",
 		},
 		"description": {
-			Type:     schema.TypeString,
-			Optional: true,
+			Type:        schema.TypeString,
+			Optional:    true,
+			Description: "The description of the group",
 		},
 
 		"member": {
-			Type:     schema.TypeSet,
-			Required: true,
+			Type:        schema.TypeSet,
+			Required:    true,
+			Description: "At least one manager should be defined",
 			Elem: &schema.Resource{
 				Schema: map[string]*schema.Schema{
 					"uuid": {
 						Type:             schema.TypeString,
 						Required:         true,
 						ValidateDiagFunc: validation.ToDiagFunc(validation.IsUUID),
+						Description:      "The uuid of the keyhub account to add as member",
 					},
 					"rights": {
 						Type:             schema.TypeString,
 						Optional:         true,
 						Computed:         true,
 						ValidateDiagFunc: validation.ToDiagFunc(validation.StringInSlice([]string{keyhubmodel.GROUP_RIGHT_MANAGER, keyhubmodel.GROUP_RIGHT_MEMBER}, false)),
+						Description:      "The rights of the member. Possible values: `MANAGER` (default), `NORMAL`",
 					},
 					"name": {
-						Type:     schema.TypeString,
-						Computed: true,
+						Type:        schema.TypeString,
+						Computed:    true,
+						Description: "The name of the member",
 					},
 				},
 			},
 		},
 
 		"client": {
-			Type:     schema.TypeSet,
-			Optional: true,
+			Type:        schema.TypeSet,
+			Optional:    true,
+			Description: "Grant clients permissions on the create group, (client used by terraform provider requires global `GROUPS_GRANT_PERMISSIONS_AFTER_CREATE` permission)",
 			Elem: &schema.Resource{
 				Schema: map[string]*schema.Schema{
 					"uuid": {
 						Type:             schema.TypeString,
 						Required:         true,
 						ValidateDiagFunc: validation.ToDiagFunc(validation.IsUUID),
+						Description:      "The UUID of the client application",
 					},
 					"permissions": {
-						Type:     schema.TypeList,
-						Required: true,
+						Type:        schema.TypeList,
+						Required:    true,
+						Description: "List of permissions to grant the client application. Possible values: `GROUP_FULL_VAULT_ACCESS`, `GROUP_READ_CONTENTS`, `GROUP_SET_AUTHORIZATION`",
 						Elem: &schema.Schema{
 							Type: schema.TypeString,
 							ValidateDiagFunc: validation.ToDiagFunc(
@@ -123,8 +134,9 @@ func GroupResourceSchema() map[string]*schema.Schema {
 		},
 
 		"extended_access": {
-			Type:     schema.TypeString,
-			Optional: true,
+			Type:        schema.TypeString,
+			Optional:    true,
+			Description: "Defines extended access. Possible values: `NOT_ALLOWED` (default), `ONE_WEEK`, `TWO_WEEKS`",
 			ValidateDiagFunc: validation.ToDiagFunc(validation.StringInSlice(
 				[]string{
 					keyhubmodel.GROUP_EXT_ACCESS_NOT,
@@ -136,8 +148,9 @@ func GroupResourceSchema() map[string]*schema.Schema {
 			Default: keyhubmodel.GROUP_EXT_ACCESS_NOT,
 		},
 		"vault_recovery": {
-			Type:     schema.TypeString,
-			Optional: true,
+			Type:        schema.TypeString,
+			Optional:    true,
+			Description: "Defines recovery strategy. Possible Values: `FULL` (default), `RECOVERY_KEY_ONLY`, `NONE`",
 			ValidateDiagFunc: validation.ToDiagFunc(validation.StringInSlice(
 				[]string{
 					keyhubmodel.VAULT_RECOVERY_FULL,
@@ -149,7 +162,8 @@ func GroupResourceSchema() map[string]*schema.Schema {
 			Default: keyhubmodel.VAULT_RECOVERY_FULL,
 		},
 		"audit_months": {
-			Type: schema.TypeList,
+			Type:        schema.TypeList,
+			Description: "List of Months the group must be audited. Possible Values: `JANUARY`,`FEBRUARY`,`MARCH`,`APRIL`,`MAY`,`JUNE`,`JULY`,`AUGUST`,`SEPTEMBER`,`OCTOBER`,`NOVEMBER`,`DECEMBER`",
 			Elem: &schema.Schema{
 				Type: schema.TypeString,
 				ValidateDiagFunc: validation.ToDiagFunc(validation.StringInSlice(
@@ -174,44 +188,54 @@ func GroupResourceSchema() map[string]*schema.Schema {
 		},
 
 		"rotating_password_required": {
-			Type:     schema.TypeBool,
-			Optional: true,
+			Type:        schema.TypeBool,
+			Optional:    true,
+			Description: "Required rotating password for members",
 		},
 		"record_trail": {
-			Type:     schema.TypeBool,
-			Optional: true,
+			Type:        schema.TypeBool,
+			Optional:    true,
+			Description: "Require a reason before activating a group",
 		},
 		"private_group": {
-			Type:     schema.TypeBool,
-			Optional: true,
+			Type:        schema.TypeBool,
+			Optional:    true,
+			Description: "Set group to invite only",
 		},
 		"hide_audit_trail": {
-			Type:     schema.TypeBool,
-			Optional: true,
+			Type:        schema.TypeBool,
+			Optional:    true,
+			Description: "Don't show audit trail in KeyHub Dashboard",
 		},
 		"application_administration": {
-			Type:     schema.TypeBool,
-			Optional: true,
+			Type:        schema.TypeBool,
+			Optional:    true,
+			Description: "Group can be assign as managing group of an application",
 		},
 		"auditor": {
-			Type:     schema.TypeBool,
-			Optional: true,
+			Type:        schema.TypeBool,
+			Optional:    true,
+			Description: "",
 		},
 		"single_managed": {
-			Type:     schema.TypeBool,
-			Optional: true,
+			Type:        schema.TypeBool,
+			Optional:    true,
+			Description: "",
 		},
 		"provisioning_auth_groupuuid": {
-			Type:     schema.TypeString,
-			Optional: true,
+			Type:        schema.TypeString,
+			Optional:    true,
+			Description: "The UUID of the group to set as authorizing group for provisioning",
 		},
 		"membership_auth_groupuuid": {
-			Type:     schema.TypeString,
-			Optional: true,
+			Type:        schema.TypeString,
+			Optional:    true,
+			Description: "The UUID of the group to set as authorizing group for membership",
 		},
 		"auditing_auth_groupuuid": {
-			Type:     schema.TypeString,
-			Optional: true,
+			Type:        schema.TypeString,
+			Optional:    true,
+			Description: "The UUID of the group to set as authorizing group for audits",
 		},
 	}
 }
