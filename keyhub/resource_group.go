@@ -237,6 +237,11 @@ func GroupResourceSchema() map[string]*schema.Schema {
 			Optional:    true,
 			Description: "The UUID of the group to set as authorizing group for audits",
 		},
+		"nested_under_groupuuid": {
+			Type:        schema.TypeString,
+			Optional:    true,
+			Description: "The UUID of the group to nest the new group under",
+		},
 	}
 }
 
@@ -338,7 +343,7 @@ func resourceGroupCreate(ctx context.Context, d *schema.ResourceData, m interfac
 	}
 
 	/** Load groups by Uuid **/
-	group_keys := []string{"provisioning_auth_groupuuid", "membership_auth_groupuuid", "auditing_auth_groupuuid"}
+	group_keys := []string{"provisioning_auth_groupuuid", "membership_auth_groupuuid", "auditing_auth_groupuuid", "nested_under_groupuuid"}
 
 	for _, group_key := range group_keys {
 		strUuid := d.Get(group_key).(string)
@@ -373,6 +378,8 @@ func resourceGroupCreate(ctx context.Context, d *schema.ResourceData, m interfac
 			newGroup.AuthorizingGroupMembership = kh_group
 		case "auditing_auth_groupuuid":
 			newGroup.AuthorizingGroupAuditing = kh_group
+		case "nested_under_groupuuid":
+			newGroup.NestedUnder = kh_group.AsPrimer()
 		}
 	}
 

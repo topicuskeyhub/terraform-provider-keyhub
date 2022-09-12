@@ -139,6 +139,10 @@ func GroupSchema() map[string]*schema.Schema {
 			Type:     schema.TypeString,
 			Computed: true,
 		},
+		"nested_under_groupuuid": {
+			Type:     schema.TypeString,
+			Computed: true,
+		},
 	}
 }
 
@@ -228,6 +232,11 @@ func dataSourceGroupRead(ctx context.Context, d *schema.ResourceData, m interfac
 	if group.AuthorizingGroupAuditing != nil {
 		if err := d.Set("auditing_auth_groupuuid", group.AuthorizingGroupAuditing.UUID); err != nil {
 			diags = append(diags, NewDiagnosticSetError("auditing_auth_groupuuid", err))
+		}
+	}
+	if group.NestedUnder != nil {
+		if err := d.Set("nested_under_groupuuid", group.NestedUnder.UUID); err != nil {
+			diags = append(diags, NewDiagnosticSetError("nested_under_groupuuid", err))
 		}
 	}
 
