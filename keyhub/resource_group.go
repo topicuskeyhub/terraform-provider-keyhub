@@ -387,7 +387,7 @@ func resourceGroupCreate(ctx context.Context, d *schema.ResourceData, m interfac
 		diags = append(diags, diag.Diagnostic{
 			Severity: diag.Error,
 			Summary:  "Invalid configuration",
-			Detail:   "Atleast one member of nested_under_groupuuid parameter should be set",
+			Detail:   "At least one member or nested_under_groupuuid parameter should be set",
 		})
 	}
 
