@@ -13,6 +13,11 @@ The group resource allows you to store/retrieve/update/delete information about 
 Retreiving group details after creation requires adding the group details permission to the client in the KeyHub interface.
 Update or Delete isn't possible 
 
+## Permission Requirements
+To set any of the `auditing_auth_groupuuid`, `membership_auth_groupuuid`, `nested_under_groupuuid`, `provisioning_auth_groupuuid` parameters 
+the client used MUST have the `Groups - Configure a group for additional authorisation or nesting` permission on the referenced group.
+
+
 ## Example Usage
 
 ```terraform
@@ -43,6 +48,7 @@ resource "keyhub_group" "example" {
 - **extended_access** (String) Defines extended access. Possible values: `NOT_ALLOWED` (default), `ONE_WEEK`, `TWO_WEEKS`
 - **hide_audit_trail** (Bool) Don't show audit trail in KeyHub Dashboard
 - **membership_auth_groupuuid** (String) The UUID of the group to set as authorizing group for membership
+- **nested_under_groupuuid** (String) The UUID of the group to nest the new group under
 - **private_group** (Bool) Set group to invite only
 - **provisioning_auth_groupuuid** (String) The UUID of the group to set as authorizing group for provisioning
 - **record_trail** (Bool) Require a reason before activating a group
