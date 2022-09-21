@@ -6,6 +6,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.1] - 2022-09-21
+
+### Added
+- Add build for Linux-Arm64
+
+## [1.2.0] - 2022-09-13
+
+### Added
+- add nested_under_groupuuid parameter
+
+### Changed
+- Update documentation
+- Members are optional if a nested_under_groupuuid has been provided
+- Version bump dependencies go-keyhub to 1.2.1
+
 ## [1.1.0] - 2022-07-22
 
 ### Added
