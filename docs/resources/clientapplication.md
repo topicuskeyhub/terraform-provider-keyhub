@@ -24,7 +24,7 @@ resource "keyhub_clientapplication" "server2server" {
 
 
 resource "keyhub_clientapplication" "sso" {
-  callbackuri         = "https://{1-42}.example.com/oauth2/callback"
+  callback_uri         = "https://{1-42}.example.com/oauth2/callback"
   is_sso              = true
   name                = "Terraform - OAuth2 SSO client"
   owner               = local.uuids.umbrella
