@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - #15 Fixed documentation
+- #20 Update go-keyhub dependency to fix max 100 items bug
 
 ## [1.2.1] - 2022-09-21
 
