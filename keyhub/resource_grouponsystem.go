@@ -306,6 +306,7 @@ func resourceGroupOnSystemCreate(ctx context.Context, d *schema.ResourceData, m 
 				Summary:  "Owner does not exist",
 				Detail:   fmt.Sprintf("Could not find group with uuid: %s", ownerUuid.(string)),
 			})
+			return diags
 		}
 
 	} else {
@@ -335,6 +336,7 @@ func resourceGroupOnSystemCreate(ctx context.Context, d *schema.ResourceData, m 
 				Summary:  "System does not exist",
 				Detail:   fmt.Sprintf("Could not find group with uuid: %s", systemUuid.(string)),
 			})
+			return diags
 		}
 
 	} else {
@@ -398,6 +400,10 @@ func resourceGroupOnSystemCreate(ctx context.Context, d *schema.ResourceData, m 
 			gos.AddProvGroup(*pg)
 
 		}
+	}
+
+	if diags.HasError() {
+		return diags
 	}
 
 	gos.Owner = owner.AsPrimer()
