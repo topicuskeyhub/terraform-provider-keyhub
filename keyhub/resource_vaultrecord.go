@@ -4,7 +4,10 @@ import (
 	"context"
 	"encoding/base64"
 	"fmt"
+	"github.com/hashicorp/go-cty/cty"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
 	"strconv"
+	"time"
 
 	"github.com/google/uuid"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
@@ -100,6 +103,55 @@ func VaultRecordResourceSchema() map[string]*schema.Schema {
 			Type:      schema.TypeString,
 			Sensitive: true,
 			Optional:  true,
+		},
+		"enddate": {
+			Type:        schema.TypeString,
+			Optional:    true,
+			Description: "End date of vaultrecord, in YYYY-MM-DD format",
+			ValidateDiagFunc: func(v any, p cty.Path) diag.Diagnostics {
+				strvalue := v.(string)
+				value, err := time.Parse("2006-01-02", strvalue)
+				var diags diag.Diagnostics
+				if err != nil {
+					diag := diag.Diagnostic{
+						Severity: diag.Error,
+						Summary:  "not a valid date",
+						Detail:   fmt.Sprintf("%q could not be parsed: %q", strvalue, err.Error()),
+					}
+					diags = append(diags, diag)
+					return diags
+				}
+				testvalue := value.Format("2006-01-02")
+				if testvalue != strvalue {
+					diag := diag.Diagnostic{
+						Severity: diag.Error,
+						Summary:  "parse diff detected",
+						Detail:   fmt.Sprintf("%q parsed wrong as %q", strvalue, testvalue),
+					}
+					diags = append(diags, diag)
+					return diags
+				}
+				return diags
+			},
+		},
+		"warningperiod": {
+			Type:        schema.TypeString,
+			Optional:    true,
+			Description: "Warning period for the end date of the vaultrecord",
+			ValidateDiagFunc: validation.ToDiagFunc(
+				validation.StringInSlice(
+					[]string{
+						string(keyhubmodel.WARNINGPERIOD_NEVER),
+						string(keyhubmodel.WARNINGPERIOD_AT_EXPIRATION),
+						string(keyhubmodel.WARNINGPERIOD_TWO_WEEKS),
+						string(keyhubmodel.WARNINGPERIOD_ONE_MONTH),
+						string(keyhubmodel.WARNINGPERIOD_TWO_MONTHS),
+						string(keyhubmodel.WARNINGPERIOD_THREE_MONTHS),
+						string(keyhubmodel.WARNINGPERIOD_SIX_MONTHS),
+					},
+					false,
+				),
+			),
 		},
 	}
 }
@@ -372,6 +424,25 @@ func vaultRecordSchemaToModel(d *schema.ResourceData, vaultRecord *keyhubmodel.V
 		value := d.Get("comment")
 		val := value.(string)
 		vaultRecord.AdditionalObjects.Secret.Comment = &val
+	}
+
+	if d.HasChange("enddate") {
+		value := d.Get("enddate")
+		val, err := time.Parse("2006-01-02", value.(string))
+		if err != nil {
+			diags = append(diags, diag.Diagnostic{
+				Severity: diag.Error,
+				Summary:  "Could not parse enddate",
+				Detail:   fmt.Sprintf("Could not parse enddate %q: %s", value.(string), err.Error()),
+			})
+		} else {
+			vaultRecord.EndDate = val
+		}
+	}
+
+	if d.HasChange("warningperiod") {
+		value := d.Get("warningperiod")
+		vaultRecord.WarningPeriod = keyhubmodel.RecordWarningPeriod(value.(string))
 	}
 
 	return diags
