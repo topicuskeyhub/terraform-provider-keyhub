@@ -53,7 +53,20 @@ func VaultRecordSchema() map[string]*schema.Schema {
 			Sensitive: true,
 			Computed:  true,
 			Required:  false,
-		}}
+		},
+		"enddate": {
+			Type:      schema.TypeString,
+			Sensitive: false,
+			Computed:  true,
+			Required:  false,
+		},
+		"warningperiod": {
+			Type:      schema.TypeString,
+			Sensitive: false,
+			Computed:  true,
+			Required:  false,
+		},
+	}
 
 	schema := map[string]*schema.Schema{}
 	for k, v := range baseSchema {
@@ -320,6 +333,22 @@ func dataSourceVaultRecordRead(ctx context.Context, d *schema.ResourceData, m in
 		diags = append(diags, diag.Diagnostic{
 			Severity: diag.Error,
 			Summary:  "Could not set value for comment",
+			Detail:   err.Error(),
+		})
+	}
+
+	if err := d.Set("enddate", vaultRecord.EndDate.Format("2006-01-02")); err != nil {
+		diags = append(diags, diag.Diagnostic{
+			Severity: diag.Error,
+			Summary:  "Could not set value for enddate",
+			Detail:   err.Error(),
+		})
+	}
+
+	if err := d.Set("warningperiod", vaultRecord.WarningPeriod); err != nil {
+		diags = append(diags, diag.Diagnostic{
+			Severity: diag.Error,
+			Summary:  "Could not set value for warning period",
 			Detail:   err.Error(),
 		})
 	}
