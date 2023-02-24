@@ -14,7 +14,6 @@ The vaultrecord data source allows you to retrieve information about one KeyHub 
 
 ```terraform
 data "keyhub_vaultrecord" "example" {
-  groupuuid = "example"
   uuid = "example"
 }
 ```
@@ -36,6 +35,11 @@ data "keyhub_vaultrecord" "example" {
 - **url** (String) The value of the URL field of the vaultrecord
 - **username** (String) The value of the Username field of the vaultrecord
 - **filename** (String)  The value of the Filename field of the vaultrecord
+
+- **enddate** (String)  The end date for the record, formatted as yyyy-mm-dd
+- **warningperiod** (String)  How far in advance Topicus KeyHub should start displaying expiry
+  warnings. Possible values: AT_EXPIRATION, TWO_WEEKS, ONE_MONTH, TWO_MONTHS, THREE_MONTHS, SIX_MONTHS, NEVER
+
 
 - **comment** (String, Sensitive) The value of the Comment field of the vaultrecord. This value is sensitive as it might contain secret information.
 - **password** (String, Sensitive)  The value of the Password field of the vaultrecord. This value is sensitive as it might contain secret information.

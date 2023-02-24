@@ -59,11 +59,14 @@ resource "keyhub_vaultrecord" "png_file" {
 
 ### Optional
 
-- **url** (String)
-- **username** (String)
-- **filename** (String)
-- **file** (string) Content of file 
+- **url** (String) The URL to be set on the record.
+- **username** (String) The username to be set on the record.
+- **filename** (String) The filename to be set on the record
+- **file** (string) Content of the file 
 - **base64_encoded** (boolean) (Bool) If true, the value of `file` must be base64 encoded  
+- **enddate** (String)  The end date for the record, formatted as yyyy-mm-dd
+- **warningperiod** (String)  How far in advance Topicus KeyHub should start displaying expiry
+  warnings. Possible values: AT_EXPIRATION, TWO_WEEKS, ONE_MONTH, TWO_MONTHS, THREE_MONTHS, SIX_MONTHS, NEVER
 
 At least one of the following is required:
 
