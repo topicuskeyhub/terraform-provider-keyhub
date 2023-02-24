@@ -2,6 +2,7 @@ package keyhub
 
 import (
 	"context"
+	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"strconv"
 	"time"
 
@@ -50,6 +51,7 @@ func dataSourceVaultRecordsRead(ctx context.Context, d *schema.ResourceData, m i
 	}
 	group, err := client.Groups.GetByUUID(groupUUID)
 	if err != nil {
+		tflog.Debug(ctx, err.Error(), apiErrorToLogFields(err))
 		diags = append(diags, diag.Diagnostic{
 			Severity: diag.Error,
 			Summary:  "Could not GET group " + groupUUIDString + " for vault records",
@@ -60,6 +62,7 @@ func dataSourceVaultRecordsRead(ctx context.Context, d *schema.ResourceData, m i
 
 	vaultrecords, err := client.Vaults.GetRecords(group)
 	if err != nil {
+		tflog.Debug(ctx, err.Error(), apiErrorToLogFields(err))
 		diags = append(diags, diag.Diagnostic{
 			Severity: diag.Error,
 			Summary:  "Could not GET vaultrecords of group " + groupUUIDString,

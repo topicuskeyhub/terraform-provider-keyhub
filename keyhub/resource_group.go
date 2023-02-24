@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/google/uuid"
+	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
@@ -364,6 +365,7 @@ func resourceGroupCreate(ctx context.Context, d *schema.ResourceData, m interfac
 		}
 		kh_group, err := client.Groups.GetByUUID(grpUuid)
 		if err != nil {
+			tflog.Debug(ctx, err.Error(), apiErrorToLogFields(err))
 			diags = append(diags, diag.Diagnostic{
 				Severity: diag.Error,
 				Summary:  "Group does not exist",
@@ -397,6 +399,7 @@ func resourceGroupCreate(ctx context.Context, d *schema.ResourceData, m interfac
 
 	createdGroup, err := client.Groups.Create(newGroup)
 	if err != nil {
+		tflog.Debug(ctx, err.Error(), apiErrorToLogFields(err))
 		diags = append(diags, diag.Diagnostic{
 			Severity: diag.Error,
 			Summary:  "Could not create group",

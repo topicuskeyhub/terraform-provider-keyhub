@@ -5,6 +5,7 @@ import (
 	"encoding/base64"
 	"fmt"
 	"github.com/hashicorp/go-cty/cty"
+	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
 	"strconv"
 	"time"
@@ -176,6 +177,7 @@ func resourceVaultRecordCreate(ctx context.Context, d *schema.ResourceData, m in
 	}
 	group, err := client.Groups.GetByUUID(groupUUID)
 	if err != nil {
+		tflog.Debug(ctx, err.Error(), apiErrorToLogFields(err))
 		diags = append(diags, diag.Diagnostic{
 			Severity: diag.Error,
 			Summary:  "Could not GET group " + groupUUIDString + " for new vault record " + name,
@@ -187,6 +189,7 @@ func resourceVaultRecordCreate(ctx context.Context, d *schema.ResourceData, m in
 	//query vaultrecords by name to prevent duplicates
 	existingVaultRecord, err := client.Vaults.List(group, &keyhubmodel.VaultRecordQueryParams{Name: name}, &keyhubmodel.VaultRecordAdditionalQueryParams{Secret: true})
 	if err != nil {
+		tflog.Debug(ctx, err.Error(), apiErrorToLogFields(err))
 		diags = append(diags, diag.Diagnostic{
 			Severity: diag.Error,
 			Summary:  "Could not CREATE vaultRecord in group " + groupUUIDString,
@@ -215,6 +218,7 @@ func resourceVaultRecordCreate(ctx context.Context, d *schema.ResourceData, m in
 
 	newVaultRecord, err := client.Vaults.Create(group, vaultRecord)
 	if err != nil {
+		tflog.Debug(ctx, err.Error(), apiErrorToLogFields(err))
 		diags = append(diags, diag.Diagnostic{
 			Severity: diag.Error,
 			Summary:  "Could not CREATE vaultRecord in group " + groupUUIDString,
@@ -260,6 +264,7 @@ func resourceVaultRecordUpdate(ctx context.Context, d *schema.ResourceData, m in
 
 	group, err := client.Groups.GetByUUID(groupUUID)
 	if err != nil {
+		tflog.Debug(ctx, err.Error(), apiErrorToLogFields(err))
 		diags = append(diags, diag.Diagnostic{
 			Severity: diag.Error,
 			Summary:  "Could not GET group " + groupUUIDString + " for vault record " + d.Id(),
@@ -270,6 +275,7 @@ func resourceVaultRecordUpdate(ctx context.Context, d *schema.ResourceData, m in
 
 	vaultRecord, err := client.Vaults.GetByID(group, ID, &keyhubmodel.VaultRecordAdditionalQueryParams{Secret: true})
 	if err != nil {
+		tflog.Debug(ctx, err.Error(), apiErrorToLogFields(err))
 		diags = append(diags, diag.Diagnostic{
 			Severity: diag.Error,
 			Summary:  "Could not GET vault record " + d.Id(),
@@ -287,6 +293,7 @@ func resourceVaultRecordUpdate(ctx context.Context, d *schema.ResourceData, m in
 
 	_, err = client.Vaults.Update(group, vaultRecord)
 	if err != nil {
+		tflog.Debug(ctx, err.Error(), apiErrorToLogFields(err))
 		diags = append(diags, diag.Diagnostic{
 			Severity: diag.Error,
 			Summary:  "Could not UPDATE vault record " + vaultRecord.UUID,
@@ -309,6 +316,7 @@ func resourceVaultRecordDelete(ctx context.Context, d *schema.ResourceData, m in
 	groupUUIDString := d.Get("groupuuid").(string)
 	groupUUID, err := uuid.Parse(groupUUIDString)
 	if err != nil {
+		tflog.Debug(ctx, err.Error(), apiErrorToLogFields(err))
 		diags = append(diags, diag.Diagnostic{
 			Severity: diag.Error,
 			Summary:  "Field 'groupuuid' is not a valid UUID",
@@ -328,6 +336,7 @@ func resourceVaultRecordDelete(ctx context.Context, d *schema.ResourceData, m in
 
 	group, err := client.Groups.GetByUUID(groupUUID)
 	if err != nil {
+		tflog.Debug(ctx, err.Error(), apiErrorToLogFields(err))
 		diags = append(diags, diag.Diagnostic{
 			Severity: diag.Error,
 			Summary:  "Could not GET group " + groupUUIDString + " for vault record " + d.Id(),
@@ -338,6 +347,7 @@ func resourceVaultRecordDelete(ctx context.Context, d *schema.ResourceData, m in
 
 	err = client.Vaults.DeleteByID(group, ID)
 	if err != nil {
+		tflog.Debug(ctx, err.Error(), apiErrorToLogFields(err))
 		diags = append(diags, diag.Diagnostic{
 			Severity: diag.Error,
 			Summary:  "Could not DELETE vaultrecord " + d.Id(),

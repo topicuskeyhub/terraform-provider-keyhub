@@ -3,6 +3,7 @@ package keyhub
 import (
 	"context"
 	"fmt"
+	"github.com/hashicorp/terraform-plugin-log/tflog"
 	keyhubmodel "github.com/topicuskeyhub/go-keyhub/model"
 	"strconv"
 
@@ -165,6 +166,7 @@ func dataSourceGroupRead(ctx context.Context, d *schema.ResourceData, m interfac
 
 	group, err := client.Groups.GetByUUID(UUID)
 	if err != nil {
+		tflog.Debug(ctx, err.Error(), apiErrorToLogFields(err))
 		diags = append(diags, diag.Diagnostic{
 			Severity: diag.Error,
 			Summary:  "Could not GET group " + uuidString,

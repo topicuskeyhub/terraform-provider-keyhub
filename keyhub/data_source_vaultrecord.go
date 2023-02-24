@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/base64"
 	"github.com/google/uuid"
+	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"regexp"
@@ -141,6 +142,7 @@ func dataSourceVaultRecordRead(ctx context.Context, d *schema.ResourceData, m in
 		}
 		group, err = client.Groups.GetByUUID(groupUUID)
 		if err != nil {
+			tflog.Debug(ctx, err.Error(), apiErrorToLogFields(err))
 			diags = append(diags, diag.Diagnostic{
 				Severity: diag.Error,
 				Summary:  "Could not GET group " + groupUUIDString + " to READ vault record(s)",
@@ -169,6 +171,7 @@ func dataSourceVaultRecordRead(ctx context.Context, d *schema.ResourceData, m in
 			vaultRecord, err = client.Vaults.FindByUUIDForClient(UUID, &keyhubmodel.VaultRecordAdditionalQueryParams{Secret: true})
 		}
 		if err != nil {
+			tflog.Debug(ctx, err.Error(), apiErrorToLogFields(err))
 			diags = append(diags, diag.Diagnostic{
 				Severity: diag.Error,
 				Summary:  "Could not GET vault record " + uuidString.(string),
@@ -195,6 +198,7 @@ func dataSourceVaultRecordRead(ctx context.Context, d *schema.ResourceData, m in
 				vaultRecord, err = client.Vaults.FindByIDForClient(ID, &keyhubmodel.VaultRecordAdditionalQueryParams{Secret: true})
 			}
 			if err != nil {
+				tflog.Debug(ctx, err.Error(), apiErrorToLogFields(err))
 				diags = append(diags, diag.Diagnostic{
 					Severity: diag.Error,
 					Summary:  "Could not GET vault record " + d.Id(),
