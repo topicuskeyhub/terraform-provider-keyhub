@@ -103,11 +103,19 @@ func GroupOnSystemResourceSchema() map[string]*schema.Schema {
 			Optional:    true,
 			Description: "Display name of the group on provisioned system. (Only on systems that support a display name)",
 		},
+		"no_provgroup": {
+			Type:          schema.TypeBool,
+			Optional:      true,
+			ConflictsWith: []string{"provgroup"},
+			Description:   "Disable setting the owner group as the provisioning group",
+		},
+
 		"provgroup": {
-			Type:        schema.TypeSet,
-			Optional:    true,
-			Computed:    true,
-			Description: "Define the provisioning group for the grouponsystem, can be set multiple times. If omitted the owner group will be the provisioning group",
+			Type:          schema.TypeSet,
+			Optional:      true,
+			Computed:      true,
+			ConflictsWith: []string{"no_provgroup"},
+			Description:   "Define the provisioning group for the grouponsystem, can be set multiple times. If omitted the owner group will be the provisioning group",
 			Elem: &schema.Resource{
 				Schema: map[string]*schema.Schema{
 					"group": {
@@ -366,6 +374,12 @@ func resourceGroupOnSystemCreate(ctx context.Context, d *schema.ResourceData, m 
 
 	if value, ok := d.GetOk("display_name"); ok {
 		gos.DisplayName = value.(string)
+	}
+
+	if value, ok := d.GetOk("no_provgroup"); ok {
+		if value.(bool) {
+			gos.NoProvGroups()
+		}
 	}
 
 	if _, ok := d.GetOk("provgroup"); ok {
