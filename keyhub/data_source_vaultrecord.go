@@ -339,9 +339,7 @@ func dataSourceVaultRecordRead(ctx context.Context, d *schema.ResourceData, m in
 
 	var tmpEndDate string
 
-	if vaultRecord.EndDate.IsZero() {
-		tmpEndDate = ""
-	} else {
+	if !vaultRecord.EndDate.IsZero() {
 		tmpEndDate = vaultRecord.EndDate.Format("2006-01-02")
 	}
 
