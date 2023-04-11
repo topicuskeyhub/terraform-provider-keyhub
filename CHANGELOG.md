@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.3] - 2023-04-11
+
+### Fixed
+- Update go-keyhub dependency to fix no results bug
+
+
 ## [1.2.2] - 2022-10-04
 
 ### Fixed
