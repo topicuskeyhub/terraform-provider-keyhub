@@ -337,7 +337,13 @@ func dataSourceVaultRecordRead(ctx context.Context, d *schema.ResourceData, m in
 		})
 	}
 
-	if err := d.Set("enddate", vaultRecord.EndDate.Format("2006-01-02")); err != nil {
+	var tmpEndDate string
+
+	if !vaultRecord.EndDate.IsZero() {
+		tmpEndDate = vaultRecord.EndDate.Format("2006-01-02")
+	}
+
+	if err := d.Set("enddate", tmpEndDate); err != nil {
 		diags = append(diags, diag.Diagnostic{
 			Severity: diag.Error,
 			Summary:  "Could not set value for enddate",
