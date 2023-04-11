@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- #29 Hotfix: Check for empty string or parsed version 0001-01-01
+
+
 ## [1.2.3] - 2023-04-11
 
 ### Fixed
