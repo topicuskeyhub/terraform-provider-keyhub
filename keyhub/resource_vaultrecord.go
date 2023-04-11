@@ -428,15 +428,19 @@ func vaultRecordSchemaToModel(d *schema.ResourceData, vaultRecord *keyhubmodel.V
 
 	if d.HasChange("enddate") {
 		value := d.Get("enddate")
-		val, err := time.Parse("2006-01-02", value.(string))
-		if err != nil {
-			diags = append(diags, diag.Diagnostic{
-				Severity: diag.Error,
-				Summary:  "Could not parse enddate",
-				Detail:   fmt.Sprintf("Could not parse enddate %q: %s", value.(string), err.Error()),
-			})
+		if value != "" {
+			val, err := time.Parse("2006-01-02", value.(string))
+			if err != nil {
+				diags = append(diags, diag.Diagnostic{
+					Severity: diag.Error,
+					Summary:  "Could not parse enddate",
+					Detail:   fmt.Sprintf("Could not parse enddate %q: %s", value.(string), err.Error()),
+				})
+			} else {
+				vaultRecord.EndDate = val
+			}
 		} else {
-			vaultRecord.EndDate = val
+			vaultRecord.EndDate = time.Time{}
 		}
 	}
 
