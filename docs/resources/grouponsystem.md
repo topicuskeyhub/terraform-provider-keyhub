@@ -24,8 +24,7 @@ resource "keyhub_grouponsystem" "example" {
 
   provgroup {
     group = "00000000-0000-0000-0000-000000000000"
-    securitylevel = "HIGH"
-    static = false
+    activation_required = true
   }
 
 }
@@ -54,8 +53,7 @@ resource "keyhub_grouponsystem" "example" {
 
 The *provgroup* block supports the following:
 - **group** (String, Required) The UUID of the group that will become a provisioning group for the grouponsystem
-- **securitylevel** (String) The security level. Possible values: `HIGH` (default), `MEDIUM`, `LOW`
-- **static** (Bool) If set to true the group on system will be static provisioned
+- **activation_required** (Bool) Set to false to have the group on system statically provisioned
 
 
 
