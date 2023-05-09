@@ -9,6 +9,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - #22 Allow creation of GroupOnSystem without provGroups
 
+## [1.2.4] - 2023-04-11
+
+### Fixed
+- #29 Hotfix: Check for empty string or time.isZero
+
+
+## [1.2.3] - 2023-04-11
+
+### Fixed
+- Update go-keyhub dependency to fix no results bug
+
 ## [1.2.2] - 2022-10-04
 
 ### Fixed
