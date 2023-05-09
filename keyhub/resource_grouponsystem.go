@@ -124,27 +124,11 @@ func GroupOnSystemResourceSchema() map[string]*schema.Schema {
 						ValidateDiagFunc: validation.ToDiagFunc(validation.IsUUID),
 						Description:      "The UUID of the group that will become a provisioning group for the grouponsystem",
 					},
-					"securitylevel": {
-						Type:     schema.TypeString,
-						Optional: true,
-						ValidateDiagFunc: validation.ToDiagFunc(
-							validation.StringInSlice(
-								[]string{
-									string(keyhubmodel.PRGRP_SECURITY_LEVEL_HIGH),
-									string(keyhubmodel.PRGRP_SECURITY_LEVEL_MEDIUM),
-									string(keyhubmodel.PRGRP_SECURITY_LEVEL_LOW),
-								},
-								false,
-							),
-						),
-						Default:     string(keyhubmodel.PRGRP_SECURITY_LEVEL_HIGH),
-						Description: "The security level. Possible values: `HIGH` (default), `MEDIUM`, `LOW`",
-					},
-					"static": {
+					"activation_required": {
 						Type:        schema.TypeBool,
 						Optional:    true,
-						Default:     false,
-						Description: "If set to true the group on system will be static provisioned",
+						Default:     true,
+						Description: "Set to false to have the group on system statically provisioned",
 					},
 				},
 			},
@@ -266,8 +250,7 @@ func resourceGroupOnSystemRead(ctx context.Context, d *schema.ResourceData, m in
 
 			provgroup := make(map[string]interface{})
 			provgroup["group"] = pvgrp.Group.UUID
-			provgroup["securitylevel"] = string(pvgrp.SecurityLevel)
-			provgroup["static"] = pvgrp.StaticProvisioning
+			provgroup["activation_required"] = pvgrp.ActivationRequired
 
 			provgroups = append(provgroups, provgroup)
 		}
@@ -399,17 +382,8 @@ func resourceGroupOnSystemCreate(ctx context.Context, d *schema.ResourceData, m 
 
 			pg := keyhubmodel.NewProvisioningGroup()
 			pg.Group = pggrp.AsPrimer()
-			err = pg.SetSecurityLevelString(provgrp["securitylevel"].(string))
-			if err != nil {
-				diags = append(diags, diag.Diagnostic{
-					Severity: diag.Error,
-					Summary:  "Can not configure provgroup for group",
-					Detail:   err.Error(),
-				})
-				return diags
-			}
 
-			pg.StaticProvisioning = provgrp["static"].(bool)
+			pg.ActivationRequired = provgrp["activation_required"].(bool)
 
 			gos.AddProvGroup(*pg)
 
