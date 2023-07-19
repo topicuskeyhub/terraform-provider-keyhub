@@ -6,79 +6,174 @@ package provider
 import (
 	"context"
 	"net/http"
+	"os"
 
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
+	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/provider"
 	"github.com/hashicorp/terraform-plugin-framework/provider/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	keyhub "github.com/topicuskeyhub/sdk-go"
 )
 
-// Ensure ScaffoldingProvider satisfies various provider interfaces.
-var _ provider.Provider = &ScaffoldingProvider{}
+// Ensure KeyHubProvider satisfies various provider interfaces.
+var _ provider.Provider = &KeyHubProvider{}
 
-// ScaffoldingProvider defines the provider implementation.
-type ScaffoldingProvider struct {
+// KeyHubProvider defines the provider implementation.
+type KeyHubProvider struct {
 	// version is set to the provider version on release, "dev" when the
 	// provider is built and ran locally, and "test" when running acceptance
 	// testing.
 	version string
 }
 
-// ScaffoldingProviderModel describes the provider data model.
-type ScaffoldingProviderModel struct {
-	Endpoint types.String `tfsdk:"endpoint"`
+// KeyHubProviderModel describes the provider data model.
+type KeyHubProviderModel struct {
+	Issuer       types.String `tfsdk:"issuer"`
+	ClientID     types.String `tfsdk:"clientid"`
+	ClientSecret types.String `tfsdk:"clientsecret"`
 }
 
-func (p *ScaffoldingProvider) Metadata(ctx context.Context, req provider.MetadataRequest, resp *provider.MetadataResponse) {
-	resp.TypeName = "scaffolding"
+func (p *KeyHubProvider) Metadata(ctx context.Context, req provider.MetadataRequest, resp *provider.MetadataResponse) {
+	resp.TypeName = "keyhub"
 	resp.Version = p.version
 }
 
-func (p *ScaffoldingProvider) Schema(ctx context.Context, req provider.SchemaRequest, resp *provider.SchemaResponse) {
+func (p *KeyHubProvider) Schema(ctx context.Context, req provider.SchemaRequest, resp *provider.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		Attributes: map[string]schema.Attribute{
-			"endpoint": schema.StringAttribute{
-				MarkdownDescription: "Example provider attribute",
-				Optional:            true,
+			"issuer": schema.StringAttribute{
+				Optional: true,
+			},
+			"clientid": schema.StringAttribute{
+				Optional: true,
+			},
+			"clientsecret": schema.StringAttribute{
+				Optional:  true,
+				Sensitive: true,
 			},
 		},
 	}
 }
 
-func (p *ScaffoldingProvider) Configure(ctx context.Context, req provider.ConfigureRequest, resp *provider.ConfigureResponse) {
-	var data ScaffoldingProviderModel
+func (p *KeyHubProvider) Configure(ctx context.Context, req provider.ConfigureRequest, resp *provider.ConfigureResponse) {
+	var config KeyHubProviderModel
+	resp.Diagnostics.Append(req.Config.Get(ctx, &config)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
 
-	resp.Diagnostics.Append(req.Config.Get(ctx, &data)...)
+	if config.Issuer.IsUnknown() {
+		resp.Diagnostics.AddAttributeError(
+			path.Root("issuer"),
+			"Unknown Topicus KeyHub Issuer URI",
+			"The provider cannot create the Topicus KeyHub API client as there is an unknown configuration value for the Topicus KeyHub Issuer URI. "+
+				"Either target apply the source of the value first, set the value statically in the configuration, or use the KEYHUB_ISSUER environment variable.",
+		)
+	}
+	if config.ClientID.IsUnknown() {
+		resp.Diagnostics.AddAttributeError(
+			path.Root("clientid"),
+			"Unknown Topicus KeyHub Client ID",
+			"The provider cannot create the Topicus KeyHub API client as there is an unknown configuration value for the Topicus KeyHub Client ID. "+
+				"Either target apply the source of the value first, set the value statically in the configuration, or use the KEYHUB_CLIENTID environment variable.",
+		)
+	}
+	if config.ClientSecret.IsUnknown() {
+		resp.Diagnostics.AddAttributeError(
+			path.Root("clientsecret"),
+			"Unknown Topicus KeyHub Client Secret",
+			"The provider cannot create the Topicus KeyHub API client as there is an unknown configuration value for the Topicus KeyHub Client Secret. "+
+				"Either target apply the source of the value first, set the value statically in the configuration, or use the KEYHUB_CLIENTSECRET environment variable.",
+		)
+	}
 
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	// Configuration values are now available.
-	// if data.Endpoint.IsNull() { /* ... */ }
+	issuer := os.Getenv("KEYHUB_ISSUER")
+	clientid := os.Getenv("KEYHUB_CLIENTID")
+	clientsecret := os.Getenv("KEYHUB_CLIENTSECRET")
 
-	// Example client configuration for data sources and resources
-	client := http.DefaultClient
+	if !config.Issuer.IsNull() {
+		issuer = config.Issuer.ValueString()
+	}
+
+	if !config.ClientID.IsNull() {
+		clientid = config.ClientID.ValueString()
+	}
+
+	if !config.ClientSecret.IsNull() {
+		clientsecret = config.ClientSecret.ValueString()
+	}
+
+	if issuer == "" {
+		resp.Diagnostics.AddAttributeError(
+			path.Root("issuer"),
+			"Missing Topicus KeyHub Issuer URI",
+			"The provider cannot create the Topicus KeyHub API client as there is a missing or empty value for the Topicus KeyHub Issuer URI. "+
+				"Set the issuer value in the configuration or use the KEYHUB_ISSUER environment variable. "+
+				"If either is already set, ensure the value is not empty.",
+		)
+	}
+
+	if clientid == "" {
+		resp.Diagnostics.AddAttributeError(
+			path.Root("clientid"),
+			"Missing Topicus KeyHub Client ID",
+			"The provider cannot create the Topicus KeyHub API client as there is a missing or empty value for the Topicus KeyHub Client ID. "+
+				"Set the clientid value in the configuration or use the KEYHUB_CLIENTID environment variable. "+
+				"If either is already set, ensure the value is not empty.",
+		)
+	}
+
+	if clientsecret == "" {
+		resp.Diagnostics.AddAttributeError(
+			path.Root("clientsecret"),
+			"Missing Topicus KeyHub Client ID",
+			"The provider cannot create the Topicus KeyHub API client as there is a missing or empty value for the Topicus KeyHub Client ID. "+
+				"Set the clientsecret value in the configuration or use the KEYHUB_CLIENTSECRET environment variable. "+
+				"If either is already set, ensure the value is not empty.",
+		)
+	}
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	adapter, err := keyhub.NewKeyHubRequestAdapter(http.DefaultClient, issuer, clientid, clientsecret)
+	if err != nil {
+		resp.Diagnostics.AddError(
+			"Unable to create Topicus KeyHub API client",
+			"An unexpected error occurred when creating the Topicus KeyHub API client. "+
+				"If the error is not clear, please contact the provider developers.\n\n"+
+				"Topicus KeyHub API client Error: "+err.Error(),
+		)
+		return
+	}
+
+	client := keyhub.NewKeyHubClient(adapter)
 	resp.DataSourceData = client
 	resp.ResourceData = client
 }
 
-func (p *ScaffoldingProvider) Resources(ctx context.Context) []func() resource.Resource {
+func (p *KeyHubProvider) Resources(ctx context.Context) []func() resource.Resource {
 	return []func() resource.Resource{
 		NewExampleResource,
 	}
 }
 
-func (p *ScaffoldingProvider) DataSources(ctx context.Context) []func() datasource.DataSource {
+func (p *KeyHubProvider) DataSources(ctx context.Context) []func() datasource.DataSource {
 	return []func() datasource.DataSource{
-		NewExampleDataSource,
+		NewGroupDataSource,
 	}
 }
 
 func New(version string) func() provider.Provider {
 	return func() provider.Provider {
-		return &ScaffoldingProvider{
+		return &KeyHubProvider{
 			version: version,
 		}
 	}
