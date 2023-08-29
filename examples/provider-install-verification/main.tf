@@ -6,10 +6,15 @@ terraform {
   }
 }
 
+variable "keyhub_secret" {
+  type = string
+  description = "Client secret on KeyHub"
+}
+
 provider "keyhub" {
   issuer       = "https://keyhub.topicusonderwijs.nl"
   clientid     = "3a5e82ad-3f0d-4a63-846b-4b3e431f1135"
-  clientsecret = "P0OERPwK2hHJGS68Op2epiXvcVy4GDpx98huzagI"
+  clientsecret = var.keyhub_secret
 }
 
 data "keyhub_group" "test" {
