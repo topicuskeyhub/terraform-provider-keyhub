@@ -14,10 +14,13 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/provider/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/hashicorp/terraform-plugin-log/tflog"
 	keyhub "github.com/topicuskeyhub/sdk-go"
 )
 
 // Ensure KeyHubProvider satisfies various provider interfaces.
+//
+//go:generate go run github.com/topicuskeyhub/terraform-provider-keyhub-generator
 var _ provider.Provider = &KeyHubProvider{}
 
 // KeyHubProvider defines the provider implementation.
@@ -142,7 +145,12 @@ func (p *KeyHubProvider) Configure(ctx context.Context, req provider.ConfigureRe
 	if resp.Diagnostics.HasError() {
 		return
 	}
+	ctx = tflog.SetField(ctx, "keyhub_issuer", issuer)
+	ctx = tflog.SetField(ctx, "keyhub_clientid", clientid)
+	ctx = tflog.SetField(ctx, "keyhub_clientsecret", clientsecret)
+	ctx = tflog.MaskFieldValuesWithFieldKeys(ctx, "keyhub_clientsecret")
 
+	tflog.Info(ctx, "Connecting to Topicus KeyHub")
 	adapter, err := keyhub.NewKeyHubRequestAdapter(http.DefaultClient, issuer, clientid, clientsecret)
 	if err != nil {
 		resp.Diagnostics.AddError(
@@ -157,11 +165,13 @@ func (p *KeyHubProvider) Configure(ctx context.Context, req provider.ConfigureRe
 	client := keyhub.NewKeyHubClient(adapter)
 	resp.DataSourceData = client
 	resp.ResourceData = client
+
+	tflog.Info(ctx, "Connected to Topicus KeyHub", map[string]any{"success": true})
 }
 
 func (p *KeyHubProvider) Resources(ctx context.Context) []func() resource.Resource {
 	return []func() resource.Resource{
-		NewExampleResource,
+		NewGroupResource,
 	}
 }
 

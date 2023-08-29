@@ -7,12 +7,15 @@ terraform {
 }
 
 provider "keyhub" {
-  issuer       = "https://keyhub.localhost:8443"
-  clientid     = "ebdf81ac-b02b-4335-9dc4-4a9bc4eb406d"
-  clientsecret = "o9n8b8j3TRk7A4eQfKEIDIoN-IUvRAlA3gGLUNW8"
+  issuer       = "https://keyhub.topicusonderwijs.nl"
+  clientid     = "3a5e82ad-3f0d-4a63-846b-4b3e431f1135"
+  clientsecret = "P0OERPwK2hHJGS68Op2epiXvcVy4GDpx98huzagI"
 }
 
-data "keyhub_group" "testgroup" {
-  uuid = "c20a6ed4-1ae5-4a9f-91b5-2f56f5a1522f"
+data "keyhub_group" "test" {
+  uuid = "2fb85263-6406-44f9-9e8a-b1a6d1f43250"
 }
 
+output "testgroup" {
+  value = data.keyhub_group.test
+}
