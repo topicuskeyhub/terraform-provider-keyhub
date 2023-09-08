@@ -62,7 +62,7 @@ func (d *groupDataSource) Configure(ctx context.Context, req datasource.Configur
 }
 
 func (d *groupDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
-	var data groupGroupData
+	var data groupGroupDataDS
 	resp.Diagnostics.Append(req.Config.Get(ctx, &data)...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -84,12 +84,12 @@ func (d *groupDataSource) Read(ctx context.Context, req datasource.ReadRequest, 
 		return
 	}
 	group := groups.GetItems()[0]
-	tfGroup, diags := tkhToTFObjectGroupGroup(true, group)
+	tfGroup, diags := tkhToTFObjectDSGroupGroup(true, group)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	fillDataStructFromTFObjectGroupGroup(&data, tfGroup)
+	fillDataStructFromTFObjectDSGroupGroup(&data, tfGroup)
 
 	// Save data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

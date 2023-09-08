@@ -65,19 +65,19 @@ func (r *groupResource) Configure(ctx context.Context, req resource.ConfigureReq
 }
 
 func (r *groupResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	var data groupGroupData
+	var data groupGroupDataRS
 	resp.Diagnostics.Append(req.Plan.Get(ctx, &data)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	obj, diags := types.ObjectValueFrom(ctx, groupGroupAttrTypesRecurse, data)
+	obj, diags := types.ObjectValueFrom(ctx, groupGroupAttrTypesRSRecurse, data)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	newgroup, diags := tfObjectToTKHGroupGroup(ctx, true, obj)
+	newgroup, diags := tfObjectToTKHRSGroupGroup(ctx, true, obj)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -94,19 +94,19 @@ func (r *groupResource) Create(ctx context.Context, req resource.CreateRequest, 
 	}
 
 	group := createdwrapper.GetItems()[0]
-	tfGroup, diags := tkhToTFObjectGroupGroup(true, group)
+	tfGroup, diags := tkhToTFObjectRSGroupGroup(true, group)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	fillDataStructFromTFObjectGroupGroup(&data, tfGroup)
+	fillDataStructFromTFObjectRSGroupGroup(&data, tfGroup)
 
 	tflog.Trace(ctx, "Created a new Topicus KeyHub group")
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
 func (r *groupResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
-	var data groupGroupData
+	var data groupGroupDataRS
 	resp.Diagnostics.Append(req.State.Get(ctx, &data)...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -128,19 +128,19 @@ func (r *groupResource) Read(ctx context.Context, req resource.ReadRequest, resp
 		return
 	}
 	group := groups.GetItems()[0]
-	tfGroup, diags := tkhToTFObjectGroupGroup(true, group)
+	tfGroup, diags := tkhToTFObjectRSGroupGroup(true, group)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	fillDataStructFromTFObjectGroupGroup(&data, tfGroup)
+	fillDataStructFromTFObjectRSGroupGroup(&data, tfGroup)
 
 	// Save data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
 func (r *groupResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
-	var data groupGroupData
+	var data groupGroupDataRS
 	resp.Diagnostics.Append(req.Plan.Get(ctx, &data)...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -159,7 +159,7 @@ func (r *groupResource) Update(ctx context.Context, req resource.UpdateRequest, 
 }
 
 func (r *groupResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
-	var data groupGroupData
+	var data groupGroupDataRS
 	resp.Diagnostics.Append(req.State.Get(ctx, &data)...)
 	if resp.Diagnostics.HasError() {
 		return
