@@ -32,11 +32,13 @@ data "keyhub_group" "test" {
 resource "keyhub_group" "terra" {
   name = "Terraform"
   additional_objects = {
-    admins = {
+    accounts = {
 	  items = [{
-	    
+	    uuid = "7ea6622b-f9d2-4e52-a799-217b26f88376"
+	    rights = "MANAGER"
 	  }]
 	}
+	requeststatus = "MEMBER"
   }
 }
 

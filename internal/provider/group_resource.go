@@ -71,6 +71,7 @@ func (r *groupResource) Create(ctx context.Context, req resource.CreateRequest, 
 		return
 	}
 
+	ctx = context.WithValue(ctx, "keyhub_client", r.client)
 	obj, diags := types.ObjectValueFrom(ctx, groupGroupAttrTypesRSRecurse, data)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
@@ -113,6 +114,7 @@ func (r *groupResource) Read(ctx context.Context, req resource.ReadRequest, resp
 	}
 
 	ctx = tflog.SetField(ctx, "keyhub_group_uuid", data.UUID.ValueString())
+	ctx = context.WithValue(ctx, "keyhub_client", r.client)
 	tflog.Debug(ctx, "Reading group from Topicus KeyHub by UUID")
 	groups, err := r.client.Group().Get(ctx, &keyhubgroup.GroupRequestBuilderGetRequestConfiguration{
 		QueryParameters: &keyhubgroup.GroupRequestBuilderGetQueryParameters{
