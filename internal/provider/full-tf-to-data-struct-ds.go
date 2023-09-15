@@ -58,6 +58,7 @@ func fillDataStructFromTFObjectDSSegmentCount(data *segmentCountDataDS, obj type
 func fillDataStructFromTFObjectDSAuditAuditRecord(data *auditAuditRecordDataDS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.AuditAuditRecordType = obj.Attributes()["audit_audit_record_type"].(basetypes.StringValue)
 	data.DateTime = obj.Attributes()["date_time"].(basetypes.StringValue)
@@ -96,6 +97,7 @@ func fillDataStructFromTFObjectDSAuthAccount(data *authAccountDataDS, obj types.
 	data.Username = obj.Attributes()["username"].(basetypes.StringValue)
 	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
 	data.Validity = obj.Attributes()["validity"].(basetypes.StringValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.AccountPermissions = obj.Attributes()["account_permissions"].(basetypes.ListValue)
 	data.Active = obj.Attributes()["active"].(basetypes.BoolValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
@@ -203,6 +205,7 @@ func fillDataStructFromTFObjectDSAuthInternalAccount(data *authInternalAccountDa
 	data.Username = obj.Attributes()["username"].(basetypes.StringValue)
 	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
 	data.Validity = obj.Attributes()["validity"].(basetypes.StringValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.AccountPermissions = obj.Attributes()["account_permissions"].(basetypes.ListValue)
 	data.Active = obj.Attributes()["active"].(basetypes.BoolValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
@@ -271,6 +274,7 @@ func fillDataStructFromTFObjectDSCertificateCertificate(data *certificateCertifi
 	data.Global = obj.Attributes()["global"].(basetypes.BoolValue)
 	data.SubjectDN = obj.Attributes()["subject_d_n"].(basetypes.StringValue)
 	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.KeyData = obj.Attributes()["key_data"].(basetypes.ListValue)
 }
@@ -306,6 +310,7 @@ func fillDataStructFromTFObjectDSClientClientApplication(data *clientClientAppli
 	data.Scopes = obj.Attributes()["scopes"].(basetypes.ListValue)
 	data.SsoApplication = obj.Attributes()["sso_application"].(basetypes.BoolValue)
 	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.LastModifiedAt = obj.Attributes()["last_modified_at"].(basetypes.StringValue)
 	data.Owner = obj.Attributes()["owner"].(basetypes.ObjectValue)
@@ -344,6 +349,7 @@ func fillDataStructFromTFObjectDSClientLdapClient(data *clientLdapClientDataDS, 
 	data.Scopes = obj.Attributes()["scopes"].(basetypes.ListValue)
 	data.SsoApplication = obj.Attributes()["sso_application"].(basetypes.BoolValue)
 	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.LastModifiedAt = obj.Attributes()["last_modified_at"].(basetypes.StringValue)
 	data.Owner = obj.Attributes()["owner"].(basetypes.ObjectValue)
@@ -364,6 +370,7 @@ func fillDataStructFromTFObjectDSClientOAuth2Client(data *clientOAuth2ClientData
 	data.Scopes = obj.Attributes()["scopes"].(basetypes.ListValue)
 	data.SsoApplication = obj.Attributes()["sso_application"].(basetypes.BoolValue)
 	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.LastModifiedAt = obj.Attributes()["last_modified_at"].(basetypes.StringValue)
 	data.Owner = obj.Attributes()["owner"].(basetypes.ObjectValue)
@@ -385,6 +392,7 @@ func fillDataStructFromTFObjectDSClientOAuth2Client(data *clientOAuth2ClientData
 func fillDataStructFromTFObjectDSClientOAuth2ClientPermission(data *clientOAuth2ClientPermissionDataDS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.ForGroup = obj.Attributes()["for_group"].(basetypes.ObjectValue)
 	data.ForSystem = obj.Attributes()["for_system"].(basetypes.ObjectValue)
@@ -398,6 +406,7 @@ func fillDataStructFromTFObjectDSClientOAuth2ClientPermissionLinkableWrapper(dat
 func fillDataStructFromTFObjectDSClientOAuth2ClientPermissionWithClient(data *clientOAuth2ClientPermissionWithClientDataDS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.ForGroup = obj.Attributes()["for_group"].(basetypes.ObjectValue)
 	data.ForSystem = obj.Attributes()["for_system"].(basetypes.ObjectValue)
@@ -425,6 +434,7 @@ func fillDataStructFromTFObjectDSClientSaml2Client(data *clientSaml2ClientDataDS
 	data.Scopes = obj.Attributes()["scopes"].(basetypes.ListValue)
 	data.SsoApplication = obj.Attributes()["sso_application"].(basetypes.BoolValue)
 	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.LastModifiedAt = obj.Attributes()["last_modified_at"].(basetypes.StringValue)
 	data.Owner = obj.Attributes()["owner"].(basetypes.ObjectValue)
@@ -446,6 +456,7 @@ func fillDataStructFromTFObjectDSDirectoryAccountDirectory(data *directoryAccoun
 	data.DirectoryAccountDirectoryPrimerType = obj.Attributes()["directory_account_directory_primer_type"].(basetypes.StringValue)
 	data.Name = obj.Attributes()["name"].(basetypes.StringValue)
 	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.BaseOrganizationalUnit = obj.Attributes()["base_organizational_unit"].(basetypes.ObjectValue)
 	data.DefaultDirectory = obj.Attributes()["default_directory"].(basetypes.BoolValue)
@@ -504,6 +515,7 @@ func fillDataStructFromTFObjectDSDirectoryInternalDirectory(data *directoryInter
 	data.DirectoryAccountDirectoryPrimerType = obj.Attributes()["directory_account_directory_primer_type"].(basetypes.StringValue)
 	data.Name = obj.Attributes()["name"].(basetypes.StringValue)
 	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.BaseOrganizationalUnit = obj.Attributes()["base_organizational_unit"].(basetypes.ObjectValue)
 	data.DefaultDirectory = obj.Attributes()["default_directory"].(basetypes.BoolValue)
@@ -522,6 +534,7 @@ func fillDataStructFromTFObjectDSDirectoryLDAPDirectory(data *directoryLDAPDirec
 	data.DirectoryAccountDirectoryPrimerType = obj.Attributes()["directory_account_directory_primer_type"].(basetypes.StringValue)
 	data.Name = obj.Attributes()["name"].(basetypes.StringValue)
 	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.BaseOrganizationalUnit = obj.Attributes()["base_organizational_unit"].(basetypes.ObjectValue)
 	data.DefaultDirectory = obj.Attributes()["default_directory"].(basetypes.BoolValue)
@@ -553,6 +566,7 @@ func fillDataStructFromTFObjectDSDirectoryMaintenanceDirectory(data *directoryMa
 	data.DirectoryAccountDirectoryPrimerType = obj.Attributes()["directory_account_directory_primer_type"].(basetypes.StringValue)
 	data.Name = obj.Attributes()["name"].(basetypes.StringValue)
 	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.BaseOrganizationalUnit = obj.Attributes()["base_organizational_unit"].(basetypes.ObjectValue)
 	data.DefaultDirectory = obj.Attributes()["default_directory"].(basetypes.BoolValue)
@@ -570,6 +584,7 @@ func fillDataStructFromTFObjectDSDirectoryOIDCDirectory(data *directoryOIDCDirec
 	data.DirectoryAccountDirectoryPrimerType = obj.Attributes()["directory_account_directory_primer_type"].(basetypes.StringValue)
 	data.Name = obj.Attributes()["name"].(basetypes.StringValue)
 	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.BaseOrganizationalUnit = obj.Attributes()["base_organizational_unit"].(basetypes.ObjectValue)
 	data.DefaultDirectory = obj.Attributes()["default_directory"].(basetypes.BoolValue)
@@ -596,6 +611,7 @@ func fillDataStructFromTFObjectDSGroupAccountGroup(data *groupAccountGroupDataDS
 	data.Admin = obj.Attributes()["admin"].(basetypes.BoolValue)
 	data.Name = obj.Attributes()["name"].(basetypes.StringValue)
 	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.EndDate = obj.Attributes()["end_date"].(basetypes.StringValue)
 	data.Folder = obj.Attributes()["folder"].(basetypes.ObjectValue)
@@ -625,6 +641,7 @@ func fillDataStructFromTFObjectDSGroupGroup(data *groupGroupDataDS, obj types.Ob
 	data.Admin = obj.Attributes()["admin"].(basetypes.BoolValue)
 	data.Name = obj.Attributes()["name"].(basetypes.StringValue)
 	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.ApplicationAdministration = obj.Attributes()["application_administration"].(basetypes.BoolValue)
 	data.AuditConfig = obj.Attributes()["audit_config"].(basetypes.ObjectValue)
@@ -657,6 +674,7 @@ func fillDataStructFromTFObjectDSGroupGroupAccount(data *groupGroupAccountDataDS
 	data.Username = obj.Attributes()["username"].(basetypes.StringValue)
 	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
 	data.Validity = obj.Attributes()["validity"].(basetypes.StringValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.Directory = obj.Attributes()["directory"].(basetypes.ObjectValue)
 	data.DisconnectedNested = obj.Attributes()["disconnected_nested"].(basetypes.BoolValue)
@@ -693,6 +711,7 @@ func fillDataStructFromTFObjectDSGroupGroupAdminMail(data *groupGroupAdminMailDa
 func fillDataStructFromTFObjectDSGroupGroupAudit(data *groupGroupAuditDataDS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.Accounts = obj.Attributes()["accounts"].(basetypes.ListValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.Comment = obj.Attributes()["comment"].(basetypes.StringValue)
@@ -754,6 +773,7 @@ func fillDataStructFromTFObjectDSGroupGroupClassification(data *groupGroupClassi
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
 	data.Name = obj.Attributes()["name"].(basetypes.StringValue)
 	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.AuthorizingGroupAuditingRequired = obj.Attributes()["authorizing_group_auditing_required"].(basetypes.BoolValue)
 	data.AuthorizingGroupDelegationRequired = obj.Attributes()["authorizing_group_delegation_required"].(basetypes.BoolValue)
@@ -796,6 +816,7 @@ func fillDataStructFromTFObjectDSGroupGroupClassification_additionalObjects(data
 func fillDataStructFromTFObjectDSGroupGroupClient(data *groupGroupClientDataDS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.ActivationRequired = obj.Attributes()["activation_required"].(basetypes.BoolValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.Client = obj.Attributes()["client"].(basetypes.ObjectValue)
@@ -815,6 +836,7 @@ func fillDataStructFromTFObjectDSGroupGroupClient_additionalObjects(data *groupG
 func fillDataStructFromTFObjectDSGroupGroupFolder(data *groupGroupFolderDataDS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.Name = obj.Attributes()["name"].(basetypes.StringValue)
 }
@@ -900,6 +922,7 @@ func fillDataStructFromTFObjectDSGroupGroupsAuditStats(data *groupGroupsAuditSta
 func fillDataStructFromTFObjectDSGroupProvisioningGroup(data *groupProvisioningGroupDataDS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.ActivationRequired = obj.Attributes()["activation_required"].(basetypes.BoolValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.Group = obj.Attributes()["group"].(basetypes.ObjectValue)
@@ -932,6 +955,7 @@ func fillDataStructFromTFObjectDSLaunchpadDisplayedLaunchpadTiles(data *launchpa
 func fillDataStructFromTFObjectDSLaunchpadLaunchpadTile(data *launchpadLaunchpadTileDataDS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.Application = obj.Attributes()["application"].(basetypes.ObjectValue)
 	data.Group = obj.Attributes()["group"].(basetypes.ObjectValue)
@@ -957,6 +981,7 @@ func fillDataStructFromTFObjectDSLaunchpadLaunchpadTile_additionalObjects(data *
 func fillDataStructFromTFObjectDSLaunchpadManualLaunchpadTile(data *launchpadManualLaunchpadTileDataDS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.Application = obj.Attributes()["application"].(basetypes.ObjectValue)
 	data.Group = obj.Attributes()["group"].(basetypes.ObjectValue)
@@ -971,6 +996,7 @@ func fillDataStructFromTFObjectDSLaunchpadManualLaunchpadTile(data *launchpadMan
 func fillDataStructFromTFObjectDSLaunchpadSsoApplicationLaunchpadTile(data *launchpadSsoApplicationLaunchpadTileDataDS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.Application = obj.Attributes()["application"].(basetypes.ObjectValue)
 	data.Group = obj.Attributes()["group"].(basetypes.ObjectValue)
@@ -984,6 +1010,7 @@ func fillDataStructFromTFObjectDSLaunchpadSsoApplicationLaunchpadTile(data *laun
 func fillDataStructFromTFObjectDSLaunchpadVaultRecordLaunchpadTile(data *launchpadVaultRecordLaunchpadTileDataDS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.Application = obj.Attributes()["application"].(basetypes.ObjectValue)
 	data.Group = obj.Attributes()["group"].(basetypes.ObjectValue)
@@ -1097,6 +1124,7 @@ func fillDataStructFromTFObjectDSOrganizationAccountOrganizationalUnit(data *org
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
 	data.Name = obj.Attributes()["name"].(basetypes.StringValue)
 	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 }
 
@@ -1113,6 +1141,7 @@ func fillDataStructFromTFObjectDSOrganizationOrganizationalUnit(data *organizati
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
 	data.Name = obj.Attributes()["name"].(basetypes.StringValue)
 	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.Depth = obj.Attributes()["depth"].(basetypes.Int64Value)
 	data.Description = obj.Attributes()["description"].(basetypes.StringValue)
@@ -1128,6 +1157,7 @@ func fillDataStructFromTFObjectDSOrganizationOrganizationalUnitAccount(data *org
 	data.Username = obj.Attributes()["username"].(basetypes.StringValue)
 	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
 	data.Validity = obj.Attributes()["validity"].(basetypes.StringValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.Directory = obj.Attributes()["directory"].(basetypes.ObjectValue)
 }
@@ -1167,6 +1197,7 @@ func fillDataStructFromTFObjectDSProvisioningAbstractProvisionedLDAP(data *provi
 	data.OrganizationalUnit = obj.Attributes()["organizational_unit"].(basetypes.ObjectValue)
 	data.ProvisioningProvisionedSystemPrimerType = obj.Attributes()["provisioning_provisioned_system_primer_type"].(basetypes.StringValue)
 	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.AccountCount = obj.Attributes()["account_count"].(basetypes.Int64Value)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.ContentAdministrator = obj.Attributes()["content_administrator"].(basetypes.ObjectValue)
@@ -1223,6 +1254,7 @@ func fillDataStructFromTFObjectDSProvisioningGroupOnSystem(data *provisioningGro
 	data.NameInSystem = obj.Attributes()["name_in_system"].(basetypes.StringValue)
 	data.ProvisioningGroupOnSystemPrimerType = obj.Attributes()["provisioning_group_on_system_primer_type"].(basetypes.StringValue)
 	data.ShortNameInSystem = obj.Attributes()["short_name_in_system"].(basetypes.StringValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.Owner = obj.Attributes()["owner"].(basetypes.ObjectValue)
 	data.System = obj.Attributes()["system"].(basetypes.ObjectValue)
@@ -1274,6 +1306,7 @@ func fillDataStructFromTFObjectDSProvisioningOwnedGroupOnSystemsWrapper(data *pr
 func fillDataStructFromTFObjectDSProvisioningProvisionNumberSequence(data *provisioningProvisionNumberSequenceDataDS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.AccountCount = obj.Attributes()["account_count"].(basetypes.Int64Value)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.Name = obj.Attributes()["name"].(basetypes.StringValue)
@@ -1297,6 +1330,7 @@ func fillDataStructFromTFObjectDSProvisioningProvisionedAD(data *provisioningPro
 	data.OrganizationalUnit = obj.Attributes()["organizational_unit"].(basetypes.ObjectValue)
 	data.ProvisioningProvisionedSystemPrimerType = obj.Attributes()["provisioning_provisioned_system_primer_type"].(basetypes.StringValue)
 	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.AccountCount = obj.Attributes()["account_count"].(basetypes.Int64Value)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.ContentAdministrator = obj.Attributes()["content_administrator"].(basetypes.ObjectValue)
@@ -1335,6 +1369,7 @@ func fillDataStructFromTFObjectDSProvisioningProvisionedAccount(data *provisioni
 	data.Username = obj.Attributes()["username"].(basetypes.StringValue)
 	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
 	data.Validity = obj.Attributes()["validity"].(basetypes.StringValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.Uid = obj.Attributes()["uid"].(basetypes.Int64Value)
 }
@@ -1355,6 +1390,7 @@ func fillDataStructFromTFObjectDSProvisioningProvisionedAzureOIDCDirectory(data 
 	data.OrganizationalUnit = obj.Attributes()["organizational_unit"].(basetypes.ObjectValue)
 	data.ProvisioningProvisionedSystemPrimerType = obj.Attributes()["provisioning_provisioned_system_primer_type"].(basetypes.StringValue)
 	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.AccountCount = obj.Attributes()["account_count"].(basetypes.Int64Value)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.ContentAdministrator = obj.Attributes()["content_administrator"].(basetypes.ObjectValue)
@@ -1378,6 +1414,7 @@ func fillDataStructFromTFObjectDSProvisioningProvisionedAzureSyncLDAPDirectory(d
 	data.OrganizationalUnit = obj.Attributes()["organizational_unit"].(basetypes.ObjectValue)
 	data.ProvisioningProvisionedSystemPrimerType = obj.Attributes()["provisioning_provisioned_system_primer_type"].(basetypes.StringValue)
 	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.AccountCount = obj.Attributes()["account_count"].(basetypes.Int64Value)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.ContentAdministrator = obj.Attributes()["content_administrator"].(basetypes.ObjectValue)
@@ -1403,6 +1440,7 @@ func fillDataStructFromTFObjectDSProvisioningProvisionedAzureTenant(data *provis
 	data.OrganizationalUnit = obj.Attributes()["organizational_unit"].(basetypes.ObjectValue)
 	data.ProvisioningProvisionedSystemPrimerType = obj.Attributes()["provisioning_provisioned_system_primer_type"].(basetypes.StringValue)
 	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.AccountCount = obj.Attributes()["account_count"].(basetypes.Int64Value)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.ContentAdministrator = obj.Attributes()["content_administrator"].(basetypes.ObjectValue)
@@ -1428,6 +1466,7 @@ func fillDataStructFromTFObjectDSProvisioningProvisionedInternalLDAP(data *provi
 	data.OrganizationalUnit = obj.Attributes()["organizational_unit"].(basetypes.ObjectValue)
 	data.ProvisioningProvisionedSystemPrimerType = obj.Attributes()["provisioning_provisioned_system_primer_type"].(basetypes.StringValue)
 	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.AccountCount = obj.Attributes()["account_count"].(basetypes.Int64Value)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.ContentAdministrator = obj.Attributes()["content_administrator"].(basetypes.ObjectValue)
@@ -1450,6 +1489,7 @@ func fillDataStructFromTFObjectDSProvisioningProvisionedLDAP(data *provisioningP
 	data.OrganizationalUnit = obj.Attributes()["organizational_unit"].(basetypes.ObjectValue)
 	data.ProvisioningProvisionedSystemPrimerType = obj.Attributes()["provisioning_provisioned_system_primer_type"].(basetypes.StringValue)
 	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.AccountCount = obj.Attributes()["account_count"].(basetypes.Int64Value)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.ContentAdministrator = obj.Attributes()["content_administrator"].(basetypes.ObjectValue)
@@ -1490,6 +1530,7 @@ func fillDataStructFromTFObjectDSProvisioningProvisionedLDAPDirectory(data *prov
 	data.OrganizationalUnit = obj.Attributes()["organizational_unit"].(basetypes.ObjectValue)
 	data.ProvisioningProvisionedSystemPrimerType = obj.Attributes()["provisioning_provisioned_system_primer_type"].(basetypes.StringValue)
 	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.AccountCount = obj.Attributes()["account_count"].(basetypes.Int64Value)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.ContentAdministrator = obj.Attributes()["content_administrator"].(basetypes.ObjectValue)
@@ -1513,6 +1554,7 @@ func fillDataStructFromTFObjectDSProvisioningProvisionedSystem(data *provisionin
 	data.OrganizationalUnit = obj.Attributes()["organizational_unit"].(basetypes.ObjectValue)
 	data.ProvisioningProvisionedSystemPrimerType = obj.Attributes()["provisioning_provisioned_system_primer_type"].(basetypes.StringValue)
 	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.AccountCount = obj.Attributes()["account_count"].(basetypes.Int64Value)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.ContentAdministrator = obj.Attributes()["content_administrator"].(basetypes.ObjectValue)
@@ -1547,6 +1589,7 @@ func fillDataStructFromTFObjectDSProvisioningProvisionedSystemPrimerLinkableWrap
 func fillDataStructFromTFObjectDSProvisioningProvisionedSystemSyncLog(data *provisioningProvisionedSystemSyncLogDataDS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.CreatedAt = obj.Attributes()["created_at"].(basetypes.StringValue)
 	data.Errors = obj.Attributes()["errors"].(basetypes.Int64Value)
@@ -1592,6 +1635,7 @@ func fillDataStructFromTFObjectDSProvisioningTokenPassword(data *provisioningTok
 func fillDataStructFromTFObjectDSRequestAbstractApplicationModificationRequest(data *requestAbstractApplicationModificationRequestDataDS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.Account = obj.Attributes()["account"].(basetypes.ObjectValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.Comment = obj.Attributes()["comment"].(basetypes.StringValue)
@@ -1606,6 +1650,7 @@ func fillDataStructFromTFObjectDSRequestAbstractApplicationModificationRequest(d
 func fillDataStructFromTFObjectDSRequestAbstractOrganizationalUnitModificationRequest(data *requestAbstractOrganizationalUnitModificationRequestDataDS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.Account = obj.Attributes()["account"].(basetypes.ObjectValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.Comment = obj.Attributes()["comment"].(basetypes.StringValue)
@@ -1620,6 +1665,7 @@ func fillDataStructFromTFObjectDSRequestAbstractOrganizationalUnitModificationRe
 func fillDataStructFromTFObjectDSRequestAbstractProvisionedSystemModificationRequest(data *requestAbstractProvisionedSystemModificationRequestDataDS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.Account = obj.Attributes()["account"].(basetypes.ObjectValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.Comment = obj.Attributes()["comment"].(basetypes.StringValue)
@@ -1651,6 +1697,7 @@ func fillDataStructFromTFObjectDSRequestAcceptModificationRequestParameters(data
 func fillDataStructFromTFObjectDSRequestAddGroupAdminRequest(data *requestAddGroupAdminRequestDataDS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.Account = obj.Attributes()["account"].(basetypes.ObjectValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.Comment = obj.Attributes()["comment"].(basetypes.StringValue)
@@ -1666,6 +1713,7 @@ func fillDataStructFromTFObjectDSRequestAddGroupAdminRequest(data *requestAddGro
 func fillDataStructFromTFObjectDSRequestCreateGroupOnSystemRequest(data *requestCreateGroupOnSystemRequestDataDS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.Account = obj.Attributes()["account"].(basetypes.ObjectValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.Comment = obj.Attributes()["comment"].(basetypes.StringValue)
@@ -1683,6 +1731,7 @@ func fillDataStructFromTFObjectDSRequestCreateGroupOnSystemRequest(data *request
 func fillDataStructFromTFObjectDSRequestCreateGroupRequest(data *requestCreateGroupRequestDataDS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.Account = obj.Attributes()["account"].(basetypes.ObjectValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.Comment = obj.Attributes()["comment"].(basetypes.StringValue)
@@ -1698,6 +1747,7 @@ func fillDataStructFromTFObjectDSRequestCreateGroupRequest(data *requestCreateGr
 func fillDataStructFromTFObjectDSRequestCreateServiceAccountRequest(data *requestCreateServiceAccountRequestDataDS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.Account = obj.Attributes()["account"].(basetypes.ObjectValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.Comment = obj.Attributes()["comment"].(basetypes.StringValue)
@@ -1713,6 +1763,7 @@ func fillDataStructFromTFObjectDSRequestCreateServiceAccountRequest(data *reques
 func fillDataStructFromTFObjectDSRequestDisable2FARequest(data *requestDisable2FARequestDataDS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.Account = obj.Attributes()["account"].(basetypes.ObjectValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.Comment = obj.Attributes()["comment"].(basetypes.StringValue)
@@ -1727,6 +1778,7 @@ func fillDataStructFromTFObjectDSRequestDisable2FARequest(data *requestDisable2F
 func fillDataStructFromTFObjectDSRequestEnableTechnicalAdministrationRequest(data *requestEnableTechnicalAdministrationRequestDataDS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.Account = obj.Attributes()["account"].(basetypes.ObjectValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.Comment = obj.Attributes()["comment"].(basetypes.StringValue)
@@ -1740,6 +1792,7 @@ func fillDataStructFromTFObjectDSRequestEnableTechnicalAdministrationRequest(dat
 func fillDataStructFromTFObjectDSRequestExtendAccessRequest(data *requestExtendAccessRequestDataDS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.Account = obj.Attributes()["account"].(basetypes.ObjectValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.Comment = obj.Attributes()["comment"].(basetypes.StringValue)
@@ -1754,6 +1807,7 @@ func fillDataStructFromTFObjectDSRequestExtendAccessRequest(data *requestExtendA
 func fillDataStructFromTFObjectDSRequestGrantAccessRequest(data *requestGrantAccessRequestDataDS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.Account = obj.Attributes()["account"].(basetypes.ObjectValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.Comment = obj.Attributes()["comment"].(basetypes.StringValue)
@@ -1767,6 +1821,7 @@ func fillDataStructFromTFObjectDSRequestGrantAccessRequest(data *requestGrantAcc
 func fillDataStructFromTFObjectDSRequestGrantApplicationRequest(data *requestGrantApplicationRequestDataDS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.Account = obj.Attributes()["account"].(basetypes.ObjectValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.Comment = obj.Attributes()["comment"].(basetypes.StringValue)
@@ -1781,6 +1836,7 @@ func fillDataStructFromTFObjectDSRequestGrantApplicationRequest(data *requestGra
 func fillDataStructFromTFObjectDSRequestGrantClientPermissionRequest(data *requestGrantClientPermissionRequestDataDS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.Account = obj.Attributes()["account"].(basetypes.ObjectValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.Comment = obj.Attributes()["comment"].(basetypes.StringValue)
@@ -1797,6 +1853,7 @@ func fillDataStructFromTFObjectDSRequestGrantClientPermissionRequest(data *reque
 func fillDataStructFromTFObjectDSRequestGrantGroupOnSystemRequest(data *requestGrantGroupOnSystemRequestDataDS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.Account = obj.Attributes()["account"].(basetypes.ObjectValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.Comment = obj.Attributes()["comment"].(basetypes.StringValue)
@@ -1812,6 +1869,7 @@ func fillDataStructFromTFObjectDSRequestGrantGroupOnSystemRequest(data *requestG
 func fillDataStructFromTFObjectDSRequestGrantGroupOnSystemRequestRequest(data *requestGrantGroupOnSystemRequestRequestDataDS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.Account = obj.Attributes()["account"].(basetypes.ObjectValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.Comment = obj.Attributes()["comment"].(basetypes.StringValue)
@@ -1827,6 +1885,7 @@ func fillDataStructFromTFObjectDSRequestGrantGroupOnSystemRequestRequest(data *r
 func fillDataStructFromTFObjectDSRequestGrantServiceAccountGroupRequest(data *requestGrantServiceAccountGroupRequestDataDS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.Account = obj.Attributes()["account"].(basetypes.ObjectValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.Comment = obj.Attributes()["comment"].(basetypes.StringValue)
@@ -1842,6 +1901,7 @@ func fillDataStructFromTFObjectDSRequestGrantServiceAccountGroupRequest(data *re
 func fillDataStructFromTFObjectDSRequestJoinGroupRequest(data *requestJoinGroupRequestDataDS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.Account = obj.Attributes()["account"].(basetypes.ObjectValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.Comment = obj.Attributes()["comment"].(basetypes.StringValue)
@@ -1855,6 +1915,7 @@ func fillDataStructFromTFObjectDSRequestJoinGroupRequest(data *requestJoinGroupR
 func fillDataStructFromTFObjectDSRequestJoinVaultRequest(data *requestJoinVaultRequestDataDS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.Account = obj.Attributes()["account"].(basetypes.ObjectValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.Comment = obj.Attributes()["comment"].(basetypes.StringValue)
@@ -1868,6 +1929,7 @@ func fillDataStructFromTFObjectDSRequestJoinVaultRequest(data *requestJoinVaultR
 func fillDataStructFromTFObjectDSRequestModificationRequest(data *requestModificationRequestDataDS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.Account = obj.Attributes()["account"].(basetypes.ObjectValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.Comment = obj.Attributes()["comment"].(basetypes.StringValue)
@@ -1890,6 +1952,7 @@ func fillDataStructFromTFObjectDSRequestModificationRequest_additionalObjects(da
 func fillDataStructFromTFObjectDSRequestPasswordResetRequest(data *requestPasswordResetRequestDataDS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.Account = obj.Attributes()["account"].(basetypes.ObjectValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.Comment = obj.Attributes()["comment"].(basetypes.StringValue)
@@ -1910,6 +1973,7 @@ func fillDataStructFromTFObjectDSRequestPasswordResetRequestStatus(data *request
 func fillDataStructFromTFObjectDSRequestRemoveGroupRequest(data *requestRemoveGroupRequestDataDS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.Account = obj.Attributes()["account"].(basetypes.ObjectValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.Comment = obj.Attributes()["comment"].(basetypes.StringValue)
@@ -1924,6 +1988,7 @@ func fillDataStructFromTFObjectDSRequestRemoveGroupRequest(data *requestRemoveGr
 func fillDataStructFromTFObjectDSRequestRemoveOrganizationalUnitRequest(data *requestRemoveOrganizationalUnitRequestDataDS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.Account = obj.Attributes()["account"].(basetypes.ObjectValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.Comment = obj.Attributes()["comment"].(basetypes.StringValue)
@@ -1939,6 +2004,7 @@ func fillDataStructFromTFObjectDSRequestRemoveOrganizationalUnitRequest(data *re
 func fillDataStructFromTFObjectDSRequestRemoveProvisionedSystemRequest(data *requestRemoveProvisionedSystemRequestDataDS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.Account = obj.Attributes()["account"].(basetypes.ObjectValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.Comment = obj.Attributes()["comment"].(basetypes.StringValue)
@@ -1954,6 +2020,7 @@ func fillDataStructFromTFObjectDSRequestRemoveProvisionedSystemRequest(data *req
 func fillDataStructFromTFObjectDSRequestReviewAuditRequest(data *requestReviewAuditRequestDataDS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.Account = obj.Attributes()["account"].(basetypes.ObjectValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.Comment = obj.Attributes()["comment"].(basetypes.StringValue)
@@ -1967,6 +2034,7 @@ func fillDataStructFromTFObjectDSRequestReviewAuditRequest(data *requestReviewAu
 func fillDataStructFromTFObjectDSRequestRevokeAdminRequest(data *requestRevokeAdminRequestDataDS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.Account = obj.Attributes()["account"].(basetypes.ObjectValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.Comment = obj.Attributes()["comment"].(basetypes.StringValue)
@@ -1981,6 +2049,7 @@ func fillDataStructFromTFObjectDSRequestRevokeAdminRequest(data *requestRevokeAd
 func fillDataStructFromTFObjectDSRequestSetupAuthorizingGroupRequest(data *requestSetupAuthorizingGroupRequestDataDS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.Account = obj.Attributes()["account"].(basetypes.ObjectValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.Comment = obj.Attributes()["comment"].(basetypes.StringValue)
@@ -1997,6 +2066,7 @@ func fillDataStructFromTFObjectDSRequestSetupAuthorizingGroupRequest(data *reque
 func fillDataStructFromTFObjectDSRequestSetupNestedGroupRequest(data *requestSetupNestedGroupRequestDataDS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.Account = obj.Attributes()["account"].(basetypes.ObjectValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.Comment = obj.Attributes()["comment"].(basetypes.StringValue)
@@ -2013,6 +2083,7 @@ func fillDataStructFromTFObjectDSRequestSetupNestedGroupRequest(data *requestSet
 func fillDataStructFromTFObjectDSRequestTransferApplicationAdministrationRequest(data *requestTransferApplicationAdministrationRequestDataDS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.Account = obj.Attributes()["account"].(basetypes.ObjectValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.Comment = obj.Attributes()["comment"].(basetypes.StringValue)
@@ -2027,6 +2098,7 @@ func fillDataStructFromTFObjectDSRequestTransferApplicationAdministrationRequest
 func fillDataStructFromTFObjectDSRequestTransferApplicationOwnershipRequest(data *requestTransferApplicationOwnershipRequestDataDS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.Account = obj.Attributes()["account"].(basetypes.ObjectValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.Comment = obj.Attributes()["comment"].(basetypes.StringValue)
@@ -2041,6 +2113,7 @@ func fillDataStructFromTFObjectDSRequestTransferApplicationOwnershipRequest(data
 func fillDataStructFromTFObjectDSRequestTransferAuditorGroupRequest(data *requestTransferAuditorGroupRequestDataDS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.Account = obj.Attributes()["account"].(basetypes.ObjectValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.Comment = obj.Attributes()["comment"].(basetypes.StringValue)
@@ -2054,6 +2127,7 @@ func fillDataStructFromTFObjectDSRequestTransferAuditorGroupRequest(data *reques
 func fillDataStructFromTFObjectDSRequestTransferGroupOnSystemOwnershipRequest(data *requestTransferGroupOnSystemOwnershipRequestDataDS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.Account = obj.Attributes()["account"].(basetypes.ObjectValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.Comment = obj.Attributes()["comment"].(basetypes.StringValue)
@@ -2068,6 +2142,7 @@ func fillDataStructFromTFObjectDSRequestTransferGroupOnSystemOwnershipRequest(da
 func fillDataStructFromTFObjectDSRequestTransferOrganizationalUnitOwnershipRequest(data *requestTransferOrganizationalUnitOwnershipRequestDataDS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.Account = obj.Attributes()["account"].(basetypes.ObjectValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.Comment = obj.Attributes()["comment"].(basetypes.StringValue)
@@ -2082,6 +2157,7 @@ func fillDataStructFromTFObjectDSRequestTransferOrganizationalUnitOwnershipReque
 func fillDataStructFromTFObjectDSRequestTransferProvisionedSystemAdministrationRequest(data *requestTransferProvisionedSystemAdministrationRequestDataDS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.Account = obj.Attributes()["account"].(basetypes.ObjectValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.Comment = obj.Attributes()["comment"].(basetypes.StringValue)
@@ -2096,6 +2172,7 @@ func fillDataStructFromTFObjectDSRequestTransferProvisionedSystemAdministrationR
 func fillDataStructFromTFObjectDSRequestTransferProvisionedSystemContentAdministrationRequest(data *requestTransferProvisionedSystemContentAdministrationRequestDataDS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.Account = obj.Attributes()["account"].(basetypes.ObjectValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.Comment = obj.Attributes()["comment"].(basetypes.StringValue)
@@ -2110,6 +2187,7 @@ func fillDataStructFromTFObjectDSRequestTransferProvisionedSystemContentAdminist
 func fillDataStructFromTFObjectDSRequestTransferProvisionedSystemOwnershipRequest(data *requestTransferProvisionedSystemOwnershipRequestDataDS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.Account = obj.Attributes()["account"].(basetypes.ObjectValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.Comment = obj.Attributes()["comment"].(basetypes.StringValue)
@@ -2124,6 +2202,7 @@ func fillDataStructFromTFObjectDSRequestTransferProvisionedSystemOwnershipReques
 func fillDataStructFromTFObjectDSRequestTransferServiceAccountAdministrationRequest(data *requestTransferServiceAccountAdministrationRequestDataDS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.Account = obj.Attributes()["account"].(basetypes.ObjectValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.Comment = obj.Attributes()["comment"].(basetypes.StringValue)
@@ -2138,6 +2217,7 @@ func fillDataStructFromTFObjectDSRequestTransferServiceAccountAdministrationRequ
 func fillDataStructFromTFObjectDSRequestUpdateGroupMembershipRequest(data *requestUpdateGroupMembershipRequestDataDS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.Account = obj.Attributes()["account"].(basetypes.ObjectValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.Comment = obj.Attributes()["comment"].(basetypes.StringValue)
@@ -2157,6 +2237,7 @@ func fillDataStructFromTFObjectDSRequestUpdateGroupMembershipRequest(data *reque
 func fillDataStructFromTFObjectDSRequestVerifyInternalAccountRequest(data *requestVerifyInternalAccountRequestDataDS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.Account = obj.Attributes()["account"].(basetypes.ObjectValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.Comment = obj.Attributes()["comment"].(basetypes.StringValue)
@@ -2176,6 +2257,7 @@ func fillDataStructFromTFObjectDSServiceaccountServiceAccount(data *serviceaccou
 	data.System = obj.Attributes()["system"].(basetypes.ObjectValue)
 	data.Username = obj.Attributes()["username"].(basetypes.StringValue)
 	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.Description = obj.Attributes()["description"].(basetypes.StringValue)
 	data.Password = obj.Attributes()["password"].(basetypes.ObjectValue)
@@ -2190,6 +2272,7 @@ func fillDataStructFromTFObjectDSServiceaccountServiceAccountGroup(data *service
 	data.NameInSystem = obj.Attributes()["name_in_system"].(basetypes.StringValue)
 	data.ProvisioningGroupOnSystemPrimerType = obj.Attributes()["provisioning_group_on_system_primer_type"].(basetypes.StringValue)
 	data.ShortNameInSystem = obj.Attributes()["short_name_in_system"].(basetypes.StringValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 }
 
@@ -2252,6 +2335,7 @@ func fillDataStructFromTFObjectDSSimpleVersionInfo(data *simpleVersionInfoDataDS
 func fillDataStructFromTFObjectDSVaultDeletedVaultHolder(data *vaultDeletedVaultHolderDataDS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.Name = obj.Attributes()["name"].(basetypes.StringValue)
 	data.RecordCount = obj.Attributes()["record_count"].(basetypes.Int64Value)
@@ -2303,6 +2387,7 @@ func fillDataStructFromTFObjectDSVaultVaultRecord(data *vaultVaultRecordDataDS, 
 	data.Name = obj.Attributes()["name"].(basetypes.StringValue)
 	data.ShareEndTime = obj.Attributes()["share_end_time"].(basetypes.StringValue)
 	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.Derived = obj.Attributes()["derived"].(basetypes.BoolValue)
 	data.EndDate = obj.Attributes()["end_date"].(basetypes.StringValue)
@@ -2374,6 +2459,7 @@ func fillDataStructFromTFObjectDSVaultVaultUnlockResponse(data *vaultVaultUnlock
 func fillDataStructFromTFObjectDSWebhookWebhook(data *webhookWebhookDataDS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.Account = obj.Attributes()["account"].(basetypes.ObjectValue)
 	data.Active = obj.Attributes()["active"].(basetypes.BoolValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
@@ -2401,6 +2487,7 @@ func fillDataStructFromTFObjectDSWebhookWebhook(data *webhookWebhookDataDS, obj 
 func fillDataStructFromTFObjectDSWebhookWebhookDelivery(data *webhookWebhookDeliveryDataDS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.Payload = obj.Attributes()["payload"].(basetypes.ObjectValue)
 	data.ReponseHeaders = obj.Attributes()["reponse_headers"].(basetypes.StringValue)

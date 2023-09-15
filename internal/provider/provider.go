@@ -39,7 +39,7 @@ type KeyHubProviderModel struct {
 }
 
 func (p *KeyHubProvider) Metadata(ctx context.Context, req provider.MetadataRequest, resp *provider.MetadataResponse) {
-	resp.TypeName = "keyhub"
+	resp.TypeName = "keyhubpreview"
 	resp.Version = p.version
 }
 

@@ -84,6 +84,7 @@ var auditAuditRecordAttrTypesDSRecurse = objectAttrsTypeDSAuditAuditRecord(true)
 type auditAuditRecordDataDS struct {
 	Links                 types.List   `tfsdk:"links"`
 	Permissions           types.List   `tfsdk:"permissions"`
+	Additional            types.List   `tfsdk:"additional"`
 	AdditionalObjects     types.Object `tfsdk:"additional_objects"`
 	AuditAuditRecordType  types.String `tfsdk:"audit_audit_record_type"`
 	DateTime              types.String `tfsdk:"date_time"`
@@ -131,6 +132,7 @@ type authAccountDataDS struct {
 	Username                        types.String `tfsdk:"username"`
 	UUID                            types.String `tfsdk:"uuid"`
 	Validity                        types.String `tfsdk:"validity"`
+	Additional                      types.List   `tfsdk:"additional"`
 	AccountPermissions              types.List   `tfsdk:"account_permissions"`
 	Active                          types.Bool   `tfsdk:"active"`
 	AdditionalObjects               types.Object `tfsdk:"additional_objects"`
@@ -277,6 +279,7 @@ type authInternalAccountDataDS struct {
 	Username                        types.String `tfsdk:"username"`
 	UUID                            types.String `tfsdk:"uuid"`
 	Validity                        types.String `tfsdk:"validity"`
+	Additional                      types.List   `tfsdk:"additional"`
 	AccountPermissions              types.List   `tfsdk:"account_permissions"`
 	Active                          types.Bool   `tfsdk:"active"`
 	AdditionalObjects               types.Object `tfsdk:"additional_objects"`
@@ -366,6 +369,7 @@ type certificateCertificateDataDS struct {
 	Global                           types.Bool   `tfsdk:"global"`
 	SubjectDN                        types.String `tfsdk:"subject_d_n"`
 	UUID                             types.String `tfsdk:"uuid"`
+	Additional                       types.List   `tfsdk:"additional"`
 	AdditionalObjects                types.Object `tfsdk:"additional_objects"`
 	KeyData                          types.List   `tfsdk:"key_data"`
 }
@@ -413,6 +417,7 @@ type clientClientApplicationDataDS struct {
 	Scopes                            types.List   `tfsdk:"scopes"`
 	SsoApplication                    types.Bool   `tfsdk:"sso_application"`
 	UUID                              types.String `tfsdk:"uuid"`
+	Additional                        types.List   `tfsdk:"additional"`
 	AdditionalObjects                 types.Object `tfsdk:"additional_objects"`
 	LastModifiedAt                    types.String `tfsdk:"last_modified_at"`
 	Owner                             types.Object `tfsdk:"owner"`
@@ -463,6 +468,7 @@ type clientLdapClientDataDS struct {
 	Scopes                            types.List   `tfsdk:"scopes"`
 	SsoApplication                    types.Bool   `tfsdk:"sso_application"`
 	UUID                              types.String `tfsdk:"uuid"`
+	Additional                        types.List   `tfsdk:"additional"`
 	AdditionalObjects                 types.Object `tfsdk:"additional_objects"`
 	LastModifiedAt                    types.String `tfsdk:"last_modified_at"`
 	Owner                             types.Object `tfsdk:"owner"`
@@ -486,6 +492,7 @@ type clientOAuth2ClientDataDS struct {
 	Scopes                            types.List   `tfsdk:"scopes"`
 	SsoApplication                    types.Bool   `tfsdk:"sso_application"`
 	UUID                              types.String `tfsdk:"uuid"`
+	Additional                        types.List   `tfsdk:"additional"`
 	AdditionalObjects                 types.Object `tfsdk:"additional_objects"`
 	LastModifiedAt                    types.String `tfsdk:"last_modified_at"`
 	Owner                             types.Object `tfsdk:"owner"`
@@ -510,6 +517,7 @@ var clientOAuth2ClientPermissionAttrTypesDSRecurse = objectAttrsTypeDSClientOAut
 type clientOAuth2ClientPermissionDataDS struct {
 	Links             types.List   `tfsdk:"links"`
 	Permissions       types.List   `tfsdk:"permissions"`
+	Additional        types.List   `tfsdk:"additional"`
 	AdditionalObjects types.Object `tfsdk:"additional_objects"`
 	ForGroup          types.Object `tfsdk:"for_group"`
 	ForSystem         types.Object `tfsdk:"for_system"`
@@ -529,6 +537,7 @@ var clientOAuth2ClientPermissionWithClientAttrTypesDSRecurse = objectAttrsTypeDS
 type clientOAuth2ClientPermissionWithClientDataDS struct {
 	Links             types.List   `tfsdk:"links"`
 	Permissions       types.List   `tfsdk:"permissions"`
+	Additional        types.List   `tfsdk:"additional"`
 	AdditionalObjects types.Object `tfsdk:"additional_objects"`
 	ForGroup          types.Object `tfsdk:"for_group"`
 	ForSystem         types.Object `tfsdk:"for_system"`
@@ -568,6 +577,7 @@ type clientSaml2ClientDataDS struct {
 	Scopes                            types.List   `tfsdk:"scopes"`
 	SsoApplication                    types.Bool   `tfsdk:"sso_application"`
 	UUID                              types.String `tfsdk:"uuid"`
+	Additional                        types.List   `tfsdk:"additional"`
 	AdditionalObjects                 types.Object `tfsdk:"additional_objects"`
 	LastModifiedAt                    types.String `tfsdk:"last_modified_at"`
 	Owner                             types.Object `tfsdk:"owner"`
@@ -595,6 +605,7 @@ type directoryAccountDirectoryDataDS struct {
 	DirectoryAccountDirectoryPrimerType types.String `tfsdk:"directory_account_directory_primer_type"`
 	Name                                types.String `tfsdk:"name"`
 	UUID                                types.String `tfsdk:"uuid"`
+	Additional                          types.List   `tfsdk:"additional"`
 	AdditionalObjects                   types.Object `tfsdk:"additional_objects"`
 	BaseOrganizationalUnit              types.Object `tfsdk:"base_organizational_unit"`
 	DefaultDirectory                    types.Bool   `tfsdk:"default_directory"`
@@ -674,6 +685,7 @@ type directoryInternalDirectoryDataDS struct {
 	DirectoryAccountDirectoryPrimerType types.String `tfsdk:"directory_account_directory_primer_type"`
 	Name                                types.String `tfsdk:"name"`
 	UUID                                types.String `tfsdk:"uuid"`
+	Additional                          types.List   `tfsdk:"additional"`
 	AdditionalObjects                   types.Object `tfsdk:"additional_objects"`
 	BaseOrganizationalUnit              types.Object `tfsdk:"base_organizational_unit"`
 	DefaultDirectory                    types.Bool   `tfsdk:"default_directory"`
@@ -695,6 +707,7 @@ type directoryLDAPDirectoryDataDS struct {
 	DirectoryAccountDirectoryPrimerType types.String `tfsdk:"directory_account_directory_primer_type"`
 	Name                                types.String `tfsdk:"name"`
 	UUID                                types.String `tfsdk:"uuid"`
+	Additional                          types.List   `tfsdk:"additional"`
 	AdditionalObjects                   types.Object `tfsdk:"additional_objects"`
 	BaseOrganizationalUnit              types.Object `tfsdk:"base_organizational_unit"`
 	DefaultDirectory                    types.Bool   `tfsdk:"default_directory"`
@@ -729,6 +742,7 @@ type directoryMaintenanceDirectoryDataDS struct {
 	DirectoryAccountDirectoryPrimerType types.String `tfsdk:"directory_account_directory_primer_type"`
 	Name                                types.String `tfsdk:"name"`
 	UUID                                types.String `tfsdk:"uuid"`
+	Additional                          types.List   `tfsdk:"additional"`
 	AdditionalObjects                   types.Object `tfsdk:"additional_objects"`
 	BaseOrganizationalUnit              types.Object `tfsdk:"base_organizational_unit"`
 	DefaultDirectory                    types.Bool   `tfsdk:"default_directory"`
@@ -749,6 +763,7 @@ type directoryOIDCDirectoryDataDS struct {
 	DirectoryAccountDirectoryPrimerType types.String `tfsdk:"directory_account_directory_primer_type"`
 	Name                                types.String `tfsdk:"name"`
 	UUID                                types.String `tfsdk:"uuid"`
+	Additional                          types.List   `tfsdk:"additional"`
 	AdditionalObjects                   types.Object `tfsdk:"additional_objects"`
 	BaseOrganizationalUnit              types.Object `tfsdk:"base_organizational_unit"`
 	DefaultDirectory                    types.Bool   `tfsdk:"default_directory"`
@@ -778,6 +793,7 @@ type groupAccountGroupDataDS struct {
 	Admin                  types.Bool   `tfsdk:"admin"`
 	Name                   types.String `tfsdk:"name"`
 	UUID                   types.String `tfsdk:"uuid"`
+	Additional             types.List   `tfsdk:"additional"`
 	AdditionalObjects      types.Object `tfsdk:"additional_objects"`
 	EndDate                types.String `tfsdk:"end_date"`
 	Folder                 types.Object `tfsdk:"folder"`
@@ -819,6 +835,7 @@ type groupGroupDataDS struct {
 	Admin                        types.Bool   `tfsdk:"admin"`
 	Name                         types.String `tfsdk:"name"`
 	UUID                         types.String `tfsdk:"uuid"`
+	Additional                   types.List   `tfsdk:"additional"`
 	AdditionalObjects            types.Object `tfsdk:"additional_objects"`
 	ApplicationAdministration    types.Bool   `tfsdk:"application_administration"`
 	AuditConfig                  types.Object `tfsdk:"audit_config"`
@@ -854,6 +871,7 @@ type groupGroupAccountDataDS struct {
 	Username               types.String `tfsdk:"username"`
 	UUID                   types.String `tfsdk:"uuid"`
 	Validity               types.String `tfsdk:"validity"`
+	Additional             types.List   `tfsdk:"additional"`
 	AdditionalObjects      types.Object `tfsdk:"additional_objects"`
 	Directory              types.Object `tfsdk:"directory"`
 	DisconnectedNested     types.Bool   `tfsdk:"disconnected_nested"`
@@ -908,6 +926,7 @@ var groupGroupAuditAttrTypesDSRecurse = objectAttrsTypeDSGroupGroupAudit(true)
 type groupGroupAuditDataDS struct {
 	Links             types.List   `tfsdk:"links"`
 	Permissions       types.List   `tfsdk:"permissions"`
+	Additional        types.List   `tfsdk:"additional"`
 	Accounts          types.List   `tfsdk:"accounts"`
 	AdditionalObjects types.Object `tfsdk:"additional_objects"`
 	Comment           types.String `tfsdk:"comment"`
@@ -987,6 +1006,7 @@ type groupGroupClassificationDataDS struct {
 	Permissions                          types.List   `tfsdk:"permissions"`
 	Name                                 types.String `tfsdk:"name"`
 	UUID                                 types.String `tfsdk:"uuid"`
+	Additional                           types.List   `tfsdk:"additional"`
 	AdditionalObjects                    types.Object `tfsdk:"additional_objects"`
 	AuthorizingGroupAuditingRequired     types.Bool   `tfsdk:"authorizing_group_auditing_required"`
 	AuthorizingGroupDelegationRequired   types.Bool   `tfsdk:"authorizing_group_delegation_required"`
@@ -1047,6 +1067,7 @@ var groupGroupClientAttrTypesDSRecurse = objectAttrsTypeDSGroupGroupClient(true)
 type groupGroupClientDataDS struct {
 	Links                  types.List   `tfsdk:"links"`
 	Permissions            types.List   `tfsdk:"permissions"`
+	Additional             types.List   `tfsdk:"additional"`
 	ActivationRequired     types.Bool   `tfsdk:"activation_required"`
 	AdditionalObjects      types.Object `tfsdk:"additional_objects"`
 	Client                 types.Object `tfsdk:"client"`
@@ -1075,6 +1096,7 @@ var groupGroupFolderAttrTypesDSRecurse = objectAttrsTypeDSGroupGroupFolder(true)
 type groupGroupFolderDataDS struct {
 	Links             types.List   `tfsdk:"links"`
 	Permissions       types.List   `tfsdk:"permissions"`
+	Additional        types.List   `tfsdk:"additional"`
 	AdditionalObjects types.Object `tfsdk:"additional_objects"`
 	Name              types.String `tfsdk:"name"`
 }
@@ -1190,6 +1212,7 @@ var groupProvisioningGroupAttrTypesDSRecurse = objectAttrsTypeDSGroupProvisionin
 type groupProvisioningGroupDataDS struct {
 	Links              types.List   `tfsdk:"links"`
 	Permissions        types.List   `tfsdk:"permissions"`
+	Additional         types.List   `tfsdk:"additional"`
 	ActivationRequired types.Bool   `tfsdk:"activation_required"`
 	AdditionalObjects  types.Object `tfsdk:"additional_objects"`
 	Group              types.Object `tfsdk:"group"`
@@ -1237,6 +1260,7 @@ var launchpadLaunchpadTileAttrTypesDSRecurse = objectAttrsTypeDSLaunchpadLaunchp
 type launchpadLaunchpadTileDataDS struct {
 	Links                      types.List   `tfsdk:"links"`
 	Permissions                types.List   `tfsdk:"permissions"`
+	Additional                 types.List   `tfsdk:"additional"`
 	AdditionalObjects          types.Object `tfsdk:"additional_objects"`
 	Application                types.Object `tfsdk:"application"`
 	Group                      types.Object `tfsdk:"group"`
@@ -1274,6 +1298,7 @@ var launchpadManualLaunchpadTileAttrTypesDSRecurse = objectAttrsTypeDSLaunchpadM
 type launchpadManualLaunchpadTileDataDS struct {
 	Links                      types.List   `tfsdk:"links"`
 	Permissions                types.List   `tfsdk:"permissions"`
+	Additional                 types.List   `tfsdk:"additional"`
 	AdditionalObjects          types.Object `tfsdk:"additional_objects"`
 	Application                types.Object `tfsdk:"application"`
 	Group                      types.Object `tfsdk:"group"`
@@ -1291,6 +1316,7 @@ var launchpadSsoApplicationLaunchpadTileAttrTypesDSRecurse = objectAttrsTypeDSLa
 type launchpadSsoApplicationLaunchpadTileDataDS struct {
 	Links                      types.List   `tfsdk:"links"`
 	Permissions                types.List   `tfsdk:"permissions"`
+	Additional                 types.List   `tfsdk:"additional"`
 	AdditionalObjects          types.Object `tfsdk:"additional_objects"`
 	Application                types.Object `tfsdk:"application"`
 	Group                      types.Object `tfsdk:"group"`
@@ -1307,6 +1333,7 @@ var launchpadVaultRecordLaunchpadTileAttrTypesDSRecurse = objectAttrsTypeDSLaunc
 type launchpadVaultRecordLaunchpadTileDataDS struct {
 	Links                      types.List   `tfsdk:"links"`
 	Permissions                types.List   `tfsdk:"permissions"`
+	Additional                 types.List   `tfsdk:"additional"`
 	AdditionalObjects          types.Object `tfsdk:"additional_objects"`
 	Application                types.Object `tfsdk:"application"`
 	Group                      types.Object `tfsdk:"group"`
@@ -1477,6 +1504,7 @@ type organizationAccountOrganizationalUnitDataDS struct {
 	Permissions       types.List   `tfsdk:"permissions"`
 	Name              types.String `tfsdk:"name"`
 	UUID              types.String `tfsdk:"uuid"`
+	Additional        types.List   `tfsdk:"additional"`
 	AdditionalObjects types.Object `tfsdk:"additional_objects"`
 }
 
@@ -1502,6 +1530,7 @@ type organizationOrganizationalUnitDataDS struct {
 	Permissions       types.List   `tfsdk:"permissions"`
 	Name              types.String `tfsdk:"name"`
 	UUID              types.String `tfsdk:"uuid"`
+	Additional        types.List   `tfsdk:"additional"`
 	AdditionalObjects types.Object `tfsdk:"additional_objects"`
 	Depth             types.Int64  `tfsdk:"depth"`
 	Description       types.String `tfsdk:"description"`
@@ -1520,6 +1549,7 @@ type organizationOrganizationalUnitAccountDataDS struct {
 	Username          types.String `tfsdk:"username"`
 	UUID              types.String `tfsdk:"uuid"`
 	Validity          types.String `tfsdk:"validity"`
+	Additional        types.List   `tfsdk:"additional"`
 	AdditionalObjects types.Object `tfsdk:"additional_objects"`
 	Directory         types.Object `tfsdk:"directory"`
 }
@@ -1580,6 +1610,7 @@ type provisioningAbstractProvisionedLDAPDataDS struct {
 	OrganizationalUnit                      types.Object `tfsdk:"organizational_unit"`
 	ProvisioningProvisionedSystemPrimerType types.String `tfsdk:"provisioning_provisioned_system_primer_type"`
 	UUID                                    types.String `tfsdk:"uuid"`
+	Additional                              types.List   `tfsdk:"additional"`
 	AccountCount                            types.Int64  `tfsdk:"account_count"`
 	AdditionalObjects                       types.Object `tfsdk:"additional_objects"`
 	ContentAdministrator                    types.Object `tfsdk:"content_administrator"`
@@ -1651,6 +1682,7 @@ type provisioningGroupOnSystemDataDS struct {
 	NameInSystem                        types.String `tfsdk:"name_in_system"`
 	ProvisioningGroupOnSystemPrimerType types.String `tfsdk:"provisioning_group_on_system_primer_type"`
 	ShortNameInSystem                   types.String `tfsdk:"short_name_in_system"`
+	Additional                          types.List   `tfsdk:"additional"`
 	AdditionalObjects                   types.Object `tfsdk:"additional_objects"`
 	Owner                               types.Object `tfsdk:"owner"`
 	System                              types.Object `tfsdk:"system"`
@@ -1726,6 +1758,7 @@ var provisioningProvisionNumberSequenceAttrTypesDSRecurse = objectAttrsTypeDSPro
 type provisioningProvisionNumberSequenceDataDS struct {
 	Links             types.List   `tfsdk:"links"`
 	Permissions       types.List   `tfsdk:"permissions"`
+	Additional        types.List   `tfsdk:"additional"`
 	AccountCount      types.Int64  `tfsdk:"account_count"`
 	AdditionalObjects types.Object `tfsdk:"additional_objects"`
 	Name              types.String `tfsdk:"name"`
@@ -1758,6 +1791,7 @@ type provisioningProvisionedADDataDS struct {
 	OrganizationalUnit                      types.Object `tfsdk:"organizational_unit"`
 	ProvisioningProvisionedSystemPrimerType types.String `tfsdk:"provisioning_provisioned_system_primer_type"`
 	UUID                                    types.String `tfsdk:"uuid"`
+	Additional                              types.List   `tfsdk:"additional"`
 	AccountCount                            types.Int64  `tfsdk:"account_count"`
 	AdditionalObjects                       types.Object `tfsdk:"additional_objects"`
 	ContentAdministrator                    types.Object `tfsdk:"content_administrator"`
@@ -1799,6 +1833,7 @@ type provisioningProvisionedAccountDataDS struct {
 	Username          types.String `tfsdk:"username"`
 	UUID              types.String `tfsdk:"uuid"`
 	Validity          types.String `tfsdk:"validity"`
+	Additional        types.List   `tfsdk:"additional"`
 	AdditionalObjects types.Object `tfsdk:"additional_objects"`
 	Uid               types.Int64  `tfsdk:"uid"`
 }
@@ -1828,6 +1863,7 @@ type provisioningProvisionedAzureOIDCDirectoryDataDS struct {
 	OrganizationalUnit                      types.Object `tfsdk:"organizational_unit"`
 	ProvisioningProvisionedSystemPrimerType types.String `tfsdk:"provisioning_provisioned_system_primer_type"`
 	UUID                                    types.String `tfsdk:"uuid"`
+	Additional                              types.List   `tfsdk:"additional"`
 	AccountCount                            types.Int64  `tfsdk:"account_count"`
 	AdditionalObjects                       types.Object `tfsdk:"additional_objects"`
 	ContentAdministrator                    types.Object `tfsdk:"content_administrator"`
@@ -1854,6 +1890,7 @@ type provisioningProvisionedAzureSyncLDAPDirectoryDataDS struct {
 	OrganizationalUnit                      types.Object `tfsdk:"organizational_unit"`
 	ProvisioningProvisionedSystemPrimerType types.String `tfsdk:"provisioning_provisioned_system_primer_type"`
 	UUID                                    types.String `tfsdk:"uuid"`
+	Additional                              types.List   `tfsdk:"additional"`
 	AccountCount                            types.Int64  `tfsdk:"account_count"`
 	AdditionalObjects                       types.Object `tfsdk:"additional_objects"`
 	ContentAdministrator                    types.Object `tfsdk:"content_administrator"`
@@ -1882,6 +1919,7 @@ type provisioningProvisionedAzureTenantDataDS struct {
 	OrganizationalUnit                      types.Object `tfsdk:"organizational_unit"`
 	ProvisioningProvisionedSystemPrimerType types.String `tfsdk:"provisioning_provisioned_system_primer_type"`
 	UUID                                    types.String `tfsdk:"uuid"`
+	Additional                              types.List   `tfsdk:"additional"`
 	AccountCount                            types.Int64  `tfsdk:"account_count"`
 	AdditionalObjects                       types.Object `tfsdk:"additional_objects"`
 	ContentAdministrator                    types.Object `tfsdk:"content_administrator"`
@@ -1910,6 +1948,7 @@ type provisioningProvisionedInternalLDAPDataDS struct {
 	OrganizationalUnit                      types.Object `tfsdk:"organizational_unit"`
 	ProvisioningProvisionedSystemPrimerType types.String `tfsdk:"provisioning_provisioned_system_primer_type"`
 	UUID                                    types.String `tfsdk:"uuid"`
+	Additional                              types.List   `tfsdk:"additional"`
 	AccountCount                            types.Int64  `tfsdk:"account_count"`
 	AdditionalObjects                       types.Object `tfsdk:"additional_objects"`
 	ContentAdministrator                    types.Object `tfsdk:"content_administrator"`
@@ -1935,6 +1974,7 @@ type provisioningProvisionedLDAPDataDS struct {
 	OrganizationalUnit                      types.Object `tfsdk:"organizational_unit"`
 	ProvisioningProvisionedSystemPrimerType types.String `tfsdk:"provisioning_provisioned_system_primer_type"`
 	UUID                                    types.String `tfsdk:"uuid"`
+	Additional                              types.List   `tfsdk:"additional"`
 	AccountCount                            types.Int64  `tfsdk:"account_count"`
 	AdditionalObjects                       types.Object `tfsdk:"additional_objects"`
 	ContentAdministrator                    types.Object `tfsdk:"content_administrator"`
@@ -1978,6 +2018,7 @@ type provisioningProvisionedLDAPDirectoryDataDS struct {
 	OrganizationalUnit                      types.Object `tfsdk:"organizational_unit"`
 	ProvisioningProvisionedSystemPrimerType types.String `tfsdk:"provisioning_provisioned_system_primer_type"`
 	UUID                                    types.String `tfsdk:"uuid"`
+	Additional                              types.List   `tfsdk:"additional"`
 	AccountCount                            types.Int64  `tfsdk:"account_count"`
 	AdditionalObjects                       types.Object `tfsdk:"additional_objects"`
 	ContentAdministrator                    types.Object `tfsdk:"content_administrator"`
@@ -2004,6 +2045,7 @@ type provisioningProvisionedSystemDataDS struct {
 	OrganizationalUnit                      types.Object `tfsdk:"organizational_unit"`
 	ProvisioningProvisionedSystemPrimerType types.String `tfsdk:"provisioning_provisioned_system_primer_type"`
 	UUID                                    types.String `tfsdk:"uuid"`
+	Additional                              types.List   `tfsdk:"additional"`
 	AccountCount                            types.Int64  `tfsdk:"account_count"`
 	AdditionalObjects                       types.Object `tfsdk:"additional_objects"`
 	ContentAdministrator                    types.Object `tfsdk:"content_administrator"`
@@ -2050,6 +2092,7 @@ var provisioningProvisionedSystemSyncLogAttrTypesDSRecurse = objectAttrsTypeDSPr
 type provisioningProvisionedSystemSyncLogDataDS struct {
 	Links             types.List   `tfsdk:"links"`
 	Permissions       types.List   `tfsdk:"permissions"`
+	Additional        types.List   `tfsdk:"additional"`
 	AdditionalObjects types.Object `tfsdk:"additional_objects"`
 	CreatedAt         types.String `tfsdk:"created_at"`
 	Errors            types.Int64  `tfsdk:"errors"`
@@ -2116,6 +2159,7 @@ var requestAbstractApplicationModificationRequestAttrTypesDSRecurse = objectAttr
 type requestAbstractApplicationModificationRequestDataDS struct {
 	Links                          types.List   `tfsdk:"links"`
 	Permissions                    types.List   `tfsdk:"permissions"`
+	Additional                     types.List   `tfsdk:"additional"`
 	Account                        types.Object `tfsdk:"account"`
 	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
 	Comment                        types.String `tfsdk:"comment"`
@@ -2133,6 +2177,7 @@ var requestAbstractOrganizationalUnitModificationRequestAttrTypesDSRecurse = obj
 type requestAbstractOrganizationalUnitModificationRequestDataDS struct {
 	Links                          types.List   `tfsdk:"links"`
 	Permissions                    types.List   `tfsdk:"permissions"`
+	Additional                     types.List   `tfsdk:"additional"`
 	Account                        types.Object `tfsdk:"account"`
 	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
 	Comment                        types.String `tfsdk:"comment"`
@@ -2150,6 +2195,7 @@ var requestAbstractProvisionedSystemModificationRequestAttrTypesDSRecurse = obje
 type requestAbstractProvisionedSystemModificationRequestDataDS struct {
 	Links                          types.List   `tfsdk:"links"`
 	Permissions                    types.List   `tfsdk:"permissions"`
+	Additional                     types.List   `tfsdk:"additional"`
 	Account                        types.Object `tfsdk:"account"`
 	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
 	Comment                        types.String `tfsdk:"comment"`
@@ -2196,6 +2242,7 @@ var requestAddGroupAdminRequestAttrTypesDSRecurse = objectAttrsTypeDSRequestAddG
 type requestAddGroupAdminRequestDataDS struct {
 	Links                          types.List   `tfsdk:"links"`
 	Permissions                    types.List   `tfsdk:"permissions"`
+	Additional                     types.List   `tfsdk:"additional"`
 	Account                        types.Object `tfsdk:"account"`
 	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
 	Comment                        types.String `tfsdk:"comment"`
@@ -2214,6 +2261,7 @@ var requestCreateGroupOnSystemRequestAttrTypesDSRecurse = objectAttrsTypeDSReque
 type requestCreateGroupOnSystemRequestDataDS struct {
 	Links                          types.List   `tfsdk:"links"`
 	Permissions                    types.List   `tfsdk:"permissions"`
+	Additional                     types.List   `tfsdk:"additional"`
 	Account                        types.Object `tfsdk:"account"`
 	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
 	Comment                        types.String `tfsdk:"comment"`
@@ -2234,6 +2282,7 @@ var requestCreateGroupRequestAttrTypesDSRecurse = objectAttrsTypeDSRequestCreate
 type requestCreateGroupRequestDataDS struct {
 	Links                          types.List   `tfsdk:"links"`
 	Permissions                    types.List   `tfsdk:"permissions"`
+	Additional                     types.List   `tfsdk:"additional"`
 	Account                        types.Object `tfsdk:"account"`
 	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
 	Comment                        types.String `tfsdk:"comment"`
@@ -2252,6 +2301,7 @@ var requestCreateServiceAccountRequestAttrTypesDSRecurse = objectAttrsTypeDSRequ
 type requestCreateServiceAccountRequestDataDS struct {
 	Links                          types.List   `tfsdk:"links"`
 	Permissions                    types.List   `tfsdk:"permissions"`
+	Additional                     types.List   `tfsdk:"additional"`
 	Account                        types.Object `tfsdk:"account"`
 	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
 	Comment                        types.String `tfsdk:"comment"`
@@ -2270,6 +2320,7 @@ var requestDisable2FARequestAttrTypesDSRecurse = objectAttrsTypeDSRequestDisable
 type requestDisable2FARequestDataDS struct {
 	Links                          types.List   `tfsdk:"links"`
 	Permissions                    types.List   `tfsdk:"permissions"`
+	Additional                     types.List   `tfsdk:"additional"`
 	Account                        types.Object `tfsdk:"account"`
 	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
 	Comment                        types.String `tfsdk:"comment"`
@@ -2287,6 +2338,7 @@ var requestEnableTechnicalAdministrationRequestAttrTypesDSRecurse = objectAttrsT
 type requestEnableTechnicalAdministrationRequestDataDS struct {
 	Links                          types.List   `tfsdk:"links"`
 	Permissions                    types.List   `tfsdk:"permissions"`
+	Additional                     types.List   `tfsdk:"additional"`
 	Account                        types.Object `tfsdk:"account"`
 	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
 	Comment                        types.String `tfsdk:"comment"`
@@ -2303,6 +2355,7 @@ var requestExtendAccessRequestAttrTypesDSRecurse = objectAttrsTypeDSRequestExten
 type requestExtendAccessRequestDataDS struct {
 	Links                          types.List   `tfsdk:"links"`
 	Permissions                    types.List   `tfsdk:"permissions"`
+	Additional                     types.List   `tfsdk:"additional"`
 	Account                        types.Object `tfsdk:"account"`
 	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
 	Comment                        types.String `tfsdk:"comment"`
@@ -2320,6 +2373,7 @@ var requestGrantAccessRequestAttrTypesDSRecurse = objectAttrsTypeDSRequestGrantA
 type requestGrantAccessRequestDataDS struct {
 	Links                          types.List   `tfsdk:"links"`
 	Permissions                    types.List   `tfsdk:"permissions"`
+	Additional                     types.List   `tfsdk:"additional"`
 	Account                        types.Object `tfsdk:"account"`
 	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
 	Comment                        types.String `tfsdk:"comment"`
@@ -2336,6 +2390,7 @@ var requestGrantApplicationRequestAttrTypesDSRecurse = objectAttrsTypeDSRequestG
 type requestGrantApplicationRequestDataDS struct {
 	Links                          types.List   `tfsdk:"links"`
 	Permissions                    types.List   `tfsdk:"permissions"`
+	Additional                     types.List   `tfsdk:"additional"`
 	Account                        types.Object `tfsdk:"account"`
 	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
 	Comment                        types.String `tfsdk:"comment"`
@@ -2353,6 +2408,7 @@ var requestGrantClientPermissionRequestAttrTypesDSRecurse = objectAttrsTypeDSReq
 type requestGrantClientPermissionRequestDataDS struct {
 	Links                          types.List   `tfsdk:"links"`
 	Permissions                    types.List   `tfsdk:"permissions"`
+	Additional                     types.List   `tfsdk:"additional"`
 	Account                        types.Object `tfsdk:"account"`
 	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
 	Comment                        types.String `tfsdk:"comment"`
@@ -2372,6 +2428,7 @@ var requestGrantGroupOnSystemRequestAttrTypesDSRecurse = objectAttrsTypeDSReques
 type requestGrantGroupOnSystemRequestDataDS struct {
 	Links                          types.List   `tfsdk:"links"`
 	Permissions                    types.List   `tfsdk:"permissions"`
+	Additional                     types.List   `tfsdk:"additional"`
 	Account                        types.Object `tfsdk:"account"`
 	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
 	Comment                        types.String `tfsdk:"comment"`
@@ -2390,6 +2447,7 @@ var requestGrantGroupOnSystemRequestRequestAttrTypesDSRecurse = objectAttrsTypeD
 type requestGrantGroupOnSystemRequestRequestDataDS struct {
 	Links                          types.List   `tfsdk:"links"`
 	Permissions                    types.List   `tfsdk:"permissions"`
+	Additional                     types.List   `tfsdk:"additional"`
 	Account                        types.Object `tfsdk:"account"`
 	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
 	Comment                        types.String `tfsdk:"comment"`
@@ -2408,6 +2466,7 @@ var requestGrantServiceAccountGroupRequestAttrTypesDSRecurse = objectAttrsTypeDS
 type requestGrantServiceAccountGroupRequestDataDS struct {
 	Links                          types.List   `tfsdk:"links"`
 	Permissions                    types.List   `tfsdk:"permissions"`
+	Additional                     types.List   `tfsdk:"additional"`
 	Account                        types.Object `tfsdk:"account"`
 	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
 	Comment                        types.String `tfsdk:"comment"`
@@ -2426,6 +2485,7 @@ var requestJoinGroupRequestAttrTypesDSRecurse = objectAttrsTypeDSRequestJoinGrou
 type requestJoinGroupRequestDataDS struct {
 	Links                          types.List   `tfsdk:"links"`
 	Permissions                    types.List   `tfsdk:"permissions"`
+	Additional                     types.List   `tfsdk:"additional"`
 	Account                        types.Object `tfsdk:"account"`
 	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
 	Comment                        types.String `tfsdk:"comment"`
@@ -2442,6 +2502,7 @@ var requestJoinVaultRequestAttrTypesDSRecurse = objectAttrsTypeDSRequestJoinVaul
 type requestJoinVaultRequestDataDS struct {
 	Links                          types.List   `tfsdk:"links"`
 	Permissions                    types.List   `tfsdk:"permissions"`
+	Additional                     types.List   `tfsdk:"additional"`
 	Account                        types.Object `tfsdk:"account"`
 	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
 	Comment                        types.String `tfsdk:"comment"`
@@ -2458,6 +2519,7 @@ var requestModificationRequestAttrTypesDSRecurse = objectAttrsTypeDSRequestModif
 type requestModificationRequestDataDS struct {
 	Links                          types.List   `tfsdk:"links"`
 	Permissions                    types.List   `tfsdk:"permissions"`
+	Additional                     types.List   `tfsdk:"additional"`
 	Account                        types.Object `tfsdk:"account"`
 	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
 	Comment                        types.String `tfsdk:"comment"`
@@ -2489,6 +2551,7 @@ var requestPasswordResetRequestAttrTypesDSRecurse = objectAttrsTypeDSRequestPass
 type requestPasswordResetRequestDataDS struct {
 	Links                          types.List   `tfsdk:"links"`
 	Permissions                    types.List   `tfsdk:"permissions"`
+	Additional                     types.List   `tfsdk:"additional"`
 	Account                        types.Object `tfsdk:"account"`
 	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
 	Comment                        types.String `tfsdk:"comment"`
@@ -2515,6 +2578,7 @@ var requestRemoveGroupRequestAttrTypesDSRecurse = objectAttrsTypeDSRequestRemove
 type requestRemoveGroupRequestDataDS struct {
 	Links                          types.List   `tfsdk:"links"`
 	Permissions                    types.List   `tfsdk:"permissions"`
+	Additional                     types.List   `tfsdk:"additional"`
 	Account                        types.Object `tfsdk:"account"`
 	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
 	Comment                        types.String `tfsdk:"comment"`
@@ -2532,6 +2596,7 @@ var requestRemoveOrganizationalUnitRequestAttrTypesDSRecurse = objectAttrsTypeDS
 type requestRemoveOrganizationalUnitRequestDataDS struct {
 	Links                          types.List   `tfsdk:"links"`
 	Permissions                    types.List   `tfsdk:"permissions"`
+	Additional                     types.List   `tfsdk:"additional"`
 	Account                        types.Object `tfsdk:"account"`
 	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
 	Comment                        types.String `tfsdk:"comment"`
@@ -2550,6 +2615,7 @@ var requestRemoveProvisionedSystemRequestAttrTypesDSRecurse = objectAttrsTypeDSR
 type requestRemoveProvisionedSystemRequestDataDS struct {
 	Links                          types.List   `tfsdk:"links"`
 	Permissions                    types.List   `tfsdk:"permissions"`
+	Additional                     types.List   `tfsdk:"additional"`
 	Account                        types.Object `tfsdk:"account"`
 	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
 	Comment                        types.String `tfsdk:"comment"`
@@ -2568,6 +2634,7 @@ var requestReviewAuditRequestAttrTypesDSRecurse = objectAttrsTypeDSRequestReview
 type requestReviewAuditRequestDataDS struct {
 	Links                          types.List   `tfsdk:"links"`
 	Permissions                    types.List   `tfsdk:"permissions"`
+	Additional                     types.List   `tfsdk:"additional"`
 	Account                        types.Object `tfsdk:"account"`
 	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
 	Comment                        types.String `tfsdk:"comment"`
@@ -2584,6 +2651,7 @@ var requestRevokeAdminRequestAttrTypesDSRecurse = objectAttrsTypeDSRequestRevoke
 type requestRevokeAdminRequestDataDS struct {
 	Links                          types.List   `tfsdk:"links"`
 	Permissions                    types.List   `tfsdk:"permissions"`
+	Additional                     types.List   `tfsdk:"additional"`
 	Account                        types.Object `tfsdk:"account"`
 	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
 	Comment                        types.String `tfsdk:"comment"`
@@ -2601,6 +2669,7 @@ var requestSetupAuthorizingGroupRequestAttrTypesDSRecurse = objectAttrsTypeDSReq
 type requestSetupAuthorizingGroupRequestDataDS struct {
 	Links                          types.List   `tfsdk:"links"`
 	Permissions                    types.List   `tfsdk:"permissions"`
+	Additional                     types.List   `tfsdk:"additional"`
 	Account                        types.Object `tfsdk:"account"`
 	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
 	Comment                        types.String `tfsdk:"comment"`
@@ -2620,6 +2689,7 @@ var requestSetupNestedGroupRequestAttrTypesDSRecurse = objectAttrsTypeDSRequestS
 type requestSetupNestedGroupRequestDataDS struct {
 	Links                          types.List   `tfsdk:"links"`
 	Permissions                    types.List   `tfsdk:"permissions"`
+	Additional                     types.List   `tfsdk:"additional"`
 	Account                        types.Object `tfsdk:"account"`
 	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
 	Comment                        types.String `tfsdk:"comment"`
@@ -2639,6 +2709,7 @@ var requestTransferApplicationAdministrationRequestAttrTypesDSRecurse = objectAt
 type requestTransferApplicationAdministrationRequestDataDS struct {
 	Links                          types.List   `tfsdk:"links"`
 	Permissions                    types.List   `tfsdk:"permissions"`
+	Additional                     types.List   `tfsdk:"additional"`
 	Account                        types.Object `tfsdk:"account"`
 	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
 	Comment                        types.String `tfsdk:"comment"`
@@ -2656,6 +2727,7 @@ var requestTransferApplicationOwnershipRequestAttrTypesDSRecurse = objectAttrsTy
 type requestTransferApplicationOwnershipRequestDataDS struct {
 	Links                          types.List   `tfsdk:"links"`
 	Permissions                    types.List   `tfsdk:"permissions"`
+	Additional                     types.List   `tfsdk:"additional"`
 	Account                        types.Object `tfsdk:"account"`
 	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
 	Comment                        types.String `tfsdk:"comment"`
@@ -2673,6 +2745,7 @@ var requestTransferAuditorGroupRequestAttrTypesDSRecurse = objectAttrsTypeDSRequ
 type requestTransferAuditorGroupRequestDataDS struct {
 	Links                          types.List   `tfsdk:"links"`
 	Permissions                    types.List   `tfsdk:"permissions"`
+	Additional                     types.List   `tfsdk:"additional"`
 	Account                        types.Object `tfsdk:"account"`
 	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
 	Comment                        types.String `tfsdk:"comment"`
@@ -2689,6 +2762,7 @@ var requestTransferGroupOnSystemOwnershipRequestAttrTypesDSRecurse = objectAttrs
 type requestTransferGroupOnSystemOwnershipRequestDataDS struct {
 	Links                          types.List   `tfsdk:"links"`
 	Permissions                    types.List   `tfsdk:"permissions"`
+	Additional                     types.List   `tfsdk:"additional"`
 	Account                        types.Object `tfsdk:"account"`
 	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
 	Comment                        types.String `tfsdk:"comment"`
@@ -2706,6 +2780,7 @@ var requestTransferOrganizationalUnitOwnershipRequestAttrTypesDSRecurse = object
 type requestTransferOrganizationalUnitOwnershipRequestDataDS struct {
 	Links                          types.List   `tfsdk:"links"`
 	Permissions                    types.List   `tfsdk:"permissions"`
+	Additional                     types.List   `tfsdk:"additional"`
 	Account                        types.Object `tfsdk:"account"`
 	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
 	Comment                        types.String `tfsdk:"comment"`
@@ -2723,6 +2798,7 @@ var requestTransferProvisionedSystemAdministrationRequestAttrTypesDSRecurse = ob
 type requestTransferProvisionedSystemAdministrationRequestDataDS struct {
 	Links                          types.List   `tfsdk:"links"`
 	Permissions                    types.List   `tfsdk:"permissions"`
+	Additional                     types.List   `tfsdk:"additional"`
 	Account                        types.Object `tfsdk:"account"`
 	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
 	Comment                        types.String `tfsdk:"comment"`
@@ -2740,6 +2816,7 @@ var requestTransferProvisionedSystemContentAdministrationRequestAttrTypesDSRecur
 type requestTransferProvisionedSystemContentAdministrationRequestDataDS struct {
 	Links                          types.List   `tfsdk:"links"`
 	Permissions                    types.List   `tfsdk:"permissions"`
+	Additional                     types.List   `tfsdk:"additional"`
 	Account                        types.Object `tfsdk:"account"`
 	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
 	Comment                        types.String `tfsdk:"comment"`
@@ -2757,6 +2834,7 @@ var requestTransferProvisionedSystemOwnershipRequestAttrTypesDSRecurse = objectA
 type requestTransferProvisionedSystemOwnershipRequestDataDS struct {
 	Links                          types.List   `tfsdk:"links"`
 	Permissions                    types.List   `tfsdk:"permissions"`
+	Additional                     types.List   `tfsdk:"additional"`
 	Account                        types.Object `tfsdk:"account"`
 	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
 	Comment                        types.String `tfsdk:"comment"`
@@ -2774,6 +2852,7 @@ var requestTransferServiceAccountAdministrationRequestAttrTypesDSRecurse = objec
 type requestTransferServiceAccountAdministrationRequestDataDS struct {
 	Links                          types.List   `tfsdk:"links"`
 	Permissions                    types.List   `tfsdk:"permissions"`
+	Additional                     types.List   `tfsdk:"additional"`
 	Account                        types.Object `tfsdk:"account"`
 	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
 	Comment                        types.String `tfsdk:"comment"`
@@ -2791,6 +2870,7 @@ var requestUpdateGroupMembershipRequestAttrTypesDSRecurse = objectAttrsTypeDSReq
 type requestUpdateGroupMembershipRequestDataDS struct {
 	Links                          types.List   `tfsdk:"links"`
 	Permissions                    types.List   `tfsdk:"permissions"`
+	Additional                     types.List   `tfsdk:"additional"`
 	Account                        types.Object `tfsdk:"account"`
 	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
 	Comment                        types.String `tfsdk:"comment"`
@@ -2813,6 +2893,7 @@ var requestVerifyInternalAccountRequestAttrTypesDSRecurse = objectAttrsTypeDSReq
 type requestVerifyInternalAccountRequestDataDS struct {
 	Links                          types.List   `tfsdk:"links"`
 	Permissions                    types.List   `tfsdk:"permissions"`
+	Additional                     types.List   `tfsdk:"additional"`
 	Account                        types.Object `tfsdk:"account"`
 	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
 	Comment                        types.String `tfsdk:"comment"`
@@ -2835,6 +2916,7 @@ type serviceaccountServiceAccountDataDS struct {
 	System                 types.Object `tfsdk:"system"`
 	Username               types.String `tfsdk:"username"`
 	UUID                   types.String `tfsdk:"uuid"`
+	Additional             types.List   `tfsdk:"additional"`
 	AdditionalObjects      types.Object `tfsdk:"additional_objects"`
 	Description            types.String `tfsdk:"description"`
 	Password               types.Object `tfsdk:"password"`
@@ -2852,6 +2934,7 @@ type serviceaccountServiceAccountGroupDataDS struct {
 	NameInSystem                        types.String `tfsdk:"name_in_system"`
 	ProvisioningGroupOnSystemPrimerType types.String `tfsdk:"provisioning_group_on_system_primer_type"`
 	ShortNameInSystem                   types.String `tfsdk:"short_name_in_system"`
+	Additional                          types.List   `tfsdk:"additional"`
 	AdditionalObjects                   types.Object `tfsdk:"additional_objects"`
 }
 
@@ -2953,6 +3036,7 @@ var vaultDeletedVaultHolderAttrTypesDSRecurse = objectAttrsTypeDSVaultDeletedVau
 type vaultDeletedVaultHolderDataDS struct {
 	Links                       types.List   `tfsdk:"links"`
 	Permissions                 types.List   `tfsdk:"permissions"`
+	Additional                  types.List   `tfsdk:"additional"`
 	AdditionalObjects           types.Object `tfsdk:"additional_objects"`
 	Name                        types.String `tfsdk:"name"`
 	RecordCount                 types.Int64  `tfsdk:"record_count"`
@@ -3028,6 +3112,7 @@ type vaultVaultRecordDataDS struct {
 	Name              types.String `tfsdk:"name"`
 	ShareEndTime      types.String `tfsdk:"share_end_time"`
 	UUID              types.String `tfsdk:"uuid"`
+	Additional        types.List   `tfsdk:"additional"`
 	AdditionalObjects types.Object `tfsdk:"additional_objects"`
 	Derived           types.Bool   `tfsdk:"derived"`
 	EndDate           types.String `tfsdk:"end_date"`
@@ -3132,6 +3217,7 @@ var webhookWebhookAttrTypesDSRecurse = objectAttrsTypeDSWebhookWebhook(true)
 type webhookWebhookDataDS struct {
 	Links                types.List   `tfsdk:"links"`
 	Permissions          types.List   `tfsdk:"permissions"`
+	Additional           types.List   `tfsdk:"additional"`
 	Account              types.Object `tfsdk:"account"`
 	Active               types.Bool   `tfsdk:"active"`
 	AdditionalObjects    types.Object `tfsdk:"additional_objects"`
@@ -3162,6 +3248,7 @@ var webhookWebhookDeliveryAttrTypesDSRecurse = objectAttrsTypeDSWebhookWebhookDe
 type webhookWebhookDeliveryDataDS struct {
 	Links             types.List   `tfsdk:"links"`
 	Permissions       types.List   `tfsdk:"permissions"`
+	Additional        types.List   `tfsdk:"additional"`
 	AdditionalObjects types.Object `tfsdk:"additional_objects"`
 	Payload           types.Object `tfsdk:"payload"`
 	ReponseHeaders    types.String `tfsdk:"reponse_headers"`

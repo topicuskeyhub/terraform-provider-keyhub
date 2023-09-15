@@ -9,7 +9,7 @@ import (
 	"log"
 
 	"github.com/hashicorp/terraform-plugin-framework/providerserver"
-	"github.com/topicuskeyhub/terraform-provider-keyhub-preview/internal/provider"
+	"github.com/topicuskeyhub/terraform-provider-keyhubpreview/internal/provider"
 )
 
 // Run "go generate" to format example terraform files and generate the docs for the registry/website
@@ -38,7 +38,7 @@ func main() {
 	flag.Parse()
 
 	opts := providerserver.ServeOpts{
-		Address: "registry.terraform.io/hashicorp/keyhub-preview",
+		Address: "registry.terraform.io/hashicorp/keyhubpreview",
 		Debug:   debug,
 	}
 

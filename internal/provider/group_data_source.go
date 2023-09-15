@@ -7,8 +7,11 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/diag"
+	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 	keyhub "github.com/topicuskeyhub/sdk-go"
 	keyhubgroup "github.com/topicuskeyhub/sdk-go/group"
@@ -70,9 +73,15 @@ func (d *groupDataSource) Read(ctx context.Context, req datasource.ReadRequest, 
 
 	ctx = tflog.SetField(ctx, "keyhub_group_uuid", data.UUID.ValueString())
 	tflog.Debug(ctx, "Reading group from Topicus KeyHub by UUID")
+	listValue, _ := data.Additional.ToListValue(ctx)
+	additional, _ := tfToSlice(listValue, func(val attr.Value, diags *diag.Diagnostics) string {
+		return val.(basetypes.StringValue).ValueString()
+	})
+
 	groups, err := d.client.Group().Get(ctx, &keyhubgroup.GroupRequestBuilderGetRequestConfiguration{
 		QueryParameters: &keyhubgroup.GroupRequestBuilderGetQueryParameters{
-			Uuid: []string{data.UUID.ValueString()},
+			Uuid:       []string{data.UUID.ValueString()},
+			Additional: additional,
 		},
 	})
 	if err != nil {
@@ -90,6 +99,7 @@ func (d *groupDataSource) Read(ctx context.Context, req datasource.ReadRequest, 
 		return
 	}
 	fillDataStructFromTFObjectDSGroupGroup(&data, tfGroup)
+	data.Additional = listValue
 
 	// Save data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
