@@ -19,8 +19,6 @@ import (
 )
 
 // Ensure KeyHubProvider satisfies various provider interfaces.
-//
-//go:generate go run github.com/topicuskeyhub/terraform-provider-keyhub-generator
 var _ provider.Provider = &KeyHubProvider{}
 
 // KeyHubProvider defines the provider implementation.
@@ -177,7 +175,17 @@ func (p *KeyHubProvider) Resources(ctx context.Context) []func() resource.Resour
 
 func (p *KeyHubProvider) DataSources(ctx context.Context) []func() datasource.DataSource {
 	return []func() datasource.DataSource{
+		NewAccountDataSource,
+		NewCertificateDataSource,
+		NewClientDataSource,
+		NewDirectoryDataSource,
 		NewGroupDataSource,
+		NewGroupclassificationDataSource,
+		NewOrganizationalunitDataSource,
+		NewServiceaccountDataSource,
+		NewSystemDataSource,
+		NewVaultrecordDataSource,
+		NewWebhookDataSource,
 	}
 }
 

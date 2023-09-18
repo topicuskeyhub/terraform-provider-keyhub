@@ -6,12 +6,14 @@ package provider
 import (
 	"context"
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
+	"github.com/hashicorp/terraform-plugin-log/tflog"
 	keyhub "github.com/topicuskeyhub/sdk-go"
 	keyhubaccount "github.com/topicuskeyhub/sdk-go/account"
 	keyhubcertificate "github.com/topicuskeyhub/sdk-go/certificate"
@@ -153,11 +155,11 @@ func parseCast[T any, Z any](val basetypes.StringValue, parser func(string) (Z, 
 	return caster(parsed), diags
 }
 
-func findFirst[T keyhubmodel.Linkableable](wrapper interface{ GetItems() []T }, name string, uuid *string, err error) (T, diag.Diagnostics) {
+func findFirst[T keyhubmodel.Linkableable](ctx context.Context, wrapper interface{ GetItems() []T }, name string, uuid *string, err error) (T, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var noVal T
 	if err != nil {
-		diags.AddError("Client Error", fmt.Sprintf("Unable to read %s, got error: %s", name, err))
+		diags.AddError("Client Error", fmt.Sprintf("Unable to read %s, got error: %s", name, errorReportToString(ctx, err)))
 		return noVal, diags
 	}
 	if len(wrapper.GetItems()) == 0 {
@@ -178,7 +180,7 @@ func findGroupGroupPrimerByUUID(ctx context.Context, uuid *string) (keyhubmodel.
 			Uuid: []string{*uuid},
 		},
 	})
-	ret, diag := findFirst[keyhubmodel.GroupGroupable](wrapper, "group", uuid, err)
+	ret, diag := findFirst[keyhubmodel.GroupGroupable](ctx, wrapper, "group", uuid, err)
 	if ret == nil {
 		return ret, diag
 	}
@@ -195,7 +197,7 @@ func findDirectoryAccountDirectoryPrimerByUUID(ctx context.Context, uuid *string
 			Uuid: []string{*uuid},
 		},
 	})
-	ret, diag := findFirst[keyhubmodel.DirectoryAccountDirectoryable](wrapper, "directory", uuid, err)
+	ret, diag := findFirst[keyhubmodel.DirectoryAccountDirectoryable](ctx, wrapper, "directory", uuid, err)
 	if ret == nil {
 		return ret, diag
 	}
@@ -212,7 +214,7 @@ func findOrganizationOrganizationalUnitPrimerByUUID(ctx context.Context, uuid *s
 			Uuid: []string{*uuid},
 		},
 	})
-	ret, diag := findFirst[keyhubmodel.OrganizationOrganizationalUnitable](wrapper, "organizational unit", uuid, err)
+	ret, diag := findFirst[keyhubmodel.OrganizationOrganizationalUnitable](ctx, wrapper, "organizational unit", uuid, err)
 	if ret == nil {
 		return ret, diag
 	}
@@ -229,7 +231,7 @@ func findCertificateCertificatePrimerByUUID(ctx context.Context, uuid *string) (
 			Uuid: []string{*uuid},
 		},
 	})
-	ret, diag := findFirst[keyhubmodel.CertificateCertificateable](wrapper, "certificate", uuid, err)
+	ret, diag := findFirst[keyhubmodel.CertificateCertificateable](ctx, wrapper, "certificate", uuid, err)
 	if ret == nil {
 		return ret, diag
 	}
@@ -246,7 +248,7 @@ func findProvisioningProvisionedSystemPrimerByUUID(ctx context.Context, uuid *st
 			Uuid: []string{*uuid},
 		},
 	})
-	ret, diag := findFirst[keyhubmodel.ProvisioningProvisionedSystemable](wrapper, "provisioned system", uuid, err)
+	ret, diag := findFirst[keyhubmodel.ProvisioningProvisionedSystemable](ctx, wrapper, "provisioned system", uuid, err)
 	if ret == nil {
 		return ret, diag
 	}
@@ -263,7 +265,7 @@ func findGroupGroupClassificationPrimerByUUID(ctx context.Context, uuid *string)
 			Uuid: []string{*uuid},
 		},
 	})
-	ret, diag := findFirst[keyhubmodel.GroupGroupClassificationable](wrapper, "group classification", uuid, err)
+	ret, diag := findFirst[keyhubmodel.GroupGroupClassificationable](ctx, wrapper, "group classification", uuid, err)
 	if ret == nil {
 		return ret, diag
 	}
@@ -280,7 +282,7 @@ func findClientClientApplicationPrimerByUUID(ctx context.Context, uuid *string) 
 			Uuid: []string{*uuid},
 		},
 	})
-	ret, diag := findFirst[keyhubmodel.ClientClientApplicationable](wrapper, "client application", uuid, err)
+	ret, diag := findFirst[keyhubmodel.ClientClientApplicationable](ctx, wrapper, "client application", uuid, err)
 	if ret == nil {
 		return ret, diag
 	}
@@ -305,7 +307,7 @@ func findAuthAccountByUUID(ctx context.Context, uuid *string) (keyhubmodel.AuthA
 			Uuid: []string{*uuid},
 		},
 	})
-	return findFirst[keyhubmodel.AuthAccountable](wrapper, "account", uuid, err)
+	return findFirst[keyhubmodel.AuthAccountable](ctx, wrapper, "account", uuid, err)
 }
 
 func findServiceaccountServiceAccountPrimerByUUID(ctx context.Context, uuid *string) (keyhubmodel.ServiceaccountServiceAccountPrimerable, diag.Diagnostics) {
@@ -318,7 +320,7 @@ func findServiceaccountServiceAccountPrimerByUUID(ctx context.Context, uuid *str
 			Uuid: []string{*uuid},
 		},
 	})
-	ret, diag := findFirst[keyhubmodel.ServiceaccountServiceAccountable](wrapper, "service account", uuid, err)
+	ret, diag := findFirst[keyhubmodel.ServiceaccountServiceAccountable](ctx, wrapper, "service account", uuid, err)
 	if ret == nil {
 		return ret, diag
 	}
@@ -335,9 +337,22 @@ func findVaultVaultRecordPrimerByUUID(ctx context.Context, uuid *string) (keyhub
 			Uuid: []string{*uuid},
 		},
 	})
-	ret, diag := findFirst[keyhubmodel.VaultVaultRecordable](wrapper, "vault record", uuid, err)
+	ret, diag := findFirst[keyhubmodel.VaultVaultRecordable](ctx, wrapper, "vault record", uuid, err)
 	if ret == nil {
 		return ret, diag
 	}
 	return &ret.(*keyhubmodel.VaultVaultRecord).VaultVaultRecordPrimer, diag
+}
+
+func errorReportToString(ctx context.Context, err error) string {
+	report, ok := err.(keyhubmodel.ErrorReportable)
+	if !ok {
+		return err.Error()
+	}
+	msg := fmt.Sprintf("Error %d from backend: %s", *report.GetCode(), *report.GetMessage())
+	tflog.Info(ctx, msg)
+	if report.GetStacktrace() != nil {
+		tflog.Info(ctx, strings.Join(report.GetStacktrace(), "\n"))
+	}
+	return msg
 }

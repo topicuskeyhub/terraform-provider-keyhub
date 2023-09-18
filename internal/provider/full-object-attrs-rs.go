@@ -179,7 +179,7 @@ func objectAttrsTypeRSAuthAccountPrimer(recurse bool) map[string]attr.Type {
 
 func objectAttrsTypeRSAuthAccountRecoveryStatus(recurse bool) map[string]attr.Type {
 	objectAttrs := make(map[string]attr.Type)
-	objectAttrs["pending2_f_a_recovery_request"] = types.BoolType
+	objectAttrs["pending2fa_recovery_request"] = types.BoolType
 	objectAttrs["pending_password_recovery_request"] = types.BoolType
 	return objectAttrs
 }
@@ -227,7 +227,7 @@ func objectAttrsTypeRSAuthAccount_additionalObjects(recurse bool) map[string]att
 func objectAttrsTypeRSAuthAccountsAuditStats(recurse bool) map[string]attr.Type {
 	objectAttrs := make(map[string]attr.Type)
 	objectAttrs["directory_stats"] = types.ObjectType{AttrTypes: objectAttrsTypeRSAuthAccountsAuditStats_directoryStats(recurse)}
-	objectAttrs["two_f_a_stats"] = types.ObjectType{AttrTypes: objectAttrsTypeRSAuthAccountsAuditStats_twoFAStats(recurse)}
+	objectAttrs["two_fa_stats"] = types.ObjectType{AttrTypes: objectAttrsTypeRSAuthAccountsAuditStats_twoFAStats(recurse)}
 	objectAttrs["validity_stats"] = types.ObjectType{AttrTypes: objectAttrsTypeRSAuthAccountsAuditStats_validityStats(recurse)}
 	return objectAttrs
 }
@@ -314,7 +314,7 @@ func objectAttrsTypeRSCertificateCertificate(recurse bool) map[string]attr.Type 
 	objectAttrs["fingerprint_sha1"] = types.StringType
 	objectAttrs["fingerprint_sha256"] = types.StringType
 	objectAttrs["global"] = types.BoolType
-	objectAttrs["subject_d_n"] = types.StringType
+	objectAttrs["subject_dn"] = types.StringType
 	objectAttrs["uuid"] = types.StringType
 	objectAttrs["key_data"] = types.ListType{ElemType: types.StringType}
 	return objectAttrs
@@ -337,7 +337,7 @@ func objectAttrsTypeRSCertificateCertificatePrimer(recurse bool) map[string]attr
 	objectAttrs["fingerprint_sha1"] = types.StringType
 	objectAttrs["fingerprint_sha256"] = types.StringType
 	objectAttrs["global"] = types.BoolType
-	objectAttrs["subject_d_n"] = types.StringType
+	objectAttrs["subject_dn"] = types.StringType
 	objectAttrs["uuid"] = types.StringType
 	return objectAttrs
 }
@@ -440,12 +440,12 @@ func objectAttrsTypeRSClientOAuth2Client(recurse bool) map[string]attr.Type {
 	objectAttrs["technical_administrator_uuid"] = types.StringType
 	objectAttrs["account_permissions"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeRSAuthPermission(false)}}
 	objectAttrs["attributes"] = types.ObjectType{AttrTypes: objectAttrsTypeRSClientOAuth2Client_attributes(false)}
-	objectAttrs["callback_u_r_i"] = types.StringType
+	objectAttrs["callback_uri"] = types.StringType
 	objectAttrs["confidential"] = types.BoolType
 	objectAttrs["debug_mode"] = types.BoolType
 	objectAttrs["id_token_claims"] = types.StringType
-	objectAttrs["initiate_login_u_r_i"] = types.StringType
-	objectAttrs["resource_u_r_is"] = types.StringType
+	objectAttrs["initiate_login_uri"] = types.StringType
+	objectAttrs["resource_uris"] = types.StringType
 	objectAttrs["share_secret_in_vault"] = types.BoolType
 	objectAttrs["shared_secret_uuid"] = types.StringType
 	objectAttrs["show_landing_page"] = types.BoolType
@@ -646,7 +646,7 @@ func objectAttrsTypeRSDirectoryLDAPDirectory(recurse bool) map[string]attr.Type 
 	objectAttrs["rotating_password"] = types.StringType
 	objectAttrs["username_customizable"] = types.BoolType
 	objectAttrs["attributes_to_store"] = types.StringType
-	objectAttrs["base_d_n"] = types.StringType
+	objectAttrs["base_dn"] = types.StringType
 	objectAttrs["client_certificate_uuid"] = types.StringType
 	objectAttrs["dialect"] = types.StringType
 	objectAttrs["failover_host"] = types.StringType
@@ -654,7 +654,7 @@ func objectAttrsTypeRSDirectoryLDAPDirectory(recurse bool) map[string]attr.Type 
 	objectAttrs["host"] = types.StringType
 	objectAttrs["password_recovery"] = types.StringType
 	objectAttrs["port"] = types.Int64Type
-	objectAttrs["search_bind_d_n"] = types.StringType
+	objectAttrs["search_bind_dn"] = types.StringType
 	objectAttrs["search_bind_password"] = types.StringType
 	objectAttrs["search_filter"] = types.StringType
 	objectAttrs["tls"] = types.StringType
@@ -1473,21 +1473,21 @@ func objectAttrsTypeRSProvisioningAbstractProvisionedLDAP(recurse bool) map[stri
 	objectAttrs["technical_administrator_uuid"] = types.StringType
 	objectAttrs["username_prefix"] = types.StringType
 	objectAttrs["attributes"] = types.ObjectType{AttrTypes: objectAttrsTypeRSProvisioningAbstractProvisionedLDAP_attributes(false)}
-	objectAttrs["base_d_n"] = types.StringType
-	objectAttrs["bind_d_n"] = types.StringType
+	objectAttrs["base_dn"] = types.StringType
+	objectAttrs["bind_dn"] = types.StringType
 	objectAttrs["bind_password"] = types.StringType
 	objectAttrs["client_certificate_uuid"] = types.StringType
 	objectAttrs["failover_host"] = types.StringType
 	objectAttrs["failover_trusted_certificate_uuid"] = types.StringType
-	objectAttrs["group_d_n"] = types.StringType
+	objectAttrs["group_dn"] = types.StringType
 	objectAttrs["host"] = types.StringType
 	objectAttrs["object_classes"] = types.StringType
 	objectAttrs["port"] = types.Int64Type
-	objectAttrs["service_account_d_n"] = types.StringType
+	objectAttrs["service_account_dn"] = types.StringType
 	objectAttrs["ssh_public_key_supported"] = types.BoolType
 	objectAttrs["tls"] = types.StringType
 	objectAttrs["trusted_certificate_uuid"] = types.StringType
-	objectAttrs["user_d_n"] = types.StringType
+	objectAttrs["user_dn"] = types.StringType
 	return objectAttrs
 }
 
@@ -1601,7 +1601,7 @@ func objectAttrsTypeRSProvisioningProvisionNumberSequence(recurse bool) map[stri
 	objectAttrs["permissions"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeRSAuthPermission(recurse)}}
 	objectAttrs["account_count"] = types.Int64Type
 	objectAttrs["name"] = types.StringType
-	objectAttrs["next_u_i_d"] = types.Int64Type
+	objectAttrs["next_uid"] = types.Int64Type
 	return objectAttrs
 }
 
@@ -1641,21 +1641,21 @@ func objectAttrsTypeRSProvisioningProvisionedAD(recurse bool) map[string]attr.Ty
 	objectAttrs["technical_administrator_uuid"] = types.StringType
 	objectAttrs["username_prefix"] = types.StringType
 	objectAttrs["attributes"] = types.ObjectType{AttrTypes: objectAttrsTypeRSProvisioningAbstractProvisionedLDAP_attributes(false)}
-	objectAttrs["base_d_n"] = types.StringType
-	objectAttrs["bind_d_n"] = types.StringType
+	objectAttrs["base_dn"] = types.StringType
+	objectAttrs["bind_dn"] = types.StringType
 	objectAttrs["bind_password"] = types.StringType
 	objectAttrs["client_certificate_uuid"] = types.StringType
 	objectAttrs["failover_host"] = types.StringType
 	objectAttrs["failover_trusted_certificate_uuid"] = types.StringType
-	objectAttrs["group_d_n"] = types.StringType
+	objectAttrs["group_dn"] = types.StringType
 	objectAttrs["host"] = types.StringType
 	objectAttrs["object_classes"] = types.StringType
 	objectAttrs["port"] = types.Int64Type
-	objectAttrs["service_account_d_n"] = types.StringType
+	objectAttrs["service_account_dn"] = types.StringType
 	objectAttrs["ssh_public_key_supported"] = types.BoolType
 	objectAttrs["tls"] = types.StringType
 	objectAttrs["trusted_certificate_uuid"] = types.StringType
-	objectAttrs["user_d_n"] = types.StringType
+	objectAttrs["user_dn"] = types.StringType
 	objectAttrs["sam_account_name_scheme"] = types.StringType
 	return objectAttrs
 }
@@ -1816,21 +1816,21 @@ func objectAttrsTypeRSProvisioningProvisionedLDAP(recurse bool) map[string]attr.
 	objectAttrs["technical_administrator_uuid"] = types.StringType
 	objectAttrs["username_prefix"] = types.StringType
 	objectAttrs["attributes"] = types.ObjectType{AttrTypes: objectAttrsTypeRSProvisioningAbstractProvisionedLDAP_attributes(false)}
-	objectAttrs["base_d_n"] = types.StringType
-	objectAttrs["bind_d_n"] = types.StringType
+	objectAttrs["base_dn"] = types.StringType
+	objectAttrs["bind_dn"] = types.StringType
 	objectAttrs["bind_password"] = types.StringType
 	objectAttrs["client_certificate_uuid"] = types.StringType
 	objectAttrs["failover_host"] = types.StringType
 	objectAttrs["failover_trusted_certificate_uuid"] = types.StringType
-	objectAttrs["group_d_n"] = types.StringType
+	objectAttrs["group_dn"] = types.StringType
 	objectAttrs["host"] = types.StringType
 	objectAttrs["object_classes"] = types.StringType
 	objectAttrs["port"] = types.Int64Type
-	objectAttrs["service_account_d_n"] = types.StringType
+	objectAttrs["service_account_dn"] = types.StringType
 	objectAttrs["ssh_public_key_supported"] = types.BoolType
 	objectAttrs["tls"] = types.StringType
 	objectAttrs["trusted_certificate_uuid"] = types.StringType
-	objectAttrs["user_d_n"] = types.StringType
+	objectAttrs["user_dn"] = types.StringType
 	objectAttrs["gid"] = types.Int64Type
 	objectAttrs["hashing_scheme"] = types.StringType
 	objectAttrs["numbering"] = types.ObjectType{AttrTypes: objectAttrsTypeRSProvisioningProvisionNumberSequence(false)}
@@ -1860,7 +1860,7 @@ func objectAttrsTypeRSProvisioningProvisionedLDAPDirectory(recurse bool) map[str
 	objectAttrs["technical_administrator_uuid"] = types.StringType
 	objectAttrs["username_prefix"] = types.StringType
 	objectAttrs["directory_uuid"] = types.StringType
-	objectAttrs["group_d_n"] = types.StringType
+	objectAttrs["group_dn"] = types.StringType
 	return objectAttrs
 }
 

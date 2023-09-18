@@ -407,7 +407,7 @@ func dataSourceSchemaAttrsAuthAccountPrimer(recurse bool) map[string]dsschema.At
 }
 func dataSourceSchemaAttrsAuthAccountRecoveryStatus(recurse bool) map[string]dsschema.Attribute {
 	schemaAttrs := make(map[string]dsschema.Attribute)
-	schemaAttrs["pending2_f_a_recovery_request"] = dsschema.BoolAttribute{
+	schemaAttrs["pending2fa_recovery_request"] = dsschema.BoolAttribute{
 		Computed: true,
 	}
 	schemaAttrs["pending_password_recovery_request"] = dsschema.BoolAttribute{
@@ -515,7 +515,7 @@ func dataSourceSchemaAttrsAuthAccountsAuditStats(recurse bool) map[string]dssche
 		Attributes: dataSourceSchemaAttrsAuthAccountsAuditStats_directoryStats(recurse),
 		Computed:   true,
 	}
-	schemaAttrs["two_f_a_stats"] = dsschema.SingleNestedAttribute{
+	schemaAttrs["two_fa_stats"] = dsschema.SingleNestedAttribute{
 		Attributes: dataSourceSchemaAttrsAuthAccountsAuditStats_twoFAStats(recurse),
 		Computed:   true,
 	}
@@ -776,7 +776,7 @@ func dataSourceSchemaAttrsCertificateCertificate(recurse bool) map[string]dssche
 	schemaAttrs["global"] = dsschema.BoolAttribute{
 		Computed: true,
 	}
-	schemaAttrs["subject_d_n"] = dsschema.StringAttribute{
+	schemaAttrs["subject_dn"] = dsschema.StringAttribute{
 		Computed: true,
 	}
 	schemaAttrs["uuid"] = dsschema.StringAttribute{
@@ -846,7 +846,7 @@ func dataSourceSchemaAttrsCertificateCertificatePrimer(recurse bool) map[string]
 	schemaAttrs["global"] = dsschema.BoolAttribute{
 		Computed: true,
 	}
-	schemaAttrs["subject_d_n"] = dsschema.StringAttribute{
+	schemaAttrs["subject_dn"] = dsschema.StringAttribute{
 		Computed: true,
 	}
 	schemaAttrs["uuid"] = dsschema.StringAttribute{
@@ -1161,7 +1161,7 @@ func dataSourceSchemaAttrsClientOAuth2Client(recurse bool) map[string]dsschema.A
 		Attributes: dataSourceSchemaAttrsClientOAuth2Client_attributes(false),
 		Computed:   true,
 	}
-	schemaAttrs["callback_u_r_i"] = dsschema.StringAttribute{
+	schemaAttrs["callback_uri"] = dsschema.StringAttribute{
 		Computed: true,
 	}
 	schemaAttrs["confidential"] = dsschema.BoolAttribute{
@@ -1173,10 +1173,10 @@ func dataSourceSchemaAttrsClientOAuth2Client(recurse bool) map[string]dsschema.A
 	schemaAttrs["id_token_claims"] = dsschema.StringAttribute{
 		Computed: true,
 	}
-	schemaAttrs["initiate_login_u_r_i"] = dsschema.StringAttribute{
+	schemaAttrs["initiate_login_uri"] = dsschema.StringAttribute{
 		Computed: true,
 	}
-	schemaAttrs["resource_u_r_is"] = dsschema.StringAttribute{
+	schemaAttrs["resource_uris"] = dsschema.StringAttribute{
 		Computed: true,
 	}
 	schemaAttrs["share_secret_in_vault"] = dsschema.BoolAttribute{
@@ -1737,7 +1737,7 @@ func dataSourceSchemaAttrsDirectoryLDAPDirectory(recurse bool) map[string]dssche
 	schemaAttrs["attributes_to_store"] = dsschema.StringAttribute{
 		Computed: true,
 	}
-	schemaAttrs["base_d_n"] = dsschema.StringAttribute{
+	schemaAttrs["base_dn"] = dsschema.StringAttribute{
 		Computed: true,
 	}
 	schemaAttrs["client_certificate"] = dsschema.SingleNestedAttribute{
@@ -1763,7 +1763,7 @@ func dataSourceSchemaAttrsDirectoryLDAPDirectory(recurse bool) map[string]dssche
 	schemaAttrs["port"] = dsschema.Int64Attribute{
 		Computed: true,
 	}
-	schemaAttrs["search_bind_d_n"] = dsschema.StringAttribute{
+	schemaAttrs["search_bind_dn"] = dsschema.StringAttribute{
 		Computed: true,
 	}
 	schemaAttrs["search_bind_password"] = dsschema.StringAttribute{
@@ -3924,10 +3924,10 @@ func dataSourceSchemaAttrsProvisioningAbstractProvisionedLDAP(recurse bool) map[
 		Attributes: dataSourceSchemaAttrsProvisioningAbstractProvisionedLDAP_attributes(false),
 		Computed:   true,
 	}
-	schemaAttrs["base_d_n"] = dsschema.StringAttribute{
+	schemaAttrs["base_dn"] = dsschema.StringAttribute{
 		Computed: true,
 	}
-	schemaAttrs["bind_d_n"] = dsschema.StringAttribute{
+	schemaAttrs["bind_dn"] = dsschema.StringAttribute{
 		Computed: true,
 	}
 	schemaAttrs["bind_password"] = dsschema.StringAttribute{
@@ -3944,7 +3944,7 @@ func dataSourceSchemaAttrsProvisioningAbstractProvisionedLDAP(recurse bool) map[
 		Attributes: dataSourceSchemaAttrsCertificateCertificatePrimer(false),
 		Computed:   true,
 	}
-	schemaAttrs["group_d_n"] = dsschema.StringAttribute{
+	schemaAttrs["group_dn"] = dsschema.StringAttribute{
 		Computed: true,
 	}
 	schemaAttrs["host"] = dsschema.StringAttribute{
@@ -3956,7 +3956,7 @@ func dataSourceSchemaAttrsProvisioningAbstractProvisionedLDAP(recurse bool) map[
 	schemaAttrs["port"] = dsschema.Int64Attribute{
 		Computed: true,
 	}
-	schemaAttrs["service_account_d_n"] = dsschema.StringAttribute{
+	schemaAttrs["service_account_dn"] = dsschema.StringAttribute{
 		Computed: true,
 	}
 	schemaAttrs["ssh_public_key_supported"] = dsschema.BoolAttribute{
@@ -3969,7 +3969,7 @@ func dataSourceSchemaAttrsProvisioningAbstractProvisionedLDAP(recurse bool) map[
 		Attributes: dataSourceSchemaAttrsCertificateCertificatePrimer(false),
 		Computed:   true,
 	}
-	schemaAttrs["user_d_n"] = dsschema.StringAttribute{
+	schemaAttrs["user_dn"] = dsschema.StringAttribute{
 		Computed: true,
 	}
 	return schemaAttrs
@@ -4225,7 +4225,7 @@ func dataSourceSchemaAttrsProvisioningProvisionNumberSequence(recurse bool) map[
 	schemaAttrs["name"] = dsschema.StringAttribute{
 		Computed: true,
 	}
-	schemaAttrs["next_u_i_d"] = dsschema.Int64Attribute{
+	schemaAttrs["next_uid"] = dsschema.Int64Attribute{
 		Computed: true,
 	}
 	return schemaAttrs
@@ -4344,10 +4344,10 @@ func dataSourceSchemaAttrsProvisioningProvisionedAD(recurse bool) map[string]dss
 		Attributes: dataSourceSchemaAttrsProvisioningAbstractProvisionedLDAP_attributes(false),
 		Computed:   true,
 	}
-	schemaAttrs["base_d_n"] = dsschema.StringAttribute{
+	schemaAttrs["base_dn"] = dsschema.StringAttribute{
 		Computed: true,
 	}
-	schemaAttrs["bind_d_n"] = dsschema.StringAttribute{
+	schemaAttrs["bind_dn"] = dsschema.StringAttribute{
 		Computed: true,
 	}
 	schemaAttrs["bind_password"] = dsschema.StringAttribute{
@@ -4364,7 +4364,7 @@ func dataSourceSchemaAttrsProvisioningProvisionedAD(recurse bool) map[string]dss
 		Attributes: dataSourceSchemaAttrsCertificateCertificatePrimer(false),
 		Computed:   true,
 	}
-	schemaAttrs["group_d_n"] = dsschema.StringAttribute{
+	schemaAttrs["group_dn"] = dsschema.StringAttribute{
 		Computed: true,
 	}
 	schemaAttrs["host"] = dsschema.StringAttribute{
@@ -4376,7 +4376,7 @@ func dataSourceSchemaAttrsProvisioningProvisionedAD(recurse bool) map[string]dss
 	schemaAttrs["port"] = dsschema.Int64Attribute{
 		Computed: true,
 	}
-	schemaAttrs["service_account_d_n"] = dsschema.StringAttribute{
+	schemaAttrs["service_account_dn"] = dsschema.StringAttribute{
 		Computed: true,
 	}
 	schemaAttrs["ssh_public_key_supported"] = dsschema.BoolAttribute{
@@ -4389,7 +4389,7 @@ func dataSourceSchemaAttrsProvisioningProvisionedAD(recurse bool) map[string]dss
 		Attributes: dataSourceSchemaAttrsCertificateCertificatePrimer(false),
 		Computed:   true,
 	}
-	schemaAttrs["user_d_n"] = dsschema.StringAttribute{
+	schemaAttrs["user_dn"] = dsschema.StringAttribute{
 		Computed: true,
 	}
 	schemaAttrs["sam_account_name_scheme"] = dsschema.StringAttribute{
@@ -4955,10 +4955,10 @@ func dataSourceSchemaAttrsProvisioningProvisionedLDAP(recurse bool) map[string]d
 		Attributes: dataSourceSchemaAttrsProvisioningAbstractProvisionedLDAP_attributes(false),
 		Computed:   true,
 	}
-	schemaAttrs["base_d_n"] = dsschema.StringAttribute{
+	schemaAttrs["base_dn"] = dsschema.StringAttribute{
 		Computed: true,
 	}
-	schemaAttrs["bind_d_n"] = dsschema.StringAttribute{
+	schemaAttrs["bind_dn"] = dsschema.StringAttribute{
 		Computed: true,
 	}
 	schemaAttrs["bind_password"] = dsschema.StringAttribute{
@@ -4975,7 +4975,7 @@ func dataSourceSchemaAttrsProvisioningProvisionedLDAP(recurse bool) map[string]d
 		Attributes: dataSourceSchemaAttrsCertificateCertificatePrimer(false),
 		Computed:   true,
 	}
-	schemaAttrs["group_d_n"] = dsschema.StringAttribute{
+	schemaAttrs["group_dn"] = dsschema.StringAttribute{
 		Computed: true,
 	}
 	schemaAttrs["host"] = dsschema.StringAttribute{
@@ -4987,7 +4987,7 @@ func dataSourceSchemaAttrsProvisioningProvisionedLDAP(recurse bool) map[string]d
 	schemaAttrs["port"] = dsschema.Int64Attribute{
 		Computed: true,
 	}
-	schemaAttrs["service_account_d_n"] = dsschema.StringAttribute{
+	schemaAttrs["service_account_dn"] = dsschema.StringAttribute{
 		Computed: true,
 	}
 	schemaAttrs["ssh_public_key_supported"] = dsschema.BoolAttribute{
@@ -5000,7 +5000,7 @@ func dataSourceSchemaAttrsProvisioningProvisionedLDAP(recurse bool) map[string]d
 		Attributes: dataSourceSchemaAttrsCertificateCertificatePrimer(false),
 		Computed:   true,
 	}
-	schemaAttrs["user_d_n"] = dsschema.StringAttribute{
+	schemaAttrs["user_dn"] = dsschema.StringAttribute{
 		Computed: true,
 	}
 	schemaAttrs["gid"] = dsschema.Int64Attribute{
@@ -5107,7 +5107,7 @@ func dataSourceSchemaAttrsProvisioningProvisionedLDAPDirectory(recurse bool) map
 		Attributes: dataSourceSchemaAttrsDirectoryAccountDirectoryPrimer(false),
 		Computed:   true,
 	}
-	schemaAttrs["group_d_n"] = dsschema.StringAttribute{
+	schemaAttrs["group_dn"] = dsschema.StringAttribute{
 		Computed: true,
 	}
 	return schemaAttrs

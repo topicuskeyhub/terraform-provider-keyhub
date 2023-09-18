@@ -462,7 +462,7 @@ func tfObjectToTKHDSAuthAccountRecoveryStatus(ctx context.Context, recurse bool,
 	}
 	objAttrs := objVal.Attributes()
 	tkh := keyhubmodel.NewAuthAccountRecoveryStatus()
-	tkh.SetPending2FARecoveryRequest(objAttrs["pending2_f_a_recovery_request"].(basetypes.BoolValue).ValueBoolPointer())
+	tkh.SetPending2FARecoveryRequest(objAttrs["pending2fa_recovery_request"].(basetypes.BoolValue).ValueBoolPointer())
 	tkh.SetPendingPasswordRecoveryRequest(objAttrs["pending_password_recovery_request"].(basetypes.BoolValue).ValueBoolPointer())
 	return tkh, diags
 }
@@ -587,7 +587,7 @@ func tfObjectToTKHDSAuthAccountsAuditStats(ctx context.Context, recurse bool, ob
 		tkh.SetDirectoryStats(val)
 	}
 	{
-		val, d := tfObjectToTKHDSAuthAccountsAuditStats_twoFAStats(ctx, recurse, objAttrs["two_f_a_stats"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHDSAuthAccountsAuditStats_twoFAStats(ctx, recurse, objAttrs["two_fa_stats"].(basetypes.ObjectValue))
 		diags.Append(d...)
 		tkh.SetTwoFAStats(val)
 	}
@@ -905,7 +905,7 @@ func tfObjectToTKHDSCertificateCertificate(ctx context.Context, recurse bool, ob
 	tkh.SetFingerprintSha1(objAttrs["fingerprint_sha1"].(basetypes.StringValue).ValueStringPointer())
 	tkh.SetFingerprintSha256(objAttrs["fingerprint_sha256"].(basetypes.StringValue).ValueStringPointer())
 	tkh.SetGlobal(objAttrs["global"].(basetypes.BoolValue).ValueBoolPointer())
-	tkh.SetSubjectDN(objAttrs["subject_d_n"].(basetypes.StringValue).ValueStringPointer())
+	tkh.SetSubjectDN(objAttrs["subject_dn"].(basetypes.StringValue).ValueStringPointer())
 	tkh.SetUuid(objAttrs["uuid"].(basetypes.StringValue).ValueStringPointer())
 	{
 		val, d := tfToSlice(objAttrs["key_data"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) string {
@@ -991,7 +991,7 @@ func tfObjectToTKHDSCertificateCertificatePrimer(ctx context.Context, recurse bo
 	tkh.SetFingerprintSha1(objAttrs["fingerprint_sha1"].(basetypes.StringValue).ValueStringPointer())
 	tkh.SetFingerprintSha256(objAttrs["fingerprint_sha256"].(basetypes.StringValue).ValueStringPointer())
 	tkh.SetGlobal(objAttrs["global"].(basetypes.BoolValue).ValueBoolPointer())
-	tkh.SetSubjectDN(objAttrs["subject_d_n"].(basetypes.StringValue).ValueStringPointer())
+	tkh.SetSubjectDN(objAttrs["subject_dn"].(basetypes.StringValue).ValueStringPointer())
 	tkh.SetUuid(objAttrs["uuid"].(basetypes.StringValue).ValueStringPointer())
 	return tkh, diags
 }
@@ -1328,12 +1328,12 @@ func tfObjectToTKHDSClientOAuth2Client(ctx context.Context, recurse bool, objVal
 		diags.Append(d...)
 		tkh.SetAttributes(val)
 	}
-	tkh.SetCallbackURI(objAttrs["callback_u_r_i"].(basetypes.StringValue).ValueStringPointer())
+	tkh.SetCallbackURI(objAttrs["callback_uri"].(basetypes.StringValue).ValueStringPointer())
 	tkh.SetConfidential(objAttrs["confidential"].(basetypes.BoolValue).ValueBoolPointer())
 	tkh.SetDebugMode(objAttrs["debug_mode"].(basetypes.BoolValue).ValueBoolPointer())
 	tkh.SetIdTokenClaims(objAttrs["id_token_claims"].(basetypes.StringValue).ValueStringPointer())
-	tkh.SetInitiateLoginURI(objAttrs["initiate_login_u_r_i"].(basetypes.StringValue).ValueStringPointer())
-	tkh.SetResourceURIs(objAttrs["resource_u_r_is"].(basetypes.StringValue).ValueStringPointer())
+	tkh.SetInitiateLoginURI(objAttrs["initiate_login_uri"].(basetypes.StringValue).ValueStringPointer())
+	tkh.SetResourceURIs(objAttrs["resource_uris"].(basetypes.StringValue).ValueStringPointer())
 	tkh.SetShareSecretInVault(objAttrs["share_secret_in_vault"].(basetypes.BoolValue).ValueBoolPointer())
 	{
 		val, d := tfObjectToTKHDSVaultVaultRecordPrimer(ctx, false, objAttrs["shared_secret"].(basetypes.ObjectValue))
@@ -1971,7 +1971,7 @@ func tfObjectToTKHDSDirectoryLDAPDirectory(ctx context.Context, recurse bool, ob
 	}
 	tkh.SetUsernameCustomizable(objAttrs["username_customizable"].(basetypes.BoolValue).ValueBoolPointer())
 	tkh.SetAttributesToStore(objAttrs["attributes_to_store"].(basetypes.StringValue).ValueStringPointer())
-	tkh.SetBaseDN(objAttrs["base_d_n"].(basetypes.StringValue).ValueStringPointer())
+	tkh.SetBaseDN(objAttrs["base_dn"].(basetypes.StringValue).ValueStringPointer())
 	{
 		val, d := tfObjectToTKHDSCertificateCertificatePrimer(ctx, false, objAttrs["client_certificate"].(basetypes.ObjectValue))
 		diags.Append(d...)
@@ -1997,7 +1997,7 @@ func tfObjectToTKHDSDirectoryLDAPDirectory(ctx context.Context, recurse bool, ob
 		tkh.SetPasswordRecovery(val)
 	}
 	tkh.SetPort(int64PToInt32P(objAttrs["port"].(basetypes.Int64Value).ValueInt64Pointer()))
-	tkh.SetSearchBindDN(objAttrs["search_bind_d_n"].(basetypes.StringValue).ValueStringPointer())
+	tkh.SetSearchBindDN(objAttrs["search_bind_dn"].(basetypes.StringValue).ValueStringPointer())
 	tkh.SetSearchBindPassword(objAttrs["search_bind_password"].(basetypes.StringValue).ValueStringPointer())
 	tkh.SetSearchFilter(objAttrs["search_filter"].(basetypes.StringValue).ValueStringPointer())
 	{
@@ -4606,8 +4606,8 @@ func tfObjectToTKHDSProvisioningAbstractProvisionedLDAP(ctx context.Context, rec
 		diags.Append(d...)
 		tkh.SetAttributes(val)
 	}
-	tkh.SetBaseDN(objAttrs["base_d_n"].(basetypes.StringValue).ValueStringPointer())
-	tkh.SetBindDN(objAttrs["bind_d_n"].(basetypes.StringValue).ValueStringPointer())
+	tkh.SetBaseDN(objAttrs["base_dn"].(basetypes.StringValue).ValueStringPointer())
+	tkh.SetBindDN(objAttrs["bind_dn"].(basetypes.StringValue).ValueStringPointer())
 	tkh.SetBindPassword(objAttrs["bind_password"].(basetypes.StringValue).ValueStringPointer())
 	{
 		val, d := tfObjectToTKHDSCertificateCertificatePrimer(ctx, false, objAttrs["client_certificate"].(basetypes.ObjectValue))
@@ -4620,11 +4620,11 @@ func tfObjectToTKHDSProvisioningAbstractProvisionedLDAP(ctx context.Context, rec
 		diags.Append(d...)
 		tkh.SetFailoverTrustedCertificate(val)
 	}
-	tkh.SetGroupDN(objAttrs["group_d_n"].(basetypes.StringValue).ValueStringPointer())
+	tkh.SetGroupDN(objAttrs["group_dn"].(basetypes.StringValue).ValueStringPointer())
 	tkh.SetHost(objAttrs["host"].(basetypes.StringValue).ValueStringPointer())
 	tkh.SetObjectClasses(objAttrs["object_classes"].(basetypes.StringValue).ValueStringPointer())
 	tkh.SetPort(int64PToInt32P(objAttrs["port"].(basetypes.Int64Value).ValueInt64Pointer()))
-	tkh.SetServiceAccountDN(objAttrs["service_account_d_n"].(basetypes.StringValue).ValueStringPointer())
+	tkh.SetServiceAccountDN(objAttrs["service_account_dn"].(basetypes.StringValue).ValueStringPointer())
 	tkh.SetSshPublicKeySupported(objAttrs["ssh_public_key_supported"].(basetypes.BoolValue).ValueBoolPointer())
 	{
 		val, d := parseCastPointer(objAttrs["tls"].(basetypes.StringValue), keyhubmodel.ParseTLSLevel, func(val any) keyhubmodel.TLSLevel { return *val.(*keyhubmodel.TLSLevel) })
@@ -4636,7 +4636,7 @@ func tfObjectToTKHDSProvisioningAbstractProvisionedLDAP(ctx context.Context, rec
 		diags.Append(d...)
 		tkh.SetTrustedCertificate(val)
 	}
-	tkh.SetUserDN(objAttrs["user_d_n"].(basetypes.StringValue).ValueStringPointer())
+	tkh.SetUserDN(objAttrs["user_dn"].(basetypes.StringValue).ValueStringPointer())
 	if recurse {
 		{
 			val, d := tfObjectToTKHDSProvisioningProvisionedSystem_additionalObjects(ctx, false, objAttrs["additional_objects"].(basetypes.ObjectValue))
@@ -4976,7 +4976,7 @@ func tfObjectToTKHDSProvisioningProvisionNumberSequence(ctx context.Context, rec
 	}
 	tkh.SetAccountCount(int64PToInt32P(objAttrs["account_count"].(basetypes.Int64Value).ValueInt64Pointer()))
 	tkh.SetName(objAttrs["name"].(basetypes.StringValue).ValueStringPointer())
-	tkh.SetNextUID(objAttrs["next_u_i_d"].(basetypes.Int64Value).ValueInt64Pointer())
+	tkh.SetNextUID(objAttrs["next_uid"].(basetypes.Int64Value).ValueInt64Pointer())
 	if recurse {
 		{
 			val, d := tfObjectToTKHDSProvisioningProvisionNumberSequence_additionalObjects(ctx, false, objAttrs["additional_objects"].(basetypes.ObjectValue))
@@ -5097,8 +5097,8 @@ func tfObjectToTKHDSProvisioningProvisionedAD(ctx context.Context, recurse bool,
 		diags.Append(d...)
 		tkh.SetAttributes(val)
 	}
-	tkh.SetBaseDN(objAttrs["base_d_n"].(basetypes.StringValue).ValueStringPointer())
-	tkh.SetBindDN(objAttrs["bind_d_n"].(basetypes.StringValue).ValueStringPointer())
+	tkh.SetBaseDN(objAttrs["base_dn"].(basetypes.StringValue).ValueStringPointer())
+	tkh.SetBindDN(objAttrs["bind_dn"].(basetypes.StringValue).ValueStringPointer())
 	tkh.SetBindPassword(objAttrs["bind_password"].(basetypes.StringValue).ValueStringPointer())
 	{
 		val, d := tfObjectToTKHDSCertificateCertificatePrimer(ctx, false, objAttrs["client_certificate"].(basetypes.ObjectValue))
@@ -5111,11 +5111,11 @@ func tfObjectToTKHDSProvisioningProvisionedAD(ctx context.Context, recurse bool,
 		diags.Append(d...)
 		tkh.SetFailoverTrustedCertificate(val)
 	}
-	tkh.SetGroupDN(objAttrs["group_d_n"].(basetypes.StringValue).ValueStringPointer())
+	tkh.SetGroupDN(objAttrs["group_dn"].(basetypes.StringValue).ValueStringPointer())
 	tkh.SetHost(objAttrs["host"].(basetypes.StringValue).ValueStringPointer())
 	tkh.SetObjectClasses(objAttrs["object_classes"].(basetypes.StringValue).ValueStringPointer())
 	tkh.SetPort(int64PToInt32P(objAttrs["port"].(basetypes.Int64Value).ValueInt64Pointer()))
-	tkh.SetServiceAccountDN(objAttrs["service_account_d_n"].(basetypes.StringValue).ValueStringPointer())
+	tkh.SetServiceAccountDN(objAttrs["service_account_dn"].(basetypes.StringValue).ValueStringPointer())
 	tkh.SetSshPublicKeySupported(objAttrs["ssh_public_key_supported"].(basetypes.BoolValue).ValueBoolPointer())
 	{
 		val, d := parseCastPointer(objAttrs["tls"].(basetypes.StringValue), keyhubmodel.ParseTLSLevel, func(val any) keyhubmodel.TLSLevel { return *val.(*keyhubmodel.TLSLevel) })
@@ -5127,7 +5127,7 @@ func tfObjectToTKHDSProvisioningProvisionedAD(ctx context.Context, recurse bool,
 		diags.Append(d...)
 		tkh.SetTrustedCertificate(val)
 	}
-	tkh.SetUserDN(objAttrs["user_d_n"].(basetypes.StringValue).ValueStringPointer())
+	tkh.SetUserDN(objAttrs["user_dn"].(basetypes.StringValue).ValueStringPointer())
 	{
 		val, d := parseCastPointer(objAttrs["sam_account_name_scheme"].(basetypes.StringValue), keyhubmodel.ParseProvisioningADSamAccountNameScheme, func(val any) keyhubmodel.ProvisioningADSamAccountNameScheme {
 			return *val.(*keyhubmodel.ProvisioningADSamAccountNameScheme)
@@ -5626,8 +5626,8 @@ func tfObjectToTKHDSProvisioningProvisionedLDAP(ctx context.Context, recurse boo
 		diags.Append(d...)
 		tkh.SetAttributes(val)
 	}
-	tkh.SetBaseDN(objAttrs["base_d_n"].(basetypes.StringValue).ValueStringPointer())
-	tkh.SetBindDN(objAttrs["bind_d_n"].(basetypes.StringValue).ValueStringPointer())
+	tkh.SetBaseDN(objAttrs["base_dn"].(basetypes.StringValue).ValueStringPointer())
+	tkh.SetBindDN(objAttrs["bind_dn"].(basetypes.StringValue).ValueStringPointer())
 	tkh.SetBindPassword(objAttrs["bind_password"].(basetypes.StringValue).ValueStringPointer())
 	{
 		val, d := tfObjectToTKHDSCertificateCertificatePrimer(ctx, false, objAttrs["client_certificate"].(basetypes.ObjectValue))
@@ -5640,11 +5640,11 @@ func tfObjectToTKHDSProvisioningProvisionedLDAP(ctx context.Context, recurse boo
 		diags.Append(d...)
 		tkh.SetFailoverTrustedCertificate(val)
 	}
-	tkh.SetGroupDN(objAttrs["group_d_n"].(basetypes.StringValue).ValueStringPointer())
+	tkh.SetGroupDN(objAttrs["group_dn"].(basetypes.StringValue).ValueStringPointer())
 	tkh.SetHost(objAttrs["host"].(basetypes.StringValue).ValueStringPointer())
 	tkh.SetObjectClasses(objAttrs["object_classes"].(basetypes.StringValue).ValueStringPointer())
 	tkh.SetPort(int64PToInt32P(objAttrs["port"].(basetypes.Int64Value).ValueInt64Pointer()))
-	tkh.SetServiceAccountDN(objAttrs["service_account_d_n"].(basetypes.StringValue).ValueStringPointer())
+	tkh.SetServiceAccountDN(objAttrs["service_account_dn"].(basetypes.StringValue).ValueStringPointer())
 	tkh.SetSshPublicKeySupported(objAttrs["ssh_public_key_supported"].(basetypes.BoolValue).ValueBoolPointer())
 	{
 		val, d := parseCastPointer(objAttrs["tls"].(basetypes.StringValue), keyhubmodel.ParseTLSLevel, func(val any) keyhubmodel.TLSLevel { return *val.(*keyhubmodel.TLSLevel) })
@@ -5656,7 +5656,7 @@ func tfObjectToTKHDSProvisioningProvisionedLDAP(ctx context.Context, recurse boo
 		diags.Append(d...)
 		tkh.SetTrustedCertificate(val)
 	}
-	tkh.SetUserDN(objAttrs["user_d_n"].(basetypes.StringValue).ValueStringPointer())
+	tkh.SetUserDN(objAttrs["user_dn"].(basetypes.StringValue).ValueStringPointer())
 	tkh.SetGid(objAttrs["gid"].(basetypes.Int64Value).ValueInt64Pointer())
 	{
 		val, d := parseCastPointer(objAttrs["hashing_scheme"].(basetypes.StringValue), keyhubmodel.ParseProvisioningLDAPPasswordHashingScheme, func(val any) keyhubmodel.ProvisioningLDAPPasswordHashingScheme {
@@ -5751,7 +5751,7 @@ func tfObjectToTKHDSProvisioningProvisionedLDAPDirectory(ctx context.Context, re
 		diags.Append(d...)
 		tkh.SetDirectory(val)
 	}
-	tkh.SetGroupDN(objAttrs["group_d_n"].(basetypes.StringValue).ValueStringPointer())
+	tkh.SetGroupDN(objAttrs["group_dn"].(basetypes.StringValue).ValueStringPointer())
 	if recurse {
 		{
 			val, d := tfObjectToTKHDSProvisioningProvisionedSystem_additionalObjects(ctx, false, objAttrs["additional_objects"].(basetypes.ObjectValue))

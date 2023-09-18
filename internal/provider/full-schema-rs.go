@@ -386,7 +386,7 @@ func resourceSchemaAttrsAuthAccountPrimer(recurse bool) map[string]rsschema.Attr
 }
 func resourceSchemaAttrsAuthAccountRecoveryStatus(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
-	schemaAttrs["pending2_f_a_recovery_request"] = rsschema.BoolAttribute{
+	schemaAttrs["pending2fa_recovery_request"] = rsschema.BoolAttribute{
 		Computed: true,
 		Optional: true,
 		Default:  booldefault.StaticBool(false),
@@ -507,7 +507,7 @@ func resourceSchemaAttrsAuthAccountsAuditStats(recurse bool) map[string]rsschema
 		Attributes: resourceSchemaAttrsAuthAccountsAuditStats_directoryStats(recurse),
 		Optional:   true,
 	}
-	schemaAttrs["two_f_a_stats"] = rsschema.SingleNestedAttribute{
+	schemaAttrs["two_fa_stats"] = rsschema.SingleNestedAttribute{
 		Attributes: resourceSchemaAttrsAuthAccountsAuditStats_twoFAStats(recurse),
 		Optional:   true,
 	}
@@ -664,7 +664,7 @@ func resourceSchemaAttrsCertificateCertificate(recurse bool) map[string]rsschema
 		Optional: true,
 		Default:  booldefault.StaticBool(false),
 	}
-	schemaAttrs["subject_d_n"] = rsschema.StringAttribute{
+	schemaAttrs["subject_dn"] = rsschema.StringAttribute{
 		Computed: true,
 	}
 	schemaAttrs["uuid"] = rsschema.StringAttribute{
@@ -724,7 +724,7 @@ func resourceSchemaAttrsCertificateCertificatePrimer(recurse bool) map[string]rs
 		Optional: true,
 		Default:  booldefault.StaticBool(false),
 	}
-	schemaAttrs["subject_d_n"] = rsschema.StringAttribute{
+	schemaAttrs["subject_dn"] = rsschema.StringAttribute{
 		Computed: true,
 	}
 	schemaAttrs["uuid"] = rsschema.StringAttribute{
@@ -990,7 +990,7 @@ func resourceSchemaAttrsClientOAuth2Client(recurse bool) map[string]rsschema.Att
 		Attributes: resourceSchemaAttrsClientOAuth2Client_attributes(false),
 		Optional:   true,
 	}
-	schemaAttrs["callback_u_r_i"] = rsschema.StringAttribute{
+	schemaAttrs["callback_uri"] = rsschema.StringAttribute{
 		Optional: true,
 	}
 	schemaAttrs["confidential"] = rsschema.BoolAttribute{
@@ -1006,10 +1006,10 @@ func resourceSchemaAttrsClientOAuth2Client(recurse bool) map[string]rsschema.Att
 	schemaAttrs["id_token_claims"] = rsschema.StringAttribute{
 		Optional: true,
 	}
-	schemaAttrs["initiate_login_u_r_i"] = rsschema.StringAttribute{
+	schemaAttrs["initiate_login_uri"] = rsschema.StringAttribute{
 		Optional: true,
 	}
-	schemaAttrs["resource_u_r_is"] = rsschema.StringAttribute{
+	schemaAttrs["resource_uris"] = rsschema.StringAttribute{
 		Optional: true,
 	}
 	schemaAttrs["share_secret_in_vault"] = rsschema.BoolAttribute{
@@ -1511,7 +1511,7 @@ func resourceSchemaAttrsDirectoryLDAPDirectory(recurse bool) map[string]rsschema
 	schemaAttrs["attributes_to_store"] = rsschema.StringAttribute{
 		Optional: true,
 	}
-	schemaAttrs["base_d_n"] = rsschema.StringAttribute{
+	schemaAttrs["base_dn"] = rsschema.StringAttribute{
 		Required: true,
 	}
 	schemaAttrs["client_certificate_uuid"] = rsschema.StringAttribute{
@@ -1539,7 +1539,7 @@ func resourceSchemaAttrsDirectoryLDAPDirectory(recurse bool) map[string]rsschema
 		Optional: true,
 		Default:  int64default.StaticInt64(0),
 	}
-	schemaAttrs["search_bind_d_n"] = rsschema.StringAttribute{
+	schemaAttrs["search_bind_dn"] = rsschema.StringAttribute{
 		Optional: true,
 	}
 	schemaAttrs["search_bind_password"] = rsschema.StringAttribute{
@@ -3472,10 +3472,10 @@ func resourceSchemaAttrsProvisioningAbstractProvisionedLDAP(recurse bool) map[st
 		Attributes: resourceSchemaAttrsProvisioningAbstractProvisionedLDAP_attributes(false),
 		Optional:   true,
 	}
-	schemaAttrs["base_d_n"] = rsschema.StringAttribute{
+	schemaAttrs["base_dn"] = rsschema.StringAttribute{
 		Required: true,
 	}
-	schemaAttrs["bind_d_n"] = rsschema.StringAttribute{
+	schemaAttrs["bind_dn"] = rsschema.StringAttribute{
 		Optional: true,
 	}
 	schemaAttrs["bind_password"] = rsschema.StringAttribute{
@@ -3490,7 +3490,7 @@ func resourceSchemaAttrsProvisioningAbstractProvisionedLDAP(recurse bool) map[st
 	schemaAttrs["failover_trusted_certificate_uuid"] = rsschema.StringAttribute{
 		Optional: true,
 	}
-	schemaAttrs["group_d_n"] = rsschema.StringAttribute{
+	schemaAttrs["group_dn"] = rsschema.StringAttribute{
 		Optional: true,
 	}
 	schemaAttrs["host"] = rsschema.StringAttribute{
@@ -3504,7 +3504,7 @@ func resourceSchemaAttrsProvisioningAbstractProvisionedLDAP(recurse bool) map[st
 		Optional: true,
 		Default:  int64default.StaticInt64(0),
 	}
-	schemaAttrs["service_account_d_n"] = rsschema.StringAttribute{
+	schemaAttrs["service_account_dn"] = rsschema.StringAttribute{
 		Optional: true,
 	}
 	schemaAttrs["ssh_public_key_supported"] = rsschema.BoolAttribute{
@@ -3518,7 +3518,7 @@ func resourceSchemaAttrsProvisioningAbstractProvisionedLDAP(recurse bool) map[st
 	schemaAttrs["trusted_certificate_uuid"] = rsschema.StringAttribute{
 		Optional: true,
 	}
-	schemaAttrs["user_d_n"] = rsschema.StringAttribute{
+	schemaAttrs["user_dn"] = rsschema.StringAttribute{
 		Optional: true,
 	}
 	return schemaAttrs
@@ -3757,7 +3757,7 @@ func resourceSchemaAttrsProvisioningProvisionNumberSequence(recurse bool) map[st
 	schemaAttrs["name"] = rsschema.StringAttribute{
 		Required: true,
 	}
-	schemaAttrs["next_u_i_d"] = rsschema.Int64Attribute{
+	schemaAttrs["next_uid"] = rsschema.Int64Attribute{
 		Computed: true,
 		Optional: true,
 		Default:  int64default.StaticInt64(2000),
@@ -3865,10 +3865,10 @@ func resourceSchemaAttrsProvisioningProvisionedAD(recurse bool) map[string]rssch
 		Attributes: resourceSchemaAttrsProvisioningAbstractProvisionedLDAP_attributes(false),
 		Optional:   true,
 	}
-	schemaAttrs["base_d_n"] = rsschema.StringAttribute{
+	schemaAttrs["base_dn"] = rsschema.StringAttribute{
 		Required: true,
 	}
-	schemaAttrs["bind_d_n"] = rsschema.StringAttribute{
+	schemaAttrs["bind_dn"] = rsschema.StringAttribute{
 		Optional: true,
 	}
 	schemaAttrs["bind_password"] = rsschema.StringAttribute{
@@ -3883,7 +3883,7 @@ func resourceSchemaAttrsProvisioningProvisionedAD(recurse bool) map[string]rssch
 	schemaAttrs["failover_trusted_certificate_uuid"] = rsschema.StringAttribute{
 		Optional: true,
 	}
-	schemaAttrs["group_d_n"] = rsschema.StringAttribute{
+	schemaAttrs["group_dn"] = rsschema.StringAttribute{
 		Optional: true,
 	}
 	schemaAttrs["host"] = rsschema.StringAttribute{
@@ -3897,7 +3897,7 @@ func resourceSchemaAttrsProvisioningProvisionedAD(recurse bool) map[string]rssch
 		Optional: true,
 		Default:  int64default.StaticInt64(0),
 	}
-	schemaAttrs["service_account_d_n"] = rsschema.StringAttribute{
+	schemaAttrs["service_account_dn"] = rsschema.StringAttribute{
 		Optional: true,
 	}
 	schemaAttrs["ssh_public_key_supported"] = rsschema.BoolAttribute{
@@ -3911,7 +3911,7 @@ func resourceSchemaAttrsProvisioningProvisionedAD(recurse bool) map[string]rssch
 	schemaAttrs["trusted_certificate_uuid"] = rsschema.StringAttribute{
 		Optional: true,
 	}
-	schemaAttrs["user_d_n"] = rsschema.StringAttribute{
+	schemaAttrs["user_dn"] = rsschema.StringAttribute{
 		Optional: true,
 	}
 	schemaAttrs["sam_account_name_scheme"] = rsschema.StringAttribute{
@@ -4374,10 +4374,10 @@ func resourceSchemaAttrsProvisioningProvisionedLDAP(recurse bool) map[string]rss
 		Attributes: resourceSchemaAttrsProvisioningAbstractProvisionedLDAP_attributes(false),
 		Optional:   true,
 	}
-	schemaAttrs["base_d_n"] = rsschema.StringAttribute{
+	schemaAttrs["base_dn"] = rsschema.StringAttribute{
 		Required: true,
 	}
-	schemaAttrs["bind_d_n"] = rsschema.StringAttribute{
+	schemaAttrs["bind_dn"] = rsschema.StringAttribute{
 		Optional: true,
 	}
 	schemaAttrs["bind_password"] = rsschema.StringAttribute{
@@ -4392,7 +4392,7 @@ func resourceSchemaAttrsProvisioningProvisionedLDAP(recurse bool) map[string]rss
 	schemaAttrs["failover_trusted_certificate_uuid"] = rsschema.StringAttribute{
 		Optional: true,
 	}
-	schemaAttrs["group_d_n"] = rsschema.StringAttribute{
+	schemaAttrs["group_dn"] = rsschema.StringAttribute{
 		Optional: true,
 	}
 	schemaAttrs["host"] = rsschema.StringAttribute{
@@ -4406,7 +4406,7 @@ func resourceSchemaAttrsProvisioningProvisionedLDAP(recurse bool) map[string]rss
 		Optional: true,
 		Default:  int64default.StaticInt64(0),
 	}
-	schemaAttrs["service_account_d_n"] = rsschema.StringAttribute{
+	schemaAttrs["service_account_dn"] = rsschema.StringAttribute{
 		Optional: true,
 	}
 	schemaAttrs["ssh_public_key_supported"] = rsschema.BoolAttribute{
@@ -4420,7 +4420,7 @@ func resourceSchemaAttrsProvisioningProvisionedLDAP(recurse bool) map[string]rss
 	schemaAttrs["trusted_certificate_uuid"] = rsschema.StringAttribute{
 		Optional: true,
 	}
-	schemaAttrs["user_d_n"] = rsschema.StringAttribute{
+	schemaAttrs["user_dn"] = rsschema.StringAttribute{
 		Optional: true,
 	}
 	schemaAttrs["gid"] = rsschema.Int64Attribute{
@@ -4515,7 +4515,7 @@ func resourceSchemaAttrsProvisioningProvisionedLDAPDirectory(recurse bool) map[s
 	schemaAttrs["directory_uuid"] = rsschema.StringAttribute{
 		Required: true,
 	}
-	schemaAttrs["group_d_n"] = rsschema.StringAttribute{
+	schemaAttrs["group_dn"] = rsschema.StringAttribute{
 		Required: true,
 	}
 	return schemaAttrs

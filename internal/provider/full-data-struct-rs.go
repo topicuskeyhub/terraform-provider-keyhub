@@ -192,7 +192,7 @@ var authAccountRecoveryStatusAttrTypesRS = objectAttrsTypeRSAuthAccountRecoveryS
 var authAccountRecoveryStatusAttrTypesRSRecurse = objectAttrsTypeRSAuthAccountRecoveryStatus(true)
 
 type authAccountRecoveryStatusDataRS struct {
-	Pending2FARecoveryRequest      types.Bool `tfsdk:"pending2_f_a_recovery_request"`
+	Pending2FARecoveryRequest      types.Bool `tfsdk:"pending2fa_recovery_request"`
 	PendingPasswordRecoveryRequest types.Bool `tfsdk:"pending_password_recovery_request"`
 }
 
@@ -244,7 +244,7 @@ var authAccountsAuditStatsAttrTypesRSRecurse = objectAttrsTypeRSAuthAccountsAudi
 
 type authAccountsAuditStatsDataRS struct {
 	DirectoryStats types.Object `tfsdk:"directory_stats"`
-	TwoFAStats     types.Object `tfsdk:"two_f_a_stats"`
+	TwoFAStats     types.Object `tfsdk:"two_fa_stats"`
 	ValidityStats  types.Object `tfsdk:"validity_stats"`
 }
 
@@ -339,7 +339,7 @@ type certificateCertificateDataRS struct {
 	FingerprintSha1                  types.String `tfsdk:"fingerprint_sha1"`
 	FingerprintSha256                types.String `tfsdk:"fingerprint_sha256"`
 	Global                           types.Bool   `tfsdk:"global"`
-	SubjectDN                        types.String `tfsdk:"subject_d_n"`
+	SubjectDN                        types.String `tfsdk:"subject_dn"`
 	UUID                             types.String `tfsdk:"uuid"`
 	AdditionalObjects                types.Object `tfsdk:"additional_objects"`
 	KeyData                          types.List   `tfsdk:"key_data"`
@@ -365,7 +365,7 @@ type certificateCertificatePrimerDataRS struct {
 	FingerprintSha1                  types.String `tfsdk:"fingerprint_sha1"`
 	FingerprintSha256                types.String `tfsdk:"fingerprint_sha256"`
 	Global                           types.Bool   `tfsdk:"global"`
-	SubjectDN                        types.String `tfsdk:"subject_d_n"`
+	SubjectDN                        types.String `tfsdk:"subject_dn"`
 	UUID                             types.String `tfsdk:"uuid"`
 }
 
@@ -444,7 +444,7 @@ type clientLdapClientDataRS struct {
 	LastModifiedAt                    types.String `tfsdk:"last_modified_at"`
 	OwnerUUID                         types.String `tfsdk:"owner_uuid"`
 	TechnicalAdministratorUUID        types.String `tfsdk:"technical_administrator_uuid"`
-	BindDn                            types.String `tfsdk:"bind_dn"`
+	BindDN                            types.String `tfsdk:"bind_dn"`
 	ClientCertificateUUID             types.String `tfsdk:"client_certificate_uuid"`
 	ShareSecretInVault                types.Bool   `tfsdk:"share_secret_in_vault"`
 	SharedSecretUUID                  types.String `tfsdk:"shared_secret_uuid"`
@@ -469,12 +469,12 @@ type clientOAuth2ClientDataRS struct {
 	TechnicalAdministratorUUID        types.String `tfsdk:"technical_administrator_uuid"`
 	AccountPermissions                types.List   `tfsdk:"account_permissions"`
 	Attributes                        types.Object `tfsdk:"attributes"`
-	CallbackURI                       types.String `tfsdk:"callback_u_r_i"`
+	CallbackURI                       types.String `tfsdk:"callback_uri"`
 	Confidential                      types.Bool   `tfsdk:"confidential"`
 	DebugMode                         types.Bool   `tfsdk:"debug_mode"`
 	IDTokenClaims                     types.String `tfsdk:"id_token_claims"`
-	InitiateLoginURI                  types.String `tfsdk:"initiate_login_u_r_i"`
-	ResourceURIs                      types.String `tfsdk:"resource_u_r_is"`
+	InitiateLoginURI                  types.String `tfsdk:"initiate_login_uri"`
+	ResourceURIs                      types.String `tfsdk:"resource_uris"`
 	ShareSecretInVault                types.Bool   `tfsdk:"share_secret_in_vault"`
 	SharedSecretUUID                  types.String `tfsdk:"shared_secret_uuid"`
 	ShowLandingPage                   types.Bool   `tfsdk:"show_landing_page"`
@@ -680,7 +680,7 @@ type directoryLDAPDirectoryDataRS struct {
 	RotatingPassword                    types.String `tfsdk:"rotating_password"`
 	UsernameCustomizable                types.Bool   `tfsdk:"username_customizable"`
 	AttributesToStore                   types.String `tfsdk:"attributes_to_store"`
-	BaseDN                              types.String `tfsdk:"base_d_n"`
+	BaseDN                              types.String `tfsdk:"base_dn"`
 	ClientCertificateUUID               types.String `tfsdk:"client_certificate_uuid"`
 	Dialect                             types.String `tfsdk:"dialect"`
 	FailoverHost                        types.String `tfsdk:"failover_host"`
@@ -688,7 +688,7 @@ type directoryLDAPDirectoryDataRS struct {
 	Host                                types.String `tfsdk:"host"`
 	PasswordRecovery                    types.String `tfsdk:"password_recovery"`
 	Port                                types.Int64  `tfsdk:"port"`
-	SearchBindDN                        types.String `tfsdk:"search_bind_d_n"`
+	SearchBindDN                        types.String `tfsdk:"search_bind_dn"`
 	SearchBindPassword                  types.String `tfsdk:"search_bind_password"`
 	SearchFilter                        types.String `tfsdk:"search_filter"`
 	TLS                                 types.String `tfsdk:"tls"`
@@ -1188,7 +1188,7 @@ type launchpadDisplayedLaunchpadTileDataRS struct {
 	Logo          types.List   `tfsdk:"logo"`
 	Tile          types.Object `tfsdk:"tile"`
 	Title         types.String `tfsdk:"title"`
-	Uri           types.String `tfsdk:"uri"`
+	URI           types.String `tfsdk:"uri"`
 }
 
 var launchpadDisplayedLaunchpadTilesAttrTypesRS = objectAttrsTypeRSLaunchpadDisplayedLaunchpadTiles(false)
@@ -1249,7 +1249,7 @@ type launchpadManualLaunchpadTileDataRS struct {
 	Logo                       types.List   `tfsdk:"logo"`
 	VaultRecordUUID            types.String `tfsdk:"vault_record_uuid"`
 	Title                      types.String `tfsdk:"title"`
-	Uri                        types.String `tfsdk:"uri"`
+	URI                        types.String `tfsdk:"uri"`
 }
 
 var launchpadSsoApplicationLaunchpadTileAttrTypesRS = objectAttrsTypeRSLaunchpadSsoApplicationLaunchpadTile(false)
@@ -1265,7 +1265,7 @@ type launchpadSsoApplicationLaunchpadTileDataRS struct {
 	LaunchpadLaunchpadTileType types.String `tfsdk:"launchpad_launchpad_tile_type"`
 	Logo                       types.List   `tfsdk:"logo"`
 	VaultRecordUUID            types.String `tfsdk:"vault_record_uuid"`
-	Uri                        types.String `tfsdk:"uri"`
+	URI                        types.String `tfsdk:"uri"`
 }
 
 var launchpadVaultRecordLaunchpadTileAttrTypesRS = objectAttrsTypeRSLaunchpadVaultRecordLaunchpadTile(false)
@@ -1551,21 +1551,21 @@ type provisioningAbstractProvisionedLDAPDataRS struct {
 	TechnicalAdministratorUUID              types.String `tfsdk:"technical_administrator_uuid"`
 	UsernamePrefix                          types.String `tfsdk:"username_prefix"`
 	Attributes                              types.Object `tfsdk:"attributes"`
-	BaseDN                                  types.String `tfsdk:"base_d_n"`
-	BindDN                                  types.String `tfsdk:"bind_d_n"`
+	BaseDN                                  types.String `tfsdk:"base_dn"`
+	BindDN                                  types.String `tfsdk:"bind_dn"`
 	BindPassword                            types.String `tfsdk:"bind_password"`
 	ClientCertificateUUID                   types.String `tfsdk:"client_certificate_uuid"`
 	FailoverHost                            types.String `tfsdk:"failover_host"`
 	FailoverTrustedCertificateUUID          types.String `tfsdk:"failover_trusted_certificate_uuid"`
-	GroupDN                                 types.String `tfsdk:"group_d_n"`
+	GroupDN                                 types.String `tfsdk:"group_dn"`
 	Host                                    types.String `tfsdk:"host"`
 	ObjectClasses                           types.String `tfsdk:"object_classes"`
 	Port                                    types.Int64  `tfsdk:"port"`
-	ServiceAccountDN                        types.String `tfsdk:"service_account_d_n"`
+	ServiceAccountDN                        types.String `tfsdk:"service_account_dn"`
 	SshPublicKeySupported                   types.Bool   `tfsdk:"ssh_public_key_supported"`
 	TLS                                     types.String `tfsdk:"tls"`
 	TrustedCertificateUUID                  types.String `tfsdk:"trusted_certificate_uuid"`
-	UserDN                                  types.String `tfsdk:"user_d_n"`
+	UserDN                                  types.String `tfsdk:"user_dn"`
 }
 
 var provisioningAbstractProvisionedLDAP_attributesAttrTypesRS = objectAttrsTypeRSProvisioningAbstractProvisionedLDAP_attributes(false)
@@ -1688,7 +1688,7 @@ type provisioningProvisionNumberSequenceDataRS struct {
 	AccountCount      types.Int64  `tfsdk:"account_count"`
 	AdditionalObjects types.Object `tfsdk:"additional_objects"`
 	Name              types.String `tfsdk:"name"`
-	NextUID           types.Int64  `tfsdk:"next_u_i_d"`
+	NextUID           types.Int64  `tfsdk:"next_uid"`
 }
 
 var provisioningProvisionNumberSequenceLinkableWrapperAttrTypesRS = objectAttrsTypeRSProvisioningProvisionNumberSequenceLinkableWrapper(false)
@@ -1729,21 +1729,21 @@ type provisioningProvisionedADDataRS struct {
 	TechnicalAdministratorUUID              types.String `tfsdk:"technical_administrator_uuid"`
 	UsernamePrefix                          types.String `tfsdk:"username_prefix"`
 	Attributes                              types.Object `tfsdk:"attributes"`
-	BaseDN                                  types.String `tfsdk:"base_d_n"`
-	BindDN                                  types.String `tfsdk:"bind_d_n"`
+	BaseDN                                  types.String `tfsdk:"base_dn"`
+	BindDN                                  types.String `tfsdk:"bind_dn"`
 	BindPassword                            types.String `tfsdk:"bind_password"`
 	ClientCertificateUUID                   types.String `tfsdk:"client_certificate_uuid"`
 	FailoverHost                            types.String `tfsdk:"failover_host"`
 	FailoverTrustedCertificateUUID          types.String `tfsdk:"failover_trusted_certificate_uuid"`
-	GroupDN                                 types.String `tfsdk:"group_d_n"`
+	GroupDN                                 types.String `tfsdk:"group_dn"`
 	Host                                    types.String `tfsdk:"host"`
 	ObjectClasses                           types.String `tfsdk:"object_classes"`
 	Port                                    types.Int64  `tfsdk:"port"`
-	ServiceAccountDN                        types.String `tfsdk:"service_account_d_n"`
+	ServiceAccountDN                        types.String `tfsdk:"service_account_dn"`
 	SshPublicKeySupported                   types.Bool   `tfsdk:"ssh_public_key_supported"`
 	TLS                                     types.String `tfsdk:"tls"`
 	TrustedCertificateUUID                  types.String `tfsdk:"trusted_certificate_uuid"`
-	UserDN                                  types.String `tfsdk:"user_d_n"`
+	UserDN                                  types.String `tfsdk:"user_dn"`
 	SamAccountNameScheme                    types.String `tfsdk:"sam_account_name_scheme"`
 }
 
@@ -1753,7 +1753,7 @@ var provisioningProvisionedAccountAttrTypesRSRecurse = objectAttrsTypeRSProvisio
 type provisioningProvisionedAccountDataRS struct {
 	UUID              types.String `tfsdk:"uuid"`
 	AdditionalObjects types.Object `tfsdk:"additional_objects"`
-	Uid               types.Int64  `tfsdk:"uid"`
+	UID               types.Int64  `tfsdk:"uid"`
 }
 
 var provisioningProvisionedAccountLinkableWrapperAttrTypesRS = objectAttrsTypeRSProvisioningProvisionedAccountLinkableWrapper(false)
@@ -1900,21 +1900,21 @@ type provisioningProvisionedLDAPDataRS struct {
 	TechnicalAdministratorUUID              types.String `tfsdk:"technical_administrator_uuid"`
 	UsernamePrefix                          types.String `tfsdk:"username_prefix"`
 	Attributes                              types.Object `tfsdk:"attributes"`
-	BaseDN                                  types.String `tfsdk:"base_d_n"`
-	BindDN                                  types.String `tfsdk:"bind_d_n"`
+	BaseDN                                  types.String `tfsdk:"base_dn"`
+	BindDN                                  types.String `tfsdk:"bind_dn"`
 	BindPassword                            types.String `tfsdk:"bind_password"`
 	ClientCertificateUUID                   types.String `tfsdk:"client_certificate_uuid"`
 	FailoverHost                            types.String `tfsdk:"failover_host"`
 	FailoverTrustedCertificateUUID          types.String `tfsdk:"failover_trusted_certificate_uuid"`
-	GroupDN                                 types.String `tfsdk:"group_d_n"`
+	GroupDN                                 types.String `tfsdk:"group_dn"`
 	Host                                    types.String `tfsdk:"host"`
 	ObjectClasses                           types.String `tfsdk:"object_classes"`
 	Port                                    types.Int64  `tfsdk:"port"`
-	ServiceAccountDN                        types.String `tfsdk:"service_account_d_n"`
+	ServiceAccountDN                        types.String `tfsdk:"service_account_dn"`
 	SshPublicKeySupported                   types.Bool   `tfsdk:"ssh_public_key_supported"`
 	TLS                                     types.String `tfsdk:"tls"`
 	TrustedCertificateUUID                  types.String `tfsdk:"trusted_certificate_uuid"`
-	UserDN                                  types.String `tfsdk:"user_d_n"`
+	UserDN                                  types.String `tfsdk:"user_dn"`
 	Gid                                     types.Int64  `tfsdk:"gid"`
 	HashingScheme                           types.String `tfsdk:"hashing_scheme"`
 	Numbering                               types.Object `tfsdk:"numbering"`
@@ -1943,7 +1943,7 @@ type provisioningProvisionedLDAPDirectoryDataRS struct {
 	TechnicalAdministratorUUID              types.String `tfsdk:"technical_administrator_uuid"`
 	UsernamePrefix                          types.String `tfsdk:"username_prefix"`
 	DirectoryUUID                           types.String `tfsdk:"directory_uuid"`
-	GroupDN                                 types.String `tfsdk:"group_d_n"`
+	GroupDN                                 types.String `tfsdk:"group_dn"`
 }
 
 var provisioningProvisionedSystemAttrTypesRS = objectAttrsTypeRSProvisioningProvisionedSystem(false)

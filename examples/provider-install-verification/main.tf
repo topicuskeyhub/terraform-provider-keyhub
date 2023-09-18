@@ -34,19 +34,19 @@ output "data_group" {
   value = data.keyhubpreview_group.test
 }
 
-resource "keyhubpreview_group" "terra" {
-  name = "Terraform"
-  additional_objects = {
-    accounts = {
-      items = [{
-        uuid   = "7ea6622b-f9d2-4e52-a799-217b26f88376"
-        rights = "MANAGER"
-      }]
-    }
-  }
-  admin = true
-}
-
-output "resource_group" {
-  value = resource.keyhubpreview_group.terra
-}
+#resource "keyhubpreview_group" "terra" {
+#  name = "Terraform"
+#  additional_objects = {
+#    accounts = {
+#      items = [{
+#        uuid   = "7ea6622b-f9d2-4e52-a799-217b26f88376"
+#        rights = "MANAGER"
+#      }]
+#    }
+#  }
+#  admin = true
+#}
+#
+#output "resource_group" {
+#  value = resource.keyhubpreview_group.terra
+#}

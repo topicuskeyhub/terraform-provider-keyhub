@@ -14,7 +14,8 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 	keyhub "github.com/topicuskeyhub/sdk-go"
-	keyhubgroup "github.com/topicuskeyhub/sdk-go/group"
+	keyhubreq "github.com/topicuskeyhub/sdk-go/group"
+	keyhubmodels "github.com/topicuskeyhub/sdk-go/models"
 )
 
 // Ensure provider defined types fully satisfy framework interfaces.
@@ -27,7 +28,6 @@ func NewGroupDataSource() datasource.DataSource {
 	return &groupDataSource{}
 }
 
-// groupDataSource defines the data source implementation.
 type groupDataSource struct {
 	client *keyhub.KeyHubClient
 }
@@ -38,9 +38,7 @@ func (d *groupDataSource) Metadata(ctx context.Context, req datasource.MetadataR
 
 func (d *groupDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: "Group data source",
-		Attributes:          dataSourceSchemaAttrsGroupGroup(true),
+		Attributes: dataSourceSchemaAttrsGroupGroup(true),
 	}
 }
 
@@ -71,36 +69,34 @@ func (d *groupDataSource) Read(ctx context.Context, req datasource.ReadRequest, 
 		return
 	}
 
-	ctx = tflog.SetField(ctx, "keyhub_group_uuid", data.UUID.ValueString())
 	tflog.Debug(ctx, "Reading group from Topicus KeyHub by UUID")
 	listValue, _ := data.Additional.ToListValue(ctx)
 	additional, _ := tfToSlice(listValue, func(val attr.Value, diags *diag.Diagnostics) string {
 		return val.(basetypes.StringValue).ValueString()
 	})
+	uuid := data.UUID.ValueString()
 
-	groups, err := d.client.Group().Get(ctx, &keyhubgroup.GroupRequestBuilderGetRequestConfiguration{
-		QueryParameters: &keyhubgroup.GroupRequestBuilderGetQueryParameters{
-			Uuid:       []string{data.UUID.ValueString()},
+	wrapper, err := d.client.Group().Get(ctx, &keyhubreq.GroupRequestBuilderGetRequestConfiguration{
+		QueryParameters: &keyhubreq.GroupRequestBuilderGetQueryParameters{
+			Uuid:       []string{uuid},
 			Additional: additional,
 		},
 	})
-	if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Unable to read group, got error: %s", err))
-		return
-	}
-	if len(groups.GetItems()) == 0 {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Unable to find group with UUID %s", data.UUID.ValueString()))
-		return
-	}
-	group := groups.GetItems()[0]
-	tfGroup, diags := tkhToTFObjectDSGroupGroup(true, group)
+
+	tkh, diags := findFirst[keyhubmodels.GroupGroupable](ctx, wrapper, "group", &uuid, err)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	fillDataStructFromTFObjectDSGroupGroup(&data, tfGroup)
+
+	tf, diags := tkhToTFObjectDSGroupGroup(true, tkh)
+	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	fillDataStructFromTFObjectDSGroupGroup(&data, tf)
 	data.Additional = listValue
 
-	// Save data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }

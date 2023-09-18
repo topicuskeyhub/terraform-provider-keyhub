@@ -3,12 +3,12 @@
 page_title: "keyhubpreview_group Data Source - terraform-provider-keyhubpreview"
 subcategory: ""
 description: |-
-  Group data source
+  
 ---
 
 # keyhubpreview_group (Data Source)
 
-Group data source
+
 
 
 

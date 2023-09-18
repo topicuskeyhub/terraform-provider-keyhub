@@ -558,7 +558,7 @@ func tkhToTFObjectDSAuthAccountRecoveryStatus(recurse bool, tkh keyhubmodel.Auth
 	}
 
 	obj := make(map[string]attr.Value)
-	obj["pending2_f_a_recovery_request"] = types.BoolPointerValue(tkh.GetPending2FARecoveryRequest())
+	obj["pending2fa_recovery_request"] = types.BoolPointerValue(tkh.GetPending2FARecoveryRequest())
 	obj["pending_password_recovery_request"] = types.BoolPointerValue(tkh.GetPendingPasswordRecoveryRequest())
 
 	objVal, d := types.ObjectValue(attrs, obj)
@@ -697,7 +697,7 @@ func tkhToTFObjectDSAuthAccountsAuditStats(recurse bool, tkh keyhubmodel.AuthAcc
 	{
 		val, d := tkhToTFObjectDSAuthAccountsAuditStats_twoFAStats(recurse, tkh.GetTwoFAStats())
 		diags.Append(d...)
-		obj["two_f_a_stats"] = val
+		obj["two_fa_stats"] = val
 	}
 	{
 		val, d := tkhToTFObjectDSAuthAccountsAuditStats_validityStats(recurse, tkh.GetValidityStats())
@@ -1071,7 +1071,7 @@ func tkhToTFObjectDSCertificateCertificate(recurse bool, tkh keyhubmodel.Certifi
 	obj["fingerprint_sha1"] = types.StringPointerValue(tkh.GetFingerprintSha1())
 	obj["fingerprint_sha256"] = types.StringPointerValue(tkh.GetFingerprintSha256())
 	obj["global"] = types.BoolPointerValue(tkh.GetGlobal())
-	obj["subject_d_n"] = types.StringPointerValue(tkh.GetSubjectDN())
+	obj["subject_dn"] = types.StringPointerValue(tkh.GetSubjectDN())
 	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
 	obj["additional"] = types.ListNull(types.StringType)
 	{
@@ -1164,7 +1164,7 @@ func tkhToTFObjectDSCertificateCertificatePrimer(recurse bool, tkh keyhubmodel.C
 	obj["fingerprint_sha1"] = types.StringPointerValue(tkh.GetFingerprintSha1())
 	obj["fingerprint_sha256"] = types.StringPointerValue(tkh.GetFingerprintSha256())
 	obj["global"] = types.BoolPointerValue(tkh.GetGlobal())
-	obj["subject_d_n"] = types.StringPointerValue(tkh.GetSubjectDN())
+	obj["subject_dn"] = types.StringPointerValue(tkh.GetSubjectDN())
 	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
 
 	objVal, d := types.ObjectValue(attrs, obj)
@@ -1552,12 +1552,12 @@ func tkhToTFObjectDSClientOAuth2Client(recurse bool, tkh keyhubmodel.ClientOAuth
 		diags.Append(d...)
 		obj["attributes"] = val
 	}
-	obj["callback_u_r_i"] = types.StringPointerValue(tkh.GetCallbackURI())
+	obj["callback_uri"] = types.StringPointerValue(tkh.GetCallbackURI())
 	obj["confidential"] = types.BoolPointerValue(tkh.GetConfidential())
 	obj["debug_mode"] = types.BoolPointerValue(tkh.GetDebugMode())
 	obj["id_token_claims"] = types.StringPointerValue(tkh.GetIdTokenClaims())
-	obj["initiate_login_u_r_i"] = types.StringPointerValue(tkh.GetInitiateLoginURI())
-	obj["resource_u_r_is"] = types.StringPointerValue(tkh.GetResourceURIs())
+	obj["initiate_login_uri"] = types.StringPointerValue(tkh.GetInitiateLoginURI())
+	obj["resource_uris"] = types.StringPointerValue(tkh.GetResourceURIs())
 	obj["share_secret_in_vault"] = types.BoolPointerValue(tkh.GetShareSecretInVault())
 	{
 		val, d := tkhToTFObjectDSVaultVaultRecordPrimer(false, tkh.GetSharedSecret())
@@ -2297,7 +2297,7 @@ func tkhToTFObjectDSDirectoryLDAPDirectory(recurse bool, tkh keyhubmodel.Directo
 	obj["rotating_password"] = stringerToTF(tkh.GetRotatingPassword())
 	obj["username_customizable"] = types.BoolPointerValue(tkh.GetUsernameCustomizable())
 	obj["attributes_to_store"] = types.StringPointerValue(tkh.GetAttributesToStore())
-	obj["base_d_n"] = types.StringPointerValue(tkh.GetBaseDN())
+	obj["base_dn"] = types.StringPointerValue(tkh.GetBaseDN())
 	{
 		val, d := tkhToTFObjectDSCertificateCertificatePrimer(false, tkh.GetClientCertificate())
 		diags.Append(d...)
@@ -2313,7 +2313,7 @@ func tkhToTFObjectDSDirectoryLDAPDirectory(recurse bool, tkh keyhubmodel.Directo
 	obj["host"] = types.StringPointerValue(tkh.GetHost())
 	obj["password_recovery"] = stringerToTF(tkh.GetPasswordRecovery())
 	obj["port"] = types.Int64PointerValue(int32PToInt64P(tkh.GetPort()))
-	obj["search_bind_d_n"] = types.StringPointerValue(tkh.GetSearchBindDN())
+	obj["search_bind_dn"] = types.StringPointerValue(tkh.GetSearchBindDN())
 	obj["search_bind_password"] = types.StringPointerValue(tkh.GetSearchBindPassword())
 	obj["search_filter"] = types.StringPointerValue(tkh.GetSearchFilter())
 	obj["tls"] = stringerToTF(tkh.GetTls())
@@ -5505,8 +5505,8 @@ func tkhToTFObjectDSProvisioningAbstractProvisionedLDAP(recurse bool, tkh keyhub
 		diags.Append(d...)
 		obj["attributes"] = val
 	}
-	obj["base_d_n"] = types.StringPointerValue(tkh.GetBaseDN())
-	obj["bind_d_n"] = types.StringPointerValue(tkh.GetBindDN())
+	obj["base_dn"] = types.StringPointerValue(tkh.GetBaseDN())
+	obj["bind_dn"] = types.StringPointerValue(tkh.GetBindDN())
 	obj["bind_password"] = types.StringPointerValue(tkh.GetBindPassword())
 	{
 		val, d := tkhToTFObjectDSCertificateCertificatePrimer(false, tkh.GetClientCertificate())
@@ -5519,11 +5519,11 @@ func tkhToTFObjectDSProvisioningAbstractProvisionedLDAP(recurse bool, tkh keyhub
 		diags.Append(d...)
 		obj["failover_trusted_certificate"] = val
 	}
-	obj["group_d_n"] = types.StringPointerValue(tkh.GetGroupDN())
+	obj["group_dn"] = types.StringPointerValue(tkh.GetGroupDN())
 	obj["host"] = types.StringPointerValue(tkh.GetHost())
 	obj["object_classes"] = types.StringPointerValue(tkh.GetObjectClasses())
 	obj["port"] = types.Int64PointerValue(int32PToInt64P(tkh.GetPort()))
-	obj["service_account_d_n"] = types.StringPointerValue(tkh.GetServiceAccountDN())
+	obj["service_account_dn"] = types.StringPointerValue(tkh.GetServiceAccountDN())
 	obj["ssh_public_key_supported"] = types.BoolPointerValue(tkh.GetSshPublicKeySupported())
 	obj["tls"] = stringerToTF(tkh.GetTls())
 	{
@@ -5531,7 +5531,7 @@ func tkhToTFObjectDSProvisioningAbstractProvisionedLDAP(recurse bool, tkh keyhub
 		diags.Append(d...)
 		obj["trusted_certificate"] = val
 	}
-	obj["user_d_n"] = types.StringPointerValue(tkh.GetUserDN())
+	obj["user_dn"] = types.StringPointerValue(tkh.GetUserDN())
 
 	objVal, d := types.ObjectValue(attrs, obj)
 	diags.Append(d...)
@@ -5965,7 +5965,7 @@ func tkhToTFObjectDSProvisioningProvisionNumberSequence(recurse bool, tkh keyhub
 	obj["additional"] = types.ListNull(types.StringType)
 	obj["account_count"] = types.Int64PointerValue(int32PToInt64P(tkh.GetAccountCount()))
 	obj["name"] = types.StringPointerValue(tkh.GetName())
-	obj["next_u_i_d"] = types.Int64PointerValue(tkh.GetNextUID())
+	obj["next_uid"] = types.Int64PointerValue(tkh.GetNextUID())
 
 	objVal, d := types.ObjectValue(attrs, obj)
 	diags.Append(d...)
@@ -6107,8 +6107,8 @@ func tkhToTFObjectDSProvisioningProvisionedAD(recurse bool, tkh keyhubmodel.Prov
 		diags.Append(d...)
 		obj["attributes"] = val
 	}
-	obj["base_d_n"] = types.StringPointerValue(tkh.GetBaseDN())
-	obj["bind_d_n"] = types.StringPointerValue(tkh.GetBindDN())
+	obj["base_dn"] = types.StringPointerValue(tkh.GetBaseDN())
+	obj["bind_dn"] = types.StringPointerValue(tkh.GetBindDN())
 	obj["bind_password"] = types.StringPointerValue(tkh.GetBindPassword())
 	{
 		val, d := tkhToTFObjectDSCertificateCertificatePrimer(false, tkh.GetClientCertificate())
@@ -6121,11 +6121,11 @@ func tkhToTFObjectDSProvisioningProvisionedAD(recurse bool, tkh keyhubmodel.Prov
 		diags.Append(d...)
 		obj["failover_trusted_certificate"] = val
 	}
-	obj["group_d_n"] = types.StringPointerValue(tkh.GetGroupDN())
+	obj["group_dn"] = types.StringPointerValue(tkh.GetGroupDN())
 	obj["host"] = types.StringPointerValue(tkh.GetHost())
 	obj["object_classes"] = types.StringPointerValue(tkh.GetObjectClasses())
 	obj["port"] = types.Int64PointerValue(int32PToInt64P(tkh.GetPort()))
-	obj["service_account_d_n"] = types.StringPointerValue(tkh.GetServiceAccountDN())
+	obj["service_account_dn"] = types.StringPointerValue(tkh.GetServiceAccountDN())
 	obj["ssh_public_key_supported"] = types.BoolPointerValue(tkh.GetSshPublicKeySupported())
 	obj["tls"] = stringerToTF(tkh.GetTls())
 	{
@@ -6133,7 +6133,7 @@ func tkhToTFObjectDSProvisioningProvisionedAD(recurse bool, tkh keyhubmodel.Prov
 		diags.Append(d...)
 		obj["trusted_certificate"] = val
 	}
-	obj["user_d_n"] = types.StringPointerValue(tkh.GetUserDN())
+	obj["user_dn"] = types.StringPointerValue(tkh.GetUserDN())
 	obj["sam_account_name_scheme"] = stringerToTF(tkh.GetSamAccountNameScheme())
 
 	objVal, d := types.ObjectValue(attrs, obj)
@@ -6659,8 +6659,8 @@ func tkhToTFObjectDSProvisioningProvisionedLDAP(recurse bool, tkh keyhubmodel.Pr
 		diags.Append(d...)
 		obj["attributes"] = val
 	}
-	obj["base_d_n"] = types.StringPointerValue(tkh.GetBaseDN())
-	obj["bind_d_n"] = types.StringPointerValue(tkh.GetBindDN())
+	obj["base_dn"] = types.StringPointerValue(tkh.GetBaseDN())
+	obj["bind_dn"] = types.StringPointerValue(tkh.GetBindDN())
 	obj["bind_password"] = types.StringPointerValue(tkh.GetBindPassword())
 	{
 		val, d := tkhToTFObjectDSCertificateCertificatePrimer(false, tkh.GetClientCertificate())
@@ -6673,11 +6673,11 @@ func tkhToTFObjectDSProvisioningProvisionedLDAP(recurse bool, tkh keyhubmodel.Pr
 		diags.Append(d...)
 		obj["failover_trusted_certificate"] = val
 	}
-	obj["group_d_n"] = types.StringPointerValue(tkh.GetGroupDN())
+	obj["group_dn"] = types.StringPointerValue(tkh.GetGroupDN())
 	obj["host"] = types.StringPointerValue(tkh.GetHost())
 	obj["object_classes"] = types.StringPointerValue(tkh.GetObjectClasses())
 	obj["port"] = types.Int64PointerValue(int32PToInt64P(tkh.GetPort()))
-	obj["service_account_d_n"] = types.StringPointerValue(tkh.GetServiceAccountDN())
+	obj["service_account_dn"] = types.StringPointerValue(tkh.GetServiceAccountDN())
 	obj["ssh_public_key_supported"] = types.BoolPointerValue(tkh.GetSshPublicKeySupported())
 	obj["tls"] = stringerToTF(tkh.GetTls())
 	{
@@ -6685,7 +6685,7 @@ func tkhToTFObjectDSProvisioningProvisionedLDAP(recurse bool, tkh keyhubmodel.Pr
 		diags.Append(d...)
 		obj["trusted_certificate"] = val
 	}
-	obj["user_d_n"] = types.StringPointerValue(tkh.GetUserDN())
+	obj["user_dn"] = types.StringPointerValue(tkh.GetUserDN())
 	obj["gid"] = types.Int64PointerValue(tkh.GetGid())
 	obj["hashing_scheme"] = stringerToTF(tkh.GetHashingScheme())
 	{
@@ -6776,7 +6776,7 @@ func tkhToTFObjectDSProvisioningProvisionedLDAPDirectory(recurse bool, tkh keyhu
 		diags.Append(d...)
 		obj["directory"] = val
 	}
-	obj["group_d_n"] = types.StringPointerValue(tkh.GetGroupDN())
+	obj["group_dn"] = types.StringPointerValue(tkh.GetGroupDN())
 
 	objVal, d := types.ObjectValue(attrs, obj)
 	diags.Append(d...)

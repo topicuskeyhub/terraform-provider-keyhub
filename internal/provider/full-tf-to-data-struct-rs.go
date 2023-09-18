@@ -142,7 +142,7 @@ func fillDataStructFromTFObjectRSAuthAccountPrimer(data *authAccountPrimerDataRS
 }
 
 func fillDataStructFromTFObjectRSAuthAccountRecoveryStatus(data *authAccountRecoveryStatusDataRS, obj types.Object) {
-	data.Pending2FARecoveryRequest = obj.Attributes()["pending2_f_a_recovery_request"].(basetypes.BoolValue)
+	data.Pending2FARecoveryRequest = obj.Attributes()["pending2fa_recovery_request"].(basetypes.BoolValue)
 	data.PendingPasswordRecoveryRequest = obj.Attributes()["pending_password_recovery_request"].(basetypes.BoolValue)
 }
 
@@ -182,7 +182,7 @@ func fillDataStructFromTFObjectRSAuthAccount_additionalObjects(data *authAccount
 
 func fillDataStructFromTFObjectRSAuthAccountsAuditStats(data *authAccountsAuditStatsDataRS, obj types.Object) {
 	data.DirectoryStats = obj.Attributes()["directory_stats"].(basetypes.ObjectValue)
-	data.TwoFAStats = obj.Attributes()["two_f_a_stats"].(basetypes.ObjectValue)
+	data.TwoFAStats = obj.Attributes()["two_fa_stats"].(basetypes.ObjectValue)
 	data.ValidityStats = obj.Attributes()["validity_stats"].(basetypes.ObjectValue)
 }
 
@@ -244,7 +244,7 @@ func fillDataStructFromTFObjectRSCertificateCertificate(data *certificateCertifi
 	data.FingerprintSha1 = obj.Attributes()["fingerprint_sha1"].(basetypes.StringValue)
 	data.FingerprintSha256 = obj.Attributes()["fingerprint_sha256"].(basetypes.StringValue)
 	data.Global = obj.Attributes()["global"].(basetypes.BoolValue)
-	data.SubjectDN = obj.Attributes()["subject_d_n"].(basetypes.StringValue)
+	data.SubjectDN = obj.Attributes()["subject_dn"].(basetypes.StringValue)
 	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.KeyData = obj.Attributes()["key_data"].(basetypes.ListValue)
@@ -264,7 +264,7 @@ func fillDataStructFromTFObjectRSCertificateCertificatePrimer(data *certificateC
 	data.FingerprintSha1 = obj.Attributes()["fingerprint_sha1"].(basetypes.StringValue)
 	data.FingerprintSha256 = obj.Attributes()["fingerprint_sha256"].(basetypes.StringValue)
 	data.Global = obj.Attributes()["global"].(basetypes.BoolValue)
-	data.SubjectDN = obj.Attributes()["subject_d_n"].(basetypes.StringValue)
+	data.SubjectDN = obj.Attributes()["subject_dn"].(basetypes.StringValue)
 	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
 }
 
@@ -325,7 +325,7 @@ func fillDataStructFromTFObjectRSClientLdapClient(data *clientLdapClientDataRS, 
 	data.LastModifiedAt = obj.Attributes()["last_modified_at"].(basetypes.StringValue)
 	data.OwnerUUID = obj.Attributes()["owner_uuid"].(basetypes.StringValue)
 	data.TechnicalAdministratorUUID = obj.Attributes()["technical_administrator_uuid"].(basetypes.StringValue)
-	data.BindDn = obj.Attributes()["bind_dn"].(basetypes.StringValue)
+	data.BindDN = obj.Attributes()["bind_dn"].(basetypes.StringValue)
 	data.ClientCertificateUUID = obj.Attributes()["client_certificate_uuid"].(basetypes.StringValue)
 	data.ShareSecretInVault = obj.Attributes()["share_secret_in_vault"].(basetypes.BoolValue)
 	data.SharedSecretUUID = obj.Attributes()["shared_secret_uuid"].(basetypes.StringValue)
@@ -347,12 +347,12 @@ func fillDataStructFromTFObjectRSClientOAuth2Client(data *clientOAuth2ClientData
 	data.TechnicalAdministratorUUID = obj.Attributes()["technical_administrator_uuid"].(basetypes.StringValue)
 	data.AccountPermissions = obj.Attributes()["account_permissions"].(basetypes.ListValue)
 	data.Attributes = obj.Attributes()["attributes"].(basetypes.ObjectValue)
-	data.CallbackURI = obj.Attributes()["callback_u_r_i"].(basetypes.StringValue)
+	data.CallbackURI = obj.Attributes()["callback_uri"].(basetypes.StringValue)
 	data.Confidential = obj.Attributes()["confidential"].(basetypes.BoolValue)
 	data.DebugMode = obj.Attributes()["debug_mode"].(basetypes.BoolValue)
 	data.IDTokenClaims = obj.Attributes()["id_token_claims"].(basetypes.StringValue)
-	data.InitiateLoginURI = obj.Attributes()["initiate_login_u_r_i"].(basetypes.StringValue)
-	data.ResourceURIs = obj.Attributes()["resource_u_r_is"].(basetypes.StringValue)
+	data.InitiateLoginURI = obj.Attributes()["initiate_login_uri"].(basetypes.StringValue)
+	data.ResourceURIs = obj.Attributes()["resource_uris"].(basetypes.StringValue)
 	data.ShareSecretInVault = obj.Attributes()["share_secret_in_vault"].(basetypes.BoolValue)
 	data.SharedSecretUUID = obj.Attributes()["shared_secret_uuid"].(basetypes.StringValue)
 	data.ShowLandingPage = obj.Attributes()["show_landing_page"].(basetypes.BoolValue)
@@ -507,7 +507,7 @@ func fillDataStructFromTFObjectRSDirectoryLDAPDirectory(data *directoryLDAPDirec
 	data.RotatingPassword = obj.Attributes()["rotating_password"].(basetypes.StringValue)
 	data.UsernameCustomizable = obj.Attributes()["username_customizable"].(basetypes.BoolValue)
 	data.AttributesToStore = obj.Attributes()["attributes_to_store"].(basetypes.StringValue)
-	data.BaseDN = obj.Attributes()["base_d_n"].(basetypes.StringValue)
+	data.BaseDN = obj.Attributes()["base_dn"].(basetypes.StringValue)
 	data.ClientCertificateUUID = obj.Attributes()["client_certificate_uuid"].(basetypes.StringValue)
 	data.Dialect = obj.Attributes()["dialect"].(basetypes.StringValue)
 	data.FailoverHost = obj.Attributes()["failover_host"].(basetypes.StringValue)
@@ -515,7 +515,7 @@ func fillDataStructFromTFObjectRSDirectoryLDAPDirectory(data *directoryLDAPDirec
 	data.Host = obj.Attributes()["host"].(basetypes.StringValue)
 	data.PasswordRecovery = obj.Attributes()["password_recovery"].(basetypes.StringValue)
 	data.Port = obj.Attributes()["port"].(basetypes.Int64Value)
-	data.SearchBindDN = obj.Attributes()["search_bind_d_n"].(basetypes.StringValue)
+	data.SearchBindDN = obj.Attributes()["search_bind_dn"].(basetypes.StringValue)
 	data.SearchBindPassword = obj.Attributes()["search_bind_password"].(basetypes.StringValue)
 	data.SearchFilter = obj.Attributes()["search_filter"].(basetypes.StringValue)
 	data.TLS = obj.Attributes()["tls"].(basetypes.StringValue)
@@ -889,7 +889,7 @@ func fillDataStructFromTFObjectRSLaunchpadDisplayedLaunchpadTile(data *launchpad
 	data.Logo = obj.Attributes()["logo"].(basetypes.ListValue)
 	data.Tile = obj.Attributes()["tile"].(basetypes.ObjectValue)
 	data.Title = obj.Attributes()["title"].(basetypes.StringValue)
-	data.Uri = obj.Attributes()["uri"].(basetypes.StringValue)
+	data.URI = obj.Attributes()["uri"].(basetypes.StringValue)
 }
 
 func fillDataStructFromTFObjectRSLaunchpadDisplayedLaunchpadTiles(data *launchpadDisplayedLaunchpadTilesDataRS, obj types.Object) {
@@ -932,7 +932,7 @@ func fillDataStructFromTFObjectRSLaunchpadManualLaunchpadTile(data *launchpadMan
 	data.Logo = obj.Attributes()["logo"].(basetypes.ListValue)
 	data.VaultRecordUUID = obj.Attributes()["vault_record_uuid"].(basetypes.StringValue)
 	data.Title = obj.Attributes()["title"].(basetypes.StringValue)
-	data.Uri = obj.Attributes()["uri"].(basetypes.StringValue)
+	data.URI = obj.Attributes()["uri"].(basetypes.StringValue)
 }
 
 func fillDataStructFromTFObjectRSLaunchpadSsoApplicationLaunchpadTile(data *launchpadSsoApplicationLaunchpadTileDataRS, obj types.Object) {
@@ -945,7 +945,7 @@ func fillDataStructFromTFObjectRSLaunchpadSsoApplicationLaunchpadTile(data *laun
 	data.LaunchpadLaunchpadTileType = obj.Attributes()["launchpad_launchpad_tile_type"].(basetypes.StringValue)
 	data.Logo = obj.Attributes()["logo"].(basetypes.ListValue)
 	data.VaultRecordUUID = obj.Attributes()["vault_record_uuid"].(basetypes.StringValue)
-	data.Uri = obj.Attributes()["uri"].(basetypes.StringValue)
+	data.URI = obj.Attributes()["uri"].(basetypes.StringValue)
 }
 
 func fillDataStructFromTFObjectRSLaunchpadVaultRecordLaunchpadTile(data *launchpadVaultRecordLaunchpadTileDataRS, obj types.Object) {
@@ -1138,21 +1138,21 @@ func fillDataStructFromTFObjectRSProvisioningAbstractProvisionedLDAP(data *provi
 	data.TechnicalAdministratorUUID = obj.Attributes()["technical_administrator_uuid"].(basetypes.StringValue)
 	data.UsernamePrefix = obj.Attributes()["username_prefix"].(basetypes.StringValue)
 	data.Attributes = obj.Attributes()["attributes"].(basetypes.ObjectValue)
-	data.BaseDN = obj.Attributes()["base_d_n"].(basetypes.StringValue)
-	data.BindDN = obj.Attributes()["bind_d_n"].(basetypes.StringValue)
+	data.BaseDN = obj.Attributes()["base_dn"].(basetypes.StringValue)
+	data.BindDN = obj.Attributes()["bind_dn"].(basetypes.StringValue)
 	data.BindPassword = obj.Attributes()["bind_password"].(basetypes.StringValue)
 	data.ClientCertificateUUID = obj.Attributes()["client_certificate_uuid"].(basetypes.StringValue)
 	data.FailoverHost = obj.Attributes()["failover_host"].(basetypes.StringValue)
 	data.FailoverTrustedCertificateUUID = obj.Attributes()["failover_trusted_certificate_uuid"].(basetypes.StringValue)
-	data.GroupDN = obj.Attributes()["group_d_n"].(basetypes.StringValue)
+	data.GroupDN = obj.Attributes()["group_dn"].(basetypes.StringValue)
 	data.Host = obj.Attributes()["host"].(basetypes.StringValue)
 	data.ObjectClasses = obj.Attributes()["object_classes"].(basetypes.StringValue)
 	data.Port = obj.Attributes()["port"].(basetypes.Int64Value)
-	data.ServiceAccountDN = obj.Attributes()["service_account_d_n"].(basetypes.StringValue)
+	data.ServiceAccountDN = obj.Attributes()["service_account_dn"].(basetypes.StringValue)
 	data.SshPublicKeySupported = obj.Attributes()["ssh_public_key_supported"].(basetypes.BoolValue)
 	data.TLS = obj.Attributes()["tls"].(basetypes.StringValue)
 	data.TrustedCertificateUUID = obj.Attributes()["trusted_certificate_uuid"].(basetypes.StringValue)
-	data.UserDN = obj.Attributes()["user_d_n"].(basetypes.StringValue)
+	data.UserDN = obj.Attributes()["user_dn"].(basetypes.StringValue)
 }
 
 func fillDataStructFromTFObjectRSProvisioningAbstractProvisionedLDAP_attributes(data *provisioningAbstractProvisionedLDAP_attributesDataRS, obj types.Object) {
@@ -1236,7 +1236,7 @@ func fillDataStructFromTFObjectRSProvisioningProvisionNumberSequence(data *provi
 	data.AccountCount = obj.Attributes()["account_count"].(basetypes.Int64Value)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
 	data.Name = obj.Attributes()["name"].(basetypes.StringValue)
-	data.NextUID = obj.Attributes()["next_u_i_d"].(basetypes.Int64Value)
+	data.NextUID = obj.Attributes()["next_uid"].(basetypes.Int64Value)
 }
 
 func fillDataStructFromTFObjectRSProvisioningProvisionNumberSequenceLinkableWrapper(data *provisioningProvisionNumberSequenceLinkableWrapperDataRS, obj types.Object) {
@@ -1268,28 +1268,28 @@ func fillDataStructFromTFObjectRSProvisioningProvisionedAD(data *provisioningPro
 	data.TechnicalAdministratorUUID = obj.Attributes()["technical_administrator_uuid"].(basetypes.StringValue)
 	data.UsernamePrefix = obj.Attributes()["username_prefix"].(basetypes.StringValue)
 	data.Attributes = obj.Attributes()["attributes"].(basetypes.ObjectValue)
-	data.BaseDN = obj.Attributes()["base_d_n"].(basetypes.StringValue)
-	data.BindDN = obj.Attributes()["bind_d_n"].(basetypes.StringValue)
+	data.BaseDN = obj.Attributes()["base_dn"].(basetypes.StringValue)
+	data.BindDN = obj.Attributes()["bind_dn"].(basetypes.StringValue)
 	data.BindPassword = obj.Attributes()["bind_password"].(basetypes.StringValue)
 	data.ClientCertificateUUID = obj.Attributes()["client_certificate_uuid"].(basetypes.StringValue)
 	data.FailoverHost = obj.Attributes()["failover_host"].(basetypes.StringValue)
 	data.FailoverTrustedCertificateUUID = obj.Attributes()["failover_trusted_certificate_uuid"].(basetypes.StringValue)
-	data.GroupDN = obj.Attributes()["group_d_n"].(basetypes.StringValue)
+	data.GroupDN = obj.Attributes()["group_dn"].(basetypes.StringValue)
 	data.Host = obj.Attributes()["host"].(basetypes.StringValue)
 	data.ObjectClasses = obj.Attributes()["object_classes"].(basetypes.StringValue)
 	data.Port = obj.Attributes()["port"].(basetypes.Int64Value)
-	data.ServiceAccountDN = obj.Attributes()["service_account_d_n"].(basetypes.StringValue)
+	data.ServiceAccountDN = obj.Attributes()["service_account_dn"].(basetypes.StringValue)
 	data.SshPublicKeySupported = obj.Attributes()["ssh_public_key_supported"].(basetypes.BoolValue)
 	data.TLS = obj.Attributes()["tls"].(basetypes.StringValue)
 	data.TrustedCertificateUUID = obj.Attributes()["trusted_certificate_uuid"].(basetypes.StringValue)
-	data.UserDN = obj.Attributes()["user_d_n"].(basetypes.StringValue)
+	data.UserDN = obj.Attributes()["user_dn"].(basetypes.StringValue)
 	data.SamAccountNameScheme = obj.Attributes()["sam_account_name_scheme"].(basetypes.StringValue)
 }
 
 func fillDataStructFromTFObjectRSProvisioningProvisionedAccount(data *provisioningProvisionedAccountDataRS, obj types.Object) {
 	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
 	data.AdditionalObjects = obj.Attributes()["additional_objects"].(basetypes.ObjectValue)
-	data.Uid = obj.Attributes()["uid"].(basetypes.Int64Value)
+	data.UID = obj.Attributes()["uid"].(basetypes.Int64Value)
 }
 
 func fillDataStructFromTFObjectRSProvisioningProvisionedAccountLinkableWrapper(data *provisioningProvisionedAccountLinkableWrapperDataRS, obj types.Object) {
@@ -1415,21 +1415,21 @@ func fillDataStructFromTFObjectRSProvisioningProvisionedLDAP(data *provisioningP
 	data.TechnicalAdministratorUUID = obj.Attributes()["technical_administrator_uuid"].(basetypes.StringValue)
 	data.UsernamePrefix = obj.Attributes()["username_prefix"].(basetypes.StringValue)
 	data.Attributes = obj.Attributes()["attributes"].(basetypes.ObjectValue)
-	data.BaseDN = obj.Attributes()["base_d_n"].(basetypes.StringValue)
-	data.BindDN = obj.Attributes()["bind_d_n"].(basetypes.StringValue)
+	data.BaseDN = obj.Attributes()["base_dn"].(basetypes.StringValue)
+	data.BindDN = obj.Attributes()["bind_dn"].(basetypes.StringValue)
 	data.BindPassword = obj.Attributes()["bind_password"].(basetypes.StringValue)
 	data.ClientCertificateUUID = obj.Attributes()["client_certificate_uuid"].(basetypes.StringValue)
 	data.FailoverHost = obj.Attributes()["failover_host"].(basetypes.StringValue)
 	data.FailoverTrustedCertificateUUID = obj.Attributes()["failover_trusted_certificate_uuid"].(basetypes.StringValue)
-	data.GroupDN = obj.Attributes()["group_d_n"].(basetypes.StringValue)
+	data.GroupDN = obj.Attributes()["group_dn"].(basetypes.StringValue)
 	data.Host = obj.Attributes()["host"].(basetypes.StringValue)
 	data.ObjectClasses = obj.Attributes()["object_classes"].(basetypes.StringValue)
 	data.Port = obj.Attributes()["port"].(basetypes.Int64Value)
-	data.ServiceAccountDN = obj.Attributes()["service_account_d_n"].(basetypes.StringValue)
+	data.ServiceAccountDN = obj.Attributes()["service_account_dn"].(basetypes.StringValue)
 	data.SshPublicKeySupported = obj.Attributes()["ssh_public_key_supported"].(basetypes.BoolValue)
 	data.TLS = obj.Attributes()["tls"].(basetypes.StringValue)
 	data.TrustedCertificateUUID = obj.Attributes()["trusted_certificate_uuid"].(basetypes.StringValue)
-	data.UserDN = obj.Attributes()["user_d_n"].(basetypes.StringValue)
+	data.UserDN = obj.Attributes()["user_dn"].(basetypes.StringValue)
 	data.Gid = obj.Attributes()["gid"].(basetypes.Int64Value)
 	data.HashingScheme = obj.Attributes()["hashing_scheme"].(basetypes.StringValue)
 	data.Numbering = obj.Attributes()["numbering"].(basetypes.ObjectValue)
@@ -1455,7 +1455,7 @@ func fillDataStructFromTFObjectRSProvisioningProvisionedLDAPDirectory(data *prov
 	data.TechnicalAdministratorUUID = obj.Attributes()["technical_administrator_uuid"].(basetypes.StringValue)
 	data.UsernamePrefix = obj.Attributes()["username_prefix"].(basetypes.StringValue)
 	data.DirectoryUUID = obj.Attributes()["directory_uuid"].(basetypes.StringValue)
-	data.GroupDN = obj.Attributes()["group_d_n"].(basetypes.StringValue)
+	data.GroupDN = obj.Attributes()["group_dn"].(basetypes.StringValue)
 }
 
 func fillDataStructFromTFObjectRSProvisioningProvisionedSystem(data *provisioningProvisionedSystemDataRS, obj types.Object) {
