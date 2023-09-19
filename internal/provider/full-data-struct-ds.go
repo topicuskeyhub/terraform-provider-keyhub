@@ -422,6 +422,9 @@ type clientClientApplicationDataDS struct {
 	LastModifiedAt                    types.String `tfsdk:"last_modified_at"`
 	Owner                             types.Object `tfsdk:"owner"`
 	TechnicalAdministrator            types.Object `tfsdk:"technical_administrator"`
+	OAuth2Client                      types.Object `tfsdk:"o_auth2_client"`
+	LDAPClient                        types.Object `tfsdk:"ldap_client"`
+	Saml2Client                       types.Object `tfsdk:"saml2_client"`
 }
 
 var clientClientApplicationLinkableWrapperAttrTypesDS = objectAttrsTypeDSClientClientApplicationLinkableWrapper(false)
@@ -460,55 +463,29 @@ var clientLdapClientAttrTypesDS = objectAttrsTypeDSClientLdapClient(false)
 var clientLdapClientAttrTypesDSRecurse = objectAttrsTypeDSClientLdapClient(true)
 
 type clientLdapClientDataDS struct {
-	Links                             types.List   `tfsdk:"links"`
-	Permissions                       types.List   `tfsdk:"permissions"`
-	ClientClientApplicationPrimerType types.String `tfsdk:"client_client_application_primer_type"`
-	ClientID                          types.String `tfsdk:"client_id"`
-	Name                              types.String `tfsdk:"name"`
-	Scopes                            types.List   `tfsdk:"scopes"`
-	SsoApplication                    types.Bool   `tfsdk:"sso_application"`
-	UUID                              types.String `tfsdk:"uuid"`
-	Additional                        types.List   `tfsdk:"additional"`
-	AdditionalObjects                 types.Object `tfsdk:"additional_objects"`
-	LastModifiedAt                    types.String `tfsdk:"last_modified_at"`
-	Owner                             types.Object `tfsdk:"owner"`
-	TechnicalAdministrator            types.Object `tfsdk:"technical_administrator"`
-	BindDN                            types.String `tfsdk:"bind_dn"`
-	ClientCertificate                 types.Object `tfsdk:"client_certificate"`
-	ShareSecretInVault                types.Bool   `tfsdk:"share_secret_in_vault"`
-	SharedSecret                      types.Object `tfsdk:"shared_secret"`
-	UsedForProvisioning               types.Bool   `tfsdk:"used_for_provisioning"`
+	BindDN              types.String `tfsdk:"bind_dn"`
+	ClientCertificate   types.Object `tfsdk:"client_certificate"`
+	ShareSecretInVault  types.Bool   `tfsdk:"share_secret_in_vault"`
+	SharedSecret        types.Object `tfsdk:"shared_secret"`
+	UsedForProvisioning types.Bool   `tfsdk:"used_for_provisioning"`
 }
 
 var clientOAuth2ClientAttrTypesDS = objectAttrsTypeDSClientOAuth2Client(false)
 var clientOAuth2ClientAttrTypesDSRecurse = objectAttrsTypeDSClientOAuth2Client(true)
 
 type clientOAuth2ClientDataDS struct {
-	Links                             types.List   `tfsdk:"links"`
-	Permissions                       types.List   `tfsdk:"permissions"`
-	ClientClientApplicationPrimerType types.String `tfsdk:"client_client_application_primer_type"`
-	ClientID                          types.String `tfsdk:"client_id"`
-	Name                              types.String `tfsdk:"name"`
-	Scopes                            types.List   `tfsdk:"scopes"`
-	SsoApplication                    types.Bool   `tfsdk:"sso_application"`
-	UUID                              types.String `tfsdk:"uuid"`
-	Additional                        types.List   `tfsdk:"additional"`
-	AdditionalObjects                 types.Object `tfsdk:"additional_objects"`
-	LastModifiedAt                    types.String `tfsdk:"last_modified_at"`
-	Owner                             types.Object `tfsdk:"owner"`
-	TechnicalAdministrator            types.Object `tfsdk:"technical_administrator"`
-	AccountPermissions                types.List   `tfsdk:"account_permissions"`
-	Attributes                        types.Object `tfsdk:"attributes"`
-	CallbackURI                       types.String `tfsdk:"callback_uri"`
-	Confidential                      types.Bool   `tfsdk:"confidential"`
-	DebugMode                         types.Bool   `tfsdk:"debug_mode"`
-	IDTokenClaims                     types.String `tfsdk:"id_token_claims"`
-	InitiateLoginURI                  types.String `tfsdk:"initiate_login_uri"`
-	ResourceURIs                      types.String `tfsdk:"resource_uris"`
-	ShareSecretInVault                types.Bool   `tfsdk:"share_secret_in_vault"`
-	SharedSecret                      types.Object `tfsdk:"shared_secret"`
-	ShowLandingPage                   types.Bool   `tfsdk:"show_landing_page"`
-	UseClientCredentials              types.Bool   `tfsdk:"use_client_credentials"`
+	AccountPermissions   types.List   `tfsdk:"account_permissions"`
+	Attributes           types.Object `tfsdk:"attributes"`
+	CallbackURI          types.String `tfsdk:"callback_uri"`
+	Confidential         types.Bool   `tfsdk:"confidential"`
+	DebugMode            types.Bool   `tfsdk:"debug_mode"`
+	IDTokenClaims        types.String `tfsdk:"id_token_claims"`
+	InitiateLoginURI     types.String `tfsdk:"initiate_login_uri"`
+	ResourceURIs         types.String `tfsdk:"resource_uris"`
+	ShareSecretInVault   types.Bool   `tfsdk:"share_secret_in_vault"`
+	SharedSecret         types.Object `tfsdk:"shared_secret"`
+	ShowLandingPage      types.Bool   `tfsdk:"show_landing_page"`
+	UseClientCredentials types.Bool   `tfsdk:"use_client_credentials"`
 }
 
 var clientOAuth2ClientPermissionAttrTypesDS = objectAttrsTypeDSClientOAuth2ClientPermission(false)
@@ -569,23 +546,10 @@ var clientSaml2ClientAttrTypesDS = objectAttrsTypeDSClientSaml2Client(false)
 var clientSaml2ClientAttrTypesDSRecurse = objectAttrsTypeDSClientSaml2Client(true)
 
 type clientSaml2ClientDataDS struct {
-	Links                             types.List   `tfsdk:"links"`
-	Permissions                       types.List   `tfsdk:"permissions"`
-	ClientClientApplicationPrimerType types.String `tfsdk:"client_client_application_primer_type"`
-	ClientID                          types.String `tfsdk:"client_id"`
-	Name                              types.String `tfsdk:"name"`
-	Scopes                            types.List   `tfsdk:"scopes"`
-	SsoApplication                    types.Bool   `tfsdk:"sso_application"`
-	UUID                              types.String `tfsdk:"uuid"`
-	Additional                        types.List   `tfsdk:"additional"`
-	AdditionalObjects                 types.Object `tfsdk:"additional_objects"`
-	LastModifiedAt                    types.String `tfsdk:"last_modified_at"`
-	Owner                             types.Object `tfsdk:"owner"`
-	TechnicalAdministrator            types.Object `tfsdk:"technical_administrator"`
-	Attributes                        types.Object `tfsdk:"attributes"`
-	Metadata                          types.String `tfsdk:"metadata"`
-	MetadataURL                       types.String `tfsdk:"metadata_url"`
-	SubjectFormat                     types.String `tfsdk:"subject_format"`
+	Attributes    types.Object `tfsdk:"attributes"`
+	Metadata      types.String `tfsdk:"metadata"`
+	MetadataURL   types.String `tfsdk:"metadata_url"`
+	SubjectFormat types.String `tfsdk:"subject_format"`
 }
 
 var clientSaml2Client_attributesAttrTypesDS = objectAttrsTypeDSClientSaml2Client_attributes(false)
@@ -613,6 +577,10 @@ type directoryAccountDirectoryDataDS struct {
 	Restrict2fa                         types.Bool   `tfsdk:"restrict2fa"`
 	RotatingPassword                    types.String `tfsdk:"rotating_password"`
 	UsernameCustomizable                types.Bool   `tfsdk:"username_customizable"`
+	InternalDirectory                   types.Object `tfsdk:"internal_directory"`
+	LDAPDirectory                       types.Object `tfsdk:"l_d_a_p_directory"`
+	OIDCDirectory                       types.Object `tfsdk:"o_id_c_directory"`
+	MaintenanceDirectory                types.Object `tfsdk:"maintenance_directory"`
 }
 
 var directoryAccountDirectoryLinkableWrapperAttrTypesDS = objectAttrsTypeDSDirectoryAccountDirectoryLinkableWrapper(false)
@@ -678,110 +646,50 @@ var directoryInternalDirectoryAttrTypesDS = objectAttrsTypeDSDirectoryInternalDi
 var directoryInternalDirectoryAttrTypesDSRecurse = objectAttrsTypeDSDirectoryInternalDirectory(true)
 
 type directoryInternalDirectoryDataDS struct {
-	Links                               types.List   `tfsdk:"links"`
-	Permissions                         types.List   `tfsdk:"permissions"`
-	AccountValiditySupported            types.Bool   `tfsdk:"account_validity_supported"`
-	Active                              types.Bool   `tfsdk:"active"`
-	DirectoryAccountDirectoryPrimerType types.String `tfsdk:"directory_account_directory_primer_type"`
-	Name                                types.String `tfsdk:"name"`
-	UUID                                types.String `tfsdk:"uuid"`
-	Additional                          types.List   `tfsdk:"additional"`
-	AdditionalObjects                   types.Object `tfsdk:"additional_objects"`
-	BaseOrganizationalUnit              types.Object `tfsdk:"base_organizational_unit"`
-	DefaultDirectory                    types.Bool   `tfsdk:"default_directory"`
-	HelpdeskGroup                       types.Object `tfsdk:"helpdesk_group"`
-	Restrict2fa                         types.Bool   `tfsdk:"restrict2fa"`
-	RotatingPassword                    types.String `tfsdk:"rotating_password"`
-	UsernameCustomizable                types.Bool   `tfsdk:"username_customizable"`
-	Owner                               types.Object `tfsdk:"owner"`
+	Owner types.Object `tfsdk:"owner"`
 }
 
 var directoryLDAPDirectoryAttrTypesDS = objectAttrsTypeDSDirectoryLDAPDirectory(false)
 var directoryLDAPDirectoryAttrTypesDSRecurse = objectAttrsTypeDSDirectoryLDAPDirectory(true)
 
 type directoryLDAPDirectoryDataDS struct {
-	Links                               types.List   `tfsdk:"links"`
-	Permissions                         types.List   `tfsdk:"permissions"`
-	AccountValiditySupported            types.Bool   `tfsdk:"account_validity_supported"`
-	Active                              types.Bool   `tfsdk:"active"`
-	DirectoryAccountDirectoryPrimerType types.String `tfsdk:"directory_account_directory_primer_type"`
-	Name                                types.String `tfsdk:"name"`
-	UUID                                types.String `tfsdk:"uuid"`
-	Additional                          types.List   `tfsdk:"additional"`
-	AdditionalObjects                   types.Object `tfsdk:"additional_objects"`
-	BaseOrganizationalUnit              types.Object `tfsdk:"base_organizational_unit"`
-	DefaultDirectory                    types.Bool   `tfsdk:"default_directory"`
-	HelpdeskGroup                       types.Object `tfsdk:"helpdesk_group"`
-	Restrict2fa                         types.Bool   `tfsdk:"restrict2fa"`
-	RotatingPassword                    types.String `tfsdk:"rotating_password"`
-	UsernameCustomizable                types.Bool   `tfsdk:"username_customizable"`
-	AttributesToStore                   types.String `tfsdk:"attributes_to_store"`
-	BaseDN                              types.String `tfsdk:"base_dn"`
-	ClientCertificate                   types.Object `tfsdk:"client_certificate"`
-	Dialect                             types.String `tfsdk:"dialect"`
-	FailoverHost                        types.String `tfsdk:"failover_host"`
-	FailoverTrustedCertificate          types.Object `tfsdk:"failover_trusted_certificate"`
-	Host                                types.String `tfsdk:"host"`
-	PasswordRecovery                    types.String `tfsdk:"password_recovery"`
-	Port                                types.Int64  `tfsdk:"port"`
-	SearchBindDN                        types.String `tfsdk:"search_bind_dn"`
-	SearchBindPassword                  types.String `tfsdk:"search_bind_password"`
-	SearchFilter                        types.String `tfsdk:"search_filter"`
-	TLS                                 types.String `tfsdk:"tls"`
-	TrustedCertificate                  types.Object `tfsdk:"trusted_certificate"`
+	AttributesToStore          types.String `tfsdk:"attributes_to_store"`
+	BaseDN                     types.String `tfsdk:"base_dn"`
+	ClientCertificate          types.Object `tfsdk:"client_certificate"`
+	Dialect                    types.String `tfsdk:"dialect"`
+	FailoverHost               types.String `tfsdk:"failover_host"`
+	FailoverTrustedCertificate types.Object `tfsdk:"failover_trusted_certificate"`
+	Host                       types.String `tfsdk:"host"`
+	PasswordRecovery           types.String `tfsdk:"password_recovery"`
+	Port                       types.Int64  `tfsdk:"port"`
+	SearchBindDN               types.String `tfsdk:"search_bind_dn"`
+	SearchBindPassword         types.String `tfsdk:"search_bind_password"`
+	SearchFilter               types.String `tfsdk:"search_filter"`
+	TLS                        types.String `tfsdk:"tls"`
+	TrustedCertificate         types.Object `tfsdk:"trusted_certificate"`
 }
 
 var directoryMaintenanceDirectoryAttrTypesDS = objectAttrsTypeDSDirectoryMaintenanceDirectory(false)
 var directoryMaintenanceDirectoryAttrTypesDSRecurse = objectAttrsTypeDSDirectoryMaintenanceDirectory(true)
 
 type directoryMaintenanceDirectoryDataDS struct {
-	Links                               types.List   `tfsdk:"links"`
-	Permissions                         types.List   `tfsdk:"permissions"`
-	AccountValiditySupported            types.Bool   `tfsdk:"account_validity_supported"`
-	Active                              types.Bool   `tfsdk:"active"`
-	DirectoryAccountDirectoryPrimerType types.String `tfsdk:"directory_account_directory_primer_type"`
-	Name                                types.String `tfsdk:"name"`
-	UUID                                types.String `tfsdk:"uuid"`
-	Additional                          types.List   `tfsdk:"additional"`
-	AdditionalObjects                   types.Object `tfsdk:"additional_objects"`
-	BaseOrganizationalUnit              types.Object `tfsdk:"base_organizational_unit"`
-	DefaultDirectory                    types.Bool   `tfsdk:"default_directory"`
-	HelpdeskGroup                       types.Object `tfsdk:"helpdesk_group"`
-	Restrict2fa                         types.Bool   `tfsdk:"restrict2fa"`
-	RotatingPassword                    types.String `tfsdk:"rotating_password"`
-	UsernameCustomizable                types.Bool   `tfsdk:"username_customizable"`
 }
 
 var directoryOIDCDirectoryAttrTypesDS = objectAttrsTypeDSDirectoryOIDCDirectory(false)
 var directoryOIDCDirectoryAttrTypesDSRecurse = objectAttrsTypeDSDirectoryOIDCDirectory(true)
 
 type directoryOIDCDirectoryDataDS struct {
-	Links                               types.List   `tfsdk:"links"`
-	Permissions                         types.List   `tfsdk:"permissions"`
-	AccountValiditySupported            types.Bool   `tfsdk:"account_validity_supported"`
-	Active                              types.Bool   `tfsdk:"active"`
-	DirectoryAccountDirectoryPrimerType types.String `tfsdk:"directory_account_directory_primer_type"`
-	Name                                types.String `tfsdk:"name"`
-	UUID                                types.String `tfsdk:"uuid"`
-	Additional                          types.List   `tfsdk:"additional"`
-	AdditionalObjects                   types.Object `tfsdk:"additional_objects"`
-	BaseOrganizationalUnit              types.Object `tfsdk:"base_organizational_unit"`
-	DefaultDirectory                    types.Bool   `tfsdk:"default_directory"`
-	HelpdeskGroup                       types.Object `tfsdk:"helpdesk_group"`
-	Restrict2fa                         types.Bool   `tfsdk:"restrict2fa"`
-	RotatingPassword                    types.String `tfsdk:"rotating_password"`
-	UsernameCustomizable                types.Bool   `tfsdk:"username_customizable"`
-	AcrValues                           types.String `tfsdk:"acr_values"`
-	AttributesToStore                   types.String `tfsdk:"attributes_to_store"`
-	ClientID                            types.String `tfsdk:"client_id"`
-	ClientSecret                        types.String `tfsdk:"client_secret"`
-	DomainRestriction                   types.String `tfsdk:"domain_restriction"`
-	Enforces2fa                         types.Bool   `tfsdk:"enforces2fa"`
-	FullyResolvedIssuer                 types.String `tfsdk:"fully_resolved_issuer"`
-	Issuer                              types.String `tfsdk:"issuer"`
-	LogoutURL                           types.String `tfsdk:"logout_url"`
-	SendLoginHint                       types.Bool   `tfsdk:"send_login_hint"`
-	VendorEscaped                       types.String `tfsdk:"vendor_escaped"`
+	AcrValues           types.String `tfsdk:"acr_values"`
+	AttributesToStore   types.String `tfsdk:"attributes_to_store"`
+	ClientID            types.String `tfsdk:"client_id"`
+	ClientSecret        types.String `tfsdk:"client_secret"`
+	DomainRestriction   types.String `tfsdk:"domain_restriction"`
+	Enforces2fa         types.Bool   `tfsdk:"enforces2fa"`
+	FullyResolvedIssuer types.String `tfsdk:"fully_resolved_issuer"`
+	Issuer              types.String `tfsdk:"issuer"`
+	LogoutURL           types.String `tfsdk:"logout_url"`
+	SendLoginHint       types.Bool   `tfsdk:"send_login_hint"`
+	VendorEscaped       types.String `tfsdk:"vendor_escaped"`
 }
 
 var groupAccountGroupAttrTypesDS = objectAttrsTypeDSGroupAccountGroup(false)
@@ -1258,16 +1166,19 @@ var launchpadLaunchpadTileAttrTypesDS = objectAttrsTypeDSLaunchpadLaunchpadTile(
 var launchpadLaunchpadTileAttrTypesDSRecurse = objectAttrsTypeDSLaunchpadLaunchpadTile(true)
 
 type launchpadLaunchpadTileDataDS struct {
-	Links                      types.List   `tfsdk:"links"`
-	Permissions                types.List   `tfsdk:"permissions"`
-	Additional                 types.List   `tfsdk:"additional"`
-	AdditionalObjects          types.Object `tfsdk:"additional_objects"`
-	Application                types.Object `tfsdk:"application"`
-	Group                      types.Object `tfsdk:"group"`
-	IDenticonCode              types.Int64  `tfsdk:"identicon_code"`
-	LaunchpadLaunchpadTileType types.String `tfsdk:"launchpad_launchpad_tile_type"`
-	Logo                       types.List   `tfsdk:"logo"`
-	VaultRecord                types.Object `tfsdk:"vault_record"`
+	Links                       types.List   `tfsdk:"links"`
+	Permissions                 types.List   `tfsdk:"permissions"`
+	Additional                  types.List   `tfsdk:"additional"`
+	AdditionalObjects           types.Object `tfsdk:"additional_objects"`
+	Application                 types.Object `tfsdk:"application"`
+	Group                       types.Object `tfsdk:"group"`
+	IDenticonCode               types.Int64  `tfsdk:"identicon_code"`
+	LaunchpadLaunchpadTileType  types.String `tfsdk:"launchpad_launchpad_tile_type"`
+	Logo                        types.List   `tfsdk:"logo"`
+	VaultRecord                 types.Object `tfsdk:"vault_record"`
+	SsoApplicationLaunchpadTile types.Object `tfsdk:"sso_application_launchpad_tile"`
+	VaultRecordLaunchpadTile    types.Object `tfsdk:"vault_record_launchpad_tile"`
+	ManualLaunchpadTile         types.Object `tfsdk:"manual_launchpad_tile"`
 }
 
 var launchpadLaunchpadTileLinkableWrapperAttrTypesDS = objectAttrsTypeDSLaunchpadLaunchpadTileLinkableWrapper(false)
@@ -1296,51 +1207,21 @@ var launchpadManualLaunchpadTileAttrTypesDS = objectAttrsTypeDSLaunchpadManualLa
 var launchpadManualLaunchpadTileAttrTypesDSRecurse = objectAttrsTypeDSLaunchpadManualLaunchpadTile(true)
 
 type launchpadManualLaunchpadTileDataDS struct {
-	Links                      types.List   `tfsdk:"links"`
-	Permissions                types.List   `tfsdk:"permissions"`
-	Additional                 types.List   `tfsdk:"additional"`
-	AdditionalObjects          types.Object `tfsdk:"additional_objects"`
-	Application                types.Object `tfsdk:"application"`
-	Group                      types.Object `tfsdk:"group"`
-	IDenticonCode              types.Int64  `tfsdk:"identicon_code"`
-	LaunchpadLaunchpadTileType types.String `tfsdk:"launchpad_launchpad_tile_type"`
-	Logo                       types.List   `tfsdk:"logo"`
-	VaultRecord                types.Object `tfsdk:"vault_record"`
-	Title                      types.String `tfsdk:"title"`
-	URI                        types.String `tfsdk:"uri"`
+	Title types.String `tfsdk:"title"`
+	URI   types.String `tfsdk:"uri"`
 }
 
 var launchpadSsoApplicationLaunchpadTileAttrTypesDS = objectAttrsTypeDSLaunchpadSsoApplicationLaunchpadTile(false)
 var launchpadSsoApplicationLaunchpadTileAttrTypesDSRecurse = objectAttrsTypeDSLaunchpadSsoApplicationLaunchpadTile(true)
 
 type launchpadSsoApplicationLaunchpadTileDataDS struct {
-	Links                      types.List   `tfsdk:"links"`
-	Permissions                types.List   `tfsdk:"permissions"`
-	Additional                 types.List   `tfsdk:"additional"`
-	AdditionalObjects          types.Object `tfsdk:"additional_objects"`
-	Application                types.Object `tfsdk:"application"`
-	Group                      types.Object `tfsdk:"group"`
-	IDenticonCode              types.Int64  `tfsdk:"identicon_code"`
-	LaunchpadLaunchpadTileType types.String `tfsdk:"launchpad_launchpad_tile_type"`
-	Logo                       types.List   `tfsdk:"logo"`
-	VaultRecord                types.Object `tfsdk:"vault_record"`
-	URI                        types.String `tfsdk:"uri"`
+	URI types.String `tfsdk:"uri"`
 }
 
 var launchpadVaultRecordLaunchpadTileAttrTypesDS = objectAttrsTypeDSLaunchpadVaultRecordLaunchpadTile(false)
 var launchpadVaultRecordLaunchpadTileAttrTypesDSRecurse = objectAttrsTypeDSLaunchpadVaultRecordLaunchpadTile(true)
 
 type launchpadVaultRecordLaunchpadTileDataDS struct {
-	Links                      types.List   `tfsdk:"links"`
-	Permissions                types.List   `tfsdk:"permissions"`
-	Additional                 types.List   `tfsdk:"additional"`
-	AdditionalObjects          types.Object `tfsdk:"additional_objects"`
-	Application                types.Object `tfsdk:"application"`
-	Group                      types.Object `tfsdk:"group"`
-	IDenticonCode              types.Int64  `tfsdk:"identicon_code"`
-	LaunchpadLaunchpadTileType types.String `tfsdk:"launchpad_launchpad_tile_type"`
-	Logo                       types.List   `tfsdk:"logo"`
-	VaultRecord                types.Object `tfsdk:"vault_record"`
 }
 
 var licenseKeyHubLicenseInfoAttrTypesDS = objectAttrsTypeDSLicenseKeyHubLicenseInfo(false)
@@ -1394,7 +1275,7 @@ type notificationCertificateExpiredNotificationDataDS struct {
 	Certificate types.Object `tfsdk:"certificate"`
 	Directory   types.Object `tfsdk:"directory"`
 	Expiration  types.String `tfsdk:"expiration"`
-	LdapClient  types.Object `tfsdk:"ldap_client"`
+	LDAPClient  types.Object `tfsdk:"ldap_client"`
 	System      types.Object `tfsdk:"system"`
 	Usage       types.String `tfsdk:"usage"`
 	Webhook     types.Object `tfsdk:"webhook"`
@@ -1603,41 +1484,22 @@ var provisioningAbstractProvisionedLDAPAttrTypesDS = objectAttrsTypeDSProvisioni
 var provisioningAbstractProvisionedLDAPAttrTypesDSRecurse = objectAttrsTypeDSProvisioningAbstractProvisionedLDAP(true)
 
 type provisioningAbstractProvisionedLDAPDataDS struct {
-	Links                                   types.List   `tfsdk:"links"`
-	Permissions                             types.List   `tfsdk:"permissions"`
-	Active                                  types.Bool   `tfsdk:"active"`
-	Name                                    types.String `tfsdk:"name"`
-	OrganizationalUnit                      types.Object `tfsdk:"organizational_unit"`
-	ProvisioningProvisionedSystemPrimerType types.String `tfsdk:"provisioning_provisioned_system_primer_type"`
-	UUID                                    types.String `tfsdk:"uuid"`
-	Additional                              types.List   `tfsdk:"additional"`
-	AccountCount                            types.Int64  `tfsdk:"account_count"`
-	AdditionalObjects                       types.Object `tfsdk:"additional_objects"`
-	ContentAdministrator                    types.Object `tfsdk:"content_administrator"`
-	ExternalUUID                            types.String `tfsdk:"external_uuid"`
-	Owner                                   types.Object `tfsdk:"owner"`
-	SelfServiceExistingGroups               types.Bool   `tfsdk:"self_service_existing_groups"`
-	SelfServiceNewGroups                    types.Bool   `tfsdk:"self_service_new_groups"`
-	SelfServiceServiceAccounts              types.Bool   `tfsdk:"self_service_service_accounts"`
-	ShouldDestroyUnknownAccounts            types.Bool   `tfsdk:"should_destroy_unknown_accounts"`
-	TechnicalAdministrator                  types.Object `tfsdk:"technical_administrator"`
-	UsernamePrefix                          types.String `tfsdk:"username_prefix"`
-	Attributes                              types.Object `tfsdk:"attributes"`
-	BaseDN                                  types.String `tfsdk:"base_dn"`
-	BindDN                                  types.String `tfsdk:"bind_dn"`
-	BindPassword                            types.String `tfsdk:"bind_password"`
-	ClientCertificate                       types.Object `tfsdk:"client_certificate"`
-	FailoverHost                            types.String `tfsdk:"failover_host"`
-	FailoverTrustedCertificate              types.Object `tfsdk:"failover_trusted_certificate"`
-	GroupDN                                 types.String `tfsdk:"group_dn"`
-	Host                                    types.String `tfsdk:"host"`
-	ObjectClasses                           types.String `tfsdk:"object_classes"`
-	Port                                    types.Int64  `tfsdk:"port"`
-	ServiceAccountDN                        types.String `tfsdk:"service_account_dn"`
-	SshPublicKeySupported                   types.Bool   `tfsdk:"ssh_public_key_supported"`
-	TLS                                     types.String `tfsdk:"tls"`
-	TrustedCertificate                      types.Object `tfsdk:"trusted_certificate"`
-	UserDN                                  types.String `tfsdk:"user_dn"`
+	Attributes                 types.Object `tfsdk:"attributes"`
+	BaseDN                     types.String `tfsdk:"base_dn"`
+	BindDN                     types.String `tfsdk:"bind_dn"`
+	BindPassword               types.String `tfsdk:"bind_password"`
+	ClientCertificate          types.Object `tfsdk:"client_certificate"`
+	FailoverHost               types.String `tfsdk:"failover_host"`
+	FailoverTrustedCertificate types.Object `tfsdk:"failover_trusted_certificate"`
+	GroupDN                    types.String `tfsdk:"group_dn"`
+	Host                       types.String `tfsdk:"host"`
+	ObjectClasses              types.String `tfsdk:"object_classes"`
+	Port                       types.Int64  `tfsdk:"port"`
+	ServiceAccountDN           types.String `tfsdk:"service_account_dn"`
+	SshPublicKeySupported      types.Bool   `tfsdk:"ssh_public_key_supported"`
+	TLS                        types.String `tfsdk:"tls"`
+	TrustedCertificate         types.Object `tfsdk:"trusted_certificate"`
+	UserDN                     types.String `tfsdk:"user_dn"`
 }
 
 var provisioningAbstractProvisionedLDAP_attributesAttrTypesDS = objectAttrsTypeDSProvisioningAbstractProvisionedLDAP_attributes(false)
@@ -1784,42 +1646,7 @@ var provisioningProvisionedADAttrTypesDS = objectAttrsTypeDSProvisioningProvisio
 var provisioningProvisionedADAttrTypesDSRecurse = objectAttrsTypeDSProvisioningProvisionedAD(true)
 
 type provisioningProvisionedADDataDS struct {
-	Links                                   types.List   `tfsdk:"links"`
-	Permissions                             types.List   `tfsdk:"permissions"`
-	Active                                  types.Bool   `tfsdk:"active"`
-	Name                                    types.String `tfsdk:"name"`
-	OrganizationalUnit                      types.Object `tfsdk:"organizational_unit"`
-	ProvisioningProvisionedSystemPrimerType types.String `tfsdk:"provisioning_provisioned_system_primer_type"`
-	UUID                                    types.String `tfsdk:"uuid"`
-	Additional                              types.List   `tfsdk:"additional"`
-	AccountCount                            types.Int64  `tfsdk:"account_count"`
-	AdditionalObjects                       types.Object `tfsdk:"additional_objects"`
-	ContentAdministrator                    types.Object `tfsdk:"content_administrator"`
-	ExternalUUID                            types.String `tfsdk:"external_uuid"`
-	Owner                                   types.Object `tfsdk:"owner"`
-	SelfServiceExistingGroups               types.Bool   `tfsdk:"self_service_existing_groups"`
-	SelfServiceNewGroups                    types.Bool   `tfsdk:"self_service_new_groups"`
-	SelfServiceServiceAccounts              types.Bool   `tfsdk:"self_service_service_accounts"`
-	ShouldDestroyUnknownAccounts            types.Bool   `tfsdk:"should_destroy_unknown_accounts"`
-	TechnicalAdministrator                  types.Object `tfsdk:"technical_administrator"`
-	UsernamePrefix                          types.String `tfsdk:"username_prefix"`
-	Attributes                              types.Object `tfsdk:"attributes"`
-	BaseDN                                  types.String `tfsdk:"base_dn"`
-	BindDN                                  types.String `tfsdk:"bind_dn"`
-	BindPassword                            types.String `tfsdk:"bind_password"`
-	ClientCertificate                       types.Object `tfsdk:"client_certificate"`
-	FailoverHost                            types.String `tfsdk:"failover_host"`
-	FailoverTrustedCertificate              types.Object `tfsdk:"failover_trusted_certificate"`
-	GroupDN                                 types.String `tfsdk:"group_dn"`
-	Host                                    types.String `tfsdk:"host"`
-	ObjectClasses                           types.String `tfsdk:"object_classes"`
-	Port                                    types.Int64  `tfsdk:"port"`
-	ServiceAccountDN                        types.String `tfsdk:"service_account_dn"`
-	SshPublicKeySupported                   types.Bool   `tfsdk:"ssh_public_key_supported"`
-	TLS                                     types.String `tfsdk:"tls"`
-	TrustedCertificate                      types.Object `tfsdk:"trusted_certificate"`
-	UserDN                                  types.String `tfsdk:"user_dn"`
-	SamAccountNameScheme                    types.String `tfsdk:"sam_account_name_scheme"`
+	SamAccountNameScheme types.String `tfsdk:"sam_account_name_scheme"`
 }
 
 var provisioningProvisionedAccountAttrTypesDS = objectAttrsTypeDSProvisioningProvisionedAccount(false)
@@ -1856,182 +1683,52 @@ var provisioningProvisionedAzureOIDCDirectoryAttrTypesDS = objectAttrsTypeDSProv
 var provisioningProvisionedAzureOIDCDirectoryAttrTypesDSRecurse = objectAttrsTypeDSProvisioningProvisionedAzureOIDCDirectory(true)
 
 type provisioningProvisionedAzureOIDCDirectoryDataDS struct {
-	Links                                   types.List   `tfsdk:"links"`
-	Permissions                             types.List   `tfsdk:"permissions"`
-	Active                                  types.Bool   `tfsdk:"active"`
-	Name                                    types.String `tfsdk:"name"`
-	OrganizationalUnit                      types.Object `tfsdk:"organizational_unit"`
-	ProvisioningProvisionedSystemPrimerType types.String `tfsdk:"provisioning_provisioned_system_primer_type"`
-	UUID                                    types.String `tfsdk:"uuid"`
-	Additional                              types.List   `tfsdk:"additional"`
-	AccountCount                            types.Int64  `tfsdk:"account_count"`
-	AdditionalObjects                       types.Object `tfsdk:"additional_objects"`
-	ContentAdministrator                    types.Object `tfsdk:"content_administrator"`
-	ExternalUUID                            types.String `tfsdk:"external_uuid"`
-	Owner                                   types.Object `tfsdk:"owner"`
-	SelfServiceExistingGroups               types.Bool   `tfsdk:"self_service_existing_groups"`
-	SelfServiceNewGroups                    types.Bool   `tfsdk:"self_service_new_groups"`
-	SelfServiceServiceAccounts              types.Bool   `tfsdk:"self_service_service_accounts"`
-	ShouldDestroyUnknownAccounts            types.Bool   `tfsdk:"should_destroy_unknown_accounts"`
-	TechnicalAdministrator                  types.Object `tfsdk:"technical_administrator"`
-	UsernamePrefix                          types.String `tfsdk:"username_prefix"`
-	Directory                               types.Object `tfsdk:"directory"`
-	Tenant                                  types.String `tfsdk:"tenant"`
+	Directory types.Object `tfsdk:"directory"`
+	Tenant    types.String `tfsdk:"tenant"`
 }
 
 var provisioningProvisionedAzureSyncLDAPDirectoryAttrTypesDS = objectAttrsTypeDSProvisioningProvisionedAzureSyncLDAPDirectory(false)
 var provisioningProvisionedAzureSyncLDAPDirectoryAttrTypesDSRecurse = objectAttrsTypeDSProvisioningProvisionedAzureSyncLDAPDirectory(true)
 
 type provisioningProvisionedAzureSyncLDAPDirectoryDataDS struct {
-	Links                                   types.List   `tfsdk:"links"`
-	Permissions                             types.List   `tfsdk:"permissions"`
-	Active                                  types.Bool   `tfsdk:"active"`
-	Name                                    types.String `tfsdk:"name"`
-	OrganizationalUnit                      types.Object `tfsdk:"organizational_unit"`
-	ProvisioningProvisionedSystemPrimerType types.String `tfsdk:"provisioning_provisioned_system_primer_type"`
-	UUID                                    types.String `tfsdk:"uuid"`
-	Additional                              types.List   `tfsdk:"additional"`
-	AccountCount                            types.Int64  `tfsdk:"account_count"`
-	AdditionalObjects                       types.Object `tfsdk:"additional_objects"`
-	ContentAdministrator                    types.Object `tfsdk:"content_administrator"`
-	ExternalUUID                            types.String `tfsdk:"external_uuid"`
-	Owner                                   types.Object `tfsdk:"owner"`
-	SelfServiceExistingGroups               types.Bool   `tfsdk:"self_service_existing_groups"`
-	SelfServiceNewGroups                    types.Bool   `tfsdk:"self_service_new_groups"`
-	SelfServiceServiceAccounts              types.Bool   `tfsdk:"self_service_service_accounts"`
-	ShouldDestroyUnknownAccounts            types.Bool   `tfsdk:"should_destroy_unknown_accounts"`
-	TechnicalAdministrator                  types.Object `tfsdk:"technical_administrator"`
-	UsernamePrefix                          types.String `tfsdk:"username_prefix"`
-	ClientID                                types.String `tfsdk:"client_id"`
-	ClientSecret                            types.String `tfsdk:"client_secret"`
-	Directory                               types.Object `tfsdk:"directory"`
-	Tenant                                  types.String `tfsdk:"tenant"`
+	ClientID     types.String `tfsdk:"client_id"`
+	ClientSecret types.String `tfsdk:"client_secret"`
+	Directory    types.Object `tfsdk:"directory"`
+	Tenant       types.String `tfsdk:"tenant"`
 }
 
 var provisioningProvisionedAzureTenantAttrTypesDS = objectAttrsTypeDSProvisioningProvisionedAzureTenant(false)
 var provisioningProvisionedAzureTenantAttrTypesDSRecurse = objectAttrsTypeDSProvisioningProvisionedAzureTenant(true)
 
 type provisioningProvisionedAzureTenantDataDS struct {
-	Links                                   types.List   `tfsdk:"links"`
-	Permissions                             types.List   `tfsdk:"permissions"`
-	Active                                  types.Bool   `tfsdk:"active"`
-	Name                                    types.String `tfsdk:"name"`
-	OrganizationalUnit                      types.Object `tfsdk:"organizational_unit"`
-	ProvisioningProvisionedSystemPrimerType types.String `tfsdk:"provisioning_provisioned_system_primer_type"`
-	UUID                                    types.String `tfsdk:"uuid"`
-	Additional                              types.List   `tfsdk:"additional"`
-	AccountCount                            types.Int64  `tfsdk:"account_count"`
-	AdditionalObjects                       types.Object `tfsdk:"additional_objects"`
-	ContentAdministrator                    types.Object `tfsdk:"content_administrator"`
-	ExternalUUID                            types.String `tfsdk:"external_uuid"`
-	Owner                                   types.Object `tfsdk:"owner"`
-	SelfServiceExistingGroups               types.Bool   `tfsdk:"self_service_existing_groups"`
-	SelfServiceNewGroups                    types.Bool   `tfsdk:"self_service_new_groups"`
-	SelfServiceServiceAccounts              types.Bool   `tfsdk:"self_service_service_accounts"`
-	ShouldDestroyUnknownAccounts            types.Bool   `tfsdk:"should_destroy_unknown_accounts"`
-	TechnicalAdministrator                  types.Object `tfsdk:"technical_administrator"`
-	UsernamePrefix                          types.String `tfsdk:"username_prefix"`
-	ClientID                                types.String `tfsdk:"client_id"`
-	ClientSecret                            types.String `tfsdk:"client_secret"`
-	IDpDomain                               types.String `tfsdk:"idp_domain"`
-	Tenant                                  types.String `tfsdk:"tenant"`
+	ClientID     types.String `tfsdk:"client_id"`
+	ClientSecret types.String `tfsdk:"client_secret"`
+	IDpDomain    types.String `tfsdk:"idp_domain"`
+	Tenant       types.String `tfsdk:"tenant"`
 }
 
 var provisioningProvisionedInternalLDAPAttrTypesDS = objectAttrsTypeDSProvisioningProvisionedInternalLDAP(false)
 var provisioningProvisionedInternalLDAPAttrTypesDSRecurse = objectAttrsTypeDSProvisioningProvisionedInternalLDAP(true)
 
 type provisioningProvisionedInternalLDAPDataDS struct {
-	Links                                   types.List   `tfsdk:"links"`
-	Permissions                             types.List   `tfsdk:"permissions"`
-	Active                                  types.Bool   `tfsdk:"active"`
-	Name                                    types.String `tfsdk:"name"`
-	OrganizationalUnit                      types.Object `tfsdk:"organizational_unit"`
-	ProvisioningProvisionedSystemPrimerType types.String `tfsdk:"provisioning_provisioned_system_primer_type"`
-	UUID                                    types.String `tfsdk:"uuid"`
-	Additional                              types.List   `tfsdk:"additional"`
-	AccountCount                            types.Int64  `tfsdk:"account_count"`
-	AdditionalObjects                       types.Object `tfsdk:"additional_objects"`
-	ContentAdministrator                    types.Object `tfsdk:"content_administrator"`
-	ExternalUUID                            types.String `tfsdk:"external_uuid"`
-	Owner                                   types.Object `tfsdk:"owner"`
-	SelfServiceExistingGroups               types.Bool   `tfsdk:"self_service_existing_groups"`
-	SelfServiceNewGroups                    types.Bool   `tfsdk:"self_service_new_groups"`
-	SelfServiceServiceAccounts              types.Bool   `tfsdk:"self_service_service_accounts"`
-	ShouldDestroyUnknownAccounts            types.Bool   `tfsdk:"should_destroy_unknown_accounts"`
-	TechnicalAdministrator                  types.Object `tfsdk:"technical_administrator"`
-	UsernamePrefix                          types.String `tfsdk:"username_prefix"`
-	Client                                  types.Object `tfsdk:"client"`
+	Client types.Object `tfsdk:"client"`
 }
 
 var provisioningProvisionedLDAPAttrTypesDS = objectAttrsTypeDSProvisioningProvisionedLDAP(false)
 var provisioningProvisionedLDAPAttrTypesDSRecurse = objectAttrsTypeDSProvisioningProvisionedLDAP(true)
 
 type provisioningProvisionedLDAPDataDS struct {
-	Links                                   types.List   `tfsdk:"links"`
-	Permissions                             types.List   `tfsdk:"permissions"`
-	Active                                  types.Bool   `tfsdk:"active"`
-	Name                                    types.String `tfsdk:"name"`
-	OrganizationalUnit                      types.Object `tfsdk:"organizational_unit"`
-	ProvisioningProvisionedSystemPrimerType types.String `tfsdk:"provisioning_provisioned_system_primer_type"`
-	UUID                                    types.String `tfsdk:"uuid"`
-	Additional                              types.List   `tfsdk:"additional"`
-	AccountCount                            types.Int64  `tfsdk:"account_count"`
-	AdditionalObjects                       types.Object `tfsdk:"additional_objects"`
-	ContentAdministrator                    types.Object `tfsdk:"content_administrator"`
-	ExternalUUID                            types.String `tfsdk:"external_uuid"`
-	Owner                                   types.Object `tfsdk:"owner"`
-	SelfServiceExistingGroups               types.Bool   `tfsdk:"self_service_existing_groups"`
-	SelfServiceNewGroups                    types.Bool   `tfsdk:"self_service_new_groups"`
-	SelfServiceServiceAccounts              types.Bool   `tfsdk:"self_service_service_accounts"`
-	ShouldDestroyUnknownAccounts            types.Bool   `tfsdk:"should_destroy_unknown_accounts"`
-	TechnicalAdministrator                  types.Object `tfsdk:"technical_administrator"`
-	UsernamePrefix                          types.String `tfsdk:"username_prefix"`
-	Attributes                              types.Object `tfsdk:"attributes"`
-	BaseDN                                  types.String `tfsdk:"base_dn"`
-	BindDN                                  types.String `tfsdk:"bind_dn"`
-	BindPassword                            types.String `tfsdk:"bind_password"`
-	ClientCertificate                       types.Object `tfsdk:"client_certificate"`
-	FailoverHost                            types.String `tfsdk:"failover_host"`
-	FailoverTrustedCertificate              types.Object `tfsdk:"failover_trusted_certificate"`
-	GroupDN                                 types.String `tfsdk:"group_dn"`
-	Host                                    types.String `tfsdk:"host"`
-	ObjectClasses                           types.String `tfsdk:"object_classes"`
-	Port                                    types.Int64  `tfsdk:"port"`
-	ServiceAccountDN                        types.String `tfsdk:"service_account_dn"`
-	SshPublicKeySupported                   types.Bool   `tfsdk:"ssh_public_key_supported"`
-	TLS                                     types.String `tfsdk:"tls"`
-	TrustedCertificate                      types.Object `tfsdk:"trusted_certificate"`
-	UserDN                                  types.String `tfsdk:"user_dn"`
-	Gid                                     types.Int64  `tfsdk:"gid"`
-	HashingScheme                           types.String `tfsdk:"hashing_scheme"`
-	Numbering                               types.Object `tfsdk:"numbering"`
+	Gid           types.Int64  `tfsdk:"gid"`
+	HashingScheme types.String `tfsdk:"hashing_scheme"`
+	Numbering     types.Object `tfsdk:"numbering"`
 }
 
 var provisioningProvisionedLDAPDirectoryAttrTypesDS = objectAttrsTypeDSProvisioningProvisionedLDAPDirectory(false)
 var provisioningProvisionedLDAPDirectoryAttrTypesDSRecurse = objectAttrsTypeDSProvisioningProvisionedLDAPDirectory(true)
 
 type provisioningProvisionedLDAPDirectoryDataDS struct {
-	Links                                   types.List   `tfsdk:"links"`
-	Permissions                             types.List   `tfsdk:"permissions"`
-	Active                                  types.Bool   `tfsdk:"active"`
-	Name                                    types.String `tfsdk:"name"`
-	OrganizationalUnit                      types.Object `tfsdk:"organizational_unit"`
-	ProvisioningProvisionedSystemPrimerType types.String `tfsdk:"provisioning_provisioned_system_primer_type"`
-	UUID                                    types.String `tfsdk:"uuid"`
-	Additional                              types.List   `tfsdk:"additional"`
-	AccountCount                            types.Int64  `tfsdk:"account_count"`
-	AdditionalObjects                       types.Object `tfsdk:"additional_objects"`
-	ContentAdministrator                    types.Object `tfsdk:"content_administrator"`
-	ExternalUUID                            types.String `tfsdk:"external_uuid"`
-	Owner                                   types.Object `tfsdk:"owner"`
-	SelfServiceExistingGroups               types.Bool   `tfsdk:"self_service_existing_groups"`
-	SelfServiceNewGroups                    types.Bool   `tfsdk:"self_service_new_groups"`
-	SelfServiceServiceAccounts              types.Bool   `tfsdk:"self_service_service_accounts"`
-	ShouldDestroyUnknownAccounts            types.Bool   `tfsdk:"should_destroy_unknown_accounts"`
-	TechnicalAdministrator                  types.Object `tfsdk:"technical_administrator"`
-	UsernamePrefix                          types.String `tfsdk:"username_prefix"`
-	Directory                               types.Object `tfsdk:"directory"`
-	GroupDN                                 types.String `tfsdk:"group_dn"`
+	Directory types.Object `tfsdk:"directory"`
+	GroupDN   types.String `tfsdk:"group_dn"`
 }
 
 var provisioningProvisionedSystemAttrTypesDS = objectAttrsTypeDSProvisioningProvisionedSystem(false)
@@ -2057,6 +1754,14 @@ type provisioningProvisionedSystemDataDS struct {
 	ShouldDestroyUnknownAccounts            types.Bool   `tfsdk:"should_destroy_unknown_accounts"`
 	TechnicalAdministrator                  types.Object `tfsdk:"technical_administrator"`
 	UsernamePrefix                          types.String `tfsdk:"username_prefix"`
+	ProvisionedAzureSyncLDAPDirectory       types.Object `tfsdk:"provisioned_azure_sync_ldap_directory"`
+	ProvisionedLDAPDirectory                types.Object `tfsdk:"provisioned_ldap_directory"`
+	ProvisionedAzureOIDCDirectory           types.Object `tfsdk:"provisioned_azure_oidc_directory"`
+	AbstractProvisionedLDAP                 types.Object `tfsdk:"abstract_provisioned_ldap"`
+	ProvisionedAzureTenant                  types.Object `tfsdk:"provisioned_azure_tenant"`
+	ProvisionedLDAP                         types.Object `tfsdk:"provisioned_ldap"`
+	ProvisionedAD                           types.Object `tfsdk:"provisioned_a_d"`
+	ProvisionedInternalLDAP                 types.Object `tfsdk:"provisioned_internal_ldap"`
 }
 
 var provisioningProvisionedSystemLinkableWrapperAttrTypesDS = objectAttrsTypeDSProvisioningProvisionedSystemLinkableWrapper(false)
@@ -2157,54 +1862,21 @@ var requestAbstractApplicationModificationRequestAttrTypesDS = objectAttrsTypeDS
 var requestAbstractApplicationModificationRequestAttrTypesDSRecurse = objectAttrsTypeDSRequestAbstractApplicationModificationRequest(true)
 
 type requestAbstractApplicationModificationRequestDataDS struct {
-	Links                          types.List   `tfsdk:"links"`
-	Permissions                    types.List   `tfsdk:"permissions"`
-	Additional                     types.List   `tfsdk:"additional"`
-	Account                        types.Object `tfsdk:"account"`
-	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
-	Comment                        types.String `tfsdk:"comment"`
-	Feedback                       types.String `tfsdk:"feedback"`
-	Group                          types.Object `tfsdk:"group"`
-	MailKey                        types.String `tfsdk:"mail_key"`
-	RequestModificationRequestType types.String `tfsdk:"request_modification_request_type"`
-	Status                         types.String `tfsdk:"status"`
-	Application                    types.Object `tfsdk:"application"`
+	Application types.Object `tfsdk:"application"`
 }
 
 var requestAbstractOrganizationalUnitModificationRequestAttrTypesDS = objectAttrsTypeDSRequestAbstractOrganizationalUnitModificationRequest(false)
 var requestAbstractOrganizationalUnitModificationRequestAttrTypesDSRecurse = objectAttrsTypeDSRequestAbstractOrganizationalUnitModificationRequest(true)
 
 type requestAbstractOrganizationalUnitModificationRequestDataDS struct {
-	Links                          types.List   `tfsdk:"links"`
-	Permissions                    types.List   `tfsdk:"permissions"`
-	Additional                     types.List   `tfsdk:"additional"`
-	Account                        types.Object `tfsdk:"account"`
-	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
-	Comment                        types.String `tfsdk:"comment"`
-	Feedback                       types.String `tfsdk:"feedback"`
-	Group                          types.Object `tfsdk:"group"`
-	MailKey                        types.String `tfsdk:"mail_key"`
-	RequestModificationRequestType types.String `tfsdk:"request_modification_request_type"`
-	Status                         types.String `tfsdk:"status"`
-	OrganizationalUnit             types.Object `tfsdk:"organizational_unit"`
+	OrganizationalUnit types.Object `tfsdk:"organizational_unit"`
 }
 
 var requestAbstractProvisionedSystemModificationRequestAttrTypesDS = objectAttrsTypeDSRequestAbstractProvisionedSystemModificationRequest(false)
 var requestAbstractProvisionedSystemModificationRequestAttrTypesDSRecurse = objectAttrsTypeDSRequestAbstractProvisionedSystemModificationRequest(true)
 
 type requestAbstractProvisionedSystemModificationRequestDataDS struct {
-	Links                          types.List   `tfsdk:"links"`
-	Permissions                    types.List   `tfsdk:"permissions"`
-	Additional                     types.List   `tfsdk:"additional"`
-	Account                        types.Object `tfsdk:"account"`
-	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
-	Comment                        types.String `tfsdk:"comment"`
-	Feedback                       types.String `tfsdk:"feedback"`
-	Group                          types.Object `tfsdk:"group"`
-	MailKey                        types.String `tfsdk:"mail_key"`
-	RequestModificationRequestType types.String `tfsdk:"request_modification_request_type"`
-	Status                         types.String `tfsdk:"status"`
-	System                         types.Object `tfsdk:"system"`
+	System types.Object `tfsdk:"system"`
 }
 
 var requestAcceptGrantAccessRequestParametersAttrTypesDS = objectAttrsTypeDSRequestAcceptGrantAccessRequestParameters(false)
@@ -2240,294 +1912,161 @@ var requestAddGroupAdminRequestAttrTypesDS = objectAttrsTypeDSRequestAddGroupAdm
 var requestAddGroupAdminRequestAttrTypesDSRecurse = objectAttrsTypeDSRequestAddGroupAdminRequest(true)
 
 type requestAddGroupAdminRequestDataDS struct {
-	Links                          types.List   `tfsdk:"links"`
-	Permissions                    types.List   `tfsdk:"permissions"`
-	Additional                     types.List   `tfsdk:"additional"`
-	Account                        types.Object `tfsdk:"account"`
-	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
-	Comment                        types.String `tfsdk:"comment"`
-	Feedback                       types.String `tfsdk:"feedback"`
-	Group                          types.Object `tfsdk:"group"`
-	MailKey                        types.String `tfsdk:"mail_key"`
-	RequestModificationRequestType types.String `tfsdk:"request_modification_request_type"`
-	Status                         types.String `tfsdk:"status"`
-	NewAdmin                       types.Object `tfsdk:"new_admin"`
-	PrivateKey                     types.String `tfsdk:"private_key"`
+	NewAdmin   types.Object `tfsdk:"new_admin"`
+	PrivateKey types.String `tfsdk:"private_key"`
 }
 
 var requestCreateGroupOnSystemRequestAttrTypesDS = objectAttrsTypeDSRequestCreateGroupOnSystemRequest(false)
 var requestCreateGroupOnSystemRequestAttrTypesDSRecurse = objectAttrsTypeDSRequestCreateGroupOnSystemRequest(true)
 
 type requestCreateGroupOnSystemRequestDataDS struct {
-	Links                          types.List   `tfsdk:"links"`
-	Permissions                    types.List   `tfsdk:"permissions"`
-	Additional                     types.List   `tfsdk:"additional"`
-	Account                        types.Object `tfsdk:"account"`
-	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
-	Comment                        types.String `tfsdk:"comment"`
-	Feedback                       types.String `tfsdk:"feedback"`
-	Group                          types.Object `tfsdk:"group"`
-	MailKey                        types.String `tfsdk:"mail_key"`
-	RequestModificationRequestType types.String `tfsdk:"request_modification_request_type"`
-	Status                         types.String `tfsdk:"status"`
-	System                         types.Object `tfsdk:"system"`
-	ActivationRequired             types.Bool   `tfsdk:"activation_required"`
-	GroupOnSystemType              types.String `tfsdk:"group_on_system_type"`
-	NameInSystem                   types.String `tfsdk:"name_in_system"`
+	ActivationRequired types.Bool   `tfsdk:"activation_required"`
+	GroupOnSystemType  types.String `tfsdk:"group_on_system_type"`
+	NameInSystem       types.String `tfsdk:"name_in_system"`
 }
 
 var requestCreateGroupRequestAttrTypesDS = objectAttrsTypeDSRequestCreateGroupRequest(false)
 var requestCreateGroupRequestAttrTypesDSRecurse = objectAttrsTypeDSRequestCreateGroupRequest(true)
 
 type requestCreateGroupRequestDataDS struct {
-	Links                          types.List   `tfsdk:"links"`
-	Permissions                    types.List   `tfsdk:"permissions"`
-	Additional                     types.List   `tfsdk:"additional"`
-	Account                        types.Object `tfsdk:"account"`
-	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
-	Comment                        types.String `tfsdk:"comment"`
-	Feedback                       types.String `tfsdk:"feedback"`
-	Group                          types.Object `tfsdk:"group"`
-	MailKey                        types.String `tfsdk:"mail_key"`
-	RequestModificationRequestType types.String `tfsdk:"request_modification_request_type"`
-	Status                         types.String `tfsdk:"status"`
-	OrganizationalUnit             types.Object `tfsdk:"organizational_unit"`
-	GroupName                      types.String `tfsdk:"group_name"`
+	GroupName types.String `tfsdk:"group_name"`
 }
 
 var requestCreateServiceAccountRequestAttrTypesDS = objectAttrsTypeDSRequestCreateServiceAccountRequest(false)
 var requestCreateServiceAccountRequestAttrTypesDSRecurse = objectAttrsTypeDSRequestCreateServiceAccountRequest(true)
 
 type requestCreateServiceAccountRequestDataDS struct {
-	Links                          types.List   `tfsdk:"links"`
-	Permissions                    types.List   `tfsdk:"permissions"`
-	Additional                     types.List   `tfsdk:"additional"`
-	Account                        types.Object `tfsdk:"account"`
-	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
-	Comment                        types.String `tfsdk:"comment"`
-	Feedback                       types.String `tfsdk:"feedback"`
-	Group                          types.Object `tfsdk:"group"`
-	MailKey                        types.String `tfsdk:"mail_key"`
-	RequestModificationRequestType types.String `tfsdk:"request_modification_request_type"`
-	Status                         types.String `tfsdk:"status"`
-	System                         types.Object `tfsdk:"system"`
-	Username                       types.String `tfsdk:"username"`
+	Username types.String `tfsdk:"username"`
 }
 
 var requestDisable2FARequestAttrTypesDS = objectAttrsTypeDSRequestDisable2FARequest(false)
 var requestDisable2FARequestAttrTypesDSRecurse = objectAttrsTypeDSRequestDisable2FARequest(true)
 
 type requestDisable2FARequestDataDS struct {
-	Links                          types.List   `tfsdk:"links"`
-	Permissions                    types.List   `tfsdk:"permissions"`
-	Additional                     types.List   `tfsdk:"additional"`
-	Account                        types.Object `tfsdk:"account"`
-	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
-	Comment                        types.String `tfsdk:"comment"`
-	Feedback                       types.String `tfsdk:"feedback"`
-	Group                          types.Object `tfsdk:"group"`
-	MailKey                        types.String `tfsdk:"mail_key"`
-	RequestModificationRequestType types.String `tfsdk:"request_modification_request_type"`
-	Status                         types.String `tfsdk:"status"`
-	Subject                        types.String `tfsdk:"subject"`
+	Subject types.String `tfsdk:"subject"`
 }
 
 var requestEnableTechnicalAdministrationRequestAttrTypesDS = objectAttrsTypeDSRequestEnableTechnicalAdministrationRequest(false)
 var requestEnableTechnicalAdministrationRequestAttrTypesDSRecurse = objectAttrsTypeDSRequestEnableTechnicalAdministrationRequest(true)
 
 type requestEnableTechnicalAdministrationRequestDataDS struct {
-	Links                          types.List   `tfsdk:"links"`
-	Permissions                    types.List   `tfsdk:"permissions"`
-	Additional                     types.List   `tfsdk:"additional"`
-	Account                        types.Object `tfsdk:"account"`
-	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
-	Comment                        types.String `tfsdk:"comment"`
-	Feedback                       types.String `tfsdk:"feedback"`
-	Group                          types.Object `tfsdk:"group"`
-	MailKey                        types.String `tfsdk:"mail_key"`
-	RequestModificationRequestType types.String `tfsdk:"request_modification_request_type"`
-	Status                         types.String `tfsdk:"status"`
 }
 
 var requestExtendAccessRequestAttrTypesDS = objectAttrsTypeDSRequestExtendAccessRequest(false)
 var requestExtendAccessRequestAttrTypesDSRecurse = objectAttrsTypeDSRequestExtendAccessRequest(true)
 
 type requestExtendAccessRequestDataDS struct {
-	Links                          types.List   `tfsdk:"links"`
-	Permissions                    types.List   `tfsdk:"permissions"`
-	Additional                     types.List   `tfsdk:"additional"`
-	Account                        types.Object `tfsdk:"account"`
-	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
-	Comment                        types.String `tfsdk:"comment"`
-	Feedback                       types.String `tfsdk:"feedback"`
-	Group                          types.Object `tfsdk:"group"`
-	MailKey                        types.String `tfsdk:"mail_key"`
-	RequestModificationRequestType types.String `tfsdk:"request_modification_request_type"`
-	Status                         types.String `tfsdk:"status"`
-	ExtendUntil                    types.String `tfsdk:"extend_until"`
+	ExtendUntil types.String `tfsdk:"extend_until"`
 }
 
 var requestGrantAccessRequestAttrTypesDS = objectAttrsTypeDSRequestGrantAccessRequest(false)
 var requestGrantAccessRequestAttrTypesDSRecurse = objectAttrsTypeDSRequestGrantAccessRequest(true)
 
 type requestGrantAccessRequestDataDS struct {
-	Links                          types.List   `tfsdk:"links"`
-	Permissions                    types.List   `tfsdk:"permissions"`
-	Additional                     types.List   `tfsdk:"additional"`
-	Account                        types.Object `tfsdk:"account"`
-	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
-	Comment                        types.String `tfsdk:"comment"`
-	Feedback                       types.String `tfsdk:"feedback"`
-	Group                          types.Object `tfsdk:"group"`
-	MailKey                        types.String `tfsdk:"mail_key"`
-	RequestModificationRequestType types.String `tfsdk:"request_modification_request_type"`
-	Status                         types.String `tfsdk:"status"`
 }
 
 var requestGrantApplicationRequestAttrTypesDS = objectAttrsTypeDSRequestGrantApplicationRequest(false)
 var requestGrantApplicationRequestAttrTypesDSRecurse = objectAttrsTypeDSRequestGrantApplicationRequest(true)
 
 type requestGrantApplicationRequestDataDS struct {
-	Links                          types.List   `tfsdk:"links"`
-	Permissions                    types.List   `tfsdk:"permissions"`
-	Additional                     types.List   `tfsdk:"additional"`
-	Account                        types.Object `tfsdk:"account"`
-	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
-	Comment                        types.String `tfsdk:"comment"`
-	Feedback                       types.String `tfsdk:"feedback"`
-	Group                          types.Object `tfsdk:"group"`
-	MailKey                        types.String `tfsdk:"mail_key"`
-	RequestModificationRequestType types.String `tfsdk:"request_modification_request_type"`
-	Status                         types.String `tfsdk:"status"`
-	Application                    types.Object `tfsdk:"application"`
 }
 
 var requestGrantClientPermissionRequestAttrTypesDS = objectAttrsTypeDSRequestGrantClientPermissionRequest(false)
 var requestGrantClientPermissionRequestAttrTypesDSRecurse = objectAttrsTypeDSRequestGrantClientPermissionRequest(true)
 
 type requestGrantClientPermissionRequestDataDS struct {
-	Links                          types.List   `tfsdk:"links"`
-	Permissions                    types.List   `tfsdk:"permissions"`
-	Additional                     types.List   `tfsdk:"additional"`
-	Account                        types.Object `tfsdk:"account"`
-	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
-	Comment                        types.String `tfsdk:"comment"`
-	Feedback                       types.String `tfsdk:"feedback"`
-	Group                          types.Object `tfsdk:"group"`
-	MailKey                        types.String `tfsdk:"mail_key"`
-	RequestModificationRequestType types.String `tfsdk:"request_modification_request_type"`
-	Status                         types.String `tfsdk:"status"`
-	Application                    types.Object `tfsdk:"application"`
-	PermissionType                 types.String `tfsdk:"permission_type"`
-	System                         types.Object `tfsdk:"system"`
+	PermissionType types.String `tfsdk:"permission_type"`
+	System         types.Object `tfsdk:"system"`
 }
 
 var requestGrantGroupOnSystemRequestAttrTypesDS = objectAttrsTypeDSRequestGrantGroupOnSystemRequest(false)
 var requestGrantGroupOnSystemRequestAttrTypesDSRecurse = objectAttrsTypeDSRequestGrantGroupOnSystemRequest(true)
 
 type requestGrantGroupOnSystemRequestDataDS struct {
-	Links                          types.List   `tfsdk:"links"`
-	Permissions                    types.List   `tfsdk:"permissions"`
-	Additional                     types.List   `tfsdk:"additional"`
-	Account                        types.Object `tfsdk:"account"`
-	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
-	Comment                        types.String `tfsdk:"comment"`
-	Feedback                       types.String `tfsdk:"feedback"`
-	Group                          types.Object `tfsdk:"group"`
-	MailKey                        types.String `tfsdk:"mail_key"`
-	RequestModificationRequestType types.String `tfsdk:"request_modification_request_type"`
-	Status                         types.String `tfsdk:"status"`
-	ActivationRequired             types.Bool   `tfsdk:"activation_required"`
-	GroupOnSystem                  types.Object `tfsdk:"group_on_system"`
+	ActivationRequired types.Bool   `tfsdk:"activation_required"`
+	GroupOnSystem      types.Object `tfsdk:"group_on_system"`
 }
 
 var requestGrantGroupOnSystemRequestRequestAttrTypesDS = objectAttrsTypeDSRequestGrantGroupOnSystemRequestRequest(false)
 var requestGrantGroupOnSystemRequestRequestAttrTypesDSRecurse = objectAttrsTypeDSRequestGrantGroupOnSystemRequestRequest(true)
 
 type requestGrantGroupOnSystemRequestRequestDataDS struct {
-	Links                          types.List   `tfsdk:"links"`
-	Permissions                    types.List   `tfsdk:"permissions"`
-	Additional                     types.List   `tfsdk:"additional"`
-	Account                        types.Object `tfsdk:"account"`
-	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
-	Comment                        types.String `tfsdk:"comment"`
-	Feedback                       types.String `tfsdk:"feedback"`
-	Group                          types.Object `tfsdk:"group"`
-	MailKey                        types.String `tfsdk:"mail_key"`
-	RequestModificationRequestType types.String `tfsdk:"request_modification_request_type"`
-	Status                         types.String `tfsdk:"status"`
-	ActivationRequired             types.Bool   `tfsdk:"activation_required"`
-	GroupOnSystem                  types.Object `tfsdk:"group_on_system"`
+	ActivationRequired types.Bool   `tfsdk:"activation_required"`
+	GroupOnSystem      types.Object `tfsdk:"group_on_system"`
 }
 
 var requestGrantServiceAccountGroupRequestAttrTypesDS = objectAttrsTypeDSRequestGrantServiceAccountGroupRequest(false)
 var requestGrantServiceAccountGroupRequestAttrTypesDSRecurse = objectAttrsTypeDSRequestGrantServiceAccountGroupRequest(true)
 
 type requestGrantServiceAccountGroupRequestDataDS struct {
-	Links                          types.List   `tfsdk:"links"`
-	Permissions                    types.List   `tfsdk:"permissions"`
-	Additional                     types.List   `tfsdk:"additional"`
-	Account                        types.Object `tfsdk:"account"`
-	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
-	Comment                        types.String `tfsdk:"comment"`
-	Feedback                       types.String `tfsdk:"feedback"`
-	Group                          types.Object `tfsdk:"group"`
-	MailKey                        types.String `tfsdk:"mail_key"`
-	RequestModificationRequestType types.String `tfsdk:"request_modification_request_type"`
-	Status                         types.String `tfsdk:"status"`
-	GroupOnSystem                  types.Object `tfsdk:"group_on_system"`
-	ServiceAccount                 types.Object `tfsdk:"service_account"`
+	GroupOnSystem  types.Object `tfsdk:"group_on_system"`
+	ServiceAccount types.Object `tfsdk:"service_account"`
 }
 
 var requestJoinGroupRequestAttrTypesDS = objectAttrsTypeDSRequestJoinGroupRequest(false)
 var requestJoinGroupRequestAttrTypesDSRecurse = objectAttrsTypeDSRequestJoinGroupRequest(true)
 
 type requestJoinGroupRequestDataDS struct {
-	Links                          types.List   `tfsdk:"links"`
-	Permissions                    types.List   `tfsdk:"permissions"`
-	Additional                     types.List   `tfsdk:"additional"`
-	Account                        types.Object `tfsdk:"account"`
-	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
-	Comment                        types.String `tfsdk:"comment"`
-	Feedback                       types.String `tfsdk:"feedback"`
-	Group                          types.Object `tfsdk:"group"`
-	MailKey                        types.String `tfsdk:"mail_key"`
-	RequestModificationRequestType types.String `tfsdk:"request_modification_request_type"`
-	Status                         types.String `tfsdk:"status"`
 }
 
 var requestJoinVaultRequestAttrTypesDS = objectAttrsTypeDSRequestJoinVaultRequest(false)
 var requestJoinVaultRequestAttrTypesDSRecurse = objectAttrsTypeDSRequestJoinVaultRequest(true)
 
 type requestJoinVaultRequestDataDS struct {
-	Links                          types.List   `tfsdk:"links"`
-	Permissions                    types.List   `tfsdk:"permissions"`
-	Additional                     types.List   `tfsdk:"additional"`
-	Account                        types.Object `tfsdk:"account"`
-	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
-	Comment                        types.String `tfsdk:"comment"`
-	Feedback                       types.String `tfsdk:"feedback"`
-	Group                          types.Object `tfsdk:"group"`
-	MailKey                        types.String `tfsdk:"mail_key"`
-	RequestModificationRequestType types.String `tfsdk:"request_modification_request_type"`
-	Status                         types.String `tfsdk:"status"`
 }
 
 var requestModificationRequestAttrTypesDS = objectAttrsTypeDSRequestModificationRequest(false)
 var requestModificationRequestAttrTypesDSRecurse = objectAttrsTypeDSRequestModificationRequest(true)
 
 type requestModificationRequestDataDS struct {
-	Links                          types.List   `tfsdk:"links"`
-	Permissions                    types.List   `tfsdk:"permissions"`
-	Additional                     types.List   `tfsdk:"additional"`
-	Account                        types.Object `tfsdk:"account"`
-	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
-	Comment                        types.String `tfsdk:"comment"`
-	Feedback                       types.String `tfsdk:"feedback"`
-	Group                          types.Object `tfsdk:"group"`
-	MailKey                        types.String `tfsdk:"mail_key"`
-	RequestModificationRequestType types.String `tfsdk:"request_modification_request_type"`
-	Status                         types.String `tfsdk:"status"`
+	Links                                                 types.List   `tfsdk:"links"`
+	Permissions                                           types.List   `tfsdk:"permissions"`
+	Additional                                            types.List   `tfsdk:"additional"`
+	Account                                               types.Object `tfsdk:"account"`
+	AdditionalObjects                                     types.Object `tfsdk:"additional_objects"`
+	Comment                                               types.String `tfsdk:"comment"`
+	Feedback                                              types.String `tfsdk:"feedback"`
+	Group                                                 types.Object `tfsdk:"group"`
+	MailKey                                               types.String `tfsdk:"mail_key"`
+	RequestModificationRequestType                        types.String `tfsdk:"request_modification_request_type"`
+	Status                                                types.String `tfsdk:"status"`
+	AbstractOrganizationalUnitModificationRequest         types.Object `tfsdk:"abstract_organizational_unit_modification_request"`
+	CreateGroupRequest                                    types.Object `tfsdk:"create_group_request"`
+	AbstractProvisionedSystemModificationRequest          types.Object `tfsdk:"abstract_provisioned_system_modification_request"`
+	TransferProvisionedSystemOwnershipRequest             types.Object `tfsdk:"transfer_provisioned_system_ownership_request"`
+	GrantAccessRequest                                    types.Object `tfsdk:"grant_access_request"`
+	RemoveGroupRequest                                    types.Object `tfsdk:"remove_group_request"`
+	AbstractApplicationModificationRequest                types.Object `tfsdk:"abstract_application_modification_request"`
+	GrantGroupOnSystemRequestRequest                      types.Object `tfsdk:"grant_group_on_system_request_request"`
+	RemoveProvisionedSystemRequest                        types.Object `tfsdk:"remove_provisioned_system_request"`
+	TransferApplicationOwnershipRequest                   types.Object `tfsdk:"transfer_application_ownership_request"`
+	PasswordResetRequest                                  types.Object `tfsdk:"password_reset_request"`
+	GrantClientPermissionRequest                          types.Object `tfsdk:"grant_client_permission_request"`
+	RevokeAdminRequest                                    types.Object `tfsdk:"revoke_admin_request"`
+	GrantGroupOnSystemRequest                             types.Object `tfsdk:"grant_group_on_system_request"`
+	TransferServiceAccountAdministrationRequest           types.Object `tfsdk:"transfer_service_account_administration_request"`
+	SetupNestedGroupRequest                               types.Object `tfsdk:"setup_nested_group_request"`
+	JoinGroupRequest                                      types.Object `tfsdk:"join_group_request"`
+	ExtendAccessRequest                                   types.Object `tfsdk:"extend_access_request"`
+	TransferProvisionedSystemContentAdministrationRequest types.Object `tfsdk:"transfer_provisioned_system_content_administration_request"`
+	SetupAuthorizingGroupRequest                          types.Object `tfsdk:"setup_authorizing_group_request"`
+	TransferAuditorGroupRequest                           types.Object `tfsdk:"transfer_auditor_group_request"`
+	GrantApplicationRequest                               types.Object `tfsdk:"grant_application_request"`
+	TransferGroupOnSystemOwnershipRequest                 types.Object `tfsdk:"transfer_group_on_system_ownership_request"`
+	Disable2FARequest                                     types.Object `tfsdk:"disable2fa_request"`
+	GrantServiceAccountGroupRequest                       types.Object `tfsdk:"grant_service_account_group_request"`
+	UpdateGroupMembershipRequest                          types.Object `tfsdk:"update_group_membership_request"`
+	VerifyInternalAccountRequest                          types.Object `tfsdk:"verify_internal_account_request"`
+	CreateGroupOnSystemRequest                            types.Object `tfsdk:"create_group_on_system_request"`
+	ReviewAuditRequest                                    types.Object `tfsdk:"review_audit_request"`
+	TransferOrganizationalUnitOwnershipRequest            types.Object `tfsdk:"transfer_organizational_unit_ownership_request"`
+	AddGroupAdminRequest                                  types.Object `tfsdk:"add_group_admin_request"`
+	TransferApplicationAdministrationRequest              types.Object `tfsdk:"transfer_application_administration_request"`
+	TransferProvisionedSystemAdministrationRequest        types.Object `tfsdk:"transfer_provisioned_system_administration_request"`
+	JoinVaultRequest                                      types.Object `tfsdk:"join_vault_request"`
+	EnableTechnicalAdministrationRequest                  types.Object `tfsdk:"enable_technical_administration_request"`
+	CreateServiceAccountRequest                           types.Object `tfsdk:"create_service_account_request"`
+	RemoveOrganizationalUnitRequest                       types.Object `tfsdk:"remove_organizational_unit_request"`
 }
 
 var requestModificationRequestLinkableWrapperAttrTypesDS = objectAttrsTypeDSRequestModificationRequestLinkableWrapper(false)
@@ -2549,17 +2088,6 @@ var requestPasswordResetRequestAttrTypesDS = objectAttrsTypeDSRequestPasswordRes
 var requestPasswordResetRequestAttrTypesDSRecurse = objectAttrsTypeDSRequestPasswordResetRequest(true)
 
 type requestPasswordResetRequestDataDS struct {
-	Links                          types.List   `tfsdk:"links"`
-	Permissions                    types.List   `tfsdk:"permissions"`
-	Additional                     types.List   `tfsdk:"additional"`
-	Account                        types.Object `tfsdk:"account"`
-	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
-	Comment                        types.String `tfsdk:"comment"`
-	Feedback                       types.String `tfsdk:"feedback"`
-	Group                          types.Object `tfsdk:"group"`
-	MailKey                        types.String `tfsdk:"mail_key"`
-	RequestModificationRequestType types.String `tfsdk:"request_modification_request_type"`
-	Status                         types.String `tfsdk:"status"`
 }
 
 var requestPasswordResetRequestStatusAttrTypesDS = objectAttrsTypeDSRequestPasswordResetRequestStatus(false)
@@ -2576,333 +2104,127 @@ var requestRemoveGroupRequestAttrTypesDS = objectAttrsTypeDSRequestRemoveGroupRe
 var requestRemoveGroupRequestAttrTypesDSRecurse = objectAttrsTypeDSRequestRemoveGroupRequest(true)
 
 type requestRemoveGroupRequestDataDS struct {
-	Links                          types.List   `tfsdk:"links"`
-	Permissions                    types.List   `tfsdk:"permissions"`
-	Additional                     types.List   `tfsdk:"additional"`
-	Account                        types.Object `tfsdk:"account"`
-	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
-	Comment                        types.String `tfsdk:"comment"`
-	Feedback                       types.String `tfsdk:"feedback"`
-	Group                          types.Object `tfsdk:"group"`
-	MailKey                        types.String `tfsdk:"mail_key"`
-	RequestModificationRequestType types.String `tfsdk:"request_modification_request_type"`
-	Status                         types.String `tfsdk:"status"`
-	GroupName                      types.String `tfsdk:"group_name"`
+	GroupName types.String `tfsdk:"group_name"`
 }
 
 var requestRemoveOrganizationalUnitRequestAttrTypesDS = objectAttrsTypeDSRequestRemoveOrganizationalUnitRequest(false)
 var requestRemoveOrganizationalUnitRequestAttrTypesDSRecurse = objectAttrsTypeDSRequestRemoveOrganizationalUnitRequest(true)
 
 type requestRemoveOrganizationalUnitRequestDataDS struct {
-	Links                          types.List   `tfsdk:"links"`
-	Permissions                    types.List   `tfsdk:"permissions"`
-	Additional                     types.List   `tfsdk:"additional"`
-	Account                        types.Object `tfsdk:"account"`
-	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
-	Comment                        types.String `tfsdk:"comment"`
-	Feedback                       types.String `tfsdk:"feedback"`
-	Group                          types.Object `tfsdk:"group"`
-	MailKey                        types.String `tfsdk:"mail_key"`
-	RequestModificationRequestType types.String `tfsdk:"request_modification_request_type"`
-	Status                         types.String `tfsdk:"status"`
-	OrganizationalUnit             types.Object `tfsdk:"organizational_unit"`
-	OrganizationalUnitName         types.String `tfsdk:"organizational_unit_name"`
+	OrganizationalUnitName types.String `tfsdk:"organizational_unit_name"`
 }
 
 var requestRemoveProvisionedSystemRequestAttrTypesDS = objectAttrsTypeDSRequestRemoveProvisionedSystemRequest(false)
 var requestRemoveProvisionedSystemRequestAttrTypesDSRecurse = objectAttrsTypeDSRequestRemoveProvisionedSystemRequest(true)
 
 type requestRemoveProvisionedSystemRequestDataDS struct {
-	Links                          types.List   `tfsdk:"links"`
-	Permissions                    types.List   `tfsdk:"permissions"`
-	Additional                     types.List   `tfsdk:"additional"`
-	Account                        types.Object `tfsdk:"account"`
-	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
-	Comment                        types.String `tfsdk:"comment"`
-	Feedback                       types.String `tfsdk:"feedback"`
-	Group                          types.Object `tfsdk:"group"`
-	MailKey                        types.String `tfsdk:"mail_key"`
-	RequestModificationRequestType types.String `tfsdk:"request_modification_request_type"`
-	Status                         types.String `tfsdk:"status"`
-	System                         types.Object `tfsdk:"system"`
-	SystemName                     types.String `tfsdk:"system_name"`
+	SystemName types.String `tfsdk:"system_name"`
 }
 
 var requestReviewAuditRequestAttrTypesDS = objectAttrsTypeDSRequestReviewAuditRequest(false)
 var requestReviewAuditRequestAttrTypesDSRecurse = objectAttrsTypeDSRequestReviewAuditRequest(true)
 
 type requestReviewAuditRequestDataDS struct {
-	Links                          types.List   `tfsdk:"links"`
-	Permissions                    types.List   `tfsdk:"permissions"`
-	Additional                     types.List   `tfsdk:"additional"`
-	Account                        types.Object `tfsdk:"account"`
-	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
-	Comment                        types.String `tfsdk:"comment"`
-	Feedback                       types.String `tfsdk:"feedback"`
-	Group                          types.Object `tfsdk:"group"`
-	MailKey                        types.String `tfsdk:"mail_key"`
-	RequestModificationRequestType types.String `tfsdk:"request_modification_request_type"`
-	Status                         types.String `tfsdk:"status"`
 }
 
 var requestRevokeAdminRequestAttrTypesDS = objectAttrsTypeDSRequestRevokeAdminRequest(false)
 var requestRevokeAdminRequestAttrTypesDSRecurse = objectAttrsTypeDSRequestRevokeAdminRequest(true)
 
 type requestRevokeAdminRequestDataDS struct {
-	Links                          types.List   `tfsdk:"links"`
-	Permissions                    types.List   `tfsdk:"permissions"`
-	Additional                     types.List   `tfsdk:"additional"`
-	Account                        types.Object `tfsdk:"account"`
-	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
-	Comment                        types.String `tfsdk:"comment"`
-	Feedback                       types.String `tfsdk:"feedback"`
-	Group                          types.Object `tfsdk:"group"`
-	MailKey                        types.String `tfsdk:"mail_key"`
-	RequestModificationRequestType types.String `tfsdk:"request_modification_request_type"`
-	Status                         types.String `tfsdk:"status"`
-	Admin                          types.Object `tfsdk:"admin"`
+	Admin types.Object `tfsdk:"admin"`
 }
 
 var requestSetupAuthorizingGroupRequestAttrTypesDS = objectAttrsTypeDSRequestSetupAuthorizingGroupRequest(false)
 var requestSetupAuthorizingGroupRequestAttrTypesDSRecurse = objectAttrsTypeDSRequestSetupAuthorizingGroupRequest(true)
 
 type requestSetupAuthorizingGroupRequestDataDS struct {
-	Links                          types.List   `tfsdk:"links"`
-	Permissions                    types.List   `tfsdk:"permissions"`
-	Additional                     types.List   `tfsdk:"additional"`
-	Account                        types.Object `tfsdk:"account"`
-	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
-	Comment                        types.String `tfsdk:"comment"`
-	Feedback                       types.String `tfsdk:"feedback"`
-	Group                          types.Object `tfsdk:"group"`
-	MailKey                        types.String `tfsdk:"mail_key"`
-	RequestModificationRequestType types.String `tfsdk:"request_modification_request_type"`
-	Status                         types.String `tfsdk:"status"`
-	AuthorizingGroupType           types.String `tfsdk:"authorizing_group_type"`
-	Connect                        types.Bool   `tfsdk:"connect"`
-	RequestingGroup                types.Object `tfsdk:"requesting_group"`
+	AuthorizingGroupType types.String `tfsdk:"authorizing_group_type"`
+	Connect              types.Bool   `tfsdk:"connect"`
+	RequestingGroup      types.Object `tfsdk:"requesting_group"`
 }
 
 var requestSetupNestedGroupRequestAttrTypesDS = objectAttrsTypeDSRequestSetupNestedGroupRequest(false)
 var requestSetupNestedGroupRequestAttrTypesDSRecurse = objectAttrsTypeDSRequestSetupNestedGroupRequest(true)
 
 type requestSetupNestedGroupRequestDataDS struct {
-	Links                          types.List   `tfsdk:"links"`
-	Permissions                    types.List   `tfsdk:"permissions"`
-	Additional                     types.List   `tfsdk:"additional"`
-	Account                        types.Object `tfsdk:"account"`
-	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
-	Comment                        types.String `tfsdk:"comment"`
-	Feedback                       types.String `tfsdk:"feedback"`
-	Group                          types.Object `tfsdk:"group"`
-	MailKey                        types.String `tfsdk:"mail_key"`
-	RequestModificationRequestType types.String `tfsdk:"request_modification_request_type"`
-	Status                         types.String `tfsdk:"status"`
-	AccountAction                  types.String `tfsdk:"account_action"`
-	Connect                        types.Bool   `tfsdk:"connect"`
-	RequestingGroup                types.Object `tfsdk:"requesting_group"`
+	AccountAction   types.String `tfsdk:"account_action"`
+	Connect         types.Bool   `tfsdk:"connect"`
+	RequestingGroup types.Object `tfsdk:"requesting_group"`
 }
 
 var requestTransferApplicationAdministrationRequestAttrTypesDS = objectAttrsTypeDSRequestTransferApplicationAdministrationRequest(false)
 var requestTransferApplicationAdministrationRequestAttrTypesDSRecurse = objectAttrsTypeDSRequestTransferApplicationAdministrationRequest(true)
 
 type requestTransferApplicationAdministrationRequestDataDS struct {
-	Links                          types.List   `tfsdk:"links"`
-	Permissions                    types.List   `tfsdk:"permissions"`
-	Additional                     types.List   `tfsdk:"additional"`
-	Account                        types.Object `tfsdk:"account"`
-	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
-	Comment                        types.String `tfsdk:"comment"`
-	Feedback                       types.String `tfsdk:"feedback"`
-	Group                          types.Object `tfsdk:"group"`
-	MailKey                        types.String `tfsdk:"mail_key"`
-	RequestModificationRequestType types.String `tfsdk:"request_modification_request_type"`
-	Status                         types.String `tfsdk:"status"`
-	Application                    types.Object `tfsdk:"application"`
 }
 
 var requestTransferApplicationOwnershipRequestAttrTypesDS = objectAttrsTypeDSRequestTransferApplicationOwnershipRequest(false)
 var requestTransferApplicationOwnershipRequestAttrTypesDSRecurse = objectAttrsTypeDSRequestTransferApplicationOwnershipRequest(true)
 
 type requestTransferApplicationOwnershipRequestDataDS struct {
-	Links                          types.List   `tfsdk:"links"`
-	Permissions                    types.List   `tfsdk:"permissions"`
-	Additional                     types.List   `tfsdk:"additional"`
-	Account                        types.Object `tfsdk:"account"`
-	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
-	Comment                        types.String `tfsdk:"comment"`
-	Feedback                       types.String `tfsdk:"feedback"`
-	Group                          types.Object `tfsdk:"group"`
-	MailKey                        types.String `tfsdk:"mail_key"`
-	RequestModificationRequestType types.String `tfsdk:"request_modification_request_type"`
-	Status                         types.String `tfsdk:"status"`
-	Application                    types.Object `tfsdk:"application"`
 }
 
 var requestTransferAuditorGroupRequestAttrTypesDS = objectAttrsTypeDSRequestTransferAuditorGroupRequest(false)
 var requestTransferAuditorGroupRequestAttrTypesDSRecurse = objectAttrsTypeDSRequestTransferAuditorGroupRequest(true)
 
 type requestTransferAuditorGroupRequestDataDS struct {
-	Links                          types.List   `tfsdk:"links"`
-	Permissions                    types.List   `tfsdk:"permissions"`
-	Additional                     types.List   `tfsdk:"additional"`
-	Account                        types.Object `tfsdk:"account"`
-	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
-	Comment                        types.String `tfsdk:"comment"`
-	Feedback                       types.String `tfsdk:"feedback"`
-	Group                          types.Object `tfsdk:"group"`
-	MailKey                        types.String `tfsdk:"mail_key"`
-	RequestModificationRequestType types.String `tfsdk:"request_modification_request_type"`
-	Status                         types.String `tfsdk:"status"`
 }
 
 var requestTransferGroupOnSystemOwnershipRequestAttrTypesDS = objectAttrsTypeDSRequestTransferGroupOnSystemOwnershipRequest(false)
 var requestTransferGroupOnSystemOwnershipRequestAttrTypesDSRecurse = objectAttrsTypeDSRequestTransferGroupOnSystemOwnershipRequest(true)
 
 type requestTransferGroupOnSystemOwnershipRequestDataDS struct {
-	Links                          types.List   `tfsdk:"links"`
-	Permissions                    types.List   `tfsdk:"permissions"`
-	Additional                     types.List   `tfsdk:"additional"`
-	Account                        types.Object `tfsdk:"account"`
-	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
-	Comment                        types.String `tfsdk:"comment"`
-	Feedback                       types.String `tfsdk:"feedback"`
-	Group                          types.Object `tfsdk:"group"`
-	MailKey                        types.String `tfsdk:"mail_key"`
-	RequestModificationRequestType types.String `tfsdk:"request_modification_request_type"`
-	Status                         types.String `tfsdk:"status"`
-	GroupOnSystem                  types.Object `tfsdk:"group_on_system"`
+	GroupOnSystem types.Object `tfsdk:"group_on_system"`
 }
 
 var requestTransferOrganizationalUnitOwnershipRequestAttrTypesDS = objectAttrsTypeDSRequestTransferOrganizationalUnitOwnershipRequest(false)
 var requestTransferOrganizationalUnitOwnershipRequestAttrTypesDSRecurse = objectAttrsTypeDSRequestTransferOrganizationalUnitOwnershipRequest(true)
 
 type requestTransferOrganizationalUnitOwnershipRequestDataDS struct {
-	Links                          types.List   `tfsdk:"links"`
-	Permissions                    types.List   `tfsdk:"permissions"`
-	Additional                     types.List   `tfsdk:"additional"`
-	Account                        types.Object `tfsdk:"account"`
-	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
-	Comment                        types.String `tfsdk:"comment"`
-	Feedback                       types.String `tfsdk:"feedback"`
-	Group                          types.Object `tfsdk:"group"`
-	MailKey                        types.String `tfsdk:"mail_key"`
-	RequestModificationRequestType types.String `tfsdk:"request_modification_request_type"`
-	Status                         types.String `tfsdk:"status"`
-	OrganizationalUnit             types.Object `tfsdk:"organizational_unit"`
 }
 
 var requestTransferProvisionedSystemAdministrationRequestAttrTypesDS = objectAttrsTypeDSRequestTransferProvisionedSystemAdministrationRequest(false)
 var requestTransferProvisionedSystemAdministrationRequestAttrTypesDSRecurse = objectAttrsTypeDSRequestTransferProvisionedSystemAdministrationRequest(true)
 
 type requestTransferProvisionedSystemAdministrationRequestDataDS struct {
-	Links                          types.List   `tfsdk:"links"`
-	Permissions                    types.List   `tfsdk:"permissions"`
-	Additional                     types.List   `tfsdk:"additional"`
-	Account                        types.Object `tfsdk:"account"`
-	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
-	Comment                        types.String `tfsdk:"comment"`
-	Feedback                       types.String `tfsdk:"feedback"`
-	Group                          types.Object `tfsdk:"group"`
-	MailKey                        types.String `tfsdk:"mail_key"`
-	RequestModificationRequestType types.String `tfsdk:"request_modification_request_type"`
-	Status                         types.String `tfsdk:"status"`
-	System                         types.Object `tfsdk:"system"`
 }
 
 var requestTransferProvisionedSystemContentAdministrationRequestAttrTypesDS = objectAttrsTypeDSRequestTransferProvisionedSystemContentAdministrationRequest(false)
 var requestTransferProvisionedSystemContentAdministrationRequestAttrTypesDSRecurse = objectAttrsTypeDSRequestTransferProvisionedSystemContentAdministrationRequest(true)
 
 type requestTransferProvisionedSystemContentAdministrationRequestDataDS struct {
-	Links                          types.List   `tfsdk:"links"`
-	Permissions                    types.List   `tfsdk:"permissions"`
-	Additional                     types.List   `tfsdk:"additional"`
-	Account                        types.Object `tfsdk:"account"`
-	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
-	Comment                        types.String `tfsdk:"comment"`
-	Feedback                       types.String `tfsdk:"feedback"`
-	Group                          types.Object `tfsdk:"group"`
-	MailKey                        types.String `tfsdk:"mail_key"`
-	RequestModificationRequestType types.String `tfsdk:"request_modification_request_type"`
-	Status                         types.String `tfsdk:"status"`
-	System                         types.Object `tfsdk:"system"`
 }
 
 var requestTransferProvisionedSystemOwnershipRequestAttrTypesDS = objectAttrsTypeDSRequestTransferProvisionedSystemOwnershipRequest(false)
 var requestTransferProvisionedSystemOwnershipRequestAttrTypesDSRecurse = objectAttrsTypeDSRequestTransferProvisionedSystemOwnershipRequest(true)
 
 type requestTransferProvisionedSystemOwnershipRequestDataDS struct {
-	Links                          types.List   `tfsdk:"links"`
-	Permissions                    types.List   `tfsdk:"permissions"`
-	Additional                     types.List   `tfsdk:"additional"`
-	Account                        types.Object `tfsdk:"account"`
-	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
-	Comment                        types.String `tfsdk:"comment"`
-	Feedback                       types.String `tfsdk:"feedback"`
-	Group                          types.Object `tfsdk:"group"`
-	MailKey                        types.String `tfsdk:"mail_key"`
-	RequestModificationRequestType types.String `tfsdk:"request_modification_request_type"`
-	Status                         types.String `tfsdk:"status"`
-	System                         types.Object `tfsdk:"system"`
 }
 
 var requestTransferServiceAccountAdministrationRequestAttrTypesDS = objectAttrsTypeDSRequestTransferServiceAccountAdministrationRequest(false)
 var requestTransferServiceAccountAdministrationRequestAttrTypesDSRecurse = objectAttrsTypeDSRequestTransferServiceAccountAdministrationRequest(true)
 
 type requestTransferServiceAccountAdministrationRequestDataDS struct {
-	Links                          types.List   `tfsdk:"links"`
-	Permissions                    types.List   `tfsdk:"permissions"`
-	Additional                     types.List   `tfsdk:"additional"`
-	Account                        types.Object `tfsdk:"account"`
-	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
-	Comment                        types.String `tfsdk:"comment"`
-	Feedback                       types.String `tfsdk:"feedback"`
-	Group                          types.Object `tfsdk:"group"`
-	MailKey                        types.String `tfsdk:"mail_key"`
-	RequestModificationRequestType types.String `tfsdk:"request_modification_request_type"`
-	Status                         types.String `tfsdk:"status"`
-	ServiceAccount                 types.Object `tfsdk:"service_account"`
+	ServiceAccount types.Object `tfsdk:"service_account"`
 }
 
 var requestUpdateGroupMembershipRequestAttrTypesDS = objectAttrsTypeDSRequestUpdateGroupMembershipRequest(false)
 var requestUpdateGroupMembershipRequestAttrTypesDSRecurse = objectAttrsTypeDSRequestUpdateGroupMembershipRequest(true)
 
 type requestUpdateGroupMembershipRequestDataDS struct {
-	Links                          types.List   `tfsdk:"links"`
-	Permissions                    types.List   `tfsdk:"permissions"`
-	Additional                     types.List   `tfsdk:"additional"`
-	Account                        types.Object `tfsdk:"account"`
-	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
-	Comment                        types.String `tfsdk:"comment"`
-	Feedback                       types.String `tfsdk:"feedback"`
-	Group                          types.Object `tfsdk:"group"`
-	MailKey                        types.String `tfsdk:"mail_key"`
-	RequestModificationRequestType types.String `tfsdk:"request_modification_request_type"`
-	Status                         types.String `tfsdk:"status"`
-	AccountToUpdate                types.Object `tfsdk:"account_to_update"`
-	CurrentEndDate                 types.String `tfsdk:"current_end_date"`
-	CurrentRights                  types.String `tfsdk:"current_rights"`
-	EndDate                        types.String `tfsdk:"end_date"`
-	Rights                         types.String `tfsdk:"rights"`
-	UpdateGroupMembershipType      types.String `tfsdk:"update_group_membership_type"`
+	AccountToUpdate           types.Object `tfsdk:"account_to_update"`
+	CurrentEndDate            types.String `tfsdk:"current_end_date"`
+	CurrentRights             types.String `tfsdk:"current_rights"`
+	EndDate                   types.String `tfsdk:"end_date"`
+	Rights                    types.String `tfsdk:"rights"`
+	UpdateGroupMembershipType types.String `tfsdk:"update_group_membership_type"`
 }
 
 var requestVerifyInternalAccountRequestAttrTypesDS = objectAttrsTypeDSRequestVerifyInternalAccountRequest(false)
 var requestVerifyInternalAccountRequestAttrTypesDSRecurse = objectAttrsTypeDSRequestVerifyInternalAccountRequest(true)
 
 type requestVerifyInternalAccountRequestDataDS struct {
-	Links                          types.List   `tfsdk:"links"`
-	Permissions                    types.List   `tfsdk:"permissions"`
-	Additional                     types.List   `tfsdk:"additional"`
-	Account                        types.Object `tfsdk:"account"`
-	AdditionalObjects              types.Object `tfsdk:"additional_objects"`
-	Comment                        types.String `tfsdk:"comment"`
-	Feedback                       types.String `tfsdk:"feedback"`
-	Group                          types.Object `tfsdk:"group"`
-	MailKey                        types.String `tfsdk:"mail_key"`
-	RequestModificationRequestType types.String `tfsdk:"request_modification_request_type"`
-	Status                         types.String `tfsdk:"status"`
-	InternalAccountName            types.String `tfsdk:"internal_account_name"`
+	InternalAccountName types.String `tfsdk:"internal_account_name"`
 }
 
 var serviceaccountServiceAccountAttrTypesDS = objectAttrsTypeDSServiceaccountServiceAccount(false)
