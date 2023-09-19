@@ -155,7 +155,7 @@ Read-Only:
 - `global` (Boolean)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--client_certificate--links))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--client_certificate--permissions))
-- `subject_d_n` (String)
+- `subject_dn` (String)
 - `uuid` (String)
 
 <a id="nestedatt--client_certificate--links"></a>
@@ -356,7 +356,7 @@ Read-Only:
 - `global` (Boolean)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--trusted_certificate--links))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--trusted_certificate--permissions))
-- `subject_d_n` (String)
+- `subject_dn` (String)
 - `uuid` (String)
 
 <a id="nestedatt--trusted_certificate--links"></a>

@@ -36,7 +36,7 @@ description: |-
 - `key_data` (List of String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--links))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--permissions))
-- `subject_d_n` (String)
+- `subject_dn` (String)
 
 <a id="nestedatt--additional_objects"></a>
 ### Nested Schema for `additional_objects`

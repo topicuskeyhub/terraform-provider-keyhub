@@ -30,10 +30,17 @@ data "keyhubpreview_group" "test" {
   additional = ["accounts"]
 }
 
-output "data_group" {
-  value = data.keyhubpreview_group.test
+#output "data_group" {
+#  value = data.keyhubpreview_group.test
+#}
+
+data "keyhubpreview_client" "test" {
+  uuid = "ebdf81ac-b02b-4335-9dc4-4a9bc4eb406d"
 }
 
+output "data_client" {
+  value = data.keyhubpreview_client.test
+}
 #resource "keyhubpreview_group" "terra" {
 #  name = "Terraform"
 #  additional_objects = {

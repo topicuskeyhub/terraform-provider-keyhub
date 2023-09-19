@@ -29,10 +29,13 @@ description: |-
 - `client_client_application_primer_type` (String)
 - `client_id` (String)
 - `last_modified_at` (String)
+- `ldap_client` (Attributes) (see [below for nested schema](#nestedatt--ldap_client))
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--links))
 - `name` (String)
+- `o_auth2_client` (Attributes) (see [below for nested schema](#nestedatt--o_auth2_client))
 - `owner` (Attributes) (see [below for nested schema](#nestedatt--owner))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--permissions))
+- `saml2_client` (Attributes) (see [below for nested schema](#nestedatt--saml2_client))
 - `scopes` (List of String)
 - `sso_application` (Boolean)
 - `technical_administrator` (Attributes) (see [below for nested schema](#nestedatt--technical_administrator))
@@ -584,38 +587,42 @@ Read-Only:
 <a id="nestedatt--additional_objects--tile"></a>
 ### Nested Schema for `additional_objects.tile`
 
-Optional:
-
-- `additional` (List of String)
-
 Read-Only:
 
-- `application` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--tile--application))
-- `group` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--tile--group))
-- `identicon_code` (Number)
-- `launchpad_launchpad_tile_type` (String)
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--tile--links))
-- `logo` (List of String)
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--tile--permissions))
 - `uri` (String)
-- `vault_record` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--tile--vault_record))
 
-<a id="nestedatt--additional_objects--tile--application"></a>
-### Nested Schema for `additional_objects.tile.application`
+
+
+<a id="nestedatt--ldap_client"></a>
+### Nested Schema for `ldap_client`
 
 Read-Only:
 
-- `client_client_application_primer_type` (String)
-- `client_id` (String)
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--tile--application--links))
-- `name` (String)
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--tile--application--permissions))
-- `scopes` (List of String)
-- `sso_application` (Boolean)
+- `bind_dn` (String)
+- `client_certificate` (Attributes) (see [below for nested schema](#nestedatt--ldap_client--client_certificate))
+- `share_secret_in_vault` (Boolean)
+- `shared_secret` (Attributes) (see [below for nested schema](#nestedatt--ldap_client--shared_secret))
+- `used_for_provisioning` (Boolean)
+
+<a id="nestedatt--ldap_client--client_certificate"></a>
+### Nested Schema for `ldap_client.client_certificate`
+
+Read-Only:
+
+- `alias` (String)
+- `certificate_certificate_primer_type` (String)
+- `certificate_data` (List of String)
+- `expiration` (String)
+- `fingerprint_sha1` (String)
+- `fingerprint_sha256` (String)
+- `global` (Boolean)
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--ldap_client--client_certificate--links))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--ldap_client--client_certificate--permissions))
+- `subject_dn` (String)
 - `uuid` (String)
 
-<a id="nestedatt--additional_objects--tile--application--links"></a>
-### Nested Schema for `additional_objects.tile.application.uuid`
+<a id="nestedatt--ldap_client--client_certificate--links"></a>
+### Nested Schema for `ldap_client.client_certificate.links`
 
 Read-Only:
 
@@ -625,8 +632,8 @@ Read-Only:
 - `type_escaped` (String)
 
 
-<a id="nestedatt--additional_objects--tile--application--permissions"></a>
-### Nested Schema for `additional_objects.tile.application.uuid`
+<a id="nestedatt--ldap_client--client_certificate--permissions"></a>
+### Nested Schema for `ldap_client.client_certificate.permissions`
 
 Read-Only:
 
@@ -637,76 +644,20 @@ Read-Only:
 
 
 
-<a id="nestedatt--additional_objects--tile--group"></a>
-### Nested Schema for `additional_objects.tile.group`
-
-Read-Only:
-
-- `admin` (Boolean)
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--tile--group--links))
-- `name` (String)
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--tile--group--permissions))
-- `uuid` (String)
-
-<a id="nestedatt--additional_objects--tile--group--links"></a>
-### Nested Schema for `additional_objects.tile.group.uuid`
-
-Read-Only:
-
-- `href` (String)
-- `id` (Number)
-- `rel` (String)
-- `type_escaped` (String)
-
-
-<a id="nestedatt--additional_objects--tile--group--permissions"></a>
-### Nested Schema for `additional_objects.tile.group.uuid`
-
-Read-Only:
-
-- `full` (String)
-- `instances` (List of String)
-- `operations` (List of String)
-- `type_escaped` (String)
-
-
-
-<a id="nestedatt--additional_objects--tile--links"></a>
-### Nested Schema for `additional_objects.tile.links`
-
-Read-Only:
-
-- `href` (String)
-- `id` (Number)
-- `rel` (String)
-- `type_escaped` (String)
-
-
-<a id="nestedatt--additional_objects--tile--permissions"></a>
-### Nested Schema for `additional_objects.tile.permissions`
-
-Read-Only:
-
-- `full` (String)
-- `instances` (List of String)
-- `operations` (List of String)
-- `type_escaped` (String)
-
-
-<a id="nestedatt--additional_objects--tile--vault_record"></a>
-### Nested Schema for `additional_objects.tile.vault_record`
+<a id="nestedatt--ldap_client--shared_secret"></a>
+### Nested Schema for `ldap_client.shared_secret`
 
 Read-Only:
 
 - `color` (String)
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--tile--vault_record--links))
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--ldap_client--shared_secret--links))
 - `name` (String)
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--tile--vault_record--permissions))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--ldap_client--shared_secret--permissions))
 - `share_end_time` (String)
 - `uuid` (String)
 
-<a id="nestedatt--additional_objects--tile--vault_record--links"></a>
-### Nested Schema for `additional_objects.tile.vault_record.uuid`
+<a id="nestedatt--ldap_client--shared_secret--links"></a>
+### Nested Schema for `ldap_client.shared_secret.links`
 
 Read-Only:
 
@@ -716,8 +667,8 @@ Read-Only:
 - `type_escaped` (String)
 
 
-<a id="nestedatt--additional_objects--tile--vault_record--permissions"></a>
-### Nested Schema for `additional_objects.tile.vault_record.uuid`
+<a id="nestedatt--ldap_client--shared_secret--permissions"></a>
+### Nested Schema for `ldap_client.shared_secret.permissions`
 
 Read-Only:
 
@@ -725,7 +676,6 @@ Read-Only:
 - `instances` (List of String)
 - `operations` (List of String)
 - `type_escaped` (String)
-
 
 
 
@@ -739,6 +689,75 @@ Read-Only:
 - `id` (Number)
 - `rel` (String)
 - `type_escaped` (String)
+
+
+<a id="nestedatt--o_auth2_client"></a>
+### Nested Schema for `o_auth2_client`
+
+Read-Only:
+
+- `account_permissions` (Attributes List) (see [below for nested schema](#nestedatt--o_auth2_client--account_permissions))
+- `attributes` (Attributes) (see [below for nested schema](#nestedatt--o_auth2_client--attributes))
+- `callback_uri` (String)
+- `confidential` (Boolean)
+- `debug_mode` (Boolean)
+- `id_token_claims` (String)
+- `initiate_login_uri` (String)
+- `resource_uris` (String)
+- `share_secret_in_vault` (Boolean)
+- `shared_secret` (Attributes) (see [below for nested schema](#nestedatt--o_auth2_client--shared_secret))
+- `show_landing_page` (Boolean)
+- `use_client_credentials` (Boolean)
+
+<a id="nestedatt--o_auth2_client--account_permissions"></a>
+### Nested Schema for `o_auth2_client.account_permissions`
+
+Read-Only:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (List of String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--o_auth2_client--attributes"></a>
+### Nested Schema for `o_auth2_client.attributes`
+
+
+<a id="nestedatt--o_auth2_client--shared_secret"></a>
+### Nested Schema for `o_auth2_client.shared_secret`
+
+Read-Only:
+
+- `color` (String)
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--o_auth2_client--shared_secret--links))
+- `name` (String)
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--o_auth2_client--shared_secret--permissions))
+- `share_end_time` (String)
+- `uuid` (String)
+
+<a id="nestedatt--o_auth2_client--shared_secret--links"></a>
+### Nested Schema for `o_auth2_client.shared_secret.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--o_auth2_client--shared_secret--permissions"></a>
+### Nested Schema for `o_auth2_client.shared_secret.permissions`
+
+Read-Only:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (List of String)
+- `type_escaped` (String)
+
+
 
 
 <a id="nestedatt--owner"></a>
@@ -784,6 +803,21 @@ Read-Only:
 - `instances` (List of String)
 - `operations` (List of String)
 - `type_escaped` (String)
+
+
+<a id="nestedatt--saml2_client"></a>
+### Nested Schema for `saml2_client`
+
+Read-Only:
+
+- `attributes` (Attributes) (see [below for nested schema](#nestedatt--saml2_client--attributes))
+- `metadata` (String)
+- `metadata_url` (String)
+- `subject_format` (String)
+
+<a id="nestedatt--saml2_client--attributes"></a>
+### Nested Schema for `saml2_client.attributes`
+
 
 
 <a id="nestedatt--technical_administrator"></a>

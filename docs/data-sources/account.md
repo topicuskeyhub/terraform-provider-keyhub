@@ -179,7 +179,7 @@ Read-Only:
 
 Read-Only:
 
-- `pending2_f_a_recovery_request` (Boolean)
+- `pending2fa_recovery_request` (Boolean)
 - `pending_password_recovery_request` (Boolean)
 
 
