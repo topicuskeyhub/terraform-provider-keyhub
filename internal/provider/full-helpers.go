@@ -171,7 +171,7 @@ func findFirst[T keyhubmodel.Linkableable](ctx context.Context, wrapper interfac
 }
 
 func findGroupGroupPrimerByUUID(ctx context.Context, uuid *string) (keyhubmodel.GroupGroupPrimerable, diag.Diagnostics) {
-	if uuid == nil {
+	if uuid == nil || *uuid == "" {
 		return nil, diag.Diagnostics{}
 	}
 	client := ctx.Value(keyHubClientKey).(*keyhub.KeyHubClient)
@@ -188,7 +188,7 @@ func findGroupGroupPrimerByUUID(ctx context.Context, uuid *string) (keyhubmodel.
 }
 
 func findDirectoryAccountDirectoryPrimerByUUID(ctx context.Context, uuid *string) (keyhubmodel.DirectoryAccountDirectoryPrimerable, diag.Diagnostics) {
-	if uuid == nil {
+	if uuid == nil || *uuid == "" {
 		return nil, diag.Diagnostics{}
 	}
 	client := ctx.Value(keyHubClientKey).(*keyhub.KeyHubClient)
@@ -205,7 +205,7 @@ func findDirectoryAccountDirectoryPrimerByUUID(ctx context.Context, uuid *string
 }
 
 func findOrganizationOrganizationalUnitPrimerByUUID(ctx context.Context, uuid *string) (keyhubmodel.OrganizationOrganizationalUnitPrimerable, diag.Diagnostics) {
-	if uuid == nil {
+	if uuid == nil || *uuid == "" {
 		return nil, diag.Diagnostics{}
 	}
 	client := ctx.Value(keyHubClientKey).(*keyhub.KeyHubClient)
@@ -222,7 +222,7 @@ func findOrganizationOrganizationalUnitPrimerByUUID(ctx context.Context, uuid *s
 }
 
 func findCertificateCertificatePrimerByUUID(ctx context.Context, uuid *string) (keyhubmodel.CertificateCertificatePrimerable, diag.Diagnostics) {
-	if uuid == nil {
+	if uuid == nil || *uuid == "" {
 		return nil, diag.Diagnostics{}
 	}
 	client := ctx.Value(keyHubClientKey).(*keyhub.KeyHubClient)
@@ -239,7 +239,7 @@ func findCertificateCertificatePrimerByUUID(ctx context.Context, uuid *string) (
 }
 
 func findProvisioningProvisionedSystemPrimerByUUID(ctx context.Context, uuid *string) (keyhubmodel.ProvisioningProvisionedSystemPrimerable, diag.Diagnostics) {
-	if uuid == nil {
+	if uuid == nil || *uuid == "" {
 		return nil, diag.Diagnostics{}
 	}
 	client := ctx.Value(keyHubClientKey).(*keyhub.KeyHubClient)
@@ -256,7 +256,7 @@ func findProvisioningProvisionedSystemPrimerByUUID(ctx context.Context, uuid *st
 }
 
 func findGroupGroupClassificationPrimerByUUID(ctx context.Context, uuid *string) (keyhubmodel.GroupGroupClassificationPrimerable, diag.Diagnostics) {
-	if uuid == nil {
+	if uuid == nil || *uuid == "" {
 		return nil, diag.Diagnostics{}
 	}
 	client := ctx.Value(keyHubClientKey).(*keyhub.KeyHubClient)
@@ -273,7 +273,7 @@ func findGroupGroupClassificationPrimerByUUID(ctx context.Context, uuid *string)
 }
 
 func findClientClientApplicationPrimerByUUID(ctx context.Context, uuid *string) (keyhubmodel.ClientClientApplicationPrimerable, diag.Diagnostics) {
-	if uuid == nil {
+	if uuid == nil || *uuid == "" {
 		return nil, diag.Diagnostics{}
 	}
 	client := ctx.Value(keyHubClientKey).(*keyhub.KeyHubClient)
@@ -298,7 +298,7 @@ func findAuthAccountPrimerByUUID(ctx context.Context, uuid *string) (keyhubmodel
 }
 
 func findAuthAccountByUUID(ctx context.Context, uuid *string) (keyhubmodel.AuthAccountable, diag.Diagnostics) {
-	if uuid == nil {
+	if uuid == nil || *uuid == "" {
 		return nil, diag.Diagnostics{}
 	}
 	client := ctx.Value(keyHubClientKey).(*keyhub.KeyHubClient)
@@ -311,7 +311,7 @@ func findAuthAccountByUUID(ctx context.Context, uuid *string) (keyhubmodel.AuthA
 }
 
 func findServiceaccountServiceAccountPrimerByUUID(ctx context.Context, uuid *string) (keyhubmodel.ServiceaccountServiceAccountPrimerable, diag.Diagnostics) {
-	if uuid == nil {
+	if uuid == nil || *uuid == "" {
 		return nil, diag.Diagnostics{}
 	}
 	client := ctx.Value(keyHubClientKey).(*keyhub.KeyHubClient)
@@ -328,7 +328,7 @@ func findServiceaccountServiceAccountPrimerByUUID(ctx context.Context, uuid *str
 }
 
 func findVaultVaultRecordPrimerByUUID(ctx context.Context, uuid *string) (keyhubmodel.VaultVaultRecordPrimerable, diag.Diagnostics) {
-	if uuid == nil {
+	if uuid == nil || *uuid == "" {
 		return nil, diag.Diagnostics{}
 	}
 	client := ctx.Value(keyHubClientKey).(*keyhub.KeyHubClient)
@@ -349,10 +349,22 @@ func errorReportToString(ctx context.Context, err error) string {
 	if !ok {
 		return err.Error()
 	}
-	msg := fmt.Sprintf("Error %d from backend: %s", *report.GetCode(), *report.GetMessage())
+	var msg string
+	if report.GetApplicationError() == nil {
+		msg = fmt.Sprintf("Error %d from backend: %s", *report.GetCode(), stringPointerToString(report.GetMessage()))
+	} else {
+		msg = fmt.Sprintf("Error %d (%s) from backend: %s", *report.GetCode(), *report.GetApplicationError(), stringPointerToString(report.GetMessage()))
+	}
 	tflog.Info(ctx, msg)
 	if report.GetStacktrace() != nil {
 		tflog.Info(ctx, strings.Join(report.GetStacktrace(), "\n"))
 	}
 	return msg
+}
+
+func stringPointerToString(input *string) string {
+	if input != nil {
+		return *input
+	}
+	return ""
 }

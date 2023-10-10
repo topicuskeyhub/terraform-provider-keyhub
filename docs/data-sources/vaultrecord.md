@@ -46,6 +46,7 @@ Read-Only:
 
 - `audit` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--audit))
 - `parent` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--parent))
+- `password_metadata` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--password_metadata))
 - `secret` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--secret))
 - `share_summary` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--share_summary))
 - `shares` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--shares))
@@ -96,6 +97,22 @@ Read-Only:
 - `operations` (List of String)
 - `type_escaped` (String)
 
+
+
+<a id="nestedatt--additional_objects--password_metadata"></a>
+### Nested Schema for `additional_objects.password_metadata`
+
+Read-Only:
+
+- `dictionary` (Boolean)
+- `duplicate` (Boolean)
+- `hash` (String)
+- `length` (Number)
+- `lower_count` (Number)
+- `number_count` (Number)
+- `special_count` (Number)
+- `strength` (Number)
+- `upper_count` (Number)
 
 
 <a id="nestedatt--additional_objects--secret"></a>

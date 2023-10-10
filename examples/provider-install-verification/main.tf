@@ -34,13 +34,24 @@ data "keyhubpreview_group" "test" {
 #  value = data.keyhubpreview_group.test
 #}
 
-data "keyhubpreview_client" "test" {
-  uuid = "ebdf81ac-b02b-4335-9dc4-4a9bc4eb406d"
+#data "keyhubpreview_client" "test" {
+#  uuid = "ebdf81ac-b02b-4335-9dc4-4a9bc4eb406d"
+#}
+
+#output "data_client" {
+#  value = data.keyhubpreview_client.test
+#}
+
+resource "keyhubpreview_vaultrecord" "terrarecord" {
+  name       = "Terraform Record"
+  group_uuid = data.keyhubpreview_group.test.uuid
+  additional_objects = {
+    secret = {
+      password = "test3"
+    }
+  }
 }
 
-output "data_client" {
-  value = data.keyhubpreview_client.test
-}
 #resource "keyhubpreview_group" "terra" {
 #  name = "Terraform"
 #  additional_objects = {

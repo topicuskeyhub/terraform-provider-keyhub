@@ -29,6 +29,8 @@ type KeyHubProvider struct {
 	version string
 }
 
+const ProviderName = "keyhubpreview"
+
 // KeyHubProviderModel describes the provider data model.
 type KeyHubProviderModel struct {
 	Issuer       types.String `tfsdk:"issuer"`
@@ -37,8 +39,9 @@ type KeyHubProviderModel struct {
 }
 
 func (p *KeyHubProvider) Metadata(ctx context.Context, req provider.MetadataRequest, resp *provider.MetadataResponse) {
-	resp.TypeName = "keyhubpreview"
+	resp.TypeName = ProviderName
 	resp.Version = p.version
+	tflog.Info(ctx, "Provider name set to "+resp.TypeName)
 }
 
 func (p *KeyHubProvider) Schema(ctx context.Context, req provider.SchemaRequest, resp *provider.SchemaResponse) {
@@ -149,7 +152,7 @@ func (p *KeyHubProvider) Configure(ctx context.Context, req provider.ConfigureRe
 	ctx = tflog.MaskFieldValuesWithFieldKeys(ctx, "keyhub_clientsecret")
 
 	tflog.Info(ctx, "Connecting to Topicus KeyHub")
-	adapter, err := keyhub.NewKeyHubRequestAdapter(http.DefaultClient, issuer, clientid, clientsecret)
+	adapter, err := keyhub.NewKeyHubRequestAdapter(&http.Client{}, issuer, clientid, clientsecret)
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Unable to create Topicus KeyHub API client",
@@ -170,6 +173,7 @@ func (p *KeyHubProvider) Configure(ctx context.Context, req provider.ConfigureRe
 func (p *KeyHubProvider) Resources(ctx context.Context) []func() resource.Resource {
 	return []func() resource.Resource{
 		NewGroupResource,
+		NewVaultRecordResource,
 	}
 }
 

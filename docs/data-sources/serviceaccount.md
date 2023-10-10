@@ -44,6 +44,7 @@ Read-Only:
 
 - `audit` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--audit))
 - `groups` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--groups))
+- `secret` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--secret))
 
 <a id="nestedatt--additional_objects--audit"></a>
 ### Nested Schema for `additional_objects.audit`
@@ -101,6 +102,16 @@ Read-Only:
 - `type_escaped` (String)
 
 
+
+
+<a id="nestedatt--additional_objects--secret"></a>
+### Nested Schema for `additional_objects.secret`
+
+Read-Only:
+
+- `generated_secret` (String)
+- `old_secret` (String)
+- `regenerate` (Boolean)
 
 
 

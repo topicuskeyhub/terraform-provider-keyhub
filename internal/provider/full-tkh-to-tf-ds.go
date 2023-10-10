@@ -221,6 +221,72 @@ func tkhToTFObjectDSSegmentCount(recurse bool, tkh keyhubmodel.SegmentCountable)
 	return objVal, diags
 }
 
+func tkhToTFObjectDSAccountVaultVaultRecord(recurse bool, tkh keyhubmodel.VaultVaultRecordable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = accountVaultVaultRecordAttrTypesDSRecurse
+	} else {
+		attrs = accountVaultVaultRecordAttrTypesDS
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	if recurse {
+		{
+			val, d := tkhToTFObjectDSVaultVaultRecord_additionalObjects(false, tkh.GetAdditionalObjects())
+			diags.Append(d...)
+			obj["additional_objects"] = val
+		}
+	}
+	obj["account_uuid"] = types.StringNull()
+	{
+		elemType := attrs["links"].(types.ListType).ElemType
+		val, d := sliceToTF(elemType, tkh.GetLinks(), func(tkh keyhubmodel.RestLinkable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectDSRestLink(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["links"] = val
+	}
+	{
+		elemType := attrs["permissions"].(types.ListType).ElemType
+		val, d := sliceToTF(elemType, tkh.GetPermissions(), func(tkh keyhubmodel.AuthPermissionable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectDSAuthPermission(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["permissions"] = val
+	}
+	obj["color"] = stringerToTF(tkh.GetColor())
+	obj["name"] = types.StringPointerValue(tkh.GetName())
+	obj["share_end_time"] = timePointerToTF(tkh.GetShareEndTime())
+	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
+	obj["additional"] = types.ListNull(types.StringType)
+	obj["derived"] = types.BoolPointerValue(tkh.GetDerived())
+	obj["end_date"] = stringerToTF(tkh.GetEndDate())
+	obj["filename"] = types.StringPointerValue(tkh.GetFilename())
+	{
+		elemType := attrs["types"].(types.ListType).ElemType
+		val, d := sliceToTF(elemType, tkh.GetTypes(), func(tkh keyhubmodel.VaultVaultSecretType, diags *diag.Diagnostics) attr.Value {
+			return types.StringValue(tkh.String())
+		})
+		diags.Append(d...)
+		obj["types"] = val
+	}
+	obj["url"] = types.StringPointerValue(tkh.GetUrl())
+	obj["username"] = types.StringPointerValue(tkh.GetUsername())
+	obj["warning_period"] = stringerToTF(tkh.GetWarningPeriod())
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
 func tkhToTFObjectDSAuditAuditRecord(recurse bool, tkh keyhubmodel.AuditAuditRecordable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
@@ -1196,6 +1262,72 @@ func tkhToTFObjectDSCertificateCertificate_additionalObjects(recurse bool, tkh k
 	return objVal, diags
 }
 
+func tkhToTFObjectDSClientApplicationVaultVaultRecord(recurse bool, tkh keyhubmodel.VaultVaultRecordable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = clientApplicationVaultVaultRecordAttrTypesDSRecurse
+	} else {
+		attrs = clientApplicationVaultVaultRecordAttrTypesDS
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	if recurse {
+		{
+			val, d := tkhToTFObjectDSVaultVaultRecord_additionalObjects(false, tkh.GetAdditionalObjects())
+			diags.Append(d...)
+			obj["additional_objects"] = val
+		}
+	}
+	obj["client_application_uuid"] = types.StringNull()
+	{
+		elemType := attrs["links"].(types.ListType).ElemType
+		val, d := sliceToTF(elemType, tkh.GetLinks(), func(tkh keyhubmodel.RestLinkable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectDSRestLink(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["links"] = val
+	}
+	{
+		elemType := attrs["permissions"].(types.ListType).ElemType
+		val, d := sliceToTF(elemType, tkh.GetPermissions(), func(tkh keyhubmodel.AuthPermissionable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectDSAuthPermission(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["permissions"] = val
+	}
+	obj["color"] = stringerToTF(tkh.GetColor())
+	obj["name"] = types.StringPointerValue(tkh.GetName())
+	obj["share_end_time"] = timePointerToTF(tkh.GetShareEndTime())
+	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
+	obj["additional"] = types.ListNull(types.StringType)
+	obj["derived"] = types.BoolPointerValue(tkh.GetDerived())
+	obj["end_date"] = stringerToTF(tkh.GetEndDate())
+	obj["filename"] = types.StringPointerValue(tkh.GetFilename())
+	{
+		elemType := attrs["types"].(types.ListType).ElemType
+		val, d := sliceToTF(elemType, tkh.GetTypes(), func(tkh keyhubmodel.VaultVaultSecretType, diags *diag.Diagnostics) attr.Value {
+			return types.StringValue(tkh.String())
+		})
+		diags.Append(d...)
+		obj["types"] = val
+	}
+	obj["url"] = types.StringPointerValue(tkh.GetUrl())
+	obj["username"] = types.StringPointerValue(tkh.GetUsername())
+	obj["warning_period"] = stringerToTF(tkh.GetWarningPeriod())
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
 func tkhToTFObjectDSClientClientApplication(recurse bool, tkh keyhubmodel.ClientClientApplicationable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
@@ -1393,6 +1525,11 @@ func tkhToTFObjectDSClientClientApplication_additionalObjects(recurse bool, tkh 
 		val, d := tkhToTFObjectDSGroupGroupLinkableWrapper(recurse, tkh.GetGroups())
 		diags.Append(d...)
 		obj["groups"] = val
+	}
+	{
+		val, d := tkhToTFObjectDSGeneratedSecret(recurse, tkh.GetSecret())
+		diags.Append(d...)
+		obj["secret"] = val
 	}
 	{
 		val, d := tkhToTFObjectDSLaunchpadSsoApplicationLaunchpadTile(recurse, tkh.GetTile())
@@ -1754,6 +1891,72 @@ func tkhToTFObjectDSClientSaml2Client_attributes(recurse bool, tkh keyhubmodel.C
 	return objVal, diags
 }
 
+func tkhToTFObjectDSDeletedVaultHolderVaultVaultRecord(recurse bool, tkh keyhubmodel.VaultVaultRecordable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = deletedVaultHolderVaultVaultRecordAttrTypesDSRecurse
+	} else {
+		attrs = deletedVaultHolderVaultVaultRecordAttrTypesDS
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	if recurse {
+		{
+			val, d := tkhToTFObjectDSVaultVaultRecord_additionalObjects(false, tkh.GetAdditionalObjects())
+			diags.Append(d...)
+			obj["additional_objects"] = val
+		}
+	}
+	obj["deleted_vault_holder_uuid"] = types.StringNull()
+	{
+		elemType := attrs["links"].(types.ListType).ElemType
+		val, d := sliceToTF(elemType, tkh.GetLinks(), func(tkh keyhubmodel.RestLinkable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectDSRestLink(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["links"] = val
+	}
+	{
+		elemType := attrs["permissions"].(types.ListType).ElemType
+		val, d := sliceToTF(elemType, tkh.GetPermissions(), func(tkh keyhubmodel.AuthPermissionable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectDSAuthPermission(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["permissions"] = val
+	}
+	obj["color"] = stringerToTF(tkh.GetColor())
+	obj["name"] = types.StringPointerValue(tkh.GetName())
+	obj["share_end_time"] = timePointerToTF(tkh.GetShareEndTime())
+	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
+	obj["additional"] = types.ListNull(types.StringType)
+	obj["derived"] = types.BoolPointerValue(tkh.GetDerived())
+	obj["end_date"] = stringerToTF(tkh.GetEndDate())
+	obj["filename"] = types.StringPointerValue(tkh.GetFilename())
+	{
+		elemType := attrs["types"].(types.ListType).ElemType
+		val, d := sliceToTF(elemType, tkh.GetTypes(), func(tkh keyhubmodel.VaultVaultSecretType, diags *diag.Diagnostics) attr.Value {
+			return types.StringValue(tkh.String())
+		})
+		diags.Append(d...)
+		obj["types"] = val
+	}
+	obj["url"] = types.StringPointerValue(tkh.GetUrl())
+	obj["username"] = types.StringPointerValue(tkh.GetUsername())
+	obj["warning_period"] = stringerToTF(tkh.GetWarningPeriod())
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
 func tkhToTFObjectDSDirectoryAccountDirectory(recurse bool, tkh keyhubmodel.DirectoryAccountDirectoryable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
@@ -1815,10 +2018,10 @@ func tkhToTFObjectDSDirectoryAccountDirectory(recurse bool, tkh keyhubmodel.Dire
 	obj["rotating_password"] = stringerToTF(tkh.GetRotatingPassword())
 	obj["username_customizable"] = types.BoolPointerValue(tkh.GetUsernameCustomizable())
 	{
-		tkhCast, _ := tkh.(keyhubmodel.DirectoryMaintenanceDirectoryable)
-		val, d := tkhToTFObjectDSDirectoryMaintenanceDirectory(false, tkhCast)
+		tkhCast, _ := tkh.(keyhubmodel.DirectoryInternalDirectoryable)
+		val, d := tkhToTFObjectDSDirectoryInternalDirectory(false, tkhCast)
 		diags.Append(d...)
-		obj["maintenance_directory"] = val
+		obj["internal_directory"] = val
 	}
 	{
 		tkhCast, _ := tkh.(keyhubmodel.DirectoryOIDCDirectoryable)
@@ -1827,16 +2030,16 @@ func tkhToTFObjectDSDirectoryAccountDirectory(recurse bool, tkh keyhubmodel.Dire
 		obj["o_id_c_directory"] = val
 	}
 	{
-		tkhCast, _ := tkh.(keyhubmodel.DirectoryInternalDirectoryable)
-		val, d := tkhToTFObjectDSDirectoryInternalDirectory(false, tkhCast)
-		diags.Append(d...)
-		obj["internal_directory"] = val
-	}
-	{
 		tkhCast, _ := tkh.(keyhubmodel.DirectoryLDAPDirectoryable)
 		val, d := tkhToTFObjectDSDirectoryLDAPDirectory(false, tkhCast)
 		diags.Append(d...)
 		obj["l_d_a_p_directory"] = val
+	}
+	{
+		tkhCast, _ := tkh.(keyhubmodel.DirectoryMaintenanceDirectoryable)
+		val, d := tkhToTFObjectDSDirectoryMaintenanceDirectory(false, tkhCast)
+		diags.Append(d...)
+		obj["maintenance_directory"] = val
 	}
 
 	objVal, d := types.ObjectValue(attrs, obj)
@@ -3748,6 +3951,72 @@ func tkhToTFObjectDSGroupProvisioningGroup_additionalObjects(recurse bool, tkh k
 	return objVal, diags
 }
 
+func tkhToTFObjectDSGroupVaultVaultRecord(recurse bool, tkh keyhubmodel.VaultVaultRecordable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = groupVaultVaultRecordAttrTypesDSRecurse
+	} else {
+		attrs = groupVaultVaultRecordAttrTypesDS
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	if recurse {
+		{
+			val, d := tkhToTFObjectDSVaultVaultRecord_additionalObjects(false, tkh.GetAdditionalObjects())
+			diags.Append(d...)
+			obj["additional_objects"] = val
+		}
+	}
+	obj["group_uuid"] = types.StringNull()
+	{
+		elemType := attrs["links"].(types.ListType).ElemType
+		val, d := sliceToTF(elemType, tkh.GetLinks(), func(tkh keyhubmodel.RestLinkable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectDSRestLink(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["links"] = val
+	}
+	{
+		elemType := attrs["permissions"].(types.ListType).ElemType
+		val, d := sliceToTF(elemType, tkh.GetPermissions(), func(tkh keyhubmodel.AuthPermissionable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectDSAuthPermission(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["permissions"] = val
+	}
+	obj["color"] = stringerToTF(tkh.GetColor())
+	obj["name"] = types.StringPointerValue(tkh.GetName())
+	obj["share_end_time"] = timePointerToTF(tkh.GetShareEndTime())
+	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
+	obj["additional"] = types.ListNull(types.StringType)
+	obj["derived"] = types.BoolPointerValue(tkh.GetDerived())
+	obj["end_date"] = stringerToTF(tkh.GetEndDate())
+	obj["filename"] = types.StringPointerValue(tkh.GetFilename())
+	{
+		elemType := attrs["types"].(types.ListType).ElemType
+		val, d := sliceToTF(elemType, tkh.GetTypes(), func(tkh keyhubmodel.VaultVaultSecretType, diags *diag.Diagnostics) attr.Value {
+			return types.StringValue(tkh.String())
+		})
+		diags.Append(d...)
+		obj["types"] = val
+	}
+	obj["url"] = types.StringPointerValue(tkh.GetUrl())
+	obj["username"] = types.StringPointerValue(tkh.GetUsername())
+	obj["warning_period"] = stringerToTF(tkh.GetWarningPeriod())
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
 func tkhToTFObjectDSLaunchpadDisplayedLaunchpadTile(recurse bool, tkh keyhubmodel.LaunchpadDisplayedLaunchpadTileable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
@@ -4203,6 +4472,738 @@ func tkhToTFObjectDSMarkItemMarkers(recurse bool, tkh keyhubmodel.MarkItemMarker
 		diags.Append(d...)
 		obj["markers"] = val
 	}
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
+func tkhToTFObjectDSNestedAuthInternalAccount(recurse bool, tkh keyhubmodel.AuthInternalAccountable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = nestedAuthInternalAccountAttrTypesDSRecurse
+	} else {
+		attrs = nestedAuthInternalAccountAttrTypesDS
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	if recurse {
+		{
+			val, d := tkhToTFObjectDSAuthAccount_additionalObjects(false, tkh.GetAdditionalObjects())
+			diags.Append(d...)
+			obj["additional_objects"] = val
+		}
+	}
+	obj["account_directory_uuid"] = types.StringNull()
+	{
+		elemType := attrs["links"].(types.ListType).ElemType
+		val, d := sliceToTF(elemType, tkh.GetLinks(), func(tkh keyhubmodel.RestLinkable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectDSRestLink(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["links"] = val
+	}
+	{
+		elemType := attrs["permissions"].(types.ListType).ElemType
+		val, d := sliceToTF(elemType, tkh.GetPermissions(), func(tkh keyhubmodel.AuthPermissionable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectDSAuthPermission(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["permissions"] = val
+	}
+	obj["display_name"] = types.StringPointerValue(tkh.GetDisplayName())
+	obj["last_active"] = timePointerToTF(tkh.GetLastActive())
+	obj["username"] = types.StringPointerValue(tkh.GetUsername())
+	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
+	obj["validity"] = stringerToTF(tkh.GetValidity())
+	obj["additional"] = types.ListNull(types.StringType)
+	{
+		elemType := attrs["account_permissions"].(types.ListType).ElemType
+		val, d := sliceToTF(elemType, tkh.GetAccountPermissions(), func(tkh keyhubmodel.AuthPermissionable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectDSAuthPermission(false, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["account_permissions"] = val
+	}
+	obj["active"] = types.BoolPointerValue(tkh.GetActive())
+	obj["can_request_groups"] = types.BoolPointerValue(tkh.GetCanRequestGroups())
+	{
+		val, d := tkhToTFObjectDSDirectoryAccountDirectoryPrimer(false, tkh.GetDirectory())
+		diags.Append(d...)
+		obj["directory"] = val
+	}
+	obj["directory_name"] = types.StringPointerValue(tkh.GetDirectoryName())
+	obj["directory_password_change_required"] = types.BoolPointerValue(tkh.GetDirectoryPasswordChangeRequired())
+	obj["directory_rotating_password"] = stringerToTF(tkh.GetDirectoryRotatingPassword())
+	obj["directory_type"] = stringerToTF(tkh.GetDirectoryType())
+	obj["email"] = types.StringPointerValue(tkh.GetEmail())
+	obj["id_in_directory"] = types.StringPointerValue(tkh.GetIdInDirectory())
+	obj["key_hub_password_change_required"] = types.BoolPointerValue(tkh.GetKeyHubPasswordChangeRequired())
+	obj["last_modified_at"] = timePointerToTF(tkh.GetLastModifiedAt())
+	obj["license_role"] = stringerToTF(tkh.GetLicenseRole())
+	obj["locale"] = types.StringPointerValue(tkh.GetLocale())
+	obj["reregistration_required"] = types.BoolPointerValue(tkh.GetReregistrationRequired())
+	obj["token_password_enabled"] = types.BoolPointerValue(tkh.GetTokenPasswordEnabled())
+	obj["two_factor_status"] = stringerToTF(tkh.GetTwoFactorStatus())
+	obj["valid_in_directory"] = types.BoolPointerValue(tkh.GetValidInDirectory())
+	obj["activation_code"] = types.StringPointerValue(tkh.GetActivationCode())
+	obj["activation_deadline"] = timePointerToTF(tkh.GetActivationDeadline())
+	obj["company"] = types.StringPointerValue(tkh.GetCompany())
+	obj["first_name"] = types.StringPointerValue(tkh.GetFirstName())
+	obj["last_name"] = types.StringPointerValue(tkh.GetLastName())
+	obj["status"] = stringerToTF(tkh.GetStatus())
+	obj["telephone"] = types.StringPointerValue(tkh.GetTelephone())
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
+func tkhToTFObjectDSNestedClientOAuth2ClientPermission(recurse bool, tkh keyhubmodel.ClientOAuth2ClientPermissionable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = nestedClientOAuth2ClientPermissionAttrTypesDSRecurse
+	} else {
+		attrs = nestedClientOAuth2ClientPermissionAttrTypesDS
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	if recurse {
+		{
+			val, d := tkhToTFObjectDSClientOAuth2ClientPermission_additionalObjects(false, tkh.GetAdditionalObjects())
+			diags.Append(d...)
+			obj["additional_objects"] = val
+		}
+	}
+	obj["client_application_uuid"] = types.StringNull()
+	{
+		elemType := attrs["links"].(types.ListType).ElemType
+		val, d := sliceToTF(elemType, tkh.GetLinks(), func(tkh keyhubmodel.RestLinkable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectDSRestLink(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["links"] = val
+	}
+	{
+		elemType := attrs["permissions"].(types.ListType).ElemType
+		val, d := sliceToTF(elemType, tkh.GetPermissions(), func(tkh keyhubmodel.AuthPermissionable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectDSAuthPermission(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["permissions"] = val
+	}
+	obj["additional"] = types.ListNull(types.StringType)
+	{
+		val, d := tkhToTFObjectDSGroupGroupPrimer(false, tkh.GetForGroup())
+		diags.Append(d...)
+		obj["for_group"] = val
+	}
+	{
+		val, d := tkhToTFObjectDSProvisioningProvisionedSystemPrimer(false, tkh.GetForSystem())
+		diags.Append(d...)
+		obj["for_system"] = val
+	}
+	obj["value"] = stringerToTF(tkh.GetValue())
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
+func tkhToTFObjectDSNestedGroupAccountGroup(recurse bool, tkh keyhubmodel.GroupAccountGroupable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = nestedGroupAccountGroupAttrTypesDSRecurse
+	} else {
+		attrs = nestedGroupAccountGroupAttrTypesDS
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	if recurse {
+		{
+			val, d := tkhToTFObjectDSGroupAccountGroup_additionalObjects(false, tkh.GetAdditionalObjects())
+			diags.Append(d...)
+			obj["additional_objects"] = val
+		}
+	}
+	obj["account_uuid"] = types.StringNull()
+	{
+		elemType := attrs["links"].(types.ListType).ElemType
+		val, d := sliceToTF(elemType, tkh.GetLinks(), func(tkh keyhubmodel.RestLinkable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectDSRestLink(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["links"] = val
+	}
+	{
+		elemType := attrs["permissions"].(types.ListType).ElemType
+		val, d := sliceToTF(elemType, tkh.GetPermissions(), func(tkh keyhubmodel.AuthPermissionable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectDSAuthPermission(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["permissions"] = val
+	}
+	obj["admin"] = types.BoolPointerValue(tkh.GetAdmin())
+	obj["name"] = types.StringPointerValue(tkh.GetName())
+	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
+	obj["additional"] = types.ListNull(types.StringType)
+	obj["end_date"] = stringerToTF(tkh.GetEndDate())
+	{
+		val, d := tkhToTFObjectDSGroupGroupFolder(false, tkh.GetFolder())
+		diags.Append(d...)
+		obj["folder"] = val
+	}
+	obj["last_used"] = stringerToTF(tkh.GetLastUsed())
+	obj["provisioning_end_time"] = timePointerToTF(tkh.GetProvisioningEndTime())
+	obj["rights"] = stringerToTF(tkh.GetRights())
+	obj["visible_for_provisioning"] = types.BoolPointerValue(tkh.GetVisibleForProvisioning())
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
+func tkhToTFObjectDSNestedGroupGroupAccount(recurse bool, tkh keyhubmodel.GroupGroupAccountable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = nestedGroupGroupAccountAttrTypesDSRecurse
+	} else {
+		attrs = nestedGroupGroupAccountAttrTypesDS
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	if recurse {
+		{
+			val, d := tkhToTFObjectDSGroupGroupAccount_additionalObjects(false, tkh.GetAdditionalObjects())
+			diags.Append(d...)
+			obj["additional_objects"] = val
+		}
+	}
+	obj["group_uuid"] = types.StringNull()
+	{
+		elemType := attrs["links"].(types.ListType).ElemType
+		val, d := sliceToTF(elemType, tkh.GetLinks(), func(tkh keyhubmodel.RestLinkable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectDSRestLink(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["links"] = val
+	}
+	{
+		elemType := attrs["permissions"].(types.ListType).ElemType
+		val, d := sliceToTF(elemType, tkh.GetPermissions(), func(tkh keyhubmodel.AuthPermissionable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectDSAuthPermission(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["permissions"] = val
+	}
+	obj["display_name"] = types.StringPointerValue(tkh.GetDisplayName())
+	obj["last_active"] = timePointerToTF(tkh.GetLastActive())
+	obj["username"] = types.StringPointerValue(tkh.GetUsername())
+	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
+	obj["validity"] = stringerToTF(tkh.GetValidity())
+	obj["additional"] = types.ListNull(types.StringType)
+	{
+		val, d := tkhToTFObjectDSDirectoryAccountDirectoryPrimer(false, tkh.GetDirectory())
+		diags.Append(d...)
+		obj["directory"] = val
+	}
+	obj["disconnected_nested"] = types.BoolPointerValue(tkh.GetDisconnectedNested())
+	obj["end_date"] = stringerToTF(tkh.GetEndDate())
+	obj["last_used"] = stringerToTF(tkh.GetLastUsed())
+	obj["nested"] = types.BoolPointerValue(tkh.GetNested())
+	obj["provisioning_end_time"] = timePointerToTF(tkh.GetProvisioningEndTime())
+	obj["rights"] = stringerToTF(tkh.GetRights())
+	obj["two_factor_status"] = stringerToTF(tkh.GetTwoFactorStatus())
+	obj["visible_for_provisioning"] = types.BoolPointerValue(tkh.GetVisibleForProvisioning())
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
+func tkhToTFObjectDSNestedGroupGroupAudit(recurse bool, tkh keyhubmodel.GroupGroupAuditable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = nestedGroupGroupAuditAttrTypesDSRecurse
+	} else {
+		attrs = nestedGroupGroupAuditAttrTypesDS
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	if recurse {
+		{
+			val, d := tkhToTFObjectDSGroupGroupAudit_additionalObjects(false, tkh.GetAdditionalObjects())
+			diags.Append(d...)
+			obj["additional_objects"] = val
+		}
+	}
+	obj["group_uuid"] = types.StringNull()
+	{
+		elemType := attrs["links"].(types.ListType).ElemType
+		val, d := sliceToTF(elemType, tkh.GetLinks(), func(tkh keyhubmodel.RestLinkable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectDSRestLink(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["links"] = val
+	}
+	{
+		elemType := attrs["permissions"].(types.ListType).ElemType
+		val, d := sliceToTF(elemType, tkh.GetPermissions(), func(tkh keyhubmodel.AuthPermissionable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectDSAuthPermission(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["permissions"] = val
+	}
+	obj["additional"] = types.ListNull(types.StringType)
+	{
+		elemType := attrs["accounts"].(types.ListType).ElemType
+		val, d := sliceToTF(elemType, tkh.GetAccounts(), func(tkh keyhubmodel.GroupGroupAuditAccountable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectDSGroupGroupAuditAccount(false, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["accounts"] = val
+	}
+	obj["comment"] = types.StringPointerValue(tkh.GetComment())
+	obj["created_at"] = timePointerToTF(tkh.GetCreatedAt())
+	obj["created_by"] = types.StringPointerValue(tkh.GetCreatedBy())
+	obj["group_name"] = types.StringPointerValue(tkh.GetGroupName())
+	obj["name_on_audit"] = types.StringPointerValue(tkh.GetNameOnAudit())
+	obj["reviewed_at"] = timePointerToTF(tkh.GetReviewedAt())
+	obj["reviewed_by"] = types.StringPointerValue(tkh.GetReviewedBy())
+	obj["status"] = stringerToTF(tkh.GetStatus())
+	obj["submitted_at"] = timePointerToTF(tkh.GetSubmittedAt())
+	obj["submitted_by"] = types.StringPointerValue(tkh.GetSubmittedBy())
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
+func tkhToTFObjectDSNestedOrganizationAccountOrganizationalUnit(recurse bool, tkh keyhubmodel.OrganizationAccountOrganizationalUnitable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = nestedOrganizationAccountOrganizationalUnitAttrTypesDSRecurse
+	} else {
+		attrs = nestedOrganizationAccountOrganizationalUnitAttrTypesDS
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	if recurse {
+		{
+			val, d := tkhToTFObjectDSOrganizationAccountOrganizationalUnit_additionalObjects(false, tkh.GetAdditionalObjects())
+			diags.Append(d...)
+			obj["additional_objects"] = val
+		}
+	}
+	obj["account_uuid"] = types.StringNull()
+	{
+		elemType := attrs["links"].(types.ListType).ElemType
+		val, d := sliceToTF(elemType, tkh.GetLinks(), func(tkh keyhubmodel.RestLinkable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectDSRestLink(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["links"] = val
+	}
+	{
+		elemType := attrs["permissions"].(types.ListType).ElemType
+		val, d := sliceToTF(elemType, tkh.GetPermissions(), func(tkh keyhubmodel.AuthPermissionable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectDSAuthPermission(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["permissions"] = val
+	}
+	obj["name"] = types.StringPointerValue(tkh.GetName())
+	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
+	obj["additional"] = types.ListNull(types.StringType)
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
+func tkhToTFObjectDSNestedOrganizationOrganizationalUnitAccount(recurse bool, tkh keyhubmodel.OrganizationOrganizationalUnitAccountable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = nestedOrganizationOrganizationalUnitAccountAttrTypesDSRecurse
+	} else {
+		attrs = nestedOrganizationOrganizationalUnitAccountAttrTypesDS
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	if recurse {
+		{
+			val, d := tkhToTFObjectDSOrganizationOrganizationalUnitAccount_additionalObjects(false, tkh.GetAdditionalObjects())
+			diags.Append(d...)
+			obj["additional_objects"] = val
+		}
+	}
+	obj["organizational_unit_uuid"] = types.StringNull()
+	{
+		elemType := attrs["links"].(types.ListType).ElemType
+		val, d := sliceToTF(elemType, tkh.GetLinks(), func(tkh keyhubmodel.RestLinkable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectDSRestLink(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["links"] = val
+	}
+	{
+		elemType := attrs["permissions"].(types.ListType).ElemType
+		val, d := sliceToTF(elemType, tkh.GetPermissions(), func(tkh keyhubmodel.AuthPermissionable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectDSAuthPermission(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["permissions"] = val
+	}
+	obj["display_name"] = types.StringPointerValue(tkh.GetDisplayName())
+	obj["last_active"] = timePointerToTF(tkh.GetLastActive())
+	obj["username"] = types.StringPointerValue(tkh.GetUsername())
+	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
+	obj["validity"] = stringerToTF(tkh.GetValidity())
+	obj["additional"] = types.ListNull(types.StringType)
+	{
+		val, d := tkhToTFObjectDSDirectoryAccountDirectoryPrimer(false, tkh.GetDirectory())
+		diags.Append(d...)
+		obj["directory"] = val
+	}
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
+func tkhToTFObjectDSNestedProvisioningGroupOnSystem(recurse bool, tkh keyhubmodel.ProvisioningGroupOnSystemable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = nestedProvisioningGroupOnSystemAttrTypesDSRecurse
+	} else {
+		attrs = nestedProvisioningGroupOnSystemAttrTypesDS
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	if recurse {
+		{
+			val, d := tkhToTFObjectDSProvisioningGroupOnSystem_additionalObjects(false, tkh.GetAdditionalObjects())
+			diags.Append(d...)
+			obj["additional_objects"] = val
+		}
+	}
+	obj["provisioned_system_uuid"] = types.StringNull()
+	{
+		elemType := attrs["links"].(types.ListType).ElemType
+		val, d := sliceToTF(elemType, tkh.GetLinks(), func(tkh keyhubmodel.RestLinkable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectDSRestLink(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["links"] = val
+	}
+	{
+		elemType := attrs["permissions"].(types.ListType).ElemType
+		val, d := sliceToTF(elemType, tkh.GetPermissions(), func(tkh keyhubmodel.AuthPermissionable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectDSAuthPermission(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["permissions"] = val
+	}
+	obj["display_name"] = types.StringPointerValue(tkh.GetDisplayName())
+	obj["name_in_system"] = types.StringPointerValue(tkh.GetNameInSystem())
+	obj["provisioning_group_on_system_primer_type"] = stringerToTF(tkh.GetProvisioningGroupOnSystemPrimerType())
+	obj["short_name_in_system"] = types.StringPointerValue(tkh.GetShortNameInSystem())
+	obj["additional"] = types.ListNull(types.StringType)
+	{
+		val, d := tkhToTFObjectDSGroupGroupPrimer(false, tkh.GetOwner())
+		diags.Append(d...)
+		obj["owner"] = val
+	}
+	{
+		val, d := tkhToTFObjectDSProvisioningProvisionedSystemPrimer(false, tkh.GetSystem())
+		diags.Append(d...)
+		obj["system"] = val
+	}
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
+func tkhToTFObjectDSNestedProvisioningProvisionedAccount(recurse bool, tkh keyhubmodel.ProvisioningProvisionedAccountable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = nestedProvisioningProvisionedAccountAttrTypesDSRecurse
+	} else {
+		attrs = nestedProvisioningProvisionedAccountAttrTypesDS
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	if recurse {
+		{
+			val, d := tkhToTFObjectDSProvisioningProvisionedAccount_additionalObjects(false, tkh.GetAdditionalObjects())
+			diags.Append(d...)
+			obj["additional_objects"] = val
+		}
+	}
+	obj["provisioned_system_uuid"] = types.StringNull()
+	{
+		elemType := attrs["links"].(types.ListType).ElemType
+		val, d := sliceToTF(elemType, tkh.GetLinks(), func(tkh keyhubmodel.RestLinkable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectDSRestLink(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["links"] = val
+	}
+	{
+		elemType := attrs["permissions"].(types.ListType).ElemType
+		val, d := sliceToTF(elemType, tkh.GetPermissions(), func(tkh keyhubmodel.AuthPermissionable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectDSAuthPermission(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["permissions"] = val
+	}
+	obj["display_name"] = types.StringPointerValue(tkh.GetDisplayName())
+	obj["last_active"] = timePointerToTF(tkh.GetLastActive())
+	obj["username"] = types.StringPointerValue(tkh.GetUsername())
+	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
+	obj["validity"] = stringerToTF(tkh.GetValidity())
+	obj["additional"] = types.ListNull(types.StringType)
+	obj["uid"] = types.Int64PointerValue(tkh.GetUid())
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
+func tkhToTFObjectDSNestedProvisioningProvisionedSystemSyncLog(recurse bool, tkh keyhubmodel.ProvisioningProvisionedSystemSyncLogable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = nestedProvisioningProvisionedSystemSyncLogAttrTypesDSRecurse
+	} else {
+		attrs = nestedProvisioningProvisionedSystemSyncLogAttrTypesDS
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	if recurse {
+		{
+			val, d := tkhToTFObjectDSProvisioningProvisionedSystemSyncLog_additionalObjects(false, tkh.GetAdditionalObjects())
+			diags.Append(d...)
+			obj["additional_objects"] = val
+		}
+	}
+	obj["provisioned_system_uuid"] = types.StringNull()
+	{
+		elemType := attrs["links"].(types.ListType).ElemType
+		val, d := sliceToTF(elemType, tkh.GetLinks(), func(tkh keyhubmodel.RestLinkable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectDSRestLink(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["links"] = val
+	}
+	{
+		elemType := attrs["permissions"].(types.ListType).ElemType
+		val, d := sliceToTF(elemType, tkh.GetPermissions(), func(tkh keyhubmodel.AuthPermissionable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectDSAuthPermission(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["permissions"] = val
+	}
+	obj["additional"] = types.ListNull(types.StringType)
+	obj["created_at"] = timePointerToTF(tkh.GetCreatedAt())
+	obj["errors"] = types.Int64PointerValue(int32PToInt64P(tkh.GetErrors()))
+	obj["log"] = types.StringPointerValue(tkh.GetLog())
+	obj["modifications"] = types.Int64PointerValue(int32PToInt64P(tkh.GetModifications()))
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
+func tkhToTFObjectDSNestedServiceaccountServiceAccountGroup(recurse bool, tkh keyhubmodel.ServiceaccountServiceAccountGroupable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = nestedServiceaccountServiceAccountGroupAttrTypesDSRecurse
+	} else {
+		attrs = nestedServiceaccountServiceAccountGroupAttrTypesDS
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	if recurse {
+		{
+			val, d := tkhToTFObjectDSServiceaccountServiceAccountGroup_additionalObjects(false, tkh.GetAdditionalObjects())
+			diags.Append(d...)
+			obj["additional_objects"] = val
+		}
+	}
+	obj["service_account_uuid"] = types.StringNull()
+	{
+		elemType := attrs["links"].(types.ListType).ElemType
+		val, d := sliceToTF(elemType, tkh.GetLinks(), func(tkh keyhubmodel.RestLinkable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectDSRestLink(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["links"] = val
+	}
+	{
+		elemType := attrs["permissions"].(types.ListType).ElemType
+		val, d := sliceToTF(elemType, tkh.GetPermissions(), func(tkh keyhubmodel.AuthPermissionable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectDSAuthPermission(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["permissions"] = val
+	}
+	obj["display_name"] = types.StringPointerValue(tkh.GetDisplayName())
+	obj["name_in_system"] = types.StringPointerValue(tkh.GetNameInSystem())
+	obj["provisioning_group_on_system_primer_type"] = stringerToTF(tkh.GetProvisioningGroupOnSystemPrimerType())
+	obj["short_name_in_system"] = types.StringPointerValue(tkh.GetShortNameInSystem())
+	obj["additional"] = types.ListNull(types.StringType)
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
+func tkhToTFObjectDSNestedWebhookWebhookDelivery(recurse bool, tkh keyhubmodel.WebhookWebhookDeliveryable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = nestedWebhookWebhookDeliveryAttrTypesDSRecurse
+	} else {
+		attrs = nestedWebhookWebhookDeliveryAttrTypesDS
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	if recurse {
+		{
+			val, d := tkhToTFObjectDSWebhookWebhookDelivery_additionalObjects(false, tkh.GetAdditionalObjects())
+			diags.Append(d...)
+			obj["additional_objects"] = val
+		}
+	}
+	obj["webhook_uuid"] = types.StringNull()
+	{
+		elemType := attrs["links"].(types.ListType).ElemType
+		val, d := sliceToTF(elemType, tkh.GetLinks(), func(tkh keyhubmodel.RestLinkable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectDSRestLink(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["links"] = val
+	}
+	{
+		elemType := attrs["permissions"].(types.ListType).ElemType
+		val, d := sliceToTF(elemType, tkh.GetPermissions(), func(tkh keyhubmodel.AuthPermissionable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectDSAuthPermission(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["permissions"] = val
+	}
+	obj["additional"] = types.ListNull(types.StringType)
+	{
+		val, d := tkhToTFObjectDSWebhookWebhookPush(false, tkh.GetPayload())
+		diags.Append(d...)
+		obj["payload"] = val
+	}
+	obj["reponse_headers"] = types.StringPointerValue(tkh.GetReponseHeaders())
+	obj["request_headers"] = types.StringPointerValue(tkh.GetRequestHeaders())
+	obj["response"] = types.StringPointerValue(tkh.GetResponse())
+	obj["status"] = types.Int64PointerValue(int32PToInt64P(tkh.GetStatus()))
+	obj["time"] = types.Int64PointerValue(int32PToInt64P(tkh.GetTime()))
+	obj["trigger_time"] = timePointerToTF(tkh.GetTriggerTime())
 
 	objVal, d := types.ObjectValue(attrs, obj)
 	diags.Append(d...)
@@ -5877,30 +6878,6 @@ func tkhToTFObjectDSProvisioningProvisionedSystem(recurse bool, tkh keyhubmodel.
 	}
 	obj["username_prefix"] = types.StringPointerValue(tkh.GetUsernamePrefix())
 	{
-		tkhCast, _ := tkh.(keyhubmodel.ProvisioningProvisionedAzureSyncLDAPDirectoryable)
-		val, d := tkhToTFObjectDSProvisioningProvisionedAzureSyncLDAPDirectory(false, tkhCast)
-		diags.Append(d...)
-		obj["provisioned_azure_sync_ldap_directory"] = val
-	}
-	{
-		tkhCast, _ := tkh.(keyhubmodel.ProvisioningProvisionedAzureOIDCDirectoryable)
-		val, d := tkhToTFObjectDSProvisioningProvisionedAzureOIDCDirectory(false, tkhCast)
-		diags.Append(d...)
-		obj["provisioned_azure_oidc_directory"] = val
-	}
-	{
-		tkhCast, _ := tkh.(keyhubmodel.ProvisioningProvisionedInternalLDAPable)
-		val, d := tkhToTFObjectDSProvisioningProvisionedInternalLDAP(false, tkhCast)
-		diags.Append(d...)
-		obj["provisioned_internal_ldap"] = val
-	}
-	{
-		tkhCast, _ := tkh.(keyhubmodel.ProvisioningProvisionedLDAPDirectoryable)
-		val, d := tkhToTFObjectDSProvisioningProvisionedLDAPDirectory(false, tkhCast)
-		diags.Append(d...)
-		obj["provisioned_ldap_directory"] = val
-	}
-	{
 		tkhCast, _ := tkh.(keyhubmodel.ProvisioningAbstractProvisionedLDAPable)
 		val, d := tkhToTFObjectDSProvisioningAbstractProvisionedLDAP(false, tkhCast)
 		diags.Append(d...)
@@ -5913,16 +6890,40 @@ func tkhToTFObjectDSProvisioningProvisionedSystem(recurse bool, tkh keyhubmodel.
 		obj["provisioned_ldap"] = val
 	}
 	{
+		tkhCast, _ := tkh.(keyhubmodel.ProvisioningProvisionedAzureTenantable)
+		val, d := tkhToTFObjectDSProvisioningProvisionedAzureTenant(false, tkhCast)
+		diags.Append(d...)
+		obj["provisioned_azure_tenant"] = val
+	}
+	{
+		tkhCast, _ := tkh.(keyhubmodel.ProvisioningProvisionedInternalLDAPable)
+		val, d := tkhToTFObjectDSProvisioningProvisionedInternalLDAP(false, tkhCast)
+		diags.Append(d...)
+		obj["provisioned_internal_ldap"] = val
+	}
+	{
+		tkhCast, _ := tkh.(keyhubmodel.ProvisioningProvisionedAzureOIDCDirectoryable)
+		val, d := tkhToTFObjectDSProvisioningProvisionedAzureOIDCDirectory(false, tkhCast)
+		diags.Append(d...)
+		obj["provisioned_azure_oidc_directory"] = val
+	}
+	{
+		tkhCast, _ := tkh.(keyhubmodel.ProvisioningProvisionedLDAPDirectoryable)
+		val, d := tkhToTFObjectDSProvisioningProvisionedLDAPDirectory(false, tkhCast)
+		diags.Append(d...)
+		obj["provisioned_ldap_directory"] = val
+	}
+	{
 		tkhCast, _ := tkh.(keyhubmodel.ProvisioningProvisionedADable)
 		val, d := tkhToTFObjectDSProvisioningProvisionedAD(false, tkhCast)
 		diags.Append(d...)
 		obj["provisioned_a_d"] = val
 	}
 	{
-		tkhCast, _ := tkh.(keyhubmodel.ProvisioningProvisionedAzureTenantable)
-		val, d := tkhToTFObjectDSProvisioningProvisionedAzureTenant(false, tkhCast)
+		tkhCast, _ := tkh.(keyhubmodel.ProvisioningProvisionedAzureSyncLDAPDirectoryable)
+		val, d := tkhToTFObjectDSProvisioningProvisionedAzureSyncLDAPDirectory(false, tkhCast)
 		diags.Append(d...)
-		obj["provisioned_azure_tenant"] = val
+		obj["provisioned_azure_sync_ldap_directory"] = val
 	}
 
 	objVal, d := types.ObjectValue(attrs, obj)
@@ -6808,16 +7809,40 @@ func tkhToTFObjectDSRequestModificationRequest(recurse bool, tkh keyhubmodel.Req
 	obj["request_modification_request_type"] = stringerToTF(tkh.GetRequestModificationRequestType())
 	obj["status"] = stringerToTF(tkh.GetStatus())
 	{
-		tkhCast, _ := tkh.(keyhubmodel.RequestReviewAuditRequestable)
-		val, d := tkhToTFObjectDSRequestReviewAuditRequest(false, tkhCast)
+		tkhCast, _ := tkh.(keyhubmodel.RequestAbstractProvisionedSystemModificationRequestable)
+		val, d := tkhToTFObjectDSRequestAbstractProvisionedSystemModificationRequest(false, tkhCast)
 		diags.Append(d...)
-		obj["review_audit_request"] = val
+		obj["abstract_provisioned_system_modification_request"] = val
 	}
 	{
-		tkhCast, _ := tkh.(keyhubmodel.RequestTransferGroupOnSystemOwnershipRequestable)
-		val, d := tkhToTFObjectDSRequestTransferGroupOnSystemOwnershipRequest(false, tkhCast)
+		tkhCast, _ := tkh.(keyhubmodel.RequestTransferProvisionedSystemAdministrationRequestable)
+		val, d := tkhToTFObjectDSRequestTransferProvisionedSystemAdministrationRequest(false, tkhCast)
 		diags.Append(d...)
-		obj["transfer_group_on_system_ownership_request"] = val
+		obj["transfer_provisioned_system_administration_request"] = val
+	}
+	{
+		tkhCast, _ := tkh.(keyhubmodel.RequestTransferProvisionedSystemOwnershipRequestable)
+		val, d := tkhToTFObjectDSRequestTransferProvisionedSystemOwnershipRequest(false, tkhCast)
+		diags.Append(d...)
+		obj["transfer_provisioned_system_ownership_request"] = val
+	}
+	{
+		tkhCast, _ := tkh.(keyhubmodel.RequestPasswordResetRequestable)
+		val, d := tkhToTFObjectDSRequestPasswordResetRequest(false, tkhCast)
+		diags.Append(d...)
+		obj["password_reset_request"] = val
+	}
+	{
+		tkhCast, _ := tkh.(keyhubmodel.RequestRevokeAdminRequestable)
+		val, d := tkhToTFObjectDSRequestRevokeAdminRequest(false, tkhCast)
+		diags.Append(d...)
+		obj["revoke_admin_request"] = val
+	}
+	{
+		tkhCast, _ := tkh.(keyhubmodel.RequestGrantGroupOnSystemRequestRequestable)
+		val, d := tkhToTFObjectDSRequestGrantGroupOnSystemRequestRequest(false, tkhCast)
+		diags.Append(d...)
+		obj["grant_group_on_system_request_request"] = val
 	}
 	{
 		tkhCast, _ := tkh.(keyhubmodel.RequestAbstractApplicationModificationRequestable)
@@ -6826,40 +7851,34 @@ func tkhToTFObjectDSRequestModificationRequest(recurse bool, tkh keyhubmodel.Req
 		obj["abstract_application_modification_request"] = val
 	}
 	{
-		tkhCast, _ := tkh.(keyhubmodel.RequestGrantClientPermissionRequestable)
-		val, d := tkhToTFObjectDSRequestGrantClientPermissionRequest(false, tkhCast)
+		tkhCast, _ := tkh.(keyhubmodel.RequestTransferApplicationAdministrationRequestable)
+		val, d := tkhToTFObjectDSRequestTransferApplicationAdministrationRequest(false, tkhCast)
 		diags.Append(d...)
-		obj["grant_client_permission_request"] = val
+		obj["transfer_application_administration_request"] = val
 	}
 	{
-		tkhCast, _ := tkh.(keyhubmodel.RequestSetupNestedGroupRequestable)
-		val, d := tkhToTFObjectDSRequestSetupNestedGroupRequest(false, tkhCast)
+		tkhCast, _ := tkh.(keyhubmodel.RequestCreateServiceAccountRequestable)
+		val, d := tkhToTFObjectDSRequestCreateServiceAccountRequest(false, tkhCast)
 		diags.Append(d...)
-		obj["setup_nested_group_request"] = val
+		obj["create_service_account_request"] = val
 	}
 	{
-		tkhCast, _ := tkh.(keyhubmodel.RequestAbstractProvisionedSystemModificationRequestable)
-		val, d := tkhToTFObjectDSRequestAbstractProvisionedSystemModificationRequest(false, tkhCast)
+		tkhCast, _ := tkh.(keyhubmodel.RequestRemoveProvisionedSystemRequestable)
+		val, d := tkhToTFObjectDSRequestRemoveProvisionedSystemRequest(false, tkhCast)
 		diags.Append(d...)
-		obj["abstract_provisioned_system_modification_request"] = val
+		obj["remove_provisioned_system_request"] = val
 	}
 	{
-		tkhCast, _ := tkh.(keyhubmodel.RequestCreateGroupOnSystemRequestable)
-		val, d := tkhToTFObjectDSRequestCreateGroupOnSystemRequest(false, tkhCast)
+		tkhCast, _ := tkh.(keyhubmodel.RequestReviewAuditRequestable)
+		val, d := tkhToTFObjectDSRequestReviewAuditRequest(false, tkhCast)
 		diags.Append(d...)
-		obj["create_group_on_system_request"] = val
+		obj["review_audit_request"] = val
 	}
 	{
 		tkhCast, _ := tkh.(keyhubmodel.RequestAbstractOrganizationalUnitModificationRequestable)
 		val, d := tkhToTFObjectDSRequestAbstractOrganizationalUnitModificationRequest(false, tkhCast)
 		diags.Append(d...)
 		obj["abstract_organizational_unit_modification_request"] = val
-	}
-	{
-		tkhCast, _ := tkh.(keyhubmodel.RequestTransferOrganizationalUnitOwnershipRequestable)
-		val, d := tkhToTFObjectDSRequestTransferOrganizationalUnitOwnershipRequest(false, tkhCast)
-		diags.Append(d...)
-		obj["transfer_organizational_unit_ownership_request"] = val
 	}
 	{
 		tkhCast, _ := tkh.(keyhubmodel.RequestCreateGroupRequestable)
@@ -6874,28 +7893,28 @@ func tkhToTFObjectDSRequestModificationRequest(recurse bool, tkh keyhubmodel.Req
 		obj["grant_group_on_system_request"] = val
 	}
 	{
-		tkhCast, _ := tkh.(keyhubmodel.RequestTransferServiceAccountAdministrationRequestable)
-		val, d := tkhToTFObjectDSRequestTransferServiceAccountAdministrationRequest(false, tkhCast)
+		tkhCast, _ := tkh.(keyhubmodel.RequestVerifyInternalAccountRequestable)
+		val, d := tkhToTFObjectDSRequestVerifyInternalAccountRequest(false, tkhCast)
 		diags.Append(d...)
-		obj["transfer_service_account_administration_request"] = val
+		obj["verify_internal_account_request"] = val
 	}
 	{
-		tkhCast, _ := tkh.(keyhubmodel.RequestTransferApplicationOwnershipRequestable)
-		val, d := tkhToTFObjectDSRequestTransferApplicationOwnershipRequest(false, tkhCast)
+		tkhCast, _ := tkh.(keyhubmodel.RequestGrantClientPermissionRequestable)
+		val, d := tkhToTFObjectDSRequestGrantClientPermissionRequest(false, tkhCast)
 		diags.Append(d...)
-		obj["transfer_application_ownership_request"] = val
+		obj["grant_client_permission_request"] = val
 	}
 	{
-		tkhCast, _ := tkh.(keyhubmodel.RequestExtendAccessRequestable)
-		val, d := tkhToTFObjectDSRequestExtendAccessRequest(false, tkhCast)
+		tkhCast, _ := tkh.(keyhubmodel.RequestTransferOrganizationalUnitOwnershipRequestable)
+		val, d := tkhToTFObjectDSRequestTransferOrganizationalUnitOwnershipRequest(false, tkhCast)
 		diags.Append(d...)
-		obj["extend_access_request"] = val
+		obj["transfer_organizational_unit_ownership_request"] = val
 	}
 	{
-		tkhCast, _ := tkh.(keyhubmodel.RequestGrantAccessRequestable)
-		val, d := tkhToTFObjectDSRequestGrantAccessRequest(false, tkhCast)
+		tkhCast, _ := tkh.(keyhubmodel.RequestSetupNestedGroupRequestable)
+		val, d := tkhToTFObjectDSRequestSetupNestedGroupRequest(false, tkhCast)
 		diags.Append(d...)
-		obj["grant_access_request"] = val
+		obj["setup_nested_group_request"] = val
 	}
 	{
 		tkhCast, _ := tkh.(keyhubmodel.RequestJoinVaultRequestable)
@@ -6904,28 +7923,10 @@ func tkhToTFObjectDSRequestModificationRequest(recurse bool, tkh keyhubmodel.Req
 		obj["join_vault_request"] = val
 	}
 	{
-		tkhCast, _ := tkh.(keyhubmodel.RequestTransferAuditorGroupRequestable)
-		val, d := tkhToTFObjectDSRequestTransferAuditorGroupRequest(false, tkhCast)
+		tkhCast, _ := tkh.(keyhubmodel.RequestTransferServiceAccountAdministrationRequestable)
+		val, d := tkhToTFObjectDSRequestTransferServiceAccountAdministrationRequest(false, tkhCast)
 		diags.Append(d...)
-		obj["transfer_auditor_group_request"] = val
-	}
-	{
-		tkhCast, _ := tkh.(keyhubmodel.RequestTransferProvisionedSystemContentAdministrationRequestable)
-		val, d := tkhToTFObjectDSRequestTransferProvisionedSystemContentAdministrationRequest(false, tkhCast)
-		diags.Append(d...)
-		obj["transfer_provisioned_system_content_administration_request"] = val
-	}
-	{
-		tkhCast, _ := tkh.(keyhubmodel.RequestJoinGroupRequestable)
-		val, d := tkhToTFObjectDSRequestJoinGroupRequest(false, tkhCast)
-		diags.Append(d...)
-		obj["join_group_request"] = val
-	}
-	{
-		tkhCast, _ := tkh.(keyhubmodel.RequestCreateServiceAccountRequestable)
-		val, d := tkhToTFObjectDSRequestCreateServiceAccountRequest(false, tkhCast)
-		diags.Append(d...)
-		obj["create_service_account_request"] = val
+		obj["transfer_service_account_administration_request"] = val
 	}
 	{
 		tkhCast, _ := tkh.(keyhubmodel.RequestGrantApplicationRequestable)
@@ -6934,70 +7935,16 @@ func tkhToTFObjectDSRequestModificationRequest(recurse bool, tkh keyhubmodel.Req
 		obj["grant_application_request"] = val
 	}
 	{
-		tkhCast, _ := tkh.(keyhubmodel.RequestDisable2FARequestable)
-		val, d := tkhToTFObjectDSRequestDisable2FARequest(false, tkhCast)
+		tkhCast, _ := tkh.(keyhubmodel.RequestGrantAccessRequestable)
+		val, d := tkhToTFObjectDSRequestGrantAccessRequest(false, tkhCast)
 		diags.Append(d...)
-		obj["disable2fa_request"] = val
+		obj["grant_access_request"] = val
 	}
 	{
-		tkhCast, _ := tkh.(keyhubmodel.RequestVerifyInternalAccountRequestable)
-		val, d := tkhToTFObjectDSRequestVerifyInternalAccountRequest(false, tkhCast)
+		tkhCast, _ := tkh.(keyhubmodel.RequestTransferGroupOnSystemOwnershipRequestable)
+		val, d := tkhToTFObjectDSRequestTransferGroupOnSystemOwnershipRequest(false, tkhCast)
 		diags.Append(d...)
-		obj["verify_internal_account_request"] = val
-	}
-	{
-		tkhCast, _ := tkh.(keyhubmodel.RequestRemoveGroupRequestable)
-		val, d := tkhToTFObjectDSRequestRemoveGroupRequest(false, tkhCast)
-		diags.Append(d...)
-		obj["remove_group_request"] = val
-	}
-	{
-		tkhCast, _ := tkh.(keyhubmodel.RequestTransferProvisionedSystemOwnershipRequestable)
-		val, d := tkhToTFObjectDSRequestTransferProvisionedSystemOwnershipRequest(false, tkhCast)
-		diags.Append(d...)
-		obj["transfer_provisioned_system_ownership_request"] = val
-	}
-	{
-		tkhCast, _ := tkh.(keyhubmodel.RequestRemoveProvisionedSystemRequestable)
-		val, d := tkhToTFObjectDSRequestRemoveProvisionedSystemRequest(false, tkhCast)
-		diags.Append(d...)
-		obj["remove_provisioned_system_request"] = val
-	}
-	{
-		tkhCast, _ := tkh.(keyhubmodel.RequestRevokeAdminRequestable)
-		val, d := tkhToTFObjectDSRequestRevokeAdminRequest(false, tkhCast)
-		diags.Append(d...)
-		obj["revoke_admin_request"] = val
-	}
-	{
-		tkhCast, _ := tkh.(keyhubmodel.RequestTransferApplicationAdministrationRequestable)
-		val, d := tkhToTFObjectDSRequestTransferApplicationAdministrationRequest(false, tkhCast)
-		diags.Append(d...)
-		obj["transfer_application_administration_request"] = val
-	}
-	{
-		tkhCast, _ := tkh.(keyhubmodel.RequestTransferProvisionedSystemAdministrationRequestable)
-		val, d := tkhToTFObjectDSRequestTransferProvisionedSystemAdministrationRequest(false, tkhCast)
-		diags.Append(d...)
-		obj["transfer_provisioned_system_administration_request"] = val
-	}
-	{
-		tkhCast, _ := tkh.(keyhubmodel.RequestGrantServiceAccountGroupRequestable)
-		val, d := tkhToTFObjectDSRequestGrantServiceAccountGroupRequest(false, tkhCast)
-		diags.Append(d...)
-		obj["grant_service_account_group_request"] = val
-	}
-	{
-		tkhCast, _ := tkh.(keyhubmodel.RequestSetupAuthorizingGroupRequestable)
-		val, d := tkhToTFObjectDSRequestSetupAuthorizingGroupRequest(false, tkhCast)
-		diags.Append(d...)
-		obj["setup_authorizing_group_request"] = val
-	}
-	{
-		tkhCast, _ := tkh.(keyhubmodel.RequestGrantGroupOnSystemRequestRequestable)
-		val, d := tkhToTFObjectDSRequestGrantGroupOnSystemRequestRequest(false, tkhCast)
-		diags.Append(d...)
-		obj["grant_group_on_system_request_request"] = val
+		obj["transfer_group_on_system_ownership_request"] = val
 	}
 	{
 		tkhCast, _ := tkh.(keyhubmodel.RequestAddGroupAdminRequestable)
@@ -7006,16 +7953,52 @@ func tkhToTFObjectDSRequestModificationRequest(recurse bool, tkh keyhubmodel.Req
 		obj["add_group_admin_request"] = val
 	}
 	{
-		tkhCast, _ := tkh.(keyhubmodel.RequestEnableTechnicalAdministrationRequestable)
-		val, d := tkhToTFObjectDSRequestEnableTechnicalAdministrationRequest(false, tkhCast)
+		tkhCast, _ := tkh.(keyhubmodel.RequestExtendAccessRequestable)
+		val, d := tkhToTFObjectDSRequestExtendAccessRequest(false, tkhCast)
 		diags.Append(d...)
-		obj["enable_technical_administration_request"] = val
+		obj["extend_access_request"] = val
 	}
 	{
-		tkhCast, _ := tkh.(keyhubmodel.RequestPasswordResetRequestable)
-		val, d := tkhToTFObjectDSRequestPasswordResetRequest(false, tkhCast)
+		tkhCast, _ := tkh.(keyhubmodel.RequestTransferProvisionedSystemContentAdministrationRequestable)
+		val, d := tkhToTFObjectDSRequestTransferProvisionedSystemContentAdministrationRequest(false, tkhCast)
 		diags.Append(d...)
-		obj["password_reset_request"] = val
+		obj["transfer_provisioned_system_content_administration_request"] = val
+	}
+	{
+		tkhCast, _ := tkh.(keyhubmodel.RequestUpdateGroupMembershipRequestable)
+		val, d := tkhToTFObjectDSRequestUpdateGroupMembershipRequest(false, tkhCast)
+		diags.Append(d...)
+		obj["update_group_membership_request"] = val
+	}
+	{
+		tkhCast, _ := tkh.(keyhubmodel.RequestTransferAuditorGroupRequestable)
+		val, d := tkhToTFObjectDSRequestTransferAuditorGroupRequest(false, tkhCast)
+		diags.Append(d...)
+		obj["transfer_auditor_group_request"] = val
+	}
+	{
+		tkhCast, _ := tkh.(keyhubmodel.RequestTransferApplicationOwnershipRequestable)
+		val, d := tkhToTFObjectDSRequestTransferApplicationOwnershipRequest(false, tkhCast)
+		diags.Append(d...)
+		obj["transfer_application_ownership_request"] = val
+	}
+	{
+		tkhCast, _ := tkh.(keyhubmodel.RequestRemoveGroupRequestable)
+		val, d := tkhToTFObjectDSRequestRemoveGroupRequest(false, tkhCast)
+		diags.Append(d...)
+		obj["remove_group_request"] = val
+	}
+	{
+		tkhCast, _ := tkh.(keyhubmodel.RequestSetupAuthorizingGroupRequestable)
+		val, d := tkhToTFObjectDSRequestSetupAuthorizingGroupRequest(false, tkhCast)
+		diags.Append(d...)
+		obj["setup_authorizing_group_request"] = val
+	}
+	{
+		tkhCast, _ := tkh.(keyhubmodel.RequestCreateGroupOnSystemRequestable)
+		val, d := tkhToTFObjectDSRequestCreateGroupOnSystemRequest(false, tkhCast)
+		diags.Append(d...)
+		obj["create_group_on_system_request"] = val
 	}
 	{
 		tkhCast, _ := tkh.(keyhubmodel.RequestRemoveOrganizationalUnitRequestable)
@@ -7024,10 +8007,28 @@ func tkhToTFObjectDSRequestModificationRequest(recurse bool, tkh keyhubmodel.Req
 		obj["remove_organizational_unit_request"] = val
 	}
 	{
-		tkhCast, _ := tkh.(keyhubmodel.RequestUpdateGroupMembershipRequestable)
-		val, d := tkhToTFObjectDSRequestUpdateGroupMembershipRequest(false, tkhCast)
+		tkhCast, _ := tkh.(keyhubmodel.RequestGrantServiceAccountGroupRequestable)
+		val, d := tkhToTFObjectDSRequestGrantServiceAccountGroupRequest(false, tkhCast)
 		diags.Append(d...)
-		obj["update_group_membership_request"] = val
+		obj["grant_service_account_group_request"] = val
+	}
+	{
+		tkhCast, _ := tkh.(keyhubmodel.RequestDisable2FARequestable)
+		val, d := tkhToTFObjectDSRequestDisable2FARequest(false, tkhCast)
+		diags.Append(d...)
+		obj["disable2fa_request"] = val
+	}
+	{
+		tkhCast, _ := tkh.(keyhubmodel.RequestJoinGroupRequestable)
+		val, d := tkhToTFObjectDSRequestJoinGroupRequest(false, tkhCast)
+		diags.Append(d...)
+		obj["join_group_request"] = val
+	}
+	{
+		tkhCast, _ := tkh.(keyhubmodel.RequestEnableTechnicalAdministrationRequestable)
+		val, d := tkhToTFObjectDSRequestEnableTechnicalAdministrationRequest(false, tkhCast)
+		diags.Append(d...)
+		obj["enable_technical_administration_request"] = val
 	}
 
 	objVal, d := types.ObjectValue(attrs, obj)
@@ -7848,6 +8849,11 @@ func tkhToTFObjectDSServiceaccountServiceAccount_additionalObjects(recurse bool,
 		diags.Append(d...)
 		obj["groups"] = val
 	}
+	{
+		val, d := tkhToTFObjectDSGeneratedSecret(recurse, tkh.GetSecret())
+		diags.Append(d...)
+		obj["secret"] = val
+	}
 
 	objVal, d := types.ObjectValue(attrs, obj)
 	diags.Append(d...)
@@ -8154,6 +9160,34 @@ func tkhToTFObjectDSVaultMoveVaultRecord_shareDuration(recurse bool, tkh keyhubm
 	obj := make(map[string]attr.Value)
 	obj["nanos"] = types.Int64PointerValue(int32PToInt64P(tkh.GetNanos()))
 	obj["seconds"] = types.Int64PointerValue(tkh.GetSeconds())
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
+func tkhToTFObjectDSVaultPasswordMetadata(recurse bool, tkh keyhubmodel.VaultPasswordMetadataable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = vaultPasswordMetadataAttrTypesDSRecurse
+	} else {
+		attrs = vaultPasswordMetadataAttrTypesDS
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	obj["dictionary"] = types.BoolPointerValue(tkh.GetDictionary())
+	obj["duplicate"] = types.BoolPointerValue(tkh.GetDuplicate())
+	obj["hash"] = types.StringPointerValue(tkh.GetHash())
+	obj["length"] = types.Int64PointerValue(int32PToInt64P(tkh.GetLength()))
+	obj["lower_count"] = types.Int64PointerValue(int32PToInt64P(tkh.GetLowerCount()))
+	obj["number_count"] = types.Int64PointerValue(int32PToInt64P(tkh.GetNumberCount()))
+	obj["special_count"] = types.Int64PointerValue(int32PToInt64P(tkh.GetSpecialCount()))
+	obj["strength"] = types.Int64PointerValue(int32PToInt64P(tkh.GetStrength()))
+	obj["upper_count"] = types.Int64PointerValue(int32PToInt64P(tkh.GetUpperCount()))
 
 	objVal, d := types.ObjectValue(attrs, obj)
 	diags.Append(d...)
@@ -8496,6 +9530,11 @@ func tkhToTFObjectDSVaultVaultRecord_additionalObjects(recurse bool, tkh keyhubm
 		val, d := tkhToTFObjectDSVaultVaultRecordPrimer(recurse, tkh.GetParent())
 		diags.Append(d...)
 		obj["parent"] = val
+	}
+	{
+		val, d := tkhToTFObjectDSVaultPasswordMetadata(recurse, tkh.GetPasswordMetadata())
+		diags.Append(d...)
+		obj["password_metadata"] = val
 	}
 	{
 		val, d := tkhToTFObjectDSVaultVaultRecordSecrets(recurse, tkh.GetSecret())

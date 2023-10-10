@@ -48,6 +48,7 @@ Read-Only:
 - `audit` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--audit))
 - `groupclients` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--groupclients))
 - `groups` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--groups))
+- `secret` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--secret))
 - `tile` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--tile))
 - `vault_record_count` (Number)
 
@@ -582,6 +583,16 @@ Read-Only:
 - `type_escaped` (String)
 
 
+
+
+<a id="nestedatt--additional_objects--secret"></a>
+### Nested Schema for `additional_objects.secret`
+
+Read-Only:
+
+- `generated_secret` (String)
+- `old_secret` (String)
+- `regenerate` (Boolean)
 
 
 <a id="nestedatt--additional_objects--tile"></a>
