@@ -3,12 +3,12 @@
 page_title: "keyhubpreview_group Resource - terraform-provider-keyhubpreview"
 subcategory: ""
 description: |-
-  Group resource
+  
 ---
 
 # keyhubpreview_group (Resource)
 
-Group resource
+
 
 
 

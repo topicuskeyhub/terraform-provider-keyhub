@@ -1443,8 +1443,8 @@ func resourceSchemaAttrsDirectoryAccountDirectory(recurse bool) map[string]rssch
 		Optional: true,
 		Default:  booldefault.StaticBool(false),
 	}
-	schemaAttrs["maintenance_directory"] = rsschema.SingleNestedAttribute{
-		Attributes: resourceSchemaAttrsDirectoryMaintenanceDirectory(false),
+	schemaAttrs["internal_directory"] = rsschema.SingleNestedAttribute{
+		Attributes: resourceSchemaAttrsDirectoryInternalDirectory(false),
 		Optional:   true,
 	}
 	schemaAttrs["o_id_c_directory"] = rsschema.SingleNestedAttribute{
@@ -1455,8 +1455,8 @@ func resourceSchemaAttrsDirectoryAccountDirectory(recurse bool) map[string]rssch
 		Attributes: resourceSchemaAttrsDirectoryLDAPDirectory(false),
 		Optional:   true,
 	}
-	schemaAttrs["internal_directory"] = rsschema.SingleNestedAttribute{
-		Attributes: resourceSchemaAttrsDirectoryInternalDirectory(false),
+	schemaAttrs["maintenance_directory"] = rsschema.SingleNestedAttribute{
+		Attributes: resourceSchemaAttrsDirectoryMaintenanceDirectory(false),
 		Optional:   true,
 	}
 	return schemaAttrs
@@ -2935,16 +2935,16 @@ func resourceSchemaAttrsLaunchpadLaunchpadTile(recurse bool) map[string]rsschema
 	schemaAttrs["vault_record_uuid"] = rsschema.StringAttribute{
 		Optional: true,
 	}
-	schemaAttrs["sso_application_launchpad_tile"] = rsschema.SingleNestedAttribute{
-		Attributes: resourceSchemaAttrsLaunchpadSsoApplicationLaunchpadTile(false),
-		Optional:   true,
-	}
 	schemaAttrs["vault_record_launchpad_tile"] = rsschema.SingleNestedAttribute{
 		Attributes: resourceSchemaAttrsLaunchpadVaultRecordLaunchpadTile(false),
 		Optional:   true,
 	}
 	schemaAttrs["manual_launchpad_tile"] = rsschema.SingleNestedAttribute{
 		Attributes: resourceSchemaAttrsLaunchpadManualLaunchpadTile(false),
+		Optional:   true,
+	}
+	schemaAttrs["sso_application_launchpad_tile"] = rsschema.SingleNestedAttribute{
+		Attributes: resourceSchemaAttrsLaunchpadSsoApplicationLaunchpadTile(false),
 		Optional:   true,
 	}
 	return schemaAttrs
@@ -4417,10 +4417,6 @@ func resourceSchemaAttrsProvisioningProvisionedSystem(recurse bool) map[string]r
 	schemaAttrs["username_prefix"] = rsschema.StringAttribute{
 		Optional: true,
 	}
-	schemaAttrs["provisioned_azure_oidc_directory"] = rsschema.SingleNestedAttribute{
-		Attributes: resourceSchemaAttrsProvisioningProvisionedAzureOIDCDirectory(false),
-		Optional:   true,
-	}
 	schemaAttrs["provisioned_internal_ldap"] = rsschema.SingleNestedAttribute{
 		Attributes: resourceSchemaAttrsProvisioningProvisionedInternalLDAP(false),
 		Optional:   true,
@@ -4433,20 +4429,24 @@ func resourceSchemaAttrsProvisioningProvisionedSystem(recurse bool) map[string]r
 		Attributes: resourceSchemaAttrsProvisioningProvisionedLDAP(false),
 		Optional:   true,
 	}
-	schemaAttrs["provisioned_azure_sync_ldap_directory"] = rsschema.SingleNestedAttribute{
-		Attributes: resourceSchemaAttrsProvisioningProvisionedAzureSyncLDAPDirectory(false),
-		Optional:   true,
-	}
 	schemaAttrs["provisioned_ldap_directory"] = rsschema.SingleNestedAttribute{
 		Attributes: resourceSchemaAttrsProvisioningProvisionedLDAPDirectory(false),
+		Optional:   true,
+	}
+	schemaAttrs["provisioned_azure_tenant"] = rsschema.SingleNestedAttribute{
+		Attributes: resourceSchemaAttrsProvisioningProvisionedAzureTenant(false),
 		Optional:   true,
 	}
 	schemaAttrs["provisioned_a_d"] = rsschema.SingleNestedAttribute{
 		Attributes: resourceSchemaAttrsProvisioningProvisionedAD(false),
 		Optional:   true,
 	}
-	schemaAttrs["provisioned_azure_tenant"] = rsschema.SingleNestedAttribute{
-		Attributes: resourceSchemaAttrsProvisioningProvisionedAzureTenant(false),
+	schemaAttrs["provisioned_azure_oidc_directory"] = rsschema.SingleNestedAttribute{
+		Attributes: resourceSchemaAttrsProvisioningProvisionedAzureOIDCDirectory(false),
+		Optional:   true,
+	}
+	schemaAttrs["provisioned_azure_sync_ldap_directory"] = rsschema.SingleNestedAttribute{
+		Attributes: resourceSchemaAttrsProvisioningProvisionedAzureSyncLDAPDirectory(false),
 		Optional:   true,
 	}
 	return schemaAttrs
@@ -4879,8 +4879,32 @@ func resourceSchemaAttrsRequestModificationRequest(recurse bool) map[string]rssc
 		Attributes: resourceSchemaAttrsRequestAbstractOrganizationalUnitModificationRequest(false),
 		Optional:   true,
 	}
-	schemaAttrs["create_group_request"] = rsschema.SingleNestedAttribute{
-		Attributes: resourceSchemaAttrsRequestCreateGroupRequest(false),
+	schemaAttrs["transfer_organizational_unit_ownership_request"] = rsschema.SingleNestedAttribute{
+		Attributes: resourceSchemaAttrsRequestTransferOrganizationalUnitOwnershipRequest(false),
+		Optional:   true,
+	}
+	schemaAttrs["abstract_provisioned_system_modification_request"] = rsschema.SingleNestedAttribute{
+		Attributes: resourceSchemaAttrsRequestAbstractProvisionedSystemModificationRequest(false),
+		Optional:   true,
+	}
+	schemaAttrs["create_service_account_request"] = rsschema.SingleNestedAttribute{
+		Attributes: resourceSchemaAttrsRequestCreateServiceAccountRequest(false),
+		Optional:   true,
+	}
+	schemaAttrs["setup_authorizing_group_request"] = rsschema.SingleNestedAttribute{
+		Attributes: resourceSchemaAttrsRequestSetupAuthorizingGroupRequest(false),
+		Optional:   true,
+	}
+	schemaAttrs["grant_service_account_group_request"] = rsschema.SingleNestedAttribute{
+		Attributes: resourceSchemaAttrsRequestGrantServiceAccountGroupRequest(false),
+		Optional:   true,
+	}
+	schemaAttrs["grant_group_on_system_request_request"] = rsschema.SingleNestedAttribute{
+		Attributes: resourceSchemaAttrsRequestGrantGroupOnSystemRequestRequest(false),
+		Optional:   true,
+	}
+	schemaAttrs["transfer_auditor_group_request"] = rsschema.SingleNestedAttribute{
+		Attributes: resourceSchemaAttrsRequestTransferAuditorGroupRequest(false),
 		Optional:   true,
 	}
 	schemaAttrs["abstract_application_modification_request"] = rsschema.SingleNestedAttribute{
@@ -4891,136 +4915,112 @@ func resourceSchemaAttrsRequestModificationRequest(recurse bool) map[string]rssc
 		Attributes: resourceSchemaAttrsRequestTransferApplicationOwnershipRequest(false),
 		Optional:   true,
 	}
-	schemaAttrs["grant_client_permission_request"] = rsschema.SingleNestedAttribute{
-		Attributes: resourceSchemaAttrsRequestGrantClientPermissionRequest(false),
-		Optional:   true,
-	}
-	schemaAttrs["join_group_request"] = rsschema.SingleNestedAttribute{
-		Attributes: resourceSchemaAttrsRequestJoinGroupRequest(false),
-		Optional:   true,
-	}
-	schemaAttrs["abstract_provisioned_system_modification_request"] = rsschema.SingleNestedAttribute{
-		Attributes: resourceSchemaAttrsRequestAbstractProvisionedSystemModificationRequest(false),
+	schemaAttrs["transfer_service_account_administration_request"] = rsschema.SingleNestedAttribute{
+		Attributes: resourceSchemaAttrsRequestTransferServiceAccountAdministrationRequest(false),
 		Optional:   true,
 	}
 	schemaAttrs["transfer_provisioned_system_content_administration_request"] = rsschema.SingleNestedAttribute{
 		Attributes: resourceSchemaAttrsRequestTransferProvisionedSystemContentAdministrationRequest(false),
 		Optional:   true,
 	}
-	schemaAttrs["grant_group_on_system_request"] = rsschema.SingleNestedAttribute{
-		Attributes: resourceSchemaAttrsRequestGrantGroupOnSystemRequest(false),
+	schemaAttrs["remove_group_request"] = rsschema.SingleNestedAttribute{
+		Attributes: resourceSchemaAttrsRequestRemoveGroupRequest(false),
 		Optional:   true,
 	}
-	schemaAttrs["transfer_provisioned_system_ownership_request"] = rsschema.SingleNestedAttribute{
-		Attributes: resourceSchemaAttrsRequestTransferProvisionedSystemOwnershipRequest(false),
-		Optional:   true,
-	}
-	schemaAttrs["grant_service_account_group_request"] = rsschema.SingleNestedAttribute{
-		Attributes: resourceSchemaAttrsRequestGrantServiceAccountGroupRequest(false),
-		Optional:   true,
-	}
-	schemaAttrs["disable2fa_request"] = rsschema.SingleNestedAttribute{
-		Attributes: resourceSchemaAttrsRequestDisable2FARequest(false),
-		Optional:   true,
-	}
-	schemaAttrs["remove_provisioned_system_request"] = rsschema.SingleNestedAttribute{
-		Attributes: resourceSchemaAttrsRequestRemoveProvisionedSystemRequest(false),
-		Optional:   true,
-	}
-	schemaAttrs["transfer_service_account_administration_request"] = rsschema.SingleNestedAttribute{
-		Attributes: resourceSchemaAttrsRequestTransferServiceAccountAdministrationRequest(false),
-		Optional:   true,
-	}
-	schemaAttrs["password_reset_request"] = rsschema.SingleNestedAttribute{
-		Attributes: resourceSchemaAttrsRequestPasswordResetRequest(false),
-		Optional:   true,
-	}
-	schemaAttrs["transfer_auditor_group_request"] = rsschema.SingleNestedAttribute{
-		Attributes: resourceSchemaAttrsRequestTransferAuditorGroupRequest(false),
-		Optional:   true,
-	}
-	schemaAttrs["update_group_membership_request"] = rsschema.SingleNestedAttribute{
-		Attributes: resourceSchemaAttrsRequestUpdateGroupMembershipRequest(false),
-		Optional:   true,
-	}
-	schemaAttrs["add_group_admin_request"] = rsschema.SingleNestedAttribute{
-		Attributes: resourceSchemaAttrsRequestAddGroupAdminRequest(false),
-		Optional:   true,
-	}
-	schemaAttrs["remove_organizational_unit_request"] = rsschema.SingleNestedAttribute{
-		Attributes: resourceSchemaAttrsRequestRemoveOrganizationalUnitRequest(false),
-		Optional:   true,
-	}
-	schemaAttrs["transfer_provisioned_system_administration_request"] = rsschema.SingleNestedAttribute{
-		Attributes: resourceSchemaAttrsRequestTransferProvisionedSystemAdministrationRequest(false),
-		Optional:   true,
-	}
-	schemaAttrs["verify_internal_account_request"] = rsschema.SingleNestedAttribute{
-		Attributes: resourceSchemaAttrsRequestVerifyInternalAccountRequest(false),
-		Optional:   true,
-	}
-	schemaAttrs["transfer_application_administration_request"] = rsschema.SingleNestedAttribute{
-		Attributes: resourceSchemaAttrsRequestTransferApplicationAdministrationRequest(false),
-		Optional:   true,
-	}
-	schemaAttrs["extend_access_request"] = rsschema.SingleNestedAttribute{
-		Attributes: resourceSchemaAttrsRequestExtendAccessRequest(false),
-		Optional:   true,
-	}
-	schemaAttrs["grant_group_on_system_request_request"] = rsschema.SingleNestedAttribute{
-		Attributes: resourceSchemaAttrsRequestGrantGroupOnSystemRequestRequest(false),
-		Optional:   true,
-	}
-	schemaAttrs["join_vault_request"] = rsschema.SingleNestedAttribute{
-		Attributes: resourceSchemaAttrsRequestJoinVaultRequest(false),
+	schemaAttrs["join_group_request"] = rsschema.SingleNestedAttribute{
+		Attributes: resourceSchemaAttrsRequestJoinGroupRequest(false),
 		Optional:   true,
 	}
 	schemaAttrs["grant_access_request"] = rsschema.SingleNestedAttribute{
 		Attributes: resourceSchemaAttrsRequestGrantAccessRequest(false),
 		Optional:   true,
 	}
-	schemaAttrs["revoke_admin_request"] = rsschema.SingleNestedAttribute{
-		Attributes: resourceSchemaAttrsRequestRevokeAdminRequest(false),
-		Optional:   true,
-	}
-	schemaAttrs["setup_authorizing_group_request"] = rsschema.SingleNestedAttribute{
-		Attributes: resourceSchemaAttrsRequestSetupAuthorizingGroupRequest(false),
-		Optional:   true,
-	}
-	schemaAttrs["transfer_organizational_unit_ownership_request"] = rsschema.SingleNestedAttribute{
-		Attributes: resourceSchemaAttrsRequestTransferOrganizationalUnitOwnershipRequest(false),
-		Optional:   true,
-	}
-	schemaAttrs["create_service_account_request"] = rsschema.SingleNestedAttribute{
-		Attributes: resourceSchemaAttrsRequestCreateServiceAccountRequest(false),
-		Optional:   true,
-	}
-	schemaAttrs["create_group_on_system_request"] = rsschema.SingleNestedAttribute{
-		Attributes: resourceSchemaAttrsRequestCreateGroupOnSystemRequest(false),
-		Optional:   true,
-	}
 	schemaAttrs["review_audit_request"] = rsschema.SingleNestedAttribute{
 		Attributes: resourceSchemaAttrsRequestReviewAuditRequest(false),
 		Optional:   true,
 	}
-	schemaAttrs["enable_technical_administration_request"] = rsschema.SingleNestedAttribute{
-		Attributes: resourceSchemaAttrsRequestEnableTechnicalAdministrationRequest(false),
-		Optional:   true,
-	}
-	schemaAttrs["setup_nested_group_request"] = rsschema.SingleNestedAttribute{
-		Attributes: resourceSchemaAttrsRequestSetupNestedGroupRequest(false),
+	schemaAttrs["grant_client_permission_request"] = rsschema.SingleNestedAttribute{
+		Attributes: resourceSchemaAttrsRequestGrantClientPermissionRequest(false),
 		Optional:   true,
 	}
 	schemaAttrs["transfer_group_on_system_ownership_request"] = rsschema.SingleNestedAttribute{
 		Attributes: resourceSchemaAttrsRequestTransferGroupOnSystemOwnershipRequest(false),
 		Optional:   true,
 	}
-	schemaAttrs["remove_group_request"] = rsschema.SingleNestedAttribute{
-		Attributes: resourceSchemaAttrsRequestRemoveGroupRequest(false),
+	schemaAttrs["transfer_provisioned_system_ownership_request"] = rsschema.SingleNestedAttribute{
+		Attributes: resourceSchemaAttrsRequestTransferProvisionedSystemOwnershipRequest(false),
 		Optional:   true,
 	}
 	schemaAttrs["grant_application_request"] = rsschema.SingleNestedAttribute{
 		Attributes: resourceSchemaAttrsRequestGrantApplicationRequest(false),
+		Optional:   true,
+	}
+	schemaAttrs["transfer_provisioned_system_administration_request"] = rsschema.SingleNestedAttribute{
+		Attributes: resourceSchemaAttrsRequestTransferProvisionedSystemAdministrationRequest(false),
+		Optional:   true,
+	}
+	schemaAttrs["extend_access_request"] = rsschema.SingleNestedAttribute{
+		Attributes: resourceSchemaAttrsRequestExtendAccessRequest(false),
+		Optional:   true,
+	}
+	schemaAttrs["create_group_on_system_request"] = rsschema.SingleNestedAttribute{
+		Attributes: resourceSchemaAttrsRequestCreateGroupOnSystemRequest(false),
+		Optional:   true,
+	}
+	schemaAttrs["add_group_admin_request"] = rsschema.SingleNestedAttribute{
+		Attributes: resourceSchemaAttrsRequestAddGroupAdminRequest(false),
+		Optional:   true,
+	}
+	schemaAttrs["join_vault_request"] = rsschema.SingleNestedAttribute{
+		Attributes: resourceSchemaAttrsRequestJoinVaultRequest(false),
+		Optional:   true,
+	}
+	schemaAttrs["grant_group_on_system_request"] = rsschema.SingleNestedAttribute{
+		Attributes: resourceSchemaAttrsRequestGrantGroupOnSystemRequest(false),
+		Optional:   true,
+	}
+	schemaAttrs["remove_provisioned_system_request"] = rsschema.SingleNestedAttribute{
+		Attributes: resourceSchemaAttrsRequestRemoveProvisionedSystemRequest(false),
+		Optional:   true,
+	}
+	schemaAttrs["setup_nested_group_request"] = rsschema.SingleNestedAttribute{
+		Attributes: resourceSchemaAttrsRequestSetupNestedGroupRequest(false),
+		Optional:   true,
+	}
+	schemaAttrs["transfer_application_administration_request"] = rsschema.SingleNestedAttribute{
+		Attributes: resourceSchemaAttrsRequestTransferApplicationAdministrationRequest(false),
+		Optional:   true,
+	}
+	schemaAttrs["create_group_request"] = rsschema.SingleNestedAttribute{
+		Attributes: resourceSchemaAttrsRequestCreateGroupRequest(false),
+		Optional:   true,
+	}
+	schemaAttrs["revoke_admin_request"] = rsschema.SingleNestedAttribute{
+		Attributes: resourceSchemaAttrsRequestRevokeAdminRequest(false),
+		Optional:   true,
+	}
+	schemaAttrs["password_reset_request"] = rsschema.SingleNestedAttribute{
+		Attributes: resourceSchemaAttrsRequestPasswordResetRequest(false),
+		Optional:   true,
+	}
+	schemaAttrs["enable_technical_administration_request"] = rsschema.SingleNestedAttribute{
+		Attributes: resourceSchemaAttrsRequestEnableTechnicalAdministrationRequest(false),
+		Optional:   true,
+	}
+	schemaAttrs["update_group_membership_request"] = rsschema.SingleNestedAttribute{
+		Attributes: resourceSchemaAttrsRequestUpdateGroupMembershipRequest(false),
+		Optional:   true,
+	}
+	schemaAttrs["remove_organizational_unit_request"] = rsschema.SingleNestedAttribute{
+		Attributes: resourceSchemaAttrsRequestRemoveOrganizationalUnitRequest(false),
+		Optional:   true,
+	}
+	schemaAttrs["verify_internal_account_request"] = rsschema.SingleNestedAttribute{
+		Attributes: resourceSchemaAttrsRequestVerifyInternalAccountRequest(false),
+		Optional:   true,
+	}
+	schemaAttrs["disable2fa_request"] = rsschema.SingleNestedAttribute{
+		Attributes: resourceSchemaAttrsRequestDisable2FARequest(false),
 		Optional:   true,
 	}
 	return schemaAttrs
