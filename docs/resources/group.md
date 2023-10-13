@@ -104,16 +104,16 @@ Required:
 
 Optional:
 
-- `directory_uuid` (String)
 - `end_date` (String)
-- `two_factor_status` (String)
 
 Read-Only:
 
+- `directory_uuid` (String)
 - `disconnected_nested` (Boolean)
 - `last_used` (String)
 - `nested` (Boolean)
 - `provisioning_end_time` (String)
+- `two_factor_status` (String)
 - `visible_for_provisioning` (Boolean)
 
 
@@ -135,16 +135,16 @@ Required:
 
 Optional:
 
-- `directory_uuid` (String)
 - `end_date` (String)
-- `two_factor_status` (String)
 
 Read-Only:
 
+- `directory_uuid` (String)
 - `disconnected_nested` (Boolean)
 - `last_used` (String)
 - `nested` (Boolean)
 - `provisioning_end_time` (String)
+- `two_factor_status` (String)
 - `visible_for_provisioning` (Boolean)
 
 
@@ -187,13 +187,13 @@ Optional:
 - `initiate_login_uri` (String)
 - `resource_uris` (String)
 - `share_secret_in_vault` (Boolean)
-- `shared_secret_uuid` (String)
 - `show_landing_page` (Boolean)
 - `use_client_credentials` (Boolean)
 
 Read-Only:
 
 - `account_permissions` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--client_permissions--items--permissions--account_permissions))
+- `shared_secret_uuid` (String)
 
 <a id="nestedatt--additional_objects--client_permissions--items--permissions--attributes"></a>
 ### Nested Schema for `additional_objects.client_permissions.items.permissions.attributes`
@@ -214,7 +214,7 @@ Optional:
 <a id="nestedatt--additional_objects--client_permissions--items--links"></a>
 ### Nested Schema for `additional_objects.client_permissions.items.permissions`
 
-Optional:
+Read-Only:
 
 - `href` (String)
 - `id` (Number)
@@ -247,7 +247,6 @@ Optional:
 
 Required:
 
-- `client_client_application_primer_type` (String)
 - `name` (String)
 
 Optional:
@@ -262,6 +261,7 @@ Optional:
 
 Read-Only:
 
+- `client_client_application_primer_type` (String)
 - `last_modified_at` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--administered_clients--items--links))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--administered_clients--items--permissions))
@@ -275,11 +275,11 @@ Optional:
 
 - `client_certificate_uuid` (String)
 - `share_secret_in_vault` (Boolean)
-- `shared_secret_uuid` (String)
 
 Read-Only:
 
 - `bind_dn` (String)
+- `shared_secret_uuid` (String)
 - `used_for_provisioning` (Boolean)
 
 
@@ -296,13 +296,13 @@ Optional:
 - `initiate_login_uri` (String)
 - `resource_uris` (String)
 - `share_secret_in_vault` (Boolean)
-- `shared_secret_uuid` (String)
 - `show_landing_page` (Boolean)
 - `use_client_credentials` (Boolean)
 
 Read-Only:
 
 - `account_permissions` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--administered_clients--items--uuid--account_permissions))
+- `shared_secret_uuid` (String)
 
 <a id="nestedatt--additional_objects--administered_clients--items--uuid--attributes"></a>
 ### Nested Schema for `additional_objects.administered_clients.items.uuid.attributes`
@@ -341,7 +341,7 @@ Optional:
 <a id="nestedatt--additional_objects--administered_clients--items--links"></a>
 ### Nested Schema for `additional_objects.administered_clients.items.uuid`
 
-Optional:
+Read-Only:
 
 - `href` (String)
 - `id` (Number)
@@ -391,7 +391,6 @@ Optional:
 - `provisioned_internal_ldap` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--administered_systems--items--provisioned_internal_ldap))
 - `provisioned_ldap` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--administered_systems--items--provisioned_ldap))
 - `provisioned_ldap_directory` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--administered_systems--items--provisioned_ldap_directory))
-- `provisioning_provisioned_system_primer_type` (String)
 - `self_service_existing_groups` (Boolean)
 - `self_service_new_groups` (Boolean)
 - `self_service_service_accounts` (Boolean)
@@ -404,6 +403,7 @@ Read-Only:
 - `external_uuid` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--administered_systems--items--links))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--administered_systems--items--permissions))
+- `provisioning_provisioned_system_primer_type` (String)
 - `uuid` (String)
 
 <a id="nestedatt--additional_objects--administered_systems--items--abstract_provisioned_ldap"></a>
@@ -492,11 +492,11 @@ Optional:
 
 - `client_certificate_uuid` (String)
 - `share_secret_in_vault` (Boolean)
-- `shared_secret_uuid` (String)
 
 Read-Only:
 
 - `bind_dn` (String)
+- `shared_secret_uuid` (String)
 - `used_for_provisioning` (Boolean)
 
 
@@ -533,7 +533,7 @@ Read-Only:
 <a id="nestedatt--additional_objects--administered_systems--items--uuid--numbering--links"></a>
 ### Nested Schema for `additional_objects.administered_systems.items.uuid.numbering.permissions`
 
-Optional:
+Read-Only:
 
 - `href` (String)
 - `id` (Number)
@@ -566,7 +566,7 @@ Required:
 <a id="nestedatt--additional_objects--administered_systems--items--links"></a>
 ### Nested Schema for `additional_objects.administered_systems.items.uuid`
 
-Optional:
+Read-Only:
 
 - `href` (String)
 - `id` (Number)
@@ -659,7 +659,7 @@ Read-Only:
 <a id="nestedatt--additional_objects--authorized_groups--items--uuid--links"></a>
 ### Nested Schema for `additional_objects.authorized_groups.items.uuid.links`
 
-Optional:
+Read-Only:
 
 - `href` (String)
 - `id` (Number)
@@ -682,7 +682,7 @@ Optional:
 <a id="nestedatt--additional_objects--authorized_groups--items--links"></a>
 ### Nested Schema for `additional_objects.authorized_groups.items.uuid`
 
-Optional:
+Read-Only:
 
 - `href` (String)
 - `id` (Number)
@@ -716,20 +716,20 @@ Optional:
 Optional:
 
 - `activation_required` (Boolean)
-- `owner_uuid` (String)
-- `technical_administrator_uuid` (String)
 
 Read-Only:
 
 - `client_uuid` (String)
 - `group_uuid` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--clients--items--links))
+- `owner_uuid` (String)
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--clients--items--permissions))
+- `technical_administrator_uuid` (String)
 
 <a id="nestedatt--additional_objects--clients--items--links"></a>
-### Nested Schema for `additional_objects.clients.items.permissions`
+### Nested Schema for `additional_objects.clients.items.technical_administrator_uuid`
 
-Optional:
+Read-Only:
 
 - `href` (String)
 - `id` (Number)
@@ -738,7 +738,7 @@ Optional:
 
 
 <a id="nestedatt--additional_objects--clients--items--permissions"></a>
-### Nested Schema for `additional_objects.clients.items.permissions`
+### Nested Schema for `additional_objects.clients.items.technical_administrator_uuid`
 
 Optional:
 
@@ -779,7 +779,6 @@ Optional:
 - `provisioned_internal_ldap` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--content_administered_systems--items--provisioned_internal_ldap))
 - `provisioned_ldap` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--content_administered_systems--items--provisioned_ldap))
 - `provisioned_ldap_directory` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--content_administered_systems--items--provisioned_ldap_directory))
-- `provisioning_provisioned_system_primer_type` (String)
 - `self_service_existing_groups` (Boolean)
 - `self_service_new_groups` (Boolean)
 - `self_service_service_accounts` (Boolean)
@@ -792,6 +791,7 @@ Read-Only:
 - `external_uuid` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--content_administered_systems--items--links))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--content_administered_systems--items--permissions))
+- `provisioning_provisioned_system_primer_type` (String)
 - `uuid` (String)
 
 <a id="nestedatt--additional_objects--content_administered_systems--items--abstract_provisioned_ldap"></a>
@@ -880,11 +880,11 @@ Optional:
 
 - `client_certificate_uuid` (String)
 - `share_secret_in_vault` (Boolean)
-- `shared_secret_uuid` (String)
 
 Read-Only:
 
 - `bind_dn` (String)
+- `shared_secret_uuid` (String)
 - `used_for_provisioning` (Boolean)
 
 
@@ -921,7 +921,7 @@ Read-Only:
 <a id="nestedatt--additional_objects--content_administered_systems--items--uuid--numbering--links"></a>
 ### Nested Schema for `additional_objects.content_administered_systems.items.uuid.numbering.permissions`
 
-Optional:
+Read-Only:
 
 - `href` (String)
 - `id` (Number)
@@ -954,7 +954,7 @@ Required:
 <a id="nestedatt--additional_objects--content_administered_systems--items--links"></a>
 ### Nested Schema for `additional_objects.content_administered_systems.items.uuid`
 
-Optional:
+Read-Only:
 
 - `href` (String)
 - `id` (Number)
@@ -1040,7 +1040,7 @@ Optional:
 <a id="nestedatt--additional_objects--helpdesk--items--links"></a>
 ### Nested Schema for `additional_objects.helpdesk.items.permissions`
 
-Optional:
+Read-Only:
 
 - `href` (String)
 - `id` (Number)
@@ -1093,16 +1093,16 @@ Required:
 
 Optional:
 
-- `directory_uuid` (String)
 - `end_date` (String)
-- `two_factor_status` (String)
 
 Read-Only:
 
+- `directory_uuid` (String)
 - `disconnected_nested` (Boolean)
 - `last_used` (String)
 - `nested` (Boolean)
 - `provisioning_end_time` (String)
+- `two_factor_status` (String)
 - `visible_for_provisioning` (Boolean)
 
 
@@ -1116,16 +1116,16 @@ Required:
 
 Optional:
 
-- `directory_uuid` (String)
 - `end_date` (String)
-- `two_factor_status` (String)
 
 Read-Only:
 
+- `directory_uuid` (String)
 - `disconnected_nested` (Boolean)
 - `last_used` (String)
 - `nested` (Boolean)
 - `provisioning_end_time` (String)
+- `two_factor_status` (String)
 - `visible_for_provisioning` (Boolean)
 
 
@@ -1149,7 +1149,6 @@ Optional:
 
 Required:
 
-- `client_client_application_primer_type` (String)
 - `name` (String)
 
 Optional:
@@ -1164,6 +1163,7 @@ Optional:
 
 Read-Only:
 
+- `client_client_application_primer_type` (String)
 - `last_modified_at` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--owned_clients--items--links))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--owned_clients--items--permissions))
@@ -1177,11 +1177,11 @@ Optional:
 
 - `client_certificate_uuid` (String)
 - `share_secret_in_vault` (Boolean)
-- `shared_secret_uuid` (String)
 
 Read-Only:
 
 - `bind_dn` (String)
+- `shared_secret_uuid` (String)
 - `used_for_provisioning` (Boolean)
 
 
@@ -1198,13 +1198,13 @@ Optional:
 - `initiate_login_uri` (String)
 - `resource_uris` (String)
 - `share_secret_in_vault` (Boolean)
-- `shared_secret_uuid` (String)
 - `show_landing_page` (Boolean)
 - `use_client_credentials` (Boolean)
 
 Read-Only:
 
 - `account_permissions` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--owned_clients--items--uuid--account_permissions))
+- `shared_secret_uuid` (String)
 
 <a id="nestedatt--additional_objects--owned_clients--items--uuid--attributes"></a>
 ### Nested Schema for `additional_objects.owned_clients.items.uuid.attributes`
@@ -1243,7 +1243,7 @@ Optional:
 <a id="nestedatt--additional_objects--owned_clients--items--links"></a>
 ### Nested Schema for `additional_objects.owned_clients.items.uuid`
 
-Optional:
+Read-Only:
 
 - `href` (String)
 - `id` (Number)
@@ -1284,7 +1284,6 @@ Optional:
 
 - `active` (Boolean)
 - `default_directory` (Boolean)
-- `directory_account_directory_primer_type` (String)
 - `helpdesk_group_uuid` (String)
 - `internal_directory` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--owned_directories--items--internal_directory))
 - `l_d_a_p_directory` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--owned_directories--items--l_d_a_p_directory))
@@ -1296,6 +1295,7 @@ Optional:
 Read-Only:
 
 - `account_validity_supported` (Boolean)
+- `directory_account_directory_primer_type` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--owned_directories--items--links))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--owned_directories--items--permissions))
 - `uuid` (String)
@@ -1363,7 +1363,7 @@ Read-Only:
 <a id="nestedatt--additional_objects--owned_directories--items--links"></a>
 ### Nested Schema for `additional_objects.owned_directories.items.uuid`
 
-Optional:
+Read-Only:
 
 - `href` (String)
 - `id` (Number)
@@ -1415,7 +1415,7 @@ Read-Only:
 <a id="nestedatt--additional_objects--owned_groups_on_system--items--links"></a>
 ### Nested Schema for `additional_objects.owned_groups_on_system.items.permissions`
 
-Optional:
+Read-Only:
 
 - `href` (String)
 - `id` (Number)
@@ -1454,19 +1454,19 @@ Required:
 Optional:
 
 - `description` (String)
-- `parent_uuid` (String)
 
 Read-Only:
 
 - `depth` (Number)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--owned_organizational_units--items--links))
+- `parent_uuid` (String)
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--owned_organizational_units--items--permissions))
 - `uuid` (String)
 
 <a id="nestedatt--additional_objects--owned_organizational_units--items--links"></a>
 ### Nested Schema for `additional_objects.owned_organizational_units.items.uuid`
 
-Optional:
+Read-Only:
 
 - `href` (String)
 - `id` (Number)
@@ -1516,7 +1516,6 @@ Optional:
 - `provisioned_internal_ldap` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--owned_systems--items--provisioned_internal_ldap))
 - `provisioned_ldap` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--owned_systems--items--provisioned_ldap))
 - `provisioned_ldap_directory` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--owned_systems--items--provisioned_ldap_directory))
-- `provisioning_provisioned_system_primer_type` (String)
 - `self_service_existing_groups` (Boolean)
 - `self_service_new_groups` (Boolean)
 - `self_service_service_accounts` (Boolean)
@@ -1529,6 +1528,7 @@ Read-Only:
 - `external_uuid` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--owned_systems--items--links))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--owned_systems--items--permissions))
+- `provisioning_provisioned_system_primer_type` (String)
 - `uuid` (String)
 
 <a id="nestedatt--additional_objects--owned_systems--items--abstract_provisioned_ldap"></a>
@@ -1617,11 +1617,11 @@ Optional:
 
 - `client_certificate_uuid` (String)
 - `share_secret_in_vault` (Boolean)
-- `shared_secret_uuid` (String)
 
 Read-Only:
 
 - `bind_dn` (String)
+- `shared_secret_uuid` (String)
 - `used_for_provisioning` (Boolean)
 
 
@@ -1658,7 +1658,7 @@ Read-Only:
 <a id="nestedatt--additional_objects--owned_systems--items--uuid--numbering--links"></a>
 ### Nested Schema for `additional_objects.owned_systems.items.uuid.numbering.permissions`
 
-Optional:
+Read-Only:
 
 - `href` (String)
 - `id` (Number)
@@ -1691,7 +1691,7 @@ Required:
 <a id="nestedatt--additional_objects--owned_systems--items--links"></a>
 ### Nested Schema for `additional_objects.owned_systems.items.uuid`
 
-Optional:
+Read-Only:
 
 - `href` (String)
 - `id` (Number)
@@ -1752,7 +1752,6 @@ Optional:
 - `account_uuid` (String)
 - `action` (String)
 - `comment` (String)
-- `rights` (String)
 
 Read-Only:
 
@@ -1765,12 +1764,13 @@ Read-Only:
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--recent_audits--items--submitted_by--links))
 - `nested` (Boolean)
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--recent_audits--items--submitted_by--permissions))
+- `rights` (String)
 - `username` (String)
 
 <a id="nestedatt--additional_objects--recent_audits--items--submitted_by--links"></a>
 ### Nested Schema for `additional_objects.recent_audits.items.submitted_by.links`
 
-Optional:
+Read-Only:
 
 - `href` (String)
 - `id` (Number)
@@ -1793,7 +1793,7 @@ Optional:
 <a id="nestedatt--additional_objects--recent_audits--items--links"></a>
 ### Nested Schema for `additional_objects.recent_audits.items.submitted_by`
 
-Optional:
+Read-Only:
 
 - `href` (String)
 - `id` (Number)
@@ -1834,12 +1834,12 @@ Optional:
 
 - `active` (Boolean)
 - `description` (String)
-- `password_uuid` (String)
 - `technical_administrator_uuid` (String)
 
 Read-Only:
 
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--service_accounts--items--links))
+- `password_uuid` (String)
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--service_accounts--items--permissions))
 - `username` (String)
 - `uuid` (String)
@@ -1847,7 +1847,7 @@ Read-Only:
 <a id="nestedatt--additional_objects--service_accounts--items--links"></a>
 ### Nested Schema for `additional_objects.service_accounts.items.uuid`
 
-Optional:
+Read-Only:
 
 - `href` (String)
 - `id` (Number)
@@ -1912,7 +1912,7 @@ Read-Only:
 <a id="nestedatt--additional_objects--systems--items--permissions--links"></a>
 ### Nested Schema for `additional_objects.systems.items.permissions.links`
 
-Optional:
+Read-Only:
 
 - `href` (String)
 - `id` (Number)
@@ -1935,7 +1935,7 @@ Optional:
 <a id="nestedatt--additional_objects--systems--items--links"></a>
 ### Nested Schema for `additional_objects.systems.items.permissions`
 
-Optional:
+Read-Only:
 
 - `href` (String)
 - `id` (Number)
@@ -1998,7 +1998,7 @@ Read-Only:
 <a id="nestedatt--additional_objects--vault--records--links"></a>
 ### Nested Schema for `additional_objects.vault.records.uuid`
 
-Optional:
+Read-Only:
 
 - `href` (String)
 - `id` (Number)
@@ -2021,7 +2021,7 @@ Optional:
 <a id="nestedatt--additional_objects--vault--links"></a>
 ### Nested Schema for `additional_objects.vault.links`
 
-Optional:
+Read-Only:
 
 - `href` (String)
 - `id` (Number)
@@ -2086,7 +2086,7 @@ Read-Only:
 <a id="nestedatt--additional_objects--webhooks--items--links"></a>
 ### Nested Schema for `additional_objects.webhooks.items.uuid`
 
-Optional:
+Read-Only:
 
 - `href` (String)
 - `id` (Number)
@@ -2123,7 +2123,7 @@ Read-Only:
 <a id="nestedatt--audit_config--links"></a>
 ### Nested Schema for `audit_config.links`
 
-Optional:
+Read-Only:
 
 - `href` (String)
 - `id` (Number)
@@ -2146,7 +2146,7 @@ Optional:
 <a id="nestedatt--links"></a>
 ### Nested Schema for `links`
 
-Optional:
+Read-Only:
 
 - `href` (String)
 - `id` (Number)

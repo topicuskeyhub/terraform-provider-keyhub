@@ -143,7 +143,7 @@ Optional:
 <a id="nestedatt--links"></a>
 ### Nested Schema for `links`
 
-Optional:
+Read-Only:
 
 - `href` (String)
 - `id` (Number)

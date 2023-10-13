@@ -31,7 +31,7 @@ import (
 // system/{systemid}/group
 // serviceaccount/{accountid}/group
 
-//go:generate go run github.com/topicuskeyhub/terraform-provider-keyhub-generator --mode impl
+//go:generate go run github.com/topicuskeyhub/terraform-provider-keyhub-generator --mode model
 //go:generate go run github.com/topicuskeyhub/terraform-provider-keyhub-generator --mode data --resource account --linkable authAccount
 //go:generate go run github.com/topicuskeyhub/terraform-provider-keyhub-generator --mode data --resource certificate --linkable certificateCertificate
 //go:generate go run github.com/topicuskeyhub/terraform-provider-keyhub-generator --mode data --resource client --linkable clientClientApplication
@@ -43,6 +43,9 @@ import (
 //go:generate go run github.com/topicuskeyhub/terraform-provider-keyhub-generator --mode data --resource system --linkable provisioningProvisionedSystem
 //go:generate go run github.com/topicuskeyhub/terraform-provider-keyhub-generator --mode data --resource vaultrecord --linkable vaultVaultRecord
 //go:generate go run github.com/topicuskeyhub/terraform-provider-keyhub-generator --mode data --resource webhook --linkable webhookWebhook
+//go:generate go run github.com/topicuskeyhub/terraform-provider-keyhub-generator --mode resource --resource group
+//go:generate go run github.com/topicuskeyhub/terraform-provider-keyhub-generator --mode resource --resource group_vaultrecord
+//go:generate go run github.com/topicuskeyhub/terraform-provider-keyhub-generator --mode resource --resource grouponsystem
 
 // If you do not have terraform installed, you can remove the formatting command, but its suggested to
 // ensure the documentation is formatted properly.

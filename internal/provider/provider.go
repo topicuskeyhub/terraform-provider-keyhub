@@ -172,8 +172,9 @@ func (p *KeyHubProvider) Configure(ctx context.Context, req provider.ConfigureRe
 
 func (p *KeyHubProvider) Resources(ctx context.Context) []func() resource.Resource {
 	return []func() resource.Resource{
+		NewGroupVaultrecordResource,
 		NewGroupResource,
-		NewVaultRecordResource,
+		NewGrouponsystemResource,
 	}
 }
 

@@ -24,11 +24,11 @@ provider "keyhubpreview" {
   clientsecret = var.keyhub_secret_local
 }
 
-data "keyhubpreview_group" "test" {
-  #  uuid = "2fb85263-6406-44f9-9e8a-b1a6d1f43250"
-  uuid       = "c6c98d08-2cbf-45e9-937a-c5c0427348e2"
-  additional = ["accounts"]
-}
+#data "keyhubpreview_group" "test" {
+#  #  uuid = "2fb85263-6406-44f9-9e8a-b1a6d1f43250"
+#  uuid       = "c6c98d08-2cbf-45e9-937a-c5c0427348e2"
+#  additional = ["accounts"]
+#}
 
 #output "data_group" {
 #  value = data.keyhubpreview_group.test
@@ -42,29 +42,28 @@ data "keyhubpreview_group" "test" {
 #  value = data.keyhubpreview_client.test
 #}
 
-resource "keyhubpreview_vaultrecord" "terrarecord" {
-  name       = "Terraform Record"
-  group_uuid = data.keyhubpreview_group.test.uuid
+#resource "keyhubpreview_vaultrecord" "terrarecord" {
+#  name       = "Terraform Record"
+#  group_uuid = data.keyhubpreview_group.test.uuid
+#  additional_objects = {
+#    secret = {
+#      password = "test3"
+#    }
+#  }
+#}
+
+resource "keyhubpreview_group" "terra" {
+  name = "Terraform x"
   additional_objects = {
-    secret = {
-      password = "test3"
+    accounts = {
+      items = [{
+        uuid   = "7ea6622b-f9d2-4e52-a799-217b26f88376"
+        rights = "MANAGER"
+      }]
     }
   }
 }
 
-#resource "keyhubpreview_group" "terra" {
-#  name = "Terraform"
-#  additional_objects = {
-#    accounts = {
-#      items = [{
-#        uuid   = "7ea6622b-f9d2-4e52-a799-217b26f88376"
-#        rights = "MANAGER"
-#      }]
-#    }
-#  }
-#  admin = true
-#}
-#
 #output "resource_group" {
 #  value = resource.keyhubpreview_group.terra
 #}
