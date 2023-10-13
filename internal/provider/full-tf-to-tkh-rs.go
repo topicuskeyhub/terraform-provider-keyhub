@@ -1717,22 +1717,6 @@ func tfObjectToTKHRSDirectoryAccountDirectory(ctx context.Context, recurse bool,
 		tkh.SetRotatingPassword(val)
 	}
 	tkh.SetUsernameCustomizable(objAttrs["username_customizable"].(basetypes.BoolValue).ValueBoolPointer())
-	if !objAttrs["internal_directory"].IsNull() {
-		val, d := tfObjectToTKHRSDirectoryInternalDirectory(ctx, false, objAttrs["internal_directory"].(basetypes.ObjectValue))
-		diags.Append(d...)
-		dtype := val.GetTypeEscaped()
-		(*val.(*keyhubmodel.DirectoryInternalDirectory)).DirectoryAccountDirectory = *tkh.(*keyhubmodel.DirectoryAccountDirectory)
-		val.SetTypeEscaped(dtype)
-		tkh = val
-	}
-	if !objAttrs["o_id_c_directory"].IsNull() {
-		val, d := tfObjectToTKHRSDirectoryOIDCDirectory(ctx, false, objAttrs["o_id_c_directory"].(basetypes.ObjectValue))
-		diags.Append(d...)
-		dtype := val.GetTypeEscaped()
-		(*val.(*keyhubmodel.DirectoryOIDCDirectory)).DirectoryAccountDirectory = *tkh.(*keyhubmodel.DirectoryAccountDirectory)
-		val.SetTypeEscaped(dtype)
-		tkh = val
-	}
 	if !objAttrs["l_d_a_p_directory"].IsNull() {
 		val, d := tfObjectToTKHRSDirectoryLDAPDirectory(ctx, false, objAttrs["l_d_a_p_directory"].(basetypes.ObjectValue))
 		diags.Append(d...)
@@ -1741,11 +1725,27 @@ func tfObjectToTKHRSDirectoryAccountDirectory(ctx context.Context, recurse bool,
 		val.SetTypeEscaped(dtype)
 		tkh = val
 	}
+	if !objAttrs["internal_directory"].IsNull() {
+		val, d := tfObjectToTKHRSDirectoryInternalDirectory(ctx, false, objAttrs["internal_directory"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		dtype := val.GetTypeEscaped()
+		(*val.(*keyhubmodel.DirectoryInternalDirectory)).DirectoryAccountDirectory = *tkh.(*keyhubmodel.DirectoryAccountDirectory)
+		val.SetTypeEscaped(dtype)
+		tkh = val
+	}
 	if !objAttrs["maintenance_directory"].IsNull() {
 		val, d := tfObjectToTKHRSDirectoryMaintenanceDirectory(ctx, false, objAttrs["maintenance_directory"].(basetypes.ObjectValue))
 		diags.Append(d...)
 		dtype := val.GetTypeEscaped()
 		(*val.(*keyhubmodel.DirectoryMaintenanceDirectory)).DirectoryAccountDirectory = *tkh.(*keyhubmodel.DirectoryAccountDirectory)
+		val.SetTypeEscaped(dtype)
+		tkh = val
+	}
+	if !objAttrs["o_id_c_directory"].IsNull() {
+		val, d := tfObjectToTKHRSDirectoryOIDCDirectory(ctx, false, objAttrs["o_id_c_directory"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		dtype := val.GetTypeEscaped()
+		(*val.(*keyhubmodel.DirectoryOIDCDirectory)).DirectoryAccountDirectory = *tkh.(*keyhubmodel.DirectoryAccountDirectory)
 		val.SetTypeEscaped(dtype)
 		tkh = val
 	}
@@ -3576,19 +3576,19 @@ func tfObjectToTKHRSLaunchpadLaunchpadTile(ctx context.Context, recurse bool, ob
 		val.SetTypeEscaped(dtype)
 		tkh = val
 	}
-	if !objAttrs["manual_launchpad_tile"].IsNull() {
-		val, d := tfObjectToTKHRSLaunchpadManualLaunchpadTile(ctx, false, objAttrs["manual_launchpad_tile"].(basetypes.ObjectValue))
-		diags.Append(d...)
-		dtype := val.GetTypeEscaped()
-		(*val.(*keyhubmodel.LaunchpadManualLaunchpadTile)).LaunchpadLaunchpadTile = *tkh.(*keyhubmodel.LaunchpadLaunchpadTile)
-		val.SetTypeEscaped(dtype)
-		tkh = val
-	}
 	if !objAttrs["sso_application_launchpad_tile"].IsNull() {
 		val, d := tfObjectToTKHRSLaunchpadSsoApplicationLaunchpadTile(ctx, false, objAttrs["sso_application_launchpad_tile"].(basetypes.ObjectValue))
 		diags.Append(d...)
 		dtype := val.GetTypeEscaped()
 		(*val.(*keyhubmodel.LaunchpadSsoApplicationLaunchpadTile)).LaunchpadLaunchpadTile = *tkh.(*keyhubmodel.LaunchpadLaunchpadTile)
+		val.SetTypeEscaped(dtype)
+		tkh = val
+	}
+	if !objAttrs["manual_launchpad_tile"].IsNull() {
+		val, d := tfObjectToTKHRSLaunchpadManualLaunchpadTile(ctx, false, objAttrs["manual_launchpad_tile"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		dtype := val.GetTypeEscaped()
+		(*val.(*keyhubmodel.LaunchpadManualLaunchpadTile)).LaunchpadLaunchpadTile = *tkh.(*keyhubmodel.LaunchpadLaunchpadTile)
 		val.SetTypeEscaped(dtype)
 		tkh = val
 	}
@@ -5656,43 +5656,11 @@ func tfObjectToTKHRSProvisioningProvisionedSystem(ctx context.Context, recurse b
 		tkh.SetTechnicalAdministrator(val)
 	}
 	tkh.SetUsernamePrefix(objAttrs["username_prefix"].(basetypes.StringValue).ValueStringPointer())
-	if !objAttrs["provisioned_internal_ldap"].IsNull() {
-		val, d := tfObjectToTKHRSProvisioningProvisionedInternalLDAP(ctx, false, objAttrs["provisioned_internal_ldap"].(basetypes.ObjectValue))
-		diags.Append(d...)
-		dtype := val.GetTypeEscaped()
-		(*val.(*keyhubmodel.ProvisioningProvisionedInternalLDAP)).ProvisioningProvisionedSystem = *tkh.(*keyhubmodel.ProvisioningProvisionedSystem)
-		val.SetTypeEscaped(dtype)
-		tkh = val
-	}
 	if !objAttrs["abstract_provisioned_ldap"].IsNull() {
 		val, d := tfObjectToTKHRSProvisioningAbstractProvisionedLDAP(ctx, false, objAttrs["abstract_provisioned_ldap"].(basetypes.ObjectValue))
 		diags.Append(d...)
 		dtype := val.GetTypeEscaped()
 		(*val.(*keyhubmodel.ProvisioningAbstractProvisionedLDAP)).ProvisioningProvisionedSystem = *tkh.(*keyhubmodel.ProvisioningProvisionedSystem)
-		val.SetTypeEscaped(dtype)
-		tkh = val
-	}
-	if !objAttrs["provisioned_ldap"].IsNull() {
-		val, d := tfObjectToTKHRSProvisioningProvisionedLDAP(ctx, false, objAttrs["provisioned_ldap"].(basetypes.ObjectValue))
-		diags.Append(d...)
-		dtype := val.GetTypeEscaped()
-		(*val.(*keyhubmodel.ProvisioningProvisionedLDAP)).ProvisioningProvisionedSystem = *tkh.(*keyhubmodel.ProvisioningProvisionedSystem)
-		val.SetTypeEscaped(dtype)
-		tkh = val
-	}
-	if !objAttrs["provisioned_ldap_directory"].IsNull() {
-		val, d := tfObjectToTKHRSProvisioningProvisionedLDAPDirectory(ctx, false, objAttrs["provisioned_ldap_directory"].(basetypes.ObjectValue))
-		diags.Append(d...)
-		dtype := val.GetTypeEscaped()
-		(*val.(*keyhubmodel.ProvisioningProvisionedLDAPDirectory)).ProvisioningProvisionedSystem = *tkh.(*keyhubmodel.ProvisioningProvisionedSystem)
-		val.SetTypeEscaped(dtype)
-		tkh = val
-	}
-	if !objAttrs["provisioned_azure_tenant"].IsNull() {
-		val, d := tfObjectToTKHRSProvisioningProvisionedAzureTenant(ctx, false, objAttrs["provisioned_azure_tenant"].(basetypes.ObjectValue))
-		diags.Append(d...)
-		dtype := val.GetTypeEscaped()
-		(*val.(*keyhubmodel.ProvisioningProvisionedAzureTenant)).ProvisioningProvisionedSystem = *tkh.(*keyhubmodel.ProvisioningProvisionedSystem)
 		val.SetTypeEscaped(dtype)
 		tkh = val
 	}
@@ -5704,11 +5672,11 @@ func tfObjectToTKHRSProvisioningProvisionedSystem(ctx context.Context, recurse b
 		val.SetTypeEscaped(dtype)
 		tkh = val
 	}
-	if !objAttrs["provisioned_azure_oidc_directory"].IsNull() {
-		val, d := tfObjectToTKHRSProvisioningProvisionedAzureOIDCDirectory(ctx, false, objAttrs["provisioned_azure_oidc_directory"].(basetypes.ObjectValue))
+	if !objAttrs["provisioned_ldap_directory"].IsNull() {
+		val, d := tfObjectToTKHRSProvisioningProvisionedLDAPDirectory(ctx, false, objAttrs["provisioned_ldap_directory"].(basetypes.ObjectValue))
 		diags.Append(d...)
 		dtype := val.GetTypeEscaped()
-		(*val.(*keyhubmodel.ProvisioningProvisionedAzureOIDCDirectory)).ProvisioningProvisionedSystem = *tkh.(*keyhubmodel.ProvisioningProvisionedSystem)
+		(*val.(*keyhubmodel.ProvisioningProvisionedLDAPDirectory)).ProvisioningProvisionedSystem = *tkh.(*keyhubmodel.ProvisioningProvisionedSystem)
 		val.SetTypeEscaped(dtype)
 		tkh = val
 	}
@@ -5717,6 +5685,38 @@ func tfObjectToTKHRSProvisioningProvisionedSystem(ctx context.Context, recurse b
 		diags.Append(d...)
 		dtype := val.GetTypeEscaped()
 		(*val.(*keyhubmodel.ProvisioningProvisionedAzureSyncLDAPDirectory)).ProvisioningProvisionedSystem = *tkh.(*keyhubmodel.ProvisioningProvisionedSystem)
+		val.SetTypeEscaped(dtype)
+		tkh = val
+	}
+	if !objAttrs["provisioned_azure_oidc_directory"].IsNull() {
+		val, d := tfObjectToTKHRSProvisioningProvisionedAzureOIDCDirectory(ctx, false, objAttrs["provisioned_azure_oidc_directory"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		dtype := val.GetTypeEscaped()
+		(*val.(*keyhubmodel.ProvisioningProvisionedAzureOIDCDirectory)).ProvisioningProvisionedSystem = *tkh.(*keyhubmodel.ProvisioningProvisionedSystem)
+		val.SetTypeEscaped(dtype)
+		tkh = val
+	}
+	if !objAttrs["provisioned_internal_ldap"].IsNull() {
+		val, d := tfObjectToTKHRSProvisioningProvisionedInternalLDAP(ctx, false, objAttrs["provisioned_internal_ldap"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		dtype := val.GetTypeEscaped()
+		(*val.(*keyhubmodel.ProvisioningProvisionedInternalLDAP)).ProvisioningProvisionedSystem = *tkh.(*keyhubmodel.ProvisioningProvisionedSystem)
+		val.SetTypeEscaped(dtype)
+		tkh = val
+	}
+	if !objAttrs["provisioned_azure_tenant"].IsNull() {
+		val, d := tfObjectToTKHRSProvisioningProvisionedAzureTenant(ctx, false, objAttrs["provisioned_azure_tenant"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		dtype := val.GetTypeEscaped()
+		(*val.(*keyhubmodel.ProvisioningProvisionedAzureTenant)).ProvisioningProvisionedSystem = *tkh.(*keyhubmodel.ProvisioningProvisionedSystem)
+		val.SetTypeEscaped(dtype)
+		tkh = val
+	}
+	if !objAttrs["provisioned_ldap"].IsNull() {
+		val, d := tfObjectToTKHRSProvisioningProvisionedLDAP(ctx, false, objAttrs["provisioned_ldap"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		dtype := val.GetTypeEscaped()
+		(*val.(*keyhubmodel.ProvisioningProvisionedLDAP)).ProvisioningProvisionedSystem = *tkh.(*keyhubmodel.ProvisioningProvisionedSystem)
 		val.SetTypeEscaped(dtype)
 		tkh = val
 	}
@@ -6366,179 +6366,11 @@ func tfObjectToTKHRSRequestModificationRequest(ctx context.Context, recurse bool
 		diags.Append(d...)
 		tkh.SetStatus(val)
 	}
-	if !objAttrs["abstract_organizational_unit_modification_request"].IsNull() {
-		val, d := tfObjectToTKHRSRequestAbstractOrganizationalUnitModificationRequest(ctx, false, objAttrs["abstract_organizational_unit_modification_request"].(basetypes.ObjectValue))
-		diags.Append(d...)
-		dtype := val.GetTypeEscaped()
-		(*val.(*keyhubmodel.RequestAbstractOrganizationalUnitModificationRequest)).RequestModificationRequest = *tkh.(*keyhubmodel.RequestModificationRequest)
-		val.SetTypeEscaped(dtype)
-		tkh = val
-	}
-	if !objAttrs["transfer_organizational_unit_ownership_request"].IsNull() {
-		val, d := tfObjectToTKHRSRequestTransferOrganizationalUnitOwnershipRequest(ctx, false, objAttrs["transfer_organizational_unit_ownership_request"].(basetypes.ObjectValue))
-		diags.Append(d...)
-		dtype := val.GetTypeEscaped()
-		(*val.(*keyhubmodel.RequestTransferOrganizationalUnitOwnershipRequest)).RequestModificationRequest = *tkh.(*keyhubmodel.RequestModificationRequest)
-		val.SetTypeEscaped(dtype)
-		tkh = val
-	}
 	if !objAttrs["abstract_provisioned_system_modification_request"].IsNull() {
 		val, d := tfObjectToTKHRSRequestAbstractProvisionedSystemModificationRequest(ctx, false, objAttrs["abstract_provisioned_system_modification_request"].(basetypes.ObjectValue))
 		diags.Append(d...)
 		dtype := val.GetTypeEscaped()
 		(*val.(*keyhubmodel.RequestAbstractProvisionedSystemModificationRequest)).RequestModificationRequest = *tkh.(*keyhubmodel.RequestModificationRequest)
-		val.SetTypeEscaped(dtype)
-		tkh = val
-	}
-	if !objAttrs["create_service_account_request"].IsNull() {
-		val, d := tfObjectToTKHRSRequestCreateServiceAccountRequest(ctx, false, objAttrs["create_service_account_request"].(basetypes.ObjectValue))
-		diags.Append(d...)
-		dtype := val.GetTypeEscaped()
-		(*val.(*keyhubmodel.RequestCreateServiceAccountRequest)).RequestModificationRequest = *tkh.(*keyhubmodel.RequestModificationRequest)
-		val.SetTypeEscaped(dtype)
-		tkh = val
-	}
-	if !objAttrs["setup_authorizing_group_request"].IsNull() {
-		val, d := tfObjectToTKHRSRequestSetupAuthorizingGroupRequest(ctx, false, objAttrs["setup_authorizing_group_request"].(basetypes.ObjectValue))
-		diags.Append(d...)
-		dtype := val.GetTypeEscaped()
-		(*val.(*keyhubmodel.RequestSetupAuthorizingGroupRequest)).RequestModificationRequest = *tkh.(*keyhubmodel.RequestModificationRequest)
-		val.SetTypeEscaped(dtype)
-		tkh = val
-	}
-	if !objAttrs["grant_service_account_group_request"].IsNull() {
-		val, d := tfObjectToTKHRSRequestGrantServiceAccountGroupRequest(ctx, false, objAttrs["grant_service_account_group_request"].(basetypes.ObjectValue))
-		diags.Append(d...)
-		dtype := val.GetTypeEscaped()
-		(*val.(*keyhubmodel.RequestGrantServiceAccountGroupRequest)).RequestModificationRequest = *tkh.(*keyhubmodel.RequestModificationRequest)
-		val.SetTypeEscaped(dtype)
-		tkh = val
-	}
-	if !objAttrs["grant_group_on_system_request_request"].IsNull() {
-		val, d := tfObjectToTKHRSRequestGrantGroupOnSystemRequestRequest(ctx, false, objAttrs["grant_group_on_system_request_request"].(basetypes.ObjectValue))
-		diags.Append(d...)
-		dtype := val.GetTypeEscaped()
-		(*val.(*keyhubmodel.RequestGrantGroupOnSystemRequestRequest)).RequestModificationRequest = *tkh.(*keyhubmodel.RequestModificationRequest)
-		val.SetTypeEscaped(dtype)
-		tkh = val
-	}
-	if !objAttrs["transfer_auditor_group_request"].IsNull() {
-		val, d := tfObjectToTKHRSRequestTransferAuditorGroupRequest(ctx, false, objAttrs["transfer_auditor_group_request"].(basetypes.ObjectValue))
-		diags.Append(d...)
-		dtype := val.GetTypeEscaped()
-		(*val.(*keyhubmodel.RequestTransferAuditorGroupRequest)).RequestModificationRequest = *tkh.(*keyhubmodel.RequestModificationRequest)
-		val.SetTypeEscaped(dtype)
-		tkh = val
-	}
-	if !objAttrs["abstract_application_modification_request"].IsNull() {
-		val, d := tfObjectToTKHRSRequestAbstractApplicationModificationRequest(ctx, false, objAttrs["abstract_application_modification_request"].(basetypes.ObjectValue))
-		diags.Append(d...)
-		dtype := val.GetTypeEscaped()
-		(*val.(*keyhubmodel.RequestAbstractApplicationModificationRequest)).RequestModificationRequest = *tkh.(*keyhubmodel.RequestModificationRequest)
-		val.SetTypeEscaped(dtype)
-		tkh = val
-	}
-	if !objAttrs["transfer_application_ownership_request"].IsNull() {
-		val, d := tfObjectToTKHRSRequestTransferApplicationOwnershipRequest(ctx, false, objAttrs["transfer_application_ownership_request"].(basetypes.ObjectValue))
-		diags.Append(d...)
-		dtype := val.GetTypeEscaped()
-		(*val.(*keyhubmodel.RequestTransferApplicationOwnershipRequest)).RequestModificationRequest = *tkh.(*keyhubmodel.RequestModificationRequest)
-		val.SetTypeEscaped(dtype)
-		tkh = val
-	}
-	if !objAttrs["transfer_service_account_administration_request"].IsNull() {
-		val, d := tfObjectToTKHRSRequestTransferServiceAccountAdministrationRequest(ctx, false, objAttrs["transfer_service_account_administration_request"].(basetypes.ObjectValue))
-		diags.Append(d...)
-		dtype := val.GetTypeEscaped()
-		(*val.(*keyhubmodel.RequestTransferServiceAccountAdministrationRequest)).RequestModificationRequest = *tkh.(*keyhubmodel.RequestModificationRequest)
-		val.SetTypeEscaped(dtype)
-		tkh = val
-	}
-	if !objAttrs["transfer_provisioned_system_content_administration_request"].IsNull() {
-		val, d := tfObjectToTKHRSRequestTransferProvisionedSystemContentAdministrationRequest(ctx, false, objAttrs["transfer_provisioned_system_content_administration_request"].(basetypes.ObjectValue))
-		diags.Append(d...)
-		dtype := val.GetTypeEscaped()
-		(*val.(*keyhubmodel.RequestTransferProvisionedSystemContentAdministrationRequest)).RequestModificationRequest = *tkh.(*keyhubmodel.RequestModificationRequest)
-		val.SetTypeEscaped(dtype)
-		tkh = val
-	}
-	if !objAttrs["remove_group_request"].IsNull() {
-		val, d := tfObjectToTKHRSRequestRemoveGroupRequest(ctx, false, objAttrs["remove_group_request"].(basetypes.ObjectValue))
-		diags.Append(d...)
-		dtype := val.GetTypeEscaped()
-		(*val.(*keyhubmodel.RequestRemoveGroupRequest)).RequestModificationRequest = *tkh.(*keyhubmodel.RequestModificationRequest)
-		val.SetTypeEscaped(dtype)
-		tkh = val
-	}
-	if !objAttrs["join_group_request"].IsNull() {
-		val, d := tfObjectToTKHRSRequestJoinGroupRequest(ctx, false, objAttrs["join_group_request"].(basetypes.ObjectValue))
-		diags.Append(d...)
-		dtype := val.GetTypeEscaped()
-		(*val.(*keyhubmodel.RequestJoinGroupRequest)).RequestModificationRequest = *tkh.(*keyhubmodel.RequestModificationRequest)
-		val.SetTypeEscaped(dtype)
-		tkh = val
-	}
-	if !objAttrs["grant_access_request"].IsNull() {
-		val, d := tfObjectToTKHRSRequestGrantAccessRequest(ctx, false, objAttrs["grant_access_request"].(basetypes.ObjectValue))
-		diags.Append(d...)
-		dtype := val.GetTypeEscaped()
-		(*val.(*keyhubmodel.RequestGrantAccessRequest)).RequestModificationRequest = *tkh.(*keyhubmodel.RequestModificationRequest)
-		val.SetTypeEscaped(dtype)
-		tkh = val
-	}
-	if !objAttrs["review_audit_request"].IsNull() {
-		val, d := tfObjectToTKHRSRequestReviewAuditRequest(ctx, false, objAttrs["review_audit_request"].(basetypes.ObjectValue))
-		diags.Append(d...)
-		dtype := val.GetTypeEscaped()
-		(*val.(*keyhubmodel.RequestReviewAuditRequest)).RequestModificationRequest = *tkh.(*keyhubmodel.RequestModificationRequest)
-		val.SetTypeEscaped(dtype)
-		tkh = val
-	}
-	if !objAttrs["grant_client_permission_request"].IsNull() {
-		val, d := tfObjectToTKHRSRequestGrantClientPermissionRequest(ctx, false, objAttrs["grant_client_permission_request"].(basetypes.ObjectValue))
-		diags.Append(d...)
-		dtype := val.GetTypeEscaped()
-		(*val.(*keyhubmodel.RequestGrantClientPermissionRequest)).RequestModificationRequest = *tkh.(*keyhubmodel.RequestModificationRequest)
-		val.SetTypeEscaped(dtype)
-		tkh = val
-	}
-	if !objAttrs["transfer_group_on_system_ownership_request"].IsNull() {
-		val, d := tfObjectToTKHRSRequestTransferGroupOnSystemOwnershipRequest(ctx, false, objAttrs["transfer_group_on_system_ownership_request"].(basetypes.ObjectValue))
-		diags.Append(d...)
-		dtype := val.GetTypeEscaped()
-		(*val.(*keyhubmodel.RequestTransferGroupOnSystemOwnershipRequest)).RequestModificationRequest = *tkh.(*keyhubmodel.RequestModificationRequest)
-		val.SetTypeEscaped(dtype)
-		tkh = val
-	}
-	if !objAttrs["transfer_provisioned_system_ownership_request"].IsNull() {
-		val, d := tfObjectToTKHRSRequestTransferProvisionedSystemOwnershipRequest(ctx, false, objAttrs["transfer_provisioned_system_ownership_request"].(basetypes.ObjectValue))
-		diags.Append(d...)
-		dtype := val.GetTypeEscaped()
-		(*val.(*keyhubmodel.RequestTransferProvisionedSystemOwnershipRequest)).RequestModificationRequest = *tkh.(*keyhubmodel.RequestModificationRequest)
-		val.SetTypeEscaped(dtype)
-		tkh = val
-	}
-	if !objAttrs["grant_application_request"].IsNull() {
-		val, d := tfObjectToTKHRSRequestGrantApplicationRequest(ctx, false, objAttrs["grant_application_request"].(basetypes.ObjectValue))
-		diags.Append(d...)
-		dtype := val.GetTypeEscaped()
-		(*val.(*keyhubmodel.RequestGrantApplicationRequest)).RequestModificationRequest = *tkh.(*keyhubmodel.RequestModificationRequest)
-		val.SetTypeEscaped(dtype)
-		tkh = val
-	}
-	if !objAttrs["transfer_provisioned_system_administration_request"].IsNull() {
-		val, d := tfObjectToTKHRSRequestTransferProvisionedSystemAdministrationRequest(ctx, false, objAttrs["transfer_provisioned_system_administration_request"].(basetypes.ObjectValue))
-		diags.Append(d...)
-		dtype := val.GetTypeEscaped()
-		(*val.(*keyhubmodel.RequestTransferProvisionedSystemAdministrationRequest)).RequestModificationRequest = *tkh.(*keyhubmodel.RequestModificationRequest)
-		val.SetTypeEscaped(dtype)
-		tkh = val
-	}
-	if !objAttrs["extend_access_request"].IsNull() {
-		val, d := tfObjectToTKHRSRequestExtendAccessRequest(ctx, false, objAttrs["extend_access_request"].(basetypes.ObjectValue))
-		diags.Append(d...)
-		dtype := val.GetTypeEscaped()
-		(*val.(*keyhubmodel.RequestExtendAccessRequest)).RequestModificationRequest = *tkh.(*keyhubmodel.RequestModificationRequest)
 		val.SetTypeEscaped(dtype)
 		tkh = val
 	}
@@ -6550,51 +6382,11 @@ func tfObjectToTKHRSRequestModificationRequest(ctx context.Context, recurse bool
 		val.SetTypeEscaped(dtype)
 		tkh = val
 	}
-	if !objAttrs["add_group_admin_request"].IsNull() {
-		val, d := tfObjectToTKHRSRequestAddGroupAdminRequest(ctx, false, objAttrs["add_group_admin_request"].(basetypes.ObjectValue))
+	if !objAttrs["abstract_organizational_unit_modification_request"].IsNull() {
+		val, d := tfObjectToTKHRSRequestAbstractOrganizationalUnitModificationRequest(ctx, false, objAttrs["abstract_organizational_unit_modification_request"].(basetypes.ObjectValue))
 		diags.Append(d...)
 		dtype := val.GetTypeEscaped()
-		(*val.(*keyhubmodel.RequestAddGroupAdminRequest)).RequestModificationRequest = *tkh.(*keyhubmodel.RequestModificationRequest)
-		val.SetTypeEscaped(dtype)
-		tkh = val
-	}
-	if !objAttrs["join_vault_request"].IsNull() {
-		val, d := tfObjectToTKHRSRequestJoinVaultRequest(ctx, false, objAttrs["join_vault_request"].(basetypes.ObjectValue))
-		diags.Append(d...)
-		dtype := val.GetTypeEscaped()
-		(*val.(*keyhubmodel.RequestJoinVaultRequest)).RequestModificationRequest = *tkh.(*keyhubmodel.RequestModificationRequest)
-		val.SetTypeEscaped(dtype)
-		tkh = val
-	}
-	if !objAttrs["grant_group_on_system_request"].IsNull() {
-		val, d := tfObjectToTKHRSRequestGrantGroupOnSystemRequest(ctx, false, objAttrs["grant_group_on_system_request"].(basetypes.ObjectValue))
-		diags.Append(d...)
-		dtype := val.GetTypeEscaped()
-		(*val.(*keyhubmodel.RequestGrantGroupOnSystemRequest)).RequestModificationRequest = *tkh.(*keyhubmodel.RequestModificationRequest)
-		val.SetTypeEscaped(dtype)
-		tkh = val
-	}
-	if !objAttrs["remove_provisioned_system_request"].IsNull() {
-		val, d := tfObjectToTKHRSRequestRemoveProvisionedSystemRequest(ctx, false, objAttrs["remove_provisioned_system_request"].(basetypes.ObjectValue))
-		diags.Append(d...)
-		dtype := val.GetTypeEscaped()
-		(*val.(*keyhubmodel.RequestRemoveProvisionedSystemRequest)).RequestModificationRequest = *tkh.(*keyhubmodel.RequestModificationRequest)
-		val.SetTypeEscaped(dtype)
-		tkh = val
-	}
-	if !objAttrs["setup_nested_group_request"].IsNull() {
-		val, d := tfObjectToTKHRSRequestSetupNestedGroupRequest(ctx, false, objAttrs["setup_nested_group_request"].(basetypes.ObjectValue))
-		diags.Append(d...)
-		dtype := val.GetTypeEscaped()
-		(*val.(*keyhubmodel.RequestSetupNestedGroupRequest)).RequestModificationRequest = *tkh.(*keyhubmodel.RequestModificationRequest)
-		val.SetTypeEscaped(dtype)
-		tkh = val
-	}
-	if !objAttrs["transfer_application_administration_request"].IsNull() {
-		val, d := tfObjectToTKHRSRequestTransferApplicationAdministrationRequest(ctx, false, objAttrs["transfer_application_administration_request"].(basetypes.ObjectValue))
-		diags.Append(d...)
-		dtype := val.GetTypeEscaped()
-		(*val.(*keyhubmodel.RequestTransferApplicationAdministrationRequest)).RequestModificationRequest = *tkh.(*keyhubmodel.RequestModificationRequest)
+		(*val.(*keyhubmodel.RequestAbstractOrganizationalUnitModificationRequest)).RequestModificationRequest = *tkh.(*keyhubmodel.RequestModificationRequest)
 		val.SetTypeEscaped(dtype)
 		tkh = val
 	}
@@ -6606,35 +6398,27 @@ func tfObjectToTKHRSRequestModificationRequest(ctx context.Context, recurse bool
 		val.SetTypeEscaped(dtype)
 		tkh = val
 	}
-	if !objAttrs["revoke_admin_request"].IsNull() {
-		val, d := tfObjectToTKHRSRequestRevokeAdminRequest(ctx, false, objAttrs["revoke_admin_request"].(basetypes.ObjectValue))
+	if !objAttrs["abstract_application_modification_request"].IsNull() {
+		val, d := tfObjectToTKHRSRequestAbstractApplicationModificationRequest(ctx, false, objAttrs["abstract_application_modification_request"].(basetypes.ObjectValue))
 		diags.Append(d...)
 		dtype := val.GetTypeEscaped()
-		(*val.(*keyhubmodel.RequestRevokeAdminRequest)).RequestModificationRequest = *tkh.(*keyhubmodel.RequestModificationRequest)
+		(*val.(*keyhubmodel.RequestAbstractApplicationModificationRequest)).RequestModificationRequest = *tkh.(*keyhubmodel.RequestModificationRequest)
 		val.SetTypeEscaped(dtype)
 		tkh = val
 	}
-	if !objAttrs["password_reset_request"].IsNull() {
-		val, d := tfObjectToTKHRSRequestPasswordResetRequest(ctx, false, objAttrs["password_reset_request"].(basetypes.ObjectValue))
+	if !objAttrs["grant_group_on_system_request"].IsNull() {
+		val, d := tfObjectToTKHRSRequestGrantGroupOnSystemRequest(ctx, false, objAttrs["grant_group_on_system_request"].(basetypes.ObjectValue))
 		diags.Append(d...)
 		dtype := val.GetTypeEscaped()
-		(*val.(*keyhubmodel.RequestPasswordResetRequest)).RequestModificationRequest = *tkh.(*keyhubmodel.RequestModificationRequest)
+		(*val.(*keyhubmodel.RequestGrantGroupOnSystemRequest)).RequestModificationRequest = *tkh.(*keyhubmodel.RequestModificationRequest)
 		val.SetTypeEscaped(dtype)
 		tkh = val
 	}
-	if !objAttrs["enable_technical_administration_request"].IsNull() {
-		val, d := tfObjectToTKHRSRequestEnableTechnicalAdministrationRequest(ctx, false, objAttrs["enable_technical_administration_request"].(basetypes.ObjectValue))
+	if !objAttrs["setup_authorizing_group_request"].IsNull() {
+		val, d := tfObjectToTKHRSRequestSetupAuthorizingGroupRequest(ctx, false, objAttrs["setup_authorizing_group_request"].(basetypes.ObjectValue))
 		diags.Append(d...)
 		dtype := val.GetTypeEscaped()
-		(*val.(*keyhubmodel.RequestEnableTechnicalAdministrationRequest)).RequestModificationRequest = *tkh.(*keyhubmodel.RequestModificationRequest)
-		val.SetTypeEscaped(dtype)
-		tkh = val
-	}
-	if !objAttrs["update_group_membership_request"].IsNull() {
-		val, d := tfObjectToTKHRSRequestUpdateGroupMembershipRequest(ctx, false, objAttrs["update_group_membership_request"].(basetypes.ObjectValue))
-		diags.Append(d...)
-		dtype := val.GetTypeEscaped()
-		(*val.(*keyhubmodel.RequestUpdateGroupMembershipRequest)).RequestModificationRequest = *tkh.(*keyhubmodel.RequestModificationRequest)
+		(*val.(*keyhubmodel.RequestSetupAuthorizingGroupRequest)).RequestModificationRequest = *tkh.(*keyhubmodel.RequestModificationRequest)
 		val.SetTypeEscaped(dtype)
 		tkh = val
 	}
@@ -6646,11 +6430,19 @@ func tfObjectToTKHRSRequestModificationRequest(ctx context.Context, recurse bool
 		val.SetTypeEscaped(dtype)
 		tkh = val
 	}
-	if !objAttrs["verify_internal_account_request"].IsNull() {
-		val, d := tfObjectToTKHRSRequestVerifyInternalAccountRequest(ctx, false, objAttrs["verify_internal_account_request"].(basetypes.ObjectValue))
+	if !objAttrs["join_group_request"].IsNull() {
+		val, d := tfObjectToTKHRSRequestJoinGroupRequest(ctx, false, objAttrs["join_group_request"].(basetypes.ObjectValue))
 		diags.Append(d...)
 		dtype := val.GetTypeEscaped()
-		(*val.(*keyhubmodel.RequestVerifyInternalAccountRequest)).RequestModificationRequest = *tkh.(*keyhubmodel.RequestModificationRequest)
+		(*val.(*keyhubmodel.RequestJoinGroupRequest)).RequestModificationRequest = *tkh.(*keyhubmodel.RequestModificationRequest)
+		val.SetTypeEscaped(dtype)
+		tkh = val
+	}
+	if !objAttrs["transfer_application_administration_request"].IsNull() {
+		val, d := tfObjectToTKHRSRequestTransferApplicationAdministrationRequest(ctx, false, objAttrs["transfer_application_administration_request"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		dtype := val.GetTypeEscaped()
+		(*val.(*keyhubmodel.RequestTransferApplicationAdministrationRequest)).RequestModificationRequest = *tkh.(*keyhubmodel.RequestModificationRequest)
 		val.SetTypeEscaped(dtype)
 		tkh = val
 	}
@@ -6659,6 +6451,214 @@ func tfObjectToTKHRSRequestModificationRequest(ctx context.Context, recurse bool
 		diags.Append(d...)
 		dtype := val.GetTypeEscaped()
 		(*val.(*keyhubmodel.RequestDisable2FARequest)).RequestModificationRequest = *tkh.(*keyhubmodel.RequestModificationRequest)
+		val.SetTypeEscaped(dtype)
+		tkh = val
+	}
+	if !objAttrs["grant_group_on_system_request_request"].IsNull() {
+		val, d := tfObjectToTKHRSRequestGrantGroupOnSystemRequestRequest(ctx, false, objAttrs["grant_group_on_system_request_request"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		dtype := val.GetTypeEscaped()
+		(*val.(*keyhubmodel.RequestGrantGroupOnSystemRequestRequest)).RequestModificationRequest = *tkh.(*keyhubmodel.RequestModificationRequest)
+		val.SetTypeEscaped(dtype)
+		tkh = val
+	}
+	if !objAttrs["grant_application_request"].IsNull() {
+		val, d := tfObjectToTKHRSRequestGrantApplicationRequest(ctx, false, objAttrs["grant_application_request"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		dtype := val.GetTypeEscaped()
+		(*val.(*keyhubmodel.RequestGrantApplicationRequest)).RequestModificationRequest = *tkh.(*keyhubmodel.RequestModificationRequest)
+		val.SetTypeEscaped(dtype)
+		tkh = val
+	}
+	if !objAttrs["grant_access_request"].IsNull() {
+		val, d := tfObjectToTKHRSRequestGrantAccessRequest(ctx, false, objAttrs["grant_access_request"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		dtype := val.GetTypeEscaped()
+		(*val.(*keyhubmodel.RequestGrantAccessRequest)).RequestModificationRequest = *tkh.(*keyhubmodel.RequestModificationRequest)
+		val.SetTypeEscaped(dtype)
+		tkh = val
+	}
+	if !objAttrs["grant_service_account_group_request"].IsNull() {
+		val, d := tfObjectToTKHRSRequestGrantServiceAccountGroupRequest(ctx, false, objAttrs["grant_service_account_group_request"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		dtype := val.GetTypeEscaped()
+		(*val.(*keyhubmodel.RequestGrantServiceAccountGroupRequest)).RequestModificationRequest = *tkh.(*keyhubmodel.RequestModificationRequest)
+		val.SetTypeEscaped(dtype)
+		tkh = val
+	}
+	if !objAttrs["transfer_auditor_group_request"].IsNull() {
+		val, d := tfObjectToTKHRSRequestTransferAuditorGroupRequest(ctx, false, objAttrs["transfer_auditor_group_request"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		dtype := val.GetTypeEscaped()
+		(*val.(*keyhubmodel.RequestTransferAuditorGroupRequest)).RequestModificationRequest = *tkh.(*keyhubmodel.RequestModificationRequest)
+		val.SetTypeEscaped(dtype)
+		tkh = val
+	}
+	if !objAttrs["add_group_admin_request"].IsNull() {
+		val, d := tfObjectToTKHRSRequestAddGroupAdminRequest(ctx, false, objAttrs["add_group_admin_request"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		dtype := val.GetTypeEscaped()
+		(*val.(*keyhubmodel.RequestAddGroupAdminRequest)).RequestModificationRequest = *tkh.(*keyhubmodel.RequestModificationRequest)
+		val.SetTypeEscaped(dtype)
+		tkh = val
+	}
+	if !objAttrs["enable_technical_administration_request"].IsNull() {
+		val, d := tfObjectToTKHRSRequestEnableTechnicalAdministrationRequest(ctx, false, objAttrs["enable_technical_administration_request"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		dtype := val.GetTypeEscaped()
+		(*val.(*keyhubmodel.RequestEnableTechnicalAdministrationRequest)).RequestModificationRequest = *tkh.(*keyhubmodel.RequestModificationRequest)
+		val.SetTypeEscaped(dtype)
+		tkh = val
+	}
+	if !objAttrs["transfer_provisioned_system_ownership_request"].IsNull() {
+		val, d := tfObjectToTKHRSRequestTransferProvisionedSystemOwnershipRequest(ctx, false, objAttrs["transfer_provisioned_system_ownership_request"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		dtype := val.GetTypeEscaped()
+		(*val.(*keyhubmodel.RequestTransferProvisionedSystemOwnershipRequest)).RequestModificationRequest = *tkh.(*keyhubmodel.RequestModificationRequest)
+		val.SetTypeEscaped(dtype)
+		tkh = val
+	}
+	if !objAttrs["transfer_service_account_administration_request"].IsNull() {
+		val, d := tfObjectToTKHRSRequestTransferServiceAccountAdministrationRequest(ctx, false, objAttrs["transfer_service_account_administration_request"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		dtype := val.GetTypeEscaped()
+		(*val.(*keyhubmodel.RequestTransferServiceAccountAdministrationRequest)).RequestModificationRequest = *tkh.(*keyhubmodel.RequestModificationRequest)
+		val.SetTypeEscaped(dtype)
+		tkh = val
+	}
+	if !objAttrs["review_audit_request"].IsNull() {
+		val, d := tfObjectToTKHRSRequestReviewAuditRequest(ctx, false, objAttrs["review_audit_request"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		dtype := val.GetTypeEscaped()
+		(*val.(*keyhubmodel.RequestReviewAuditRequest)).RequestModificationRequest = *tkh.(*keyhubmodel.RequestModificationRequest)
+		val.SetTypeEscaped(dtype)
+		tkh = val
+	}
+	if !objAttrs["transfer_group_on_system_ownership_request"].IsNull() {
+		val, d := tfObjectToTKHRSRequestTransferGroupOnSystemOwnershipRequest(ctx, false, objAttrs["transfer_group_on_system_ownership_request"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		dtype := val.GetTypeEscaped()
+		(*val.(*keyhubmodel.RequestTransferGroupOnSystemOwnershipRequest)).RequestModificationRequest = *tkh.(*keyhubmodel.RequestModificationRequest)
+		val.SetTypeEscaped(dtype)
+		tkh = val
+	}
+	if !objAttrs["join_vault_request"].IsNull() {
+		val, d := tfObjectToTKHRSRequestJoinVaultRequest(ctx, false, objAttrs["join_vault_request"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		dtype := val.GetTypeEscaped()
+		(*val.(*keyhubmodel.RequestJoinVaultRequest)).RequestModificationRequest = *tkh.(*keyhubmodel.RequestModificationRequest)
+		val.SetTypeEscaped(dtype)
+		tkh = val
+	}
+	if !objAttrs["setup_nested_group_request"].IsNull() {
+		val, d := tfObjectToTKHRSRequestSetupNestedGroupRequest(ctx, false, objAttrs["setup_nested_group_request"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		dtype := val.GetTypeEscaped()
+		(*val.(*keyhubmodel.RequestSetupNestedGroupRequest)).RequestModificationRequest = *tkh.(*keyhubmodel.RequestModificationRequest)
+		val.SetTypeEscaped(dtype)
+		tkh = val
+	}
+	if !objAttrs["transfer_provisioned_system_administration_request"].IsNull() {
+		val, d := tfObjectToTKHRSRequestTransferProvisionedSystemAdministrationRequest(ctx, false, objAttrs["transfer_provisioned_system_administration_request"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		dtype := val.GetTypeEscaped()
+		(*val.(*keyhubmodel.RequestTransferProvisionedSystemAdministrationRequest)).RequestModificationRequest = *tkh.(*keyhubmodel.RequestModificationRequest)
+		val.SetTypeEscaped(dtype)
+		tkh = val
+	}
+	if !objAttrs["verify_internal_account_request"].IsNull() {
+		val, d := tfObjectToTKHRSRequestVerifyInternalAccountRequest(ctx, false, objAttrs["verify_internal_account_request"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		dtype := val.GetTypeEscaped()
+		(*val.(*keyhubmodel.RequestVerifyInternalAccountRequest)).RequestModificationRequest = *tkh.(*keyhubmodel.RequestModificationRequest)
+		val.SetTypeEscaped(dtype)
+		tkh = val
+	}
+	if !objAttrs["create_service_account_request"].IsNull() {
+		val, d := tfObjectToTKHRSRequestCreateServiceAccountRequest(ctx, false, objAttrs["create_service_account_request"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		dtype := val.GetTypeEscaped()
+		(*val.(*keyhubmodel.RequestCreateServiceAccountRequest)).RequestModificationRequest = *tkh.(*keyhubmodel.RequestModificationRequest)
+		val.SetTypeEscaped(dtype)
+		tkh = val
+	}
+	if !objAttrs["remove_provisioned_system_request"].IsNull() {
+		val, d := tfObjectToTKHRSRequestRemoveProvisionedSystemRequest(ctx, false, objAttrs["remove_provisioned_system_request"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		dtype := val.GetTypeEscaped()
+		(*val.(*keyhubmodel.RequestRemoveProvisionedSystemRequest)).RequestModificationRequest = *tkh.(*keyhubmodel.RequestModificationRequest)
+		val.SetTypeEscaped(dtype)
+		tkh = val
+	}
+	if !objAttrs["revoke_admin_request"].IsNull() {
+		val, d := tfObjectToTKHRSRequestRevokeAdminRequest(ctx, false, objAttrs["revoke_admin_request"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		dtype := val.GetTypeEscaped()
+		(*val.(*keyhubmodel.RequestRevokeAdminRequest)).RequestModificationRequest = *tkh.(*keyhubmodel.RequestModificationRequest)
+		val.SetTypeEscaped(dtype)
+		tkh = val
+	}
+	if !objAttrs["transfer_provisioned_system_content_administration_request"].IsNull() {
+		val, d := tfObjectToTKHRSRequestTransferProvisionedSystemContentAdministrationRequest(ctx, false, objAttrs["transfer_provisioned_system_content_administration_request"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		dtype := val.GetTypeEscaped()
+		(*val.(*keyhubmodel.RequestTransferProvisionedSystemContentAdministrationRequest)).RequestModificationRequest = *tkh.(*keyhubmodel.RequestModificationRequest)
+		val.SetTypeEscaped(dtype)
+		tkh = val
+	}
+	if !objAttrs["transfer_application_ownership_request"].IsNull() {
+		val, d := tfObjectToTKHRSRequestTransferApplicationOwnershipRequest(ctx, false, objAttrs["transfer_application_ownership_request"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		dtype := val.GetTypeEscaped()
+		(*val.(*keyhubmodel.RequestTransferApplicationOwnershipRequest)).RequestModificationRequest = *tkh.(*keyhubmodel.RequestModificationRequest)
+		val.SetTypeEscaped(dtype)
+		tkh = val
+	}
+	if !objAttrs["extend_access_request"].IsNull() {
+		val, d := tfObjectToTKHRSRequestExtendAccessRequest(ctx, false, objAttrs["extend_access_request"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		dtype := val.GetTypeEscaped()
+		(*val.(*keyhubmodel.RequestExtendAccessRequest)).RequestModificationRequest = *tkh.(*keyhubmodel.RequestModificationRequest)
+		val.SetTypeEscaped(dtype)
+		tkh = val
+	}
+	if !objAttrs["update_group_membership_request"].IsNull() {
+		val, d := tfObjectToTKHRSRequestUpdateGroupMembershipRequest(ctx, false, objAttrs["update_group_membership_request"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		dtype := val.GetTypeEscaped()
+		(*val.(*keyhubmodel.RequestUpdateGroupMembershipRequest)).RequestModificationRequest = *tkh.(*keyhubmodel.RequestModificationRequest)
+		val.SetTypeEscaped(dtype)
+		tkh = val
+	}
+	if !objAttrs["grant_client_permission_request"].IsNull() {
+		val, d := tfObjectToTKHRSRequestGrantClientPermissionRequest(ctx, false, objAttrs["grant_client_permission_request"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		dtype := val.GetTypeEscaped()
+		(*val.(*keyhubmodel.RequestGrantClientPermissionRequest)).RequestModificationRequest = *tkh.(*keyhubmodel.RequestModificationRequest)
+		val.SetTypeEscaped(dtype)
+		tkh = val
+	}
+	if !objAttrs["transfer_organizational_unit_ownership_request"].IsNull() {
+		val, d := tfObjectToTKHRSRequestTransferOrganizationalUnitOwnershipRequest(ctx, false, objAttrs["transfer_organizational_unit_ownership_request"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		dtype := val.GetTypeEscaped()
+		(*val.(*keyhubmodel.RequestTransferOrganizationalUnitOwnershipRequest)).RequestModificationRequest = *tkh.(*keyhubmodel.RequestModificationRequest)
+		val.SetTypeEscaped(dtype)
+		tkh = val
+	}
+	if !objAttrs["remove_group_request"].IsNull() {
+		val, d := tfObjectToTKHRSRequestRemoveGroupRequest(ctx, false, objAttrs["remove_group_request"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		dtype := val.GetTypeEscaped()
+		(*val.(*keyhubmodel.RequestRemoveGroupRequest)).RequestModificationRequest = *tkh.(*keyhubmodel.RequestModificationRequest)
+		val.SetTypeEscaped(dtype)
+		tkh = val
+	}
+	if !objAttrs["password_reset_request"].IsNull() {
+		val, d := tfObjectToTKHRSRequestPasswordResetRequest(ctx, false, objAttrs["password_reset_request"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		dtype := val.GetTypeEscaped()
+		(*val.(*keyhubmodel.RequestPasswordResetRequest)).RequestModificationRequest = *tkh.(*keyhubmodel.RequestModificationRequest)
 		val.SetTypeEscaped(dtype)
 		tkh = val
 	}

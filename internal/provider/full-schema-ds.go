@@ -4,6 +4,8 @@
 package provider
 
 import (
+	"regexp"
+
 	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	dsschema "github.com/hashicorp/terraform-plugin-framework/datasource/schema"
@@ -132,6 +134,9 @@ func dataSourceSchemaAttrsAccountVaultVaultRecord(recurse bool) map[string]dssch
 	schemaAttrs["account_uuid"] = dsschema.StringAttribute{
 		Required: recurse,
 		Computed: !recurse,
+		Validators: []validator.String{
+			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+		},
 	}
 	schemaAttrs["links"] = dsschema.ListNestedAttribute{
 		NestedObject: dsschema.NestedAttributeObject{
@@ -157,23 +162,17 @@ func dataSourceSchemaAttrsAccountVaultVaultRecord(recurse bool) map[string]dssch
 	schemaAttrs["uuid"] = dsschema.StringAttribute{
 		Required: recurse,
 		Computed: !recurse,
+		Validators: []validator.String{
+			stringvalidator.UTF8LengthBetween(0, 36),
+		},
 	}
 	schemaAttrs["additional"] = dsschema.ListAttribute{
 		ElementType: types.StringType,
 		Optional:    true,
 		Validators: []validator.List{
-			listvalidator.ValueStringsAre(
-				stringvalidator.OneOf(
-					"audit",
-					"parent",
-					"passwordMetadata",
-					"secret",
-					"shareSummary",
-					"shares",
-					"tile",
-					"vaultholder",
-				),
-			),
+			listvalidator.ValueStringsAre(stringvalidator.OneOf(
+				"audit", "parent", "passwordMetadata", "secret", "shareSummary", "shares", "tile", "vaultholder",
+			)),
 		},
 	}
 	schemaAttrs["derived"] = dsschema.BoolAttribute{
@@ -224,11 +223,9 @@ func dataSourceSchemaAttrsAuditAuditRecord(recurse bool) map[string]dsschema.Att
 		ElementType: types.StringType,
 		Optional:    true,
 		Validators: []validator.List{
-			listvalidator.ValueStringsAre(
-				stringvalidator.OneOf(
-					"audit",
-				),
-			),
+			listvalidator.ValueStringsAre(stringvalidator.OneOf(
+				"audit",
+			)),
 		},
 	}
 	schemaAttrs["audit_audit_record_type"] = dsschema.StringAttribute{
@@ -348,17 +345,9 @@ func dataSourceSchemaAttrsAuthAccount(recurse bool) map[string]dsschema.Attribut
 		ElementType: types.StringType,
 		Optional:    true,
 		Validators: []validator.List{
-			listvalidator.ValueStringsAre(
-				stringvalidator.OneOf(
-					"activeLogin",
-					"audit",
-					"groups",
-					"pendingRecoveryRequests",
-					"settings",
-					"storedAttributes",
-					"vault",
-				),
-			),
+			listvalidator.ValueStringsAre(stringvalidator.OneOf(
+				"activeLogin", "audit", "groups", "pendingRecoveryRequests", "settings", "storedAttributes", "vault",
+			)),
 		},
 	}
 	schemaAttrs["account_permissions"] = dsschema.ListNestedAttribute{
@@ -656,17 +645,9 @@ func dataSourceSchemaAttrsAuthInternalAccount(recurse bool) map[string]dsschema.
 		ElementType: types.StringType,
 		Optional:    true,
 		Validators: []validator.List{
-			listvalidator.ValueStringsAre(
-				stringvalidator.OneOf(
-					"activeLogin",
-					"audit",
-					"groups",
-					"pendingRecoveryRequests",
-					"settings",
-					"storedAttributes",
-					"vault",
-				),
-			),
+			listvalidator.ValueStringsAre(stringvalidator.OneOf(
+				"activeLogin", "audit", "groups", "pendingRecoveryRequests", "settings", "storedAttributes", "vault",
+			)),
 		},
 	}
 	schemaAttrs["account_permissions"] = dsschema.ListNestedAttribute{
@@ -861,16 +842,17 @@ func dataSourceSchemaAttrsCertificateCertificate(recurse bool) map[string]dssche
 	schemaAttrs["uuid"] = dsschema.StringAttribute{
 		Required: recurse,
 		Computed: !recurse,
+		Validators: []validator.String{
+			stringvalidator.UTF8LengthBetween(0, 36),
+		},
 	}
 	schemaAttrs["additional"] = dsschema.ListAttribute{
 		ElementType: types.StringType,
 		Optional:    true,
 		Validators: []validator.List{
-			listvalidator.ValueStringsAre(
-				stringvalidator.OneOf(
-					"audit",
-				),
-			),
+			listvalidator.ValueStringsAre(stringvalidator.OneOf(
+				"audit",
+			)),
 		},
 	}
 	schemaAttrs["key_data"] = dsschema.ListAttribute{
@@ -931,6 +913,9 @@ func dataSourceSchemaAttrsCertificateCertificatePrimer(recurse bool) map[string]
 	schemaAttrs["uuid"] = dsschema.StringAttribute{
 		Required: recurse,
 		Computed: !recurse,
+		Validators: []validator.String{
+			stringvalidator.UTF8LengthBetween(0, 36),
+		},
 	}
 	return schemaAttrs
 }
@@ -953,6 +938,9 @@ func dataSourceSchemaAttrsClientApplicationVaultVaultRecord(recurse bool) map[st
 	schemaAttrs["client_application_uuid"] = dsschema.StringAttribute{
 		Required: recurse,
 		Computed: !recurse,
+		Validators: []validator.String{
+			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+		},
 	}
 	schemaAttrs["links"] = dsschema.ListNestedAttribute{
 		NestedObject: dsschema.NestedAttributeObject{
@@ -978,23 +966,17 @@ func dataSourceSchemaAttrsClientApplicationVaultVaultRecord(recurse bool) map[st
 	schemaAttrs["uuid"] = dsschema.StringAttribute{
 		Required: recurse,
 		Computed: !recurse,
+		Validators: []validator.String{
+			stringvalidator.UTF8LengthBetween(0, 36),
+		},
 	}
 	schemaAttrs["additional"] = dsschema.ListAttribute{
 		ElementType: types.StringType,
 		Optional:    true,
 		Validators: []validator.List{
-			listvalidator.ValueStringsAre(
-				stringvalidator.OneOf(
-					"audit",
-					"parent",
-					"passwordMetadata",
-					"secret",
-					"shareSummary",
-					"shares",
-					"tile",
-					"vaultholder",
-				),
-			),
+			listvalidator.ValueStringsAre(stringvalidator.OneOf(
+				"audit", "parent", "passwordMetadata", "secret", "shareSummary", "shares", "tile", "vaultholder",
+			)),
 		},
 	}
 	schemaAttrs["derived"] = dsschema.BoolAttribute{
@@ -1060,21 +1042,17 @@ func dataSourceSchemaAttrsClientClientApplication(recurse bool) map[string]dssch
 	schemaAttrs["uuid"] = dsschema.StringAttribute{
 		Required: recurse,
 		Computed: !recurse,
+		Validators: []validator.String{
+			stringvalidator.UTF8LengthBetween(0, 36),
+		},
 	}
 	schemaAttrs["additional"] = dsschema.ListAttribute{
 		ElementType: types.StringType,
 		Optional:    true,
 		Validators: []validator.List{
-			listvalidator.ValueStringsAre(
-				stringvalidator.OneOf(
-					"audit",
-					"groupclients",
-					"groups",
-					"secret",
-					"tile",
-					"vaultRecordCount",
-				),
-			),
+			listvalidator.ValueStringsAre(stringvalidator.OneOf(
+				"audit", "groupclients", "groups", "secret", "tile", "vaultRecordCount",
+			)),
 		},
 	}
 	schemaAttrs["last_modified_at"] = dsschema.StringAttribute{
@@ -1145,6 +1123,9 @@ func dataSourceSchemaAttrsClientClientApplicationPrimer(recurse bool) map[string
 	schemaAttrs["uuid"] = dsschema.StringAttribute{
 		Required: recurse,
 		Computed: !recurse,
+		Validators: []validator.String{
+			stringvalidator.UTF8LengthBetween(0, 36),
+		},
 	}
 	return schemaAttrs
 }
@@ -1265,11 +1246,9 @@ func dataSourceSchemaAttrsClientOAuth2ClientPermission(recurse bool) map[string]
 		ElementType: types.StringType,
 		Optional:    true,
 		Validators: []validator.List{
-			listvalidator.ValueStringsAre(
-				stringvalidator.OneOf(
-					"audit",
-				),
-			),
+			listvalidator.ValueStringsAre(stringvalidator.OneOf(
+				"audit",
+			)),
 		},
 	}
 	schemaAttrs["for_group"] = dsschema.SingleNestedAttribute{
@@ -1319,11 +1298,9 @@ func dataSourceSchemaAttrsClientOAuth2ClientPermissionWithClient(recurse bool) m
 		ElementType: types.StringType,
 		Optional:    true,
 		Validators: []validator.List{
-			listvalidator.ValueStringsAre(
-				stringvalidator.OneOf(
-					"audit",
-				),
-			),
+			listvalidator.ValueStringsAre(stringvalidator.OneOf(
+				"audit",
+			)),
 		},
 	}
 	schemaAttrs["for_group"] = dsschema.SingleNestedAttribute{
@@ -1397,6 +1374,9 @@ func dataSourceSchemaAttrsDeletedVaultHolderVaultVaultRecord(recurse bool) map[s
 	schemaAttrs["deleted_vault_holder_uuid"] = dsschema.StringAttribute{
 		Required: recurse,
 		Computed: !recurse,
+		Validators: []validator.String{
+			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+		},
 	}
 	schemaAttrs["links"] = dsschema.ListNestedAttribute{
 		NestedObject: dsschema.NestedAttributeObject{
@@ -1422,23 +1402,17 @@ func dataSourceSchemaAttrsDeletedVaultHolderVaultVaultRecord(recurse bool) map[s
 	schemaAttrs["uuid"] = dsschema.StringAttribute{
 		Required: recurse,
 		Computed: !recurse,
+		Validators: []validator.String{
+			stringvalidator.UTF8LengthBetween(0, 36),
+		},
 	}
 	schemaAttrs["additional"] = dsschema.ListAttribute{
 		ElementType: types.StringType,
 		Optional:    true,
 		Validators: []validator.List{
-			listvalidator.ValueStringsAre(
-				stringvalidator.OneOf(
-					"audit",
-					"parent",
-					"passwordMetadata",
-					"secret",
-					"shareSummary",
-					"shares",
-					"tile",
-					"vaultholder",
-				),
-			),
+			listvalidator.ValueStringsAre(stringvalidator.OneOf(
+				"audit", "parent", "passwordMetadata", "secret", "shareSummary", "shares", "tile", "vaultholder",
+			)),
 		},
 	}
 	schemaAttrs["derived"] = dsschema.BoolAttribute{
@@ -1500,18 +1474,17 @@ func dataSourceSchemaAttrsDirectoryAccountDirectory(recurse bool) map[string]dss
 	schemaAttrs["uuid"] = dsschema.StringAttribute{
 		Required: recurse,
 		Computed: !recurse,
+		Validators: []validator.String{
+			stringvalidator.UTF8LengthBetween(0, 36),
+		},
 	}
 	schemaAttrs["additional"] = dsschema.ListAttribute{
 		ElementType: types.StringType,
 		Optional:    true,
 		Validators: []validator.List{
-			listvalidator.ValueStringsAre(
-				stringvalidator.OneOf(
-					"audit",
-					"markers",
-					"status",
-				),
-			),
+			listvalidator.ValueStringsAre(stringvalidator.OneOf(
+				"audit", "markers", "status",
+			)),
 		},
 	}
 	schemaAttrs["base_organizational_unit"] = dsschema.SingleNestedAttribute{
@@ -1534,20 +1507,20 @@ func dataSourceSchemaAttrsDirectoryAccountDirectory(recurse bool) map[string]dss
 	schemaAttrs["username_customizable"] = dsschema.BoolAttribute{
 		Computed: true,
 	}
-	schemaAttrs["internal_directory"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsDirectoryInternalDirectory(false),
-		Computed:   true,
-	}
-	schemaAttrs["o_id_c_directory"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsDirectoryOIDCDirectory(false),
-		Computed:   true,
-	}
 	schemaAttrs["l_d_a_p_directory"] = dsschema.SingleNestedAttribute{
 		Attributes: dataSourceSchemaAttrsDirectoryLDAPDirectory(false),
 		Computed:   true,
 	}
+	schemaAttrs["internal_directory"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsDirectoryInternalDirectory(false),
+		Computed:   true,
+	}
 	schemaAttrs["maintenance_directory"] = dsschema.SingleNestedAttribute{
 		Attributes: dataSourceSchemaAttrsDirectoryMaintenanceDirectory(false),
+		Computed:   true,
+	}
+	schemaAttrs["o_id_c_directory"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsDirectoryOIDCDirectory(false),
 		Computed:   true,
 	}
 	return schemaAttrs
@@ -1591,6 +1564,9 @@ func dataSourceSchemaAttrsDirectoryAccountDirectoryPrimer(recurse bool) map[stri
 	schemaAttrs["uuid"] = dsschema.StringAttribute{
 		Required: recurse,
 		Computed: !recurse,
+		Validators: []validator.String{
+			stringvalidator.UTF8LengthBetween(0, 36),
+		},
 	}
 	return schemaAttrs
 }
@@ -1795,17 +1771,17 @@ func dataSourceSchemaAttrsGroupAccountGroup(recurse bool) map[string]dsschema.At
 	schemaAttrs["uuid"] = dsschema.StringAttribute{
 		Required: recurse,
 		Computed: !recurse,
+		Validators: []validator.String{
+			stringvalidator.UTF8LengthBetween(0, 36),
+		},
 	}
 	schemaAttrs["additional"] = dsschema.ListAttribute{
 		ElementType: types.StringType,
 		Optional:    true,
 		Validators: []validator.List{
-			listvalidator.ValueStringsAre(
-				stringvalidator.OneOf(
-					"audit",
-					"vault",
-				),
-			),
+			listvalidator.ValueStringsAre(stringvalidator.OneOf(
+				"audit", "vault",
+			)),
 		},
 	}
 	schemaAttrs["end_date"] = dsschema.StringAttribute{
@@ -1893,42 +1869,17 @@ func dataSourceSchemaAttrsGroupGroup(recurse bool) map[string]dsschema.Attribute
 	schemaAttrs["uuid"] = dsschema.StringAttribute{
 		Required: recurse,
 		Computed: !recurse,
+		Validators: []validator.String{
+			stringvalidator.UTF8LengthBetween(0, 36),
+		},
 	}
 	schemaAttrs["additional"] = dsschema.ListAttribute{
 		ElementType: types.StringType,
 		Optional:    true,
 		Validators: []validator.List{
-			listvalidator.ValueStringsAre(
-				stringvalidator.OneOf(
-					"accounts",
-					"administeredClients",
-					"administeredSystems",
-					"admins",
-					"audit",
-					"authorizedGroups",
-					"clientPermissions",
-					"clients",
-					"contentAdministeredSystems",
-					"groupauditinginfo",
-					"groupinfo",
-					"helpdesk",
-					"markers",
-					"myaccount",
-					"mydelegatedaccount",
-					"nestedGroups",
-					"ownedClients",
-					"ownedDirectories",
-					"ownedGroupsOnSystem",
-					"ownedOrganizationalUnits",
-					"ownedSystems",
-					"recentAudits",
-					"requeststatus",
-					"serviceAccounts",
-					"systems",
-					"vault",
-					"webhooks",
-				),
-			),
+			listvalidator.ValueStringsAre(stringvalidator.OneOf(
+				"accounts", "administeredClients", "administeredSystems", "admins", "audit", "authorizedGroups", "clientPermissions", "clients", "contentAdministeredSystems", "groupauditinginfo", "groupinfo", "helpdesk", "markers", "myaccount", "mydelegatedaccount", "nestedGroups", "ownedClients", "ownedDirectories", "ownedGroupsOnSystem", "ownedOrganizationalUnits", "ownedSystems", "recentAudits", "requeststatus", "serviceAccounts", "systems", "vault", "webhooks",
+			)),
 		},
 	}
 	schemaAttrs["application_administration"] = dsschema.BoolAttribute{
@@ -2045,11 +1996,9 @@ func dataSourceSchemaAttrsGroupGroupAccount(recurse bool) map[string]dsschema.At
 		ElementType: types.StringType,
 		Optional:    true,
 		Validators: []validator.List{
-			listvalidator.ValueStringsAre(
-				stringvalidator.OneOf(
-					"audit",
-				),
-			),
+			listvalidator.ValueStringsAre(stringvalidator.OneOf(
+				"audit",
+			)),
 		},
 	}
 	schemaAttrs["directory"] = dsschema.SingleNestedAttribute{
@@ -2149,11 +2098,9 @@ func dataSourceSchemaAttrsGroupGroupAudit(recurse bool) map[string]dsschema.Attr
 		ElementType: types.StringType,
 		Optional:    true,
 		Validators: []validator.List{
-			listvalidator.ValueStringsAre(
-				stringvalidator.OneOf(
-					"audit",
-				),
-			),
+			listvalidator.ValueStringsAre(stringvalidator.OneOf(
+				"audit",
+			)),
 		},
 	}
 	schemaAttrs["accounts"] = dsschema.ListNestedAttribute{
@@ -2338,17 +2285,17 @@ func dataSourceSchemaAttrsGroupGroupClassification(recurse bool) map[string]dssc
 	schemaAttrs["uuid"] = dsschema.StringAttribute{
 		Required: recurse,
 		Computed: !recurse,
+		Validators: []validator.String{
+			stringvalidator.UTF8LengthBetween(0, 36),
+		},
 	}
 	schemaAttrs["additional"] = dsschema.ListAttribute{
 		ElementType: types.StringType,
 		Optional:    true,
 		Validators: []validator.List{
-			listvalidator.ValueStringsAre(
-				stringvalidator.OneOf(
-					"audit",
-					"info",
-				),
-			),
+			listvalidator.ValueStringsAre(stringvalidator.OneOf(
+				"audit", "info",
+			)),
 		},
 	}
 	schemaAttrs["authorizing_group_auditing_required"] = dsschema.BoolAttribute{
@@ -2427,6 +2374,9 @@ func dataSourceSchemaAttrsGroupGroupClassificationPrimer(recurse bool) map[strin
 	schemaAttrs["uuid"] = dsschema.StringAttribute{
 		Required: recurse,
 		Computed: !recurse,
+		Validators: []validator.String{
+			stringvalidator.UTF8LengthBetween(0, 36),
+		},
 	}
 	return schemaAttrs
 }
@@ -2474,11 +2424,9 @@ func dataSourceSchemaAttrsGroupGroupClient(recurse bool) map[string]dsschema.Att
 		ElementType: types.StringType,
 		Optional:    true,
 		Validators: []validator.List{
-			listvalidator.ValueStringsAre(
-				stringvalidator.OneOf(
-					"audit",
-				),
-			),
+			listvalidator.ValueStringsAre(stringvalidator.OneOf(
+				"audit",
+			)),
 		},
 	}
 	schemaAttrs["activation_required"] = dsschema.BoolAttribute{
@@ -2544,11 +2492,9 @@ func dataSourceSchemaAttrsGroupGroupFolder(recurse bool) map[string]dsschema.Att
 		ElementType: types.StringType,
 		Optional:    true,
 		Validators: []validator.List{
-			listvalidator.ValueStringsAre(
-				stringvalidator.OneOf(
-					"audit",
-				),
-			),
+			listvalidator.ValueStringsAre(stringvalidator.OneOf(
+				"audit",
+			)),
 		},
 	}
 	schemaAttrs["name"] = dsschema.StringAttribute{
@@ -2629,6 +2575,9 @@ func dataSourceSchemaAttrsGroupGroupPrimer(recurse bool) map[string]dsschema.Att
 	schemaAttrs["uuid"] = dsschema.StringAttribute{
 		Required: recurse,
 		Computed: !recurse,
+		Validators: []validator.String{
+			stringvalidator.UTF8LengthBetween(0, 36),
+		},
 	}
 	return schemaAttrs
 }
@@ -2822,11 +2771,9 @@ func dataSourceSchemaAttrsGroupProvisioningGroup(recurse bool) map[string]dssche
 		ElementType: types.StringType,
 		Optional:    true,
 		Validators: []validator.List{
-			listvalidator.ValueStringsAre(
-				stringvalidator.OneOf(
-					"audit",
-				),
-			),
+			listvalidator.ValueStringsAre(stringvalidator.OneOf(
+				"audit",
+			)),
 		},
 	}
 	schemaAttrs["activation_required"] = dsschema.BoolAttribute{
@@ -2871,6 +2818,9 @@ func dataSourceSchemaAttrsGroupVaultVaultRecord(recurse bool) map[string]dsschem
 	schemaAttrs["group_uuid"] = dsschema.StringAttribute{
 		Required: recurse,
 		Computed: !recurse,
+		Validators: []validator.String{
+			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+		},
 	}
 	schemaAttrs["links"] = dsschema.ListNestedAttribute{
 		NestedObject: dsschema.NestedAttributeObject{
@@ -2896,23 +2846,17 @@ func dataSourceSchemaAttrsGroupVaultVaultRecord(recurse bool) map[string]dsschem
 	schemaAttrs["uuid"] = dsschema.StringAttribute{
 		Required: recurse,
 		Computed: !recurse,
+		Validators: []validator.String{
+			stringvalidator.UTF8LengthBetween(0, 36),
+		},
 	}
 	schemaAttrs["additional"] = dsschema.ListAttribute{
 		ElementType: types.StringType,
 		Optional:    true,
 		Validators: []validator.List{
-			listvalidator.ValueStringsAre(
-				stringvalidator.OneOf(
-					"audit",
-					"parent",
-					"passwordMetadata",
-					"secret",
-					"shareSummary",
-					"shares",
-					"tile",
-					"vaultholder",
-				),
-			),
+			listvalidator.ValueStringsAre(stringvalidator.OneOf(
+				"audit", "parent", "passwordMetadata", "secret", "shareSummary", "shares", "tile", "vaultholder",
+			)),
 		},
 	}
 	schemaAttrs["derived"] = dsschema.BoolAttribute{
@@ -3010,11 +2954,9 @@ func dataSourceSchemaAttrsLaunchpadLaunchpadTile(recurse bool) map[string]dssche
 		ElementType: types.StringType,
 		Optional:    true,
 		Validators: []validator.List{
-			listvalidator.ValueStringsAre(
-				stringvalidator.OneOf(
-					"audit",
-				),
-			),
+			listvalidator.ValueStringsAre(stringvalidator.OneOf(
+				"audit",
+			)),
 		},
 	}
 	schemaAttrs["application"] = dsschema.SingleNestedAttribute{
@@ -3043,12 +2985,12 @@ func dataSourceSchemaAttrsLaunchpadLaunchpadTile(recurse bool) map[string]dssche
 		Attributes: dataSourceSchemaAttrsLaunchpadVaultRecordLaunchpadTile(false),
 		Computed:   true,
 	}
-	schemaAttrs["manual_launchpad_tile"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsLaunchpadManualLaunchpadTile(false),
-		Computed:   true,
-	}
 	schemaAttrs["sso_application_launchpad_tile"] = dsschema.SingleNestedAttribute{
 		Attributes: dataSourceSchemaAttrsLaunchpadSsoApplicationLaunchpadTile(false),
+		Computed:   true,
+	}
+	schemaAttrs["manual_launchpad_tile"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsLaunchpadManualLaunchpadTile(false),
 		Computed:   true,
 	}
 	return schemaAttrs
@@ -3158,6 +3100,9 @@ func dataSourceSchemaAttrsLicenseKeyHubLicenseInfo(recurse bool) map[string]dssc
 	schemaAttrs["uuid"] = dsschema.StringAttribute{
 		Required: recurse,
 		Computed: !recurse,
+		Validators: []validator.String{
+			stringvalidator.UTF8LengthBetween(0, 36),
+		},
 	}
 	schemaAttrs["version"] = dsschema.Int64Attribute{
 		Computed: true,
@@ -3203,6 +3148,9 @@ func dataSourceSchemaAttrsNestedAuthInternalAccount(recurse bool) map[string]dss
 	schemaAttrs["account_directory_uuid"] = dsschema.StringAttribute{
 		Required: recurse,
 		Computed: !recurse,
+		Validators: []validator.String{
+			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+		},
 	}
 	schemaAttrs["links"] = dsschema.ListNestedAttribute{
 		NestedObject: dsschema.NestedAttributeObject{
@@ -3236,17 +3184,9 @@ func dataSourceSchemaAttrsNestedAuthInternalAccount(recurse bool) map[string]dss
 		ElementType: types.StringType,
 		Optional:    true,
 		Validators: []validator.List{
-			listvalidator.ValueStringsAre(
-				stringvalidator.OneOf(
-					"activeLogin",
-					"audit",
-					"groups",
-					"pendingRecoveryRequests",
-					"settings",
-					"storedAttributes",
-					"vault",
-				),
-			),
+			listvalidator.ValueStringsAre(stringvalidator.OneOf(
+				"activeLogin", "audit", "groups", "pendingRecoveryRequests", "settings", "storedAttributes", "vault",
+			)),
 		},
 	}
 	schemaAttrs["account_permissions"] = dsschema.ListNestedAttribute{
@@ -3341,6 +3281,9 @@ func dataSourceSchemaAttrsNestedClientOAuth2ClientPermission(recurse bool) map[s
 	schemaAttrs["client_application_uuid"] = dsschema.StringAttribute{
 		Required: recurse,
 		Computed: !recurse,
+		Validators: []validator.String{
+			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+		},
 	}
 	schemaAttrs["links"] = dsschema.ListNestedAttribute{
 		NestedObject: dsschema.NestedAttributeObject{
@@ -3358,11 +3301,9 @@ func dataSourceSchemaAttrsNestedClientOAuth2ClientPermission(recurse bool) map[s
 		ElementType: types.StringType,
 		Optional:    true,
 		Validators: []validator.List{
-			listvalidator.ValueStringsAre(
-				stringvalidator.OneOf(
-					"audit",
-				),
-			),
+			listvalidator.ValueStringsAre(stringvalidator.OneOf(
+				"audit",
+			)),
 		},
 	}
 	schemaAttrs["for_group"] = dsschema.SingleNestedAttribute{
@@ -3389,6 +3330,9 @@ func dataSourceSchemaAttrsNestedGroupAccountGroup(recurse bool) map[string]dssch
 	schemaAttrs["account_uuid"] = dsschema.StringAttribute{
 		Required: recurse,
 		Computed: !recurse,
+		Validators: []validator.String{
+			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+		},
 	}
 	schemaAttrs["links"] = dsschema.ListNestedAttribute{
 		NestedObject: dsschema.NestedAttributeObject{
@@ -3411,17 +3355,17 @@ func dataSourceSchemaAttrsNestedGroupAccountGroup(recurse bool) map[string]dssch
 	schemaAttrs["uuid"] = dsschema.StringAttribute{
 		Required: recurse,
 		Computed: !recurse,
+		Validators: []validator.String{
+			stringvalidator.UTF8LengthBetween(0, 36),
+		},
 	}
 	schemaAttrs["additional"] = dsschema.ListAttribute{
 		ElementType: types.StringType,
 		Optional:    true,
 		Validators: []validator.List{
-			listvalidator.ValueStringsAre(
-				stringvalidator.OneOf(
-					"audit",
-					"vault",
-				),
-			),
+			listvalidator.ValueStringsAre(stringvalidator.OneOf(
+				"audit", "vault",
+			)),
 		},
 	}
 	schemaAttrs["end_date"] = dsschema.StringAttribute{
@@ -3456,6 +3400,9 @@ func dataSourceSchemaAttrsNestedGroupGroupAccount(recurse bool) map[string]dssch
 	schemaAttrs["group_uuid"] = dsschema.StringAttribute{
 		Required: recurse,
 		Computed: !recurse,
+		Validators: []validator.String{
+			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+		},
 	}
 	schemaAttrs["links"] = dsschema.ListNestedAttribute{
 		NestedObject: dsschema.NestedAttributeObject{
@@ -3489,11 +3436,9 @@ func dataSourceSchemaAttrsNestedGroupGroupAccount(recurse bool) map[string]dssch
 		ElementType: types.StringType,
 		Optional:    true,
 		Validators: []validator.List{
-			listvalidator.ValueStringsAre(
-				stringvalidator.OneOf(
-					"audit",
-				),
-			),
+			listvalidator.ValueStringsAre(stringvalidator.OneOf(
+				"audit",
+			)),
 		},
 	}
 	schemaAttrs["directory"] = dsschema.SingleNestedAttribute{
@@ -3537,6 +3482,9 @@ func dataSourceSchemaAttrsNestedGroupGroupAudit(recurse bool) map[string]dsschem
 	schemaAttrs["group_uuid"] = dsschema.StringAttribute{
 		Required: recurse,
 		Computed: !recurse,
+		Validators: []validator.String{
+			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+		},
 	}
 	schemaAttrs["links"] = dsschema.ListNestedAttribute{
 		NestedObject: dsschema.NestedAttributeObject{
@@ -3554,11 +3502,9 @@ func dataSourceSchemaAttrsNestedGroupGroupAudit(recurse bool) map[string]dsschem
 		ElementType: types.StringType,
 		Optional:    true,
 		Validators: []validator.List{
-			listvalidator.ValueStringsAre(
-				stringvalidator.OneOf(
-					"audit",
-				),
-			),
+			listvalidator.ValueStringsAre(stringvalidator.OneOf(
+				"audit",
+			)),
 		},
 	}
 	schemaAttrs["accounts"] = dsschema.ListNestedAttribute{
@@ -3610,6 +3556,9 @@ func dataSourceSchemaAttrsNestedOrganizationAccountOrganizationalUnit(recurse bo
 	schemaAttrs["account_uuid"] = dsschema.StringAttribute{
 		Required: recurse,
 		Computed: !recurse,
+		Validators: []validator.String{
+			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+		},
 	}
 	schemaAttrs["links"] = dsschema.ListNestedAttribute{
 		NestedObject: dsschema.NestedAttributeObject{
@@ -3629,16 +3578,17 @@ func dataSourceSchemaAttrsNestedOrganizationAccountOrganizationalUnit(recurse bo
 	schemaAttrs["uuid"] = dsschema.StringAttribute{
 		Required: recurse,
 		Computed: !recurse,
+		Validators: []validator.String{
+			stringvalidator.UTF8LengthBetween(0, 36),
+		},
 	}
 	schemaAttrs["additional"] = dsschema.ListAttribute{
 		ElementType: types.StringType,
 		Optional:    true,
 		Validators: []validator.List{
-			listvalidator.ValueStringsAre(
-				stringvalidator.OneOf(
-					"audit",
-				),
-			),
+			listvalidator.ValueStringsAre(stringvalidator.OneOf(
+				"audit",
+			)),
 		},
 	}
 	return schemaAttrs
@@ -3654,6 +3604,9 @@ func dataSourceSchemaAttrsNestedOrganizationOrganizationalUnitAccount(recurse bo
 	schemaAttrs["organizational_unit_uuid"] = dsschema.StringAttribute{
 		Required: recurse,
 		Computed: !recurse,
+		Validators: []validator.String{
+			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+		},
 	}
 	schemaAttrs["links"] = dsschema.ListNestedAttribute{
 		NestedObject: dsschema.NestedAttributeObject{
@@ -3687,11 +3640,9 @@ func dataSourceSchemaAttrsNestedOrganizationOrganizationalUnitAccount(recurse bo
 		ElementType: types.StringType,
 		Optional:    true,
 		Validators: []validator.List{
-			listvalidator.ValueStringsAre(
-				stringvalidator.OneOf(
-					"audit",
-				),
-			),
+			listvalidator.ValueStringsAre(stringvalidator.OneOf(
+				"audit",
+			)),
 		},
 	}
 	schemaAttrs["directory"] = dsschema.SingleNestedAttribute{
@@ -3711,6 +3662,9 @@ func dataSourceSchemaAttrsNestedProvisioningGroupOnSystem(recurse bool) map[stri
 	schemaAttrs["provisioned_system_uuid"] = dsschema.StringAttribute{
 		Required: recurse,
 		Computed: !recurse,
+		Validators: []validator.String{
+			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+		},
 	}
 	schemaAttrs["links"] = dsschema.ListNestedAttribute{
 		NestedObject: dsschema.NestedAttributeObject{
@@ -3740,13 +3694,9 @@ func dataSourceSchemaAttrsNestedProvisioningGroupOnSystem(recurse bool) map[stri
 		ElementType: types.StringType,
 		Optional:    true,
 		Validators: []validator.List{
-			listvalidator.ValueStringsAre(
-				stringvalidator.OneOf(
-					"audit",
-					"provgroups",
-					"serviceAccounts",
-				),
-			),
+			listvalidator.ValueStringsAre(stringvalidator.OneOf(
+				"audit", "provgroups", "serviceAccounts",
+			)),
 		},
 	}
 	schemaAttrs["owner"] = dsschema.SingleNestedAttribute{
@@ -3770,6 +3720,9 @@ func dataSourceSchemaAttrsNestedProvisioningProvisionedAccount(recurse bool) map
 	schemaAttrs["provisioned_system_uuid"] = dsschema.StringAttribute{
 		Required: recurse,
 		Computed: !recurse,
+		Validators: []validator.String{
+			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+		},
 	}
 	schemaAttrs["links"] = dsschema.ListNestedAttribute{
 		NestedObject: dsschema.NestedAttributeObject{
@@ -3803,11 +3756,9 @@ func dataSourceSchemaAttrsNestedProvisioningProvisionedAccount(recurse bool) map
 		ElementType: types.StringType,
 		Optional:    true,
 		Validators: []validator.List{
-			listvalidator.ValueStringsAre(
-				stringvalidator.OneOf(
-					"audit",
-				),
-			),
+			listvalidator.ValueStringsAre(stringvalidator.OneOf(
+				"audit",
+			)),
 		},
 	}
 	schemaAttrs["uid"] = dsschema.Int64Attribute{
@@ -3826,6 +3777,9 @@ func dataSourceSchemaAttrsNestedProvisioningProvisionedSystemSyncLog(recurse boo
 	schemaAttrs["provisioned_system_uuid"] = dsschema.StringAttribute{
 		Required: recurse,
 		Computed: !recurse,
+		Validators: []validator.String{
+			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+		},
 	}
 	schemaAttrs["links"] = dsschema.ListNestedAttribute{
 		NestedObject: dsschema.NestedAttributeObject{
@@ -3843,11 +3797,9 @@ func dataSourceSchemaAttrsNestedProvisioningProvisionedSystemSyncLog(recurse boo
 		ElementType: types.StringType,
 		Optional:    true,
 		Validators: []validator.List{
-			listvalidator.ValueStringsAre(
-				stringvalidator.OneOf(
-					"audit",
-				),
-			),
+			listvalidator.ValueStringsAre(stringvalidator.OneOf(
+				"audit",
+			)),
 		},
 	}
 	schemaAttrs["created_at"] = dsschema.StringAttribute{
@@ -3875,6 +3827,9 @@ func dataSourceSchemaAttrsNestedServiceaccountServiceAccountGroup(recurse bool) 
 	schemaAttrs["service_account_uuid"] = dsschema.StringAttribute{
 		Required: recurse,
 		Computed: !recurse,
+		Validators: []validator.String{
+			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+		},
 	}
 	schemaAttrs["links"] = dsschema.ListNestedAttribute{
 		NestedObject: dsschema.NestedAttributeObject{
@@ -3904,11 +3859,9 @@ func dataSourceSchemaAttrsNestedServiceaccountServiceAccountGroup(recurse bool) 
 		ElementType: types.StringType,
 		Optional:    true,
 		Validators: []validator.List{
-			listvalidator.ValueStringsAre(
-				stringvalidator.OneOf(
-					"audit",
-				),
-			),
+			listvalidator.ValueStringsAre(stringvalidator.OneOf(
+				"audit",
+			)),
 		},
 	}
 	return schemaAttrs
@@ -3924,6 +3877,9 @@ func dataSourceSchemaAttrsNestedWebhookWebhookDelivery(recurse bool) map[string]
 	schemaAttrs["webhook_uuid"] = dsschema.StringAttribute{
 		Required: recurse,
 		Computed: !recurse,
+		Validators: []validator.String{
+			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+		},
 	}
 	schemaAttrs["links"] = dsschema.ListNestedAttribute{
 		NestedObject: dsschema.NestedAttributeObject{
@@ -3941,11 +3897,9 @@ func dataSourceSchemaAttrsNestedWebhookWebhookDelivery(recurse bool) map[string]
 		ElementType: types.StringType,
 		Optional:    true,
 		Validators: []validator.List{
-			listvalidator.ValueStringsAre(
-				stringvalidator.OneOf(
-					"audit",
-				),
-			),
+			listvalidator.ValueStringsAre(stringvalidator.OneOf(
+				"audit",
+			)),
 		},
 	}
 	schemaAttrs["payload"] = dsschema.SingleNestedAttribute{
@@ -4152,16 +4106,17 @@ func dataSourceSchemaAttrsOrganizationAccountOrganizationalUnit(recurse bool) ma
 	schemaAttrs["uuid"] = dsschema.StringAttribute{
 		Required: recurse,
 		Computed: !recurse,
+		Validators: []validator.String{
+			stringvalidator.UTF8LengthBetween(0, 36),
+		},
 	}
 	schemaAttrs["additional"] = dsschema.ListAttribute{
 		ElementType: types.StringType,
 		Optional:    true,
 		Validators: []validator.List{
-			listvalidator.ValueStringsAre(
-				stringvalidator.OneOf(
-					"audit",
-				),
-			),
+			listvalidator.ValueStringsAre(stringvalidator.OneOf(
+				"audit",
+			)),
 		},
 	}
 	return schemaAttrs
@@ -4210,16 +4165,17 @@ func dataSourceSchemaAttrsOrganizationOrganizationalUnit(recurse bool) map[strin
 	schemaAttrs["uuid"] = dsschema.StringAttribute{
 		Required: recurse,
 		Computed: !recurse,
+		Validators: []validator.String{
+			stringvalidator.UTF8LengthBetween(0, 36),
+		},
 	}
 	schemaAttrs["additional"] = dsschema.ListAttribute{
 		ElementType: types.StringType,
 		Optional:    true,
 		Validators: []validator.List{
-			listvalidator.ValueStringsAre(
-				stringvalidator.OneOf(
-					"audit",
-				),
-			),
+			listvalidator.ValueStringsAre(stringvalidator.OneOf(
+				"audit",
+			)),
 		},
 	}
 	schemaAttrs["depth"] = dsschema.Int64Attribute{
@@ -4278,11 +4234,9 @@ func dataSourceSchemaAttrsOrganizationOrganizationalUnitAccount(recurse bool) ma
 		ElementType: types.StringType,
 		Optional:    true,
 		Validators: []validator.List{
-			listvalidator.ValueStringsAre(
-				stringvalidator.OneOf(
-					"audit",
-				),
-			),
+			listvalidator.ValueStringsAre(stringvalidator.OneOf(
+				"audit",
+			)),
 		},
 	}
 	schemaAttrs["directory"] = dsschema.SingleNestedAttribute{
@@ -4339,6 +4293,9 @@ func dataSourceSchemaAttrsOrganizationOrganizationalUnitPrimer(recurse bool) map
 	schemaAttrs["uuid"] = dsschema.StringAttribute{
 		Required: recurse,
 		Computed: !recurse,
+		Validators: []validator.String{
+			stringvalidator.UTF8LengthBetween(0, 36),
+		},
 	}
 	return schemaAttrs
 }
@@ -4496,13 +4453,9 @@ func dataSourceSchemaAttrsProvisioningGroupOnSystem(recurse bool) map[string]dss
 		ElementType: types.StringType,
 		Optional:    true,
 		Validators: []validator.List{
-			listvalidator.ValueStringsAre(
-				stringvalidator.OneOf(
-					"audit",
-					"provgroups",
-					"serviceAccounts",
-				),
-			),
+			listvalidator.ValueStringsAre(stringvalidator.OneOf(
+				"audit", "provgroups", "serviceAccounts",
+			)),
 		},
 	}
 	schemaAttrs["owner"] = dsschema.SingleNestedAttribute{
@@ -4653,12 +4606,9 @@ func dataSourceSchemaAttrsProvisioningProvisionNumberSequence(recurse bool) map[
 		ElementType: types.StringType,
 		Optional:    true,
 		Validators: []validator.List{
-			listvalidator.ValueStringsAre(
-				stringvalidator.OneOf(
-					"audit",
-					"systems",
-				),
-			),
+			listvalidator.ValueStringsAre(stringvalidator.OneOf(
+				"audit", "systems",
+			)),
 		},
 	}
 	schemaAttrs["account_count"] = dsschema.Int64Attribute{
@@ -4741,11 +4691,9 @@ func dataSourceSchemaAttrsProvisioningProvisionedAccount(recurse bool) map[strin
 		ElementType: types.StringType,
 		Optional:    true,
 		Validators: []validator.List{
-			listvalidator.ValueStringsAre(
-				stringvalidator.OneOf(
-					"audit",
-				),
-			),
+			listvalidator.ValueStringsAre(stringvalidator.OneOf(
+				"audit",
+			)),
 		},
 	}
 	schemaAttrs["uid"] = dsschema.Int64Attribute{
@@ -4884,23 +4832,17 @@ func dataSourceSchemaAttrsProvisioningProvisionedSystem(recurse bool) map[string
 	schemaAttrs["uuid"] = dsschema.StringAttribute{
 		Required: recurse,
 		Computed: !recurse,
+		Validators: []validator.String{
+			stringvalidator.UTF8LengthBetween(0, 36),
+		},
 	}
 	schemaAttrs["additional"] = dsschema.ListAttribute{
 		ElementType: types.StringType,
 		Optional:    true,
 		Validators: []validator.List{
-			listvalidator.ValueStringsAre(
-				stringvalidator.OneOf(
-					"account",
-					"audit",
-					"issuedPermissions",
-					"loginName",
-					"managementPermissions",
-					"markers",
-					"statistics",
-					"supportedGroupTypes",
-				),
-			),
+			listvalidator.ValueStringsAre(stringvalidator.OneOf(
+				"account", "audit", "issuedPermissions", "loginName", "managementPermissions", "markers", "statistics", "supportedGroupTypes",
+			)),
 		},
 	}
 	schemaAttrs["account_count"] = dsschema.Int64Attribute{
@@ -4936,36 +4878,36 @@ func dataSourceSchemaAttrsProvisioningProvisionedSystem(recurse bool) map[string
 	schemaAttrs["username_prefix"] = dsschema.StringAttribute{
 		Computed: true,
 	}
-	schemaAttrs["provisioned_internal_ldap"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsProvisioningProvisionedInternalLDAP(false),
-		Computed:   true,
-	}
 	schemaAttrs["abstract_provisioned_ldap"] = dsschema.SingleNestedAttribute{
 		Attributes: dataSourceSchemaAttrsProvisioningAbstractProvisionedLDAP(false),
-		Computed:   true,
-	}
-	schemaAttrs["provisioned_ldap"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsProvisioningProvisionedLDAP(false),
-		Computed:   true,
-	}
-	schemaAttrs["provisioned_ldap_directory"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsProvisioningProvisionedLDAPDirectory(false),
-		Computed:   true,
-	}
-	schemaAttrs["provisioned_azure_tenant"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsProvisioningProvisionedAzureTenant(false),
 		Computed:   true,
 	}
 	schemaAttrs["provisioned_a_d"] = dsschema.SingleNestedAttribute{
 		Attributes: dataSourceSchemaAttrsProvisioningProvisionedAD(false),
 		Computed:   true,
 	}
-	schemaAttrs["provisioned_azure_oidc_directory"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsProvisioningProvisionedAzureOIDCDirectory(false),
+	schemaAttrs["provisioned_ldap_directory"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsProvisioningProvisionedLDAPDirectory(false),
 		Computed:   true,
 	}
 	schemaAttrs["provisioned_azure_sync_ldap_directory"] = dsschema.SingleNestedAttribute{
 		Attributes: dataSourceSchemaAttrsProvisioningProvisionedAzureSyncLDAPDirectory(false),
+		Computed:   true,
+	}
+	schemaAttrs["provisioned_azure_oidc_directory"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsProvisioningProvisionedAzureOIDCDirectory(false),
+		Computed:   true,
+	}
+	schemaAttrs["provisioned_internal_ldap"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsProvisioningProvisionedInternalLDAP(false),
+		Computed:   true,
+	}
+	schemaAttrs["provisioned_azure_tenant"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsProvisioningProvisionedAzureTenant(false),
+		Computed:   true,
+	}
+	schemaAttrs["provisioned_ldap"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsProvisioningProvisionedLDAP(false),
 		Computed:   true,
 	}
 	return schemaAttrs
@@ -5010,6 +4952,9 @@ func dataSourceSchemaAttrsProvisioningProvisionedSystemPrimer(recurse bool) map[
 	schemaAttrs["uuid"] = dsschema.StringAttribute{
 		Required: recurse,
 		Computed: !recurse,
+		Validators: []validator.String{
+			stringvalidator.UTF8LengthBetween(0, 36),
+		},
 	}
 	return schemaAttrs
 }
@@ -5047,11 +4992,9 @@ func dataSourceSchemaAttrsProvisioningProvisionedSystemSyncLog(recurse bool) map
 		ElementType: types.StringType,
 		Optional:    true,
 		Validators: []validator.List{
-			listvalidator.ValueStringsAre(
-				stringvalidator.OneOf(
-					"audit",
-				),
-			),
+			listvalidator.ValueStringsAre(stringvalidator.OneOf(
+				"audit",
+			)),
 		},
 	}
 	schemaAttrs["created_at"] = dsschema.StringAttribute{
@@ -5354,12 +5297,9 @@ func dataSourceSchemaAttrsRequestModificationRequest(recurse bool) map[string]ds
 		ElementType: types.StringType,
 		Optional:    true,
 		Validators: []validator.List{
-			listvalidator.ValueStringsAre(
-				stringvalidator.OneOf(
-					"audit",
-					"resetStatus",
-				),
-			),
+			listvalidator.ValueStringsAre(stringvalidator.OneOf(
+				"audit", "resetStatus",
+			)),
 		},
 	}
 	schemaAttrs["account"] = dsschema.SingleNestedAttribute{
@@ -5385,152 +5325,152 @@ func dataSourceSchemaAttrsRequestModificationRequest(recurse bool) map[string]ds
 	schemaAttrs["status"] = dsschema.StringAttribute{
 		Computed: true,
 	}
-	schemaAttrs["abstract_organizational_unit_modification_request"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsRequestAbstractOrganizationalUnitModificationRequest(false),
-		Computed:   true,
-	}
-	schemaAttrs["transfer_organizational_unit_ownership_request"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsRequestTransferOrganizationalUnitOwnershipRequest(false),
-		Computed:   true,
-	}
 	schemaAttrs["abstract_provisioned_system_modification_request"] = dsschema.SingleNestedAttribute{
 		Attributes: dataSourceSchemaAttrsRequestAbstractProvisionedSystemModificationRequest(false),
-		Computed:   true,
-	}
-	schemaAttrs["create_service_account_request"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsRequestCreateServiceAccountRequest(false),
-		Computed:   true,
-	}
-	schemaAttrs["setup_authorizing_group_request"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsRequestSetupAuthorizingGroupRequest(false),
-		Computed:   true,
-	}
-	schemaAttrs["grant_service_account_group_request"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsRequestGrantServiceAccountGroupRequest(false),
-		Computed:   true,
-	}
-	schemaAttrs["grant_group_on_system_request_request"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsRequestGrantGroupOnSystemRequestRequest(false),
-		Computed:   true,
-	}
-	schemaAttrs["transfer_auditor_group_request"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsRequestTransferAuditorGroupRequest(false),
-		Computed:   true,
-	}
-	schemaAttrs["abstract_application_modification_request"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsRequestAbstractApplicationModificationRequest(false),
-		Computed:   true,
-	}
-	schemaAttrs["transfer_application_ownership_request"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsRequestTransferApplicationOwnershipRequest(false),
-		Computed:   true,
-	}
-	schemaAttrs["transfer_service_account_administration_request"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsRequestTransferServiceAccountAdministrationRequest(false),
-		Computed:   true,
-	}
-	schemaAttrs["transfer_provisioned_system_content_administration_request"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsRequestTransferProvisionedSystemContentAdministrationRequest(false),
-		Computed:   true,
-	}
-	schemaAttrs["remove_group_request"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsRequestRemoveGroupRequest(false),
-		Computed:   true,
-	}
-	schemaAttrs["join_group_request"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsRequestJoinGroupRequest(false),
-		Computed:   true,
-	}
-	schemaAttrs["grant_access_request"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsRequestGrantAccessRequest(false),
-		Computed:   true,
-	}
-	schemaAttrs["review_audit_request"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsRequestReviewAuditRequest(false),
-		Computed:   true,
-	}
-	schemaAttrs["grant_client_permission_request"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsRequestGrantClientPermissionRequest(false),
-		Computed:   true,
-	}
-	schemaAttrs["transfer_group_on_system_ownership_request"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsRequestTransferGroupOnSystemOwnershipRequest(false),
-		Computed:   true,
-	}
-	schemaAttrs["transfer_provisioned_system_ownership_request"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsRequestTransferProvisionedSystemOwnershipRequest(false),
-		Computed:   true,
-	}
-	schemaAttrs["grant_application_request"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsRequestGrantApplicationRequest(false),
-		Computed:   true,
-	}
-	schemaAttrs["transfer_provisioned_system_administration_request"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsRequestTransferProvisionedSystemAdministrationRequest(false),
-		Computed:   true,
-	}
-	schemaAttrs["extend_access_request"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsRequestExtendAccessRequest(false),
 		Computed:   true,
 	}
 	schemaAttrs["create_group_on_system_request"] = dsschema.SingleNestedAttribute{
 		Attributes: dataSourceSchemaAttrsRequestCreateGroupOnSystemRequest(false),
 		Computed:   true,
 	}
-	schemaAttrs["add_group_admin_request"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsRequestAddGroupAdminRequest(false),
-		Computed:   true,
-	}
-	schemaAttrs["join_vault_request"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsRequestJoinVaultRequest(false),
-		Computed:   true,
-	}
-	schemaAttrs["grant_group_on_system_request"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsRequestGrantGroupOnSystemRequest(false),
-		Computed:   true,
-	}
-	schemaAttrs["remove_provisioned_system_request"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsRequestRemoveProvisionedSystemRequest(false),
-		Computed:   true,
-	}
-	schemaAttrs["setup_nested_group_request"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsRequestSetupNestedGroupRequest(false),
-		Computed:   true,
-	}
-	schemaAttrs["transfer_application_administration_request"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsRequestTransferApplicationAdministrationRequest(false),
+	schemaAttrs["abstract_organizational_unit_modification_request"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsRequestAbstractOrganizationalUnitModificationRequest(false),
 		Computed:   true,
 	}
 	schemaAttrs["create_group_request"] = dsschema.SingleNestedAttribute{
 		Attributes: dataSourceSchemaAttrsRequestCreateGroupRequest(false),
 		Computed:   true,
 	}
-	schemaAttrs["revoke_admin_request"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsRequestRevokeAdminRequest(false),
+	schemaAttrs["abstract_application_modification_request"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsRequestAbstractApplicationModificationRequest(false),
 		Computed:   true,
 	}
-	schemaAttrs["password_reset_request"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsRequestPasswordResetRequest(false),
+	schemaAttrs["grant_group_on_system_request"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsRequestGrantGroupOnSystemRequest(false),
 		Computed:   true,
 	}
-	schemaAttrs["enable_technical_administration_request"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsRequestEnableTechnicalAdministrationRequest(false),
-		Computed:   true,
-	}
-	schemaAttrs["update_group_membership_request"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsRequestUpdateGroupMembershipRequest(false),
+	schemaAttrs["setup_authorizing_group_request"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsRequestSetupAuthorizingGroupRequest(false),
 		Computed:   true,
 	}
 	schemaAttrs["remove_organizational_unit_request"] = dsschema.SingleNestedAttribute{
 		Attributes: dataSourceSchemaAttrsRequestRemoveOrganizationalUnitRequest(false),
 		Computed:   true,
 	}
-	schemaAttrs["verify_internal_account_request"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsRequestVerifyInternalAccountRequest(false),
+	schemaAttrs["join_group_request"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsRequestJoinGroupRequest(false),
+		Computed:   true,
+	}
+	schemaAttrs["transfer_application_administration_request"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsRequestTransferApplicationAdministrationRequest(false),
 		Computed:   true,
 	}
 	schemaAttrs["disable2fa_request"] = dsschema.SingleNestedAttribute{
 		Attributes: dataSourceSchemaAttrsRequestDisable2FARequest(false),
+		Computed:   true,
+	}
+	schemaAttrs["grant_group_on_system_request_request"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsRequestGrantGroupOnSystemRequestRequest(false),
+		Computed:   true,
+	}
+	schemaAttrs["grant_application_request"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsRequestGrantApplicationRequest(false),
+		Computed:   true,
+	}
+	schemaAttrs["grant_access_request"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsRequestGrantAccessRequest(false),
+		Computed:   true,
+	}
+	schemaAttrs["grant_service_account_group_request"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsRequestGrantServiceAccountGroupRequest(false),
+		Computed:   true,
+	}
+	schemaAttrs["transfer_auditor_group_request"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsRequestTransferAuditorGroupRequest(false),
+		Computed:   true,
+	}
+	schemaAttrs["add_group_admin_request"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsRequestAddGroupAdminRequest(false),
+		Computed:   true,
+	}
+	schemaAttrs["enable_technical_administration_request"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsRequestEnableTechnicalAdministrationRequest(false),
+		Computed:   true,
+	}
+	schemaAttrs["transfer_provisioned_system_ownership_request"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsRequestTransferProvisionedSystemOwnershipRequest(false),
+		Computed:   true,
+	}
+	schemaAttrs["transfer_service_account_administration_request"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsRequestTransferServiceAccountAdministrationRequest(false),
+		Computed:   true,
+	}
+	schemaAttrs["review_audit_request"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsRequestReviewAuditRequest(false),
+		Computed:   true,
+	}
+	schemaAttrs["transfer_group_on_system_ownership_request"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsRequestTransferGroupOnSystemOwnershipRequest(false),
+		Computed:   true,
+	}
+	schemaAttrs["join_vault_request"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsRequestJoinVaultRequest(false),
+		Computed:   true,
+	}
+	schemaAttrs["setup_nested_group_request"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsRequestSetupNestedGroupRequest(false),
+		Computed:   true,
+	}
+	schemaAttrs["transfer_provisioned_system_administration_request"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsRequestTransferProvisionedSystemAdministrationRequest(false),
+		Computed:   true,
+	}
+	schemaAttrs["verify_internal_account_request"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsRequestVerifyInternalAccountRequest(false),
+		Computed:   true,
+	}
+	schemaAttrs["create_service_account_request"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsRequestCreateServiceAccountRequest(false),
+		Computed:   true,
+	}
+	schemaAttrs["remove_provisioned_system_request"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsRequestRemoveProvisionedSystemRequest(false),
+		Computed:   true,
+	}
+	schemaAttrs["revoke_admin_request"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsRequestRevokeAdminRequest(false),
+		Computed:   true,
+	}
+	schemaAttrs["transfer_provisioned_system_content_administration_request"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsRequestTransferProvisionedSystemContentAdministrationRequest(false),
+		Computed:   true,
+	}
+	schemaAttrs["transfer_application_ownership_request"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsRequestTransferApplicationOwnershipRequest(false),
+		Computed:   true,
+	}
+	schemaAttrs["extend_access_request"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsRequestExtendAccessRequest(false),
+		Computed:   true,
+	}
+	schemaAttrs["update_group_membership_request"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsRequestUpdateGroupMembershipRequest(false),
+		Computed:   true,
+	}
+	schemaAttrs["grant_client_permission_request"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsRequestGrantClientPermissionRequest(false),
+		Computed:   true,
+	}
+	schemaAttrs["transfer_organizational_unit_ownership_request"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsRequestTransferOrganizationalUnitOwnershipRequest(false),
+		Computed:   true,
+	}
+	schemaAttrs["remove_group_request"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsRequestRemoveGroupRequest(false),
+		Computed:   true,
+	}
+	schemaAttrs["password_reset_request"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsRequestPasswordResetRequest(false),
 		Computed:   true,
 	}
 	return schemaAttrs
@@ -5749,18 +5689,17 @@ func dataSourceSchemaAttrsServiceaccountServiceAccount(recurse bool) map[string]
 	schemaAttrs["uuid"] = dsschema.StringAttribute{
 		Required: recurse,
 		Computed: !recurse,
+		Validators: []validator.String{
+			stringvalidator.UTF8LengthBetween(0, 36),
+		},
 	}
 	schemaAttrs["additional"] = dsschema.ListAttribute{
 		ElementType: types.StringType,
 		Optional:    true,
 		Validators: []validator.List{
-			listvalidator.ValueStringsAre(
-				stringvalidator.OneOf(
-					"audit",
-					"groups",
-					"secret",
-				),
-			),
+			listvalidator.ValueStringsAre(stringvalidator.OneOf(
+				"audit", "groups", "secret",
+			)),
 		},
 	}
 	schemaAttrs["description"] = dsschema.StringAttribute{
@@ -5815,11 +5754,9 @@ func dataSourceSchemaAttrsServiceaccountServiceAccountGroup(recurse bool) map[st
 		ElementType: types.StringType,
 		Optional:    true,
 		Validators: []validator.List{
-			listvalidator.ValueStringsAre(
-				stringvalidator.OneOf(
-					"audit",
-				),
-			),
+			listvalidator.ValueStringsAre(stringvalidator.OneOf(
+				"audit",
+			)),
 		},
 	}
 	return schemaAttrs
@@ -5882,6 +5819,9 @@ func dataSourceSchemaAttrsServiceaccountServiceAccountPrimer(recurse bool) map[s
 	schemaAttrs["uuid"] = dsschema.StringAttribute{
 		Required: recurse,
 		Computed: !recurse,
+		Validators: []validator.String{
+			stringvalidator.UTF8LengthBetween(0, 36),
+		},
 	}
 	return schemaAttrs
 }
@@ -5983,12 +5923,9 @@ func dataSourceSchemaAttrsVaultDeletedVaultHolder(recurse bool) map[string]dssch
 		ElementType: types.StringType,
 		Optional:    true,
 		Validators: []validator.List{
-			listvalidator.ValueStringsAre(
-				stringvalidator.OneOf(
-					"audit",
-					"vault",
-				),
-			),
+			listvalidator.ValueStringsAre(stringvalidator.OneOf(
+				"audit", "vault",
+			)),
 		},
 	}
 	schemaAttrs["name"] = dsschema.StringAttribute{
@@ -6162,23 +6099,17 @@ func dataSourceSchemaAttrsVaultVaultRecord(recurse bool) map[string]dsschema.Att
 	schemaAttrs["uuid"] = dsschema.StringAttribute{
 		Required: recurse,
 		Computed: !recurse,
+		Validators: []validator.String{
+			stringvalidator.UTF8LengthBetween(0, 36),
+		},
 	}
 	schemaAttrs["additional"] = dsschema.ListAttribute{
 		ElementType: types.StringType,
 		Optional:    true,
 		Validators: []validator.List{
-			listvalidator.ValueStringsAre(
-				stringvalidator.OneOf(
-					"audit",
-					"parent",
-					"passwordMetadata",
-					"secret",
-					"shareSummary",
-					"shares",
-					"tile",
-					"vaultholder",
-				),
-			),
+			listvalidator.ValueStringsAre(stringvalidator.OneOf(
+				"audit", "parent", "passwordMetadata", "secret", "shareSummary", "shares", "tile", "vaultholder",
+			)),
 		},
 	}
 	schemaAttrs["derived"] = dsschema.BoolAttribute{
@@ -6241,6 +6172,9 @@ func dataSourceSchemaAttrsVaultVaultRecordPrimer(recurse bool) map[string]dssche
 	schemaAttrs["uuid"] = dsschema.StringAttribute{
 		Required: recurse,
 		Computed: !recurse,
+		Validators: []validator.String{
+			stringvalidator.UTF8LengthBetween(0, 36),
+		},
 	}
 	return schemaAttrs
 }
@@ -6382,11 +6316,9 @@ func dataSourceSchemaAttrsWebhookWebhook(recurse bool) map[string]dsschema.Attri
 		ElementType: types.StringType,
 		Optional:    true,
 		Validators: []validator.List{
-			listvalidator.ValueStringsAre(
-				stringvalidator.OneOf(
-					"audit",
-				),
-			),
+			listvalidator.ValueStringsAre(stringvalidator.OneOf(
+				"audit",
+			)),
 		},
 	}
 	schemaAttrs["account"] = dsschema.SingleNestedAttribute{
@@ -6457,6 +6389,9 @@ func dataSourceSchemaAttrsWebhookWebhook(recurse bool) map[string]dsschema.Attri
 	schemaAttrs["uuid"] = dsschema.StringAttribute{
 		Required: recurse,
 		Computed: !recurse,
+		Validators: []validator.String{
+			stringvalidator.UTF8LengthBetween(0, 36),
+		},
 	}
 	schemaAttrs["verbose_payloads"] = dsschema.BoolAttribute{
 		Computed: true,
@@ -6487,11 +6422,9 @@ func dataSourceSchemaAttrsWebhookWebhookDelivery(recurse bool) map[string]dssche
 		ElementType: types.StringType,
 		Optional:    true,
 		Validators: []validator.List{
-			listvalidator.ValueStringsAre(
-				stringvalidator.OneOf(
-					"audit",
-				),
-			),
+			listvalidator.ValueStringsAre(stringvalidator.OneOf(
+				"audit",
+			)),
 		},
 	}
 	schemaAttrs["payload"] = dsschema.SingleNestedAttribute{
