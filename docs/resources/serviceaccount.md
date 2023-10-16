@@ -82,7 +82,7 @@ Optional:
 Required:
 
 - `name_in_system` (String)
-- `provisioning_group_on_system_primer_type` (String)
+- `type` (String)
 
 Optional:
 

@@ -135,7 +135,7 @@ func dataSourceSchemaAttrsAccountVaultVaultRecord(recurse bool) map[string]dssch
 		Required: recurse,
 		Computed: !recurse,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["links"] = dsschema.ListNestedAttribute{
@@ -228,7 +228,7 @@ func dataSourceSchemaAttrsAuditAuditRecord(recurse bool) map[string]dsschema.Att
 			)),
 		},
 	}
-	schemaAttrs["audit_audit_record_type"] = dsschema.StringAttribute{
+	schemaAttrs["type"] = dsschema.StringAttribute{
 		Computed: true,
 	}
 	schemaAttrs["date_time"] = dsschema.StringAttribute{
@@ -817,7 +817,7 @@ func dataSourceSchemaAttrsCertificateCertificate(recurse bool) map[string]dssche
 	schemaAttrs["alias"] = dsschema.StringAttribute{
 		Computed: true,
 	}
-	schemaAttrs["certificate_certificate_primer_type"] = dsschema.StringAttribute{
+	schemaAttrs["type"] = dsschema.StringAttribute{
 		Computed: true,
 	}
 	schemaAttrs["certificate_data"] = dsschema.ListAttribute{
@@ -888,7 +888,7 @@ func dataSourceSchemaAttrsCertificateCertificatePrimer(recurse bool) map[string]
 	schemaAttrs["alias"] = dsschema.StringAttribute{
 		Computed: true,
 	}
-	schemaAttrs["certificate_certificate_primer_type"] = dsschema.StringAttribute{
+	schemaAttrs["type"] = dsschema.StringAttribute{
 		Computed: true,
 	}
 	schemaAttrs["certificate_data"] = dsschema.ListAttribute{
@@ -939,7 +939,7 @@ func dataSourceSchemaAttrsClientApplicationVaultVaultRecord(recurse bool) map[st
 		Required: recurse,
 		Computed: !recurse,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["links"] = dsschema.ListNestedAttribute{
@@ -1023,7 +1023,7 @@ func dataSourceSchemaAttrsClientClientApplication(recurse bool) map[string]dssch
 		},
 		Computed: true,
 	}
-	schemaAttrs["client_client_application_primer_type"] = dsschema.StringAttribute{
+	schemaAttrs["type"] = dsschema.StringAttribute{
 		Computed: true,
 	}
 	schemaAttrs["client_id"] = dsschema.StringAttribute{
@@ -1070,12 +1070,12 @@ func dataSourceSchemaAttrsClientClientApplication(recurse bool) map[string]dssch
 		Attributes: dataSourceSchemaAttrsClientOAuth2Client(false),
 		Computed:   true,
 	}
-	schemaAttrs["ldap_client"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsClientLdapClient(false),
-		Computed:   true,
-	}
 	schemaAttrs["saml2_client"] = dsschema.SingleNestedAttribute{
 		Attributes: dataSourceSchemaAttrsClientSaml2Client(false),
+		Computed:   true,
+	}
+	schemaAttrs["ldap_client"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsClientLdapClient(false),
 		Computed:   true,
 	}
 	return schemaAttrs
@@ -1104,7 +1104,7 @@ func dataSourceSchemaAttrsClientClientApplicationPrimer(recurse bool) map[string
 		},
 		Computed: true,
 	}
-	schemaAttrs["client_client_application_primer_type"] = dsschema.StringAttribute{
+	schemaAttrs["type"] = dsschema.StringAttribute{
 		Computed: true,
 	}
 	schemaAttrs["client_id"] = dsschema.StringAttribute{
@@ -1375,7 +1375,7 @@ func dataSourceSchemaAttrsDeletedVaultHolderVaultVaultRecord(recurse bool) map[s
 		Required: recurse,
 		Computed: !recurse,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["links"] = dsschema.ListNestedAttribute{
@@ -1465,7 +1465,7 @@ func dataSourceSchemaAttrsDirectoryAccountDirectory(recurse bool) map[string]dss
 	schemaAttrs["active"] = dsschema.BoolAttribute{
 		Computed: true,
 	}
-	schemaAttrs["directory_account_directory_primer_type"] = dsschema.StringAttribute{
+	schemaAttrs["type"] = dsschema.StringAttribute{
 		Computed: true,
 	}
 	schemaAttrs["name"] = dsschema.StringAttribute{
@@ -1515,12 +1515,12 @@ func dataSourceSchemaAttrsDirectoryAccountDirectory(recurse bool) map[string]dss
 		Attributes: dataSourceSchemaAttrsDirectoryInternalDirectory(false),
 		Computed:   true,
 	}
-	schemaAttrs["maintenance_directory"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsDirectoryMaintenanceDirectory(false),
-		Computed:   true,
-	}
 	schemaAttrs["o_id_c_directory"] = dsschema.SingleNestedAttribute{
 		Attributes: dataSourceSchemaAttrsDirectoryOIDCDirectory(false),
+		Computed:   true,
+	}
+	schemaAttrs["maintenance_directory"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsDirectoryMaintenanceDirectory(false),
 		Computed:   true,
 	}
 	return schemaAttrs
@@ -1555,7 +1555,7 @@ func dataSourceSchemaAttrsDirectoryAccountDirectoryPrimer(recurse bool) map[stri
 	schemaAttrs["active"] = dsschema.BoolAttribute{
 		Computed: true,
 	}
-	schemaAttrs["directory_account_directory_primer_type"] = dsschema.StringAttribute{
+	schemaAttrs["type"] = dsschema.StringAttribute{
 		Computed: true,
 	}
 	schemaAttrs["name"] = dsschema.StringAttribute{
@@ -1597,7 +1597,7 @@ func dataSourceSchemaAttrsDirectoryAccountDirectorySummary(recurse bool) map[str
 		},
 		Computed: true,
 	}
-	schemaAttrs["directory_account_directory_summary_type"] = dsschema.StringAttribute{
+	schemaAttrs["type"] = dsschema.StringAttribute{
 		Computed: true,
 	}
 	schemaAttrs["domain_restriction"] = dsschema.StringAttribute{
@@ -2819,7 +2819,7 @@ func dataSourceSchemaAttrsGroupVaultVaultRecord(recurse bool) map[string]dsschem
 		Required: recurse,
 		Computed: !recurse,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["links"] = dsschema.ListNestedAttribute{
@@ -3114,7 +3114,7 @@ func dataSourceSchemaAttrsMarkItemMarker(recurse bool) map[string]dsschema.Attri
 	schemaAttrs["level"] = dsschema.StringAttribute{
 		Computed: true,
 	}
-	schemaAttrs["mark_item_marker_type"] = dsschema.StringAttribute{
+	schemaAttrs["type"] = dsschema.StringAttribute{
 		Computed: true,
 	}
 	schemaAttrs["parameters"] = dsschema.SingleNestedAttribute{
@@ -3149,7 +3149,7 @@ func dataSourceSchemaAttrsNestedAuthInternalAccount(recurse bool) map[string]dss
 		Required: recurse,
 		Computed: !recurse,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["links"] = dsschema.ListNestedAttribute{
@@ -3282,7 +3282,7 @@ func dataSourceSchemaAttrsNestedClientOAuth2ClientPermission(recurse bool) map[s
 		Required: recurse,
 		Computed: !recurse,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["links"] = dsschema.ListNestedAttribute{
@@ -3331,7 +3331,7 @@ func dataSourceSchemaAttrsNestedGroupAccountGroup(recurse bool) map[string]dssch
 		Required: recurse,
 		Computed: !recurse,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["links"] = dsschema.ListNestedAttribute{
@@ -3401,7 +3401,7 @@ func dataSourceSchemaAttrsNestedGroupGroupAccount(recurse bool) map[string]dssch
 		Required: recurse,
 		Computed: !recurse,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["links"] = dsschema.ListNestedAttribute{
@@ -3483,7 +3483,7 @@ func dataSourceSchemaAttrsNestedGroupGroupAudit(recurse bool) map[string]dsschem
 		Required: recurse,
 		Computed: !recurse,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["links"] = dsschema.ListNestedAttribute{
@@ -3557,7 +3557,7 @@ func dataSourceSchemaAttrsNestedOrganizationAccountOrganizationalUnit(recurse bo
 		Required: recurse,
 		Computed: !recurse,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["links"] = dsschema.ListNestedAttribute{
@@ -3605,7 +3605,7 @@ func dataSourceSchemaAttrsNestedOrganizationOrganizationalUnitAccount(recurse bo
 		Required: recurse,
 		Computed: !recurse,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["links"] = dsschema.ListNestedAttribute{
@@ -3663,7 +3663,7 @@ func dataSourceSchemaAttrsNestedProvisioningGroupOnSystem(recurse bool) map[stri
 		Required: recurse,
 		Computed: !recurse,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["links"] = dsschema.ListNestedAttribute{
@@ -3684,7 +3684,7 @@ func dataSourceSchemaAttrsNestedProvisioningGroupOnSystem(recurse bool) map[stri
 	schemaAttrs["name_in_system"] = dsschema.StringAttribute{
 		Computed: true,
 	}
-	schemaAttrs["provisioning_group_on_system_primer_type"] = dsschema.StringAttribute{
+	schemaAttrs["type"] = dsschema.StringAttribute{
 		Computed: true,
 	}
 	schemaAttrs["short_name_in_system"] = dsschema.StringAttribute{
@@ -3721,7 +3721,7 @@ func dataSourceSchemaAttrsNestedProvisioningProvisionedAccount(recurse bool) map
 		Required: recurse,
 		Computed: !recurse,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["links"] = dsschema.ListNestedAttribute{
@@ -3778,7 +3778,7 @@ func dataSourceSchemaAttrsNestedProvisioningProvisionedSystemSyncLog(recurse boo
 		Required: recurse,
 		Computed: !recurse,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["links"] = dsschema.ListNestedAttribute{
@@ -3828,7 +3828,7 @@ func dataSourceSchemaAttrsNestedServiceaccountServiceAccountGroup(recurse bool) 
 		Required: recurse,
 		Computed: !recurse,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["links"] = dsschema.ListNestedAttribute{
@@ -3849,7 +3849,7 @@ func dataSourceSchemaAttrsNestedServiceaccountServiceAccountGroup(recurse bool) 
 	schemaAttrs["name_in_system"] = dsschema.StringAttribute{
 		Computed: true,
 	}
-	schemaAttrs["provisioning_group_on_system_primer_type"] = dsschema.StringAttribute{
+	schemaAttrs["type"] = dsschema.StringAttribute{
 		Computed: true,
 	}
 	schemaAttrs["short_name_in_system"] = dsschema.StringAttribute{
@@ -3878,7 +3878,7 @@ func dataSourceSchemaAttrsNestedWebhookWebhookDelivery(recurse bool) map[string]
 		Required: recurse,
 		Computed: !recurse,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["links"] = dsschema.ListNestedAttribute{
@@ -4443,7 +4443,7 @@ func dataSourceSchemaAttrsProvisioningGroupOnSystem(recurse bool) map[string]dss
 	schemaAttrs["name_in_system"] = dsschema.StringAttribute{
 		Computed: true,
 	}
-	schemaAttrs["provisioning_group_on_system_primer_type"] = dsschema.StringAttribute{
+	schemaAttrs["type"] = dsschema.StringAttribute{
 		Computed: true,
 	}
 	schemaAttrs["short_name_in_system"] = dsschema.StringAttribute{
@@ -4498,7 +4498,7 @@ func dataSourceSchemaAttrsProvisioningGroupOnSystemPrimer(recurse bool) map[stri
 	schemaAttrs["name_in_system"] = dsschema.StringAttribute{
 		Computed: true,
 	}
-	schemaAttrs["provisioning_group_on_system_primer_type"] = dsschema.StringAttribute{
+	schemaAttrs["type"] = dsschema.StringAttribute{
 		Computed: true,
 	}
 	schemaAttrs["short_name_in_system"] = dsschema.StringAttribute{
@@ -4826,7 +4826,7 @@ func dataSourceSchemaAttrsProvisioningProvisionedSystem(recurse bool) map[string
 		Attributes: dataSourceSchemaAttrsOrganizationOrganizationalUnitPrimer(recurse),
 		Computed:   true,
 	}
-	schemaAttrs["provisioning_provisioned_system_primer_type"] = dsschema.StringAttribute{
+	schemaAttrs["type"] = dsschema.StringAttribute{
 		Computed: true,
 	}
 	schemaAttrs["uuid"] = dsschema.StringAttribute{
@@ -4878,6 +4878,10 @@ func dataSourceSchemaAttrsProvisioningProvisionedSystem(recurse bool) map[string
 	schemaAttrs["username_prefix"] = dsschema.StringAttribute{
 		Computed: true,
 	}
+	schemaAttrs["provisioned_azure_oidc_directory"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsProvisioningProvisionedAzureOIDCDirectory(false),
+		Computed:   true,
+	}
 	schemaAttrs["abstract_provisioned_ldap"] = dsschema.SingleNestedAttribute{
 		Attributes: dataSourceSchemaAttrsProvisioningAbstractProvisionedLDAP(false),
 		Computed:   true,
@@ -4886,28 +4890,24 @@ func dataSourceSchemaAttrsProvisioningProvisionedSystem(recurse bool) map[string
 		Attributes: dataSourceSchemaAttrsProvisioningProvisionedAD(false),
 		Computed:   true,
 	}
-	schemaAttrs["provisioned_ldap_directory"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsProvisioningProvisionedLDAPDirectory(false),
+	schemaAttrs["provisioned_azure_tenant"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsProvisioningProvisionedAzureTenant(false),
 		Computed:   true,
 	}
 	schemaAttrs["provisioned_azure_sync_ldap_directory"] = dsschema.SingleNestedAttribute{
 		Attributes: dataSourceSchemaAttrsProvisioningProvisionedAzureSyncLDAPDirectory(false),
 		Computed:   true,
 	}
-	schemaAttrs["provisioned_azure_oidc_directory"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsProvisioningProvisionedAzureOIDCDirectory(false),
-		Computed:   true,
-	}
 	schemaAttrs["provisioned_internal_ldap"] = dsschema.SingleNestedAttribute{
 		Attributes: dataSourceSchemaAttrsProvisioningProvisionedInternalLDAP(false),
 		Computed:   true,
 	}
-	schemaAttrs["provisioned_azure_tenant"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsProvisioningProvisionedAzureTenant(false),
-		Computed:   true,
-	}
 	schemaAttrs["provisioned_ldap"] = dsschema.SingleNestedAttribute{
 		Attributes: dataSourceSchemaAttrsProvisioningProvisionedLDAP(false),
+		Computed:   true,
+	}
+	schemaAttrs["provisioned_ldap_directory"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsProvisioningProvisionedLDAPDirectory(false),
 		Computed:   true,
 	}
 	return schemaAttrs
@@ -4946,7 +4946,7 @@ func dataSourceSchemaAttrsProvisioningProvisionedSystemPrimer(recurse bool) map[
 		Attributes: dataSourceSchemaAttrsOrganizationOrganizationalUnitPrimer(recurse),
 		Computed:   true,
 	}
-	schemaAttrs["provisioning_provisioned_system_primer_type"] = dsschema.StringAttribute{
+	schemaAttrs["type"] = dsschema.StringAttribute{
 		Computed: true,
 	}
 	schemaAttrs["uuid"] = dsschema.StringAttribute{
@@ -5325,76 +5325,140 @@ func dataSourceSchemaAttrsRequestModificationRequest(recurse bool) map[string]ds
 	schemaAttrs["status"] = dsschema.StringAttribute{
 		Computed: true,
 	}
+	schemaAttrs["transfer_auditor_group_request"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsRequestTransferAuditorGroupRequest(false),
+		Computed:   true,
+	}
 	schemaAttrs["abstract_provisioned_system_modification_request"] = dsschema.SingleNestedAttribute{
 		Attributes: dataSourceSchemaAttrsRequestAbstractProvisionedSystemModificationRequest(false),
 		Computed:   true,
 	}
-	schemaAttrs["create_group_on_system_request"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsRequestCreateGroupOnSystemRequest(false),
+	schemaAttrs["create_service_account_request"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsRequestCreateServiceAccountRequest(false),
 		Computed:   true,
 	}
-	schemaAttrs["abstract_organizational_unit_modification_request"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsRequestAbstractOrganizationalUnitModificationRequest(false),
+	schemaAttrs["review_audit_request"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsRequestReviewAuditRequest(false),
 		Computed:   true,
 	}
-	schemaAttrs["create_group_request"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsRequestCreateGroupRequest(false),
+	schemaAttrs["setup_nested_group_request"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsRequestSetupNestedGroupRequest(false),
+		Computed:   true,
+	}
+	schemaAttrs["remove_provisioned_system_request"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsRequestRemoveProvisionedSystemRequest(false),
 		Computed:   true,
 	}
 	schemaAttrs["abstract_application_modification_request"] = dsschema.SingleNestedAttribute{
 		Attributes: dataSourceSchemaAttrsRequestAbstractApplicationModificationRequest(false),
 		Computed:   true,
 	}
-	schemaAttrs["grant_group_on_system_request"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsRequestGrantGroupOnSystemRequest(false),
+	schemaAttrs["grant_application_request"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsRequestGrantApplicationRequest(false),
 		Computed:   true,
 	}
-	schemaAttrs["setup_authorizing_group_request"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsRequestSetupAuthorizingGroupRequest(false),
+	schemaAttrs["abstract_organizational_unit_modification_request"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsRequestAbstractOrganizationalUnitModificationRequest(false),
 		Computed:   true,
 	}
-	schemaAttrs["remove_organizational_unit_request"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsRequestRemoveOrganizationalUnitRequest(false),
-		Computed:   true,
-	}
-	schemaAttrs["join_group_request"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsRequestJoinGroupRequest(false),
-		Computed:   true,
-	}
-	schemaAttrs["transfer_application_administration_request"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsRequestTransferApplicationAdministrationRequest(false),
+	schemaAttrs["verify_internal_account_request"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsRequestVerifyInternalAccountRequest(false),
 		Computed:   true,
 	}
 	schemaAttrs["disable2fa_request"] = dsschema.SingleNestedAttribute{
 		Attributes: dataSourceSchemaAttrsRequestDisable2FARequest(false),
 		Computed:   true,
 	}
-	schemaAttrs["grant_group_on_system_request_request"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsRequestGrantGroupOnSystemRequestRequest(false),
+	schemaAttrs["join_group_request"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsRequestJoinGroupRequest(false),
 		Computed:   true,
 	}
-	schemaAttrs["grant_application_request"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsRequestGrantApplicationRequest(false),
+	schemaAttrs["join_vault_request"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsRequestJoinVaultRequest(false),
 		Computed:   true,
 	}
-	schemaAttrs["grant_access_request"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsRequestGrantAccessRequest(false),
+	schemaAttrs["remove_group_request"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsRequestRemoveGroupRequest(false),
+		Computed:   true,
+	}
+	schemaAttrs["transfer_application_administration_request"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsRequestTransferApplicationAdministrationRequest(false),
+		Computed:   true,
+	}
+	schemaAttrs["transfer_organizational_unit_ownership_request"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsRequestTransferOrganizationalUnitOwnershipRequest(false),
+		Computed:   true,
+	}
+	schemaAttrs["remove_organizational_unit_request"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsRequestRemoveOrganizationalUnitRequest(false),
+		Computed:   true,
+	}
+	schemaAttrs["grant_client_permission_request"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsRequestGrantClientPermissionRequest(false),
+		Computed:   true,
+	}
+	schemaAttrs["enable_technical_administration_request"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsRequestEnableTechnicalAdministrationRequest(false),
+		Computed:   true,
+	}
+	schemaAttrs["transfer_provisioned_system_content_administration_request"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsRequestTransferProvisionedSystemContentAdministrationRequest(false),
+		Computed:   true,
+	}
+	schemaAttrs["password_reset_request"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsRequestPasswordResetRequest(false),
+		Computed:   true,
+	}
+	schemaAttrs["transfer_group_on_system_ownership_request"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsRequestTransferGroupOnSystemOwnershipRequest(false),
+		Computed:   true,
+	}
+	schemaAttrs["setup_authorizing_group_request"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsRequestSetupAuthorizingGroupRequest(false),
 		Computed:   true,
 	}
 	schemaAttrs["grant_service_account_group_request"] = dsschema.SingleNestedAttribute{
 		Attributes: dataSourceSchemaAttrsRequestGrantServiceAccountGroupRequest(false),
 		Computed:   true,
 	}
-	schemaAttrs["transfer_auditor_group_request"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsRequestTransferAuditorGroupRequest(false),
+	schemaAttrs["create_group_on_system_request"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsRequestCreateGroupOnSystemRequest(false),
+		Computed:   true,
+	}
+	schemaAttrs["transfer_application_ownership_request"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsRequestTransferApplicationOwnershipRequest(false),
+		Computed:   true,
+	}
+	schemaAttrs["grant_access_request"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsRequestGrantAccessRequest(false),
+		Computed:   true,
+	}
+	schemaAttrs["update_group_membership_request"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsRequestUpdateGroupMembershipRequest(false),
+		Computed:   true,
+	}
+	schemaAttrs["extend_access_request"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsRequestExtendAccessRequest(false),
 		Computed:   true,
 	}
 	schemaAttrs["add_group_admin_request"] = dsschema.SingleNestedAttribute{
 		Attributes: dataSourceSchemaAttrsRequestAddGroupAdminRequest(false),
 		Computed:   true,
 	}
-	schemaAttrs["enable_technical_administration_request"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsRequestEnableTechnicalAdministrationRequest(false),
+	schemaAttrs["grant_group_on_system_request"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsRequestGrantGroupOnSystemRequest(false),
+		Computed:   true,
+	}
+	schemaAttrs["grant_group_on_system_request_request"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsRequestGrantGroupOnSystemRequestRequest(false),
+		Computed:   true,
+	}
+	schemaAttrs["revoke_admin_request"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsRequestRevokeAdminRequest(false),
+		Computed:   true,
+	}
+	schemaAttrs["create_group_request"] = dsschema.SingleNestedAttribute{
+		Attributes: dataSourceSchemaAttrsRequestCreateGroupRequest(false),
 		Computed:   true,
 	}
 	schemaAttrs["transfer_provisioned_system_ownership_request"] = dsschema.SingleNestedAttribute{
@@ -5405,72 +5469,8 @@ func dataSourceSchemaAttrsRequestModificationRequest(recurse bool) map[string]ds
 		Attributes: dataSourceSchemaAttrsRequestTransferServiceAccountAdministrationRequest(false),
 		Computed:   true,
 	}
-	schemaAttrs["review_audit_request"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsRequestReviewAuditRequest(false),
-		Computed:   true,
-	}
-	schemaAttrs["transfer_group_on_system_ownership_request"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsRequestTransferGroupOnSystemOwnershipRequest(false),
-		Computed:   true,
-	}
-	schemaAttrs["join_vault_request"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsRequestJoinVaultRequest(false),
-		Computed:   true,
-	}
-	schemaAttrs["setup_nested_group_request"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsRequestSetupNestedGroupRequest(false),
-		Computed:   true,
-	}
 	schemaAttrs["transfer_provisioned_system_administration_request"] = dsschema.SingleNestedAttribute{
 		Attributes: dataSourceSchemaAttrsRequestTransferProvisionedSystemAdministrationRequest(false),
-		Computed:   true,
-	}
-	schemaAttrs["verify_internal_account_request"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsRequestVerifyInternalAccountRequest(false),
-		Computed:   true,
-	}
-	schemaAttrs["create_service_account_request"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsRequestCreateServiceAccountRequest(false),
-		Computed:   true,
-	}
-	schemaAttrs["remove_provisioned_system_request"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsRequestRemoveProvisionedSystemRequest(false),
-		Computed:   true,
-	}
-	schemaAttrs["revoke_admin_request"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsRequestRevokeAdminRequest(false),
-		Computed:   true,
-	}
-	schemaAttrs["transfer_provisioned_system_content_administration_request"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsRequestTransferProvisionedSystemContentAdministrationRequest(false),
-		Computed:   true,
-	}
-	schemaAttrs["transfer_application_ownership_request"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsRequestTransferApplicationOwnershipRequest(false),
-		Computed:   true,
-	}
-	schemaAttrs["extend_access_request"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsRequestExtendAccessRequest(false),
-		Computed:   true,
-	}
-	schemaAttrs["update_group_membership_request"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsRequestUpdateGroupMembershipRequest(false),
-		Computed:   true,
-	}
-	schemaAttrs["grant_client_permission_request"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsRequestGrantClientPermissionRequest(false),
-		Computed:   true,
-	}
-	schemaAttrs["transfer_organizational_unit_ownership_request"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsRequestTransferOrganizationalUnitOwnershipRequest(false),
-		Computed:   true,
-	}
-	schemaAttrs["remove_group_request"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsRequestRemoveGroupRequest(false),
-		Computed:   true,
-	}
-	schemaAttrs["password_reset_request"] = dsschema.SingleNestedAttribute{
-		Attributes: dataSourceSchemaAttrsRequestPasswordResetRequest(false),
 		Computed:   true,
 	}
 	return schemaAttrs
@@ -5744,7 +5744,7 @@ func dataSourceSchemaAttrsServiceaccountServiceAccountGroup(recurse bool) map[st
 	schemaAttrs["name_in_system"] = dsschema.StringAttribute{
 		Computed: true,
 	}
-	schemaAttrs["provisioning_group_on_system_primer_type"] = dsschema.StringAttribute{
+	schemaAttrs["type"] = dsschema.StringAttribute{
 		Computed: true,
 	}
 	schemaAttrs["short_name_in_system"] = dsschema.StringAttribute{
@@ -6209,7 +6209,7 @@ func dataSourceSchemaAttrsVaultVaultRecordShare(recurse bool) map[string]dsschem
 	schemaAttrs["name"] = dsschema.StringAttribute{
 		Computed: true,
 	}
-	schemaAttrs["vault_vault_record_share_type"] = dsschema.StringAttribute{
+	schemaAttrs["type"] = dsschema.StringAttribute{
 		Computed: true,
 	}
 	return schemaAttrs
@@ -6570,7 +6570,7 @@ func dataSourceSchemaAttrsWebhookWebhookPush(recurse bool) map[string]dsschema.A
 		Attributes: dataSourceSchemaAttrsWebhookWebhookNameUuid(recurse),
 		Computed:   true,
 	}
-	schemaAttrs["webhook_webhook_push_type"] = dsschema.StringAttribute{
+	schemaAttrs["type"] = dsschema.StringAttribute{
 		Computed: true,
 	}
 	return schemaAttrs

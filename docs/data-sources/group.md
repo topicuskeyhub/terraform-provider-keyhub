@@ -3575,12 +3575,12 @@ Read-Only:
 - `name_in_system` (String)
 - `owner` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--owned_groups_on_system--items--owner))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--owned_groups_on_system--items--permissions))
-- `provisioning_group_on_system_primer_type` (String)
 - `short_name_in_system` (String)
 - `system` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--owned_groups_on_system--items--system))
+- `type` (String)
 
 <a id="nestedatt--additional_objects--owned_groups_on_system--items--links"></a>
-### Nested Schema for `additional_objects.owned_groups_on_system.items.system`
+### Nested Schema for `additional_objects.owned_groups_on_system.items.type`
 
 Read-Only:
 
@@ -3591,18 +3591,18 @@ Read-Only:
 
 
 <a id="nestedatt--additional_objects--owned_groups_on_system--items--owner"></a>
-### Nested Schema for `additional_objects.owned_groups_on_system.items.system`
+### Nested Schema for `additional_objects.owned_groups_on_system.items.type`
 
 Read-Only:
 
 - `admin` (Boolean)
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--owned_groups_on_system--items--system--links))
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--owned_groups_on_system--items--type--links))
 - `name` (String)
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--owned_groups_on_system--items--system--permissions))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--owned_groups_on_system--items--type--permissions))
 - `uuid` (String)
 
-<a id="nestedatt--additional_objects--owned_groups_on_system--items--system--links"></a>
-### Nested Schema for `additional_objects.owned_groups_on_system.items.system.links`
+<a id="nestedatt--additional_objects--owned_groups_on_system--items--type--links"></a>
+### Nested Schema for `additional_objects.owned_groups_on_system.items.type.links`
 
 Read-Only:
 
@@ -3612,8 +3612,8 @@ Read-Only:
 - `type_escaped` (String)
 
 
-<a id="nestedatt--additional_objects--owned_groups_on_system--items--system--permissions"></a>
-### Nested Schema for `additional_objects.owned_groups_on_system.items.system.permissions`
+<a id="nestedatt--additional_objects--owned_groups_on_system--items--type--permissions"></a>
+### Nested Schema for `additional_objects.owned_groups_on_system.items.type.permissions`
 
 Read-Only:
 
@@ -3625,7 +3625,7 @@ Read-Only:
 
 
 <a id="nestedatt--additional_objects--owned_groups_on_system--items--permissions"></a>
-### Nested Schema for `additional_objects.owned_groups_on_system.items.system`
+### Nested Schema for `additional_objects.owned_groups_on_system.items.type`
 
 Read-Only:
 
@@ -3636,20 +3636,20 @@ Read-Only:
 
 
 <a id="nestedatt--additional_objects--owned_groups_on_system--items--system"></a>
-### Nested Schema for `additional_objects.owned_groups_on_system.items.system`
+### Nested Schema for `additional_objects.owned_groups_on_system.items.type`
 
 Read-Only:
 
 - `active` (Boolean)
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--owned_groups_on_system--items--system--links))
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--owned_groups_on_system--items--type--links))
 - `name` (String)
-- `organizational_unit` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--owned_groups_on_system--items--system--organizational_unit))
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--owned_groups_on_system--items--system--permissions))
+- `organizational_unit` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--owned_groups_on_system--items--type--organizational_unit))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--owned_groups_on_system--items--type--permissions))
 - `provisioning_provisioned_system_primer_type` (String)
 - `uuid` (String)
 
-<a id="nestedatt--additional_objects--owned_groups_on_system--items--system--links"></a>
-### Nested Schema for `additional_objects.owned_groups_on_system.items.system.links`
+<a id="nestedatt--additional_objects--owned_groups_on_system--items--type--links"></a>
+### Nested Schema for `additional_objects.owned_groups_on_system.items.type.links`
 
 Read-Only:
 
@@ -3659,18 +3659,18 @@ Read-Only:
 - `type_escaped` (String)
 
 
-<a id="nestedatt--additional_objects--owned_groups_on_system--items--system--organizational_unit"></a>
-### Nested Schema for `additional_objects.owned_groups_on_system.items.system.organizational_unit`
+<a id="nestedatt--additional_objects--owned_groups_on_system--items--type--organizational_unit"></a>
+### Nested Schema for `additional_objects.owned_groups_on_system.items.type.organizational_unit`
 
 Read-Only:
 
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--owned_groups_on_system--items--system--organizational_unit--links))
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--owned_groups_on_system--items--type--organizational_unit--links))
 - `name` (String)
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--owned_groups_on_system--items--system--organizational_unit--permissions))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--owned_groups_on_system--items--type--organizational_unit--permissions))
 - `uuid` (String)
 
-<a id="nestedatt--additional_objects--owned_groups_on_system--items--system--organizational_unit--links"></a>
-### Nested Schema for `additional_objects.owned_groups_on_system.items.system.organizational_unit.uuid`
+<a id="nestedatt--additional_objects--owned_groups_on_system--items--type--organizational_unit--links"></a>
+### Nested Schema for `additional_objects.owned_groups_on_system.items.type.organizational_unit.uuid`
 
 Read-Only:
 
@@ -3680,8 +3680,8 @@ Read-Only:
 - `type_escaped` (String)
 
 
-<a id="nestedatt--additional_objects--owned_groups_on_system--items--system--organizational_unit--permissions"></a>
-### Nested Schema for `additional_objects.owned_groups_on_system.items.system.organizational_unit.uuid`
+<a id="nestedatt--additional_objects--owned_groups_on_system--items--type--organizational_unit--permissions"></a>
+### Nested Schema for `additional_objects.owned_groups_on_system.items.type.organizational_unit.uuid`
 
 Read-Only:
 
@@ -3692,8 +3692,8 @@ Read-Only:
 
 
 
-<a id="nestedatt--additional_objects--owned_groups_on_system--items--system--permissions"></a>
-### Nested Schema for `additional_objects.owned_groups_on_system.items.system.permissions`
+<a id="nestedatt--additional_objects--owned_groups_on_system--items--type--permissions"></a>
+### Nested Schema for `additional_objects.owned_groups_on_system.items.type.permissions`
 
 Read-Only:
 
@@ -4826,9 +4826,9 @@ Read-Only:
 - `name_in_system` (String)
 - `owner` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--systems--items--permissions--owner))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--systems--items--permissions--permissions))
-- `provisioning_group_on_system_primer_type` (String)
 - `short_name_in_system` (String)
 - `system` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--systems--items--permissions--system))
+- `type` (String)
 
 <a id="nestedatt--additional_objects--systems--items--permissions--links"></a>
 ### Nested Schema for `additional_objects.systems.items.permissions.links`

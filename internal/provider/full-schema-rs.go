@@ -7,6 +7,7 @@ import (
 	"regexp"
 
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	rsschema "github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
@@ -153,7 +154,7 @@ func resourceSchemaAttrsAccountVaultVaultRecord(recurse bool) map[string]rsschem
 	schemaAttrs["account_uuid"] = rsschema.StringAttribute{
 		Required: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["links"] = rsschema.ListNestedAttribute{
@@ -252,7 +253,7 @@ func resourceSchemaAttrsAuditAuditRecord(recurse bool) map[string]rsschema.Attri
 		Computed:      true,
 		PlanModifiers: []planmodifier.List{listplanmodifier.UseStateForUnknown()},
 	}
-	schemaAttrs["audit_audit_record_type"] = rsschema.StringAttribute{
+	schemaAttrs["type"] = rsschema.StringAttribute{
 		Computed:      true,
 		PlanModifiers: []planmodifier.String{stringplanmodifier.UseStateForUnknown()},
 	}
@@ -539,7 +540,7 @@ func resourceSchemaAttrsAuthAccountSettings(recurse bool) map[string]rsschema.At
 	schemaAttrs["default_organizational_unit_uuid"] = rsschema.StringAttribute{
 		Optional: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["directory_name"] = rsschema.StringAttribute{
@@ -698,7 +699,7 @@ func resourceSchemaAttrsAuthInternalAccount(recurse bool) map[string]rsschema.At
 	schemaAttrs["uuid"] = rsschema.StringAttribute{
 		Required: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["activation_code"] = rsschema.StringAttribute{
@@ -783,6 +784,13 @@ func resourceSchemaAttrsAuthPermission(recurse bool) map[string]rsschema.Attribu
 	schemaAttrs["operations"] = rsschema.ListAttribute{
 		ElementType: types.StringType,
 		Optional:    true,
+		Validators: []validator.List{
+			listvalidator.ValueStringsAre(
+				stringvalidator.OneOf(
+					"CREATE", "READ", "UPDATE", "DELETE",
+				),
+			),
+		},
 	}
 	schemaAttrs["type_escaped"] = rsschema.StringAttribute{
 		Optional: true,
@@ -837,7 +845,7 @@ func resourceSchemaAttrsCertificateCertificate(recurse bool) map[string]rsschema
 			stringvalidator.UTF8LengthBetween(0, 128),
 		},
 	}
-	schemaAttrs["certificate_certificate_primer_type"] = rsschema.StringAttribute{
+	schemaAttrs["type"] = rsschema.StringAttribute{
 		Computed:      true,
 		PlanModifiers: []planmodifier.String{stringplanmodifier.UseStateForUnknown()},
 	}
@@ -904,7 +912,7 @@ func resourceSchemaAttrsCertificateCertificatePrimer(recurse bool) map[string]rs
 			stringvalidator.UTF8LengthBetween(0, 128),
 		},
 	}
-	schemaAttrs["certificate_certificate_primer_type"] = rsschema.StringAttribute{
+	schemaAttrs["type"] = rsschema.StringAttribute{
 		Computed:      true,
 		PlanModifiers: []planmodifier.String{stringplanmodifier.UseStateForUnknown()},
 	}
@@ -954,7 +962,7 @@ func resourceSchemaAttrsClientApplicationVaultVaultRecord(recurse bool) map[stri
 	schemaAttrs["client_application_uuid"] = rsschema.StringAttribute{
 		Required: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["links"] = rsschema.ListNestedAttribute{
@@ -1053,7 +1061,7 @@ func resourceSchemaAttrsClientClientApplication(recurse bool) map[string]rsschem
 		Computed:      true,
 		PlanModifiers: []planmodifier.List{listplanmodifier.UseStateForUnknown()},
 	}
-	schemaAttrs["client_client_application_primer_type"] = rsschema.StringAttribute{
+	schemaAttrs["type"] = rsschema.StringAttribute{
 		Computed:      true,
 		PlanModifiers: []planmodifier.String{stringplanmodifier.UseStateForUnknown()},
 	}
@@ -1087,25 +1095,25 @@ func resourceSchemaAttrsClientClientApplication(recurse bool) map[string]rsschem
 	schemaAttrs["owner_uuid"] = rsschema.StringAttribute{
 		Optional: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["technical_administrator_uuid"] = rsschema.StringAttribute{
 		Optional: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["o_auth2_client"] = rsschema.SingleNestedAttribute{
 		Attributes: resourceSchemaAttrsClientOAuth2Client(false),
 		Optional:   true,
 	}
-	schemaAttrs["ldap_client"] = rsschema.SingleNestedAttribute{
-		Attributes: resourceSchemaAttrsClientLdapClient(false),
-		Optional:   true,
-	}
 	schemaAttrs["saml2_client"] = rsschema.SingleNestedAttribute{
 		Attributes: resourceSchemaAttrsClientSaml2Client(false),
+		Optional:   true,
+	}
+	schemaAttrs["ldap_client"] = rsschema.SingleNestedAttribute{
+		Attributes: resourceSchemaAttrsClientLdapClient(false),
 		Optional:   true,
 	}
 	return schemaAttrs
@@ -1136,7 +1144,7 @@ func resourceSchemaAttrsClientClientApplicationPrimer(recurse bool) map[string]r
 		Computed:      true,
 		PlanModifiers: []planmodifier.List{listplanmodifier.UseStateForUnknown()},
 	}
-	schemaAttrs["client_client_application_primer_type"] = rsschema.StringAttribute{
+	schemaAttrs["type"] = rsschema.StringAttribute{
 		Computed:      true,
 		PlanModifiers: []planmodifier.String{stringplanmodifier.UseStateForUnknown()},
 	}
@@ -1204,7 +1212,7 @@ func resourceSchemaAttrsClientLdapClient(recurse bool) map[string]rsschema.Attri
 	schemaAttrs["client_certificate_uuid"] = rsschema.StringAttribute{
 		Optional: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["share_secret_in_vault"] = rsschema.BoolAttribute{
@@ -1302,13 +1310,13 @@ func resourceSchemaAttrsClientOAuth2ClientPermission(recurse bool) map[string]rs
 	schemaAttrs["for_group_uuid"] = rsschema.StringAttribute{
 		Optional: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["for_system_uuid"] = rsschema.StringAttribute{
 		Optional: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["value"] = rsschema.StringAttribute{
@@ -1356,13 +1364,13 @@ func resourceSchemaAttrsClientOAuth2ClientPermissionWithClient(recurse bool) map
 	schemaAttrs["for_group_uuid"] = rsschema.StringAttribute{
 		Optional: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["for_system_uuid"] = rsschema.StringAttribute{
 		Optional: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["value"] = rsschema.StringAttribute{
@@ -1441,7 +1449,7 @@ func resourceSchemaAttrsDeletedVaultHolderVaultVaultRecord(recurse bool) map[str
 	schemaAttrs["deleted_vault_holder_uuid"] = rsschema.StringAttribute{
 		Required: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["links"] = rsschema.ListNestedAttribute{
@@ -1549,7 +1557,7 @@ func resourceSchemaAttrsDirectoryAccountDirectory(recurse bool) map[string]rssch
 		Optional: true,
 		Default:  booldefault.StaticBool(false),
 	}
-	schemaAttrs["directory_account_directory_primer_type"] = rsschema.StringAttribute{
+	schemaAttrs["type"] = rsschema.StringAttribute{
 		Computed:      true,
 		PlanModifiers: []planmodifier.String{stringplanmodifier.UseStateForUnknown()},
 	}
@@ -1566,7 +1574,7 @@ func resourceSchemaAttrsDirectoryAccountDirectory(recurse bool) map[string]rssch
 	schemaAttrs["base_organizational_unit_uuid"] = rsschema.StringAttribute{
 		Required: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["default_directory"] = rsschema.BoolAttribute{
@@ -1577,7 +1585,7 @@ func resourceSchemaAttrsDirectoryAccountDirectory(recurse bool) map[string]rssch
 	schemaAttrs["helpdesk_group_uuid"] = rsschema.StringAttribute{
 		Optional: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["restrict2fa"] = rsschema.BoolAttribute{
@@ -1606,12 +1614,12 @@ func resourceSchemaAttrsDirectoryAccountDirectory(recurse bool) map[string]rssch
 		Attributes: resourceSchemaAttrsDirectoryInternalDirectory(false),
 		Optional:   true,
 	}
-	schemaAttrs["maintenance_directory"] = rsschema.SingleNestedAttribute{
-		Attributes: resourceSchemaAttrsDirectoryMaintenanceDirectory(false),
-		Optional:   true,
-	}
 	schemaAttrs["o_id_c_directory"] = rsschema.SingleNestedAttribute{
 		Attributes: resourceSchemaAttrsDirectoryOIDCDirectory(false),
+		Optional:   true,
+	}
+	schemaAttrs["maintenance_directory"] = rsschema.SingleNestedAttribute{
+		Attributes: resourceSchemaAttrsDirectoryMaintenanceDirectory(false),
 		Optional:   true,
 	}
 	return schemaAttrs
@@ -1651,7 +1659,7 @@ func resourceSchemaAttrsDirectoryAccountDirectoryPrimer(recurse bool) map[string
 		Optional: true,
 		Default:  booldefault.StaticBool(false),
 	}
-	schemaAttrs["directory_account_directory_primer_type"] = rsschema.StringAttribute{
+	schemaAttrs["type"] = rsschema.StringAttribute{
 		Computed:      true,
 		PlanModifiers: []planmodifier.String{stringplanmodifier.UseStateForUnknown()},
 	}
@@ -1703,7 +1711,7 @@ func resourceSchemaAttrsDirectoryAccountDirectorySummary(recurse bool) map[strin
 		Computed:      true,
 		PlanModifiers: []planmodifier.List{listplanmodifier.UseStateForUnknown()},
 	}
-	schemaAttrs["directory_account_directory_summary_type"] = rsschema.StringAttribute{
+	schemaAttrs["type"] = rsschema.StringAttribute{
 		Optional: true,
 		Validators: []validator.String{
 			stringvalidator.OneOf(
@@ -1762,7 +1770,7 @@ func resourceSchemaAttrsDirectoryInternalDirectory(recurse bool) map[string]rssc
 	schemaAttrs["owner_uuid"] = rsschema.StringAttribute{
 		Required: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	return schemaAttrs
@@ -1784,7 +1792,7 @@ func resourceSchemaAttrsDirectoryLDAPDirectory(recurse bool) map[string]rsschema
 	schemaAttrs["client_certificate_uuid"] = rsschema.StringAttribute{
 		Optional: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["dialect"] = rsschema.StringAttribute{
@@ -1803,7 +1811,7 @@ func resourceSchemaAttrsDirectoryLDAPDirectory(recurse bool) map[string]rsschema
 	schemaAttrs["failover_trusted_certificate_uuid"] = rsschema.StringAttribute{
 		Optional: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["host"] = rsschema.StringAttribute{
@@ -1854,7 +1862,7 @@ func resourceSchemaAttrsDirectoryLDAPDirectory(recurse bool) map[string]rsschema
 	schemaAttrs["trusted_certificate_uuid"] = rsschema.StringAttribute{
 		Optional: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	return schemaAttrs
@@ -1938,7 +1946,7 @@ func resourceSchemaAttrsGroupAccountGroup(recurse bool) map[string]rsschema.Attr
 	schemaAttrs["uuid"] = rsschema.StringAttribute{
 		Required: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["end_date"] = rsschema.StringAttribute{
@@ -2059,25 +2067,25 @@ func resourceSchemaAttrsGroupGroup(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs["authorizing_group_auditing_uuid"] = rsschema.StringAttribute{
 		Optional: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["authorizing_group_delegation_uuid"] = rsschema.StringAttribute{
 		Optional: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["authorizing_group_membership_uuid"] = rsschema.StringAttribute{
 		Optional: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["authorizing_group_provisioning_uuid"] = rsschema.StringAttribute{
 		Optional: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["authorizing_group_types"] = rsschema.ListAttribute{
@@ -2088,7 +2096,7 @@ func resourceSchemaAttrsGroupGroup(recurse bool) map[string]rsschema.Attribute {
 		Computed: true,
 		Optional: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["description"] = rsschema.StringAttribute{
@@ -2112,14 +2120,14 @@ func resourceSchemaAttrsGroupGroup(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs["nested_under_uuid"] = rsschema.StringAttribute{
 		Optional: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["organizational_unit_uuid"] = rsschema.StringAttribute{
 		Computed: true,
 		Optional: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["private_group"] = rsschema.BoolAttribute{
@@ -2170,7 +2178,7 @@ func resourceSchemaAttrsGroupGroupAccount(recurse bool) map[string]rsschema.Attr
 	schemaAttrs["uuid"] = rsschema.StringAttribute{
 		Required: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["directory_uuid"] = rsschema.StringAttribute{
@@ -2396,6 +2404,13 @@ func resourceSchemaAttrsGroupGroupAuditConfig(recurse bool) map[string]rsschema.
 		ElementType: types.StringType,
 		Optional:    true,
 		Computed:    true,
+		Validators: []validator.List{
+			listvalidator.ValueStringsAre(
+				stringvalidator.OneOf(
+					"JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER",
+				),
+			),
+		},
 	}
 	return schemaAttrs
 }
@@ -2540,6 +2555,13 @@ func resourceSchemaAttrsGroupGroupClassification(recurse bool) map[string]rssche
 	schemaAttrs["required_months"] = rsschema.ListAttribute{
 		ElementType: types.StringType,
 		Optional:    true,
+		Validators: []validator.List{
+			listvalidator.ValueStringsAre(
+				stringvalidator.OneOf(
+					"JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER",
+				),
+			),
+		},
 	}
 	schemaAttrs["rotating_password_required"] = rsschema.BoolAttribute{
 		Computed: true,
@@ -2605,7 +2627,7 @@ func resourceSchemaAttrsGroupGroupClassificationUpdate(recurse bool) map[string]
 	schemaAttrs["classificaton_uuid"] = rsschema.StringAttribute{
 		Required: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	return schemaAttrs
@@ -2812,6 +2834,11 @@ func resourceSchemaAttrsGroupGroupPrimerLinkableWrapper(recurse bool) map[string
 	schemaAttrs["items"] = rsschema.ListAttribute{
 		ElementType: types.StringType,
 		Optional:    true,
+		Validators: []validator.List{
+			listvalidator.ValueStringsAre(
+				stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
+			),
+		},
 	}
 	return schemaAttrs
 }
@@ -3050,7 +3077,7 @@ func resourceSchemaAttrsGroupVaultVaultRecord(recurse bool) map[string]rsschema.
 	schemaAttrs["group_uuid"] = rsschema.StringAttribute{
 		Required: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["links"] = rsschema.ListNestedAttribute{
@@ -3146,7 +3173,7 @@ func resourceSchemaAttrsLaunchpadDisplayedLaunchpadTile(recurse bool) map[string
 	schemaAttrs["group_uuid"] = rsschema.StringAttribute{
 		Optional: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["identicon_code"] = rsschema.Int64Attribute{
@@ -3205,13 +3232,13 @@ func resourceSchemaAttrsLaunchpadLaunchpadTile(recurse bool) map[string]rsschema
 	schemaAttrs["application_uuid"] = rsschema.StringAttribute{
 		Optional: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["group_uuid"] = rsschema.StringAttribute{
 		Optional: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["identicon_code"] = rsschema.Int64Attribute{
@@ -3230,7 +3257,7 @@ func resourceSchemaAttrsLaunchpadLaunchpadTile(recurse bool) map[string]rsschema
 	schemaAttrs["vault_record_uuid"] = rsschema.StringAttribute{
 		Optional: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["vault_record_launchpad_tile"] = rsschema.SingleNestedAttribute{
@@ -3332,6 +3359,11 @@ func resourceSchemaAttrsLicenseKeyHubLicenseInfo(recurse bool) map[string]rssche
 	schemaAttrs["customer_domains"] = rsschema.ListAttribute{
 		ElementType: types.StringType,
 		Optional:    true,
+		Validators: []validator.List{
+			listvalidator.ValueStringsAre(
+				stringvalidator.UTF8LengthBetween(0, 100),
+			),
+		},
 	}
 	schemaAttrs["details"] = rsschema.ListAttribute{
 		ElementType: types.StringType,
@@ -3343,6 +3375,13 @@ func resourceSchemaAttrsLicenseKeyHubLicenseInfo(recurse bool) map[string]rssche
 	schemaAttrs["features"] = rsschema.ListAttribute{
 		ElementType: types.StringType,
 		Optional:    true,
+		Validators: []validator.List{
+			listvalidator.ValueStringsAre(
+				stringvalidator.OneOf(
+					"CLUSTER_HA", "CLUSTER_HA_ENTERPRISE", "WORKFLOWS", "NESTED_GROUPS", "ENTERPRISE_ORGANISATION", "COMPLIANCE_PLUS", "OFFLINE_MODE", "SERVICE_ACCOUNTS",
+				),
+			),
+		},
 	}
 	schemaAttrs["issue_time"] = rsschema.StringAttribute{
 		Optional: true,
@@ -3388,7 +3427,7 @@ func resourceSchemaAttrsMarkItemMarker(recurse bool) map[string]rsschema.Attribu
 			),
 		},
 	}
-	schemaAttrs["mark_item_marker_type"] = rsschema.StringAttribute{
+	schemaAttrs["type"] = rsschema.StringAttribute{
 		Optional: true,
 		Validators: []validator.String{
 			stringvalidator.OneOf(
@@ -3421,13 +3460,13 @@ func resourceSchemaAttrsNestedAuthInternalAccount(recurse bool) map[string]rssch
 	schemaAttrs["account_directory_uuid"] = rsschema.StringAttribute{
 		Required: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["uuid"] = rsschema.StringAttribute{
 		Required: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["activation_code"] = rsschema.StringAttribute{
@@ -3481,7 +3520,7 @@ func resourceSchemaAttrsNestedClientOAuth2ClientPermission(recurse bool) map[str
 	schemaAttrs["client_application_uuid"] = rsschema.StringAttribute{
 		Required: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["links"] = rsschema.ListNestedAttribute{
@@ -3501,13 +3540,13 @@ func resourceSchemaAttrsNestedClientOAuth2ClientPermission(recurse bool) map[str
 	schemaAttrs["for_group_uuid"] = rsschema.StringAttribute{
 		Optional: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["for_system_uuid"] = rsschema.StringAttribute{
 		Optional: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["value"] = rsschema.StringAttribute{
@@ -3531,13 +3570,13 @@ func resourceSchemaAttrsNestedGroupAccountGroup(recurse bool) map[string]rsschem
 	schemaAttrs["account_uuid"] = rsschema.StringAttribute{
 		Required: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["uuid"] = rsschema.StringAttribute{
 		Required: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["end_date"] = rsschema.StringAttribute{
@@ -3577,13 +3616,13 @@ func resourceSchemaAttrsNestedGroupGroupAccount(recurse bool) map[string]rsschem
 	schemaAttrs["group_uuid"] = rsschema.StringAttribute{
 		Required: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["uuid"] = rsschema.StringAttribute{
 		Required: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["directory_uuid"] = rsschema.StringAttribute{
@@ -3631,7 +3670,7 @@ func resourceSchemaAttrsNestedGroupGroupAudit(recurse bool) map[string]rsschema.
 	schemaAttrs["group_uuid"] = rsschema.StringAttribute{
 		Required: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["links"] = rsschema.ListNestedAttribute{
@@ -3702,13 +3741,13 @@ func resourceSchemaAttrsNestedOrganizationAccountOrganizationalUnit(recurse bool
 	schemaAttrs["account_uuid"] = rsschema.StringAttribute{
 		Required: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["uuid"] = rsschema.StringAttribute{
 		Required: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	return schemaAttrs
@@ -3724,19 +3763,19 @@ func resourceSchemaAttrsNestedOrganizationOrganizationalUnitAccount(recurse bool
 	schemaAttrs["organizational_unit_uuid"] = rsschema.StringAttribute{
 		Required: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["uuid"] = rsschema.StringAttribute{
 		Required: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["directory_uuid"] = rsschema.StringAttribute{
 		Optional: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	return schemaAttrs
@@ -3752,7 +3791,7 @@ func resourceSchemaAttrsNestedProvisioningGroupOnSystem(recurse bool) map[string
 	schemaAttrs["provisioned_system_uuid"] = rsschema.StringAttribute{
 		Required: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["links"] = rsschema.ListNestedAttribute{
@@ -3778,7 +3817,7 @@ func resourceSchemaAttrsNestedProvisioningGroupOnSystem(recurse bool) map[string
 			stringvalidator.UTF8LengthBetween(0, 255),
 		},
 	}
-	schemaAttrs["provisioning_group_on_system_primer_type"] = rsschema.StringAttribute{
+	schemaAttrs["type"] = rsschema.StringAttribute{
 		Required: true,
 		Validators: []validator.String{
 			stringvalidator.OneOf(
@@ -3792,13 +3831,13 @@ func resourceSchemaAttrsNestedProvisioningGroupOnSystem(recurse bool) map[string
 	schemaAttrs["owner_uuid"] = rsschema.StringAttribute{
 		Required: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["system_uuid"] = rsschema.StringAttribute{
 		Optional: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	return schemaAttrs
@@ -3814,13 +3853,13 @@ func resourceSchemaAttrsNestedProvisioningProvisionedAccount(recurse bool) map[s
 	schemaAttrs["provisioned_system_uuid"] = rsschema.StringAttribute{
 		Required: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["uuid"] = rsschema.StringAttribute{
 		Required: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["uid"] = rsschema.Int64Attribute{
@@ -3840,7 +3879,7 @@ func resourceSchemaAttrsNestedProvisioningProvisionedSystemSyncLog(recurse bool)
 	schemaAttrs["provisioned_system_uuid"] = rsschema.StringAttribute{
 		Required: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["links"] = rsschema.ListNestedAttribute{
@@ -3886,7 +3925,7 @@ func resourceSchemaAttrsNestedServiceaccountServiceAccountGroup(recurse bool) ma
 	schemaAttrs["service_account_uuid"] = rsschema.StringAttribute{
 		Required: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["links"] = rsschema.ListNestedAttribute{
@@ -3912,7 +3951,7 @@ func resourceSchemaAttrsNestedServiceaccountServiceAccountGroup(recurse bool) ma
 			stringvalidator.UTF8LengthBetween(0, 255),
 		},
 	}
-	schemaAttrs["provisioning_group_on_system_primer_type"] = rsschema.StringAttribute{
+	schemaAttrs["type"] = rsschema.StringAttribute{
 		Required: true,
 		Validators: []validator.String{
 			stringvalidator.OneOf(
@@ -3936,7 +3975,7 @@ func resourceSchemaAttrsNestedWebhookWebhookDelivery(recurse bool) map[string]rs
 	schemaAttrs["webhook_uuid"] = rsschema.StringAttribute{
 		Required: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["links"] = rsschema.ListNestedAttribute{
@@ -4120,6 +4159,11 @@ func resourceSchemaAttrsNotificationProvisionConfigRequiredNotification(recurse 
 	schemaAttrs["systems"] = rsschema.ListAttribute{
 		ElementType: types.StringType,
 		Optional:    true,
+		Validators: []validator.List{
+			listvalidator.ValueStringsAre(
+				stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
+			),
+		},
 	}
 	return schemaAttrs
 }
@@ -4128,6 +4172,11 @@ func resourceSchemaAttrsNotificationRotatingPasswordRequiredNotification(recurse
 	schemaAttrs["groups"] = rsschema.ListAttribute{
 		ElementType: types.StringType,
 		Optional:    true,
+		Validators: []validator.List{
+			listvalidator.ValueStringsAre(
+				stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
+			),
+		},
 	}
 	return schemaAttrs
 }
@@ -4157,7 +4206,7 @@ func resourceSchemaAttrsOrganizationAccountOrganizationalUnit(recurse bool) map[
 	schemaAttrs["uuid"] = rsschema.StringAttribute{
 		Required: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	return schemaAttrs
@@ -4221,7 +4270,7 @@ func resourceSchemaAttrsOrganizationOrganizationalUnit(recurse bool) map[string]
 	schemaAttrs["owner_uuid"] = rsschema.StringAttribute{
 		Required: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["parent_uuid"] = rsschema.StringAttribute{
@@ -4240,13 +4289,13 @@ func resourceSchemaAttrsOrganizationOrganizationalUnitAccount(recurse bool) map[
 	schemaAttrs["uuid"] = rsschema.StringAttribute{
 		Required: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["directory_uuid"] = rsschema.StringAttribute{
 		Optional: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	return schemaAttrs
@@ -4312,6 +4361,11 @@ func resourceSchemaAttrsOrganizationOrganizationalUnitPrimerLinkableWrapper(recu
 	schemaAttrs["items"] = rsschema.ListAttribute{
 		ElementType: types.StringType,
 		Optional:    true,
+		Validators: []validator.List{
+			listvalidator.ValueStringsAre(
+				stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
+			),
+		},
 	}
 	return schemaAttrs
 }
@@ -4354,7 +4408,7 @@ func resourceSchemaAttrsProvisioningAbstractProvisionedLDAP(recurse bool) map[st
 	schemaAttrs["client_certificate_uuid"] = rsschema.StringAttribute{
 		Optional: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["failover_host"] = rsschema.StringAttribute{
@@ -4363,7 +4417,7 @@ func resourceSchemaAttrsProvisioningAbstractProvisionedLDAP(recurse bool) map[st
 	schemaAttrs["failover_trusted_certificate_uuid"] = rsschema.StringAttribute{
 		Optional: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["group_dn"] = rsschema.StringAttribute{
@@ -4411,7 +4465,7 @@ func resourceSchemaAttrsProvisioningAbstractProvisionedLDAP(recurse bool) map[st
 	schemaAttrs["trusted_certificate_uuid"] = rsschema.StringAttribute{
 		Optional: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["user_dn"] = rsschema.StringAttribute{
@@ -4513,7 +4567,7 @@ func resourceSchemaAttrsProvisioningGroupOnSystem(recurse bool) map[string]rssch
 			stringvalidator.UTF8LengthBetween(0, 255),
 		},
 	}
-	schemaAttrs["provisioning_group_on_system_primer_type"] = rsschema.StringAttribute{
+	schemaAttrs["type"] = rsschema.StringAttribute{
 		Required: true,
 		Validators: []validator.String{
 			stringvalidator.OneOf(
@@ -4527,13 +4581,13 @@ func resourceSchemaAttrsProvisioningGroupOnSystem(recurse bool) map[string]rssch
 	schemaAttrs["owner_uuid"] = rsschema.StringAttribute{
 		Required: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["system_uuid"] = rsschema.StringAttribute{
 		Optional: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	return schemaAttrs
@@ -4573,7 +4627,7 @@ func resourceSchemaAttrsProvisioningGroupOnSystemPrimer(recurse bool) map[string
 			stringvalidator.UTF8LengthBetween(0, 255),
 		},
 	}
-	schemaAttrs["provisioning_group_on_system_primer_type"] = rsschema.StringAttribute{
+	schemaAttrs["type"] = rsschema.StringAttribute{
 		Required: true,
 		Validators: []validator.String{
 			stringvalidator.OneOf(
@@ -4591,6 +4645,13 @@ func resourceSchemaAttrsProvisioningGroupOnSystemTypes(recurse bool) map[string]
 	schemaAttrs["types"] = rsschema.ListAttribute{
 		ElementType: types.StringType,
 		Optional:    true,
+		Validators: []validator.List{
+			listvalidator.ValueStringsAre(
+				stringvalidator.OneOf(
+					"POSIX_GROUP", "GROUP_OF_NAMES", "GROUP_OF_UNIQUE_NAMES", "GROUP", "AZURE_ROLE", "AZURE_UNIFIED_GROUP", "AZURE_SECURITY_GROUP",
+				),
+			),
+		},
 	}
 	return schemaAttrs
 }
@@ -4752,7 +4813,7 @@ func resourceSchemaAttrsProvisioningProvisionedAccount(recurse bool) map[string]
 	schemaAttrs["uuid"] = rsschema.StringAttribute{
 		Required: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["uid"] = rsschema.Int64Attribute{
@@ -4784,7 +4845,7 @@ func resourceSchemaAttrsProvisioningProvisionedAzureOIDCDirectory(recurse bool) 
 	schemaAttrs["directory_uuid"] = rsschema.StringAttribute{
 		Required: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["tenant"] = rsschema.StringAttribute{
@@ -4806,7 +4867,7 @@ func resourceSchemaAttrsProvisioningProvisionedAzureSyncLDAPDirectory(recurse bo
 	schemaAttrs["directory_uuid"] = rsschema.StringAttribute{
 		Required: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["tenant"] = rsschema.StringAttribute{
@@ -4870,7 +4931,7 @@ func resourceSchemaAttrsProvisioningProvisionedLDAPDirectory(recurse bool) map[s
 	schemaAttrs["directory_uuid"] = rsschema.StringAttribute{
 		Required: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["group_dn"] = rsschema.StringAttribute{
@@ -4917,10 +4978,10 @@ func resourceSchemaAttrsProvisioningProvisionedSystem(recurse bool) map[string]r
 	schemaAttrs["organizational_unit_uuid"] = rsschema.StringAttribute{
 		Optional: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
-	schemaAttrs["provisioning_provisioned_system_primer_type"] = rsschema.StringAttribute{
+	schemaAttrs["type"] = rsschema.StringAttribute{
 		Computed:      true,
 		PlanModifiers: []planmodifier.String{stringplanmodifier.UseStateForUnknown()},
 	}
@@ -4934,7 +4995,7 @@ func resourceSchemaAttrsProvisioningProvisionedSystem(recurse bool) map[string]r
 	schemaAttrs["content_administrator_uuid"] = rsschema.StringAttribute{
 		Required: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["external_uuid"] = rsschema.StringAttribute{
@@ -4943,7 +5004,7 @@ func resourceSchemaAttrsProvisioningProvisionedSystem(recurse bool) map[string]r
 	schemaAttrs["owner_uuid"] = rsschema.StringAttribute{
 		Required: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["self_service_existing_groups"] = rsschema.BoolAttribute{
@@ -4969,7 +5030,7 @@ func resourceSchemaAttrsProvisioningProvisionedSystem(recurse bool) map[string]r
 	schemaAttrs["technical_administrator_uuid"] = rsschema.StringAttribute{
 		Required: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["username_prefix"] = rsschema.StringAttribute{
@@ -4977,6 +5038,10 @@ func resourceSchemaAttrsProvisioningProvisionedSystem(recurse bool) map[string]r
 		Validators: []validator.String{
 			stringvalidator.UTF8LengthBetween(0, 255),
 		},
+	}
+	schemaAttrs["provisioned_azure_oidc_directory"] = rsschema.SingleNestedAttribute{
+		Attributes: resourceSchemaAttrsProvisioningProvisionedAzureOIDCDirectory(false),
+		Optional:   true,
 	}
 	schemaAttrs["abstract_provisioned_ldap"] = rsschema.SingleNestedAttribute{
 		Attributes: resourceSchemaAttrsProvisioningAbstractProvisionedLDAP(false),
@@ -4986,28 +5051,24 @@ func resourceSchemaAttrsProvisioningProvisionedSystem(recurse bool) map[string]r
 		Attributes: resourceSchemaAttrsProvisioningProvisionedAD(false),
 		Optional:   true,
 	}
-	schemaAttrs["provisioned_ldap_directory"] = rsschema.SingleNestedAttribute{
-		Attributes: resourceSchemaAttrsProvisioningProvisionedLDAPDirectory(false),
+	schemaAttrs["provisioned_azure_tenant"] = rsschema.SingleNestedAttribute{
+		Attributes: resourceSchemaAttrsProvisioningProvisionedAzureTenant(false),
 		Optional:   true,
 	}
 	schemaAttrs["provisioned_azure_sync_ldap_directory"] = rsschema.SingleNestedAttribute{
 		Attributes: resourceSchemaAttrsProvisioningProvisionedAzureSyncLDAPDirectory(false),
 		Optional:   true,
 	}
-	schemaAttrs["provisioned_azure_oidc_directory"] = rsschema.SingleNestedAttribute{
-		Attributes: resourceSchemaAttrsProvisioningProvisionedAzureOIDCDirectory(false),
-		Optional:   true,
-	}
 	schemaAttrs["provisioned_internal_ldap"] = rsschema.SingleNestedAttribute{
 		Attributes: resourceSchemaAttrsProvisioningProvisionedInternalLDAP(false),
 		Optional:   true,
 	}
-	schemaAttrs["provisioned_azure_tenant"] = rsschema.SingleNestedAttribute{
-		Attributes: resourceSchemaAttrsProvisioningProvisionedAzureTenant(false),
-		Optional:   true,
-	}
 	schemaAttrs["provisioned_ldap"] = rsschema.SingleNestedAttribute{
 		Attributes: resourceSchemaAttrsProvisioningProvisionedLDAP(false),
+		Optional:   true,
+	}
+	schemaAttrs["provisioned_ldap_directory"] = rsschema.SingleNestedAttribute{
+		Attributes: resourceSchemaAttrsProvisioningProvisionedLDAPDirectory(false),
 		Optional:   true,
 	}
 	return schemaAttrs
@@ -5052,10 +5113,10 @@ func resourceSchemaAttrsProvisioningProvisionedSystemPrimer(recurse bool) map[st
 	schemaAttrs["organizational_unit_uuid"] = rsschema.StringAttribute{
 		Optional: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
-	schemaAttrs["provisioning_provisioned_system_primer_type"] = rsschema.StringAttribute{
+	schemaAttrs["type"] = rsschema.StringAttribute{
 		Computed:      true,
 		PlanModifiers: []planmodifier.String{stringplanmodifier.UseStateForUnknown()},
 	}
@@ -5070,6 +5131,11 @@ func resourceSchemaAttrsProvisioningProvisionedSystemPrimerLinkableWrapper(recur
 	schemaAttrs["items"] = rsschema.ListAttribute{
 		ElementType: types.StringType,
 		Optional:    true,
+		Validators: []validator.List{
+			listvalidator.ValueStringsAre(
+				stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
+			),
+		},
 	}
 	return schemaAttrs
 }
@@ -5217,7 +5283,7 @@ func resourceSchemaAttrsRequestAbstractApplicationModificationRequest(recurse bo
 	schemaAttrs["application_uuid"] = rsschema.StringAttribute{
 		Required: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	return schemaAttrs
@@ -5227,7 +5293,7 @@ func resourceSchemaAttrsRequestAbstractOrganizationalUnitModificationRequest(rec
 	schemaAttrs["organizational_unit_uuid"] = rsschema.StringAttribute{
 		Required: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	return schemaAttrs
@@ -5237,7 +5303,7 @@ func resourceSchemaAttrsRequestAbstractProvisionedSystemModificationRequest(recu
 	schemaAttrs["system_uuid"] = rsschema.StringAttribute{
 		Required: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	return schemaAttrs
@@ -5281,7 +5347,7 @@ func resourceSchemaAttrsRequestAddGroupAdminRequest(recurse bool) map[string]rss
 	schemaAttrs["new_admin_uuid"] = rsschema.StringAttribute{
 		Required: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["private_key"] = rsschema.StringAttribute{
@@ -5368,7 +5434,7 @@ func resourceSchemaAttrsRequestGrantClientPermissionRequest(recurse bool) map[st
 	schemaAttrs["system_uuid"] = rsschema.StringAttribute{
 		Optional: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	return schemaAttrs
@@ -5408,7 +5474,7 @@ func resourceSchemaAttrsRequestGrantServiceAccountGroupRequest(recurse bool) map
 	schemaAttrs["service_account_uuid"] = rsschema.StringAttribute{
 		Required: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	return schemaAttrs
@@ -5446,7 +5512,7 @@ func resourceSchemaAttrsRequestModificationRequest(recurse bool) map[string]rssc
 	schemaAttrs["account_uuid"] = rsschema.StringAttribute{
 		Optional: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["comment"] = rsschema.StringAttribute{
@@ -5464,7 +5530,7 @@ func resourceSchemaAttrsRequestModificationRequest(recurse bool) map[string]rssc
 	schemaAttrs["group_uuid"] = rsschema.StringAttribute{
 		Optional: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["mail_key"] = rsschema.StringAttribute{
@@ -5483,76 +5549,140 @@ func resourceSchemaAttrsRequestModificationRequest(recurse bool) map[string]rssc
 			),
 		},
 	}
+	schemaAttrs["transfer_auditor_group_request"] = rsschema.SingleNestedAttribute{
+		Attributes: resourceSchemaAttrsRequestTransferAuditorGroupRequest(false),
+		Optional:   true,
+	}
 	schemaAttrs["abstract_provisioned_system_modification_request"] = rsschema.SingleNestedAttribute{
 		Attributes: resourceSchemaAttrsRequestAbstractProvisionedSystemModificationRequest(false),
 		Optional:   true,
 	}
-	schemaAttrs["create_group_on_system_request"] = rsschema.SingleNestedAttribute{
-		Attributes: resourceSchemaAttrsRequestCreateGroupOnSystemRequest(false),
+	schemaAttrs["create_service_account_request"] = rsschema.SingleNestedAttribute{
+		Attributes: resourceSchemaAttrsRequestCreateServiceAccountRequest(false),
 		Optional:   true,
 	}
-	schemaAttrs["abstract_organizational_unit_modification_request"] = rsschema.SingleNestedAttribute{
-		Attributes: resourceSchemaAttrsRequestAbstractOrganizationalUnitModificationRequest(false),
+	schemaAttrs["review_audit_request"] = rsschema.SingleNestedAttribute{
+		Attributes: resourceSchemaAttrsRequestReviewAuditRequest(false),
 		Optional:   true,
 	}
-	schemaAttrs["create_group_request"] = rsschema.SingleNestedAttribute{
-		Attributes: resourceSchemaAttrsRequestCreateGroupRequest(false),
+	schemaAttrs["setup_nested_group_request"] = rsschema.SingleNestedAttribute{
+		Attributes: resourceSchemaAttrsRequestSetupNestedGroupRequest(false),
+		Optional:   true,
+	}
+	schemaAttrs["remove_provisioned_system_request"] = rsschema.SingleNestedAttribute{
+		Attributes: resourceSchemaAttrsRequestRemoveProvisionedSystemRequest(false),
 		Optional:   true,
 	}
 	schemaAttrs["abstract_application_modification_request"] = rsschema.SingleNestedAttribute{
 		Attributes: resourceSchemaAttrsRequestAbstractApplicationModificationRequest(false),
 		Optional:   true,
 	}
-	schemaAttrs["grant_group_on_system_request"] = rsschema.SingleNestedAttribute{
-		Attributes: resourceSchemaAttrsRequestGrantGroupOnSystemRequest(false),
+	schemaAttrs["grant_application_request"] = rsschema.SingleNestedAttribute{
+		Attributes: resourceSchemaAttrsRequestGrantApplicationRequest(false),
 		Optional:   true,
 	}
-	schemaAttrs["setup_authorizing_group_request"] = rsschema.SingleNestedAttribute{
-		Attributes: resourceSchemaAttrsRequestSetupAuthorizingGroupRequest(false),
+	schemaAttrs["abstract_organizational_unit_modification_request"] = rsschema.SingleNestedAttribute{
+		Attributes: resourceSchemaAttrsRequestAbstractOrganizationalUnitModificationRequest(false),
 		Optional:   true,
 	}
-	schemaAttrs["remove_organizational_unit_request"] = rsschema.SingleNestedAttribute{
-		Attributes: resourceSchemaAttrsRequestRemoveOrganizationalUnitRequest(false),
-		Optional:   true,
-	}
-	schemaAttrs["join_group_request"] = rsschema.SingleNestedAttribute{
-		Attributes: resourceSchemaAttrsRequestJoinGroupRequest(false),
-		Optional:   true,
-	}
-	schemaAttrs["transfer_application_administration_request"] = rsschema.SingleNestedAttribute{
-		Attributes: resourceSchemaAttrsRequestTransferApplicationAdministrationRequest(false),
+	schemaAttrs["verify_internal_account_request"] = rsschema.SingleNestedAttribute{
+		Attributes: resourceSchemaAttrsRequestVerifyInternalAccountRequest(false),
 		Optional:   true,
 	}
 	schemaAttrs["disable2fa_request"] = rsschema.SingleNestedAttribute{
 		Attributes: resourceSchemaAttrsRequestDisable2FARequest(false),
 		Optional:   true,
 	}
-	schemaAttrs["grant_group_on_system_request_request"] = rsschema.SingleNestedAttribute{
-		Attributes: resourceSchemaAttrsRequestGrantGroupOnSystemRequestRequest(false),
+	schemaAttrs["join_group_request"] = rsschema.SingleNestedAttribute{
+		Attributes: resourceSchemaAttrsRequestJoinGroupRequest(false),
 		Optional:   true,
 	}
-	schemaAttrs["grant_application_request"] = rsschema.SingleNestedAttribute{
-		Attributes: resourceSchemaAttrsRequestGrantApplicationRequest(false),
+	schemaAttrs["join_vault_request"] = rsschema.SingleNestedAttribute{
+		Attributes: resourceSchemaAttrsRequestJoinVaultRequest(false),
 		Optional:   true,
 	}
-	schemaAttrs["grant_access_request"] = rsschema.SingleNestedAttribute{
-		Attributes: resourceSchemaAttrsRequestGrantAccessRequest(false),
+	schemaAttrs["remove_group_request"] = rsschema.SingleNestedAttribute{
+		Attributes: resourceSchemaAttrsRequestRemoveGroupRequest(false),
+		Optional:   true,
+	}
+	schemaAttrs["transfer_application_administration_request"] = rsschema.SingleNestedAttribute{
+		Attributes: resourceSchemaAttrsRequestTransferApplicationAdministrationRequest(false),
+		Optional:   true,
+	}
+	schemaAttrs["transfer_organizational_unit_ownership_request"] = rsschema.SingleNestedAttribute{
+		Attributes: resourceSchemaAttrsRequestTransferOrganizationalUnitOwnershipRequest(false),
+		Optional:   true,
+	}
+	schemaAttrs["remove_organizational_unit_request"] = rsschema.SingleNestedAttribute{
+		Attributes: resourceSchemaAttrsRequestRemoveOrganizationalUnitRequest(false),
+		Optional:   true,
+	}
+	schemaAttrs["grant_client_permission_request"] = rsschema.SingleNestedAttribute{
+		Attributes: resourceSchemaAttrsRequestGrantClientPermissionRequest(false),
+		Optional:   true,
+	}
+	schemaAttrs["enable_technical_administration_request"] = rsschema.SingleNestedAttribute{
+		Attributes: resourceSchemaAttrsRequestEnableTechnicalAdministrationRequest(false),
+		Optional:   true,
+	}
+	schemaAttrs["transfer_provisioned_system_content_administration_request"] = rsschema.SingleNestedAttribute{
+		Attributes: resourceSchemaAttrsRequestTransferProvisionedSystemContentAdministrationRequest(false),
+		Optional:   true,
+	}
+	schemaAttrs["password_reset_request"] = rsschema.SingleNestedAttribute{
+		Attributes: resourceSchemaAttrsRequestPasswordResetRequest(false),
+		Optional:   true,
+	}
+	schemaAttrs["transfer_group_on_system_ownership_request"] = rsschema.SingleNestedAttribute{
+		Attributes: resourceSchemaAttrsRequestTransferGroupOnSystemOwnershipRequest(false),
+		Optional:   true,
+	}
+	schemaAttrs["setup_authorizing_group_request"] = rsschema.SingleNestedAttribute{
+		Attributes: resourceSchemaAttrsRequestSetupAuthorizingGroupRequest(false),
 		Optional:   true,
 	}
 	schemaAttrs["grant_service_account_group_request"] = rsschema.SingleNestedAttribute{
 		Attributes: resourceSchemaAttrsRequestGrantServiceAccountGroupRequest(false),
 		Optional:   true,
 	}
-	schemaAttrs["transfer_auditor_group_request"] = rsschema.SingleNestedAttribute{
-		Attributes: resourceSchemaAttrsRequestTransferAuditorGroupRequest(false),
+	schemaAttrs["create_group_on_system_request"] = rsschema.SingleNestedAttribute{
+		Attributes: resourceSchemaAttrsRequestCreateGroupOnSystemRequest(false),
+		Optional:   true,
+	}
+	schemaAttrs["transfer_application_ownership_request"] = rsschema.SingleNestedAttribute{
+		Attributes: resourceSchemaAttrsRequestTransferApplicationOwnershipRequest(false),
+		Optional:   true,
+	}
+	schemaAttrs["grant_access_request"] = rsschema.SingleNestedAttribute{
+		Attributes: resourceSchemaAttrsRequestGrantAccessRequest(false),
+		Optional:   true,
+	}
+	schemaAttrs["update_group_membership_request"] = rsschema.SingleNestedAttribute{
+		Attributes: resourceSchemaAttrsRequestUpdateGroupMembershipRequest(false),
+		Optional:   true,
+	}
+	schemaAttrs["extend_access_request"] = rsschema.SingleNestedAttribute{
+		Attributes: resourceSchemaAttrsRequestExtendAccessRequest(false),
 		Optional:   true,
 	}
 	schemaAttrs["add_group_admin_request"] = rsschema.SingleNestedAttribute{
 		Attributes: resourceSchemaAttrsRequestAddGroupAdminRequest(false),
 		Optional:   true,
 	}
-	schemaAttrs["enable_technical_administration_request"] = rsschema.SingleNestedAttribute{
-		Attributes: resourceSchemaAttrsRequestEnableTechnicalAdministrationRequest(false),
+	schemaAttrs["grant_group_on_system_request"] = rsschema.SingleNestedAttribute{
+		Attributes: resourceSchemaAttrsRequestGrantGroupOnSystemRequest(false),
+		Optional:   true,
+	}
+	schemaAttrs["grant_group_on_system_request_request"] = rsschema.SingleNestedAttribute{
+		Attributes: resourceSchemaAttrsRequestGrantGroupOnSystemRequestRequest(false),
+		Optional:   true,
+	}
+	schemaAttrs["revoke_admin_request"] = rsschema.SingleNestedAttribute{
+		Attributes: resourceSchemaAttrsRequestRevokeAdminRequest(false),
+		Optional:   true,
+	}
+	schemaAttrs["create_group_request"] = rsschema.SingleNestedAttribute{
+		Attributes: resourceSchemaAttrsRequestCreateGroupRequest(false),
 		Optional:   true,
 	}
 	schemaAttrs["transfer_provisioned_system_ownership_request"] = rsschema.SingleNestedAttribute{
@@ -5563,72 +5693,8 @@ func resourceSchemaAttrsRequestModificationRequest(recurse bool) map[string]rssc
 		Attributes: resourceSchemaAttrsRequestTransferServiceAccountAdministrationRequest(false),
 		Optional:   true,
 	}
-	schemaAttrs["review_audit_request"] = rsschema.SingleNestedAttribute{
-		Attributes: resourceSchemaAttrsRequestReviewAuditRequest(false),
-		Optional:   true,
-	}
-	schemaAttrs["transfer_group_on_system_ownership_request"] = rsschema.SingleNestedAttribute{
-		Attributes: resourceSchemaAttrsRequestTransferGroupOnSystemOwnershipRequest(false),
-		Optional:   true,
-	}
-	schemaAttrs["join_vault_request"] = rsschema.SingleNestedAttribute{
-		Attributes: resourceSchemaAttrsRequestJoinVaultRequest(false),
-		Optional:   true,
-	}
-	schemaAttrs["setup_nested_group_request"] = rsschema.SingleNestedAttribute{
-		Attributes: resourceSchemaAttrsRequestSetupNestedGroupRequest(false),
-		Optional:   true,
-	}
 	schemaAttrs["transfer_provisioned_system_administration_request"] = rsschema.SingleNestedAttribute{
 		Attributes: resourceSchemaAttrsRequestTransferProvisionedSystemAdministrationRequest(false),
-		Optional:   true,
-	}
-	schemaAttrs["verify_internal_account_request"] = rsschema.SingleNestedAttribute{
-		Attributes: resourceSchemaAttrsRequestVerifyInternalAccountRequest(false),
-		Optional:   true,
-	}
-	schemaAttrs["create_service_account_request"] = rsschema.SingleNestedAttribute{
-		Attributes: resourceSchemaAttrsRequestCreateServiceAccountRequest(false),
-		Optional:   true,
-	}
-	schemaAttrs["remove_provisioned_system_request"] = rsschema.SingleNestedAttribute{
-		Attributes: resourceSchemaAttrsRequestRemoveProvisionedSystemRequest(false),
-		Optional:   true,
-	}
-	schemaAttrs["revoke_admin_request"] = rsschema.SingleNestedAttribute{
-		Attributes: resourceSchemaAttrsRequestRevokeAdminRequest(false),
-		Optional:   true,
-	}
-	schemaAttrs["transfer_provisioned_system_content_administration_request"] = rsschema.SingleNestedAttribute{
-		Attributes: resourceSchemaAttrsRequestTransferProvisionedSystemContentAdministrationRequest(false),
-		Optional:   true,
-	}
-	schemaAttrs["transfer_application_ownership_request"] = rsschema.SingleNestedAttribute{
-		Attributes: resourceSchemaAttrsRequestTransferApplicationOwnershipRequest(false),
-		Optional:   true,
-	}
-	schemaAttrs["extend_access_request"] = rsschema.SingleNestedAttribute{
-		Attributes: resourceSchemaAttrsRequestExtendAccessRequest(false),
-		Optional:   true,
-	}
-	schemaAttrs["update_group_membership_request"] = rsschema.SingleNestedAttribute{
-		Attributes: resourceSchemaAttrsRequestUpdateGroupMembershipRequest(false),
-		Optional:   true,
-	}
-	schemaAttrs["grant_client_permission_request"] = rsschema.SingleNestedAttribute{
-		Attributes: resourceSchemaAttrsRequestGrantClientPermissionRequest(false),
-		Optional:   true,
-	}
-	schemaAttrs["transfer_organizational_unit_ownership_request"] = rsschema.SingleNestedAttribute{
-		Attributes: resourceSchemaAttrsRequestTransferOrganizationalUnitOwnershipRequest(false),
-		Optional:   true,
-	}
-	schemaAttrs["remove_group_request"] = rsschema.SingleNestedAttribute{
-		Attributes: resourceSchemaAttrsRequestRemoveGroupRequest(false),
-		Optional:   true,
-	}
-	schemaAttrs["password_reset_request"] = rsschema.SingleNestedAttribute{
-		Attributes: resourceSchemaAttrsRequestPasswordResetRequest(false),
 		Optional:   true,
 	}
 	return schemaAttrs
@@ -5731,7 +5797,7 @@ func resourceSchemaAttrsRequestRevokeAdminRequest(recurse bool) map[string]rssch
 	schemaAttrs["admin_uuid"] = rsschema.StringAttribute{
 		Required: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	return schemaAttrs
@@ -5754,7 +5820,7 @@ func resourceSchemaAttrsRequestSetupAuthorizingGroupRequest(recurse bool) map[st
 	schemaAttrs["requesting_group_uuid"] = rsschema.StringAttribute{
 		Optional: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	return schemaAttrs
@@ -5777,7 +5843,7 @@ func resourceSchemaAttrsRequestSetupNestedGroupRequest(recurse bool) map[string]
 	schemaAttrs["requesting_group_uuid"] = rsschema.StringAttribute{
 		Optional: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	return schemaAttrs
@@ -5823,7 +5889,7 @@ func resourceSchemaAttrsRequestTransferServiceAccountAdministrationRequest(recur
 	schemaAttrs["service_account_uuid"] = rsschema.StringAttribute{
 		Required: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	return schemaAttrs
@@ -5833,7 +5899,7 @@ func resourceSchemaAttrsRequestUpdateGroupMembershipRequest(recurse bool) map[st
 	schemaAttrs["account_to_update_uuid"] = rsschema.StringAttribute{
 		Required: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["current_end_date"] = rsschema.StringAttribute{
@@ -5909,7 +5975,7 @@ func resourceSchemaAttrsServiceaccountServiceAccount(recurse bool) map[string]rs
 	schemaAttrs["system_uuid"] = rsschema.StringAttribute{
 		Required: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["username"] = rsschema.StringAttribute{
@@ -5937,7 +6003,7 @@ func resourceSchemaAttrsServiceaccountServiceAccount(recurse bool) map[string]rs
 	schemaAttrs["technical_administrator_uuid"] = rsschema.StringAttribute{
 		Optional: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	return schemaAttrs
@@ -5973,7 +6039,7 @@ func resourceSchemaAttrsServiceaccountServiceAccountGroup(recurse bool) map[stri
 			stringvalidator.UTF8LengthBetween(0, 255),
 		},
 	}
-	schemaAttrs["provisioning_group_on_system_primer_type"] = rsschema.StringAttribute{
+	schemaAttrs["type"] = rsschema.StringAttribute{
 		Required: true,
 		Validators: []validator.String{
 			stringvalidator.OneOf(
@@ -6044,7 +6110,7 @@ func resourceSchemaAttrsServiceaccountServiceAccountPrimer(recurse bool) map[str
 	schemaAttrs["system_uuid"] = rsschema.StringAttribute{
 		Required: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["username"] = rsschema.StringAttribute{
@@ -6062,6 +6128,11 @@ func resourceSchemaAttrsServiceaccountServiceAccountPrimerLinkableWrapper(recurs
 	schemaAttrs["items"] = rsschema.ListAttribute{
 		ElementType: types.StringType,
 		Optional:    true,
+		Validators: []validator.List{
+			listvalidator.ValueStringsAre(
+				stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
+			),
+		},
 	}
 	return schemaAttrs
 }
@@ -6197,7 +6268,7 @@ func resourceSchemaAttrsVaultDeletedVaultRecovery(recurse bool) map[string]rssch
 	schemaAttrs["target_group_uuid"] = rsschema.StringAttribute{
 		Optional: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	return schemaAttrs
@@ -6207,7 +6278,7 @@ func resourceSchemaAttrsVaultMoveVaultRecord(recurse bool) map[string]rsschema.A
 	schemaAttrs["account_uuid"] = rsschema.StringAttribute{
 		Optional: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["action"] = rsschema.StringAttribute{
@@ -6223,7 +6294,7 @@ func resourceSchemaAttrsVaultMoveVaultRecord(recurse bool) map[string]rsschema.A
 	schemaAttrs["group_uuid"] = rsschema.StringAttribute{
 		Optional: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["share_duration"] = rsschema.SingleNestedAttribute{
@@ -6464,6 +6535,11 @@ func resourceSchemaAttrsVaultVaultRecordPrimerLinkableWrapper(recurse bool) map[
 	schemaAttrs["items"] = rsschema.ListAttribute{
 		ElementType: types.StringType,
 		Optional:    true,
+		Validators: []validator.List{
+			listvalidator.ValueStringsAre(
+				stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
+			),
+		},
 	}
 	return schemaAttrs
 }
@@ -6493,7 +6569,7 @@ func resourceSchemaAttrsVaultVaultRecordShare(recurse bool) map[string]rsschema.
 	schemaAttrs["name"] = rsschema.StringAttribute{
 		Optional: true,
 	}
-	schemaAttrs["vault_vault_record_share_type"] = rsschema.StringAttribute{
+	schemaAttrs["type"] = rsschema.StringAttribute{
 		Optional: true,
 		Validators: []validator.String{
 			stringvalidator.OneOf(
@@ -6560,7 +6636,7 @@ func resourceSchemaAttrsVaultVaultRecovery(recurse bool) map[string]rsschema.Att
 	schemaAttrs["account_uuid"] = rsschema.StringAttribute{
 		Optional: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["private_key"] = rsschema.StringAttribute{
@@ -6610,7 +6686,7 @@ func resourceSchemaAttrsWebhookWebhook(recurse bool) map[string]rsschema.Attribu
 	schemaAttrs["account_uuid"] = rsschema.StringAttribute{
 		Optional: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["active"] = rsschema.BoolAttribute{
@@ -6654,13 +6730,13 @@ func resourceSchemaAttrsWebhookWebhook(recurse bool) map[string]rsschema.Attribu
 	schemaAttrs["client_uuid"] = rsschema.StringAttribute{
 		Optional: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["client_certificate_uuid"] = rsschema.StringAttribute{
 		Optional: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["custom_header_name"] = rsschema.StringAttribute{
@@ -6678,13 +6754,13 @@ func resourceSchemaAttrsWebhookWebhook(recurse bool) map[string]rsschema.Attribu
 	schemaAttrs["directory_uuid"] = rsschema.StringAttribute{
 		Optional: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["group_uuid"] = rsschema.StringAttribute{
 		Optional: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["name"] = rsschema.StringAttribute{
@@ -6696,7 +6772,7 @@ func resourceSchemaAttrsWebhookWebhook(recurse bool) map[string]rsschema.Attribu
 	schemaAttrs["system_uuid"] = rsschema.StringAttribute{
 		Optional: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["tls"] = rsschema.StringAttribute{
@@ -6712,12 +6788,19 @@ func resourceSchemaAttrsWebhookWebhook(recurse bool) map[string]rsschema.Attribu
 	schemaAttrs["trusted_certificate_uuid"] = rsschema.StringAttribute{
 		Optional: true,
 		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$"), "The value must be a valid UUID"),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["types"] = rsschema.ListAttribute{
 		ElementType: types.StringType,
 		Optional:    true,
+		Validators: []validator.List{
+			listvalidator.ValueStringsAre(
+				stringvalidator.OneOf(
+					"ACCOUNT_2FA_DISABLED", "ACCOUNT_2FA_ENABLED", "ACCOUNT_ADDED_TO_GROUP", "ACCOUNT_ADDED_TO_ORGANIZATIONAL_UNIT", "ACCOUNT_CREATED", "ACCOUNT_DEPROVISIONED", "ACCOUNT_DISABLED", "ACCOUNT_ENABLED", "ACCOUNT_GROUP_ACTIVATED", "ACCOUNT_GROUP_ACTIVATION_REASON", "ACCOUNT_GROUP_DEPROVISIONED", "ACCOUNT_GROUP_PROVISIONED", "ACCOUNT_LOGIN", "ACCOUNT_LOGIN_FAILED", "ACCOUNT_MODIFIED_FOR_GROUP", "ACCOUNT_PASSWORD_CHANGED", "ACCOUNT_PROVISIONED", "ACCOUNT_PROVISIONING_DESTROYED", "ACCOUNT_PROVISIONING_INITED", "ACCOUNT_PROVISIONING_SETUP", "ACCOUNT_REMOVED", "ACCOUNT_REMOVED_FROM_GROUP", "ACCOUNT_REMOVED_FROM_ORGANIZATIONAL_UNIT", "ACCOUNT_REREGISTERED", "ACCOUNT_SSH_PUBLIC_KEY_MODIFIED", "ACCOUNT_TOKEN_SIGNED", "ACCOUNT_TOTP_OFFSET_CHANGED", "ACCOUNT_VAULT_UNLOCKED", "ADD_GROUP_ADMIN_ACCEPTED", "ADD_GROUP_ADMIN_DECLINED", "ADD_GROUP_ADMIN_REQUESTED", "AUDITOR_EXPORT_GENERATED", "CERTIFICATE_CREATED", "CERTIFICATE_MODIFIED", "CERTIFICATE_REMOVED", "CLIENT_ADDED_TO_GROUP", "CLIENT_CREATED", "CLIENT_MODIFIED", "CLIENT_MODIFIED_FOR_GROUP", "CLIENT_PERMISSION_GRANTED", "CLIENT_PERMISSION_REVOKED", "CLIENT_REMOVED", "CLIENT_REMOVED_FROM_GROUP", "CLIENT_SECRET_ROTATED", "CREATE_GROUP_ACCEPTED", "CREATE_GROUP_DECLINED", "CREATE_GROUP_REQUESTED", "CREATE_GROUP_ON_SYSTEM_ACCEPTED", "CREATE_GROUP_ON_SYSTEM_DECLINED", "CREATE_GROUP_ON_SYSTEM_REQUESTED", "CREATE_SERVICE_ACCOUNT_ACCEPTED", "CREATE_SERVICE_ACCOUNT_DECLINED", "CREATE_SERVICE_ACCOUNT_REQUESTED", "DIRECTORY_CREATED", "DIRECTORY_HELPDESK_MODIFIED", "DIRECTORY_MODIFIED", "DIRECTORY_REMOVED", "DISABLE_2FA_ACCEPTED", "DISABLE_2FA_DECLINED", "DISABLE_2FA_REQUESTED", "ENABLE_TECHNICAL_ADMINISTRATION_ACCEPTED", "ENABLE_TECHNICAL_ADMINISTRATION_DECLINED", "ENABLE_TECHNICAL_ADMINISTRATION_REQUESTED", "EXTENDED_ACCESS_ACCEPTED", "EXTENDED_ACCESS_DECLINED", "EXTENDED_ACCESS_REQUESTED", "GRANT_ACCESS_ACCEPTED", "GRANT_ACCESS_DECLINED", "GRANT_ACCESS_REQUESTED", "GRANT_APPLICATION_ACCEPTED", "GRANT_APPLICATION_DECLINED", "GRANT_APPLICATION_REQUESTED", "GRANT_CLIENT_PERMISSION_ACCEPTED", "GRANT_CLIENT_PERMISSION_DECLINED", "GRANT_CLIENT_PERMISSION_REQUESTED", "GRANT_GROUP_ON_SYSTEM_ACCEPTED", "GRANT_GROUP_ON_SYSTEM_DECLINED", "GRANT_GROUP_ON_SYSTEM_REQUESTED", "GRANT_GROUP_ON_SYSTEM_REQUEST_ACCEPTED", "GRANT_GROUP_ON_SYSTEM_REQUEST_DECLINED", "GRANT_GROUP_ON_SYSTEM_REQUEST_REQUESTED", "GRANT_SERVICE_ACCOUNT_GROUP_ACCEPTED", "GRANT_SERVICE_ACCOUNT_GROUP_DECLINED", "GRANT_SERVICE_ACCOUNT_GROUP_REQUESTED", "GROUP_AUDIT_CREATED", "GROUP_AUDIT_REQUESTED", "GROUP_AUTHORIZATION_CONNECTED", "GROUP_AUTHORIZATION_DISCONNECTED", "GROUP_CLASSIFICATION_ASSIGNED", "GROUP_CLASSIFICATION_CREATED", "GROUP_CLASSIFICATION_MODIFIED", "GROUP_CLASSIFICATION_REMOVED", "GROUP_CREATED", "GROUP_MODIFIED", "GROUP_NESTING_CONNECTED", "GROUP_NESTING_DISCONNECTED", "GROUP_ON_SYSTEM_CREATED", "GROUP_ON_SYSTEM_DEPROVISIONED", "GROUP_ON_SYSTEM_PROVISIONED", "GROUP_ON_SYSTEM_REMOVED", "GROUP_REMOVED", "INTERNAL_ACCOUNT_ACTIVATED", "INTERNAL_ACCOUNT_CREATED", "INTERNAL_ACCOUNT_MODIFIED", "INTERNAL_ACCOUNT_REMOVED", "INVALID_SIGNATURE_DETECTED", "JOIN_GROUP_ACCEPTED", "JOIN_GROUP_DECLINED", "JOIN_GROUP_REQUESTED", "JOIN_VAULT_ACCEPTED", "JOIN_VAULT_DECLINED", "JOIN_VAULT_REQUESTED", "LICENSE_KEY_UPLOADED", "ORGANIZATIONAL_UNIT_CREATED", "ORGANIZATIONAL_UNIT_MODIFIED", "ORGANIZATIONAL_UNIT_REMOVED", "PROVISIONED_SYSTEM_ADDED_TO_GROUP", "PROVISIONED_SYSTEM_CREATED", "PROVISIONED_SYSTEM_MODIFIED", "PROVISIONED_SYSTEM_MODIFIED_FOR_GROUP", "PROVISIONED_SYSTEM_REMOVED", "PROVISIONED_SYSTEM_REMOVED_FROM_GROUP", "PROVISIONED_SYSTEM_UNKNOWN_ACCOUNT_DESTROYED", "REMOVE_GROUP_ACCEPTED", "REMOVE_GROUP_DECLINED", "REMOVE_GROUP_REQUESTED", "REMOVE_ORGANIZATIONAL_UNIT_ACCEPTED", "REMOVE_ORGANIZATIONAL_UNIT_DECLINED", "REMOVE_ORGANIZATIONAL_UNIT_REQUESTED", "REMOVE_PROVISIONED_SYSTEM_ACCEPTED", "REMOVE_PROVISIONED_SYSTEM_DECLINED", "REMOVE_PROVISIONED_SYSTEM_REQUESTED", "RESET_PASSWORD_ACCEPTED", "RESET_PASSWORD_DECLINED", "RESET_PASSWORD_FINISHED", "RESET_PASSWORD_REQUESTED", "REVIEW_AUDIT_ACCEPTED", "REVIEW_AUDIT_DECLINED", "REVIEW_AUDIT_REQUESTED", "REVOKE_ADMIN_ACCEPTED", "REVOKE_ADMIN_DECLINED", "REVOKE_ADMIN_REQUESTED", "SERVICE_ACCOUNT_ADDED_TO_GROUP", "SERVICE_ACCOUNT_CREATED", "SERVICE_ACCOUNT_GROUP_DEPROVISIONED", "SERVICE_ACCOUNT_GROUP_PROVISIONED", "SERVICE_ACCOUNT_MODIFIED", "SERVICE_ACCOUNT_PASSWORD_ROTATED", "SERVICE_ACCOUNT_PROVISIONING_DESTROYED", "SERVICE_ACCOUNT_PROVISIONING_INITED", "SERVICE_ACCOUNT_REMOVED", "SERVICE_ACCOUNT_REMOVED_FROM_GROUP", "SETUP_AUTHORIZING_GROUP_CONNECT_ACCEPTED", "SETUP_AUTHORIZING_GROUP_CONNECT_DECLINED", "SETUP_AUTHORIZING_GROUP_CONNECT_REQUESTED", "SETUP_AUTHORIZING_GROUP_DISCONNECT_ACCEPTED", "SETUP_AUTHORIZING_GROUP_DISCONNECT_DECLINED", "SETUP_AUTHORIZING_GROUP_DISCONNECT_REQUESTED", "SETUP_NESTED_GROUP_CONNECT_ACCEPTED", "SETUP_NESTED_GROUP_CONNECT_DECLINED", "SETUP_NESTED_GROUP_CONNECT_REQUESTED", "SETUP_NESTED_GROUP_DISCONNECT_ACCEPTED", "SETUP_NESTED_GROUP_DISCONNECT_DECLINED", "SETUP_NESTED_GROUP_DISCONNECT_REQUESTED", "TRANSFER_APPLICATION_ADMINISTRATION_ACCEPTED", "TRANSFER_APPLICATION_ADMINISTRATION_DECLINED", "TRANSFER_APPLICATION_ADMINISTRATION_REQUESTED", "TRANSFER_APPLICATION_OWNERSHIP_ACCEPTED", "TRANSFER_APPLICATION_OWNERSHIP_DECLINED", "TRANSFER_APPLICATION_OWNERSHIP_REQUESTED", "TRANSFER_GROUP_ON_SYSTEM_OWNERSHIP_ACCEPTED", "TRANSFER_GROUP_ON_SYSTEM_OWNERSHIP_DECLINED", "TRANSFER_GROUP_ON_SYSTEM_OWNERSHIP_REQUESTED", "TRANSFER_ORGANIZATIONAL_UNIT_OWNERSHIP_ACCEPTED", "TRANSFER_ORGANIZATIONAL_UNIT_OWNERSHIP_DECLINED", "TRANSFER_ORGANIZATIONAL_UNIT_OWNERSHIP_REQUESTED", "TRANSFER_PROVISIONED_SYSTEM_ADMINISTRATION_ACCEPTED", "TRANSFER_PROVISIONED_SYSTEM_ADMINISTRATION_DECLINED", "TRANSFER_PROVISIONED_SYSTEM_ADMINISTRATION_REQUESTED", "TRANSFER_PROVISIONED_SYSTEM_CONTENT_ADMINISTRATION_ACCEPTED", "TRANSFER_PROVISIONED_SYSTEM_CONTENT_ADMINISTRATION_DECLINED", "TRANSFER_PROVISIONED_SYSTEM_CONTENT_ADMINISTRATION_REQUESTED", "TRANSFER_PROVISIONED_SYSTEM_OWNERSHIP_ACCEPTED", "TRANSFER_PROVISIONED_SYSTEM_OWNERSHIP_DECLINED", "TRANSFER_PROVISIONED_SYSTEM_OWNERSHIP_REQUESTED", "TRANSFER_SERVICE_ACCOUNT_ADMINISTRATION_ACCEPTED", "TRANSFER_SERVICE_ACCOUNT_ADMINISTRATION_DECLINED", "TRANSFER_SERVICE_ACCOUNT_ADMINISTRATION_REQUESTED", "TRANSFER_AUDITOR_GROUP_ACCEPTED", "TRANSFER_AUDITOR_GROUP_DECLINED", "TRANSFER_AUDITOR_GROUP_REQUESTED", "UPDATE_GROUP_MEMBERSHIP_ACCEPTED", "UPDATE_GROUP_MEMBERSHIP_DECLINED", "UPDATE_GROUP_MEMBERSHIP_REQUESTED", "VAULT_ACCESS_RESTORED", "VAULT_EXPORTED", "VAULT_PERSONAL_RESET", "VAULT_PERSONAL_SETUP", "VAULT_RECORD_CREATED", "VAULT_RECORD_MODIFIED", "VAULT_RECORD_MOVED_COPIED_SHARED", "VAULT_RECORD_READ", "VAULT_RECORD_REMOVED", "VAULT_RECOVERED", "VERIFY_INTERNAL_ACCOUNT_ACCEPTED", "VERIFY_INTERNAL_ACCOUNT_DECLINED", "VERIFY_INTERNAL_ACCOUNT_REQUESTED", "WEBHOOK_CREATED", "WEBHOOK_MODIFIED", "WEBHOOK_REMOVED",
+				),
+			),
+		},
 	}
 	schemaAttrs["url"] = rsschema.StringAttribute{
 		Required: true,
@@ -6907,7 +6990,7 @@ func resourceSchemaAttrsWebhookWebhookPush(recurse bool) map[string]rsschema.Att
 		Attributes: resourceSchemaAttrsWebhookWebhookNameUuid(recurse),
 		Optional:   true,
 	}
-	schemaAttrs["webhook_webhook_push_type"] = rsschema.StringAttribute{
+	schemaAttrs["type"] = rsschema.StringAttribute{
 		Optional: true,
 		Validators: []validator.String{
 			stringvalidator.OneOf(

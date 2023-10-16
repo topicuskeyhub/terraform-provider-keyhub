@@ -77,11 +77,11 @@ Read-Only:
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--groups--items--links))
 - `name_in_system` (String)
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--groups--items--permissions))
-- `provisioning_group_on_system_primer_type` (String)
 - `short_name_in_system` (String)
+- `type` (String)
 
 <a id="nestedatt--additional_objects--groups--items--links"></a>
-### Nested Schema for `additional_objects.groups.items.short_name_in_system`
+### Nested Schema for `additional_objects.groups.items.type`
 
 Read-Only:
 
@@ -92,7 +92,7 @@ Read-Only:
 
 
 <a id="nestedatt--additional_objects--groups--items--permissions"></a>
-### Nested Schema for `additional_objects.groups.items.short_name_in_system`
+### Nested Schema for `additional_objects.groups.items.type`
 
 Read-Only:
 

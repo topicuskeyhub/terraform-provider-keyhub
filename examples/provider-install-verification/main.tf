@@ -53,7 +53,7 @@ provider "keyhubpreview" {
 #}
 
 resource "keyhubpreview_group" "terra" {
-  name = "Terraform x"
+  name = "Terraform"
   additional_objects = {
     accounts = {
       items = [{
@@ -62,6 +62,10 @@ resource "keyhubpreview_group" "terra" {
       }]
     }
   }
+}
+
+resource "keyhubpreview_grouponsystem" "terragos" {
+
 }
 
 #output "resource_group" {

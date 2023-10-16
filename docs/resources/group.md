@@ -1399,7 +1399,7 @@ Required:
 
 - `name_in_system` (String)
 - `owner_uuid` (String)
-- `provisioning_group_on_system_primer_type` (String)
+- `type` (String)
 
 Optional:
 
@@ -1896,7 +1896,7 @@ Required:
 
 - `name_in_system` (String)
 - `owner_uuid` (String)
-- `provisioning_group_on_system_primer_type` (String)
+- `type` (String)
 
 Optional:
 
