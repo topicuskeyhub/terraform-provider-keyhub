@@ -109,13 +109,13 @@ Read-Only:
 
 Read-Only:
 
-- `client_client_application_primer_type` (String)
 - `client_id` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--client--links))
 - `name` (String)
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--client--permissions))
 - `scopes` (List of String)
 - `sso_application` (Boolean)
+- `type` (String)
 - `uuid` (String)
 
 <a id="nestedatt--client--links"></a>
@@ -147,7 +147,6 @@ Read-Only:
 Read-Only:
 
 - `alias` (String)
-- `certificate_certificate_primer_type` (String)
 - `certificate_data` (List of String)
 - `expiration` (String)
 - `fingerprint_sha1` (String)
@@ -156,6 +155,7 @@ Read-Only:
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--client_certificate--links))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--client_certificate--permissions))
 - `subject_dn` (String)
+- `type` (String)
 - `uuid` (String)
 
 <a id="nestedatt--client_certificate--links"></a>
@@ -188,10 +188,10 @@ Read-Only:
 
 - `account_validity_supported` (Boolean)
 - `active` (Boolean)
-- `directory_account_directory_primer_type` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--directory--links))
 - `name` (String)
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--directory--permissions))
+- `type` (String)
 - `uuid` (String)
 
 <a id="nestedatt--directory--links"></a>
@@ -283,7 +283,7 @@ Read-Only:
 - `name` (String)
 - `organizational_unit` (Attributes) (see [below for nested schema](#nestedatt--system--organizational_unit))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--system--permissions))
-- `provisioning_provisioned_system_primer_type` (String)
+- `type` (String)
 - `uuid` (String)
 
 <a id="nestedatt--system--links"></a>
@@ -348,7 +348,6 @@ Read-Only:
 Read-Only:
 
 - `alias` (String)
-- `certificate_certificate_primer_type` (String)
 - `certificate_data` (List of String)
 - `expiration` (String)
 - `fingerprint_sha1` (String)
@@ -357,6 +356,7 @@ Read-Only:
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--trusted_certificate--links))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--trusted_certificate--permissions))
 - `subject_dn` (String)
+- `type` (String)
 - `uuid` (String)
 
 <a id="nestedatt--trusted_certificate--links"></a>

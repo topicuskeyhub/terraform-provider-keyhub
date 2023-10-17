@@ -30,7 +30,6 @@ description: |-
 - `additional_objects` (Attributes) (see [below for nested schema](#nestedatt--additional_objects))
 - `base_organizational_unit` (Attributes) (see [below for nested schema](#nestedatt--base_organizational_unit))
 - `default_directory` (Boolean)
-- `directory_account_directory_primer_type` (String)
 - `helpdesk_group` (Attributes) (see [below for nested schema](#nestedatt--helpdesk_group))
 - `internal_directory` (Attributes) (see [below for nested schema](#nestedatt--internal_directory))
 - `l_d_a_p_directory` (Attributes) (see [below for nested schema](#nestedatt--l_d_a_p_directory))
@@ -41,6 +40,7 @@ description: |-
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--permissions))
 - `restrict2fa` (Boolean)
 - `rotating_password` (String)
+- `type` (String)
 - `username_customizable` (Boolean)
 
 <a id="nestedatt--additional_objects"></a>
@@ -76,11 +76,11 @@ Read-Only:
 Read-Only:
 
 - `level` (String)
-- `mark_item_marker_type` (String)
 - `parameters` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--markers--markers--parameters))
+- `type` (String)
 
 <a id="nestedatt--additional_objects--markers--markers--parameters"></a>
-### Nested Schema for `additional_objects.markers.markers.parameters`
+### Nested Schema for `additional_objects.markers.markers.type`
 
 
 
@@ -231,7 +231,6 @@ Read-Only:
 Read-Only:
 
 - `alias` (String)
-- `certificate_certificate_primer_type` (String)
 - `certificate_data` (List of String)
 - `expiration` (String)
 - `fingerprint_sha1` (String)
@@ -240,6 +239,7 @@ Read-Only:
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--l_d_a_p_directory--client_certificate--links))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--l_d_a_p_directory--client_certificate--permissions))
 - `subject_dn` (String)
+- `type` (String)
 - `uuid` (String)
 
 <a id="nestedatt--l_d_a_p_directory--client_certificate--links"></a>
@@ -271,7 +271,6 @@ Read-Only:
 Read-Only:
 
 - `alias` (String)
-- `certificate_certificate_primer_type` (String)
 - `certificate_data` (List of String)
 - `expiration` (String)
 - `fingerprint_sha1` (String)
@@ -280,6 +279,7 @@ Read-Only:
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--l_d_a_p_directory--failover_trusted_certificate--links))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--l_d_a_p_directory--failover_trusted_certificate--permissions))
 - `subject_dn` (String)
+- `type` (String)
 - `uuid` (String)
 
 <a id="nestedatt--l_d_a_p_directory--failover_trusted_certificate--links"></a>
@@ -311,7 +311,6 @@ Read-Only:
 Read-Only:
 
 - `alias` (String)
-- `certificate_certificate_primer_type` (String)
 - `certificate_data` (List of String)
 - `expiration` (String)
 - `fingerprint_sha1` (String)
@@ -320,6 +319,7 @@ Read-Only:
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--l_d_a_p_directory--trusted_certificate--links))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--l_d_a_p_directory--trusted_certificate--permissions))
 - `subject_dn` (String)
+- `type` (String)
 - `uuid` (String)
 
 <a id="nestedatt--l_d_a_p_directory--trusted_certificate--links"></a>

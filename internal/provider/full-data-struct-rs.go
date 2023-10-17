@@ -253,7 +253,7 @@ var authAccount_additionalObjectsAttrTypesRSRecurse = objectAttrsTypeRSAuthAccou
 type authAccount_additionalObjectsDataRS struct {
 	ActiveLogin             types.Bool   `tfsdk:"active_login"`
 	Audit                   types.Object `tfsdk:"audit"`
-	Groups                  types.Object `tfsdk:"groups"`
+	Groups                  types.List   `tfsdk:"groups"`
 	PendingRecoveryRequests types.Object `tfsdk:"pending_recovery_requests"`
 	Settings                types.Object `tfsdk:"settings"`
 	StoredAttributes        types.Object `tfsdk:"stored_attributes"`
@@ -466,8 +466,8 @@ var clientClientApplication_additionalObjectsAttrTypesRSRecurse = objectAttrsTyp
 type clientClientApplication_additionalObjectsDataRS struct {
 	Audit            types.Object `tfsdk:"audit"`
 	DeleteTile       types.Bool   `tfsdk:"delete_tile"`
-	Groupclients     types.Object `tfsdk:"groupclients"`
-	Groups           types.Object `tfsdk:"groups"`
+	Groupclients     types.List   `tfsdk:"groupclients"`
+	Groups           types.List   `tfsdk:"groups"`
 	Secret           types.Object `tfsdk:"secret"`
 	Tile             types.Object `tfsdk:"tile"`
 	VaultRecordCount types.Int64  `tfsdk:"vault_record_count"`
@@ -609,10 +609,10 @@ type directoryAccountDirectoryDataRS struct {
 	Restrict2fa                         types.Bool   `tfsdk:"restrict2fa"`
 	RotatingPassword                    types.String `tfsdk:"rotating_password"`
 	UsernameCustomizable                types.Bool   `tfsdk:"username_customizable"`
-	LDAPDirectory                       types.Object `tfsdk:"l_d_a_p_directory"`
-	InternalDirectory                   types.Object `tfsdk:"internal_directory"`
-	OIDCDirectory                       types.Object `tfsdk:"o_id_c_directory"`
 	MaintenanceDirectory                types.Object `tfsdk:"maintenance_directory"`
+	OIDCDirectory                       types.Object `tfsdk:"o_id_c_directory"`
+	InternalDirectory                   types.Object `tfsdk:"internal_directory"`
+	LDAPDirectory                       types.Object `tfsdk:"l_d_a_p_directory"`
 }
 
 var directoryAccountDirectoryLinkableWrapperAttrTypesRS = objectAttrsTypeRSDirectoryAccountDirectoryLinkableWrapper(false)
@@ -1087,33 +1087,33 @@ var groupGroup_additionalObjectsAttrTypesRS = objectAttrsTypeRSGroupGroup_additi
 var groupGroup_additionalObjectsAttrTypesRSRecurse = objectAttrsTypeRSGroupGroup_additionalObjects(true)
 
 type groupGroup_additionalObjectsDataRS struct {
-	Accounts                   types.Object `tfsdk:"accounts"`
-	AdministeredClients        types.Object `tfsdk:"administered_clients"`
-	AdministeredSystems        types.Object `tfsdk:"administered_systems"`
-	Admins                     types.Object `tfsdk:"admins"`
+	Accounts                   types.List   `tfsdk:"accounts"`
+	AdministeredClients        types.List   `tfsdk:"administered_clients"`
+	AdministeredSystems        types.List   `tfsdk:"administered_systems"`
+	Admins                     types.List   `tfsdk:"admins"`
 	Audit                      types.Object `tfsdk:"audit"`
 	AuthorizedGroups           types.Object `tfsdk:"authorized_groups"`
-	ClientPermissions          types.Object `tfsdk:"client_permissions"`
-	Clients                    types.Object `tfsdk:"clients"`
-	ContentAdministeredSystems types.Object `tfsdk:"content_administered_systems"`
+	ClientPermissions          types.List   `tfsdk:"client_permissions"`
+	Clients                    types.List   `tfsdk:"clients"`
+	ContentAdministeredSystems types.List   `tfsdk:"content_administered_systems"`
 	Groupauditinginfo          types.Object `tfsdk:"groupauditinginfo"`
 	Groupinfo                  types.Object `tfsdk:"groupinfo"`
-	Helpdesk                   types.Object `tfsdk:"helpdesk"`
+	Helpdesk                   types.List   `tfsdk:"helpdesk"`
 	Markers                    types.Object `tfsdk:"markers"`
 	Myaccount                  types.Object `tfsdk:"myaccount"`
 	Mydelegatedaccount         types.Object `tfsdk:"mydelegatedaccount"`
-	NestedGroups               types.Object `tfsdk:"nested_groups"`
-	OwnedClients               types.Object `tfsdk:"owned_clients"`
-	OwnedDirectories           types.Object `tfsdk:"owned_directories"`
+	NestedGroups               types.List   `tfsdk:"nested_groups"`
+	OwnedClients               types.List   `tfsdk:"owned_clients"`
+	OwnedDirectories           types.List   `tfsdk:"owned_directories"`
 	OwnedGroupsOnSystem        types.Object `tfsdk:"owned_groups_on_system"`
-	OwnedOrganizationalUnits   types.Object `tfsdk:"owned_organizational_units"`
-	OwnedSystems               types.Object `tfsdk:"owned_systems"`
-	RecentAudits               types.Object `tfsdk:"recent_audits"`
+	OwnedOrganizationalUnits   types.List   `tfsdk:"owned_organizational_units"`
+	OwnedSystems               types.List   `tfsdk:"owned_systems"`
+	RecentAudits               types.List   `tfsdk:"recent_audits"`
 	Requeststatus              types.String `tfsdk:"requeststatus"`
-	ServiceAccounts            types.Object `tfsdk:"service_accounts"`
-	Systems                    types.Object `tfsdk:"systems"`
+	ServiceAccounts            types.List   `tfsdk:"service_accounts"`
+	Systems                    types.List   `tfsdk:"systems"`
 	Vault                      types.Object `tfsdk:"vault"`
-	Webhooks                   types.Object `tfsdk:"webhooks"`
+	Webhooks                   types.List   `tfsdk:"webhooks"`
 }
 
 var groupGroupsAuditStatsAttrTypesRS = objectAttrsTypeRSGroupGroupsAuditStats(false)
@@ -1672,7 +1672,7 @@ var organizationOrganizationalUnit_additionalObjectsAttrTypesRSRecurse = objectA
 
 type organizationOrganizationalUnit_additionalObjectsDataRS struct {
 	Audit            types.Object `tfsdk:"audit"`
-	CreateAsParentOf types.Object `tfsdk:"create_as_parent_of"`
+	CreateAsParentOf types.List   `tfsdk:"create_as_parent_of"`
 }
 
 var provisioningAbstractProvisionedLDAPAttrTypesRS = objectAttrsTypeRSProvisioningAbstractProvisionedLDAP(false)
@@ -1775,8 +1775,8 @@ var provisioningGroupOnSystem_additionalObjectsAttrTypesRSRecurse = objectAttrsT
 
 type provisioningGroupOnSystem_additionalObjectsDataRS struct {
 	Audit           types.Object `tfsdk:"audit"`
-	Provgroups      types.Object `tfsdk:"provgroups"`
-	ServiceAccounts types.Object `tfsdk:"service_accounts"`
+	Provgroups      types.List   `tfsdk:"provgroups"`
+	ServiceAccounts types.List   `tfsdk:"service_accounts"`
 }
 
 var provisioningGroupProvisioningStatusAttrTypesRS = objectAttrsTypeRSProvisioningGroupProvisioningStatus(false)
@@ -1832,7 +1832,7 @@ var provisioningProvisionNumberSequence_additionalObjectsAttrTypesRSRecurse = ob
 
 type provisioningProvisionNumberSequence_additionalObjectsDataRS struct {
 	Audit   types.Object `tfsdk:"audit"`
-	Systems types.Object `tfsdk:"systems"`
+	Systems types.List   `tfsdk:"systems"`
 }
 
 var provisioningProvisionedADAttrTypesRS = objectAttrsTypeRSProvisioningProvisionedAD(false)
@@ -1939,14 +1939,14 @@ type provisioningProvisionedSystemDataRS struct {
 	ShouldDestroyUnknownAccounts            types.Bool   `tfsdk:"should_destroy_unknown_accounts"`
 	TechnicalAdministratorUUID              types.String `tfsdk:"technical_administrator_uuid"`
 	UsernamePrefix                          types.String `tfsdk:"username_prefix"`
-	ProvisionedAzureOIDCDirectory           types.Object `tfsdk:"provisioned_azure_oidc_directory"`
 	AbstractProvisionedLDAP                 types.Object `tfsdk:"abstract_provisioned_ldap"`
-	ProvisionedAD                           types.Object `tfsdk:"provisioned_a_d"`
+	ProvisionedLDAP                         types.Object `tfsdk:"provisioned_ldap"`
 	ProvisionedAzureTenant                  types.Object `tfsdk:"provisioned_azure_tenant"`
 	ProvisionedAzureSyncLDAPDirectory       types.Object `tfsdk:"provisioned_azure_sync_ldap_directory"`
-	ProvisionedInternalLDAP                 types.Object `tfsdk:"provisioned_internal_ldap"`
-	ProvisionedLDAP                         types.Object `tfsdk:"provisioned_ldap"`
+	ProvisionedAzureOIDCDirectory           types.Object `tfsdk:"provisioned_azure_oidc_directory"`
+	ProvisionedAD                           types.Object `tfsdk:"provisioned_a_d"`
 	ProvisionedLDAPDirectory                types.Object `tfsdk:"provisioned_ldap_directory"`
+	ProvisionedInternalLDAP                 types.Object `tfsdk:"provisioned_internal_ldap"`
 }
 
 var provisioningProvisionedSystemLinkableWrapperAttrTypesRS = objectAttrsTypeRSProvisioningProvisionedSystemLinkableWrapper(false)
@@ -2009,7 +2009,7 @@ var provisioningProvisionedSystem_additionalObjectsAttrTypesRSRecurse = objectAt
 type provisioningProvisionedSystem_additionalObjectsDataRS struct {
 	Account               types.Object `tfsdk:"account"`
 	Audit                 types.Object `tfsdk:"audit"`
-	IssuedPermissions     types.Object `tfsdk:"issued_permissions"`
+	IssuedPermissions     types.List   `tfsdk:"issued_permissions"`
 	LoginName             types.String `tfsdk:"login_name"`
 	ManagementPermissions types.Object `tfsdk:"management_permissions"`
 	Markers               types.Object `tfsdk:"markers"`
@@ -2213,42 +2213,42 @@ type requestModificationRequestDataRS struct {
 	MailKey                                               types.String `tfsdk:"mail_key"`
 	RequestModificationRequestType                        types.String `tfsdk:"request_modification_request_type"`
 	Status                                                types.String `tfsdk:"status"`
-	TransferAuditorGroupRequest                           types.Object `tfsdk:"transfer_auditor_group_request"`
-	AbstractProvisionedSystemModificationRequest          types.Object `tfsdk:"abstract_provisioned_system_modification_request"`
-	CreateServiceAccountRequest                           types.Object `tfsdk:"create_service_account_request"`
-	ReviewAuditRequest                                    types.Object `tfsdk:"review_audit_request"`
-	SetupNestedGroupRequest                               types.Object `tfsdk:"setup_nested_group_request"`
-	RemoveProvisionedSystemRequest                        types.Object `tfsdk:"remove_provisioned_system_request"`
 	AbstractApplicationModificationRequest                types.Object `tfsdk:"abstract_application_modification_request"`
+	AbstractProvisionedSystemModificationRequest          types.Object `tfsdk:"abstract_provisioned_system_modification_request"`
+	RemoveProvisionedSystemRequest                        types.Object `tfsdk:"remove_provisioned_system_request"`
 	GrantApplicationRequest                               types.Object `tfsdk:"grant_application_request"`
-	AbstractOrganizationalUnitModificationRequest         types.Object `tfsdk:"abstract_organizational_unit_modification_request"`
-	VerifyInternalAccountRequest                          types.Object `tfsdk:"verify_internal_account_request"`
-	Disable2FARequest                                     types.Object `tfsdk:"disable2fa_request"`
-	JoinGroupRequest                                      types.Object `tfsdk:"join_group_request"`
-	JoinVaultRequest                                      types.Object `tfsdk:"join_vault_request"`
-	RemoveGroupRequest                                    types.Object `tfsdk:"remove_group_request"`
-	TransferApplicationAdministrationRequest              types.Object `tfsdk:"transfer_application_administration_request"`
-	TransferOrganizationalUnitOwnershipRequest            types.Object `tfsdk:"transfer_organizational_unit_ownership_request"`
-	RemoveOrganizationalUnitRequest                       types.Object `tfsdk:"remove_organizational_unit_request"`
-	GrantClientPermissionRequest                          types.Object `tfsdk:"grant_client_permission_request"`
-	EnableTechnicalAdministrationRequest                  types.Object `tfsdk:"enable_technical_administration_request"`
-	TransferProvisionedSystemContentAdministrationRequest types.Object `tfsdk:"transfer_provisioned_system_content_administration_request"`
-	PasswordResetRequest                                  types.Object `tfsdk:"password_reset_request"`
-	TransferGroupOnSystemOwnershipRequest                 types.Object `tfsdk:"transfer_group_on_system_ownership_request"`
-	SetupAuthorizingGroupRequest                          types.Object `tfsdk:"setup_authorizing_group_request"`
-	GrantServiceAccountGroupRequest                       types.Object `tfsdk:"grant_service_account_group_request"`
-	CreateGroupOnSystemRequest                            types.Object `tfsdk:"create_group_on_system_request"`
-	TransferApplicationOwnershipRequest                   types.Object `tfsdk:"transfer_application_ownership_request"`
-	GrantAccessRequest                                    types.Object `tfsdk:"grant_access_request"`
-	UpdateGroupMembershipRequest                          types.Object `tfsdk:"update_group_membership_request"`
-	ExtendAccessRequest                                   types.Object `tfsdk:"extend_access_request"`
-	AddGroupAdminRequest                                  types.Object `tfsdk:"add_group_admin_request"`
-	GrantGroupOnSystemRequest                             types.Object `tfsdk:"grant_group_on_system_request"`
-	GrantGroupOnSystemRequestRequest                      types.Object `tfsdk:"grant_group_on_system_request_request"`
+	ReviewAuditRequest                                    types.Object `tfsdk:"review_audit_request"`
 	RevokeAdminRequest                                    types.Object `tfsdk:"revoke_admin_request"`
+	GrantAccessRequest                                    types.Object `tfsdk:"grant_access_request"`
+	TransferProvisionedSystemContentAdministrationRequest types.Object `tfsdk:"transfer_provisioned_system_content_administration_request"`
+	AbstractOrganizationalUnitModificationRequest         types.Object `tfsdk:"abstract_organizational_unit_modification_request"`
+	RemoveOrganizationalUnitRequest                       types.Object `tfsdk:"remove_organizational_unit_request"`
+	CreateGroupOnSystemRequest                            types.Object `tfsdk:"create_group_on_system_request"`
+	TransferApplicationAdministrationRequest              types.Object `tfsdk:"transfer_application_administration_request"`
+	UpdateGroupMembershipRequest                          types.Object `tfsdk:"update_group_membership_request"`
+	AddGroupAdminRequest                                  types.Object `tfsdk:"add_group_admin_request"`
+	TransferOrganizationalUnitOwnershipRequest            types.Object `tfsdk:"transfer_organizational_unit_ownership_request"`
+	JoinVaultRequest                                      types.Object `tfsdk:"join_vault_request"`
+	VerifyInternalAccountRequest                          types.Object `tfsdk:"verify_internal_account_request"`
+	JoinGroupRequest                                      types.Object `tfsdk:"join_group_request"`
+	TransferGroupOnSystemOwnershipRequest                 types.Object `tfsdk:"transfer_group_on_system_ownership_request"`
+	RemoveGroupRequest                                    types.Object `tfsdk:"remove_group_request"`
+	SetupAuthorizingGroupRequest                          types.Object `tfsdk:"setup_authorizing_group_request"`
+	SetupNestedGroupRequest                               types.Object `tfsdk:"setup_nested_group_request"`
+	GrantGroupOnSystemRequestRequest                      types.Object `tfsdk:"grant_group_on_system_request_request"`
+	Disable2FARequest                                     types.Object `tfsdk:"disable2fa_request"`
+	GrantGroupOnSystemRequest                             types.Object `tfsdk:"grant_group_on_system_request"`
+	EnableTechnicalAdministrationRequest                  types.Object `tfsdk:"enable_technical_administration_request"`
 	CreateGroupRequest                                    types.Object `tfsdk:"create_group_request"`
-	TransferProvisionedSystemOwnershipRequest             types.Object `tfsdk:"transfer_provisioned_system_ownership_request"`
+	TransferAuditorGroupRequest                           types.Object `tfsdk:"transfer_auditor_group_request"`
+	GrantClientPermissionRequest                          types.Object `tfsdk:"grant_client_permission_request"`
+	TransferApplicationOwnershipRequest                   types.Object `tfsdk:"transfer_application_ownership_request"`
+	CreateServiceAccountRequest                           types.Object `tfsdk:"create_service_account_request"`
 	TransferServiceAccountAdministrationRequest           types.Object `tfsdk:"transfer_service_account_administration_request"`
+	PasswordResetRequest                                  types.Object `tfsdk:"password_reset_request"`
+	GrantServiceAccountGroupRequest                       types.Object `tfsdk:"grant_service_account_group_request"`
+	TransferProvisionedSystemOwnershipRequest             types.Object `tfsdk:"transfer_provisioned_system_ownership_request"`
+	ExtendAccessRequest                                   types.Object `tfsdk:"extend_access_request"`
 	TransferProvisionedSystemAdministrationRequest        types.Object `tfsdk:"transfer_provisioned_system_administration_request"`
 }
 
@@ -2498,7 +2498,7 @@ var serviceaccountServiceAccount_additionalObjectsAttrTypesRSRecurse = objectAtt
 
 type serviceaccountServiceAccount_additionalObjectsDataRS struct {
 	Audit  types.Object `tfsdk:"audit"`
-	Groups types.Object `tfsdk:"groups"`
+	Groups types.List   `tfsdk:"groups"`
 	Secret types.Object `tfsdk:"secret"`
 }
 
@@ -2707,7 +2707,7 @@ type vaultVaultRecord_additionalObjectsDataRS struct {
 	PasswordMetadata types.Object `tfsdk:"password_metadata"`
 	Secret           types.Object `tfsdk:"secret"`
 	ShareSummary     types.Object `tfsdk:"share_summary"`
-	Shares           types.Object `tfsdk:"shares"`
+	Shares           types.List   `tfsdk:"shares"`
 	Tile             types.Object `tfsdk:"tile"`
 	Vaultholder      types.Object `tfsdk:"vaultholder"`
 }

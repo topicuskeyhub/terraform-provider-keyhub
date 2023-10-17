@@ -54,7 +54,7 @@ Read-Only:
 - `parent_uuid` (String)
 - `password_metadata` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--password_metadata))
 - `share_summary` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--share_summary))
-- `shares` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--shares))
+- `shares` (List of String)
 - `vaultholder` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--vaultholder))
 
 <a id="nestedatt--additional_objects--secret"></a>
@@ -114,7 +114,7 @@ Optional:
 Optional:
 
 - `name` (String)
-- `vault_vault_record_share_type` (String)
+- `type` (String)
 
 
 <a id="nestedatt--additional_objects--share_summary--parent"></a>
@@ -123,16 +123,8 @@ Optional:
 Optional:
 
 - `name` (String)
-- `vault_vault_record_share_type` (String)
+- `type` (String)
 
-
-
-<a id="nestedatt--additional_objects--shares"></a>
-### Nested Schema for `additional_objects.shares`
-
-Optional:
-
-- `items` (List of String)
 
 
 <a id="nestedatt--additional_objects--vaultholder"></a>

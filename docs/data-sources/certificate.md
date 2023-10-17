@@ -27,7 +27,6 @@ description: |-
 
 - `additional_objects` (Attributes) (see [below for nested schema](#nestedatt--additional_objects))
 - `alias` (String)
-- `certificate_certificate_primer_type` (String)
 - `certificate_data` (List of String)
 - `expiration` (String)
 - `fingerprint_sha1` (String)
@@ -37,6 +36,7 @@ description: |-
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--links))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--permissions))
 - `subject_dn` (String)
+- `type` (String)
 
 <a id="nestedatt--additional_objects"></a>
 ### Nested Schema for `additional_objects`

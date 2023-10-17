@@ -46,7 +46,7 @@ Optional:
 Read-Only:
 
 - `audit` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--audit))
-- `groups` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--groups))
+- `groups` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--groups))
 
 <a id="nestedatt--additional_objects--secret"></a>
 ### Nested Schema for `additional_objects.secret`
@@ -72,13 +72,6 @@ Optional:
 <a id="nestedatt--additional_objects--groups"></a>
 ### Nested Schema for `additional_objects.groups`
 
-Optional:
-
-- `items` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--groups--items))
-
-<a id="nestedatt--additional_objects--groups--items"></a>
-### Nested Schema for `additional_objects.groups.items`
-
 Required:
 
 - `name_in_system` (String)
@@ -91,11 +84,11 @@ Optional:
 
 Read-Only:
 
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--groups--items--links))
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--groups--items--permissions))
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--groups--links))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--groups--permissions))
 
-<a id="nestedatt--additional_objects--groups--items--links"></a>
-### Nested Schema for `additional_objects.groups.items.permissions`
+<a id="nestedatt--additional_objects--groups--links"></a>
+### Nested Schema for `additional_objects.groups.links`
 
 Read-Only:
 
@@ -105,8 +98,8 @@ Read-Only:
 - `type_escaped` (String)
 
 
-<a id="nestedatt--additional_objects--groups--items--permissions"></a>
-### Nested Schema for `additional_objects.groups.items.permissions`
+<a id="nestedatt--additional_objects--groups--permissions"></a>
+### Nested Schema for `additional_objects.groups.permissions`
 
 Optional:
 
@@ -114,7 +107,6 @@ Optional:
 - `instances` (List of String)
 - `operations` (List of String)
 - `type_escaped` (String)
-
 
 
 

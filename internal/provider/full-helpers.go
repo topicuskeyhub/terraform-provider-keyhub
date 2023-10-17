@@ -11,6 +11,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
+	rsschema "github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
@@ -111,6 +112,21 @@ func withUuidToTF(val interface{ GetUuid() *string }) attr.Value {
 		return types.StringNull()
 	}
 	return types.StringPointerValue(val.GetUuid())
+}
+
+func toItemsList(ctx context.Context, val attr.Value) basetypes.ObjectValue {
+	attrType := map[string]attr.Type{"items": val.Type(ctx)}
+	if val.IsNull() || val.IsUnknown() {
+		return types.ObjectNull(attrType)
+	}
+	return types.ObjectValueMust(attrType, map[string]attr.Value{"items": val})
+}
+
+func getItemsAttr(val basetypes.ObjectValue, attrType attr.Type) attr.Value {
+	if val.IsNull() || val.IsUnknown() {
+		return types.ListNull(attrType.(basetypes.ListType).ElementType())
+	}
+	return val.Attributes()["items"]
 }
 
 func parsePointer[T any](val basetypes.StringValue, parser func(string) (T, error)) (*T, diag.Diagnostics) {
@@ -373,6 +389,22 @@ func getSelfLink(linksAttr basetypes.ListValue) restLinkDataRS {
 	var links restLinkDataRS
 	fillDataStructFromTFObjectRSRestLink(&links, linksAttr.Elements()[0].(basetypes.ObjectValue))
 	return links
+}
+
+func resetListNestedAttributeFlags(schema rsschema.ListNestedAttribute) rsschema.ListNestedAttribute {
+	schema.Optional = false
+	schema.Computed = false
+	schema.Required = false
+	schema.PlanModifiers = nil
+	return schema
+}
+
+func resetListAttributeFlags(schema rsschema.ListAttribute) rsschema.ListAttribute {
+	schema.Optional = false
+	schema.Computed = false
+	schema.Required = false
+	schema.PlanModifiers = nil
+	return schema
 }
 
 func isHttpStatusCodeOk(ctx context.Context, status int32, err error, diags *diag.Diagnostics) bool {

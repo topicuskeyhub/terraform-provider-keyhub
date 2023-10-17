@@ -49,7 +49,7 @@ Read-Only:
 - `password_metadata` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--password_metadata))
 - `secret` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--secret))
 - `share_summary` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--share_summary))
-- `shares` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--shares))
+- `shares` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--shares))
 - `tile` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--tile))
 - `vaultholder` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--vaultholder))
 
@@ -140,7 +140,7 @@ Read-Only:
 Read-Only:
 
 - `name` (String)
-- `vault_vault_record_share_type` (String)
+- `type` (String)
 
 
 <a id="nestedatt--additional_objects--share_summary--parent"></a>
@@ -149,7 +149,7 @@ Read-Only:
 Read-Only:
 
 - `name` (String)
-- `vault_vault_record_share_type` (String)
+- `type` (String)
 
 
 
@@ -158,22 +158,15 @@ Read-Only:
 
 Read-Only:
 
-- `items` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--shares--items))
-
-<a id="nestedatt--additional_objects--shares--items"></a>
-### Nested Schema for `additional_objects.shares.items`
-
-Read-Only:
-
 - `color` (String)
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--shares--items--links))
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--shares--links))
 - `name` (String)
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--shares--items--permissions))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--shares--permissions))
 - `share_end_time` (String)
 - `uuid` (String)
 
-<a id="nestedatt--additional_objects--shares--items--links"></a>
-### Nested Schema for `additional_objects.shares.items.uuid`
+<a id="nestedatt--additional_objects--shares--links"></a>
+### Nested Schema for `additional_objects.shares.links`
 
 Read-Only:
 
@@ -183,8 +176,8 @@ Read-Only:
 - `type_escaped` (String)
 
 
-<a id="nestedatt--additional_objects--shares--items--permissions"></a>
-### Nested Schema for `additional_objects.shares.items.uuid`
+<a id="nestedatt--additional_objects--shares--permissions"></a>
+### Nested Schema for `additional_objects.shares.permissions`
 
 Read-Only:
 
@@ -192,7 +185,6 @@ Read-Only:
 - `instances` (List of String)
 - `operations` (List of String)
 - `type_escaped` (String)
-
 
 
 

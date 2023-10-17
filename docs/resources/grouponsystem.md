@@ -39,8 +39,8 @@ description: |-
 
 Optional:
 
-- `provgroups` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--provgroups))
-- `service_accounts` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--service_accounts))
+- `provgroups` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--provgroups))
+- `service_accounts` (List of String)
 
 Read-Only:
 
@@ -51,24 +51,17 @@ Read-Only:
 
 Optional:
 
-- `items` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--provgroups--items))
-
-<a id="nestedatt--additional_objects--provgroups--items"></a>
-### Nested Schema for `additional_objects.provgroups.items`
-
-Optional:
-
 - `activation_required` (Boolean)
 
 Read-Only:
 
-- `group_on_system` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--provgroups--items--group_on_system))
+- `group_on_system` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--provgroups--group_on_system))
 - `group_uuid` (String)
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--provgroups--items--links))
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--provgroups--items--permissions))
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--provgroups--links))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--provgroups--permissions))
 
-<a id="nestedatt--additional_objects--provgroups--items--group_on_system"></a>
-### Nested Schema for `additional_objects.provgroups.items.permissions`
+<a id="nestedatt--additional_objects--provgroups--group_on_system"></a>
+### Nested Schema for `additional_objects.provgroups.group_on_system`
 
 Required:
 
@@ -84,11 +77,11 @@ Optional:
 
 Read-Only:
 
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--provgroups--items--permissions--links))
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--provgroups--items--permissions--permissions))
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--provgroups--group_on_system--links))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--provgroups--group_on_system--permissions))
 
-<a id="nestedatt--additional_objects--provgroups--items--permissions--links"></a>
-### Nested Schema for `additional_objects.provgroups.items.permissions.links`
+<a id="nestedatt--additional_objects--provgroups--group_on_system--links"></a>
+### Nested Schema for `additional_objects.provgroups.group_on_system.permissions`
 
 Read-Only:
 
@@ -98,8 +91,8 @@ Read-Only:
 - `type_escaped` (String)
 
 
-<a id="nestedatt--additional_objects--provgroups--items--permissions--permissions"></a>
-### Nested Schema for `additional_objects.provgroups.items.permissions.permissions`
+<a id="nestedatt--additional_objects--provgroups--group_on_system--permissions"></a>
+### Nested Schema for `additional_objects.provgroups.group_on_system.permissions`
 
 Optional:
 
@@ -110,8 +103,8 @@ Optional:
 
 
 
-<a id="nestedatt--additional_objects--provgroups--items--links"></a>
-### Nested Schema for `additional_objects.provgroups.items.permissions`
+<a id="nestedatt--additional_objects--provgroups--links"></a>
+### Nested Schema for `additional_objects.provgroups.links`
 
 Read-Only:
 
@@ -121,8 +114,8 @@ Read-Only:
 - `type_escaped` (String)
 
 
-<a id="nestedatt--additional_objects--provgroups--items--permissions"></a>
-### Nested Schema for `additional_objects.provgroups.items.permissions`
+<a id="nestedatt--additional_objects--provgroups--permissions"></a>
+### Nested Schema for `additional_objects.provgroups.permissions`
 
 Optional:
 
@@ -131,15 +124,6 @@ Optional:
 - `operations` (List of String)
 - `type_escaped` (String)
 
-
-
-
-<a id="nestedatt--additional_objects--service_accounts"></a>
-### Nested Schema for `additional_objects.service_accounts`
-
-Optional:
-
-- `items` (List of String)
 
 
 <a id="nestedatt--additional_objects--audit"></a>

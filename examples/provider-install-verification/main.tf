@@ -55,12 +55,10 @@ provider "keyhubpreview" {
 resource "keyhubpreview_group" "terra" {
   name = "Terraform"
   additional_objects = {
-    accounts = {
-      items = [{
-        uuid   = "7ea6622b-f9d2-4e52-a799-217b26f88376"
-        rights = "MANAGER"
-      }]
-    }
+    accounts = [{
+      uuid   = "7ea6622b-f9d2-4e52-a799-217b26f88376"
+      rights = "MANAGER"
+    }]
   }
 }
 

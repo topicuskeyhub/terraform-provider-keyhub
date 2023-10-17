@@ -191,7 +191,7 @@ func fillDataStructFromTFObjectRSAuthAccountStatus(data *authAccountStatusDataRS
 func fillDataStructFromTFObjectRSAuthAccount_additionalObjects(data *authAccount_additionalObjectsDataRS, obj types.Object) {
 	data.ActiveLogin = obj.Attributes()["active_login"].(basetypes.BoolValue)
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
-	data.Groups = obj.Attributes()["groups"].(basetypes.ObjectValue)
+	data.Groups = obj.Attributes()["groups"].(basetypes.ListValue)
 	data.PendingRecoveryRequests = obj.Attributes()["pending_recovery_requests"].(basetypes.ObjectValue)
 	data.Settings = obj.Attributes()["settings"].(basetypes.ObjectValue)
 	data.StoredAttributes = obj.Attributes()["stored_attributes"].(basetypes.ObjectValue)
@@ -344,8 +344,8 @@ func fillDataStructFromTFObjectRSClientClientApplicationPrimer(data *clientClien
 func fillDataStructFromTFObjectRSClientClientApplication_additionalObjects(data *clientClientApplication_additionalObjectsDataRS, obj types.Object) {
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
 	data.DeleteTile = obj.Attributes()["delete_tile"].(basetypes.BoolValue)
-	data.Groupclients = obj.Attributes()["groupclients"].(basetypes.ObjectValue)
-	data.Groups = obj.Attributes()["groups"].(basetypes.ObjectValue)
+	data.Groupclients = obj.Attributes()["groupclients"].(basetypes.ListValue)
+	data.Groups = obj.Attributes()["groups"].(basetypes.ListValue)
 	data.Secret = obj.Attributes()["secret"].(basetypes.ObjectValue)
 	data.Tile = obj.Attributes()["tile"].(basetypes.ObjectValue)
 	data.VaultRecordCount = obj.Attributes()["vault_record_count"].(basetypes.Int64Value)
@@ -451,10 +451,10 @@ func fillDataStructFromTFObjectRSDirectoryAccountDirectory(data *directoryAccoun
 	data.Restrict2fa = obj.Attributes()["restrict2fa"].(basetypes.BoolValue)
 	data.RotatingPassword = obj.Attributes()["rotating_password"].(basetypes.StringValue)
 	data.UsernameCustomizable = obj.Attributes()["username_customizable"].(basetypes.BoolValue)
-	data.LDAPDirectory = obj.Attributes()["l_d_a_p_directory"].(basetypes.ObjectValue)
-	data.InternalDirectory = obj.Attributes()["internal_directory"].(basetypes.ObjectValue)
-	data.OIDCDirectory = obj.Attributes()["o_id_c_directory"].(basetypes.ObjectValue)
 	data.MaintenanceDirectory = obj.Attributes()["maintenance_directory"].(basetypes.ObjectValue)
+	data.OIDCDirectory = obj.Attributes()["o_id_c_directory"].(basetypes.ObjectValue)
+	data.InternalDirectory = obj.Attributes()["internal_directory"].(basetypes.ObjectValue)
+	data.LDAPDirectory = obj.Attributes()["l_d_a_p_directory"].(basetypes.ObjectValue)
 }
 
 func fillDataStructFromTFObjectRSDirectoryAccountDirectoryLinkableWrapper(data *directoryAccountDirectoryLinkableWrapperDataRS, obj types.Object) {
@@ -794,33 +794,33 @@ func fillDataStructFromTFObjectRSGroupGroupSegmentedLinkableWrapper(data *groupG
 }
 
 func fillDataStructFromTFObjectRSGroupGroup_additionalObjects(data *groupGroup_additionalObjectsDataRS, obj types.Object) {
-	data.Accounts = obj.Attributes()["accounts"].(basetypes.ObjectValue)
-	data.AdministeredClients = obj.Attributes()["administered_clients"].(basetypes.ObjectValue)
-	data.AdministeredSystems = obj.Attributes()["administered_systems"].(basetypes.ObjectValue)
-	data.Admins = obj.Attributes()["admins"].(basetypes.ObjectValue)
+	data.Accounts = obj.Attributes()["accounts"].(basetypes.ListValue)
+	data.AdministeredClients = obj.Attributes()["administered_clients"].(basetypes.ListValue)
+	data.AdministeredSystems = obj.Attributes()["administered_systems"].(basetypes.ListValue)
+	data.Admins = obj.Attributes()["admins"].(basetypes.ListValue)
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
 	data.AuthorizedGroups = obj.Attributes()["authorized_groups"].(basetypes.ObjectValue)
-	data.ClientPermissions = obj.Attributes()["client_permissions"].(basetypes.ObjectValue)
-	data.Clients = obj.Attributes()["clients"].(basetypes.ObjectValue)
-	data.ContentAdministeredSystems = obj.Attributes()["content_administered_systems"].(basetypes.ObjectValue)
+	data.ClientPermissions = obj.Attributes()["client_permissions"].(basetypes.ListValue)
+	data.Clients = obj.Attributes()["clients"].(basetypes.ListValue)
+	data.ContentAdministeredSystems = obj.Attributes()["content_administered_systems"].(basetypes.ListValue)
 	data.Groupauditinginfo = obj.Attributes()["groupauditinginfo"].(basetypes.ObjectValue)
 	data.Groupinfo = obj.Attributes()["groupinfo"].(basetypes.ObjectValue)
-	data.Helpdesk = obj.Attributes()["helpdesk"].(basetypes.ObjectValue)
+	data.Helpdesk = obj.Attributes()["helpdesk"].(basetypes.ListValue)
 	data.Markers = obj.Attributes()["markers"].(basetypes.ObjectValue)
 	data.Myaccount = obj.Attributes()["myaccount"].(basetypes.ObjectValue)
 	data.Mydelegatedaccount = obj.Attributes()["mydelegatedaccount"].(basetypes.ObjectValue)
-	data.NestedGroups = obj.Attributes()["nested_groups"].(basetypes.ObjectValue)
-	data.OwnedClients = obj.Attributes()["owned_clients"].(basetypes.ObjectValue)
-	data.OwnedDirectories = obj.Attributes()["owned_directories"].(basetypes.ObjectValue)
+	data.NestedGroups = obj.Attributes()["nested_groups"].(basetypes.ListValue)
+	data.OwnedClients = obj.Attributes()["owned_clients"].(basetypes.ListValue)
+	data.OwnedDirectories = obj.Attributes()["owned_directories"].(basetypes.ListValue)
 	data.OwnedGroupsOnSystem = obj.Attributes()["owned_groups_on_system"].(basetypes.ObjectValue)
-	data.OwnedOrganizationalUnits = obj.Attributes()["owned_organizational_units"].(basetypes.ObjectValue)
-	data.OwnedSystems = obj.Attributes()["owned_systems"].(basetypes.ObjectValue)
-	data.RecentAudits = obj.Attributes()["recent_audits"].(basetypes.ObjectValue)
+	data.OwnedOrganizationalUnits = obj.Attributes()["owned_organizational_units"].(basetypes.ListValue)
+	data.OwnedSystems = obj.Attributes()["owned_systems"].(basetypes.ListValue)
+	data.RecentAudits = obj.Attributes()["recent_audits"].(basetypes.ListValue)
 	data.Requeststatus = obj.Attributes()["requeststatus"].(basetypes.StringValue)
-	data.ServiceAccounts = obj.Attributes()["service_accounts"].(basetypes.ObjectValue)
-	data.Systems = obj.Attributes()["systems"].(basetypes.ObjectValue)
+	data.ServiceAccounts = obj.Attributes()["service_accounts"].(basetypes.ListValue)
+	data.Systems = obj.Attributes()["systems"].(basetypes.ListValue)
 	data.Vault = obj.Attributes()["vault"].(basetypes.ObjectValue)
-	data.Webhooks = obj.Attributes()["webhooks"].(basetypes.ObjectValue)
+	data.Webhooks = obj.Attributes()["webhooks"].(basetypes.ListValue)
 }
 
 func fillDataStructFromTFObjectRSGroupGroupsAuditStats(data *groupGroupsAuditStatsDataRS, obj types.Object) {
@@ -1214,7 +1214,7 @@ func fillDataStructFromTFObjectRSOrganizationOrganizationalUnitPrimerLinkableWra
 
 func fillDataStructFromTFObjectRSOrganizationOrganizationalUnit_additionalObjects(data *organizationOrganizationalUnit_additionalObjectsDataRS, obj types.Object) {
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
-	data.CreateAsParentOf = obj.Attributes()["create_as_parent_of"].(basetypes.ObjectValue)
+	data.CreateAsParentOf = obj.Attributes()["create_as_parent_of"].(basetypes.ListValue)
 }
 
 func fillDataStructFromTFObjectRSProvisioningAbstractProvisionedLDAP(data *provisioningAbstractProvisionedLDAPDataRS, obj types.Object) {
@@ -1287,8 +1287,8 @@ func fillDataStructFromTFObjectRSProvisioningGroupOnSystemTypes(data *provisioni
 
 func fillDataStructFromTFObjectRSProvisioningGroupOnSystem_additionalObjects(data *provisioningGroupOnSystem_additionalObjectsDataRS, obj types.Object) {
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
-	data.Provgroups = obj.Attributes()["provgroups"].(basetypes.ObjectValue)
-	data.ServiceAccounts = obj.Attributes()["service_accounts"].(basetypes.ObjectValue)
+	data.Provgroups = obj.Attributes()["provgroups"].(basetypes.ListValue)
+	data.ServiceAccounts = obj.Attributes()["service_accounts"].(basetypes.ListValue)
 }
 
 func fillDataStructFromTFObjectRSProvisioningGroupProvisioningStatus(data *provisioningGroupProvisioningStatusDataRS, obj types.Object) {
@@ -1326,7 +1326,7 @@ func fillDataStructFromTFObjectRSProvisioningProvisionNumberSequenceLinkableWrap
 
 func fillDataStructFromTFObjectRSProvisioningProvisionNumberSequence_additionalObjects(data *provisioningProvisionNumberSequence_additionalObjectsDataRS, obj types.Object) {
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
-	data.Systems = obj.Attributes()["systems"].(basetypes.ObjectValue)
+	data.Systems = obj.Attributes()["systems"].(basetypes.ListValue)
 }
 
 func fillDataStructFromTFObjectRSProvisioningProvisionedAD(data *provisioningProvisionedADDataRS, obj types.Object) {
@@ -1400,14 +1400,14 @@ func fillDataStructFromTFObjectRSProvisioningProvisionedSystem(data *provisionin
 	data.ShouldDestroyUnknownAccounts = obj.Attributes()["should_destroy_unknown_accounts"].(basetypes.BoolValue)
 	data.TechnicalAdministratorUUID = obj.Attributes()["technical_administrator_uuid"].(basetypes.StringValue)
 	data.UsernamePrefix = obj.Attributes()["username_prefix"].(basetypes.StringValue)
-	data.ProvisionedAzureOIDCDirectory = obj.Attributes()["provisioned_azure_oidc_directory"].(basetypes.ObjectValue)
 	data.AbstractProvisionedLDAP = obj.Attributes()["abstract_provisioned_ldap"].(basetypes.ObjectValue)
-	data.ProvisionedAD = obj.Attributes()["provisioned_a_d"].(basetypes.ObjectValue)
+	data.ProvisionedLDAP = obj.Attributes()["provisioned_ldap"].(basetypes.ObjectValue)
 	data.ProvisionedAzureTenant = obj.Attributes()["provisioned_azure_tenant"].(basetypes.ObjectValue)
 	data.ProvisionedAzureSyncLDAPDirectory = obj.Attributes()["provisioned_azure_sync_ldap_directory"].(basetypes.ObjectValue)
-	data.ProvisionedInternalLDAP = obj.Attributes()["provisioned_internal_ldap"].(basetypes.ObjectValue)
-	data.ProvisionedLDAP = obj.Attributes()["provisioned_ldap"].(basetypes.ObjectValue)
+	data.ProvisionedAzureOIDCDirectory = obj.Attributes()["provisioned_azure_oidc_directory"].(basetypes.ObjectValue)
+	data.ProvisionedAD = obj.Attributes()["provisioned_a_d"].(basetypes.ObjectValue)
 	data.ProvisionedLDAPDirectory = obj.Attributes()["provisioned_ldap_directory"].(basetypes.ObjectValue)
+	data.ProvisionedInternalLDAP = obj.Attributes()["provisioned_internal_ldap"].(basetypes.ObjectValue)
 }
 
 func fillDataStructFromTFObjectRSProvisioningProvisionedSystemLinkableWrapper(data *provisioningProvisionedSystemLinkableWrapperDataRS, obj types.Object) {
@@ -1449,7 +1449,7 @@ func fillDataStructFromTFObjectRSProvisioningProvisionedSystemSyncLog_additional
 func fillDataStructFromTFObjectRSProvisioningProvisionedSystem_additionalObjects(data *provisioningProvisionedSystem_additionalObjectsDataRS, obj types.Object) {
 	data.Account = obj.Attributes()["account"].(basetypes.ObjectValue)
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
-	data.IssuedPermissions = obj.Attributes()["issued_permissions"].(basetypes.ObjectValue)
+	data.IssuedPermissions = obj.Attributes()["issued_permissions"].(basetypes.ListValue)
 	data.LoginName = obj.Attributes()["login_name"].(basetypes.StringValue)
 	data.ManagementPermissions = obj.Attributes()["management_permissions"].(basetypes.ObjectValue)
 	data.Markers = obj.Attributes()["markers"].(basetypes.ObjectValue)
@@ -1575,42 +1575,42 @@ func fillDataStructFromTFObjectRSRequestModificationRequest(data *requestModific
 	data.MailKey = obj.Attributes()["mail_key"].(basetypes.StringValue)
 	data.RequestModificationRequestType = obj.Attributes()["request_modification_request_type"].(basetypes.StringValue)
 	data.Status = obj.Attributes()["status"].(basetypes.StringValue)
-	data.TransferAuditorGroupRequest = obj.Attributes()["transfer_auditor_group_request"].(basetypes.ObjectValue)
-	data.AbstractProvisionedSystemModificationRequest = obj.Attributes()["abstract_provisioned_system_modification_request"].(basetypes.ObjectValue)
-	data.CreateServiceAccountRequest = obj.Attributes()["create_service_account_request"].(basetypes.ObjectValue)
-	data.ReviewAuditRequest = obj.Attributes()["review_audit_request"].(basetypes.ObjectValue)
-	data.SetupNestedGroupRequest = obj.Attributes()["setup_nested_group_request"].(basetypes.ObjectValue)
-	data.RemoveProvisionedSystemRequest = obj.Attributes()["remove_provisioned_system_request"].(basetypes.ObjectValue)
 	data.AbstractApplicationModificationRequest = obj.Attributes()["abstract_application_modification_request"].(basetypes.ObjectValue)
+	data.AbstractProvisionedSystemModificationRequest = obj.Attributes()["abstract_provisioned_system_modification_request"].(basetypes.ObjectValue)
+	data.RemoveProvisionedSystemRequest = obj.Attributes()["remove_provisioned_system_request"].(basetypes.ObjectValue)
 	data.GrantApplicationRequest = obj.Attributes()["grant_application_request"].(basetypes.ObjectValue)
-	data.AbstractOrganizationalUnitModificationRequest = obj.Attributes()["abstract_organizational_unit_modification_request"].(basetypes.ObjectValue)
-	data.VerifyInternalAccountRequest = obj.Attributes()["verify_internal_account_request"].(basetypes.ObjectValue)
-	data.Disable2FARequest = obj.Attributes()["disable2fa_request"].(basetypes.ObjectValue)
-	data.JoinGroupRequest = obj.Attributes()["join_group_request"].(basetypes.ObjectValue)
-	data.JoinVaultRequest = obj.Attributes()["join_vault_request"].(basetypes.ObjectValue)
-	data.RemoveGroupRequest = obj.Attributes()["remove_group_request"].(basetypes.ObjectValue)
-	data.TransferApplicationAdministrationRequest = obj.Attributes()["transfer_application_administration_request"].(basetypes.ObjectValue)
-	data.TransferOrganizationalUnitOwnershipRequest = obj.Attributes()["transfer_organizational_unit_ownership_request"].(basetypes.ObjectValue)
-	data.RemoveOrganizationalUnitRequest = obj.Attributes()["remove_organizational_unit_request"].(basetypes.ObjectValue)
-	data.GrantClientPermissionRequest = obj.Attributes()["grant_client_permission_request"].(basetypes.ObjectValue)
-	data.EnableTechnicalAdministrationRequest = obj.Attributes()["enable_technical_administration_request"].(basetypes.ObjectValue)
-	data.TransferProvisionedSystemContentAdministrationRequest = obj.Attributes()["transfer_provisioned_system_content_administration_request"].(basetypes.ObjectValue)
-	data.PasswordResetRequest = obj.Attributes()["password_reset_request"].(basetypes.ObjectValue)
-	data.TransferGroupOnSystemOwnershipRequest = obj.Attributes()["transfer_group_on_system_ownership_request"].(basetypes.ObjectValue)
-	data.SetupAuthorizingGroupRequest = obj.Attributes()["setup_authorizing_group_request"].(basetypes.ObjectValue)
-	data.GrantServiceAccountGroupRequest = obj.Attributes()["grant_service_account_group_request"].(basetypes.ObjectValue)
-	data.CreateGroupOnSystemRequest = obj.Attributes()["create_group_on_system_request"].(basetypes.ObjectValue)
-	data.TransferApplicationOwnershipRequest = obj.Attributes()["transfer_application_ownership_request"].(basetypes.ObjectValue)
-	data.GrantAccessRequest = obj.Attributes()["grant_access_request"].(basetypes.ObjectValue)
-	data.UpdateGroupMembershipRequest = obj.Attributes()["update_group_membership_request"].(basetypes.ObjectValue)
-	data.ExtendAccessRequest = obj.Attributes()["extend_access_request"].(basetypes.ObjectValue)
-	data.AddGroupAdminRequest = obj.Attributes()["add_group_admin_request"].(basetypes.ObjectValue)
-	data.GrantGroupOnSystemRequest = obj.Attributes()["grant_group_on_system_request"].(basetypes.ObjectValue)
-	data.GrantGroupOnSystemRequestRequest = obj.Attributes()["grant_group_on_system_request_request"].(basetypes.ObjectValue)
+	data.ReviewAuditRequest = obj.Attributes()["review_audit_request"].(basetypes.ObjectValue)
 	data.RevokeAdminRequest = obj.Attributes()["revoke_admin_request"].(basetypes.ObjectValue)
+	data.GrantAccessRequest = obj.Attributes()["grant_access_request"].(basetypes.ObjectValue)
+	data.TransferProvisionedSystemContentAdministrationRequest = obj.Attributes()["transfer_provisioned_system_content_administration_request"].(basetypes.ObjectValue)
+	data.AbstractOrganizationalUnitModificationRequest = obj.Attributes()["abstract_organizational_unit_modification_request"].(basetypes.ObjectValue)
+	data.RemoveOrganizationalUnitRequest = obj.Attributes()["remove_organizational_unit_request"].(basetypes.ObjectValue)
+	data.CreateGroupOnSystemRequest = obj.Attributes()["create_group_on_system_request"].(basetypes.ObjectValue)
+	data.TransferApplicationAdministrationRequest = obj.Attributes()["transfer_application_administration_request"].(basetypes.ObjectValue)
+	data.UpdateGroupMembershipRequest = obj.Attributes()["update_group_membership_request"].(basetypes.ObjectValue)
+	data.AddGroupAdminRequest = obj.Attributes()["add_group_admin_request"].(basetypes.ObjectValue)
+	data.TransferOrganizationalUnitOwnershipRequest = obj.Attributes()["transfer_organizational_unit_ownership_request"].(basetypes.ObjectValue)
+	data.JoinVaultRequest = obj.Attributes()["join_vault_request"].(basetypes.ObjectValue)
+	data.VerifyInternalAccountRequest = obj.Attributes()["verify_internal_account_request"].(basetypes.ObjectValue)
+	data.JoinGroupRequest = obj.Attributes()["join_group_request"].(basetypes.ObjectValue)
+	data.TransferGroupOnSystemOwnershipRequest = obj.Attributes()["transfer_group_on_system_ownership_request"].(basetypes.ObjectValue)
+	data.RemoveGroupRequest = obj.Attributes()["remove_group_request"].(basetypes.ObjectValue)
+	data.SetupAuthorizingGroupRequest = obj.Attributes()["setup_authorizing_group_request"].(basetypes.ObjectValue)
+	data.SetupNestedGroupRequest = obj.Attributes()["setup_nested_group_request"].(basetypes.ObjectValue)
+	data.GrantGroupOnSystemRequestRequest = obj.Attributes()["grant_group_on_system_request_request"].(basetypes.ObjectValue)
+	data.Disable2FARequest = obj.Attributes()["disable2fa_request"].(basetypes.ObjectValue)
+	data.GrantGroupOnSystemRequest = obj.Attributes()["grant_group_on_system_request"].(basetypes.ObjectValue)
+	data.EnableTechnicalAdministrationRequest = obj.Attributes()["enable_technical_administration_request"].(basetypes.ObjectValue)
 	data.CreateGroupRequest = obj.Attributes()["create_group_request"].(basetypes.ObjectValue)
-	data.TransferProvisionedSystemOwnershipRequest = obj.Attributes()["transfer_provisioned_system_ownership_request"].(basetypes.ObjectValue)
+	data.TransferAuditorGroupRequest = obj.Attributes()["transfer_auditor_group_request"].(basetypes.ObjectValue)
+	data.GrantClientPermissionRequest = obj.Attributes()["grant_client_permission_request"].(basetypes.ObjectValue)
+	data.TransferApplicationOwnershipRequest = obj.Attributes()["transfer_application_ownership_request"].(basetypes.ObjectValue)
+	data.CreateServiceAccountRequest = obj.Attributes()["create_service_account_request"].(basetypes.ObjectValue)
 	data.TransferServiceAccountAdministrationRequest = obj.Attributes()["transfer_service_account_administration_request"].(basetypes.ObjectValue)
+	data.PasswordResetRequest = obj.Attributes()["password_reset_request"].(basetypes.ObjectValue)
+	data.GrantServiceAccountGroupRequest = obj.Attributes()["grant_service_account_group_request"].(basetypes.ObjectValue)
+	data.TransferProvisionedSystemOwnershipRequest = obj.Attributes()["transfer_provisioned_system_ownership_request"].(basetypes.ObjectValue)
+	data.ExtendAccessRequest = obj.Attributes()["extend_access_request"].(basetypes.ObjectValue)
 	data.TransferProvisionedSystemAdministrationRequest = obj.Attributes()["transfer_provisioned_system_administration_request"].(basetypes.ObjectValue)
 }
 
@@ -1767,7 +1767,7 @@ func fillDataStructFromTFObjectRSServiceaccountServiceAccountStatus(data *servic
 
 func fillDataStructFromTFObjectRSServiceaccountServiceAccount_additionalObjects(data *serviceaccountServiceAccount_additionalObjectsDataRS, obj types.Object) {
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
-	data.Groups = obj.Attributes()["groups"].(basetypes.ObjectValue)
+	data.Groups = obj.Attributes()["groups"].(basetypes.ListValue)
 	data.Secret = obj.Attributes()["secret"].(basetypes.ObjectValue)
 }
 
@@ -1910,7 +1910,7 @@ func fillDataStructFromTFObjectRSVaultVaultRecord_additionalObjects(data *vaultV
 	data.PasswordMetadata = obj.Attributes()["password_metadata"].(basetypes.ObjectValue)
 	data.Secret = obj.Attributes()["secret"].(basetypes.ObjectValue)
 	data.ShareSummary = obj.Attributes()["share_summary"].(basetypes.ObjectValue)
-	data.Shares = obj.Attributes()["shares"].(basetypes.ObjectValue)
+	data.Shares = obj.Attributes()["shares"].(basetypes.ListValue)
 	data.Tile = obj.Attributes()["tile"].(basetypes.ObjectValue)
 	data.Vaultholder = obj.Attributes()["vaultholder"].(basetypes.ObjectValue)
 }
