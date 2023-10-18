@@ -88,7 +88,7 @@ func (r *clientapplicationResource) Create(ctx context.Context, req resource.Cre
 	wrapper, err := r.client.Client().Post(
 		ctx, newWrapper, &keyhubreq.ClientRequestBuilderPostRequestConfiguration{
 			QueryParameters: &keyhubreq.ClientRequestBuilderPostQueryParameters{
-				Additional: collectAdditional(data.AdditionalObjects),
+				Additional: collectAdditional(data),
 			},
 		})
 	tkh, diags := findFirst[keyhubmodels.ClientClientApplicationable](ctx, wrapper, "clientapplication", nil, err)
@@ -122,7 +122,7 @@ func (r *clientapplicationResource) Read(ctx context.Context, req resource.ReadR
 	tkh, err := r.client.Client().ByClientidInt64(getSelfLink(data.Links).ID.ValueInt64()).Get(
 		ctx, &keyhubreq.WithClientItemRequestBuilderGetRequestConfiguration{
 			QueryParameters: &keyhubreq.WithClientItemRequestBuilderGetQueryParameters{
-				Additional: collectAdditional(data.AdditionalObjects),
+				Additional: collectAdditional(data),
 			},
 		})
 

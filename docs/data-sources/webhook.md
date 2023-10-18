@@ -27,8 +27,8 @@ description: |-
 
 - `account` (Attributes) (see [below for nested schema](#nestedatt--account))
 - `active` (Boolean)
-- `additional_objects` (Attributes) (see [below for nested schema](#nestedatt--additional_objects))
 - `all_types` (Boolean)
+- `audit` (Attributes) (see [below for nested schema](#nestedatt--audit))
 - `authentication_scheme` (String)
 - `basic_auth_password` (String)
 - `basic_auth_username` (String)
@@ -85,15 +85,8 @@ Read-Only:
 
 
 
-<a id="nestedatt--additional_objects"></a>
-### Nested Schema for `additional_objects`
-
-Read-Only:
-
-- `audit` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--audit))
-
-<a id="nestedatt--additional_objects--audit"></a>
-### Nested Schema for `additional_objects.audit`
+<a id="nestedatt--audit"></a>
+### Nested Schema for `audit`
 
 Read-Only:
 
@@ -101,7 +94,6 @@ Read-Only:
 - `created_by` (String)
 - `last_modified_at` (String)
 - `last_modified_by` (String)
-
 
 
 <a id="nestedatt--client"></a>

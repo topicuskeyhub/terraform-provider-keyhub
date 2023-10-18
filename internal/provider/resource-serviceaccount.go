@@ -88,7 +88,7 @@ func (r *serviceaccountResource) Create(ctx context.Context, req resource.Create
 	wrapper, err := r.client.Serviceaccount().Post(
 		ctx, newWrapper, &keyhubreq.ServiceaccountRequestBuilderPostRequestConfiguration{
 			QueryParameters: &keyhubreq.ServiceaccountRequestBuilderPostQueryParameters{
-				Additional: collectAdditional(data.AdditionalObjects),
+				Additional: collectAdditional(data),
 			},
 		})
 	tkh, diags := findFirst[keyhubmodels.ServiceaccountServiceAccountable](ctx, wrapper, "serviceaccount", nil, err)
@@ -122,7 +122,7 @@ func (r *serviceaccountResource) Read(ctx context.Context, req resource.ReadRequ
 	tkh, err := r.client.Serviceaccount().ByServiceaccountidInt64(getSelfLink(data.Links).ID.ValueInt64()).Get(
 		ctx, &keyhubreq.WithServiceaccountItemRequestBuilderGetRequestConfiguration{
 			QueryParameters: &keyhubreq.WithServiceaccountItemRequestBuilderGetQueryParameters{
-				Additional: collectAdditional(data.AdditionalObjects),
+				Additional: collectAdditional(data),
 			},
 		})
 
@@ -164,7 +164,7 @@ func (r *serviceaccountResource) Update(ctx context.Context, req resource.Update
 	tkh, err := r.client.Serviceaccount().ByServiceaccountidInt64(getSelfLink(data.Links).ID.ValueInt64()).Put(
 		ctx, newTkh, &keyhubreq.WithServiceaccountItemRequestBuilderPutRequestConfiguration{
 			QueryParameters: &keyhubreq.WithServiceaccountItemRequestBuilderPutQueryParameters{
-				Additional: collectAdditional(data.AdditionalObjects),
+				Additional: collectAdditional(data),
 			},
 		})
 

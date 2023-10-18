@@ -25,7 +25,7 @@ description: |-
 
 ### Read-Only
 
-- `additional_objects` (Attributes) (see [below for nested schema](#nestedatt--additional_objects))
+- `audit` (Attributes) (see [below for nested schema](#nestedatt--audit))
 - `depth` (Number)
 - `description` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--links))
@@ -34,15 +34,8 @@ description: |-
 - `parent` (Attributes) (see [below for nested schema](#nestedatt--parent))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--permissions))
 
-<a id="nestedatt--additional_objects"></a>
-### Nested Schema for `additional_objects`
-
-Read-Only:
-
-- `audit` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--audit))
-
-<a id="nestedatt--additional_objects--audit"></a>
-### Nested Schema for `additional_objects.audit`
+<a id="nestedatt--audit"></a>
+### Nested Schema for `audit`
 
 Read-Only:
 
@@ -50,7 +43,6 @@ Read-Only:
 - `created_by` (String)
 - `last_modified_at` (String)
 - `last_modified_by` (String)
-
 
 
 <a id="nestedatt--links"></a>

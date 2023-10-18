@@ -4,6 +4,8 @@
 package provider
 
 import (
+	"golang.org/x/exp/maps"
+
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -238,7 +240,7 @@ func tkhToTFObjectRSAccountVaultVaultRecord(recurse bool, tkh keyhubmodel.VaultV
 		{
 			val, d := tkhToTFObjectRSVaultVaultRecord_additionalObjects(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
-			obj["additional_objects"] = val
+			maps.Copy(obj, val.Attributes())
 		}
 	}
 	obj["account_uuid"] = types.StringNull()
@@ -303,7 +305,7 @@ func tkhToTFObjectRSAuditAuditRecord(recurse bool, tkh keyhubmodel.AuditAuditRec
 		{
 			val, d := tkhToTFObjectRSAuditAuditRecord_additionalObjects(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
-			obj["additional_objects"] = val
+			maps.Copy(obj, val.Attributes())
 		}
 	}
 	{
@@ -421,7 +423,7 @@ func tkhToTFObjectRSAuthAccount(recurse bool, tkh keyhubmodel.AuthAccountable) (
 		{
 			val, d := tkhToTFObjectRSAuthAccount_additionalObjects(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
-			obj["additional_objects"] = val
+			maps.Copy(obj, val.Attributes())
 		}
 	}
 	{
@@ -1026,7 +1028,7 @@ func tkhToTFObjectRSCertificateCertificate(recurse bool, tkh keyhubmodel.Certifi
 		{
 			val, d := tkhToTFObjectRSCertificateCertificate_additionalObjects(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
-			obj["additional_objects"] = val
+			maps.Copy(obj, val.Attributes())
 		}
 	}
 	{
@@ -1204,7 +1206,7 @@ func tkhToTFObjectRSClientApplicationVaultVaultRecord(recurse bool, tkh keyhubmo
 		{
 			val, d := tkhToTFObjectRSVaultVaultRecord_additionalObjects(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
-			obj["additional_objects"] = val
+			maps.Copy(obj, val.Attributes())
 		}
 	}
 	obj["client_application_uuid"] = types.StringNull()
@@ -1269,7 +1271,7 @@ func tkhToTFObjectRSClientClientApplication(recurse bool, tkh keyhubmodel.Client
 		{
 			val, d := tkhToTFObjectRSClientClientApplication_additionalObjects(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
-			obj["additional_objects"] = val
+			maps.Copy(obj, val.Attributes())
 		}
 	}
 	{
@@ -1315,16 +1317,16 @@ func tkhToTFObjectRSClientClientApplication(recurse bool, tkh keyhubmodel.Client
 		obj["o_auth2_client"] = val
 	}
 	{
-		tkhCast, _ := tkh.(keyhubmodel.ClientSaml2Clientable)
-		val, d := tkhToTFObjectRSClientSaml2Client(false, tkhCast)
-		diags.Append(d...)
-		obj["saml2_client"] = val
-	}
-	{
 		tkhCast, _ := tkh.(keyhubmodel.ClientLdapClientable)
 		val, d := tkhToTFObjectRSClientLdapClient(false, tkhCast)
 		diags.Append(d...)
 		obj["ldap_client"] = val
+	}
+	{
+		tkhCast, _ := tkh.(keyhubmodel.ClientSaml2Clientable)
+		val, d := tkhToTFObjectRSClientSaml2Client(false, tkhCast)
+		diags.Append(d...)
+		obj["saml2_client"] = val
 	}
 
 	objVal, d := types.ObjectValue(attrs, obj)
@@ -1544,7 +1546,7 @@ func tkhToTFObjectRSClientOAuth2ClientPermission(recurse bool, tkh keyhubmodel.C
 		{
 			val, d := tkhToTFObjectRSClientOAuth2ClientPermission_additionalObjects(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
-			obj["additional_objects"] = val
+			maps.Copy(obj, val.Attributes())
 		}
 	}
 	{
@@ -1622,7 +1624,7 @@ func tkhToTFObjectRSClientOAuth2ClientPermissionWithClient(recurse bool, tkh key
 		{
 			val, d := tkhToTFObjectRSClientOAuth2ClientPermission_additionalObjects(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
-			obj["additional_objects"] = val
+			maps.Copy(obj, val.Attributes())
 		}
 	}
 	{
@@ -1794,7 +1796,7 @@ func tkhToTFObjectRSDeletedVaultHolderVaultVaultRecord(recurse bool, tkh keyhubm
 		{
 			val, d := tkhToTFObjectRSVaultVaultRecord_additionalObjects(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
-			obj["additional_objects"] = val
+			maps.Copy(obj, val.Attributes())
 		}
 	}
 	obj["deleted_vault_holder_uuid"] = types.StringNull()
@@ -1859,7 +1861,7 @@ func tkhToTFObjectRSDirectoryAccountDirectory(recurse bool, tkh keyhubmodel.Dire
 		{
 			val, d := tkhToTFObjectRSDirectoryAccountDirectory_additionalObjects(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
-			obj["additional_objects"] = val
+			maps.Copy(obj, val.Attributes())
 		}
 	}
 	{
@@ -1894,10 +1896,10 @@ func tkhToTFObjectRSDirectoryAccountDirectory(recurse bool, tkh keyhubmodel.Dire
 	obj["rotating_password"] = stringerToTF(tkh.GetRotatingPassword())
 	obj["username_customizable"] = types.BoolPointerValue(tkh.GetUsernameCustomizable())
 	{
-		tkhCast, _ := tkh.(keyhubmodel.DirectoryMaintenanceDirectoryable)
-		val, d := tkhToTFObjectRSDirectoryMaintenanceDirectory(false, tkhCast)
+		tkhCast, _ := tkh.(keyhubmodel.DirectoryInternalDirectoryable)
+		val, d := tkhToTFObjectRSDirectoryInternalDirectory(false, tkhCast)
 		diags.Append(d...)
-		obj["maintenance_directory"] = val
+		obj["internal_directory"] = val
 	}
 	{
 		tkhCast, _ := tkh.(keyhubmodel.DirectoryOIDCDirectoryable)
@@ -1906,10 +1908,10 @@ func tkhToTFObjectRSDirectoryAccountDirectory(recurse bool, tkh keyhubmodel.Dire
 		obj["o_id_c_directory"] = val
 	}
 	{
-		tkhCast, _ := tkh.(keyhubmodel.DirectoryInternalDirectoryable)
-		val, d := tkhToTFObjectRSDirectoryInternalDirectory(false, tkhCast)
+		tkhCast, _ := tkh.(keyhubmodel.DirectoryMaintenanceDirectoryable)
+		val, d := tkhToTFObjectRSDirectoryMaintenanceDirectory(false, tkhCast)
 		diags.Append(d...)
-		obj["internal_directory"] = val
+		obj["maintenance_directory"] = val
 	}
 	{
 		tkhCast, _ := tkh.(keyhubmodel.DirectoryLDAPDirectoryable)
@@ -2249,7 +2251,7 @@ func tkhToTFObjectRSGroupAccountGroup(recurse bool, tkh keyhubmodel.GroupAccount
 		{
 			val, d := tkhToTFObjectRSGroupAccountGroup_additionalObjects(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
-			obj["additional_objects"] = val
+			maps.Copy(obj, val.Attributes())
 		}
 	}
 	obj["uuid"] = withUuidToTF(tkh)
@@ -2374,7 +2376,7 @@ func tkhToTFObjectRSGroupGroup(recurse bool, tkh keyhubmodel.GroupGroupable) (ty
 		{
 			val, d := tkhToTFObjectRSGroupGroup_additionalObjects(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
-			obj["additional_objects"] = val
+			maps.Copy(obj, val.Attributes())
 		}
 	}
 	{
@@ -2455,7 +2457,7 @@ func tkhToTFObjectRSGroupGroupAccount(recurse bool, tkh keyhubmodel.GroupGroupAc
 		{
 			val, d := tkhToTFObjectRSGroupGroupAccount_additionalObjects(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
-			obj["additional_objects"] = val
+			maps.Copy(obj, val.Attributes())
 		}
 	}
 	obj["uuid"] = withUuidToTF(tkh)
@@ -2609,7 +2611,7 @@ func tkhToTFObjectRSGroupGroupAudit(recurse bool, tkh keyhubmodel.GroupGroupAudi
 		{
 			val, d := tkhToTFObjectRSGroupGroupAudit_additionalObjects(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
-			obj["additional_objects"] = val
+			maps.Copy(obj, val.Attributes())
 		}
 	}
 	{
@@ -2853,7 +2855,7 @@ func tkhToTFObjectRSGroupGroupClassification(recurse bool, tkh keyhubmodel.Group
 		{
 			val, d := tkhToTFObjectRSGroupGroupClassification_additionalObjects(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
-			obj["additional_objects"] = val
+			maps.Copy(obj, val.Attributes())
 		}
 	}
 	{
@@ -3059,7 +3061,7 @@ func tkhToTFObjectRSGroupGroupClient(recurse bool, tkh keyhubmodel.GroupGroupCli
 		{
 			val, d := tkhToTFObjectRSGroupGroupClient_additionalObjects(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
-			obj["additional_objects"] = val
+			maps.Copy(obj, val.Attributes())
 		}
 	}
 	{
@@ -3163,7 +3165,7 @@ func tkhToTFObjectRSGroupGroupFolder(recurse bool, tkh keyhubmodel.GroupGroupFol
 		{
 			val, d := tkhToTFObjectRSGroupGroupFolder_additionalObjects(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
-			obj["additional_objects"] = val
+			maps.Copy(obj, val.Attributes())
 		}
 	}
 	{
@@ -3610,7 +3612,7 @@ func tkhToTFObjectRSGroupProvisioningGroup(recurse bool, tkh keyhubmodel.GroupPr
 		{
 			val, d := tkhToTFObjectRSGroupProvisioningGroup_additionalObjects(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
-			obj["additional_objects"] = val
+			maps.Copy(obj, val.Attributes())
 		}
 	}
 	{
@@ -3716,7 +3718,7 @@ func tkhToTFObjectRSGroupVaultVaultRecord(recurse bool, tkh keyhubmodel.VaultVau
 		{
 			val, d := tkhToTFObjectRSVaultVaultRecord_additionalObjects(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
-			obj["additional_objects"] = val
+			maps.Copy(obj, val.Attributes())
 		}
 	}
 	obj["group_uuid"] = types.StringNull()
@@ -3866,7 +3868,7 @@ func tkhToTFObjectRSLaunchpadLaunchpadTile(recurse bool, tkh keyhubmodel.Launchp
 		{
 			val, d := tkhToTFObjectRSLaunchpadLaunchpadTile_additionalObjects(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
-			obj["additional_objects"] = val
+			maps.Copy(obj, val.Attributes())
 		}
 	}
 	{
@@ -4253,7 +4255,7 @@ func tkhToTFObjectRSNestedClientOAuth2ClientPermission(recurse bool, tkh keyhubm
 		{
 			val, d := tkhToTFObjectRSClientOAuth2ClientPermission_additionalObjects(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
-			obj["additional_objects"] = val
+			maps.Copy(obj, val.Attributes())
 		}
 	}
 	obj["client_application_uuid"] = types.StringNull()
@@ -4303,7 +4305,7 @@ func tkhToTFObjectRSNestedGroupAccountGroup(recurse bool, tkh keyhubmodel.GroupA
 		{
 			val, d := tkhToTFObjectRSGroupAccountGroup_additionalObjects(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
-			obj["additional_objects"] = val
+			maps.Copy(obj, val.Attributes())
 		}
 	}
 	obj["account_uuid"] = types.StringNull()
@@ -4341,7 +4343,7 @@ func tkhToTFObjectRSNestedGroupGroupAccount(recurse bool, tkh keyhubmodel.GroupG
 		{
 			val, d := tkhToTFObjectRSGroupGroupAccount_additionalObjects(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
-			obj["additional_objects"] = val
+			maps.Copy(obj, val.Attributes())
 		}
 	}
 	obj["group_uuid"] = types.StringNull()
@@ -4378,7 +4380,7 @@ func tkhToTFObjectRSNestedGroupGroupAudit(recurse bool, tkh keyhubmodel.GroupGro
 		{
 			val, d := tkhToTFObjectRSGroupGroupAudit_additionalObjects(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
-			obj["additional_objects"] = val
+			maps.Copy(obj, val.Attributes())
 		}
 	}
 	obj["group_uuid"] = types.StringNull()
@@ -4445,7 +4447,7 @@ func tkhToTFObjectRSNestedOrganizationAccountOrganizationalUnit(recurse bool, tk
 		{
 			val, d := tkhToTFObjectRSOrganizationAccountOrganizationalUnit_additionalObjects(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
-			obj["additional_objects"] = val
+			maps.Copy(obj, val.Attributes())
 		}
 	}
 	obj["account_uuid"] = types.StringNull()
@@ -4473,7 +4475,7 @@ func tkhToTFObjectRSNestedOrganizationOrganizationalUnitAccount(recurse bool, tk
 		{
 			val, d := tkhToTFObjectRSOrganizationOrganizationalUnitAccount_additionalObjects(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
-			obj["additional_objects"] = val
+			maps.Copy(obj, val.Attributes())
 		}
 	}
 	obj["organizational_unit_uuid"] = types.StringNull()
@@ -4502,7 +4504,7 @@ func tkhToTFObjectRSNestedProvisioningGroupOnSystem(recurse bool, tkh keyhubmode
 		{
 			val, d := tkhToTFObjectRSProvisioningGroupOnSystem_additionalObjects(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
-			obj["additional_objects"] = val
+			maps.Copy(obj, val.Attributes())
 		}
 	}
 	obj["provisioned_system_uuid"] = types.StringNull()
@@ -4555,7 +4557,7 @@ func tkhToTFObjectRSNestedProvisioningProvisionedAccount(recurse bool, tkh keyhu
 		{
 			val, d := tkhToTFObjectRSProvisioningProvisionedAccount_additionalObjects(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
-			obj["additional_objects"] = val
+			maps.Copy(obj, val.Attributes())
 		}
 	}
 	obj["provisioned_system_uuid"] = types.StringNull()
@@ -4584,7 +4586,7 @@ func tkhToTFObjectRSNestedProvisioningProvisionedSystemSyncLog(recurse bool, tkh
 		{
 			val, d := tkhToTFObjectRSProvisioningProvisionedSystemSyncLog_additionalObjects(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
-			obj["additional_objects"] = val
+			maps.Copy(obj, val.Attributes())
 		}
 	}
 	obj["provisioned_system_uuid"] = types.StringNull()
@@ -4635,7 +4637,7 @@ func tkhToTFObjectRSNestedServiceaccountServiceAccountGroup(recurse bool, tkh ke
 		{
 			val, d := tkhToTFObjectRSServiceaccountServiceAccountGroup_additionalObjects(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
-			obj["additional_objects"] = val
+			maps.Copy(obj, val.Attributes())
 		}
 	}
 	obj["service_account_uuid"] = types.StringNull()
@@ -4686,7 +4688,7 @@ func tkhToTFObjectRSNestedWebhookWebhookDelivery(recurse bool, tkh keyhubmodel.W
 		{
 			val, d := tkhToTFObjectRSWebhookWebhookDelivery_additionalObjects(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
-			obj["additional_objects"] = val
+			maps.Copy(obj, val.Attributes())
 		}
 	}
 	obj["webhook_uuid"] = types.StringNull()
@@ -5120,7 +5122,7 @@ func tkhToTFObjectRSOrganizationAccountOrganizationalUnit(recurse bool, tkh keyh
 		{
 			val, d := tkhToTFObjectRSOrganizationAccountOrganizationalUnit_additionalObjects(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
-			obj["additional_objects"] = val
+			maps.Copy(obj, val.Attributes())
 		}
 	}
 	obj["uuid"] = withUuidToTF(tkh)
@@ -5200,7 +5202,7 @@ func tkhToTFObjectRSOrganizationOrganizationalUnit(recurse bool, tkh keyhubmodel
 		{
 			val, d := tkhToTFObjectRSOrganizationOrganizationalUnit_additionalObjects(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
-			obj["additional_objects"] = val
+			maps.Copy(obj, val.Attributes())
 		}
 	}
 	{
@@ -5252,7 +5254,7 @@ func tkhToTFObjectRSOrganizationOrganizationalUnitAccount(recurse bool, tkh keyh
 		{
 			val, d := tkhToTFObjectRSOrganizationOrganizationalUnitAccount_additionalObjects(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
-			obj["additional_objects"] = val
+			maps.Copy(obj, val.Attributes())
 		}
 	}
 	obj["uuid"] = withUuidToTF(tkh)
@@ -5595,7 +5597,7 @@ func tkhToTFObjectRSProvisioningGroupOnSystem(recurse bool, tkh keyhubmodel.Prov
 		{
 			val, d := tkhToTFObjectRSProvisioningGroupOnSystem_additionalObjects(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
-			obj["additional_objects"] = val
+			maps.Copy(obj, val.Attributes())
 		}
 	}
 	{
@@ -5873,7 +5875,7 @@ func tkhToTFObjectRSProvisioningProvisionNumberSequence(recurse bool, tkh keyhub
 		{
 			val, d := tkhToTFObjectRSProvisioningProvisionNumberSequence_additionalObjects(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
-			obj["additional_objects"] = val
+			maps.Copy(obj, val.Attributes())
 		}
 	}
 	{
@@ -6000,7 +6002,7 @@ func tkhToTFObjectRSProvisioningProvisionedAccount(recurse bool, tkh keyhubmodel
 		{
 			val, d := tkhToTFObjectRSProvisioningProvisionedAccount_additionalObjects(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
-			obj["additional_objects"] = val
+			maps.Copy(obj, val.Attributes())
 		}
 	}
 	obj["uuid"] = withUuidToTF(tkh)
@@ -6219,7 +6221,7 @@ func tkhToTFObjectRSProvisioningProvisionedSystem(recurse bool, tkh keyhubmodel.
 		{
 			val, d := tkhToTFObjectRSProvisioningProvisionedSystem_additionalObjects(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
-			obj["additional_objects"] = val
+			maps.Copy(obj, val.Attributes())
 		}
 	}
 	{
@@ -6258,42 +6260,6 @@ func tkhToTFObjectRSProvisioningProvisionedSystem(recurse bool, tkh keyhubmodel.
 	obj["technical_administrator_uuid"] = withUuidToTF(tkh.GetTechnicalAdministrator())
 	obj["username_prefix"] = types.StringPointerValue(tkh.GetUsernamePrefix())
 	{
-		tkhCast, _ := tkh.(keyhubmodel.ProvisioningAbstractProvisionedLDAPable)
-		val, d := tkhToTFObjectRSProvisioningAbstractProvisionedLDAP(false, tkhCast)
-		diags.Append(d...)
-		obj["abstract_provisioned_ldap"] = val
-	}
-	{
-		tkhCast, _ := tkh.(keyhubmodel.ProvisioningProvisionedLDAPable)
-		val, d := tkhToTFObjectRSProvisioningProvisionedLDAP(false, tkhCast)
-		diags.Append(d...)
-		obj["provisioned_ldap"] = val
-	}
-	{
-		tkhCast, _ := tkh.(keyhubmodel.ProvisioningProvisionedAzureTenantable)
-		val, d := tkhToTFObjectRSProvisioningProvisionedAzureTenant(false, tkhCast)
-		diags.Append(d...)
-		obj["provisioned_azure_tenant"] = val
-	}
-	{
-		tkhCast, _ := tkh.(keyhubmodel.ProvisioningProvisionedAzureSyncLDAPDirectoryable)
-		val, d := tkhToTFObjectRSProvisioningProvisionedAzureSyncLDAPDirectory(false, tkhCast)
-		diags.Append(d...)
-		obj["provisioned_azure_sync_ldap_directory"] = val
-	}
-	{
-		tkhCast, _ := tkh.(keyhubmodel.ProvisioningProvisionedAzureOIDCDirectoryable)
-		val, d := tkhToTFObjectRSProvisioningProvisionedAzureOIDCDirectory(false, tkhCast)
-		diags.Append(d...)
-		obj["provisioned_azure_oidc_directory"] = val
-	}
-	{
-		tkhCast, _ := tkh.(keyhubmodel.ProvisioningProvisionedADable)
-		val, d := tkhToTFObjectRSProvisioningProvisionedAD(false, tkhCast)
-		diags.Append(d...)
-		obj["provisioned_a_d"] = val
-	}
-	{
 		tkhCast, _ := tkh.(keyhubmodel.ProvisioningProvisionedLDAPDirectoryable)
 		val, d := tkhToTFObjectRSProvisioningProvisionedLDAPDirectory(false, tkhCast)
 		diags.Append(d...)
@@ -6304,6 +6270,42 @@ func tkhToTFObjectRSProvisioningProvisionedSystem(recurse bool, tkh keyhubmodel.
 		val, d := tkhToTFObjectRSProvisioningProvisionedInternalLDAP(false, tkhCast)
 		diags.Append(d...)
 		obj["provisioned_internal_ldap"] = val
+	}
+	{
+		tkhCast, _ := tkh.(keyhubmodel.ProvisioningProvisionedAzureTenantable)
+		val, d := tkhToTFObjectRSProvisioningProvisionedAzureTenant(false, tkhCast)
+		diags.Append(d...)
+		obj["provisioned_azure_tenant"] = val
+	}
+	{
+		tkhCast, _ := tkh.(keyhubmodel.ProvisioningProvisionedAzureOIDCDirectoryable)
+		val, d := tkhToTFObjectRSProvisioningProvisionedAzureOIDCDirectory(false, tkhCast)
+		diags.Append(d...)
+		obj["provisioned_azure_oidc_directory"] = val
+	}
+	{
+		tkhCast, _ := tkh.(keyhubmodel.ProvisioningAbstractProvisionedLDAPable)
+		val, d := tkhToTFObjectRSProvisioningAbstractProvisionedLDAP(false, tkhCast)
+		diags.Append(d...)
+		obj["abstract_provisioned_ldap"] = val
+	}
+	{
+		tkhCast, _ := tkh.(keyhubmodel.ProvisioningProvisionedADable)
+		val, d := tkhToTFObjectRSProvisioningProvisionedAD(false, tkhCast)
+		diags.Append(d...)
+		obj["provisioned_a_d"] = val
+	}
+	{
+		tkhCast, _ := tkh.(keyhubmodel.ProvisioningProvisionedAzureSyncLDAPDirectoryable)
+		val, d := tkhToTFObjectRSProvisioningProvisionedAzureSyncLDAPDirectory(false, tkhCast)
+		diags.Append(d...)
+		obj["provisioned_azure_sync_ldap_directory"] = val
+	}
+	{
+		tkhCast, _ := tkh.(keyhubmodel.ProvisioningProvisionedLDAPable)
+		val, d := tkhToTFObjectRSProvisioningProvisionedLDAP(false, tkhCast)
+		diags.Append(d...)
+		obj["provisioned_ldap"] = val
 	}
 
 	objVal, d := types.ObjectValue(attrs, obj)
@@ -6428,7 +6430,7 @@ func tkhToTFObjectRSProvisioningProvisionedSystemSyncLog(recurse bool, tkh keyhu
 		{
 			val, d := tkhToTFObjectRSProvisioningProvisionedSystemSyncLog_additionalObjects(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
-			obj["additional_objects"] = val
+			maps.Copy(obj, val.Attributes())
 		}
 	}
 	{
@@ -7118,7 +7120,7 @@ func tkhToTFObjectRSRequestModificationRequest(recurse bool, tkh keyhubmodel.Req
 		{
 			val, d := tkhToTFObjectRSRequestModificationRequest_additionalObjects(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
-			obj["additional_objects"] = val
+			maps.Copy(obj, val.Attributes())
 		}
 	}
 	{
@@ -7155,196 +7157,16 @@ func tkhToTFObjectRSRequestModificationRequest(recurse bool, tkh keyhubmodel.Req
 		obj["abstract_application_modification_request"] = val
 	}
 	{
-		tkhCast, _ := tkh.(keyhubmodel.RequestAbstractProvisionedSystemModificationRequestable)
-		val, d := tkhToTFObjectRSRequestAbstractProvisionedSystemModificationRequest(false, tkhCast)
-		diags.Append(d...)
-		obj["abstract_provisioned_system_modification_request"] = val
-	}
-	{
-		tkhCast, _ := tkh.(keyhubmodel.RequestRemoveProvisionedSystemRequestable)
-		val, d := tkhToTFObjectRSRequestRemoveProvisionedSystemRequest(false, tkhCast)
-		diags.Append(d...)
-		obj["remove_provisioned_system_request"] = val
-	}
-	{
-		tkhCast, _ := tkh.(keyhubmodel.RequestGrantApplicationRequestable)
-		val, d := tkhToTFObjectRSRequestGrantApplicationRequest(false, tkhCast)
-		diags.Append(d...)
-		obj["grant_application_request"] = val
-	}
-	{
-		tkhCast, _ := tkh.(keyhubmodel.RequestReviewAuditRequestable)
-		val, d := tkhToTFObjectRSRequestReviewAuditRequest(false, tkhCast)
-		diags.Append(d...)
-		obj["review_audit_request"] = val
-	}
-	{
-		tkhCast, _ := tkh.(keyhubmodel.RequestRevokeAdminRequestable)
-		val, d := tkhToTFObjectRSRequestRevokeAdminRequest(false, tkhCast)
-		diags.Append(d...)
-		obj["revoke_admin_request"] = val
-	}
-	{
-		tkhCast, _ := tkh.(keyhubmodel.RequestGrantAccessRequestable)
-		val, d := tkhToTFObjectRSRequestGrantAccessRequest(false, tkhCast)
-		diags.Append(d...)
-		obj["grant_access_request"] = val
-	}
-	{
-		tkhCast, _ := tkh.(keyhubmodel.RequestTransferProvisionedSystemContentAdministrationRequestable)
-		val, d := tkhToTFObjectRSRequestTransferProvisionedSystemContentAdministrationRequest(false, tkhCast)
-		diags.Append(d...)
-		obj["transfer_provisioned_system_content_administration_request"] = val
-	}
-	{
-		tkhCast, _ := tkh.(keyhubmodel.RequestAbstractOrganizationalUnitModificationRequestable)
-		val, d := tkhToTFObjectRSRequestAbstractOrganizationalUnitModificationRequest(false, tkhCast)
-		diags.Append(d...)
-		obj["abstract_organizational_unit_modification_request"] = val
-	}
-	{
-		tkhCast, _ := tkh.(keyhubmodel.RequestRemoveOrganizationalUnitRequestable)
-		val, d := tkhToTFObjectRSRequestRemoveOrganizationalUnitRequest(false, tkhCast)
-		diags.Append(d...)
-		obj["remove_organizational_unit_request"] = val
-	}
-	{
-		tkhCast, _ := tkh.(keyhubmodel.RequestCreateGroupOnSystemRequestable)
-		val, d := tkhToTFObjectRSRequestCreateGroupOnSystemRequest(false, tkhCast)
-		diags.Append(d...)
-		obj["create_group_on_system_request"] = val
-	}
-	{
 		tkhCast, _ := tkh.(keyhubmodel.RequestTransferApplicationAdministrationRequestable)
 		val, d := tkhToTFObjectRSRequestTransferApplicationAdministrationRequest(false, tkhCast)
 		diags.Append(d...)
 		obj["transfer_application_administration_request"] = val
 	}
 	{
-		tkhCast, _ := tkh.(keyhubmodel.RequestUpdateGroupMembershipRequestable)
-		val, d := tkhToTFObjectRSRequestUpdateGroupMembershipRequest(false, tkhCast)
+		tkhCast, _ := tkh.(keyhubmodel.RequestExtendAccessRequestable)
+		val, d := tkhToTFObjectRSRequestExtendAccessRequest(false, tkhCast)
 		diags.Append(d...)
-		obj["update_group_membership_request"] = val
-	}
-	{
-		tkhCast, _ := tkh.(keyhubmodel.RequestAddGroupAdminRequestable)
-		val, d := tkhToTFObjectRSRequestAddGroupAdminRequest(false, tkhCast)
-		diags.Append(d...)
-		obj["add_group_admin_request"] = val
-	}
-	{
-		tkhCast, _ := tkh.(keyhubmodel.RequestTransferOrganizationalUnitOwnershipRequestable)
-		val, d := tkhToTFObjectRSRequestTransferOrganizationalUnitOwnershipRequest(false, tkhCast)
-		diags.Append(d...)
-		obj["transfer_organizational_unit_ownership_request"] = val
-	}
-	{
-		tkhCast, _ := tkh.(keyhubmodel.RequestJoinVaultRequestable)
-		val, d := tkhToTFObjectRSRequestJoinVaultRequest(false, tkhCast)
-		diags.Append(d...)
-		obj["join_vault_request"] = val
-	}
-	{
-		tkhCast, _ := tkh.(keyhubmodel.RequestVerifyInternalAccountRequestable)
-		val, d := tkhToTFObjectRSRequestVerifyInternalAccountRequest(false, tkhCast)
-		diags.Append(d...)
-		obj["verify_internal_account_request"] = val
-	}
-	{
-		tkhCast, _ := tkh.(keyhubmodel.RequestJoinGroupRequestable)
-		val, d := tkhToTFObjectRSRequestJoinGroupRequest(false, tkhCast)
-		diags.Append(d...)
-		obj["join_group_request"] = val
-	}
-	{
-		tkhCast, _ := tkh.(keyhubmodel.RequestTransferGroupOnSystemOwnershipRequestable)
-		val, d := tkhToTFObjectRSRequestTransferGroupOnSystemOwnershipRequest(false, tkhCast)
-		diags.Append(d...)
-		obj["transfer_group_on_system_ownership_request"] = val
-	}
-	{
-		tkhCast, _ := tkh.(keyhubmodel.RequestRemoveGroupRequestable)
-		val, d := tkhToTFObjectRSRequestRemoveGroupRequest(false, tkhCast)
-		diags.Append(d...)
-		obj["remove_group_request"] = val
-	}
-	{
-		tkhCast, _ := tkh.(keyhubmodel.RequestSetupAuthorizingGroupRequestable)
-		val, d := tkhToTFObjectRSRequestSetupAuthorizingGroupRequest(false, tkhCast)
-		diags.Append(d...)
-		obj["setup_authorizing_group_request"] = val
-	}
-	{
-		tkhCast, _ := tkh.(keyhubmodel.RequestSetupNestedGroupRequestable)
-		val, d := tkhToTFObjectRSRequestSetupNestedGroupRequest(false, tkhCast)
-		diags.Append(d...)
-		obj["setup_nested_group_request"] = val
-	}
-	{
-		tkhCast, _ := tkh.(keyhubmodel.RequestGrantGroupOnSystemRequestRequestable)
-		val, d := tkhToTFObjectRSRequestGrantGroupOnSystemRequestRequest(false, tkhCast)
-		diags.Append(d...)
-		obj["grant_group_on_system_request_request"] = val
-	}
-	{
-		tkhCast, _ := tkh.(keyhubmodel.RequestDisable2FARequestable)
-		val, d := tkhToTFObjectRSRequestDisable2FARequest(false, tkhCast)
-		diags.Append(d...)
-		obj["disable2fa_request"] = val
-	}
-	{
-		tkhCast, _ := tkh.(keyhubmodel.RequestGrantGroupOnSystemRequestable)
-		val, d := tkhToTFObjectRSRequestGrantGroupOnSystemRequest(false, tkhCast)
-		diags.Append(d...)
-		obj["grant_group_on_system_request"] = val
-	}
-	{
-		tkhCast, _ := tkh.(keyhubmodel.RequestEnableTechnicalAdministrationRequestable)
-		val, d := tkhToTFObjectRSRequestEnableTechnicalAdministrationRequest(false, tkhCast)
-		diags.Append(d...)
-		obj["enable_technical_administration_request"] = val
-	}
-	{
-		tkhCast, _ := tkh.(keyhubmodel.RequestCreateGroupRequestable)
-		val, d := tkhToTFObjectRSRequestCreateGroupRequest(false, tkhCast)
-		diags.Append(d...)
-		obj["create_group_request"] = val
-	}
-	{
-		tkhCast, _ := tkh.(keyhubmodel.RequestTransferAuditorGroupRequestable)
-		val, d := tkhToTFObjectRSRequestTransferAuditorGroupRequest(false, tkhCast)
-		diags.Append(d...)
-		obj["transfer_auditor_group_request"] = val
-	}
-	{
-		tkhCast, _ := tkh.(keyhubmodel.RequestGrantClientPermissionRequestable)
-		val, d := tkhToTFObjectRSRequestGrantClientPermissionRequest(false, tkhCast)
-		diags.Append(d...)
-		obj["grant_client_permission_request"] = val
-	}
-	{
-		tkhCast, _ := tkh.(keyhubmodel.RequestTransferApplicationOwnershipRequestable)
-		val, d := tkhToTFObjectRSRequestTransferApplicationOwnershipRequest(false, tkhCast)
-		diags.Append(d...)
-		obj["transfer_application_ownership_request"] = val
-	}
-	{
-		tkhCast, _ := tkh.(keyhubmodel.RequestCreateServiceAccountRequestable)
-		val, d := tkhToTFObjectRSRequestCreateServiceAccountRequest(false, tkhCast)
-		diags.Append(d...)
-		obj["create_service_account_request"] = val
-	}
-	{
-		tkhCast, _ := tkh.(keyhubmodel.RequestTransferServiceAccountAdministrationRequestable)
-		val, d := tkhToTFObjectRSRequestTransferServiceAccountAdministrationRequest(false, tkhCast)
-		diags.Append(d...)
-		obj["transfer_service_account_administration_request"] = val
-	}
-	{
-		tkhCast, _ := tkh.(keyhubmodel.RequestPasswordResetRequestable)
-		val, d := tkhToTFObjectRSRequestPasswordResetRequest(false, tkhCast)
-		diags.Append(d...)
-		obj["password_reset_request"] = val
+		obj["extend_access_request"] = val
 	}
 	{
 		tkhCast, _ := tkh.(keyhubmodel.RequestGrantServiceAccountGroupRequestable)
@@ -7353,16 +7175,196 @@ func tkhToTFObjectRSRequestModificationRequest(recurse bool, tkh keyhubmodel.Req
 		obj["grant_service_account_group_request"] = val
 	}
 	{
+		tkhCast, _ := tkh.(keyhubmodel.RequestGrantGroupOnSystemRequestable)
+		val, d := tkhToTFObjectRSRequestGrantGroupOnSystemRequest(false, tkhCast)
+		diags.Append(d...)
+		obj["grant_group_on_system_request"] = val
+	}
+	{
+		tkhCast, _ := tkh.(keyhubmodel.RequestAbstractProvisionedSystemModificationRequestable)
+		val, d := tkhToTFObjectRSRequestAbstractProvisionedSystemModificationRequest(false, tkhCast)
+		diags.Append(d...)
+		obj["abstract_provisioned_system_modification_request"] = val
+	}
+	{
+		tkhCast, _ := tkh.(keyhubmodel.RequestEnableTechnicalAdministrationRequestable)
+		val, d := tkhToTFObjectRSRequestEnableTechnicalAdministrationRequest(false, tkhCast)
+		diags.Append(d...)
+		obj["enable_technical_administration_request"] = val
+	}
+	{
+		tkhCast, _ := tkh.(keyhubmodel.RequestGrantApplicationRequestable)
+		val, d := tkhToTFObjectRSRequestGrantApplicationRequest(false, tkhCast)
+		diags.Append(d...)
+		obj["grant_application_request"] = val
+	}
+	{
+		tkhCast, _ := tkh.(keyhubmodel.RequestPasswordResetRequestable)
+		val, d := tkhToTFObjectRSRequestPasswordResetRequest(false, tkhCast)
+		diags.Append(d...)
+		obj["password_reset_request"] = val
+	}
+	{
+		tkhCast, _ := tkh.(keyhubmodel.RequestGrantGroupOnSystemRequestRequestable)
+		val, d := tkhToTFObjectRSRequestGrantGroupOnSystemRequestRequest(false, tkhCast)
+		diags.Append(d...)
+		obj["grant_group_on_system_request_request"] = val
+	}
+	{
+		tkhCast, _ := tkh.(keyhubmodel.RequestTransferServiceAccountAdministrationRequestable)
+		val, d := tkhToTFObjectRSRequestTransferServiceAccountAdministrationRequest(false, tkhCast)
+		diags.Append(d...)
+		obj["transfer_service_account_administration_request"] = val
+	}
+	{
+		tkhCast, _ := tkh.(keyhubmodel.RequestRemoveProvisionedSystemRequestable)
+		val, d := tkhToTFObjectRSRequestRemoveProvisionedSystemRequest(false, tkhCast)
+		diags.Append(d...)
+		obj["remove_provisioned_system_request"] = val
+	}
+	{
+		tkhCast, _ := tkh.(keyhubmodel.RequestUpdateGroupMembershipRequestable)
+		val, d := tkhToTFObjectRSRequestUpdateGroupMembershipRequest(false, tkhCast)
+		diags.Append(d...)
+		obj["update_group_membership_request"] = val
+	}
+	{
+		tkhCast, _ := tkh.(keyhubmodel.RequestTransferGroupOnSystemOwnershipRequestable)
+		val, d := tkhToTFObjectRSRequestTransferGroupOnSystemOwnershipRequest(false, tkhCast)
+		diags.Append(d...)
+		obj["transfer_group_on_system_ownership_request"] = val
+	}
+	{
+		tkhCast, _ := tkh.(keyhubmodel.RequestAbstractOrganizationalUnitModificationRequestable)
+		val, d := tkhToTFObjectRSRequestAbstractOrganizationalUnitModificationRequest(false, tkhCast)
+		diags.Append(d...)
+		obj["abstract_organizational_unit_modification_request"] = val
+	}
+	{
+		tkhCast, _ := tkh.(keyhubmodel.RequestTransferOrganizationalUnitOwnershipRequestable)
+		val, d := tkhToTFObjectRSRequestTransferOrganizationalUnitOwnershipRequest(false, tkhCast)
+		diags.Append(d...)
+		obj["transfer_organizational_unit_ownership_request"] = val
+	}
+	{
+		tkhCast, _ := tkh.(keyhubmodel.RequestGrantAccessRequestable)
+		val, d := tkhToTFObjectRSRequestGrantAccessRequest(false, tkhCast)
+		diags.Append(d...)
+		obj["grant_access_request"] = val
+	}
+	{
+		tkhCast, _ := tkh.(keyhubmodel.RequestVerifyInternalAccountRequestable)
+		val, d := tkhToTFObjectRSRequestVerifyInternalAccountRequest(false, tkhCast)
+		diags.Append(d...)
+		obj["verify_internal_account_request"] = val
+	}
+	{
+		tkhCast, _ := tkh.(keyhubmodel.RequestTransferAuditorGroupRequestable)
+		val, d := tkhToTFObjectRSRequestTransferAuditorGroupRequest(false, tkhCast)
+		diags.Append(d...)
+		obj["transfer_auditor_group_request"] = val
+	}
+	{
+		tkhCast, _ := tkh.(keyhubmodel.RequestCreateGroupOnSystemRequestable)
+		val, d := tkhToTFObjectRSRequestCreateGroupOnSystemRequest(false, tkhCast)
+		diags.Append(d...)
+		obj["create_group_on_system_request"] = val
+	}
+	{
+		tkhCast, _ := tkh.(keyhubmodel.RequestJoinGroupRequestable)
+		val, d := tkhToTFObjectRSRequestJoinGroupRequest(false, tkhCast)
+		diags.Append(d...)
+		obj["join_group_request"] = val
+	}
+	{
+		tkhCast, _ := tkh.(keyhubmodel.RequestJoinVaultRequestable)
+		val, d := tkhToTFObjectRSRequestJoinVaultRequest(false, tkhCast)
+		diags.Append(d...)
+		obj["join_vault_request"] = val
+	}
+	{
+		tkhCast, _ := tkh.(keyhubmodel.RequestTransferProvisionedSystemContentAdministrationRequestable)
+		val, d := tkhToTFObjectRSRequestTransferProvisionedSystemContentAdministrationRequest(false, tkhCast)
+		diags.Append(d...)
+		obj["transfer_provisioned_system_content_administration_request"] = val
+	}
+	{
+		tkhCast, _ := tkh.(keyhubmodel.RequestSetupNestedGroupRequestable)
+		val, d := tkhToTFObjectRSRequestSetupNestedGroupRequest(false, tkhCast)
+		diags.Append(d...)
+		obj["setup_nested_group_request"] = val
+	}
+	{
+		tkhCast, _ := tkh.(keyhubmodel.RequestRevokeAdminRequestable)
+		val, d := tkhToTFObjectRSRequestRevokeAdminRequest(false, tkhCast)
+		diags.Append(d...)
+		obj["revoke_admin_request"] = val
+	}
+	{
+		tkhCast, _ := tkh.(keyhubmodel.RequestRemoveGroupRequestable)
+		val, d := tkhToTFObjectRSRequestRemoveGroupRequest(false, tkhCast)
+		diags.Append(d...)
+		obj["remove_group_request"] = val
+	}
+	{
 		tkhCast, _ := tkh.(keyhubmodel.RequestTransferProvisionedSystemOwnershipRequestable)
 		val, d := tkhToTFObjectRSRequestTransferProvisionedSystemOwnershipRequest(false, tkhCast)
 		diags.Append(d...)
 		obj["transfer_provisioned_system_ownership_request"] = val
 	}
 	{
-		tkhCast, _ := tkh.(keyhubmodel.RequestExtendAccessRequestable)
-		val, d := tkhToTFObjectRSRequestExtendAccessRequest(false, tkhCast)
+		tkhCast, _ := tkh.(keyhubmodel.RequestCreateServiceAccountRequestable)
+		val, d := tkhToTFObjectRSRequestCreateServiceAccountRequest(false, tkhCast)
 		diags.Append(d...)
-		obj["extend_access_request"] = val
+		obj["create_service_account_request"] = val
+	}
+	{
+		tkhCast, _ := tkh.(keyhubmodel.RequestGrantClientPermissionRequestable)
+		val, d := tkhToTFObjectRSRequestGrantClientPermissionRequest(false, tkhCast)
+		diags.Append(d...)
+		obj["grant_client_permission_request"] = val
+	}
+	{
+		tkhCast, _ := tkh.(keyhubmodel.RequestCreateGroupRequestable)
+		val, d := tkhToTFObjectRSRequestCreateGroupRequest(false, tkhCast)
+		diags.Append(d...)
+		obj["create_group_request"] = val
+	}
+	{
+		tkhCast, _ := tkh.(keyhubmodel.RequestDisable2FARequestable)
+		val, d := tkhToTFObjectRSRequestDisable2FARequest(false, tkhCast)
+		diags.Append(d...)
+		obj["disable2fa_request"] = val
+	}
+	{
+		tkhCast, _ := tkh.(keyhubmodel.RequestTransferApplicationOwnershipRequestable)
+		val, d := tkhToTFObjectRSRequestTransferApplicationOwnershipRequest(false, tkhCast)
+		diags.Append(d...)
+		obj["transfer_application_ownership_request"] = val
+	}
+	{
+		tkhCast, _ := tkh.(keyhubmodel.RequestAddGroupAdminRequestable)
+		val, d := tkhToTFObjectRSRequestAddGroupAdminRequest(false, tkhCast)
+		diags.Append(d...)
+		obj["add_group_admin_request"] = val
+	}
+	{
+		tkhCast, _ := tkh.(keyhubmodel.RequestReviewAuditRequestable)
+		val, d := tkhToTFObjectRSRequestReviewAuditRequest(false, tkhCast)
+		diags.Append(d...)
+		obj["review_audit_request"] = val
+	}
+	{
+		tkhCast, _ := tkh.(keyhubmodel.RequestSetupAuthorizingGroupRequestable)
+		val, d := tkhToTFObjectRSRequestSetupAuthorizingGroupRequest(false, tkhCast)
+		diags.Append(d...)
+		obj["setup_authorizing_group_request"] = val
+	}
+	{
+		tkhCast, _ := tkh.(keyhubmodel.RequestRemoveOrganizationalUnitRequestable)
+		val, d := tkhToTFObjectRSRequestRemoveOrganizationalUnitRequest(false, tkhCast)
+		diags.Append(d...)
+		obj["remove_organizational_unit_request"] = val
 	}
 	{
 		tkhCast, _ := tkh.(keyhubmodel.RequestTransferProvisionedSystemAdministrationRequestable)
@@ -7873,7 +7875,7 @@ func tkhToTFObjectRSServiceaccountServiceAccount(recurse bool, tkh keyhubmodel.S
 		{
 			val, d := tkhToTFObjectRSServiceaccountServiceAccount_additionalObjects(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
-			obj["additional_objects"] = val
+			maps.Copy(obj, val.Attributes())
 		}
 	}
 	{
@@ -7928,7 +7930,7 @@ func tkhToTFObjectRSServiceaccountServiceAccountGroup(recurse bool, tkh keyhubmo
 		{
 			val, d := tkhToTFObjectRSServiceaccountServiceAccountGroup_additionalObjects(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
-			obj["additional_objects"] = val
+			maps.Copy(obj, val.Attributes())
 		}
 	}
 	{
@@ -8301,7 +8303,7 @@ func tkhToTFObjectRSVaultDeletedVaultHolder(recurse bool, tkh keyhubmodel.VaultD
 		{
 			val, d := tkhToTFObjectRSVaultDeletedVaultHolder_additionalObjects(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
-			obj["additional_objects"] = val
+			maps.Copy(obj, val.Attributes())
 		}
 	}
 	{
@@ -8576,7 +8578,7 @@ func tkhToTFObjectRSVaultVaultRecord(recurse bool, tkh keyhubmodel.VaultVaultRec
 		{
 			val, d := tkhToTFObjectRSVaultVaultRecord_additionalObjects(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
-			obj["additional_objects"] = val
+			maps.Copy(obj, val.Attributes())
 		}
 	}
 	{
@@ -8936,7 +8938,7 @@ func tkhToTFObjectRSWebhookWebhook(recurse bool, tkh keyhubmodel.WebhookWebhooka
 		{
 			val, d := tkhToTFObjectRSWebhookWebhook_additionalObjects(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
-			obj["additional_objects"] = val
+			maps.Copy(obj, val.Attributes())
 		}
 	}
 	{
@@ -9010,7 +9012,7 @@ func tkhToTFObjectRSWebhookWebhookDelivery(recurse bool, tkh keyhubmodel.Webhook
 		{
 			val, d := tkhToTFObjectRSWebhookWebhookDelivery_additionalObjects(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
-			obj["additional_objects"] = val
+			maps.Copy(obj, val.Attributes())
 		}
 	}
 	{

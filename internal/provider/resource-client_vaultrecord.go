@@ -94,7 +94,7 @@ func (r *clientVaultrecordResource) Create(ctx context.Context, req resource.Cre
 	wrapper, err := r.client.Client().ByClientidInt64(*tkhParent.GetLinks()[0].GetId()).Vault().Record().Post(
 		ctx, newWrapper, &keyhubreq.ItemVaultRecordRequestBuilderPostRequestConfiguration{
 			QueryParameters: &keyhubreq.ItemVaultRecordRequestBuilderPostQueryParameters{
-				Additional: collectAdditional(data.AdditionalObjects),
+				Additional: collectAdditional(data),
 			},
 		})
 	tkh, diags := findFirst[keyhubmodels.VaultVaultRecordable](ctx, wrapper, "client_vaultrecord", nil, err)
@@ -135,7 +135,7 @@ func (r *clientVaultrecordResource) Read(ctx context.Context, req resource.ReadR
 	tkh, err := r.client.Client().ByClientidInt64(*tkhParent.GetLinks()[0].GetId()).Vault().Record().ByRecordidInt64(getSelfLink(data.Links).ID.ValueInt64()).Get(
 		ctx, &keyhubreq.ItemVaultRecordWithRecordItemRequestBuilderGetRequestConfiguration{
 			QueryParameters: &keyhubreq.ItemVaultRecordWithRecordItemRequestBuilderGetQueryParameters{
-				Additional: collectAdditional(data.AdditionalObjects),
+				Additional: collectAdditional(data),
 			},
 		})
 
@@ -184,7 +184,7 @@ func (r *clientVaultrecordResource) Update(ctx context.Context, req resource.Upd
 	tkh, err := r.client.Client().ByClientidInt64(*tkhParent.GetLinks()[0].GetId()).Vault().Record().ByRecordidInt64(getSelfLink(data.Links).ID.ValueInt64()).Put(
 		ctx, newTkh, &keyhubreq.ItemVaultRecordWithRecordItemRequestBuilderPutRequestConfiguration{
 			QueryParameters: &keyhubreq.ItemVaultRecordWithRecordItemRequestBuilderPutQueryParameters{
-				Additional: collectAdditional(data.AdditionalObjects),
+				Additional: collectAdditional(data),
 			},
 		})
 

@@ -25,36 +25,29 @@ description: |-
 
 ### Read-Only
 
-- `additional_objects` (Attributes) (see [below for nested schema](#nestedatt--additional_objects))
+- `audit` (Attributes) (see [below for nested schema](#nestedatt--audit))
 - `color` (String)
 - `derived` (Boolean)
 - `end_date` (String)
 - `filename` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--links))
 - `name` (String)
+- `parent` (Attributes) (see [below for nested schema](#nestedatt--parent))
+- `password_metadata` (Attributes) (see [below for nested schema](#nestedatt--password_metadata))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--permissions))
+- `secret` (Attributes) (see [below for nested schema](#nestedatt--secret))
 - `share_end_time` (String)
+- `share_summary` (Attributes) (see [below for nested schema](#nestedatt--share_summary))
+- `shares` (Attributes List) (see [below for nested schema](#nestedatt--shares))
+- `tile` (Attributes) (see [below for nested schema](#nestedatt--tile))
 - `types` (List of String)
 - `url` (String)
 - `username` (String)
+- `vaultholder` (Attributes) (see [below for nested schema](#nestedatt--vaultholder))
 - `warning_period` (String)
 
-<a id="nestedatt--additional_objects"></a>
-### Nested Schema for `additional_objects`
-
-Read-Only:
-
-- `audit` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--audit))
-- `parent` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--parent))
-- `password_metadata` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--password_metadata))
-- `secret` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--secret))
-- `share_summary` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--share_summary))
-- `shares` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--shares))
-- `tile` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--tile))
-- `vaultholder` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--vaultholder))
-
-<a id="nestedatt--additional_objects--audit"></a>
-### Nested Schema for `additional_objects.audit`
+<a id="nestedatt--audit"></a>
+### Nested Schema for `audit`
 
 Read-Only:
 
@@ -64,20 +57,8 @@ Read-Only:
 - `last_modified_by` (String)
 
 
-<a id="nestedatt--additional_objects--parent"></a>
-### Nested Schema for `additional_objects.parent`
-
-Read-Only:
-
-- `color` (String)
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--parent--links))
-- `name` (String)
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--parent--permissions))
-- `share_end_time` (String)
-- `uuid` (String)
-
-<a id="nestedatt--additional_objects--parent--links"></a>
-### Nested Schema for `additional_objects.parent.links`
+<a id="nestedatt--links"></a>
+### Nested Schema for `links`
 
 Read-Only:
 
@@ -87,8 +68,31 @@ Read-Only:
 - `type_escaped` (String)
 
 
-<a id="nestedatt--additional_objects--parent--permissions"></a>
-### Nested Schema for `additional_objects.parent.permissions`
+<a id="nestedatt--parent"></a>
+### Nested Schema for `parent`
+
+Read-Only:
+
+- `color` (String)
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--parent--links))
+- `name` (String)
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--parent--permissions))
+- `share_end_time` (String)
+- `uuid` (String)
+
+<a id="nestedatt--parent--links"></a>
+### Nested Schema for `parent.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--parent--permissions"></a>
+### Nested Schema for `parent.permissions`
 
 Read-Only:
 
@@ -99,8 +103,8 @@ Read-Only:
 
 
 
-<a id="nestedatt--additional_objects--password_metadata"></a>
-### Nested Schema for `additional_objects.password_metadata`
+<a id="nestedatt--password_metadata"></a>
+### Nested Schema for `password_metadata`
 
 Read-Only:
 
@@ -115,99 +119,6 @@ Read-Only:
 - `upper_count` (Number)
 
 
-<a id="nestedatt--additional_objects--secret"></a>
-### Nested Schema for `additional_objects.secret`
-
-Read-Only:
-
-- `comment` (String)
-- `file` (String)
-- `password` (String)
-- `totp` (String)
-
-
-<a id="nestedatt--additional_objects--share_summary"></a>
-### Nested Schema for `additional_objects.share_summary`
-
-Read-Only:
-
-- `children` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--share_summary--children))
-- `parent` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--share_summary--parent))
-
-<a id="nestedatt--additional_objects--share_summary--children"></a>
-### Nested Schema for `additional_objects.share_summary.children`
-
-Read-Only:
-
-- `name` (String)
-- `type` (String)
-
-
-<a id="nestedatt--additional_objects--share_summary--parent"></a>
-### Nested Schema for `additional_objects.share_summary.parent`
-
-Read-Only:
-
-- `name` (String)
-- `type` (String)
-
-
-
-<a id="nestedatt--additional_objects--shares"></a>
-### Nested Schema for `additional_objects.shares`
-
-Read-Only:
-
-- `color` (String)
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--shares--links))
-- `name` (String)
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--shares--permissions))
-- `share_end_time` (String)
-- `uuid` (String)
-
-<a id="nestedatt--additional_objects--shares--links"></a>
-### Nested Schema for `additional_objects.shares.links`
-
-Read-Only:
-
-- `href` (String)
-- `id` (Number)
-- `rel` (String)
-- `type_escaped` (String)
-
-
-<a id="nestedatt--additional_objects--shares--permissions"></a>
-### Nested Schema for `additional_objects.shares.permissions`
-
-Read-Only:
-
-- `full` (String)
-- `instances` (List of String)
-- `operations` (List of String)
-- `type_escaped` (String)
-
-
-
-<a id="nestedatt--additional_objects--tile"></a>
-### Nested Schema for `additional_objects.tile`
-
-
-<a id="nestedatt--additional_objects--vaultholder"></a>
-### Nested Schema for `additional_objects.vaultholder`
-
-
-
-<a id="nestedatt--links"></a>
-### Nested Schema for `links`
-
-Read-Only:
-
-- `href` (String)
-- `id` (Number)
-- `rel` (String)
-- `type_escaped` (String)
-
-
 <a id="nestedatt--permissions"></a>
 ### Nested Schema for `permissions`
 
@@ -217,3 +128,84 @@ Read-Only:
 - `instances` (List of String)
 - `operations` (List of String)
 - `type_escaped` (String)
+
+
+<a id="nestedatt--secret"></a>
+### Nested Schema for `secret`
+
+Read-Only:
+
+- `comment` (String)
+- `file` (String)
+- `password` (String)
+- `totp` (String)
+
+
+<a id="nestedatt--share_summary"></a>
+### Nested Schema for `share_summary`
+
+Read-Only:
+
+- `children` (Attributes List) (see [below for nested schema](#nestedatt--share_summary--children))
+- `parent` (Attributes) (see [below for nested schema](#nestedatt--share_summary--parent))
+
+<a id="nestedatt--share_summary--children"></a>
+### Nested Schema for `share_summary.children`
+
+Read-Only:
+
+- `name` (String)
+- `type` (String)
+
+
+<a id="nestedatt--share_summary--parent"></a>
+### Nested Schema for `share_summary.parent`
+
+Read-Only:
+
+- `name` (String)
+- `type` (String)
+
+
+
+<a id="nestedatt--shares"></a>
+### Nested Schema for `shares`
+
+Read-Only:
+
+- `color` (String)
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--shares--links))
+- `name` (String)
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--shares--permissions))
+- `share_end_time` (String)
+- `uuid` (String)
+
+<a id="nestedatt--shares--links"></a>
+### Nested Schema for `shares.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--shares--permissions"></a>
+### Nested Schema for `shares.permissions`
+
+Read-Only:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (List of String)
+- `type_escaped` (String)
+
+
+
+<a id="nestedatt--tile"></a>
+### Nested Schema for `tile`
+
+
+<a id="nestedatt--vaultholder"></a>
+### Nested Schema for `vaultholder`

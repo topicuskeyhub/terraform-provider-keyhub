@@ -7,7 +7,9 @@ import (
 	"context"
 	"net/http"
 	"os"
+	"reflect"
 
+	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/provider"
@@ -203,4 +205,21 @@ func New(version string) func() provider.Provider {
 			version: version,
 		}
 	}
+}
+
+func collectAdditional2(data any) []string {
+	reflectValue := reflect.ValueOf(data)
+	reflectType := reflectValue.Type()
+	ret := make([]string, 0)
+	for i := 0; i < reflectType.NumField(); i++ {
+		field := reflectType.Field(i)
+		tkhoa := field.Tag.Get("tkhoa")
+		if tkhoa != "" {
+			attr := reflectValue.Field(i).Interface().(attr.Value)
+			if !attr.IsNull() && !attr.IsUnknown() {
+				ret = append(ret, tkhoa)
+			}
+		}
+	}
+	return ret
 }

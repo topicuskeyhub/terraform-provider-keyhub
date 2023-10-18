@@ -88,7 +88,7 @@ func (r *groupResource) Create(ctx context.Context, req resource.CreateRequest, 
 	wrapper, err := r.client.Group().Post(
 		ctx, newWrapper, &keyhubreq.GroupRequestBuilderPostRequestConfiguration{
 			QueryParameters: &keyhubreq.GroupRequestBuilderPostQueryParameters{
-				Additional: collectAdditional(data.AdditionalObjects),
+				Additional: collectAdditional(data),
 			},
 		})
 	tkh, diags := findFirst[keyhubmodels.GroupGroupable](ctx, wrapper, "group", nil, err)
@@ -122,7 +122,7 @@ func (r *groupResource) Read(ctx context.Context, req resource.ReadRequest, resp
 	tkh, err := r.client.Group().ByGroupidInt64(getSelfLink(data.Links).ID.ValueInt64()).Get(
 		ctx, &keyhubreq.WithGroupItemRequestBuilderGetRequestConfiguration{
 			QueryParameters: &keyhubreq.WithGroupItemRequestBuilderGetQueryParameters{
-				Additional: collectAdditional(data.AdditionalObjects),
+				Additional: collectAdditional(data),
 			},
 		})
 

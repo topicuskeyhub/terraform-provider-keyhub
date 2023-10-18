@@ -26,28 +26,21 @@ description: |-
 ### Read-Only
 
 - `active` (Boolean)
-- `additional_objects` (Attributes) (see [below for nested schema](#nestedatt--additional_objects))
+- `audit` (Attributes) (see [below for nested schema](#nestedatt--audit))
 - `description` (String)
+- `groups` (Attributes List) (see [below for nested schema](#nestedatt--groups))
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--links))
 - `name` (String)
 - `password` (Attributes) (see [below for nested schema](#nestedatt--password))
 - `password_rotation` (String)
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--permissions))
+- `secret` (Attributes) (see [below for nested schema](#nestedatt--secret))
 - `system` (Attributes) (see [below for nested schema](#nestedatt--system))
 - `technical_administrator` (Attributes) (see [below for nested schema](#nestedatt--technical_administrator))
 - `username` (String)
 
-<a id="nestedatt--additional_objects"></a>
-### Nested Schema for `additional_objects`
-
-Read-Only:
-
-- `audit` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--audit))
-- `groups` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--groups))
-- `secret` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--secret))
-
-<a id="nestedatt--additional_objects--audit"></a>
-### Nested Schema for `additional_objects.audit`
+<a id="nestedatt--audit"></a>
+### Nested Schema for `audit`
 
 Read-Only:
 
@@ -57,8 +50,8 @@ Read-Only:
 - `last_modified_by` (String)
 
 
-<a id="nestedatt--additional_objects--groups"></a>
-### Nested Schema for `additional_objects.groups`
+<a id="nestedatt--groups"></a>
+### Nested Schema for `groups`
 
 Optional:
 
@@ -67,14 +60,14 @@ Optional:
 Read-Only:
 
 - `display_name` (String)
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--groups--links))
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--groups--links))
 - `name_in_system` (String)
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--groups--permissions))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--groups--permissions))
 - `short_name_in_system` (String)
 - `type` (String)
 
-<a id="nestedatt--additional_objects--groups--links"></a>
-### Nested Schema for `additional_objects.groups.links`
+<a id="nestedatt--groups--links"></a>
+### Nested Schema for `groups.links`
 
 Read-Only:
 
@@ -84,8 +77,8 @@ Read-Only:
 - `type_escaped` (String)
 
 
-<a id="nestedatt--additional_objects--groups--permissions"></a>
-### Nested Schema for `additional_objects.groups.permissions`
+<a id="nestedatt--groups--permissions"></a>
+### Nested Schema for `groups.permissions`
 
 Read-Only:
 
@@ -93,17 +86,6 @@ Read-Only:
 - `instances` (List of String)
 - `operations` (List of String)
 - `type_escaped` (String)
-
-
-
-<a id="nestedatt--additional_objects--secret"></a>
-### Nested Schema for `additional_objects.secret`
-
-Read-Only:
-
-- `generated_secret` (String)
-- `old_secret` (String)
-- `regenerate` (Boolean)
 
 
 
@@ -162,6 +144,16 @@ Read-Only:
 - `instances` (List of String)
 - `operations` (List of String)
 - `type_escaped` (String)
+
+
+<a id="nestedatt--secret"></a>
+### Nested Schema for `secret`
+
+Read-Only:
+
+- `generated_secret` (String)
+- `old_secret` (String)
+- `regenerate` (Boolean)
 
 
 <a id="nestedatt--system"></a>

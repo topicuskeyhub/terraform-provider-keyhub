@@ -6,6 +6,7 @@ package provider
 import (
 	"context"
 	"fmt"
+	"reflect"
 	"strings"
 	"time"
 
@@ -424,11 +425,18 @@ func setAttributeValue(ctx context.Context, tf basetypes.ObjectValue, key string
 	return types.ObjectValueMust(tf.AttributeTypes(ctx), obj)
 }
 
-func collectAdditional(additionalObjects basetypes.ObjectValue) []string {
+func collectAdditional(data any) []string {
+	reflectValue := reflect.ValueOf(data)
+	reflectType := reflectValue.Type()
 	ret := make([]string, 0)
-	for name, attr := range additionalObjects.Attributes() {
-		if !attr.IsNull() && !attr.IsUnknown() {
-			ret = append(ret, name)
+	for i := 0; i < reflectType.NumField(); i++ {
+		field := reflectType.Field(i)
+		tkhoa := field.Tag.Get("tkhao")
+		if tkhoa != "" {
+			attr := reflectValue.Field(i).Interface().(attr.Value)
+			if !attr.IsNull() && !attr.IsUnknown() {
+				ret = append(ret, tkhoa)
+			}
 		}
 	}
 	return ret

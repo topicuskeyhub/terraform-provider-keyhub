@@ -25,8 +25,8 @@ description: |-
 
 ### Read-Only
 
-- `additional_objects` (Attributes) (see [below for nested schema](#nestedatt--additional_objects))
 - `alias` (String)
+- `audit` (Attributes) (see [below for nested schema](#nestedatt--audit))
 - `certificate_data` (List of String)
 - `expiration` (String)
 - `fingerprint_sha1` (String)
@@ -38,15 +38,8 @@ description: |-
 - `subject_dn` (String)
 - `type` (String)
 
-<a id="nestedatt--additional_objects"></a>
-### Nested Schema for `additional_objects`
-
-Read-Only:
-
-- `audit` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--audit))
-
-<a id="nestedatt--additional_objects--audit"></a>
-### Nested Schema for `additional_objects.audit`
+<a id="nestedatt--audit"></a>
+### Nested Schema for `audit`
 
 Read-Only:
 
@@ -54,7 +47,6 @@ Read-Only:
 - `created_by` (String)
 - `last_modified_at` (String)
 - `last_modified_by` (String)
-
 
 
 <a id="nestedatt--links"></a>

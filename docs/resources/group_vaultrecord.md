@@ -22,43 +22,33 @@ description: |-
 
 ### Optional
 
-- `additional_objects` (Attributes) (see [below for nested schema](#nestedatt--additional_objects))
 - `color` (String)
+- `delete_tile` (Boolean)
 - `end_date` (String)
 - `filename` (String)
+- `secret` (Attributes) (see [below for nested schema](#nestedatt--secret))
+- `tile` (Attributes) (see [below for nested schema](#nestedatt--tile))
 - `url` (String)
 - `username` (String)
 - `warning_period` (String)
 
 ### Read-Only
 
+- `audit` (Attributes) (see [below for nested schema](#nestedatt--audit))
 - `derived` (Boolean)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--links))
+- `parent_uuid` (String)
+- `password_metadata` (Attributes) (see [below for nested schema](#nestedatt--password_metadata))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--permissions))
 - `share_end_time` (String)
+- `share_summary` (Attributes) (see [below for nested schema](#nestedatt--share_summary))
+- `shares` (List of String)
 - `types` (List of String)
 - `uuid` (String)
+- `vaultholder` (Attributes) (see [below for nested schema](#nestedatt--vaultholder))
 
-<a id="nestedatt--additional_objects"></a>
-### Nested Schema for `additional_objects`
-
-Optional:
-
-- `delete_tile` (Boolean)
-- `secret` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--secret))
-- `tile` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--tile))
-
-Read-Only:
-
-- `audit` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--audit))
-- `parent_uuid` (String)
-- `password_metadata` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--password_metadata))
-- `share_summary` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--share_summary))
-- `shares` (List of String)
-- `vaultholder` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--vaultholder))
-
-<a id="nestedatt--additional_objects--secret"></a>
-### Nested Schema for `additional_objects.secret`
+<a id="nestedatt--secret"></a>
+### Nested Schema for `secret`
 
 Optional:
 
@@ -69,12 +59,12 @@ Optional:
 - `write_totp` (Boolean)
 
 
-<a id="nestedatt--additional_objects--tile"></a>
-### Nested Schema for `additional_objects.tile`
+<a id="nestedatt--tile"></a>
+### Nested Schema for `tile`
 
 
-<a id="nestedatt--additional_objects--audit"></a>
-### Nested Schema for `additional_objects.audit`
+<a id="nestedatt--audit"></a>
+### Nested Schema for `audit`
 
 Optional:
 
@@ -84,8 +74,19 @@ Optional:
 - `last_modified_by` (String)
 
 
-<a id="nestedatt--additional_objects--password_metadata"></a>
-### Nested Schema for `additional_objects.password_metadata`
+<a id="nestedatt--links"></a>
+### Nested Schema for `links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--password_metadata"></a>
+### Nested Schema for `password_metadata`
 
 Optional:
 
@@ -100,49 +101,6 @@ Optional:
 - `upper_count` (Number)
 
 
-<a id="nestedatt--additional_objects--share_summary"></a>
-### Nested Schema for `additional_objects.share_summary`
-
-Optional:
-
-- `children` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--share_summary--children))
-- `parent` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--share_summary--parent))
-
-<a id="nestedatt--additional_objects--share_summary--children"></a>
-### Nested Schema for `additional_objects.share_summary.children`
-
-Optional:
-
-- `name` (String)
-- `type` (String)
-
-
-<a id="nestedatt--additional_objects--share_summary--parent"></a>
-### Nested Schema for `additional_objects.share_summary.parent`
-
-Optional:
-
-- `name` (String)
-- `type` (String)
-
-
-
-<a id="nestedatt--additional_objects--vaultholder"></a>
-### Nested Schema for `additional_objects.vaultholder`
-
-
-
-<a id="nestedatt--links"></a>
-### Nested Schema for `links`
-
-Read-Only:
-
-- `href` (String)
-- `id` (Number)
-- `rel` (String)
-- `type_escaped` (String)
-
-
 <a id="nestedatt--permissions"></a>
 ### Nested Schema for `permissions`
 
@@ -152,3 +110,34 @@ Optional:
 - `instances` (List of String)
 - `operations` (List of String)
 - `type_escaped` (String)
+
+
+<a id="nestedatt--share_summary"></a>
+### Nested Schema for `share_summary`
+
+Optional:
+
+- `children` (Attributes List) (see [below for nested schema](#nestedatt--share_summary--children))
+- `parent` (Attributes) (see [below for nested schema](#nestedatt--share_summary--parent))
+
+<a id="nestedatt--share_summary--children"></a>
+### Nested Schema for `share_summary.children`
+
+Optional:
+
+- `name` (String)
+- `type` (String)
+
+
+<a id="nestedatt--share_summary--parent"></a>
+### Nested Schema for `share_summary.parent`
+
+Optional:
+
+- `name` (String)
+- `type` (String)
+
+
+
+<a id="nestedatt--vaultholder"></a>
+### Nested Schema for `vaultholder`

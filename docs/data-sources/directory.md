@@ -27,7 +27,7 @@ description: |-
 
 - `account_validity_supported` (Boolean)
 - `active` (Boolean)
-- `additional_objects` (Attributes) (see [below for nested schema](#nestedatt--additional_objects))
+- `audit` (Attributes) (see [below for nested schema](#nestedatt--audit))
 - `base_organizational_unit` (Attributes) (see [below for nested schema](#nestedatt--base_organizational_unit))
 - `default_directory` (Boolean)
 - `helpdesk_group` (Attributes) (see [below for nested schema](#nestedatt--helpdesk_group))
@@ -35,25 +35,18 @@ description: |-
 - `l_d_a_p_directory` (Attributes) (see [below for nested schema](#nestedatt--l_d_a_p_directory))
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--links))
 - `maintenance_directory` (Attributes) (see [below for nested schema](#nestedatt--maintenance_directory))
+- `markers` (Attributes) (see [below for nested schema](#nestedatt--markers))
 - `name` (String)
 - `o_id_c_directory` (Attributes) (see [below for nested schema](#nestedatt--o_id_c_directory))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--permissions))
 - `restrict2fa` (Boolean)
 - `rotating_password` (String)
+- `status` (Attributes) (see [below for nested schema](#nestedatt--status))
 - `type` (String)
 - `username_customizable` (Boolean)
 
-<a id="nestedatt--additional_objects"></a>
-### Nested Schema for `additional_objects`
-
-Read-Only:
-
-- `audit` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--audit))
-- `markers` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--markers))
-- `status` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--status))
-
-<a id="nestedatt--additional_objects--audit"></a>
-### Nested Schema for `additional_objects.audit`
+<a id="nestedatt--audit"></a>
+### Nested Schema for `audit`
 
 Read-Only:
 
@@ -61,39 +54,6 @@ Read-Only:
 - `created_by` (String)
 - `last_modified_at` (String)
 - `last_modified_by` (String)
-
-
-<a id="nestedatt--additional_objects--markers"></a>
-### Nested Schema for `additional_objects.markers`
-
-Read-Only:
-
-- `markers` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--markers--markers))
-
-<a id="nestedatt--additional_objects--markers--markers"></a>
-### Nested Schema for `additional_objects.markers.markers`
-
-Read-Only:
-
-- `level` (String)
-- `parameters` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--markers--markers--parameters))
-- `type` (String)
-
-<a id="nestedatt--additional_objects--markers--markers--parameters"></a>
-### Nested Schema for `additional_objects.markers.markers.type`
-
-
-
-
-<a id="nestedatt--additional_objects--status"></a>
-### Nested Schema for `additional_objects.status`
-
-Read-Only:
-
-- `accounts` (Number)
-- `reason` (String)
-- `status` (String)
-
 
 
 <a id="nestedatt--base_organizational_unit"></a>
@@ -361,6 +321,28 @@ Read-Only:
 ### Nested Schema for `maintenance_directory`
 
 
+<a id="nestedatt--markers"></a>
+### Nested Schema for `markers`
+
+Read-Only:
+
+- `markers` (Attributes List) (see [below for nested schema](#nestedatt--markers--markers))
+
+<a id="nestedatt--markers--markers"></a>
+### Nested Schema for `markers.markers`
+
+Read-Only:
+
+- `level` (String)
+- `parameters` (Attributes) (see [below for nested schema](#nestedatt--markers--markers--parameters))
+- `type` (String)
+
+<a id="nestedatt--markers--markers--parameters"></a>
+### Nested Schema for `markers.markers.parameters`
+
+
+
+
 <a id="nestedatt--o_id_c_directory"></a>
 ### Nested Schema for `o_id_c_directory`
 
@@ -388,3 +370,13 @@ Read-Only:
 - `instances` (List of String)
 - `operations` (List of String)
 - `type_escaped` (String)
+
+
+<a id="nestedatt--status"></a>
+### Nested Schema for `status`
+
+Read-Only:
+
+- `accounts` (Number)
+- `reason` (String)
+- `status` (String)

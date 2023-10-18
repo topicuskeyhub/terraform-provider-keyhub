@@ -94,7 +94,7 @@ func (r *grouponsystemResource) Create(ctx context.Context, req resource.CreateR
 	wrapper, err := r.client.System().BySystemidInt64(*tkhParent.GetLinks()[0].GetId()).Group().Post(
 		ctx, newWrapper, &keyhubreq.ItemGroupRequestBuilderPostRequestConfiguration{
 			QueryParameters: &keyhubreq.ItemGroupRequestBuilderPostQueryParameters{
-				Additional: collectAdditional(data.AdditionalObjects),
+				Additional: collectAdditional(data),
 			},
 		})
 	tkh, diags := findFirst[keyhubmodels.ProvisioningGroupOnSystemable](ctx, wrapper, "grouponsystem", nil, err)
@@ -135,7 +135,7 @@ func (r *grouponsystemResource) Read(ctx context.Context, req resource.ReadReque
 	tkh, err := r.client.System().BySystemidInt64(*tkhParent.GetLinks()[0].GetId()).Group().ByGroupidInt64(getSelfLink(data.Links).ID.ValueInt64()).Get(
 		ctx, &keyhubreq.ItemGroupWithGroupItemRequestBuilderGetRequestConfiguration{
 			QueryParameters: &keyhubreq.ItemGroupWithGroupItemRequestBuilderGetQueryParameters{
-				Additional: collectAdditional(data.AdditionalObjects),
+				Additional: collectAdditional(data),
 			},
 		})
 

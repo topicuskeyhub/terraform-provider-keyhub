@@ -25,13 +25,14 @@ description: |-
 
 ### Read-Only
 
-- `additional_objects` (Attributes) (see [below for nested schema](#nestedatt--additional_objects))
+- `audit` (Attributes) (see [below for nested schema](#nestedatt--audit))
 - `authorizing_group_auditing_required` (Boolean)
 - `authorizing_group_delegation_required` (Boolean)
 - `authorizing_group_membership_required` (Boolean)
 - `authorizing_group_provisioning_required` (Boolean)
 - `default_classification` (Boolean)
 - `description` (String)
+- `info` (Attributes) (see [below for nested schema](#nestedatt--info))
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--links))
 - `maximum_audit_interval` (Number)
 - `minimum_nr_managers` (Number)
@@ -42,16 +43,8 @@ description: |-
 - `rotating_password_required` (Boolean)
 - `vault_requires_activation` (Boolean)
 
-<a id="nestedatt--additional_objects"></a>
-### Nested Schema for `additional_objects`
-
-Read-Only:
-
-- `audit` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--audit))
-- `info` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--info))
-
-<a id="nestedatt--additional_objects--audit"></a>
-### Nested Schema for `additional_objects.audit`
+<a id="nestedatt--audit"></a>
+### Nested Schema for `audit`
 
 Read-Only:
 
@@ -61,13 +54,12 @@ Read-Only:
 - `last_modified_by` (String)
 
 
-<a id="nestedatt--additional_objects--info"></a>
-### Nested Schema for `additional_objects.info`
+<a id="nestedatt--info"></a>
+### Nested Schema for `info`
 
 Read-Only:
 
 - `nr_groups` (Number)
-
 
 
 <a id="nestedatt--links"></a>

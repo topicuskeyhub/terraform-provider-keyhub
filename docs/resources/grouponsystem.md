@@ -24,30 +24,20 @@ description: |-
 
 ### Optional
 
-- `additional_objects` (Attributes) (see [below for nested schema](#nestedatt--additional_objects))
 - `display_name` (String)
+- `provgroups` (Attributes List) (see [below for nested schema](#nestedatt--provgroups))
+- `service_accounts` (List of String)
 - `short_name_in_system` (String)
 - `system_uuid` (String)
 
 ### Read-Only
 
+- `audit` (Attributes) (see [below for nested schema](#nestedatt--audit))
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--links))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--permissions))
 
-<a id="nestedatt--additional_objects"></a>
-### Nested Schema for `additional_objects`
-
-Optional:
-
-- `provgroups` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--provgroups))
-- `service_accounts` (List of String)
-
-Read-Only:
-
-- `audit` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--audit))
-
-<a id="nestedatt--additional_objects--provgroups"></a>
-### Nested Schema for `additional_objects.provgroups`
+<a id="nestedatt--provgroups"></a>
+### Nested Schema for `provgroups`
 
 Optional:
 
@@ -55,13 +45,13 @@ Optional:
 
 Read-Only:
 
-- `group_on_system` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--provgroups--group_on_system))
+- `group_on_system` (Attributes) (see [below for nested schema](#nestedatt--provgroups--group_on_system))
 - `group_uuid` (String)
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--provgroups--links))
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--provgroups--permissions))
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--provgroups--links))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--provgroups--permissions))
 
-<a id="nestedatt--additional_objects--provgroups--group_on_system"></a>
-### Nested Schema for `additional_objects.provgroups.group_on_system`
+<a id="nestedatt--provgroups--group_on_system"></a>
+### Nested Schema for `provgroups.group_on_system`
 
 Required:
 
@@ -77,11 +67,11 @@ Optional:
 
 Read-Only:
 
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--provgroups--group_on_system--links))
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--provgroups--group_on_system--permissions))
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--provgroups--group_on_system--links))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--provgroups--group_on_system--permissions))
 
-<a id="nestedatt--additional_objects--provgroups--group_on_system--links"></a>
-### Nested Schema for `additional_objects.provgroups.group_on_system.permissions`
+<a id="nestedatt--provgroups--group_on_system--links"></a>
+### Nested Schema for `provgroups.group_on_system.links`
 
 Read-Only:
 
@@ -91,8 +81,8 @@ Read-Only:
 - `type_escaped` (String)
 
 
-<a id="nestedatt--additional_objects--provgroups--group_on_system--permissions"></a>
-### Nested Schema for `additional_objects.provgroups.group_on_system.permissions`
+<a id="nestedatt--provgroups--group_on_system--permissions"></a>
+### Nested Schema for `provgroups.group_on_system.permissions`
 
 Optional:
 
@@ -103,8 +93,8 @@ Optional:
 
 
 
-<a id="nestedatt--additional_objects--provgroups--links"></a>
-### Nested Schema for `additional_objects.provgroups.links`
+<a id="nestedatt--provgroups--links"></a>
+### Nested Schema for `provgroups.links`
 
 Read-Only:
 
@@ -114,8 +104,8 @@ Read-Only:
 - `type_escaped` (String)
 
 
-<a id="nestedatt--additional_objects--provgroups--permissions"></a>
-### Nested Schema for `additional_objects.provgroups.permissions`
+<a id="nestedatt--provgroups--permissions"></a>
+### Nested Schema for `provgroups.permissions`
 
 Optional:
 
@@ -126,8 +116,8 @@ Optional:
 
 
 
-<a id="nestedatt--additional_objects--audit"></a>
-### Nested Schema for `additional_objects.audit`
+<a id="nestedatt--audit"></a>
+### Nested Schema for `audit`
 
 Optional:
 
@@ -135,7 +125,6 @@ Optional:
 - `created_by` (String)
 - `last_modified_at` (String)
 - `last_modified_by` (String)
-
 
 
 <a id="nestedatt--links"></a>

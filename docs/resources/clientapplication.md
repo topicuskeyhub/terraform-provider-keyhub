@@ -21,42 +21,32 @@ description: |-
 
 ### Optional
 
-- `additional_objects` (Attributes) (see [below for nested schema](#nestedatt--additional_objects))
 - `client_id` (String)
+- `delete_tile` (Boolean)
+- `groupclients` (Attributes List) (see [below for nested schema](#nestedatt--groupclients))
 - `ldap_client` (Attributes) (see [below for nested schema](#nestedatt--ldap_client))
 - `o_auth2_client` (Attributes) (see [below for nested schema](#nestedatt--o_auth2_client))
 - `owner_uuid` (String)
 - `saml2_client` (Attributes) (see [below for nested schema](#nestedatt--saml2_client))
 - `scopes` (List of String)
+- `secret` (Attributes) (see [below for nested schema](#nestedatt--secret))
 - `technical_administrator_uuid` (String)
+- `tile` (Attributes) (see [below for nested schema](#nestedatt--tile))
 
 ### Read-Only
 
+- `audit` (Attributes) (see [below for nested schema](#nestedatt--audit))
+- `groups` (Attributes List) (see [below for nested schema](#nestedatt--groups))
 - `last_modified_at` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--links))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--permissions))
 - `sso_application` (Boolean)
 - `type` (String)
 - `uuid` (String)
-
-<a id="nestedatt--additional_objects"></a>
-### Nested Schema for `additional_objects`
-
-Optional:
-
-- `delete_tile` (Boolean)
-- `groupclients` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--groupclients))
-- `secret` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--secret))
-- `tile` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--tile))
-
-Read-Only:
-
-- `audit` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--audit))
-- `groups` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--groups))
 - `vault_record_count` (Number)
 
-<a id="nestedatt--additional_objects--groupclients"></a>
-### Nested Schema for `additional_objects.groupclients`
+<a id="nestedatt--groupclients"></a>
+### Nested Schema for `groupclients`
 
 Optional:
 
@@ -66,13 +56,13 @@ Read-Only:
 
 - `client_uuid` (String)
 - `group_uuid` (String)
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--groupclients--links))
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--groupclients--links))
 - `owner_uuid` (String)
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--groupclients--permissions))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--groupclients--permissions))
 - `technical_administrator_uuid` (String)
 
-<a id="nestedatt--additional_objects--groupclients--links"></a>
-### Nested Schema for `additional_objects.groupclients.links`
+<a id="nestedatt--groupclients--links"></a>
+### Nested Schema for `groupclients.links`
 
 Read-Only:
 
@@ -82,8 +72,8 @@ Read-Only:
 - `type_escaped` (String)
 
 
-<a id="nestedatt--additional_objects--groupclients--permissions"></a>
-### Nested Schema for `additional_objects.groupclients.permissions`
+<a id="nestedatt--groupclients--permissions"></a>
+### Nested Schema for `groupclients.permissions`
 
 Optional:
 
@@ -91,132 +81,6 @@ Optional:
 - `instances` (List of String)
 - `operations` (List of String)
 - `type_escaped` (String)
-
-
-
-<a id="nestedatt--additional_objects--secret"></a>
-### Nested Schema for `additional_objects.secret`
-
-Optional:
-
-- `generated_secret` (String)
-- `old_secret` (String)
-- `regenerate` (Boolean)
-
-
-<a id="nestedatt--additional_objects--tile"></a>
-### Nested Schema for `additional_objects.tile`
-
-Optional:
-
-- `uri` (String)
-
-
-<a id="nestedatt--additional_objects--audit"></a>
-### Nested Schema for `additional_objects.audit`
-
-Optional:
-
-- `created_at` (String)
-- `created_by` (String)
-- `last_modified_at` (String)
-- `last_modified_by` (String)
-
-
-<a id="nestedatt--additional_objects--groups"></a>
-### Nested Schema for `additional_objects.groups`
-
-Required:
-
-- `name` (String)
-
-Optional:
-
-- `application_administration` (Boolean)
-- `audit_config` (Attributes) (see [below for nested schema](#nestedatt--additional_objects--groups--audit_config))
-- `authorizing_group_auditing_uuid` (String)
-- `authorizing_group_delegation_uuid` (String)
-- `authorizing_group_membership_uuid` (String)
-- `authorizing_group_provisioning_uuid` (String)
-- `classification_uuid` (String)
-- `description` (String)
-- `extended_access` (String)
-- `hide_audit_trail` (Boolean)
-- `nested_under_uuid` (String)
-- `organizational_unit_uuid` (String)
-- `private_group` (Boolean)
-- `record_trail` (Boolean)
-- `rotating_password_required` (Boolean)
-- `single_managed` (Boolean)
-- `vault_recovery` (String)
-- `vault_requires_activation` (Boolean)
-
-Read-Only:
-
-- `admin` (Boolean)
-- `audit_requested` (Boolean)
-- `auditor` (Boolean)
-- `authorizing_group_types` (List of String)
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--groups--links))
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--groups--permissions))
-- `uuid` (String)
-
-<a id="nestedatt--additional_objects--groups--audit_config"></a>
-### Nested Schema for `additional_objects.groups.audit_config`
-
-Optional:
-
-- `months` (List of String)
-
-Read-Only:
-
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--groups--audit_config--links))
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--additional_objects--groups--audit_config--permissions))
-
-<a id="nestedatt--additional_objects--groups--audit_config--links"></a>
-### Nested Schema for `additional_objects.groups.audit_config.permissions`
-
-Read-Only:
-
-- `href` (String)
-- `id` (Number)
-- `rel` (String)
-- `type_escaped` (String)
-
-
-<a id="nestedatt--additional_objects--groups--audit_config--permissions"></a>
-### Nested Schema for `additional_objects.groups.audit_config.permissions`
-
-Optional:
-
-- `full` (String)
-- `instances` (List of String)
-- `operations` (List of String)
-- `type_escaped` (String)
-
-
-
-<a id="nestedatt--additional_objects--groups--links"></a>
-### Nested Schema for `additional_objects.groups.links`
-
-Read-Only:
-
-- `href` (String)
-- `id` (Number)
-- `rel` (String)
-- `type_escaped` (String)
-
-
-<a id="nestedatt--additional_objects--groups--permissions"></a>
-### Nested Schema for `additional_objects.groups.permissions`
-
-Optional:
-
-- `full` (String)
-- `instances` (List of String)
-- `operations` (List of String)
-- `type_escaped` (String)
-
 
 
 
@@ -287,6 +151,131 @@ Optional:
 
 <a id="nestedatt--saml2_client--attributes"></a>
 ### Nested Schema for `saml2_client.attributes`
+
+
+
+<a id="nestedatt--secret"></a>
+### Nested Schema for `secret`
+
+Optional:
+
+- `generated_secret` (String)
+- `old_secret` (String)
+- `regenerate` (Boolean)
+
+
+<a id="nestedatt--tile"></a>
+### Nested Schema for `tile`
+
+Optional:
+
+- `uri` (String)
+
+
+<a id="nestedatt--audit"></a>
+### Nested Schema for `audit`
+
+Optional:
+
+- `created_at` (String)
+- `created_by` (String)
+- `last_modified_at` (String)
+- `last_modified_by` (String)
+
+
+<a id="nestedatt--groups"></a>
+### Nested Schema for `groups`
+
+Required:
+
+- `name` (String)
+
+Optional:
+
+- `application_administration` (Boolean)
+- `audit_config` (Attributes) (see [below for nested schema](#nestedatt--groups--audit_config))
+- `authorizing_group_auditing_uuid` (String)
+- `authorizing_group_delegation_uuid` (String)
+- `authorizing_group_membership_uuid` (String)
+- `authorizing_group_provisioning_uuid` (String)
+- `classification_uuid` (String)
+- `description` (String)
+- `extended_access` (String)
+- `hide_audit_trail` (Boolean)
+- `nested_under_uuid` (String)
+- `organizational_unit_uuid` (String)
+- `private_group` (Boolean)
+- `record_trail` (Boolean)
+- `rotating_password_required` (Boolean)
+- `single_managed` (Boolean)
+- `vault_recovery` (String)
+- `vault_requires_activation` (Boolean)
+
+Read-Only:
+
+- `admin` (Boolean)
+- `audit_requested` (Boolean)
+- `auditor` (Boolean)
+- `authorizing_group_types` (List of String)
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--groups--links))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--groups--permissions))
+- `uuid` (String)
+
+<a id="nestedatt--groups--audit_config"></a>
+### Nested Schema for `groups.audit_config`
+
+Optional:
+
+- `months` (List of String)
+
+Read-Only:
+
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--groups--audit_config--links))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--groups--audit_config--permissions))
+
+<a id="nestedatt--groups--audit_config--links"></a>
+### Nested Schema for `groups.audit_config.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--groups--audit_config--permissions"></a>
+### Nested Schema for `groups.audit_config.permissions`
+
+Optional:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (List of String)
+- `type_escaped` (String)
+
+
+
+<a id="nestedatt--groups--links"></a>
+### Nested Schema for `groups.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--groups--permissions"></a>
+### Nested Schema for `groups.permissions`
+
+Optional:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (List of String)
+- `type_escaped` (String)
 
 
 

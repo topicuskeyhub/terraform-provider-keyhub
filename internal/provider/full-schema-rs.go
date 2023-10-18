@@ -4,6 +4,7 @@
 package provider
 
 import (
+	"golang.org/x/exp/maps"
 	"regexp"
 
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
@@ -149,13 +150,7 @@ func resourceSchemaAttrsSegmentCount(recurse bool) map[string]rsschema.Attribute
 func resourceSchemaAttrsAccountVaultVaultRecord(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	if recurse {
-		{
-			attr := rsschema.SingleNestedAttribute{
-				Attributes: resourceSchemaAttrsVaultVaultRecord_additionalObjects(false),
-			}
-			attr.Optional = true
-			schemaAttrs["additional_objects"] = attr
-		}
+		maps.Copy(schemaAttrs, resourceSchemaAttrsVaultVaultRecord_additionalObjects(false))
 	}
 	schemaAttrs["account_uuid"] = rsschema.StringAttribute{
 		Required: true,
@@ -240,13 +235,7 @@ func resourceSchemaAttrsAccountVaultVaultRecord(recurse bool) map[string]rsschem
 func resourceSchemaAttrsAuditAuditRecord(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	if recurse {
-		{
-			attr := rsschema.SingleNestedAttribute{
-				Attributes: resourceSchemaAttrsAuditAuditRecord_additionalObjects(false),
-			}
-			attr.Optional = true
-			schemaAttrs["additional_objects"] = attr
-		}
+		maps.Copy(schemaAttrs, resourceSchemaAttrsAuditAuditRecord_additionalObjects(false))
 	}
 	schemaAttrs["links"] = rsschema.ListNestedAttribute{
 		NestedObject: rsschema.NestedAttributeObject{
@@ -364,13 +353,7 @@ func resourceSchemaAttrsAuditAuditRecord_additionalObjects(recurse bool) map[str
 func resourceSchemaAttrsAuthAccount(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	if recurse {
-		{
-			attr := rsschema.SingleNestedAttribute{
-				Attributes: resourceSchemaAttrsAuthAccount_additionalObjects(false),
-			}
-			attr.Optional = true
-			schemaAttrs["additional_objects"] = attr
-		}
+		maps.Copy(schemaAttrs, resourceSchemaAttrsAuthAccount_additionalObjects(false))
 	}
 	schemaAttrs["links"] = rsschema.ListNestedAttribute{
 		NestedObject: rsschema.NestedAttributeObject{
@@ -863,13 +846,7 @@ func resourceSchemaAttrsAuthStoredAccountAttributes(recurse bool) map[string]rss
 func resourceSchemaAttrsCertificateCertificate(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	if recurse {
-		{
-			attr := rsschema.SingleNestedAttribute{
-				Attributes: resourceSchemaAttrsCertificateCertificate_additionalObjects(false),
-			}
-			attr.Optional = true
-			schemaAttrs["additional_objects"] = attr
-		}
+		maps.Copy(schemaAttrs, resourceSchemaAttrsCertificateCertificate_additionalObjects(false))
 	}
 	schemaAttrs["links"] = rsschema.ListNestedAttribute{
 		NestedObject: rsschema.NestedAttributeObject{
@@ -1003,13 +980,7 @@ func resourceSchemaAttrsCertificateCertificate_additionalObjects(recurse bool) m
 func resourceSchemaAttrsClientApplicationVaultVaultRecord(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	if recurse {
-		{
-			attr := rsschema.SingleNestedAttribute{
-				Attributes: resourceSchemaAttrsVaultVaultRecord_additionalObjects(false),
-			}
-			attr.Optional = true
-			schemaAttrs["additional_objects"] = attr
-		}
+		maps.Copy(schemaAttrs, resourceSchemaAttrsVaultVaultRecord_additionalObjects(false))
 	}
 	schemaAttrs["client_application_uuid"] = rsschema.StringAttribute{
 		Required: true,
@@ -1094,13 +1065,7 @@ func resourceSchemaAttrsClientApplicationVaultVaultRecord(recurse bool) map[stri
 func resourceSchemaAttrsClientClientApplication(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	if recurse {
-		{
-			attr := rsschema.SingleNestedAttribute{
-				Attributes: resourceSchemaAttrsClientClientApplication_additionalObjects(false),
-			}
-			attr.Optional = true
-			schemaAttrs["additional_objects"] = attr
-		}
+		maps.Copy(schemaAttrs, resourceSchemaAttrsClientClientApplication_additionalObjects(false))
 	}
 	schemaAttrs["links"] = rsschema.ListNestedAttribute{
 		NestedObject: rsschema.NestedAttributeObject{
@@ -1168,17 +1133,17 @@ func resourceSchemaAttrsClientClientApplication(recurse bool) map[string]rsschem
 	}
 	{
 		attr := rsschema.SingleNestedAttribute{
-			Attributes: resourceSchemaAttrsClientSaml2Client(false),
-		}
-		attr.Optional = true
-		schemaAttrs["saml2_client"] = attr
-	}
-	{
-		attr := rsschema.SingleNestedAttribute{
 			Attributes: resourceSchemaAttrsClientLdapClient(false),
 		}
 		attr.Optional = true
 		schemaAttrs["ldap_client"] = attr
+	}
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsClientSaml2Client(false),
+		}
+		attr.Optional = true
+		schemaAttrs["saml2_client"] = attr
 	}
 	return schemaAttrs
 }
@@ -1366,13 +1331,7 @@ func resourceSchemaAttrsClientOAuth2Client(recurse bool) map[string]rsschema.Att
 func resourceSchemaAttrsClientOAuth2ClientPermission(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	if recurse {
-		{
-			attr := rsschema.SingleNestedAttribute{
-				Attributes: resourceSchemaAttrsClientOAuth2ClientPermission_additionalObjects(false),
-			}
-			attr.Optional = true
-			schemaAttrs["additional_objects"] = attr
-		}
+		maps.Copy(schemaAttrs, resourceSchemaAttrsClientOAuth2ClientPermission_additionalObjects(false))
 	}
 	schemaAttrs["links"] = rsschema.ListNestedAttribute{
 		NestedObject: rsschema.NestedAttributeObject{
@@ -1423,13 +1382,7 @@ func resourceSchemaAttrsClientOAuth2ClientPermissionLinkableWrapper(recurse bool
 func resourceSchemaAttrsClientOAuth2ClientPermissionWithClient(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	if recurse {
-		{
-			attr := rsschema.SingleNestedAttribute{
-				Attributes: resourceSchemaAttrsClientOAuth2ClientPermission_additionalObjects(false),
-			}
-			attr.Optional = true
-			schemaAttrs["additional_objects"] = attr
-		}
+		maps.Copy(schemaAttrs, resourceSchemaAttrsClientOAuth2ClientPermission_additionalObjects(false))
 	}
 	schemaAttrs["links"] = rsschema.ListNestedAttribute{
 		NestedObject: rsschema.NestedAttributeObject{
@@ -1534,13 +1487,7 @@ func resourceSchemaAttrsClientSaml2Client_attributes(recurse bool) map[string]rs
 func resourceSchemaAttrsDeletedVaultHolderVaultVaultRecord(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	if recurse {
-		{
-			attr := rsschema.SingleNestedAttribute{
-				Attributes: resourceSchemaAttrsVaultVaultRecord_additionalObjects(false),
-			}
-			attr.Optional = true
-			schemaAttrs["additional_objects"] = attr
-		}
+		maps.Copy(schemaAttrs, resourceSchemaAttrsVaultVaultRecord_additionalObjects(false))
 	}
 	schemaAttrs["deleted_vault_holder_uuid"] = rsschema.StringAttribute{
 		Required: true,
@@ -1625,13 +1572,7 @@ func resourceSchemaAttrsDeletedVaultHolderVaultVaultRecord(recurse bool) map[str
 func resourceSchemaAttrsDirectoryAccountDirectory(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	if recurse {
-		{
-			attr := rsschema.SingleNestedAttribute{
-				Attributes: resourceSchemaAttrsDirectoryAccountDirectory_additionalObjects(false),
-			}
-			attr.Optional = true
-			schemaAttrs["additional_objects"] = attr
-		}
+		maps.Copy(schemaAttrs, resourceSchemaAttrsDirectoryAccountDirectory_additionalObjects(false))
 	}
 	schemaAttrs["links"] = rsschema.ListNestedAttribute{
 		NestedObject: rsschema.NestedAttributeObject{
@@ -1707,10 +1648,10 @@ func resourceSchemaAttrsDirectoryAccountDirectory(recurse bool) map[string]rssch
 	}
 	{
 		attr := rsschema.SingleNestedAttribute{
-			Attributes: resourceSchemaAttrsDirectoryMaintenanceDirectory(false),
+			Attributes: resourceSchemaAttrsDirectoryInternalDirectory(false),
 		}
 		attr.Optional = true
-		schemaAttrs["maintenance_directory"] = attr
+		schemaAttrs["internal_directory"] = attr
 	}
 	{
 		attr := rsschema.SingleNestedAttribute{
@@ -1721,10 +1662,10 @@ func resourceSchemaAttrsDirectoryAccountDirectory(recurse bool) map[string]rssch
 	}
 	{
 		attr := rsschema.SingleNestedAttribute{
-			Attributes: resourceSchemaAttrsDirectoryInternalDirectory(false),
+			Attributes: resourceSchemaAttrsDirectoryMaintenanceDirectory(false),
 		}
 		attr.Optional = true
-		schemaAttrs["internal_directory"] = attr
+		schemaAttrs["maintenance_directory"] = attr
 	}
 	{
 		attr := rsschema.SingleNestedAttribute{
@@ -2061,13 +2002,7 @@ func resourceSchemaAttrsDirectoryOIDCDirectory(recurse bool) map[string]rsschema
 func resourceSchemaAttrsGroupAccountGroup(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	if recurse {
-		{
-			attr := rsschema.SingleNestedAttribute{
-				Attributes: resourceSchemaAttrsGroupAccountGroup_additionalObjects(false),
-			}
-			attr.Optional = true
-			schemaAttrs["additional_objects"] = attr
-		}
+		maps.Copy(schemaAttrs, resourceSchemaAttrsGroupAccountGroup_additionalObjects(false))
 	}
 	schemaAttrs["uuid"] = rsschema.StringAttribute{
 		Required: true,
@@ -2150,13 +2085,7 @@ func resourceSchemaAttrsGroupAuthorizedGroupsWrapper(recurse bool) map[string]rs
 func resourceSchemaAttrsGroupGroup(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	if recurse {
-		{
-			attr := rsschema.SingleNestedAttribute{
-				Attributes: resourceSchemaAttrsGroupGroup_additionalObjects(false),
-			}
-			attr.Optional = true
-			schemaAttrs["additional_objects"] = attr
-		}
+		maps.Copy(schemaAttrs, resourceSchemaAttrsGroupGroup_additionalObjects(false))
 	}
 	schemaAttrs["links"] = rsschema.ListNestedAttribute{
 		NestedObject: rsschema.NestedAttributeObject{
@@ -2311,13 +2240,7 @@ func resourceSchemaAttrsGroupGroup(recurse bool) map[string]rsschema.Attribute {
 func resourceSchemaAttrsGroupGroupAccount(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	if recurse {
-		{
-			attr := rsschema.SingleNestedAttribute{
-				Attributes: resourceSchemaAttrsGroupGroupAccount_additionalObjects(false),
-			}
-			attr.Optional = true
-			schemaAttrs["additional_objects"] = attr
-		}
+		maps.Copy(schemaAttrs, resourceSchemaAttrsGroupGroupAccount_additionalObjects(false))
 	}
 	schemaAttrs["uuid"] = rsschema.StringAttribute{
 		Required: true,
@@ -2413,13 +2336,7 @@ func resourceSchemaAttrsGroupGroupAdminMail(recurse bool) map[string]rsschema.At
 func resourceSchemaAttrsGroupGroupAudit(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	if recurse {
-		{
-			attr := rsschema.SingleNestedAttribute{
-				Attributes: resourceSchemaAttrsGroupGroupAudit_additionalObjects(false),
-			}
-			attr.Optional = true
-			schemaAttrs["additional_objects"] = attr
-		}
+		maps.Copy(schemaAttrs, resourceSchemaAttrsGroupGroupAudit_additionalObjects(false))
 	}
 	schemaAttrs["links"] = rsschema.ListNestedAttribute{
 		NestedObject: rsschema.NestedAttributeObject{
@@ -2631,13 +2548,7 @@ func resourceSchemaAttrsGroupGroupAuditingInfo(recurse bool) map[string]rsschema
 func resourceSchemaAttrsGroupGroupClassification(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	if recurse {
-		{
-			attr := rsschema.SingleNestedAttribute{
-				Attributes: resourceSchemaAttrsGroupGroupClassification_additionalObjects(false),
-			}
-			attr.Optional = true
-			schemaAttrs["additional_objects"] = attr
-		}
+		maps.Copy(schemaAttrs, resourceSchemaAttrsGroupGroupClassification_additionalObjects(false))
 	}
 	schemaAttrs["links"] = rsschema.ListNestedAttribute{
 		NestedObject: rsschema.NestedAttributeObject{
@@ -2812,13 +2723,7 @@ func resourceSchemaAttrsGroupGroupClassification_additionalObjects(recurse bool)
 func resourceSchemaAttrsGroupGroupClient(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	if recurse {
-		{
-			attr := rsschema.SingleNestedAttribute{
-				Attributes: resourceSchemaAttrsGroupGroupClient_additionalObjects(false),
-			}
-			attr.Optional = true
-			schemaAttrs["additional_objects"] = attr
-		}
+		maps.Copy(schemaAttrs, resourceSchemaAttrsGroupGroupClient_additionalObjects(false))
 	}
 	schemaAttrs["links"] = rsschema.ListNestedAttribute{
 		NestedObject: rsschema.NestedAttributeObject{
@@ -2879,13 +2784,7 @@ func resourceSchemaAttrsGroupGroupClient_additionalObjects(recurse bool) map[str
 func resourceSchemaAttrsGroupGroupFolder(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	if recurse {
-		{
-			attr := rsschema.SingleNestedAttribute{
-				Attributes: resourceSchemaAttrsGroupGroupFolder_additionalObjects(false),
-			}
-			attr.Optional = true
-			schemaAttrs["additional_objects"] = attr
-		}
+		maps.Copy(schemaAttrs, resourceSchemaAttrsGroupGroupFolder_additionalObjects(false))
 	}
 	schemaAttrs["links"] = rsschema.ListNestedAttribute{
 		NestedObject: rsschema.NestedAttributeObject{
@@ -3234,13 +3133,7 @@ func resourceSchemaAttrsGroupGroupsAuditStats(recurse bool) map[string]rsschema.
 func resourceSchemaAttrsGroupProvisioningGroup(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	if recurse {
-		{
-			attr := rsschema.SingleNestedAttribute{
-				Attributes: resourceSchemaAttrsGroupProvisioningGroup_additionalObjects(false),
-			}
-			attr.Optional = true
-			schemaAttrs["additional_objects"] = attr
-		}
+		maps.Copy(schemaAttrs, resourceSchemaAttrsGroupProvisioningGroup_additionalObjects(false))
 	}
 	schemaAttrs["links"] = rsschema.ListNestedAttribute{
 		NestedObject: rsschema.NestedAttributeObject{
@@ -3299,13 +3192,7 @@ func resourceSchemaAttrsGroupProvisioningGroup_additionalObjects(recurse bool) m
 func resourceSchemaAttrsGroupVaultVaultRecord(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	if recurse {
-		{
-			attr := rsschema.SingleNestedAttribute{
-				Attributes: resourceSchemaAttrsVaultVaultRecord_additionalObjects(false),
-			}
-			attr.Optional = true
-			schemaAttrs["additional_objects"] = attr
-		}
+		maps.Copy(schemaAttrs, resourceSchemaAttrsVaultVaultRecord_additionalObjects(false))
 	}
 	schemaAttrs["group_uuid"] = rsschema.StringAttribute{
 		Required: true,
@@ -3446,13 +3333,7 @@ func resourceSchemaAttrsLaunchpadDisplayedLaunchpadTiles(recurse bool) map[strin
 func resourceSchemaAttrsLaunchpadLaunchpadTile(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	if recurse {
-		{
-			attr := rsschema.SingleNestedAttribute{
-				Attributes: resourceSchemaAttrsLaunchpadLaunchpadTile_additionalObjects(false),
-			}
-			attr.Optional = true
-			schemaAttrs["additional_objects"] = attr
-		}
+		maps.Copy(schemaAttrs, resourceSchemaAttrsLaunchpadLaunchpadTile_additionalObjects(false))
 	}
 	schemaAttrs["links"] = rsschema.ListNestedAttribute{
 		NestedObject: rsschema.NestedAttributeObject{
@@ -3766,13 +3647,7 @@ func resourceSchemaAttrsNestedAuthInternalAccount(recurse bool) map[string]rssch
 func resourceSchemaAttrsNestedClientOAuth2ClientPermission(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	if recurse {
-		{
-			attr := rsschema.SingleNestedAttribute{
-				Attributes: resourceSchemaAttrsClientOAuth2ClientPermission_additionalObjects(false),
-			}
-			attr.Optional = true
-			schemaAttrs["additional_objects"] = attr
-		}
+		maps.Copy(schemaAttrs, resourceSchemaAttrsClientOAuth2ClientPermission_additionalObjects(false))
 	}
 	schemaAttrs["client_application_uuid"] = rsschema.StringAttribute{
 		Required: true,
@@ -3819,13 +3694,7 @@ func resourceSchemaAttrsNestedClientOAuth2ClientPermission(recurse bool) map[str
 func resourceSchemaAttrsNestedGroupAccountGroup(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	if recurse {
-		{
-			attr := rsschema.SingleNestedAttribute{
-				Attributes: resourceSchemaAttrsGroupAccountGroup_additionalObjects(false),
-			}
-			attr.Optional = true
-			schemaAttrs["additional_objects"] = attr
-		}
+		maps.Copy(schemaAttrs, resourceSchemaAttrsGroupAccountGroup_additionalObjects(false))
 	}
 	schemaAttrs["account_uuid"] = rsschema.StringAttribute{
 		Required: true,
@@ -3871,13 +3740,7 @@ func resourceSchemaAttrsNestedGroupAccountGroup(recurse bool) map[string]rsschem
 func resourceSchemaAttrsNestedGroupGroupAccount(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	if recurse {
-		{
-			attr := rsschema.SingleNestedAttribute{
-				Attributes: resourceSchemaAttrsGroupGroupAccount_additionalObjects(false),
-			}
-			attr.Optional = true
-			schemaAttrs["additional_objects"] = attr
-		}
+		maps.Copy(schemaAttrs, resourceSchemaAttrsGroupGroupAccount_additionalObjects(false))
 	}
 	schemaAttrs["group_uuid"] = rsschema.StringAttribute{
 		Required: true,
@@ -3928,13 +3791,7 @@ func resourceSchemaAttrsNestedGroupGroupAccount(recurse bool) map[string]rsschem
 func resourceSchemaAttrsNestedGroupGroupAudit(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	if recurse {
-		{
-			attr := rsschema.SingleNestedAttribute{
-				Attributes: resourceSchemaAttrsGroupGroupAudit_additionalObjects(false),
-			}
-			attr.Optional = true
-			schemaAttrs["additional_objects"] = attr
-		}
+		maps.Copy(schemaAttrs, resourceSchemaAttrsGroupGroupAudit_additionalObjects(false))
 	}
 	schemaAttrs["group_uuid"] = rsschema.StringAttribute{
 		Required: true,
@@ -4002,13 +3859,7 @@ func resourceSchemaAttrsNestedGroupGroupAudit(recurse bool) map[string]rsschema.
 func resourceSchemaAttrsNestedOrganizationAccountOrganizationalUnit(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	if recurse {
-		{
-			attr := rsschema.SingleNestedAttribute{
-				Attributes: resourceSchemaAttrsOrganizationAccountOrganizationalUnit_additionalObjects(false),
-			}
-			attr.Optional = true
-			schemaAttrs["additional_objects"] = attr
-		}
+		maps.Copy(schemaAttrs, resourceSchemaAttrsOrganizationAccountOrganizationalUnit_additionalObjects(false))
 	}
 	schemaAttrs["account_uuid"] = rsschema.StringAttribute{
 		Required: true,
@@ -4027,13 +3878,7 @@ func resourceSchemaAttrsNestedOrganizationAccountOrganizationalUnit(recurse bool
 func resourceSchemaAttrsNestedOrganizationOrganizationalUnitAccount(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	if recurse {
-		{
-			attr := rsschema.SingleNestedAttribute{
-				Attributes: resourceSchemaAttrsOrganizationOrganizationalUnitAccount_additionalObjects(false),
-			}
-			attr.Optional = true
-			schemaAttrs["additional_objects"] = attr
-		}
+		maps.Copy(schemaAttrs, resourceSchemaAttrsOrganizationOrganizationalUnitAccount_additionalObjects(false))
 	}
 	schemaAttrs["organizational_unit_uuid"] = rsschema.StringAttribute{
 		Required: true,
@@ -4058,13 +3903,7 @@ func resourceSchemaAttrsNestedOrganizationOrganizationalUnitAccount(recurse bool
 func resourceSchemaAttrsNestedProvisioningGroupOnSystem(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	if recurse {
-		{
-			attr := rsschema.SingleNestedAttribute{
-				Attributes: resourceSchemaAttrsProvisioningGroupOnSystem_additionalObjects(false),
-			}
-			attr.Optional = true
-			schemaAttrs["additional_objects"] = attr
-		}
+		maps.Copy(schemaAttrs, resourceSchemaAttrsProvisioningGroupOnSystem_additionalObjects(false))
 	}
 	schemaAttrs["provisioned_system_uuid"] = rsschema.StringAttribute{
 		Required: true,
@@ -4123,13 +3962,7 @@ func resourceSchemaAttrsNestedProvisioningGroupOnSystem(recurse bool) map[string
 func resourceSchemaAttrsNestedProvisioningProvisionedAccount(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	if recurse {
-		{
-			attr := rsschema.SingleNestedAttribute{
-				Attributes: resourceSchemaAttrsProvisioningProvisionedAccount_additionalObjects(false),
-			}
-			attr.Optional = true
-			schemaAttrs["additional_objects"] = attr
-		}
+		maps.Copy(schemaAttrs, resourceSchemaAttrsProvisioningProvisionedAccount_additionalObjects(false))
 	}
 	schemaAttrs["provisioned_system_uuid"] = rsschema.StringAttribute{
 		Required: true,
@@ -4152,13 +3985,7 @@ func resourceSchemaAttrsNestedProvisioningProvisionedAccount(recurse bool) map[s
 func resourceSchemaAttrsNestedProvisioningProvisionedSystemSyncLog(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	if recurse {
-		{
-			attr := rsschema.SingleNestedAttribute{
-				Attributes: resourceSchemaAttrsProvisioningProvisionedSystemSyncLog_additionalObjects(false),
-			}
-			attr.Optional = true
-			schemaAttrs["additional_objects"] = attr
-		}
+		maps.Copy(schemaAttrs, resourceSchemaAttrsProvisioningProvisionedSystemSyncLog_additionalObjects(false))
 	}
 	schemaAttrs["provisioned_system_uuid"] = rsschema.StringAttribute{
 		Required: true,
@@ -4201,13 +4028,7 @@ func resourceSchemaAttrsNestedProvisioningProvisionedSystemSyncLog(recurse bool)
 func resourceSchemaAttrsNestedServiceaccountServiceAccountGroup(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	if recurse {
-		{
-			attr := rsschema.SingleNestedAttribute{
-				Attributes: resourceSchemaAttrsServiceaccountServiceAccountGroup_additionalObjects(false),
-			}
-			attr.Optional = true
-			schemaAttrs["additional_objects"] = attr
-		}
+		maps.Copy(schemaAttrs, resourceSchemaAttrsServiceaccountServiceAccountGroup_additionalObjects(false))
 	}
 	schemaAttrs["service_account_uuid"] = rsschema.StringAttribute{
 		Required: true,
@@ -4254,13 +4075,7 @@ func resourceSchemaAttrsNestedServiceaccountServiceAccountGroup(recurse bool) ma
 func resourceSchemaAttrsNestedWebhookWebhookDelivery(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	if recurse {
-		{
-			attr := rsschema.SingleNestedAttribute{
-				Attributes: resourceSchemaAttrsWebhookWebhookDelivery_additionalObjects(false),
-			}
-			attr.Optional = true
-			schemaAttrs["additional_objects"] = attr
-		}
+		maps.Copy(schemaAttrs, resourceSchemaAttrsWebhookWebhookDelivery_additionalObjects(false))
 	}
 	schemaAttrs["webhook_uuid"] = rsschema.StringAttribute{
 		Required: true,
@@ -4527,13 +4342,7 @@ func resourceSchemaAttrsNotificationVaultRecordExpiredNotification(recurse bool)
 func resourceSchemaAttrsOrganizationAccountOrganizationalUnit(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	if recurse {
-		{
-			attr := rsschema.SingleNestedAttribute{
-				Attributes: resourceSchemaAttrsOrganizationAccountOrganizationalUnit_additionalObjects(false),
-			}
-			attr.Optional = true
-			schemaAttrs["additional_objects"] = attr
-		}
+		maps.Copy(schemaAttrs, resourceSchemaAttrsOrganizationAccountOrganizationalUnit_additionalObjects(false))
 	}
 	schemaAttrs["uuid"] = rsschema.StringAttribute{
 		Required: true,
@@ -4567,13 +4376,7 @@ func resourceSchemaAttrsOrganizationAccountOrganizationalUnit_additionalObjects(
 func resourceSchemaAttrsOrganizationOrganizationalUnit(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	if recurse {
-		{
-			attr := rsschema.SingleNestedAttribute{
-				Attributes: resourceSchemaAttrsOrganizationOrganizationalUnit_additionalObjects(false),
-			}
-			attr.Optional = true
-			schemaAttrs["additional_objects"] = attr
-		}
+		maps.Copy(schemaAttrs, resourceSchemaAttrsOrganizationOrganizationalUnit_additionalObjects(false))
 	}
 	schemaAttrs["links"] = rsschema.ListNestedAttribute{
 		NestedObject: rsschema.NestedAttributeObject{
@@ -4619,13 +4422,7 @@ func resourceSchemaAttrsOrganizationOrganizationalUnit(recurse bool) map[string]
 func resourceSchemaAttrsOrganizationOrganizationalUnitAccount(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	if recurse {
-		{
-			attr := rsschema.SingleNestedAttribute{
-				Attributes: resourceSchemaAttrsOrganizationOrganizationalUnitAccount_additionalObjects(false),
-			}
-			attr.Optional = true
-			schemaAttrs["additional_objects"] = attr
-		}
+		maps.Copy(schemaAttrs, resourceSchemaAttrsOrganizationOrganizationalUnitAccount_additionalObjects(false))
 	}
 	schemaAttrs["uuid"] = rsschema.StringAttribute{
 		Required: true,
@@ -4893,13 +4690,7 @@ func resourceSchemaAttrsProvisioningCircuitBreakerStatistics(recurse bool) map[s
 func resourceSchemaAttrsProvisioningGroupOnSystem(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	if recurse {
-		{
-			attr := rsschema.SingleNestedAttribute{
-				Attributes: resourceSchemaAttrsProvisioningGroupOnSystem_additionalObjects(false),
-			}
-			attr.Optional = true
-			schemaAttrs["additional_objects"] = attr
-		}
+		maps.Copy(schemaAttrs, resourceSchemaAttrsProvisioningGroupOnSystem_additionalObjects(false))
 	}
 	schemaAttrs["links"] = rsschema.ListNestedAttribute{
 		NestedObject: rsschema.NestedAttributeObject{
@@ -5104,13 +4895,7 @@ func resourceSchemaAttrsProvisioningOwnedGroupOnSystemsWrapper(recurse bool) map
 func resourceSchemaAttrsProvisioningProvisionNumberSequence(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	if recurse {
-		{
-			attr := rsschema.SingleNestedAttribute{
-				Attributes: resourceSchemaAttrsProvisioningProvisionNumberSequence_additionalObjects(false),
-			}
-			attr.Optional = true
-			schemaAttrs["additional_objects"] = attr
-		}
+		maps.Copy(schemaAttrs, resourceSchemaAttrsProvisioningProvisionNumberSequence_additionalObjects(false))
 	}
 	schemaAttrs["links"] = rsschema.ListNestedAttribute{
 		NestedObject: rsschema.NestedAttributeObject{
@@ -5186,13 +4971,7 @@ func resourceSchemaAttrsProvisioningProvisionedAD(recurse bool) map[string]rssch
 func resourceSchemaAttrsProvisioningProvisionedAccount(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	if recurse {
-		{
-			attr := rsschema.SingleNestedAttribute{
-				Attributes: resourceSchemaAttrsProvisioningProvisionedAccount_additionalObjects(false),
-			}
-			attr.Optional = true
-			schemaAttrs["additional_objects"] = attr
-		}
+		maps.Copy(schemaAttrs, resourceSchemaAttrsProvisioningProvisionedAccount_additionalObjects(false))
 	}
 	schemaAttrs["uuid"] = rsschema.StringAttribute{
 		Required: true,
@@ -5338,13 +5117,7 @@ func resourceSchemaAttrsProvisioningProvisionedLDAPDirectory(recurse bool) map[s
 func resourceSchemaAttrsProvisioningProvisionedSystem(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	if recurse {
-		{
-			attr := rsschema.SingleNestedAttribute{
-				Attributes: resourceSchemaAttrsProvisioningProvisionedSystem_additionalObjects(false),
-			}
-			attr.Optional = true
-			schemaAttrs["additional_objects"] = attr
-		}
+		maps.Copy(schemaAttrs, resourceSchemaAttrsProvisioningProvisionedSystem_additionalObjects(false))
 	}
 	schemaAttrs["links"] = rsschema.ListNestedAttribute{
 		NestedObject: rsschema.NestedAttributeObject{
@@ -5437,48 +5210,6 @@ func resourceSchemaAttrsProvisioningProvisionedSystem(recurse bool) map[string]r
 	}
 	{
 		attr := rsschema.SingleNestedAttribute{
-			Attributes: resourceSchemaAttrsProvisioningAbstractProvisionedLDAP(false),
-		}
-		attr.Optional = true
-		schemaAttrs["abstract_provisioned_ldap"] = attr
-	}
-	{
-		attr := rsschema.SingleNestedAttribute{
-			Attributes: resourceSchemaAttrsProvisioningProvisionedLDAP(false),
-		}
-		attr.Optional = true
-		schemaAttrs["provisioned_ldap"] = attr
-	}
-	{
-		attr := rsschema.SingleNestedAttribute{
-			Attributes: resourceSchemaAttrsProvisioningProvisionedAzureTenant(false),
-		}
-		attr.Optional = true
-		schemaAttrs["provisioned_azure_tenant"] = attr
-	}
-	{
-		attr := rsschema.SingleNestedAttribute{
-			Attributes: resourceSchemaAttrsProvisioningProvisionedAzureSyncLDAPDirectory(false),
-		}
-		attr.Optional = true
-		schemaAttrs["provisioned_azure_sync_ldap_directory"] = attr
-	}
-	{
-		attr := rsschema.SingleNestedAttribute{
-			Attributes: resourceSchemaAttrsProvisioningProvisionedAzureOIDCDirectory(false),
-		}
-		attr.Optional = true
-		schemaAttrs["provisioned_azure_oidc_directory"] = attr
-	}
-	{
-		attr := rsschema.SingleNestedAttribute{
-			Attributes: resourceSchemaAttrsProvisioningProvisionedAD(false),
-		}
-		attr.Optional = true
-		schemaAttrs["provisioned_a_d"] = attr
-	}
-	{
-		attr := rsschema.SingleNestedAttribute{
 			Attributes: resourceSchemaAttrsProvisioningProvisionedLDAPDirectory(false),
 		}
 		attr.Optional = true
@@ -5490,6 +5221,48 @@ func resourceSchemaAttrsProvisioningProvisionedSystem(recurse bool) map[string]r
 		}
 		attr.Optional = true
 		schemaAttrs["provisioned_internal_ldap"] = attr
+	}
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsProvisioningProvisionedAzureTenant(false),
+		}
+		attr.Optional = true
+		schemaAttrs["provisioned_azure_tenant"] = attr
+	}
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsProvisioningProvisionedAzureOIDCDirectory(false),
+		}
+		attr.Optional = true
+		schemaAttrs["provisioned_azure_oidc_directory"] = attr
+	}
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsProvisioningAbstractProvisionedLDAP(false),
+		}
+		attr.Optional = true
+		schemaAttrs["abstract_provisioned_ldap"] = attr
+	}
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsProvisioningProvisionedAD(false),
+		}
+		attr.Optional = true
+		schemaAttrs["provisioned_a_d"] = attr
+	}
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsProvisioningProvisionedAzureSyncLDAPDirectory(false),
+		}
+		attr.Optional = true
+		schemaAttrs["provisioned_azure_sync_ldap_directory"] = attr
+	}
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsProvisioningProvisionedLDAP(false),
+		}
+		attr.Optional = true
+		schemaAttrs["provisioned_ldap"] = attr
 	}
 	return schemaAttrs
 }
@@ -5562,13 +5335,7 @@ func resourceSchemaAttrsProvisioningProvisionedSystemPrimerLinkableWrapper(recur
 func resourceSchemaAttrsProvisioningProvisionedSystemSyncLog(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	if recurse {
-		{
-			attr := rsschema.SingleNestedAttribute{
-				Attributes: resourceSchemaAttrsProvisioningProvisionedSystemSyncLog_additionalObjects(false),
-			}
-			attr.Optional = true
-			schemaAttrs["additional_objects"] = attr
-		}
+		maps.Copy(schemaAttrs, resourceSchemaAttrsProvisioningProvisionedSystemSyncLog_additionalObjects(false))
 	}
 	schemaAttrs["links"] = rsschema.ListNestedAttribute{
 		NestedObject: rsschema.NestedAttributeObject{
@@ -5947,13 +5714,7 @@ func resourceSchemaAttrsRequestJoinVaultRequest(recurse bool) map[string]rsschem
 func resourceSchemaAttrsRequestModificationRequest(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	if recurse {
-		{
-			attr := rsschema.SingleNestedAttribute{
-				Attributes: resourceSchemaAttrsRequestModificationRequest_additionalObjects(false),
-			}
-			attr.Optional = true
-			schemaAttrs["additional_objects"] = attr
-		}
+		maps.Copy(schemaAttrs, resourceSchemaAttrsRequestModificationRequest_additionalObjects(false))
 	}
 	schemaAttrs["links"] = rsschema.ListNestedAttribute{
 		NestedObject: rsschema.NestedAttributeObject{
@@ -6018,76 +5779,6 @@ func resourceSchemaAttrsRequestModificationRequest(recurse bool) map[string]rssc
 	}
 	{
 		attr := rsschema.SingleNestedAttribute{
-			Attributes: resourceSchemaAttrsRequestAbstractProvisionedSystemModificationRequest(false),
-		}
-		attr.Optional = true
-		schemaAttrs["abstract_provisioned_system_modification_request"] = attr
-	}
-	{
-		attr := rsschema.SingleNestedAttribute{
-			Attributes: resourceSchemaAttrsRequestRemoveProvisionedSystemRequest(false),
-		}
-		attr.Optional = true
-		schemaAttrs["remove_provisioned_system_request"] = attr
-	}
-	{
-		attr := rsschema.SingleNestedAttribute{
-			Attributes: resourceSchemaAttrsRequestGrantApplicationRequest(false),
-		}
-		attr.Optional = true
-		schemaAttrs["grant_application_request"] = attr
-	}
-	{
-		attr := rsschema.SingleNestedAttribute{
-			Attributes: resourceSchemaAttrsRequestReviewAuditRequest(false),
-		}
-		attr.Optional = true
-		schemaAttrs["review_audit_request"] = attr
-	}
-	{
-		attr := rsschema.SingleNestedAttribute{
-			Attributes: resourceSchemaAttrsRequestRevokeAdminRequest(false),
-		}
-		attr.Optional = true
-		schemaAttrs["revoke_admin_request"] = attr
-	}
-	{
-		attr := rsschema.SingleNestedAttribute{
-			Attributes: resourceSchemaAttrsRequestGrantAccessRequest(false),
-		}
-		attr.Optional = true
-		schemaAttrs["grant_access_request"] = attr
-	}
-	{
-		attr := rsschema.SingleNestedAttribute{
-			Attributes: resourceSchemaAttrsRequestTransferProvisionedSystemContentAdministrationRequest(false),
-		}
-		attr.Optional = true
-		schemaAttrs["transfer_provisioned_system_content_administration_request"] = attr
-	}
-	{
-		attr := rsschema.SingleNestedAttribute{
-			Attributes: resourceSchemaAttrsRequestAbstractOrganizationalUnitModificationRequest(false),
-		}
-		attr.Optional = true
-		schemaAttrs["abstract_organizational_unit_modification_request"] = attr
-	}
-	{
-		attr := rsschema.SingleNestedAttribute{
-			Attributes: resourceSchemaAttrsRequestRemoveOrganizationalUnitRequest(false),
-		}
-		attr.Optional = true
-		schemaAttrs["remove_organizational_unit_request"] = attr
-	}
-	{
-		attr := rsschema.SingleNestedAttribute{
-			Attributes: resourceSchemaAttrsRequestCreateGroupOnSystemRequest(false),
-		}
-		attr.Optional = true
-		schemaAttrs["create_group_on_system_request"] = attr
-	}
-	{
-		attr := rsschema.SingleNestedAttribute{
 			Attributes: resourceSchemaAttrsRequestTransferApplicationAdministrationRequest(false),
 		}
 		attr.Optional = true
@@ -6095,150 +5786,10 @@ func resourceSchemaAttrsRequestModificationRequest(recurse bool) map[string]rssc
 	}
 	{
 		attr := rsschema.SingleNestedAttribute{
-			Attributes: resourceSchemaAttrsRequestUpdateGroupMembershipRequest(false),
+			Attributes: resourceSchemaAttrsRequestExtendAccessRequest(false),
 		}
 		attr.Optional = true
-		schemaAttrs["update_group_membership_request"] = attr
-	}
-	{
-		attr := rsschema.SingleNestedAttribute{
-			Attributes: resourceSchemaAttrsRequestAddGroupAdminRequest(false),
-		}
-		attr.Optional = true
-		schemaAttrs["add_group_admin_request"] = attr
-	}
-	{
-		attr := rsschema.SingleNestedAttribute{
-			Attributes: resourceSchemaAttrsRequestTransferOrganizationalUnitOwnershipRequest(false),
-		}
-		attr.Optional = true
-		schemaAttrs["transfer_organizational_unit_ownership_request"] = attr
-	}
-	{
-		attr := rsschema.SingleNestedAttribute{
-			Attributes: resourceSchemaAttrsRequestJoinVaultRequest(false),
-		}
-		attr.Optional = true
-		schemaAttrs["join_vault_request"] = attr
-	}
-	{
-		attr := rsschema.SingleNestedAttribute{
-			Attributes: resourceSchemaAttrsRequestVerifyInternalAccountRequest(false),
-		}
-		attr.Optional = true
-		schemaAttrs["verify_internal_account_request"] = attr
-	}
-	{
-		attr := rsschema.SingleNestedAttribute{
-			Attributes: resourceSchemaAttrsRequestJoinGroupRequest(false),
-		}
-		attr.Optional = true
-		schemaAttrs["join_group_request"] = attr
-	}
-	{
-		attr := rsschema.SingleNestedAttribute{
-			Attributes: resourceSchemaAttrsRequestTransferGroupOnSystemOwnershipRequest(false),
-		}
-		attr.Optional = true
-		schemaAttrs["transfer_group_on_system_ownership_request"] = attr
-	}
-	{
-		attr := rsschema.SingleNestedAttribute{
-			Attributes: resourceSchemaAttrsRequestRemoveGroupRequest(false),
-		}
-		attr.Optional = true
-		schemaAttrs["remove_group_request"] = attr
-	}
-	{
-		attr := rsschema.SingleNestedAttribute{
-			Attributes: resourceSchemaAttrsRequestSetupAuthorizingGroupRequest(false),
-		}
-		attr.Optional = true
-		schemaAttrs["setup_authorizing_group_request"] = attr
-	}
-	{
-		attr := rsschema.SingleNestedAttribute{
-			Attributes: resourceSchemaAttrsRequestSetupNestedGroupRequest(false),
-		}
-		attr.Optional = true
-		schemaAttrs["setup_nested_group_request"] = attr
-	}
-	{
-		attr := rsschema.SingleNestedAttribute{
-			Attributes: resourceSchemaAttrsRequestGrantGroupOnSystemRequestRequest(false),
-		}
-		attr.Optional = true
-		schemaAttrs["grant_group_on_system_request_request"] = attr
-	}
-	{
-		attr := rsschema.SingleNestedAttribute{
-			Attributes: resourceSchemaAttrsRequestDisable2FARequest(false),
-		}
-		attr.Optional = true
-		schemaAttrs["disable2fa_request"] = attr
-	}
-	{
-		attr := rsschema.SingleNestedAttribute{
-			Attributes: resourceSchemaAttrsRequestGrantGroupOnSystemRequest(false),
-		}
-		attr.Optional = true
-		schemaAttrs["grant_group_on_system_request"] = attr
-	}
-	{
-		attr := rsschema.SingleNestedAttribute{
-			Attributes: resourceSchemaAttrsRequestEnableTechnicalAdministrationRequest(false),
-		}
-		attr.Optional = true
-		schemaAttrs["enable_technical_administration_request"] = attr
-	}
-	{
-		attr := rsschema.SingleNestedAttribute{
-			Attributes: resourceSchemaAttrsRequestCreateGroupRequest(false),
-		}
-		attr.Optional = true
-		schemaAttrs["create_group_request"] = attr
-	}
-	{
-		attr := rsschema.SingleNestedAttribute{
-			Attributes: resourceSchemaAttrsRequestTransferAuditorGroupRequest(false),
-		}
-		attr.Optional = true
-		schemaAttrs["transfer_auditor_group_request"] = attr
-	}
-	{
-		attr := rsschema.SingleNestedAttribute{
-			Attributes: resourceSchemaAttrsRequestGrantClientPermissionRequest(false),
-		}
-		attr.Optional = true
-		schemaAttrs["grant_client_permission_request"] = attr
-	}
-	{
-		attr := rsschema.SingleNestedAttribute{
-			Attributes: resourceSchemaAttrsRequestTransferApplicationOwnershipRequest(false),
-		}
-		attr.Optional = true
-		schemaAttrs["transfer_application_ownership_request"] = attr
-	}
-	{
-		attr := rsschema.SingleNestedAttribute{
-			Attributes: resourceSchemaAttrsRequestCreateServiceAccountRequest(false),
-		}
-		attr.Optional = true
-		schemaAttrs["create_service_account_request"] = attr
-	}
-	{
-		attr := rsschema.SingleNestedAttribute{
-			Attributes: resourceSchemaAttrsRequestTransferServiceAccountAdministrationRequest(false),
-		}
-		attr.Optional = true
-		schemaAttrs["transfer_service_account_administration_request"] = attr
-	}
-	{
-		attr := rsschema.SingleNestedAttribute{
-			Attributes: resourceSchemaAttrsRequestPasswordResetRequest(false),
-		}
-		attr.Optional = true
-		schemaAttrs["password_reset_request"] = attr
+		schemaAttrs["extend_access_request"] = attr
 	}
 	{
 		attr := rsschema.SingleNestedAttribute{
@@ -6249,6 +5800,160 @@ func resourceSchemaAttrsRequestModificationRequest(recurse bool) map[string]rssc
 	}
 	{
 		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsRequestGrantGroupOnSystemRequest(false),
+		}
+		attr.Optional = true
+		schemaAttrs["grant_group_on_system_request"] = attr
+	}
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsRequestAbstractProvisionedSystemModificationRequest(false),
+		}
+		attr.Optional = true
+		schemaAttrs["abstract_provisioned_system_modification_request"] = attr
+	}
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsRequestEnableTechnicalAdministrationRequest(false),
+		}
+		attr.Optional = true
+		schemaAttrs["enable_technical_administration_request"] = attr
+	}
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsRequestGrantApplicationRequest(false),
+		}
+		attr.Optional = true
+		schemaAttrs["grant_application_request"] = attr
+	}
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsRequestPasswordResetRequest(false),
+		}
+		attr.Optional = true
+		schemaAttrs["password_reset_request"] = attr
+	}
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsRequestGrantGroupOnSystemRequestRequest(false),
+		}
+		attr.Optional = true
+		schemaAttrs["grant_group_on_system_request_request"] = attr
+	}
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsRequestTransferServiceAccountAdministrationRequest(false),
+		}
+		attr.Optional = true
+		schemaAttrs["transfer_service_account_administration_request"] = attr
+	}
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsRequestRemoveProvisionedSystemRequest(false),
+		}
+		attr.Optional = true
+		schemaAttrs["remove_provisioned_system_request"] = attr
+	}
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsRequestUpdateGroupMembershipRequest(false),
+		}
+		attr.Optional = true
+		schemaAttrs["update_group_membership_request"] = attr
+	}
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsRequestTransferGroupOnSystemOwnershipRequest(false),
+		}
+		attr.Optional = true
+		schemaAttrs["transfer_group_on_system_ownership_request"] = attr
+	}
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsRequestAbstractOrganizationalUnitModificationRequest(false),
+		}
+		attr.Optional = true
+		schemaAttrs["abstract_organizational_unit_modification_request"] = attr
+	}
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsRequestTransferOrganizationalUnitOwnershipRequest(false),
+		}
+		attr.Optional = true
+		schemaAttrs["transfer_organizational_unit_ownership_request"] = attr
+	}
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsRequestGrantAccessRequest(false),
+		}
+		attr.Optional = true
+		schemaAttrs["grant_access_request"] = attr
+	}
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsRequestVerifyInternalAccountRequest(false),
+		}
+		attr.Optional = true
+		schemaAttrs["verify_internal_account_request"] = attr
+	}
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsRequestTransferAuditorGroupRequest(false),
+		}
+		attr.Optional = true
+		schemaAttrs["transfer_auditor_group_request"] = attr
+	}
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsRequestCreateGroupOnSystemRequest(false),
+		}
+		attr.Optional = true
+		schemaAttrs["create_group_on_system_request"] = attr
+	}
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsRequestJoinGroupRequest(false),
+		}
+		attr.Optional = true
+		schemaAttrs["join_group_request"] = attr
+	}
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsRequestJoinVaultRequest(false),
+		}
+		attr.Optional = true
+		schemaAttrs["join_vault_request"] = attr
+	}
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsRequestTransferProvisionedSystemContentAdministrationRequest(false),
+		}
+		attr.Optional = true
+		schemaAttrs["transfer_provisioned_system_content_administration_request"] = attr
+	}
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsRequestSetupNestedGroupRequest(false),
+		}
+		attr.Optional = true
+		schemaAttrs["setup_nested_group_request"] = attr
+	}
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsRequestRevokeAdminRequest(false),
+		}
+		attr.Optional = true
+		schemaAttrs["revoke_admin_request"] = attr
+	}
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsRequestRemoveGroupRequest(false),
+		}
+		attr.Optional = true
+		schemaAttrs["remove_group_request"] = attr
+	}
+	{
+		attr := rsschema.SingleNestedAttribute{
 			Attributes: resourceSchemaAttrsRequestTransferProvisionedSystemOwnershipRequest(false),
 		}
 		attr.Optional = true
@@ -6256,10 +5961,66 @@ func resourceSchemaAttrsRequestModificationRequest(recurse bool) map[string]rssc
 	}
 	{
 		attr := rsschema.SingleNestedAttribute{
-			Attributes: resourceSchemaAttrsRequestExtendAccessRequest(false),
+			Attributes: resourceSchemaAttrsRequestCreateServiceAccountRequest(false),
 		}
 		attr.Optional = true
-		schemaAttrs["extend_access_request"] = attr
+		schemaAttrs["create_service_account_request"] = attr
+	}
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsRequestGrantClientPermissionRequest(false),
+		}
+		attr.Optional = true
+		schemaAttrs["grant_client_permission_request"] = attr
+	}
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsRequestCreateGroupRequest(false),
+		}
+		attr.Optional = true
+		schemaAttrs["create_group_request"] = attr
+	}
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsRequestDisable2FARequest(false),
+		}
+		attr.Optional = true
+		schemaAttrs["disable2fa_request"] = attr
+	}
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsRequestTransferApplicationOwnershipRequest(false),
+		}
+		attr.Optional = true
+		schemaAttrs["transfer_application_ownership_request"] = attr
+	}
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsRequestAddGroupAdminRequest(false),
+		}
+		attr.Optional = true
+		schemaAttrs["add_group_admin_request"] = attr
+	}
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsRequestReviewAuditRequest(false),
+		}
+		attr.Optional = true
+		schemaAttrs["review_audit_request"] = attr
+	}
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsRequestSetupAuthorizingGroupRequest(false),
+		}
+		attr.Optional = true
+		schemaAttrs["setup_authorizing_group_request"] = attr
+	}
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsRequestRemoveOrganizationalUnitRequest(false),
+		}
+		attr.Optional = true
+		schemaAttrs["remove_organizational_unit_request"] = attr
 	}
 	{
 		attr := rsschema.SingleNestedAttribute{
@@ -6525,13 +6286,7 @@ func resourceSchemaAttrsRequestVerifyInternalAccountRequest(recurse bool) map[st
 func resourceSchemaAttrsServiceaccountServiceAccount(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	if recurse {
-		{
-			attr := rsschema.SingleNestedAttribute{
-				Attributes: resourceSchemaAttrsServiceaccountServiceAccount_additionalObjects(false),
-			}
-			attr.Optional = true
-			schemaAttrs["additional_objects"] = attr
-		}
+		maps.Copy(schemaAttrs, resourceSchemaAttrsServiceaccountServiceAccount_additionalObjects(false))
 	}
 	schemaAttrs["links"] = rsschema.ListNestedAttribute{
 		NestedObject: rsschema.NestedAttributeObject{
@@ -6597,13 +6352,7 @@ func resourceSchemaAttrsServiceaccountServiceAccount(recurse bool) map[string]rs
 func resourceSchemaAttrsServiceaccountServiceAccountGroup(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	if recurse {
-		{
-			attr := rsschema.SingleNestedAttribute{
-				Attributes: resourceSchemaAttrsServiceaccountServiceAccountGroup_additionalObjects(false),
-			}
-			attr.Optional = true
-			schemaAttrs["additional_objects"] = attr
-		}
+		maps.Copy(schemaAttrs, resourceSchemaAttrsServiceaccountServiceAccountGroup_additionalObjects(false))
 	}
 	schemaAttrs["links"] = rsschema.ListNestedAttribute{
 		NestedObject: rsschema.NestedAttributeObject{
@@ -6808,13 +6557,7 @@ func resourceSchemaAttrsSimpleVersionInfo(recurse bool) map[string]rsschema.Attr
 func resourceSchemaAttrsVaultDeletedVaultHolder(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	if recurse {
-		{
-			attr := rsschema.SingleNestedAttribute{
-				Attributes: resourceSchemaAttrsVaultDeletedVaultHolder_additionalObjects(false),
-			}
-			attr.Optional = true
-			schemaAttrs["additional_objects"] = attr
-		}
+		maps.Copy(schemaAttrs, resourceSchemaAttrsVaultDeletedVaultHolder_additionalObjects(false))
 	}
 	schemaAttrs["links"] = rsschema.ListNestedAttribute{
 		NestedObject: rsschema.NestedAttributeObject{
@@ -7016,13 +6759,7 @@ func resourceSchemaAttrsVaultVaultHolder(recurse bool) map[string]rsschema.Attri
 func resourceSchemaAttrsVaultVaultRecord(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	if recurse {
-		{
-			attr := rsschema.SingleNestedAttribute{
-				Attributes: resourceSchemaAttrsVaultVaultRecord_additionalObjects(false),
-			}
-			attr.Optional = true
-			schemaAttrs["additional_objects"] = attr
-		}
+		maps.Copy(schemaAttrs, resourceSchemaAttrsVaultVaultRecord_additionalObjects(false))
 	}
 	schemaAttrs["links"] = rsschema.ListNestedAttribute{
 		NestedObject: rsschema.NestedAttributeObject{
@@ -7306,13 +7043,7 @@ func resourceSchemaAttrsVaultVaultUnlockResponse(recurse bool) map[string]rssche
 func resourceSchemaAttrsWebhookWebhook(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	if recurse {
-		{
-			attr := rsschema.SingleNestedAttribute{
-				Attributes: resourceSchemaAttrsWebhookWebhook_additionalObjects(false),
-			}
-			attr.Optional = true
-			schemaAttrs["additional_objects"] = attr
-		}
+		maps.Copy(schemaAttrs, resourceSchemaAttrsWebhookWebhook_additionalObjects(false))
 	}
 	schemaAttrs["links"] = rsschema.ListNestedAttribute{
 		NestedObject: rsschema.NestedAttributeObject{
@@ -7467,13 +7198,7 @@ func resourceSchemaAttrsWebhookWebhook(recurse bool) map[string]rsschema.Attribu
 func resourceSchemaAttrsWebhookWebhookDelivery(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	if recurse {
-		{
-			attr := rsschema.SingleNestedAttribute{
-				Attributes: resourceSchemaAttrsWebhookWebhookDelivery_additionalObjects(false),
-			}
-			attr.Optional = true
-			schemaAttrs["additional_objects"] = attr
-		}
+		maps.Copy(schemaAttrs, resourceSchemaAttrsWebhookWebhookDelivery_additionalObjects(false))
 	}
 	schemaAttrs["links"] = rsschema.ListNestedAttribute{
 		NestedObject: rsschema.NestedAttributeObject{
