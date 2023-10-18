@@ -201,7 +201,12 @@ func findGroupGroupPrimerByUUID(ctx context.Context, uuid *string) (keyhubmodels
 	if ret == nil {
 		return ret, diag
 	}
-	return &ret.(*keyhubmodels.GroupGroup).GroupGroupPrimer, diag
+	if primer, ok := findSuperStruct(ret, reflect.TypeOf(keyhubmodels.GroupGroupPrimer{})); ok {
+		ret := primer.(keyhubmodels.GroupGroupPrimer)
+		return &ret, diag
+	}
+	diag.AddError("Type error", "Result not of type GroupGroupPrimer")
+	return nil, diag
 }
 
 func findDirectoryAccountDirectoryPrimerByUUID(ctx context.Context, uuid *string) (keyhubmodels.DirectoryAccountDirectoryPrimerable, diag.Diagnostics) {
@@ -218,7 +223,12 @@ func findDirectoryAccountDirectoryPrimerByUUID(ctx context.Context, uuid *string
 	if ret == nil {
 		return ret, diag
 	}
-	return &ret.(*keyhubmodels.DirectoryAccountDirectory).DirectoryAccountDirectoryPrimer, diag
+	if primer, ok := findSuperStruct(ret, reflect.TypeOf(keyhubmodels.DirectoryAccountDirectoryPrimer{})); ok {
+		ret := primer.(keyhubmodels.DirectoryAccountDirectoryPrimer)
+		return &ret, diag
+	}
+	diag.AddError("Type error", "Result not of type DirectoryAccountDirectoryPrimer")
+	return nil, diag
 }
 
 func findOrganizationOrganizationalUnitPrimerByUUID(ctx context.Context, uuid *string) (keyhubmodels.OrganizationOrganizationalUnitPrimerable, diag.Diagnostics) {
@@ -235,7 +245,12 @@ func findOrganizationOrganizationalUnitPrimerByUUID(ctx context.Context, uuid *s
 	if ret == nil {
 		return ret, diag
 	}
-	return &ret.(*keyhubmodels.OrganizationOrganizationalUnit).OrganizationOrganizationalUnitPrimer, diag
+	if primer, ok := findSuperStruct(ret, reflect.TypeOf(keyhubmodels.OrganizationOrganizationalUnitPrimer{})); ok {
+		ret := primer.(keyhubmodels.OrganizationOrganizationalUnitPrimer)
+		return &ret, diag
+	}
+	diag.AddError("Type error", "Result not of type OrganizationOrganizationalUnitPrimer")
+	return nil, diag
 }
 
 func findCertificateCertificatePrimerByUUID(ctx context.Context, uuid *string) (keyhubmodels.CertificateCertificatePrimerable, diag.Diagnostics) {
@@ -252,7 +267,12 @@ func findCertificateCertificatePrimerByUUID(ctx context.Context, uuid *string) (
 	if ret == nil {
 		return ret, diag
 	}
-	return &ret.(*keyhubmodels.CertificateCertificate).CertificateCertificatePrimer, diag
+	if primer, ok := findSuperStruct(ret, reflect.TypeOf(keyhubmodels.CertificateCertificatePrimer{})); ok {
+		ret := primer.(keyhubmodels.CertificateCertificatePrimer)
+		return &ret, diag
+	}
+	diag.AddError("Type error", "Result not of type CertificateCertificatePrimer")
+	return nil, diag
 }
 
 func findProvisioningProvisionedSystemPrimerByUUID(ctx context.Context, uuid *string) (keyhubmodels.ProvisioningProvisionedSystemPrimerable, diag.Diagnostics) {
@@ -269,7 +289,12 @@ func findProvisioningProvisionedSystemPrimerByUUID(ctx context.Context, uuid *st
 	if ret == nil {
 		return ret, diag
 	}
-	return &ret.(*keyhubmodels.ProvisioningProvisionedSystem).ProvisioningProvisionedSystemPrimer, diag
+	if primer, ok := findSuperStruct(ret, reflect.TypeOf(keyhubmodels.ProvisioningProvisionedSystemPrimer{})); ok {
+		ret := primer.(keyhubmodels.ProvisioningProvisionedSystemPrimer)
+		return &ret, diag
+	}
+	diag.AddError("Type error", "Result not of type ProvisioningProvisionedSystemPrimer")
+	return nil, diag
 }
 
 func findGroupGroupClassificationPrimerByUUID(ctx context.Context, uuid *string) (keyhubmodels.GroupGroupClassificationPrimerable, diag.Diagnostics) {
@@ -286,7 +311,12 @@ func findGroupGroupClassificationPrimerByUUID(ctx context.Context, uuid *string)
 	if ret == nil {
 		return ret, diag
 	}
-	return &ret.(*keyhubmodels.GroupGroupClassification).GroupGroupClassificationPrimer, diag
+	if primer, ok := findSuperStruct(ret, reflect.TypeOf(keyhubmodels.GroupGroupClassificationPrimer{})); ok {
+		ret := primer.(keyhubmodels.GroupGroupClassificationPrimer)
+		return &ret, diag
+	}
+	diag.AddError("Type error", "Result not of type GroupGroupClassificationPrimer")
+	return nil, diag
 }
 
 func findClientClientApplicationPrimerByUUID(ctx context.Context, uuid *string) (keyhubmodels.ClientClientApplicationPrimerable, diag.Diagnostics) {
@@ -303,15 +333,25 @@ func findClientClientApplicationPrimerByUUID(ctx context.Context, uuid *string) 
 	if ret == nil {
 		return ret, diag
 	}
-	return &ret.(*keyhubmodels.ClientClientApplication).ClientClientApplicationPrimer, diag
+	if primer, ok := findSuperStruct(ret, reflect.TypeOf(keyhubmodels.ClientClientApplicationPrimer{})); ok {
+		ret := primer.(keyhubmodels.ClientClientApplicationPrimer)
+		return &ret, diag
+	}
+	diag.AddError("Type error", "Result not of type ClientClientApplicationPrimer")
+	return nil, diag
 }
 
 func findAuthAccountPrimerByUUID(ctx context.Context, uuid *string) (keyhubmodels.AuthAccountPrimerable, diag.Diagnostics) {
-	account, diag := findAuthAccountByUUID(ctx, uuid)
-	if account == nil {
-		return account, diag
+	ret, diag := findAuthAccountByUUID(ctx, uuid)
+	if ret == nil {
+		return ret, diag
 	}
-	return &account.(*keyhubmodels.AuthAccount).AuthAccountPrimer, diag
+	if primer, ok := findSuperStruct(ret, reflect.TypeOf(keyhubmodels.AuthAccountPrimer{})); ok {
+		ret := primer.(keyhubmodels.AuthAccountPrimer)
+		return &ret, diag
+	}
+	diag.AddError("Type error", "Result not of type AuthAccountPrimer")
+	return nil, diag
 }
 
 func findAuthAccountByUUID(ctx context.Context, uuid *string) (keyhubmodels.AuthAccountable, diag.Diagnostics) {
@@ -341,7 +381,12 @@ func findServiceaccountServiceAccountPrimerByUUID(ctx context.Context, uuid *str
 	if ret == nil {
 		return ret, diag
 	}
-	return &ret.(*keyhubmodels.ServiceaccountServiceAccount).ServiceaccountServiceAccountPrimer, diag
+	if primer, ok := findSuperStruct(ret, reflect.TypeOf(keyhubmodels.ServiceaccountServiceAccountPrimer{})); ok {
+		ret := primer.(keyhubmodels.ServiceaccountServiceAccountPrimer)
+		return &ret, diag
+	}
+	diag.AddError("Type error", "Result not of type ServiceaccountServiceAccountPrimer")
+	return nil, diag
 }
 
 func findVaultVaultRecordPrimerByUUID(ctx context.Context, uuid *string) (keyhubmodels.VaultVaultRecordPrimerable, diag.Diagnostics) {
@@ -358,7 +403,12 @@ func findVaultVaultRecordPrimerByUUID(ctx context.Context, uuid *string) (keyhub
 	if ret == nil {
 		return ret, diag
 	}
-	return &ret.(*keyhubmodels.VaultVaultRecord).VaultVaultRecordPrimer, diag
+	if primer, ok := findSuperStruct(ret, reflect.TypeOf(keyhubmodels.VaultVaultRecordPrimer{})); ok {
+		ret := primer.(keyhubmodels.VaultVaultRecordPrimer)
+		return &ret, diag
+	}
+	diag.AddError("Type error", "Result not of type VaultVaultRecordPrimer")
+	return nil, diag
 }
 
 func errorReportToString(ctx context.Context, err error) string {
@@ -440,4 +490,25 @@ func collectAdditional(data any) []string {
 		}
 	}
 	return ret
+}
+
+func findSuperStruct(data any, targetType reflect.Type) (any, bool) {
+	reflectValue := reflect.ValueOf(data)
+	reflectType := reflectValue.Type()
+	if reflectType.Kind() == reflect.Pointer {
+		return findSuperStruct(reflectValue.Elem().Interface(), targetType)
+	}
+	for i := 0; i < reflectType.NumField(); i++ {
+		field := reflectType.Field(i)
+		if field.Anonymous {
+			fieldValue := reflectValue.Field(i).Interface()
+			if field.Type == targetType {
+				return fieldValue, true
+			}
+			if ret, ok := findSuperStruct(fieldValue, targetType); ok {
+				return ret, true
+			}
+		}
+	}
+	return nil, false
 }

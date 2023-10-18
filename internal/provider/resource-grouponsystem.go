@@ -85,7 +85,7 @@ func (r *grouponsystemResource) Create(ctx context.Context, req resource.CreateR
 	tflog.Info(ctx, "Creating Topicus KeyHub grouponsystem")
 	newWrapper := keyhubmodels.NewProvisioningGroupOnSystemLinkableWrapper()
 	newWrapper.SetItems([]keyhubmodels.ProvisioningGroupOnSystemable{newTkh})
-	tkhParent, diags := findProvisioningProvisionedSystemPrimerByUUID(ctx, data.SystemUUID.ValueStringPointer())
+	tkhParent, diags := findProvisioningProvisionedSystemPrimerByUUID(ctx, data.ProvisionedSystemUUID.ValueStringPointer())
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -108,7 +108,7 @@ func (r *grouponsystemResource) Create(ctx context.Context, req resource.CreateR
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	tf = setAttributeValue(ctx, tf, "system_uuid", types.StringValue(data.SystemUUID.ValueString()))
+	tf = setAttributeValue(ctx, tf, "provisioned_system_uuid", types.StringValue(data.ProvisionedSystemUUID.ValueString()))
 	fillDataStructFromTFObjectRSNestedProvisioningGroupOnSystem(&data, tf)
 
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -126,7 +126,7 @@ func (r *grouponsystemResource) Read(ctx context.Context, req resource.ReadReque
 
 	ctx = context.WithValue(ctx, keyHubClientKey, r.client)
 	tflog.Info(ctx, "Reading grouponsystem from Topicus KeyHub")
-	tkhParent, diags := findProvisioningProvisionedSystemPrimerByUUID(ctx, data.SystemUUID.ValueStringPointer())
+	tkhParent, diags := findProvisioningProvisionedSystemPrimerByUUID(ctx, data.ProvisionedSystemUUID.ValueStringPointer())
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -148,7 +148,7 @@ func (r *grouponsystemResource) Read(ctx context.Context, req resource.ReadReque
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	tf = setAttributeValue(ctx, tf, "system_uuid", types.StringValue(data.SystemUUID.ValueString()))
+	tf = setAttributeValue(ctx, tf, "provisioned_system_uuid", types.StringValue(data.ProvisionedSystemUUID.ValueString()))
 	fillDataStructFromTFObjectRSNestedProvisioningGroupOnSystem(&data, tf)
 
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

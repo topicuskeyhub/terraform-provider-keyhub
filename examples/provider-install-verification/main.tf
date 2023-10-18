@@ -60,9 +60,16 @@ resource "keyhubpreview_group" "terra" {
   }]
 }
 
-#resource "keyhubpreview_grouponsystem" "terragos" {
-#
-#}
+resource "keyhubpreview_grouponsystem" "terragos" {
+  provisioned_system_uuid = "47923975-b1af-47c8-bd7a-e52ebb4b9b84"
+  owner_uuid              = resource.keyhubpreview_group.terra.uuid
+  name_in_system          = "cn=terraform,ou=groups,ou=dev,dc=ad01,dc=keyhub,dc=s25,dc=topicus,dc=education"
+  type                    = "GROUP"
+  provgroups = [{
+    activation_required = "false"
+    group_uuid          = "c6c98d08-2cbf-45e9-937a-c5c0427348e2"
+  }]
+}
 
 #output "resource_group" {
 #  value = resource.keyhubpreview_group.terra

@@ -1352,13 +1352,12 @@ Required:
 Optional:
 
 - `display_name` (String)
-- `short_name_in_system` (String)
-- `system_uuid` (String)
 
 Read-Only:
 
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_groups_on_system--items--links))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_groups_on_system--items--permissions))
+- `short_name_in_system` (String)
 
 <a id="nestedatt--owned_groups_on_system--items--links"></a>
 ### Nested Schema for `owned_groups_on_system.items.links`
@@ -1798,6 +1797,10 @@ Optional:
 <a id="nestedatt--systems"></a>
 ### Nested Schema for `systems`
 
+Required:
+
+- `group_uuid` (String)
+
 Optional:
 
 - `activation_required` (Boolean)
@@ -1805,7 +1808,6 @@ Optional:
 Read-Only:
 
 - `group_on_system` (Attributes) (see [below for nested schema](#nestedatt--systems--group_on_system))
-- `group_uuid` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--systems--links))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--systems--permissions))
 
@@ -1821,13 +1823,12 @@ Required:
 Optional:
 
 - `display_name` (String)
-- `short_name_in_system` (String)
-- `system_uuid` (String)
 
 Read-Only:
 
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--systems--group_on_system--links))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--systems--group_on_system--permissions))
+- `short_name_in_system` (String)
 
 <a id="nestedatt--systems--group_on_system--links"></a>
 ### Nested Schema for `systems.group_on_system.links`
