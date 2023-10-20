@@ -181,7 +181,7 @@ Read-Only:
 
 Optional:
 
-- `attributes` (Attributes) (see [below for nested schema](#nestedatt--client_permissions--client--attributes))
+- `attributes` (Map of String)
 - `callback_uri` (String)
 - `confidential` (Boolean)
 - `debug_mode` (Boolean)
@@ -196,10 +196,6 @@ Read-Only:
 
 - `account_permissions` (Attributes List) (see [below for nested schema](#nestedatt--client_permissions--client--account_permissions))
 - `shared_secret_uuid` (String)
-
-<a id="nestedatt--client_permissions--client--attributes"></a>
-### Nested Schema for `client_permissions.client.attributes`
-
 
 <a id="nestedatt--client_permissions--client--account_permissions"></a>
 ### Nested Schema for `client_permissions.client.account_permissions`
@@ -282,7 +278,7 @@ Read-Only:
 
 Optional:
 
-- `attributes` (Attributes) (see [below for nested schema](#nestedatt--administered_clients--o_auth2_client--attributes))
+- `attributes` (Map of String)
 - `callback_uri` (String)
 - `confidential` (Boolean)
 - `debug_mode` (Boolean)
@@ -297,10 +293,6 @@ Read-Only:
 
 - `account_permissions` (Attributes List) (see [below for nested schema](#nestedatt--administered_clients--o_auth2_client--account_permissions))
 - `shared_secret_uuid` (String)
-
-<a id="nestedatt--administered_clients--o_auth2_client--attributes"></a>
-### Nested Schema for `administered_clients.o_auth2_client.attributes`
-
 
 <a id="nestedatt--administered_clients--o_auth2_client--account_permissions"></a>
 ### Nested Schema for `administered_clients.o_auth2_client.account_permissions`
@@ -323,13 +315,9 @@ Required:
 
 Optional:
 
-- `attributes` (Attributes) (see [below for nested schema](#nestedatt--administered_clients--saml2_client--attributes))
+- `attributes` (Map of String)
 - `metadata` (String)
 - `metadata_url` (String)
-
-<a id="nestedatt--administered_clients--saml2_client--attributes"></a>
-### Nested Schema for `administered_clients.saml2_client.attributes`
-
 
 
 <a id="nestedatt--administered_clients--links"></a>
@@ -403,7 +391,7 @@ Required:
 
 Optional:
 
-- `attributes` (Attributes) (see [below for nested schema](#nestedatt--administered_systems--abstract_provisioned_ldap--attributes))
+- `attributes` (Map of String)
 - `bind_dn` (String)
 - `bind_password` (String)
 - `client_certificate_uuid` (String)
@@ -416,10 +404,6 @@ Optional:
 - `ssh_public_key_supported` (Boolean)
 - `trusted_certificate_uuid` (String)
 - `user_dn` (String)
-
-<a id="nestedatt--administered_systems--abstract_provisioned_ldap--attributes"></a>
-### Nested Schema for `administered_systems.abstract_provisioned_ldap.attributes`
-
 
 
 <a id="nestedatt--administered_systems--provisioned_a_d"></a>
@@ -775,7 +759,7 @@ Required:
 
 Optional:
 
-- `attributes` (Attributes) (see [below for nested schema](#nestedatt--content_administered_systems--abstract_provisioned_ldap--attributes))
+- `attributes` (Map of String)
 - `bind_dn` (String)
 - `bind_password` (String)
 - `client_certificate_uuid` (String)
@@ -788,10 +772,6 @@ Optional:
 - `ssh_public_key_supported` (Boolean)
 - `trusted_certificate_uuid` (String)
 - `user_dn` (String)
-
-<a id="nestedatt--content_administered_systems--abstract_provisioned_ldap--attributes"></a>
-### Nested Schema for `content_administered_systems.abstract_provisioned_ldap.attributes`
-
 
 
 <a id="nestedatt--content_administered_systems--provisioned_a_d"></a>
@@ -1046,12 +1026,8 @@ Optional:
 Optional:
 
 - `level` (String)
-- `parameters` (Attributes) (see [below for nested schema](#nestedatt--markers--markers--parameters))
+- `parameters` (Map of String)
 - `type` (String)
-
-<a id="nestedatt--markers--markers--parameters"></a>
-### Nested Schema for `markers.markers.parameters`
-
 
 
 
@@ -1147,7 +1123,7 @@ Read-Only:
 
 Optional:
 
-- `attributes` (Attributes) (see [below for nested schema](#nestedatt--owned_clients--o_auth2_client--attributes))
+- `attributes` (Map of String)
 - `callback_uri` (String)
 - `confidential` (Boolean)
 - `debug_mode` (Boolean)
@@ -1162,10 +1138,6 @@ Read-Only:
 
 - `account_permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_clients--o_auth2_client--account_permissions))
 - `shared_secret_uuid` (String)
-
-<a id="nestedatt--owned_clients--o_auth2_client--attributes"></a>
-### Nested Schema for `owned_clients.o_auth2_client.attributes`
-
 
 <a id="nestedatt--owned_clients--o_auth2_client--account_permissions"></a>
 ### Nested Schema for `owned_clients.o_auth2_client.account_permissions`
@@ -1188,13 +1160,9 @@ Required:
 
 Optional:
 
-- `attributes` (Attributes) (see [below for nested schema](#nestedatt--owned_clients--saml2_client--attributes))
+- `attributes` (Map of String)
 - `metadata` (String)
 - `metadata_url` (String)
-
-<a id="nestedatt--owned_clients--saml2_client--attributes"></a>
-### Nested Schema for `owned_clients.saml2_client.attributes`
-
 
 
 <a id="nestedatt--owned_clients--links"></a>
@@ -1474,7 +1442,7 @@ Required:
 
 Optional:
 
-- `attributes` (Attributes) (see [below for nested schema](#nestedatt--owned_systems--abstract_provisioned_ldap--attributes))
+- `attributes` (Map of String)
 - `bind_dn` (String)
 - `bind_password` (String)
 - `client_certificate_uuid` (String)
@@ -1487,10 +1455,6 @@ Optional:
 - `ssh_public_key_supported` (Boolean)
 - `trusted_certificate_uuid` (String)
 - `user_dn` (String)
-
-<a id="nestedatt--owned_systems--abstract_provisioned_ldap--attributes"></a>
-### Nested Schema for `owned_systems.abstract_provisioned_ldap.attributes`
-
 
 
 <a id="nestedatt--owned_systems--provisioned_a_d"></a>

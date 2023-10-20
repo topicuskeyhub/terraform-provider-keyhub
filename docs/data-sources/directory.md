@@ -334,12 +334,8 @@ Read-Only:
 Read-Only:
 
 - `level` (String)
-- `parameters` (Attributes) (see [below for nested schema](#nestedatt--markers--markers--parameters))
+- `parameters` (Map of String)
 - `type` (String)
-
-<a id="nestedatt--markers--markers--parameters"></a>
-### Nested Schema for `markers.markers.parameters`
-
 
 
 

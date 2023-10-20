@@ -16,6 +16,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
+	"github.com/microsoft/kiota-abstractions-go/serialization"
 	keyhub "github.com/topicuskeyhub/sdk-go"
 	keyhubaccount "github.com/topicuskeyhub/sdk-go/account"
 	keyhubcertificate "github.com/topicuskeyhub/sdk-go/certificate"
@@ -52,6 +53,26 @@ func tfToSlice[T any](val basetypes.ListValue, toValue func(attr.Value, *diag.Di
 	for _, curVal := range vals {
 		ret = append(ret, toValue(curVal, &diags))
 	}
+	return ret, diags
+}
+
+func mapToTF[T any](elemType attr.Type, vals map[string]T, toValue func(T, *diag.Diagnostics) attr.Value) (attr.Value, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	ret := make(map[string]attr.Value)
+	for name, val := range vals {
+		ret[name] = toValue(val, &diags)
+	}
+	return types.MapValue(elemType, ret)
+}
+
+func tfToMap[T serialization.AdditionalDataHolder](val basetypes.MapValue, toValue func(attr.Value, *diag.Diagnostics) any, ret T) (T, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	vals := val.Elements()
+	retMap := make(map[string]any)
+	for name, val := range vals {
+		retMap[name] = toValue(val, &diags)
+	}
+	ret.SetAdditionalData(retMap)
 	return ret, diags
 }
 

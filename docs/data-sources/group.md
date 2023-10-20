@@ -291,7 +291,7 @@ Read-Only:
 Read-Only:
 
 - `account_permissions` (Attributes List) (see [below for nested schema](#nestedatt--administered_clients--o_auth2_client--account_permissions))
-- `attributes` (Attributes) (see [below for nested schema](#nestedatt--administered_clients--o_auth2_client--attributes))
+- `attributes` (Map of String)
 - `callback_uri` (String)
 - `confidential` (Boolean)
 - `debug_mode` (Boolean)
@@ -312,10 +312,6 @@ Read-Only:
 - `instances` (List of String)
 - `operations` (List of String)
 - `type_escaped` (String)
-
-
-<a id="nestedatt--administered_clients--o_auth2_client--attributes"></a>
-### Nested Schema for `administered_clients.o_auth2_client.attributes`
 
 
 <a id="nestedatt--administered_clients--o_auth2_client--shared_secret"></a>
@@ -404,14 +400,10 @@ Read-Only:
 
 Read-Only:
 
-- `attributes` (Attributes) (see [below for nested schema](#nestedatt--administered_clients--saml2_client--attributes))
+- `attributes` (Map of String)
 - `metadata` (String)
 - `metadata_url` (String)
 - `subject_format` (String)
-
-<a id="nestedatt--administered_clients--saml2_client--attributes"></a>
-### Nested Schema for `administered_clients.saml2_client.attributes`
-
 
 
 <a id="nestedatt--administered_clients--technical_administrator"></a>
@@ -489,7 +481,7 @@ Read-Only:
 
 Read-Only:
 
-- `attributes` (Attributes) (see [below for nested schema](#nestedatt--administered_systems--abstract_provisioned_ldap--attributes))
+- `attributes` (Map of String)
 - `base_dn` (String)
 - `bind_dn` (String)
 - `bind_password` (String)
@@ -505,10 +497,6 @@ Read-Only:
 - `tls` (String)
 - `trusted_certificate` (Attributes) (see [below for nested schema](#nestedatt--administered_systems--abstract_provisioned_ldap--trusted_certificate))
 - `user_dn` (String)
-
-<a id="nestedatt--administered_systems--abstract_provisioned_ldap--attributes"></a>
-### Nested Schema for `administered_systems.abstract_provisioned_ldap.attributes`
-
 
 <a id="nestedatt--administered_systems--abstract_provisioned_ldap--client_certificate"></a>
 ### Nested Schema for `administered_systems.abstract_provisioned_ldap.client_certificate`
@@ -1743,7 +1731,7 @@ Read-Only:
 Read-Only:
 
 - `account_permissions` (Attributes List) (see [below for nested schema](#nestedatt--client_permissions--client--account_permissions))
-- `attributes` (Attributes) (see [below for nested schema](#nestedatt--client_permissions--client--attributes))
+- `attributes` (Map of String)
 - `callback_uri` (String)
 - `confidential` (Boolean)
 - `debug_mode` (Boolean)
@@ -1764,10 +1752,6 @@ Read-Only:
 - `instances` (List of String)
 - `operations` (List of String)
 - `type_escaped` (String)
-
-
-<a id="nestedatt--client_permissions--client--attributes"></a>
-### Nested Schema for `client_permissions.client.attributes`
 
 
 <a id="nestedatt--client_permissions--client--shared_secret"></a>
@@ -2151,7 +2135,7 @@ Read-Only:
 
 Read-Only:
 
-- `attributes` (Attributes) (see [below for nested schema](#nestedatt--content_administered_systems--abstract_provisioned_ldap--attributes))
+- `attributes` (Map of String)
 - `base_dn` (String)
 - `bind_dn` (String)
 - `bind_password` (String)
@@ -2167,10 +2151,6 @@ Read-Only:
 - `tls` (String)
 - `trusted_certificate` (Attributes) (see [below for nested schema](#nestedatt--content_administered_systems--abstract_provisioned_ldap--trusted_certificate))
 - `user_dn` (String)
-
-<a id="nestedatt--content_administered_systems--abstract_provisioned_ldap--attributes"></a>
-### Nested Schema for `content_administered_systems.abstract_provisioned_ldap.attributes`
-
 
 <a id="nestedatt--content_administered_systems--abstract_provisioned_ldap--client_certificate"></a>
 ### Nested Schema for `content_administered_systems.abstract_provisioned_ldap.client_certificate`
@@ -2849,12 +2829,8 @@ Read-Only:
 Read-Only:
 
 - `level` (String)
-- `parameters` (Attributes) (see [below for nested schema](#nestedatt--markers--markers--parameters))
+- `parameters` (Map of String)
 - `type` (String)
-
-<a id="nestedatt--markers--markers--parameters"></a>
-### Nested Schema for `markers.markers.parameters`
-
 
 
 
@@ -3257,7 +3233,7 @@ Read-Only:
 Read-Only:
 
 - `account_permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_clients--o_auth2_client--account_permissions))
-- `attributes` (Attributes) (see [below for nested schema](#nestedatt--owned_clients--o_auth2_client--attributes))
+- `attributes` (Map of String)
 - `callback_uri` (String)
 - `confidential` (Boolean)
 - `debug_mode` (Boolean)
@@ -3278,10 +3254,6 @@ Read-Only:
 - `instances` (List of String)
 - `operations` (List of String)
 - `type_escaped` (String)
-
-
-<a id="nestedatt--owned_clients--o_auth2_client--attributes"></a>
-### Nested Schema for `owned_clients.o_auth2_client.attributes`
 
 
 <a id="nestedatt--owned_clients--o_auth2_client--shared_secret"></a>
@@ -3370,14 +3342,10 @@ Read-Only:
 
 Read-Only:
 
-- `attributes` (Attributes) (see [below for nested schema](#nestedatt--owned_clients--saml2_client--attributes))
+- `attributes` (Map of String)
 - `metadata` (String)
 - `metadata_url` (String)
 - `subject_format` (String)
-
-<a id="nestedatt--owned_clients--saml2_client--attributes"></a>
-### Nested Schema for `owned_clients.saml2_client.attributes`
-
 
 
 <a id="nestedatt--owned_clients--technical_administrator"></a>
@@ -3968,7 +3936,7 @@ Read-Only:
 
 Read-Only:
 
-- `attributes` (Attributes) (see [below for nested schema](#nestedatt--owned_systems--abstract_provisioned_ldap--attributes))
+- `attributes` (Map of String)
 - `base_dn` (String)
 - `bind_dn` (String)
 - `bind_password` (String)
@@ -3984,10 +3952,6 @@ Read-Only:
 - `tls` (String)
 - `trusted_certificate` (Attributes) (see [below for nested schema](#nestedatt--owned_systems--abstract_provisioned_ldap--trusted_certificate))
 - `user_dn` (String)
-
-<a id="nestedatt--owned_systems--abstract_provisioned_ldap--attributes"></a>
-### Nested Schema for `owned_systems.abstract_provisioned_ldap.attributes`
-
 
 <a id="nestedatt--owned_systems--abstract_provisioned_ldap--client_certificate"></a>
 ### Nested Schema for `owned_systems.abstract_provisioned_ldap.client_certificate`

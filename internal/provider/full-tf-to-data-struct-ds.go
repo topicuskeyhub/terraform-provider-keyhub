@@ -221,7 +221,7 @@ func fillDataStructFromTFObjectDSClientLdapClient(data *clientLdapClientDataDS, 
 
 func fillDataStructFromTFObjectDSClientOAuth2Client(data *clientOAuth2ClientDataDS, obj types.Object) {
 	data.AccountPermissions = obj.Attributes()["account_permissions"].(basetypes.ListValue)
-	data.Attributes = obj.Attributes()["attributes"].(basetypes.ObjectValue)
+	data.Attributes = obj.Attributes()["attributes"].(basetypes.MapValue)
 	data.CallbackURI = obj.Attributes()["callback_uri"].(basetypes.StringValue)
 	data.Confidential = obj.Attributes()["confidential"].(basetypes.BoolValue)
 	data.DebugMode = obj.Attributes()["debug_mode"].(basetypes.BoolValue)
@@ -263,17 +263,11 @@ func fillDataStructFromTFObjectDSClientOAuth2ClientPermission_additionalObjects(
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
 }
 
-func fillDataStructFromTFObjectDSClientOAuth2Client_attributes(data *clientOAuth2Client_attributesDataDS, obj types.Object) {
-}
-
 func fillDataStructFromTFObjectDSClientSaml2Client(data *clientSaml2ClientDataDS, obj types.Object) {
-	data.Attributes = obj.Attributes()["attributes"].(basetypes.ObjectValue)
+	data.Attributes = obj.Attributes()["attributes"].(basetypes.MapValue)
 	data.Metadata = obj.Attributes()["metadata"].(basetypes.StringValue)
 	data.MetadataURL = obj.Attributes()["metadata_url"].(basetypes.StringValue)
 	data.SubjectFormat = obj.Attributes()["subject_format"].(basetypes.StringValue)
-}
-
-func fillDataStructFromTFObjectDSClientSaml2Client_attributes(data *clientSaml2Client_attributesDataDS, obj types.Object) {
 }
 
 func fillDataStructFromTFObjectDSDirectoryAccountDirectory(data *directoryAccountDirectoryDataDS, obj types.Object) {
@@ -709,10 +703,7 @@ func fillDataStructFromTFObjectDSLaunchpadVaultRecordLaunchpadTile(data *launchp
 func fillDataStructFromTFObjectDSMarkItemMarker(data *markItemMarkerDataDS, obj types.Object) {
 	data.Level = obj.Attributes()["level"].(basetypes.StringValue)
 	data.MarkItemMarkerType = obj.Attributes()["type"].(basetypes.StringValue)
-	data.Parameters = obj.Attributes()["parameters"].(basetypes.ObjectValue)
-}
-
-func fillDataStructFromTFObjectDSMarkItemMarker_parameters(data *markItemMarker_parametersDataDS, obj types.Object) {
+	data.Parameters = obj.Attributes()["parameters"].(basetypes.MapValue)
 }
 
 func fillDataStructFromTFObjectDSMarkItemMarkers(data *markItemMarkersDataDS, obj types.Object) {
@@ -748,7 +739,7 @@ func fillDataStructFromTFObjectDSOrganizationOrganizationalUnit_additionalObject
 }
 
 func fillDataStructFromTFObjectDSProvisioningAbstractProvisionedLDAP(data *provisioningAbstractProvisionedLDAPDataDS, obj types.Object) {
-	data.Attributes = obj.Attributes()["attributes"].(basetypes.ObjectValue)
+	data.Attributes = obj.Attributes()["attributes"].(basetypes.MapValue)
 	data.BaseDN = obj.Attributes()["base_dn"].(basetypes.StringValue)
 	data.BindDN = obj.Attributes()["bind_dn"].(basetypes.StringValue)
 	data.BindPassword = obj.Attributes()["bind_password"].(basetypes.StringValue)
@@ -764,9 +755,6 @@ func fillDataStructFromTFObjectDSProvisioningAbstractProvisionedLDAP(data *provi
 	data.TLS = obj.Attributes()["tls"].(basetypes.StringValue)
 	data.TrustedCertificate = obj.Attributes()["trusted_certificate"].(basetypes.ObjectValue)
 	data.UserDN = obj.Attributes()["user_dn"].(basetypes.StringValue)
-}
-
-func fillDataStructFromTFObjectDSProvisioningAbstractProvisionedLDAP_attributes(data *provisioningAbstractProvisionedLDAP_attributesDataDS, obj types.Object) {
 }
 
 func fillDataStructFromTFObjectDSProvisioningCircuitBreakerStatistics(data *provisioningCircuitBreakerStatisticsDataDS, obj types.Object) {

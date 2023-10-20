@@ -104,7 +104,7 @@ Read-Only:
 
 Optional:
 
-- `attributes` (Attributes) (see [below for nested schema](#nestedatt--o_auth2_client--attributes))
+- `attributes` (Map of String)
 - `callback_uri` (String)
 - `confidential` (Boolean)
 - `debug_mode` (Boolean)
@@ -119,10 +119,6 @@ Read-Only:
 
 - `account_permissions` (Attributes List) (see [below for nested schema](#nestedatt--o_auth2_client--account_permissions))
 - `shared_secret_uuid` (String)
-
-<a id="nestedatt--o_auth2_client--attributes"></a>
-### Nested Schema for `o_auth2_client.attributes`
-
 
 <a id="nestedatt--o_auth2_client--account_permissions"></a>
 ### Nested Schema for `o_auth2_client.account_permissions`
@@ -145,13 +141,9 @@ Required:
 
 Optional:
 
-- `attributes` (Attributes) (see [below for nested schema](#nestedatt--saml2_client--attributes))
+- `attributes` (Map of String)
 - `metadata` (String)
 - `metadata_url` (String)
-
-<a id="nestedatt--saml2_client--attributes"></a>
-### Nested Schema for `saml2_client.attributes`
-
 
 
 <a id="nestedatt--secret"></a>

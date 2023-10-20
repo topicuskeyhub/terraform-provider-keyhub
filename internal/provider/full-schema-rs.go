@@ -506,12 +506,9 @@ func resourceSchemaAttrsClientOAuth2Client(recurse bool) map[string]rsschema.Att
 		},
 		Computed: true,
 	}
-	{
-		attr := rsschema.SingleNestedAttribute{
-			Attributes: resourceSchemaAttrsClientOAuth2Client_attributes(recurse),
-		}
-		attr.Optional = true
-		schemaAttrs["attributes"] = attr
+	schemaAttrs["attributes"] = rsschema.MapAttribute{
+		ElementType: types.StringType,
+		Optional:    true,
 	}
 	schemaAttrs["callback_uri"] = rsschema.StringAttribute{
 		Optional: true,
@@ -668,18 +665,11 @@ func resourceSchemaAttrsClientOAuth2ClientPermission_additionalObjects(recurse b
 	}
 	return schemaAttrs
 }
-func resourceSchemaAttrsClientOAuth2Client_attributes(recurse bool) map[string]rsschema.Attribute {
-	schemaAttrs := make(map[string]rsschema.Attribute)
-	return schemaAttrs
-}
 func resourceSchemaAttrsClientSaml2Client(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
-	{
-		attr := rsschema.SingleNestedAttribute{
-			Attributes: resourceSchemaAttrsClientSaml2Client_attributes(recurse),
-		}
-		attr.Optional = true
-		schemaAttrs["attributes"] = attr
+	schemaAttrs["attributes"] = rsschema.MapAttribute{
+		ElementType: types.StringType,
+		Optional:    true,
 	}
 	schemaAttrs["metadata"] = rsschema.StringAttribute{
 		Optional: true,
@@ -698,10 +688,6 @@ func resourceSchemaAttrsClientSaml2Client(recurse bool) map[string]rsschema.Attr
 			),
 		},
 	}
-	return schemaAttrs
-}
-func resourceSchemaAttrsClientSaml2Client_attributes(recurse bool) map[string]rsschema.Attribute {
-	schemaAttrs := make(map[string]rsschema.Attribute)
 	return schemaAttrs
 }
 func resourceSchemaAttrsDirectoryAccountDirectory(recurse bool) map[string]rsschema.Attribute {
@@ -2091,17 +2077,10 @@ func resourceSchemaAttrsMarkItemMarker(recurse bool) map[string]rsschema.Attribu
 			),
 		},
 	}
-	{
-		attr := rsschema.SingleNestedAttribute{
-			Attributes: resourceSchemaAttrsMarkItemMarker_parameters(recurse),
-		}
-		attr.Optional = true
-		schemaAttrs["parameters"] = attr
+	schemaAttrs["parameters"] = rsschema.MapAttribute{
+		ElementType: types.StringType,
+		Optional:    true,
 	}
-	return schemaAttrs
-}
-func resourceSchemaAttrsMarkItemMarker_parameters(recurse bool) map[string]rsschema.Attribute {
-	schemaAttrs := make(map[string]rsschema.Attribute)
 	return schemaAttrs
 }
 func resourceSchemaAttrsMarkItemMarkers(recurse bool) map[string]rsschema.Attribute {
@@ -2282,12 +2261,9 @@ func resourceSchemaAttrsOrganizationOrganizationalUnit_additionalObjects(recurse
 }
 func resourceSchemaAttrsProvisioningAbstractProvisionedLDAP(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
-	{
-		attr := rsschema.SingleNestedAttribute{
-			Attributes: resourceSchemaAttrsProvisioningAbstractProvisionedLDAP_attributes(recurse),
-		}
-		attr.Optional = true
-		schemaAttrs["attributes"] = attr
+	schemaAttrs["attributes"] = rsschema.MapAttribute{
+		ElementType: types.StringType,
+		Optional:    true,
 	}
 	schemaAttrs["base_dn"] = rsschema.StringAttribute{
 		Required: true,
@@ -2376,10 +2352,6 @@ func resourceSchemaAttrsProvisioningAbstractProvisionedLDAP(recurse bool) map[st
 			stringvalidator.UTF8LengthBetween(0, 255),
 		},
 	}
-	return schemaAttrs
-}
-func resourceSchemaAttrsProvisioningAbstractProvisionedLDAP_attributes(recurse bool) map[string]rsschema.Attribute {
-	schemaAttrs := make(map[string]rsschema.Attribute)
 	return schemaAttrs
 }
 func resourceSchemaAttrsProvisioningCircuitBreakerStatistics(recurse bool) map[string]rsschema.Attribute {

@@ -286,7 +286,7 @@ var clientOAuth2ClientAttrTypesDSRecurse = objectAttrsTypeDSClientOAuth2Client(t
 
 type clientOAuth2ClientDataDS struct {
 	AccountPermissions   types.List   `tfsdk:"account_permissions"`
-	Attributes           types.Object `tfsdk:"attributes"`
+	Attributes           types.Map    `tfsdk:"attributes"`
 	CallbackURI          types.String `tfsdk:"callback_uri"`
 	Confidential         types.Bool   `tfsdk:"confidential"`
 	DebugMode            types.Bool   `tfsdk:"debug_mode"`
@@ -340,26 +340,14 @@ type clientOAuth2ClientPermission_additionalObjectsDataDS struct {
 	Audit types.Object `tfsdk:"audit"`
 }
 
-var clientOAuth2Client_attributesAttrTypesDS = objectAttrsTypeDSClientOAuth2Client_attributes(false)
-var clientOAuth2Client_attributesAttrTypesDSRecurse = objectAttrsTypeDSClientOAuth2Client_attributes(true)
-
-type clientOAuth2Client_attributesDataDS struct {
-}
-
 var clientSaml2ClientAttrTypesDS = objectAttrsTypeDSClientSaml2Client(false)
 var clientSaml2ClientAttrTypesDSRecurse = objectAttrsTypeDSClientSaml2Client(true)
 
 type clientSaml2ClientDataDS struct {
-	Attributes    types.Object `tfsdk:"attributes"`
+	Attributes    types.Map    `tfsdk:"attributes"`
 	Metadata      types.String `tfsdk:"metadata"`
 	MetadataURL   types.String `tfsdk:"metadata_url"`
 	SubjectFormat types.String `tfsdk:"subject_format"`
-}
-
-var clientSaml2Client_attributesAttrTypesDS = objectAttrsTypeDSClientSaml2Client_attributes(false)
-var clientSaml2Client_attributesAttrTypesDSRecurse = objectAttrsTypeDSClientSaml2Client_attributes(true)
-
-type clientSaml2Client_attributesDataDS struct {
 }
 
 var directoryAccountDirectoryAttrTypesDS = objectAttrsTypeDSDirectoryAccountDirectory(false)
@@ -930,13 +918,7 @@ var markItemMarkerAttrTypesDSRecurse = objectAttrsTypeDSMarkItemMarker(true)
 type markItemMarkerDataDS struct {
 	Level              types.String `tfsdk:"level"`
 	MarkItemMarkerType types.String `tfsdk:"type"`
-	Parameters         types.Object `tfsdk:"parameters"`
-}
-
-var markItemMarker_parametersAttrTypesDS = objectAttrsTypeDSMarkItemMarker_parameters(false)
-var markItemMarker_parametersAttrTypesDSRecurse = objectAttrsTypeDSMarkItemMarker_parameters(true)
-
-type markItemMarker_parametersDataDS struct {
+	Parameters         types.Map    `tfsdk:"parameters"`
 }
 
 var markItemMarkersAttrTypesDS = objectAttrsTypeDSMarkItemMarkers(false)
@@ -990,7 +972,7 @@ var provisioningAbstractProvisionedLDAPAttrTypesDS = objectAttrsTypeDSProvisioni
 var provisioningAbstractProvisionedLDAPAttrTypesDSRecurse = objectAttrsTypeDSProvisioningAbstractProvisionedLDAP(true)
 
 type provisioningAbstractProvisionedLDAPDataDS struct {
-	Attributes                 types.Object `tfsdk:"attributes"`
+	Attributes                 types.Map    `tfsdk:"attributes"`
 	BaseDN                     types.String `tfsdk:"base_dn"`
 	BindDN                     types.String `tfsdk:"bind_dn"`
 	BindPassword               types.String `tfsdk:"bind_password"`
@@ -1006,12 +988,6 @@ type provisioningAbstractProvisionedLDAPDataDS struct {
 	TLS                        types.String `tfsdk:"tls"`
 	TrustedCertificate         types.Object `tfsdk:"trusted_certificate"`
 	UserDN                     types.String `tfsdk:"user_dn"`
-}
-
-var provisioningAbstractProvisionedLDAP_attributesAttrTypesDS = objectAttrsTypeDSProvisioningAbstractProvisionedLDAP_attributes(false)
-var provisioningAbstractProvisionedLDAP_attributesAttrTypesDSRecurse = objectAttrsTypeDSProvisioningAbstractProvisionedLDAP_attributes(true)
-
-type provisioningAbstractProvisionedLDAP_attributesDataDS struct {
 }
 
 var provisioningCircuitBreakerStatisticsAttrTypesDS = objectAttrsTypeDSProvisioningCircuitBreakerStatistics(false)

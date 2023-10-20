@@ -594,7 +594,10 @@ func tkhToTFObjectRSClientOAuth2Client(recurse bool, tkh keyhubmodel.ClientOAuth
 		obj["account_permissions"] = val
 	}
 	{
-		val, d := tkhToTFObjectRSClientOAuth2Client_attributes(recurse, tkh.GetAttributes())
+		elemType := attrs["attributes"].(types.MapType).ElemType
+		val, d := mapToTF(elemType, tkh.GetAttributes().GetAdditionalData(), func(tkh any, diags *diag.Diagnostics) attr.Value {
+			return types.StringValue(tkh.(string))
+		})
 		diags.Append(d...)
 		obj["attributes"] = val
 	}
@@ -770,25 +773,6 @@ func tkhToTFObjectRSClientOAuth2ClientPermission_additionalObjects(recurse bool,
 	return objVal, diags
 }
 
-func tkhToTFObjectRSClientOAuth2Client_attributes(recurse bool, tkh keyhubmodel.ClientOAuth2Client_attributesable) (types.Object, diag.Diagnostics) {
-	var diags diag.Diagnostics
-	var attrs map[string]attr.Type
-	if recurse {
-		attrs = clientOAuth2Client_attributesAttrTypesRSRecurse
-	} else {
-		attrs = clientOAuth2Client_attributesAttrTypesRS
-	}
-	if tkh == nil {
-		return types.ObjectNull(attrs), diags
-	}
-
-	obj := make(map[string]attr.Value)
-
-	objVal, d := types.ObjectValue(attrs, obj)
-	diags.Append(d...)
-	return objVal, diags
-}
-
 func tkhToTFObjectRSClientSaml2Client(recurse bool, tkh keyhubmodel.ClientSaml2Clientable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
@@ -803,32 +787,16 @@ func tkhToTFObjectRSClientSaml2Client(recurse bool, tkh keyhubmodel.ClientSaml2C
 
 	obj := make(map[string]attr.Value)
 	{
-		val, d := tkhToTFObjectRSClientSaml2Client_attributes(recurse, tkh.GetAttributes())
+		elemType := attrs["attributes"].(types.MapType).ElemType
+		val, d := mapToTF(elemType, tkh.GetAttributes().GetAdditionalData(), func(tkh any, diags *diag.Diagnostics) attr.Value {
+			return types.StringValue(tkh.(string))
+		})
 		diags.Append(d...)
 		obj["attributes"] = val
 	}
 	obj["metadata"] = types.StringPointerValue(tkh.GetMetadata())
 	obj["metadata_url"] = types.StringPointerValue(tkh.GetMetadataUrl())
 	obj["subject_format"] = stringerToTF(tkh.GetSubjectFormat())
-
-	objVal, d := types.ObjectValue(attrs, obj)
-	diags.Append(d...)
-	return objVal, diags
-}
-
-func tkhToTFObjectRSClientSaml2Client_attributes(recurse bool, tkh keyhubmodel.ClientSaml2Client_attributesable) (types.Object, diag.Diagnostics) {
-	var diags diag.Diagnostics
-	var attrs map[string]attr.Type
-	if recurse {
-		attrs = clientSaml2Client_attributesAttrTypesRSRecurse
-	} else {
-		attrs = clientSaml2Client_attributesAttrTypesRS
-	}
-	if tkh == nil {
-		return types.ObjectNull(attrs), diags
-	}
-
-	obj := make(map[string]attr.Value)
 
 	objVal, d := types.ObjectValue(attrs, obj)
 	diags.Append(d...)
@@ -2313,29 +2281,13 @@ func tkhToTFObjectRSMarkItemMarker(recurse bool, tkh keyhubmodel.MarkItemMarkera
 	obj["level"] = stringerToTF(tkh.GetLevel())
 	obj["type"] = stringerToTF(tkh.GetMarkItemMarkerType())
 	{
-		val, d := tkhToTFObjectRSMarkItemMarker_parameters(recurse, tkh.GetParameters())
+		elemType := attrs["parameters"].(types.MapType).ElemType
+		val, d := mapToTF(elemType, tkh.GetParameters().GetAdditionalData(), func(tkh any, diags *diag.Diagnostics) attr.Value {
+			return types.StringValue(tkh.(string))
+		})
 		diags.Append(d...)
 		obj["parameters"] = val
 	}
-
-	objVal, d := types.ObjectValue(attrs, obj)
-	diags.Append(d...)
-	return objVal, diags
-}
-
-func tkhToTFObjectRSMarkItemMarker_parameters(recurse bool, tkh keyhubmodel.MarkItemMarker_parametersable) (types.Object, diag.Diagnostics) {
-	var diags diag.Diagnostics
-	var attrs map[string]attr.Type
-	if recurse {
-		attrs = markItemMarker_parametersAttrTypesRSRecurse
-	} else {
-		attrs = markItemMarker_parametersAttrTypesRS
-	}
-	if tkh == nil {
-		return types.ObjectNull(attrs), diags
-	}
-
-	obj := make(map[string]attr.Value)
 
 	objVal, d := types.ObjectValue(attrs, obj)
 	diags.Append(d...)
@@ -2615,7 +2567,10 @@ func tkhToTFObjectRSProvisioningAbstractProvisionedLDAP(recurse bool, tkh keyhub
 
 	obj := make(map[string]attr.Value)
 	{
-		val, d := tkhToTFObjectRSProvisioningAbstractProvisionedLDAP_attributes(recurse, tkh.GetAttributes())
+		elemType := attrs["attributes"].(types.MapType).ElemType
+		val, d := mapToTF(elemType, tkh.GetAttributes().GetAdditionalData(), func(tkh any, diags *diag.Diagnostics) attr.Value {
+			return types.StringValue(tkh.(string))
+		})
 		diags.Append(d...)
 		obj["attributes"] = val
 	}
@@ -2634,25 +2589,6 @@ func tkhToTFObjectRSProvisioningAbstractProvisionedLDAP(recurse bool, tkh keyhub
 	obj["tls"] = stringerToTF(tkh.GetTls())
 	obj["trusted_certificate_uuid"] = withUuidToTF(tkh.GetTrustedCertificate())
 	obj["user_dn"] = types.StringPointerValue(tkh.GetUserDN())
-
-	objVal, d := types.ObjectValue(attrs, obj)
-	diags.Append(d...)
-	return objVal, diags
-}
-
-func tkhToTFObjectRSProvisioningAbstractProvisionedLDAP_attributes(recurse bool, tkh keyhubmodel.ProvisioningAbstractProvisionedLDAP_attributesable) (types.Object, diag.Diagnostics) {
-	var diags diag.Diagnostics
-	var attrs map[string]attr.Type
-	if recurse {
-		attrs = provisioningAbstractProvisionedLDAP_attributesAttrTypesRSRecurse
-	} else {
-		attrs = provisioningAbstractProvisionedLDAP_attributesAttrTypesRS
-	}
-	if tkh == nil {
-		return types.ObjectNull(attrs), diags
-	}
-
-	obj := make(map[string]attr.Value)
 
 	objVal, d := types.ObjectValue(attrs, obj)
 	diags.Append(d...)

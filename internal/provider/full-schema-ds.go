@@ -699,12 +699,9 @@ func dataSourceSchemaAttrsClientOAuth2Client(recurse bool) map[string]dsschema.A
 		},
 		Computed: true,
 	}
-	{
-		attr := dsschema.SingleNestedAttribute{
-			Attributes: dataSourceSchemaAttrsClientOAuth2Client_attributes(recurse),
-		}
-		attr.Computed = true
-		schemaAttrs["attributes"] = attr
+	schemaAttrs["attributes"] = dsschema.MapAttribute{
+		ElementType: types.StringType,
+		Computed:    true,
 	}
 	schemaAttrs["callback_uri"] = dsschema.StringAttribute{
 		Computed: true,
@@ -860,18 +857,11 @@ func dataSourceSchemaAttrsClientOAuth2ClientPermission_additionalObjects(recurse
 	}
 	return schemaAttrs
 }
-func dataSourceSchemaAttrsClientOAuth2Client_attributes(recurse bool) map[string]dsschema.Attribute {
-	schemaAttrs := make(map[string]dsschema.Attribute)
-	return schemaAttrs
-}
 func dataSourceSchemaAttrsClientSaml2Client(recurse bool) map[string]dsschema.Attribute {
 	schemaAttrs := make(map[string]dsschema.Attribute)
-	{
-		attr := dsschema.SingleNestedAttribute{
-			Attributes: dataSourceSchemaAttrsClientSaml2Client_attributes(recurse),
-		}
-		attr.Computed = true
-		schemaAttrs["attributes"] = attr
+	schemaAttrs["attributes"] = dsschema.MapAttribute{
+		ElementType: types.StringType,
+		Computed:    true,
 	}
 	schemaAttrs["metadata"] = dsschema.StringAttribute{
 		Computed: true,
@@ -882,10 +872,6 @@ func dataSourceSchemaAttrsClientSaml2Client(recurse bool) map[string]dsschema.At
 	schemaAttrs["subject_format"] = dsschema.StringAttribute{
 		Computed: true,
 	}
-	return schemaAttrs
-}
-func dataSourceSchemaAttrsClientSaml2Client_attributes(recurse bool) map[string]dsschema.Attribute {
-	schemaAttrs := make(map[string]dsschema.Attribute)
 	return schemaAttrs
 }
 func dataSourceSchemaAttrsDirectoryAccountDirectory(recurse bool) map[string]dsschema.Attribute {
@@ -2322,17 +2308,10 @@ func dataSourceSchemaAttrsMarkItemMarker(recurse bool) map[string]dsschema.Attri
 	schemaAttrs["type"] = dsschema.StringAttribute{
 		Computed: true,
 	}
-	{
-		attr := dsschema.SingleNestedAttribute{
-			Attributes: dataSourceSchemaAttrsMarkItemMarker_parameters(recurse),
-		}
-		attr.Computed = true
-		schemaAttrs["parameters"] = attr
+	schemaAttrs["parameters"] = dsschema.MapAttribute{
+		ElementType: types.StringType,
+		Computed:    true,
 	}
-	return schemaAttrs
-}
-func dataSourceSchemaAttrsMarkItemMarker_parameters(recurse bool) map[string]dsschema.Attribute {
-	schemaAttrs := make(map[string]dsschema.Attribute)
 	return schemaAttrs
 }
 func dataSourceSchemaAttrsMarkItemMarkers(recurse bool) map[string]dsschema.Attribute {
@@ -2454,12 +2433,9 @@ func dataSourceSchemaAttrsOrganizationOrganizationalUnit_additionalObjects(recur
 }
 func dataSourceSchemaAttrsProvisioningAbstractProvisionedLDAP(recurse bool) map[string]dsschema.Attribute {
 	schemaAttrs := make(map[string]dsschema.Attribute)
-	{
-		attr := dsschema.SingleNestedAttribute{
-			Attributes: dataSourceSchemaAttrsProvisioningAbstractProvisionedLDAP_attributes(recurse),
-		}
-		attr.Computed = true
-		schemaAttrs["attributes"] = attr
+	schemaAttrs["attributes"] = dsschema.MapAttribute{
+		ElementType: types.StringType,
+		Computed:    true,
 	}
 	schemaAttrs["base_dn"] = dsschema.StringAttribute{
 		Computed: true,
@@ -2518,10 +2494,6 @@ func dataSourceSchemaAttrsProvisioningAbstractProvisionedLDAP(recurse bool) map[
 	schemaAttrs["user_dn"] = dsschema.StringAttribute{
 		Computed: true,
 	}
-	return schemaAttrs
-}
-func dataSourceSchemaAttrsProvisioningAbstractProvisionedLDAP_attributes(recurse bool) map[string]dsschema.Attribute {
-	schemaAttrs := make(map[string]dsschema.Attribute)
 	return schemaAttrs
 }
 func dataSourceSchemaAttrsProvisioningCircuitBreakerStatistics(recurse bool) map[string]dsschema.Attribute {

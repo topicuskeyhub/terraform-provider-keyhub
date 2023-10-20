@@ -185,7 +185,7 @@ func objectAttrsTypeRSClientLdapClient(recurse bool) map[string]attr.Type {
 func objectAttrsTypeRSClientOAuth2Client(recurse bool) map[string]attr.Type {
 	objectAttrs := make(map[string]attr.Type)
 	objectAttrs["account_permissions"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeRSAuthPermission(recurse)}}
-	objectAttrs["attributes"] = types.ObjectType{AttrTypes: objectAttrsTypeRSClientOAuth2Client_attributes(recurse)}
+	objectAttrs["attributes"] = types.MapType{ElemType: types.StringType}
 	objectAttrs["callback_uri"] = types.StringType
 	objectAttrs["confidential"] = types.BoolType
 	objectAttrs["debug_mode"] = types.BoolType
@@ -238,22 +238,12 @@ func objectAttrsTypeRSClientOAuth2ClientPermission_additionalObjects(recurse boo
 	return objectAttrs
 }
 
-func objectAttrsTypeRSClientOAuth2Client_attributes(recurse bool) map[string]attr.Type {
-	objectAttrs := make(map[string]attr.Type)
-	return objectAttrs
-}
-
 func objectAttrsTypeRSClientSaml2Client(recurse bool) map[string]attr.Type {
 	objectAttrs := make(map[string]attr.Type)
-	objectAttrs["attributes"] = types.ObjectType{AttrTypes: objectAttrsTypeRSClientSaml2Client_attributes(recurse)}
+	objectAttrs["attributes"] = types.MapType{ElemType: types.StringType}
 	objectAttrs["metadata"] = types.StringType
 	objectAttrs["metadata_url"] = types.StringType
 	objectAttrs["subject_format"] = types.StringType
-	return objectAttrs
-}
-
-func objectAttrsTypeRSClientSaml2Client_attributes(recurse bool) map[string]attr.Type {
-	objectAttrs := make(map[string]attr.Type)
 	return objectAttrs
 }
 
@@ -724,12 +714,7 @@ func objectAttrsTypeRSMarkItemMarker(recurse bool) map[string]attr.Type {
 	objectAttrs := make(map[string]attr.Type)
 	objectAttrs["level"] = types.StringType
 	objectAttrs["type"] = types.StringType
-	objectAttrs["parameters"] = types.ObjectType{AttrTypes: objectAttrsTypeRSMarkItemMarker_parameters(recurse)}
-	return objectAttrs
-}
-
-func objectAttrsTypeRSMarkItemMarker_parameters(recurse bool) map[string]attr.Type {
-	objectAttrs := make(map[string]attr.Type)
+	objectAttrs["parameters"] = types.MapType{ElemType: types.StringType}
 	return objectAttrs
 }
 
@@ -804,7 +789,7 @@ func objectAttrsTypeRSOrganizationOrganizationalUnit_additionalObjects(recurse b
 
 func objectAttrsTypeRSProvisioningAbstractProvisionedLDAP(recurse bool) map[string]attr.Type {
 	objectAttrs := make(map[string]attr.Type)
-	objectAttrs["attributes"] = types.ObjectType{AttrTypes: objectAttrsTypeRSProvisioningAbstractProvisionedLDAP_attributes(recurse)}
+	objectAttrs["attributes"] = types.MapType{ElemType: types.StringType}
 	objectAttrs["base_dn"] = types.StringType
 	objectAttrs["bind_dn"] = types.StringType
 	objectAttrs["bind_password"] = types.StringType
@@ -820,11 +805,6 @@ func objectAttrsTypeRSProvisioningAbstractProvisionedLDAP(recurse bool) map[stri
 	objectAttrs["tls"] = types.StringType
 	objectAttrs["trusted_certificate_uuid"] = types.StringType
 	objectAttrs["user_dn"] = types.StringType
-	return objectAttrs
-}
-
-func objectAttrsTypeRSProvisioningAbstractProvisionedLDAP_attributes(recurse bool) map[string]attr.Type {
-	objectAttrs := make(map[string]attr.Type)
 	return objectAttrs
 }
 

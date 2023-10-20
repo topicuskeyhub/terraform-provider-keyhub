@@ -42,15 +42,13 @@ provider "keyhubpreview" {
 #  value = data.keyhubpreview_client.test
 #}
 
-#resource "keyhubpreview_vaultrecord" "terrarecord" {
-#  name       = "Terraform Record"
-#  group_uuid = data.keyhubpreview_group.test.uuid
-#  additional_objects = {
-#    secret = {
-#      password = "test3"
-#    }
-#  }
-#}
+resource "keyhubpreview_group_vaultrecord" "terrarecord" {
+  name       = "Terraform Record"
+  group_uuid = resource.keyhubpreview_group.terra.uuid
+  secret = {
+    password = "test3"
+  }
+}
 
 resource "keyhubpreview_group" "terra" {
   name = "Terraform"

@@ -549,7 +549,9 @@ func tfObjectToTKHRSClientOAuth2Client(ctx context.Context, recurse bool, objVal
 		tkh.SetAccountPermissions(val)
 	}
 	{
-		val, d := tfObjectToTKHRSClientOAuth2Client_attributes(ctx, recurse, objAttrs["attributes"].(basetypes.ObjectValue))
+		val, d := tfToMap(objAttrs["attributes"].(basetypes.MapValue), func(val attr.Value, diags *diag.Diagnostics) any {
+			return val.(basetypes.StringValue).ValueString()
+		}, keyhubmodel.NewClientOAuth2Client_attributes())
 		diags.Append(d...)
 		tkh.SetAttributes(val)
 	}
@@ -717,16 +719,6 @@ func tfObjectToTKHRSClientOAuth2ClientPermission_additionalObjects(ctx context.C
 	return tkh, diags
 }
 
-func tfObjectToTKHRSClientOAuth2Client_attributes(ctx context.Context, recurse bool, objVal types.Object) (keyhubmodel.ClientOAuth2Client_attributesable, diag.Diagnostics) {
-	var diags diag.Diagnostics
-	if objVal.IsNull() || objVal.IsUnknown() {
-		return nil, diags
-	}
-	var tkh keyhubmodel.ClientOAuth2Client_attributesable
-	tkh = keyhubmodel.NewClientOAuth2Client_attributes()
-	return tkh, diags
-}
-
 func tfObjectToTKHRSClientSaml2Client(ctx context.Context, recurse bool, objVal types.Object) (keyhubmodel.ClientSaml2Clientable, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	if objVal.IsNull() || objVal.IsUnknown() {
@@ -736,7 +728,9 @@ func tfObjectToTKHRSClientSaml2Client(ctx context.Context, recurse bool, objVal 
 	var tkh keyhubmodel.ClientSaml2Clientable
 	tkh = keyhubmodel.NewClientSaml2Client()
 	{
-		val, d := tfObjectToTKHRSClientSaml2Client_attributes(ctx, recurse, objAttrs["attributes"].(basetypes.ObjectValue))
+		val, d := tfToMap(objAttrs["attributes"].(basetypes.MapValue), func(val attr.Value, diags *diag.Diagnostics) any {
+			return val.(basetypes.StringValue).ValueString()
+		}, keyhubmodel.NewClientSaml2Client_attributes())
 		diags.Append(d...)
 		tkh.SetAttributes(val)
 	}
@@ -747,16 +741,6 @@ func tfObjectToTKHRSClientSaml2Client(ctx context.Context, recurse bool, objVal 
 		diags.Append(d...)
 		tkh.SetSubjectFormat(val)
 	}
-	return tkh, diags
-}
-
-func tfObjectToTKHRSClientSaml2Client_attributes(ctx context.Context, recurse bool, objVal types.Object) (keyhubmodel.ClientSaml2Client_attributesable, diag.Diagnostics) {
-	var diags diag.Diagnostics
-	if objVal.IsNull() || objVal.IsUnknown() {
-		return nil, diags
-	}
-	var tkh keyhubmodel.ClientSaml2Client_attributesable
-	tkh = keyhubmodel.NewClientSaml2Client_attributes()
 	return tkh, diags
 }
 
@@ -2194,20 +2178,12 @@ func tfObjectToTKHRSMarkItemMarker(ctx context.Context, recurse bool, objVal typ
 		tkh.SetMarkItemMarkerType(val)
 	}
 	{
-		val, d := tfObjectToTKHRSMarkItemMarker_parameters(ctx, recurse, objAttrs["parameters"].(basetypes.ObjectValue))
+		val, d := tfToMap(objAttrs["parameters"].(basetypes.MapValue), func(val attr.Value, diags *diag.Diagnostics) any {
+			return val.(basetypes.StringValue).ValueString()
+		}, keyhubmodel.NewMarkItemMarker_parameters())
 		diags.Append(d...)
 		tkh.SetParameters(val)
 	}
-	return tkh, diags
-}
-
-func tfObjectToTKHRSMarkItemMarker_parameters(ctx context.Context, recurse bool, objVal types.Object) (keyhubmodel.MarkItemMarker_parametersable, diag.Diagnostics) {
-	var diags diag.Diagnostics
-	if objVal.IsNull() || objVal.IsUnknown() {
-		return nil, diags
-	}
-	var tkh keyhubmodel.MarkItemMarker_parametersable
-	tkh = keyhubmodel.NewMarkItemMarker_parameters()
 	return tkh, diags
 }
 
@@ -2436,7 +2412,9 @@ func tfObjectToTKHRSProvisioningAbstractProvisionedLDAP(ctx context.Context, rec
 	var tkh keyhubmodel.ProvisioningAbstractProvisionedLDAPable
 	tkh = keyhubmodel.NewProvisioningAbstractProvisionedLDAP()
 	{
-		val, d := tfObjectToTKHRSProvisioningAbstractProvisionedLDAP_attributes(ctx, recurse, objAttrs["attributes"].(basetypes.ObjectValue))
+		val, d := tfToMap(objAttrs["attributes"].(basetypes.MapValue), func(val attr.Value, diags *diag.Diagnostics) any {
+			return val.(basetypes.StringValue).ValueString()
+		}, keyhubmodel.NewProvisioningAbstractProvisionedLDAP_attributes())
 		diags.Append(d...)
 		tkh.SetAttributes(val)
 	}
@@ -2471,16 +2449,6 @@ func tfObjectToTKHRSProvisioningAbstractProvisionedLDAP(ctx context.Context, rec
 		tkh.SetTrustedCertificate(val)
 	}
 	tkh.SetUserDN(objAttrs["user_dn"].(basetypes.StringValue).ValueStringPointer())
-	return tkh, diags
-}
-
-func tfObjectToTKHRSProvisioningAbstractProvisionedLDAP_attributes(ctx context.Context, recurse bool, objVal types.Object) (keyhubmodel.ProvisioningAbstractProvisionedLDAP_attributesable, diag.Diagnostics) {
-	var diags diag.Diagnostics
-	if objVal.IsNull() || objVal.IsUnknown() {
-		return nil, diags
-	}
-	var tkh keyhubmodel.ProvisioningAbstractProvisionedLDAP_attributesable
-	tkh = keyhubmodel.NewProvisioningAbstractProvisionedLDAP_attributes()
 	return tkh, diags
 }
 
