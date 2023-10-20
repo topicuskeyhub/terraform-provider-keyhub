@@ -24,23 +24,17 @@ provider "keyhubpreview" {
   clientsecret = var.keyhub_secret_local
 }
 
-#data "keyhubpreview_group" "test" {
-#  #  uuid = "2fb85263-6406-44f9-9e8a-b1a6d1f43250"
-#  uuid       = "c6c98d08-2cbf-45e9-937a-c5c0427348e2"
-#  additional = ["accounts"]
-#}
-
-#output "data_group" {
-#  value = data.keyhubpreview_group.test
-#}
-
-#data "keyhubpreview_client" "test" {
-#  uuid = "ebdf81ac-b02b-4335-9dc4-4a9bc4eb406d"
-#}
-
-#output "data_client" {
-#  value = data.keyhubpreview_client.test
-#}
+resource "keyhubpreview_group" "terra" {
+  name = "Terraform"
+  accounts = [{
+    uuid   = "7ea6622b-f9d2-4e52-a799-217b26f88376"
+    rights = "MANAGER"
+  }]
+  client_permissions = [{
+    client_uuid = "ebdf81ac-b02b-4335-9dc4-4a9bc4eb406d"
+    value       = "GROUP_FULL_VAULT_ACCESS"
+  }]
+}
 
 resource "keyhubpreview_group_vaultrecord" "terrarecord" {
   name       = "Terraform Record"
@@ -48,14 +42,6 @@ resource "keyhubpreview_group_vaultrecord" "terrarecord" {
   secret = {
     password = "test3"
   }
-}
-
-resource "keyhubpreview_group" "terra" {
-  name = "Terraform"
-  accounts = [{
-    uuid   = "7ea6622b-f9d2-4e52-a799-217b26f88376"
-    rights = "MANAGER"
-  }]
 }
 
 resource "keyhubpreview_grouponsystem" "terragos" {
@@ -68,7 +54,3 @@ resource "keyhubpreview_grouponsystem" "terragos" {
     group_uuid          = "c6c98d08-2cbf-45e9-937a-c5c0427348e2"
   }]
 }
-
-#output "resource_group" {
-#  value = resource.keyhubpreview_group.terra
-#}

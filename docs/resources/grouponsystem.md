@@ -26,7 +26,7 @@ description: |-
 
 - `display_name` (String)
 - `provgroups` (Attributes List) (see [below for nested schema](#nestedatt--provgroups))
-- `service_accounts` (List of String)
+- `service_accounts` (Attributes List) (see [below for nested schema](#nestedatt--service_accounts))
 
 ### Read-Only
 
@@ -107,6 +107,48 @@ Read-Only:
 
 <a id="nestedatt--provgroups--permissions"></a>
 ### Nested Schema for `provgroups.permissions`
+
+Optional:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (List of String)
+- `type_escaped` (String)
+
+
+
+<a id="nestedatt--service_accounts"></a>
+### Nested Schema for `service_accounts`
+
+Required:
+
+- `name` (String)
+- `system_uuid` (String)
+
+Optional:
+
+- `active` (Boolean)
+
+Read-Only:
+
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--service_accounts--links))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--service_accounts--permissions))
+- `username` (String)
+- `uuid` (String)
+
+<a id="nestedatt--service_accounts--links"></a>
+### Nested Schema for `service_accounts.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--service_accounts--permissions"></a>
+### Nested Schema for `service_accounts.permissions`
 
 Optional:
 

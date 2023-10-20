@@ -709,11 +709,7 @@ func tkhToTFObjectRSClientOAuth2ClientPermissionWithClient(recurse bool, tkh key
 	obj["for_group_uuid"] = withUuidToTF(tkh.GetForGroup())
 	obj["for_system_uuid"] = withUuidToTF(tkh.GetForSystem())
 	obj["value"] = stringerToTF(tkh.GetValue())
-	{
-		val, d := tkhToTFObjectRSClientOAuth2Client(false, tkh.GetClient())
-		diags.Append(d...)
-		obj["client"] = val
-	}
+	obj["client_uuid"] = withUuidToTF(tkh.GetClient())
 
 	objVal, d := types.ObjectValue(attrs, obj)
 	diags.Append(d...)
@@ -1894,7 +1890,9 @@ func tkhToTFObjectRSGroupGroupPrimerLinkableWrapper(recurse bool, tkh keyhubmode
 	{
 		elemType := attrs["items"].(types.ListType).ElemType
 		val, d := sliceToTF(elemType, tkh.GetItems(), func(tkh keyhubmodel.GroupGroupPrimerable, diags *diag.Diagnostics) attr.Value {
-			return withUuidToTF(tkh)
+			val, d := tkhToTFObjectRSGroupGroupPrimer(recurse, tkh)
+			diags.Append(d...)
+			return val
 		})
 		diags.Append(d...)
 		obj["items"] = val
@@ -2513,7 +2511,9 @@ func tkhToTFObjectRSOrganizationOrganizationalUnitPrimerLinkableWrapper(recurse 
 	{
 		elemType := attrs["items"].(types.ListType).ElemType
 		val, d := sliceToTF(elemType, tkh.GetItems(), func(tkh keyhubmodel.OrganizationOrganizationalUnitPrimerable, diags *diag.Diagnostics) attr.Value {
-			return withUuidToTF(tkh)
+			val, d := tkhToTFObjectRSOrganizationOrganizationalUnitPrimer(recurse, tkh)
+			diags.Append(d...)
+			return val
 		})
 		diags.Append(d...)
 		obj["items"] = val
@@ -3062,11 +3062,7 @@ func tkhToTFObjectRSProvisioningProvisionedInternalLDAP(recurse bool, tkh keyhub
 	}
 
 	obj := make(map[string]attr.Value)
-	{
-		val, d := tkhToTFObjectRSClientLdapClient(recurse, tkh.GetClient())
-		diags.Append(d...)
-		obj["client"] = val
-	}
+	obj["client_uuid"] = withUuidToTF(tkh.GetClient())
 
 	objVal, d := types.ObjectValue(attrs, obj)
 	diags.Append(d...)
@@ -3318,7 +3314,9 @@ func tkhToTFObjectRSProvisioningProvisionedSystemPrimerLinkableWrapper(recurse b
 	{
 		elemType := attrs["items"].(types.ListType).ElemType
 		val, d := sliceToTF(elemType, tkh.GetItems(), func(tkh keyhubmodel.ProvisioningProvisionedSystemPrimerable, diags *diag.Diagnostics) attr.Value {
-			return withUuidToTF(tkh)
+			val, d := tkhToTFObjectRSProvisioningProvisionedSystemPrimer(recurse, tkh)
+			diags.Append(d...)
+			return val
 		})
 		diags.Append(d...)
 		obj["items"] = val
@@ -3653,7 +3651,9 @@ func tkhToTFObjectRSServiceaccountServiceAccountPrimerLinkableWrapper(recurse bo
 	{
 		elemType := attrs["items"].(types.ListType).ElemType
 		val, d := sliceToTF(elemType, tkh.GetItems(), func(tkh keyhubmodel.ServiceaccountServiceAccountPrimerable, diags *diag.Diagnostics) attr.Value {
-			return withUuidToTF(tkh)
+			val, d := tkhToTFObjectRSServiceaccountServiceAccountPrimer(recurse, tkh)
+			diags.Append(d...)
+			return val
 		})
 		diags.Append(d...)
 		obj["items"] = val
@@ -3764,9 +3764,7 @@ func tkhToTFObjectRSVaultVault(recurse bool, tkh keyhubmodel.VaultVaultable) (ty
 	{
 		elemType := attrs["records"].(types.ListType).ElemType
 		val, d := sliceToTF(elemType, tkh.GetRecords(), func(tkh keyhubmodel.VaultVaultRecordable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSVaultVaultRecord(recurse, tkh)
-			diags.Append(d...)
-			return val
+			return withUuidToTF(tkh)
 		})
 		diags.Append(d...)
 		obj["records"] = val
@@ -3919,7 +3917,9 @@ func tkhToTFObjectRSVaultVaultRecordPrimerLinkableWrapper(recurse bool, tkh keyh
 	{
 		elemType := attrs["items"].(types.ListType).ElemType
 		val, d := sliceToTF(elemType, tkh.GetItems(), func(tkh keyhubmodel.VaultVaultRecordPrimerable, diags *diag.Diagnostics) attr.Value {
-			return withUuidToTF(tkh)
+			val, d := tkhToTFObjectRSVaultVaultRecordPrimer(recurse, tkh)
+			diags.Append(d...)
+			return val
 		})
 		diags.Append(d...)
 		obj["items"] = val

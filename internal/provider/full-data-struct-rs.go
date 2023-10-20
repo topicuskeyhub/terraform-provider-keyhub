@@ -231,7 +231,7 @@ type clientOAuth2ClientPermissionWithClientDataRS struct {
 	ForGroupUUID  types.String `tfsdk:"for_group_uuid"`
 	ForSystemUUID types.String `tfsdk:"for_system_uuid"`
 	Value         types.String `tfsdk:"value"`
-	Client        types.Object `tfsdk:"client"`
+	ClientUUID    types.String `tfsdk:"client_uuid"`
 }
 
 var clientOAuth2ClientPermissionWithClientLinkableWrapperAttrTypesRS = objectAttrsTypeRSClientOAuth2ClientPermissionWithClientLinkableWrapper(false)
@@ -992,7 +992,7 @@ var provisioningProvisionedInternalLDAPAttrTypesRS = objectAttrsTypeRSProvisioni
 var provisioningProvisionedInternalLDAPAttrTypesRSRecurse = objectAttrsTypeRSProvisioningProvisionedInternalLDAP(true)
 
 type provisioningProvisionedInternalLDAPDataRS struct {
-	Client types.Object `tfsdk:"client"`
+	ClientUUID types.String `tfsdk:"client_uuid"`
 }
 
 var provisioningProvisionedLDAPAttrTypesRS = objectAttrsTypeRSProvisioningProvisionedLDAP(false)

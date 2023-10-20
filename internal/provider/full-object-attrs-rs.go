@@ -222,7 +222,7 @@ func objectAttrsTypeRSClientOAuth2ClientPermissionWithClient(recurse bool) map[s
 	objectAttrs["for_group_uuid"] = types.StringType
 	objectAttrs["for_system_uuid"] = types.StringType
 	objectAttrs["value"] = types.StringType
-	objectAttrs["client"] = types.ObjectType{AttrTypes: objectAttrsTypeRSClientOAuth2Client(false)}
+	objectAttrs["client_uuid"] = types.StringType
 	return objectAttrs
 }
 
@@ -608,7 +608,7 @@ func objectAttrsTypeRSGroupGroupPrimer(recurse bool) map[string]attr.Type {
 
 func objectAttrsTypeRSGroupGroupPrimerLinkableWrapper(recurse bool) map[string]attr.Type {
 	objectAttrs := make(map[string]attr.Type)
-	objectAttrs["items"] = types.ListType{ElemType: types.StringType}
+	objectAttrs["items"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeRSGroupGroupPrimer(recurse)}}
 	return objectAttrs
 }
 
@@ -776,7 +776,7 @@ func objectAttrsTypeRSOrganizationOrganizationalUnitPrimer(recurse bool) map[str
 
 func objectAttrsTypeRSOrganizationOrganizationalUnitPrimerLinkableWrapper(recurse bool) map[string]attr.Type {
 	objectAttrs := make(map[string]attr.Type)
-	objectAttrs["items"] = types.ListType{ElemType: types.StringType}
+	objectAttrs["items"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeRSOrganizationOrganizationalUnitPrimer(recurse)}}
 	return objectAttrs
 }
 
@@ -942,7 +942,7 @@ func objectAttrsTypeRSProvisioningProvisionedAzureTenant(recurse bool) map[strin
 
 func objectAttrsTypeRSProvisioningProvisionedInternalLDAP(recurse bool) map[string]attr.Type {
 	objectAttrs := make(map[string]attr.Type)
-	objectAttrs["client"] = types.ObjectType{AttrTypes: objectAttrsTypeRSClientLdapClient(recurse)}
+	objectAttrs["client_uuid"] = types.StringType
 	return objectAttrs
 }
 
@@ -1021,7 +1021,7 @@ func objectAttrsTypeRSProvisioningProvisionedSystemPrimer(recurse bool) map[stri
 
 func objectAttrsTypeRSProvisioningProvisionedSystemPrimerLinkableWrapper(recurse bool) map[string]attr.Type {
 	objectAttrs := make(map[string]attr.Type)
-	objectAttrs["items"] = types.ListType{ElemType: types.StringType}
+	objectAttrs["items"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeRSProvisioningProvisionedSystemPrimer(recurse)}}
 	return objectAttrs
 }
 
@@ -1113,7 +1113,7 @@ func objectAttrsTypeRSServiceaccountServiceAccountPrimer(recurse bool) map[strin
 
 func objectAttrsTypeRSServiceaccountServiceAccountPrimerLinkableWrapper(recurse bool) map[string]attr.Type {
 	objectAttrs := make(map[string]attr.Type)
-	objectAttrs["items"] = types.ListType{ElemType: types.StringType}
+	objectAttrs["items"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeRSServiceaccountServiceAccountPrimer(recurse)}}
 	return objectAttrs
 }
 
@@ -1145,7 +1145,7 @@ func objectAttrsTypeRSVaultVault(recurse bool) map[string]attr.Type {
 	objectAttrs["permissions"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeRSAuthPermission(recurse)}}
 	objectAttrs["access_available"] = types.BoolType
 	objectAttrs["name"] = types.StringType
-	objectAttrs["records"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeRSVaultVaultRecord(recurse)}}
+	objectAttrs["records"] = types.ListType{ElemType: types.StringType}
 	return objectAttrs
 }
 
@@ -1196,7 +1196,7 @@ func objectAttrsTypeRSVaultVaultRecordPrimer(recurse bool) map[string]attr.Type 
 
 func objectAttrsTypeRSVaultVaultRecordPrimerLinkableWrapper(recurse bool) map[string]attr.Type {
 	objectAttrs := make(map[string]attr.Type)
-	objectAttrs["items"] = types.ListType{ElemType: types.StringType}
+	objectAttrs["items"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeRSVaultVaultRecordPrimer(recurse)}}
 	return objectAttrs
 }
 

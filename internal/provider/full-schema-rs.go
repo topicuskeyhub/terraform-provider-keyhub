@@ -575,12 +575,14 @@ func resourceSchemaAttrsClientOAuth2ClientPermission(recurse bool) map[string]rs
 		PlanModifiers: []planmodifier.List{listplanmodifier.UseStateForUnknown()},
 	}
 	schemaAttrs["for_group_uuid"] = rsschema.StringAttribute{
+		Computed: true,
 		Optional: true,
 		Validators: []validator.String{
 			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["for_system_uuid"] = rsschema.StringAttribute{
+		Computed: true,
 		Optional: true,
 		Validators: []validator.String{
 			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
@@ -616,12 +618,14 @@ func resourceSchemaAttrsClientOAuth2ClientPermissionWithClient(recurse bool) map
 		PlanModifiers: []planmodifier.List{listplanmodifier.UseStateForUnknown()},
 	}
 	schemaAttrs["for_group_uuid"] = rsschema.StringAttribute{
+		Computed: true,
 		Optional: true,
 		Validators: []validator.String{
 			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["for_system_uuid"] = rsschema.StringAttribute{
+		Computed: true,
 		Optional: true,
 		Validators: []validator.String{
 			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
@@ -635,12 +639,11 @@ func resourceSchemaAttrsClientOAuth2ClientPermissionWithClient(recurse bool) map
 			),
 		},
 	}
-	{
-		attr := rsschema.SingleNestedAttribute{
-			Attributes: resourceSchemaAttrsClientOAuth2Client(false),
-		}
-		attr.Optional = true
-		schemaAttrs["client"] = attr
+	schemaAttrs["client_uuid"] = rsschema.StringAttribute{
+		Optional: true,
+		Validators: []validator.String{
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
+		},
 	}
 	return schemaAttrs
 }
@@ -1735,14 +1738,11 @@ func resourceSchemaAttrsGroupGroupPrimer(recurse bool) map[string]rsschema.Attri
 }
 func resourceSchemaAttrsGroupGroupPrimerLinkableWrapper(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
-	schemaAttrs["items"] = rsschema.ListAttribute{
-		ElementType: types.StringType,
-		Optional:    true,
-		Validators: []validator.List{
-			listvalidator.ValueStringsAre(
-				stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
-			),
+	schemaAttrs["items"] = rsschema.ListNestedAttribute{
+		NestedObject: rsschema.NestedAttributeObject{
+			Attributes: resourceSchemaAttrsGroupGroupPrimer(recurse),
 		},
+		Optional: true,
 	}
 	return schemaAttrs
 }
@@ -1839,7 +1839,7 @@ func resourceSchemaAttrsGroupGroup_additionalObjects(recurse bool) map[string]rs
 		schemaAttrs["mydelegatedaccount"] = attr
 	}
 	{
-		attr := resetListAttributeFlags(resourceSchemaAttrsGroupGroupPrimerLinkableWrapper(recurse)["items"].(rsschema.ListAttribute))
+		attr := resetListNestedAttributeFlags(resourceSchemaAttrsGroupGroupPrimerLinkableWrapper(recurse)["items"].(rsschema.ListNestedAttribute))
 		attr.Computed = true
 		schemaAttrs["nested_groups"] = attr
 	}
@@ -2232,14 +2232,11 @@ func resourceSchemaAttrsOrganizationOrganizationalUnitPrimer(recurse bool) map[s
 }
 func resourceSchemaAttrsOrganizationOrganizationalUnitPrimerLinkableWrapper(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
-	schemaAttrs["items"] = rsschema.ListAttribute{
-		ElementType: types.StringType,
-		Optional:    true,
-		Validators: []validator.List{
-			listvalidator.ValueStringsAre(
-				stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
-			),
+	schemaAttrs["items"] = rsschema.ListNestedAttribute{
+		NestedObject: rsschema.NestedAttributeObject{
+			Attributes: resourceSchemaAttrsOrganizationOrganizationalUnitPrimer(recurse),
 		},
+		Optional: true,
 	}
 	return schemaAttrs
 }
@@ -2253,7 +2250,7 @@ func resourceSchemaAttrsOrganizationOrganizationalUnit_additionalObjects(recurse
 		schemaAttrs["audit"] = attr
 	}
 	{
-		attr := resetListAttributeFlags(resourceSchemaAttrsOrganizationOrganizationalUnitPrimerLinkableWrapper(recurse)["items"].(rsschema.ListAttribute))
+		attr := resetListNestedAttributeFlags(resourceSchemaAttrsOrganizationOrganizationalUnitPrimerLinkableWrapper(recurse)["items"].(rsschema.ListNestedAttribute))
 		attr.Optional = true
 		schemaAttrs["create_as_parent_of"] = attr
 	}
@@ -2506,7 +2503,7 @@ func resourceSchemaAttrsProvisioningGroupOnSystem_additionalObjects(recurse bool
 		schemaAttrs["provgroups"] = attr
 	}
 	{
-		attr := resetListAttributeFlags(resourceSchemaAttrsServiceaccountServiceAccountPrimerLinkableWrapper(recurse)["items"].(rsschema.ListAttribute))
+		attr := resetListNestedAttributeFlags(resourceSchemaAttrsServiceaccountServiceAccountPrimerLinkableWrapper(recurse)["items"].(rsschema.ListNestedAttribute))
 		attr.Optional = true
 		schemaAttrs["service_accounts"] = attr
 	}
@@ -2575,7 +2572,7 @@ func resourceSchemaAttrsProvisioningProvisionNumberSequence_additionalObjects(re
 		schemaAttrs["audit"] = attr
 	}
 	{
-		attr := resetListAttributeFlags(resourceSchemaAttrsProvisioningProvisionedSystemPrimerLinkableWrapper(recurse)["items"].(rsschema.ListAttribute))
+		attr := resetListNestedAttributeFlags(resourceSchemaAttrsProvisioningProvisionedSystemPrimerLinkableWrapper(recurse)["items"].(rsschema.ListNestedAttribute))
 		attr.Computed = true
 		schemaAttrs["systems"] = attr
 	}
@@ -2680,12 +2677,11 @@ func resourceSchemaAttrsProvisioningProvisionedAzureTenant(recurse bool) map[str
 }
 func resourceSchemaAttrsProvisioningProvisionedInternalLDAP(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
-	{
-		attr := rsschema.SingleNestedAttribute{
-			Attributes: resourceSchemaAttrsClientLdapClient(recurse),
-		}
-		attr.Optional = true
-		schemaAttrs["client"] = attr
+	schemaAttrs["client_uuid"] = rsschema.StringAttribute{
+		Optional: true,
+		Validators: []validator.String{
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
+		},
 	}
 	return schemaAttrs
 }
@@ -2936,14 +2932,11 @@ func resourceSchemaAttrsProvisioningProvisionedSystemPrimer(recurse bool) map[st
 }
 func resourceSchemaAttrsProvisioningProvisionedSystemPrimerLinkableWrapper(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
-	schemaAttrs["items"] = rsschema.ListAttribute{
-		ElementType: types.StringType,
-		Optional:    true,
-		Validators: []validator.List{
-			listvalidator.ValueStringsAre(
-				stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
-			),
+	schemaAttrs["items"] = rsschema.ListNestedAttribute{
+		NestedObject: rsschema.NestedAttributeObject{
+			Attributes: resourceSchemaAttrsProvisioningProvisionedSystemPrimer(recurse),
 		},
+		Optional: true,
 	}
 	return schemaAttrs
 }
@@ -3203,14 +3196,11 @@ func resourceSchemaAttrsServiceaccountServiceAccountPrimer(recurse bool) map[str
 }
 func resourceSchemaAttrsServiceaccountServiceAccountPrimerLinkableWrapper(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
-	schemaAttrs["items"] = rsschema.ListAttribute{
-		ElementType: types.StringType,
-		Optional:    true,
-		Validators: []validator.List{
-			listvalidator.ValueStringsAre(
-				stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
-			),
+	schemaAttrs["items"] = rsschema.ListNestedAttribute{
+		NestedObject: rsschema.NestedAttributeObject{
+			Attributes: resourceSchemaAttrsServiceaccountServiceAccountPrimer(recurse),
 		},
+		Optional: true,
 	}
 	return schemaAttrs
 }
@@ -3308,11 +3298,14 @@ func resourceSchemaAttrsVaultVault(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs["name"] = rsschema.StringAttribute{
 		Optional: true,
 	}
-	schemaAttrs["records"] = rsschema.ListNestedAttribute{
-		NestedObject: rsschema.NestedAttributeObject{
-			Attributes: resourceSchemaAttrsVaultVaultRecord(recurse),
+	schemaAttrs["records"] = rsschema.ListAttribute{
+		ElementType: types.StringType,
+		Optional:    true,
+		Validators: []validator.List{
+			listvalidator.ValueStringsAre(
+				stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
+			),
 		},
-		Optional: true,
 	}
 	return schemaAttrs
 }
@@ -3443,14 +3436,11 @@ func resourceSchemaAttrsVaultVaultRecordPrimer(recurse bool) map[string]rsschema
 }
 func resourceSchemaAttrsVaultVaultRecordPrimerLinkableWrapper(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
-	schemaAttrs["items"] = rsschema.ListAttribute{
-		ElementType: types.StringType,
-		Optional:    true,
-		Validators: []validator.List{
-			listvalidator.ValueStringsAre(
-				stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
-			),
+	schemaAttrs["items"] = rsschema.ListNestedAttribute{
+		NestedObject: rsschema.NestedAttributeObject{
+			Attributes: resourceSchemaAttrsVaultVaultRecordPrimer(recurse),
 		},
+		Optional: true,
 	}
 	return schemaAttrs
 }
@@ -3544,7 +3534,7 @@ func resourceSchemaAttrsVaultVaultRecord_additionalObjects(recurse bool) map[str
 		schemaAttrs["share_summary"] = attr
 	}
 	{
-		attr := resetListAttributeFlags(resourceSchemaAttrsVaultVaultRecordPrimerLinkableWrapper(recurse)["items"].(rsschema.ListAttribute))
+		attr := resetListNestedAttributeFlags(resourceSchemaAttrsVaultVaultRecordPrimerLinkableWrapper(recurse)["items"].(rsschema.ListNestedAttribute))
 		attr.Computed = true
 		schemaAttrs["shares"] = attr
 	}

@@ -499,9 +499,6 @@ func tfObjectToTKHRSClientClientApplication_additionalObjects(ctx context.Contex
 		val, d := tfObjectToTKHRSLaunchpadSsoApplicationLaunchpadTile(ctx, recurse, objAttrs["tile"].(basetypes.ObjectValue))
 		diags.Append(d...)
 		tkh.SetTile(val)
-		if val != nil {
-			val.SetAdditionalData(map[string]any{"$type": "launchpad.SsoApplicationLaunchpadTile"})
-		}
 	}
 	tkh.SetVaultRecordCount(int64PToInt32P(objAttrs["vault_record_count"].(basetypes.Int64Value).ValueInt64Pointer()))
 	return tkh, diags
@@ -669,7 +666,7 @@ func tfObjectToTKHRSClientOAuth2ClientPermissionWithClient(ctx context.Context, 
 		tkh.SetValue(val)
 	}
 	{
-		val, d := tfObjectToTKHRSClientOAuth2Client(ctx, false, objAttrs["client"].(basetypes.ObjectValue))
+		val, d := findClientOAuth2ClientByUUID(ctx, objAttrs["client_uuid"].(basetypes.StringValue).ValueStringPointer())
 		diags.Append(d...)
 		tkh.SetClient(val)
 	}
@@ -1786,7 +1783,7 @@ func tfObjectToTKHRSGroupGroupPrimerLinkableWrapper(ctx context.Context, recurse
 	tkh = keyhubmodel.NewGroupGroupPrimerLinkableWrapper()
 	{
 		val, d := tfToSlice(objAttrs["items"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.GroupGroupPrimerable {
-			tkh, d := findGroupGroupPrimerByUUID(ctx, val.(basetypes.StringValue).ValueStringPointer())
+			tkh, d := tfObjectToTKHRSGroupGroupPrimer(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -2369,7 +2366,7 @@ func tfObjectToTKHRSOrganizationOrganizationalUnitPrimerLinkableWrapper(ctx cont
 	tkh = keyhubmodel.NewOrganizationOrganizationalUnitPrimerLinkableWrapper()
 	{
 		val, d := tfToSlice(objAttrs["items"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.OrganizationOrganizationalUnitPrimerable {
-			tkh, d := findOrganizationOrganizationalUnitPrimerByUUID(ctx, val.(basetypes.StringValue).ValueStringPointer())
+			tkh, d := tfObjectToTKHRSOrganizationOrganizationalUnitPrimer(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -2843,7 +2840,7 @@ func tfObjectToTKHRSProvisioningProvisionedInternalLDAP(ctx context.Context, rec
 	var tkh keyhubmodel.ProvisioningProvisionedInternalLDAPable
 	tkh = keyhubmodel.NewProvisioningProvisionedInternalLDAP()
 	{
-		val, d := tfObjectToTKHRSClientLdapClient(ctx, recurse, objAttrs["client"].(basetypes.ObjectValue))
+		val, d := findClientLdapClientByUUID(ctx, objAttrs["client_uuid"].(basetypes.StringValue).ValueStringPointer())
 		diags.Append(d...)
 		tkh.SetClient(val)
 	}
@@ -3106,7 +3103,7 @@ func tfObjectToTKHRSProvisioningProvisionedSystemPrimerLinkableWrapper(ctx conte
 	tkh = keyhubmodel.NewProvisioningProvisionedSystemPrimerLinkableWrapper()
 	{
 		val, d := tfToSlice(objAttrs["items"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.ProvisioningProvisionedSystemPrimerable {
-			tkh, d := findProvisioningProvisionedSystemPrimerByUUID(ctx, val.(basetypes.StringValue).ValueStringPointer())
+			tkh, d := tfObjectToTKHRSProvisioningProvisionedSystemPrimer(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -3393,7 +3390,7 @@ func tfObjectToTKHRSServiceaccountServiceAccountPrimerLinkableWrapper(ctx contex
 	tkh = keyhubmodel.NewServiceaccountServiceAccountPrimerLinkableWrapper()
 	{
 		val, d := tfToSlice(objAttrs["items"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.ServiceaccountServiceAccountPrimerable {
-			tkh, d := findServiceaccountServiceAccountPrimerByUUID(ctx, val.(basetypes.StringValue).ValueStringPointer())
+			tkh, d := tfObjectToTKHRSServiceaccountServiceAccountPrimer(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -3482,7 +3479,7 @@ func tfObjectToTKHRSVaultVault(ctx context.Context, recurse bool, objVal types.O
 	tkh.SetName(objAttrs["name"].(basetypes.StringValue).ValueStringPointer())
 	{
 		val, d := tfToSlice(objAttrs["records"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.VaultVaultRecordable {
-			tkh, d := tfObjectToTKHRSVaultVaultRecord(ctx, recurse, val.(basetypes.ObjectValue))
+			tkh, d := findVaultVaultRecordByUUID(ctx, val.(basetypes.StringValue).ValueStringPointer())
 			diags.Append(d...)
 			return tkh
 		})
@@ -3626,7 +3623,7 @@ func tfObjectToTKHRSVaultVaultRecordPrimerLinkableWrapper(ctx context.Context, r
 	tkh = keyhubmodel.NewVaultVaultRecordPrimerLinkableWrapper()
 	{
 		val, d := tfToSlice(objAttrs["items"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.VaultVaultRecordPrimerable {
-			tkh, d := findVaultVaultRecordPrimerByUUID(ctx, val.(basetypes.StringValue).ValueStringPointer())
+			tkh, d := tfObjectToTKHRSVaultVaultRecordPrimer(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -3740,9 +3737,6 @@ func tfObjectToTKHRSVaultVaultRecord_additionalObjects(ctx context.Context, recu
 		val, d := tfObjectToTKHRSLaunchpadVaultRecordLaunchpadTile(ctx, recurse, objAttrs["tile"].(basetypes.ObjectValue))
 		diags.Append(d...)
 		tkh.SetTile(val)
-		if val != nil {
-			val.SetAdditionalData(map[string]any{"$type": "launchpad.VaultRecordLaunchpadTile"})
-		}
 	}
 	{
 		val, d := tfObjectToTKHRSVaultVaultHolder(ctx, recurse, objAttrs["vaultholder"].(basetypes.ObjectValue))

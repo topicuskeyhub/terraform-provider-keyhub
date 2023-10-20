@@ -42,7 +42,7 @@ description: |-
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--permissions))
 - `share_end_time` (String)
 - `share_summary` (Attributes) (see [below for nested schema](#nestedatt--share_summary))
-- `shares` (List of String)
+- `shares` (Attributes List) (see [below for nested schema](#nestedatt--shares))
 - `types` (List of String)
 - `uuid` (String)
 - `vaultholder` (Attributes) (see [below for nested schema](#nestedatt--vaultholder))
@@ -136,6 +136,47 @@ Optional:
 
 - `name` (String)
 - `type` (String)
+
+
+
+<a id="nestedatt--shares"></a>
+### Nested Schema for `shares`
+
+Required:
+
+- `name` (String)
+
+Optional:
+
+- `color` (String)
+
+Read-Only:
+
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--shares--links))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--shares--permissions))
+- `share_end_time` (String)
+- `uuid` (String)
+
+<a id="nestedatt--shares--links"></a>
+### Nested Schema for `shares.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--shares--permissions"></a>
+### Nested Schema for `shares.permissions`
+
+Optional:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (List of String)
+- `type_escaped` (String)
 
 
 

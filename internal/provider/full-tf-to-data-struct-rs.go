@@ -181,7 +181,7 @@ func fillDataStructFromTFObjectRSClientOAuth2ClientPermissionWithClient(data *cl
 	data.ForGroupUUID = obj.Attributes()["for_group_uuid"].(basetypes.StringValue)
 	data.ForSystemUUID = obj.Attributes()["for_system_uuid"].(basetypes.StringValue)
 	data.Value = obj.Attributes()["value"].(basetypes.StringValue)
-	data.Client = obj.Attributes()["client"].(basetypes.ObjectValue)
+	data.ClientUUID = obj.Attributes()["client_uuid"].(basetypes.StringValue)
 }
 
 func fillDataStructFromTFObjectRSClientOAuth2ClientPermissionWithClientLinkableWrapper(data *clientOAuth2ClientPermissionWithClientLinkableWrapperDataRS, obj types.Object) {
@@ -747,7 +747,7 @@ func fillDataStructFromTFObjectRSProvisioningProvisionedAzureTenant(data *provis
 }
 
 func fillDataStructFromTFObjectRSProvisioningProvisionedInternalLDAP(data *provisioningProvisionedInternalLDAPDataRS, obj types.Object) {
-	data.Client = obj.Attributes()["client"].(basetypes.ObjectValue)
+	data.ClientUUID = obj.Attributes()["client_uuid"].(basetypes.StringValue)
 }
 
 func fillDataStructFromTFObjectRSProvisioningProvisionedLDAP(data *provisioningProvisionedLDAPDataRS, obj types.Object) {

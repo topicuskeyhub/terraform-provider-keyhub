@@ -362,6 +362,48 @@ func findClientClientApplicationPrimerByUUID(ctx context.Context, uuid *string) 
 	return nil, diag
 }
 
+func findClientOAuth2ClientByUUID(ctx context.Context, uuid *string) (keyhubmodels.ClientOAuth2Clientable, diag.Diagnostics) {
+	if uuid == nil || *uuid == "" {
+		return nil, diag.Diagnostics{}
+	}
+	client := ctx.Value(keyHubClientKey).(*keyhub.KeyHubClient)
+	wrapper, err := client.Client().Get(ctx, &keyhubclient.ClientRequestBuilderGetRequestConfiguration{
+		QueryParameters: &keyhubclient.ClientRequestBuilderGetQueryParameters{
+			Uuid: []string{*uuid},
+		},
+	})
+	ret, diag := findFirst[keyhubmodels.ClientClientApplicationable](ctx, wrapper, "client application", uuid, err)
+	if ret == nil {
+		return nil, diag
+	}
+	if retSub, ok := ret.(*keyhubmodels.ClientOAuth2Client); ok {
+		return retSub, diag
+	}
+	diag.AddError("Type error", "Result not of type ClientOAuth2Client")
+	return nil, diag
+}
+
+func findClientLdapClientByUUID(ctx context.Context, uuid *string) (keyhubmodels.ClientLdapClientable, diag.Diagnostics) {
+	if uuid == nil || *uuid == "" {
+		return nil, diag.Diagnostics{}
+	}
+	client := ctx.Value(keyHubClientKey).(*keyhub.KeyHubClient)
+	wrapper, err := client.Client().Get(ctx, &keyhubclient.ClientRequestBuilderGetRequestConfiguration{
+		QueryParameters: &keyhubclient.ClientRequestBuilderGetQueryParameters{
+			Uuid: []string{*uuid},
+		},
+	})
+	ret, diag := findFirst[keyhubmodels.ClientClientApplicationable](ctx, wrapper, "client application", uuid, err)
+	if ret == nil {
+		return nil, diag
+	}
+	if retSub, ok := ret.(*keyhubmodels.ClientLdapClient); ok {
+		return retSub, diag
+	}
+	diag.AddError("Type error", "Result not of type ClientLdapClient")
+	return nil, diag
+}
+
 func findAuthAccountPrimerByUUID(ctx context.Context, uuid *string) (keyhubmodels.AuthAccountPrimerable, diag.Diagnostics) {
 	ret, diag := findAuthAccountByUUID(ctx, uuid)
 	if ret == nil {
@@ -411,16 +453,7 @@ func findServiceaccountServiceAccountPrimerByUUID(ctx context.Context, uuid *str
 }
 
 func findVaultVaultRecordPrimerByUUID(ctx context.Context, uuid *string) (keyhubmodels.VaultVaultRecordPrimerable, diag.Diagnostics) {
-	if uuid == nil || *uuid == "" {
-		return nil, diag.Diagnostics{}
-	}
-	client := ctx.Value(keyHubClientKey).(*keyhub.KeyHubClient)
-	wrapper, err := client.Vaultrecord().Get(ctx, &keyhubvaultrecord.VaultrecordRequestBuilderGetRequestConfiguration{
-		QueryParameters: &keyhubvaultrecord.VaultrecordRequestBuilderGetQueryParameters{
-			Uuid: []string{*uuid},
-		},
-	})
-	ret, diag := findFirst[keyhubmodels.VaultVaultRecordable](ctx, wrapper, "vault record", uuid, err)
+	ret, diag := findVaultVaultRecordByUUID(ctx, uuid)
 	if ret == nil {
 		return ret, diag
 	}
@@ -430,6 +463,19 @@ func findVaultVaultRecordPrimerByUUID(ctx context.Context, uuid *string) (keyhub
 	}
 	diag.AddError("Type error", "Result not of type VaultVaultRecordPrimer")
 	return nil, diag
+}
+
+func findVaultVaultRecordByUUID(ctx context.Context, uuid *string) (keyhubmodels.VaultVaultRecordable, diag.Diagnostics) {
+	if uuid == nil || *uuid == "" {
+		return nil, diag.Diagnostics{}
+	}
+	client := ctx.Value(keyHubClientKey).(*keyhub.KeyHubClient)
+	wrapper, err := client.Vaultrecord().Get(ctx, &keyhubvaultrecord.VaultrecordRequestBuilderGetRequestConfiguration{
+		QueryParameters: &keyhubvaultrecord.VaultrecordRequestBuilderGetQueryParameters{
+			Uuid: []string{*uuid},
+		},
+	})
+	return findFirst[keyhubmodels.VaultVaultRecordable](ctx, wrapper, "vault record", uuid, err)
 }
 
 func errorReportToString(ctx context.Context, err error) string {
