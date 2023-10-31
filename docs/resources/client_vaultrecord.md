@@ -26,8 +26,8 @@ description: |-
 - `delete_tile` (Boolean)
 - `end_date` (String)
 - `filename` (String)
-- `secret` (Attributes) (see [below for nested schema](#nestedatt--secret))
-- `tile` (Attributes) (see [below for nested schema](#nestedatt--tile))
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--links))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--permissions))
 - `url` (String)
 - `username` (String)
 - `warning_period` (String)
@@ -36,31 +36,37 @@ description: |-
 
 - `audit` (Attributes) (see [below for nested schema](#nestedatt--audit))
 - `derived` (Boolean)
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--links))
 - `parent_uuid` (String)
 - `password_metadata` (Attributes) (see [below for nested schema](#nestedatt--password_metadata))
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--permissions))
+- `secret` (Attributes) (see [below for nested schema](#nestedatt--secret))
 - `share_end_time` (String)
 - `share_summary` (Attributes) (see [below for nested schema](#nestedatt--share_summary))
 - `shares` (Attributes List) (see [below for nested schema](#nestedatt--shares))
+- `tile` (Attributes) (see [below for nested schema](#nestedatt--tile))
 - `types` (List of String)
 - `uuid` (String)
 - `vaultholder` (Attributes) (see [below for nested schema](#nestedatt--vaultholder))
 
-<a id="nestedatt--secret"></a>
-### Nested Schema for `secret`
+<a id="nestedatt--links"></a>
+### Nested Schema for `links`
 
 Optional:
 
-- `comment` (String)
-- `file` (String)
-- `password` (String)
-- `totp` (String)
-- `write_totp` (Boolean)
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
 
 
-<a id="nestedatt--tile"></a>
-### Nested Schema for `tile`
+<a id="nestedatt--permissions"></a>
+### Nested Schema for `permissions`
+
+Optional:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (List of String)
+- `type_escaped` (String)
 
 
 <a id="nestedatt--audit"></a>
@@ -72,17 +78,6 @@ Optional:
 - `created_by` (String)
 - `last_modified_at` (String)
 - `last_modified_by` (String)
-
-
-<a id="nestedatt--links"></a>
-### Nested Schema for `links`
-
-Read-Only:
-
-- `href` (String)
-- `id` (Number)
-- `rel` (String)
-- `type_escaped` (String)
 
 
 <a id="nestedatt--password_metadata"></a>
@@ -101,15 +96,16 @@ Optional:
 - `upper_count` (Number)
 
 
-<a id="nestedatt--permissions"></a>
-### Nested Schema for `permissions`
+<a id="nestedatt--secret"></a>
+### Nested Schema for `secret`
 
 Optional:
 
-- `full` (String)
-- `instances` (List of String)
-- `operations` (List of String)
-- `type_escaped` (String)
+- `comment` (String)
+- `file` (String)
+- `password` (String)
+- `totp` (String)
+- `write_totp` (Boolean)
 
 
 <a id="nestedatt--share_summary"></a>
@@ -149,18 +145,18 @@ Required:
 Optional:
 
 - `color` (String)
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--shares--links))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--shares--permissions))
 
 Read-Only:
 
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--shares--links))
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--shares--permissions))
 - `share_end_time` (String)
 - `uuid` (String)
 
 <a id="nestedatt--shares--links"></a>
 ### Nested Schema for `shares.links`
 
-Read-Only:
+Optional:
 
 - `href` (String)
 - `id` (Number)
@@ -178,6 +174,10 @@ Optional:
 - `operations` (List of String)
 - `type_escaped` (String)
 
+
+
+<a id="nestedatt--tile"></a>
+### Nested Schema for `tile`
 
 
 <a id="nestedatt--vaultholder"></a>
