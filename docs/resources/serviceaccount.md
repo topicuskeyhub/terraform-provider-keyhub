@@ -25,9 +25,6 @@ description: |-
 
 - `active` (Boolean)
 - `description` (String)
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--links))
-- `password_uuid` (String)
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--permissions))
 - `secret` (Attributes) (see [below for nested schema](#nestedatt--secret))
 - `technical_administrator_uuid` (String)
 
@@ -35,30 +32,11 @@ description: |-
 
 - `audit` (Attributes) (see [below for nested schema](#nestedatt--audit))
 - `groups` (Attributes List) (see [below for nested schema](#nestedatt--groups))
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--links))
+- `password_uuid` (String)
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--permissions))
 - `username` (String)
 - `uuid` (String)
-
-<a id="nestedatt--links"></a>
-### Nested Schema for `links`
-
-Optional:
-
-- `href` (String)
-- `id` (Number)
-- `rel` (String)
-- `type_escaped` (String)
-
-
-<a id="nestedatt--permissions"></a>
-### Nested Schema for `permissions`
-
-Optional:
-
-- `full` (String)
-- `instances` (List of String)
-- `operations` (List of String)
-- `type_escaped` (String)
-
 
 <a id="nestedatt--secret"></a>
 ### Nested Schema for `secret`
@@ -92,6 +70,9 @@ Required:
 Optional:
 
 - `display_name` (String)
+
+Read-Only:
+
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--groups--links))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--groups--permissions))
 - `short_name_in_system` (String)
@@ -99,7 +80,7 @@ Optional:
 <a id="nestedatt--groups--links"></a>
 ### Nested Schema for `groups.links`
 
-Optional:
+Read-Only:
 
 - `href` (String)
 - `id` (Number)
@@ -109,6 +90,29 @@ Optional:
 
 <a id="nestedatt--groups--permissions"></a>
 ### Nested Schema for `groups.permissions`
+
+Optional:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (List of String)
+- `type_escaped` (String)
+
+
+
+<a id="nestedatt--links"></a>
+### Nested Schema for `links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--permissions"></a>
+### Nested Schema for `permissions`
 
 Optional:
 

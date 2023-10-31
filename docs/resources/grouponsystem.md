@@ -25,73 +25,32 @@ description: |-
 ### Optional
 
 - `display_name` (String)
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--links))
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--permissions))
 - `provgroups` (Attributes List) (see [below for nested schema](#nestedatt--provgroups))
 - `service_accounts` (Attributes List) (see [below for nested schema](#nestedatt--service_accounts))
-- `short_name_in_system` (String)
 
 ### Read-Only
 
 - `audit` (Attributes) (see [below for nested schema](#nestedatt--audit))
-
-<a id="nestedatt--links"></a>
-### Nested Schema for `links`
-
-Optional:
-
-- `href` (String)
-- `id` (Number)
-- `rel` (String)
-- `type_escaped` (String)
-
-
-<a id="nestedatt--permissions"></a>
-### Nested Schema for `permissions`
-
-Optional:
-
-- `full` (String)
-- `instances` (List of String)
-- `operations` (List of String)
-- `type_escaped` (String)
-
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--links))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--permissions))
+- `short_name_in_system` (String)
 
 <a id="nestedatt--provgroups"></a>
 ### Nested Schema for `provgroups`
 
+Required:
+
+- `group_uuid` (String)
+
 Optional:
 
 - `activation_required` (Boolean)
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--provgroups--links))
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--provgroups--permissions))
 
 Read-Only:
 
 - `group_on_system` (Attributes) (see [below for nested schema](#nestedatt--provgroups--group_on_system))
-- `group_uuid` (String)
-
-<a id="nestedatt--provgroups--links"></a>
-### Nested Schema for `provgroups.links`
-
-Optional:
-
-- `href` (String)
-- `id` (Number)
-- `rel` (String)
-- `type_escaped` (String)
-
-
-<a id="nestedatt--provgroups--permissions"></a>
-### Nested Schema for `provgroups.permissions`
-
-Optional:
-
-- `full` (String)
-- `instances` (List of String)
-- `operations` (List of String)
-- `type_escaped` (String)
-
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--provgroups--links))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--provgroups--permissions))
 
 <a id="nestedatt--provgroups--group_on_system"></a>
 ### Nested Schema for `provgroups.group_on_system`
@@ -105,6 +64,9 @@ Required:
 Optional:
 
 - `display_name` (String)
+
+Read-Only:
+
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--provgroups--group_on_system--links))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--provgroups--group_on_system--permissions))
 - `short_name_in_system` (String)
@@ -112,7 +74,7 @@ Optional:
 <a id="nestedatt--provgroups--group_on_system--links"></a>
 ### Nested Schema for `provgroups.group_on_system.links`
 
-Optional:
+Read-Only:
 
 - `href` (String)
 - `id` (Number)
@@ -132,6 +94,28 @@ Optional:
 
 
 
+<a id="nestedatt--provgroups--links"></a>
+### Nested Schema for `provgroups.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--provgroups--permissions"></a>
+### Nested Schema for `provgroups.permissions`
+
+Optional:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (List of String)
+- `type_escaped` (String)
+
+
 
 <a id="nestedatt--service_accounts"></a>
 ### Nested Schema for `service_accounts`
@@ -144,18 +128,18 @@ Required:
 Optional:
 
 - `active` (Boolean)
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--service_accounts--links))
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--service_accounts--permissions))
 
 Read-Only:
 
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--service_accounts--links))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--service_accounts--permissions))
 - `username` (String)
 - `uuid` (String)
 
 <a id="nestedatt--service_accounts--links"></a>
 ### Nested Schema for `service_accounts.links`
 
-Optional:
+Read-Only:
 
 - `href` (String)
 - `id` (Number)
@@ -184,3 +168,25 @@ Optional:
 - `created_by` (String)
 - `last_modified_at` (String)
 - `last_modified_by` (String)
+
+
+<a id="nestedatt--links"></a>
+### Nested Schema for `links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--permissions"></a>
+### Nested Schema for `permissions`
+
+Optional:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (List of String)
+- `type_escaped` (String)
