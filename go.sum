@@ -169,8 +169,8 @@ github.com/stretchr/testify v1.5.1/go.mod h1:5W2xD1RspED5o8YsWQXVCued0rvSQ+mT+I5
 github.com/stretchr/testify v1.6.1/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/h/Wwjteg=
 github.com/stretchr/testify v1.7.2/go.mod h1:R6va5+xMeoiuVRoj+gSkQ7d3FALtqAAGI1FQKckRals=
 github.com/stretchr/testify v1.8.4 h1:CcVxjf3Q8PM0mHUKJCdn+eZZtm5yQwehR5yeSVQQcUk=
-github.com/topicuskeyhub/sdk-go v0.29.1-0.20231020192028-022be2ba030f h1:/Umyd1P2MaEVi8eoWnPCbkZOoHz5QZg81dqw5G//Ybo=
-github.com/topicuskeyhub/sdk-go v0.29.1-0.20231020192028-022be2ba030f/go.mod h1:rYrE+VBV3sYYXR44U5VZgihBnj/KQPtZvm9isb7Zp28=
+github.com/topicuskeyhub/sdk-go v0.29.1-0.20231031163120-580c3f972b4d h1:QUcCSysZOnwe7rr0Oyu4ikkRKWmuenJvnooCbR2ud/Y=
+github.com/topicuskeyhub/sdk-go v0.29.1-0.20231031163120-580c3f972b4d/go.mod h1:s8qOQieJ+9cm/2s0uxPySRH9YNFbln3Nb9J8/XNaWbM=
 github.com/vmihailenco/msgpack/v5 v5.4.1 h1:cQriyiUvjTwOHg8QZaPihLWeRAAVoCpE00IUPn0Bjt8=
 github.com/vmihailenco/msgpack/v5 v5.4.1/go.mod h1:GaZTsDaehaPpQVyxrf5mtQlH+pc21PIudVV/E3rRQok=
 github.com/vmihailenco/tagparser/v2 v2.0.0 h1:y09buUbR+b5aycVFQs/g70pqKVZNBmxwAhO7/IwNM9g=
