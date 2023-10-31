@@ -1,6 +1,6 @@
 module github.com/topicuskeyhub/terraform-provider-keyhubpreview
 
-go 1.19
+go 1.20
 
 require (
 	github.com/google/uuid v1.4.0
