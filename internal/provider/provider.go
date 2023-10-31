@@ -14,6 +14,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/provider/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/hashicorp/terraform-plugin-log/tflog"
 	keyhub "github.com/topicuskeyhub/sdk-go"
 )
 
@@ -28,6 +29,8 @@ type KeyHubProvider struct {
 	version string
 }
 
+const ProviderName = "keyhubpreview"
+
 // KeyHubProviderModel describes the provider data model.
 type KeyHubProviderModel struct {
 	Issuer       types.String `tfsdk:"issuer"`
@@ -36,8 +39,9 @@ type KeyHubProviderModel struct {
 }
 
 func (p *KeyHubProvider) Metadata(ctx context.Context, req provider.MetadataRequest, resp *provider.MetadataResponse) {
-	resp.TypeName = "keyhub"
+	resp.TypeName = ProviderName
 	resp.Version = p.version
+	tflog.Info(ctx, "Provider name set to "+resp.TypeName)
 }
 
 func (p *KeyHubProvider) Schema(ctx context.Context, req provider.SchemaRequest, resp *provider.SchemaResponse) {
@@ -142,8 +146,13 @@ func (p *KeyHubProvider) Configure(ctx context.Context, req provider.ConfigureRe
 	if resp.Diagnostics.HasError() {
 		return
 	}
+	ctx = tflog.SetField(ctx, "keyhub_issuer", issuer)
+	ctx = tflog.SetField(ctx, "keyhub_clientid", clientid)
+	ctx = tflog.SetField(ctx, "keyhub_clientsecret", clientsecret)
+	ctx = tflog.MaskFieldValuesWithFieldKeys(ctx, "keyhub_clientsecret")
 
-	adapter, err := keyhub.NewKeyHubRequestAdapter(http.DefaultClient, issuer, clientid, clientsecret)
+	tflog.Info(ctx, "Connecting to Topicus KeyHub")
+	adapter, err := keyhub.NewKeyHubRequestAdapter(&http.Client{}, issuer, clientid, clientsecret)
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Unable to create Topicus KeyHub API client",
@@ -157,17 +166,34 @@ func (p *KeyHubProvider) Configure(ctx context.Context, req provider.ConfigureRe
 	client := keyhub.NewKeyHubClient(adapter)
 	resp.DataSourceData = client
 	resp.ResourceData = client
+
+	tflog.Info(ctx, "Connected to Topicus KeyHub", map[string]any{"success": true})
 }
 
 func (p *KeyHubProvider) Resources(ctx context.Context) []func() resource.Resource {
 	return []func() resource.Resource{
-		NewExampleResource,
+		NewClientapplicationResource,
+		NewClientVaultrecordResource,
+		NewGroupVaultrecordResource,
+		NewGroupResource,
+		NewGrouponsystemResource,
+		NewServiceaccountResource,
 	}
 }
 
 func (p *KeyHubProvider) DataSources(ctx context.Context) []func() datasource.DataSource {
 	return []func() datasource.DataSource{
+		NewAccountDataSource,
+		NewCertificateDataSource,
+		NewClientDataSource,
+		NewDirectoryDataSource,
 		NewGroupDataSource,
+		NewGroupclassificationDataSource,
+		NewOrganizationalunitDataSource,
+		NewServiceaccountDataSource,
+		NewSystemDataSource,
+		NewVaultrecordDataSource,
+		NewWebhookDataSource,
 	}
 }
 
