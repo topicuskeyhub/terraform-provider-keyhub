@@ -2,6 +2,7 @@ package keyhub
 
 import (
 	"context"
+	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"strconv"
 	"time"
 
@@ -35,6 +36,7 @@ func dataSourceGroupsRead(ctx context.Context, d *schema.ResourceData, m interfa
 
 	groups, err := client.Groups.List()
 	if err != nil {
+		tflog.Debug(ctx, err.Error(), apiErrorToLogFields(err))
 		diags = append(diags, diag.Diagnostic{
 			Severity: diag.Error,
 			Summary:  "Could not GET groups",

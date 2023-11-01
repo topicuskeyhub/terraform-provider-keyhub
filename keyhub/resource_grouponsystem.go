@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/google/uuid"
+	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
@@ -292,6 +293,7 @@ func resourceGroupOnSystemCreate(ctx context.Context, d *schema.ResourceData, m 
 
 		owner, err = client.Groups.GetByUUID(uuidOwner)
 		if err != nil {
+			tflog.Debug(ctx, err.Error(), apiErrorToLogFields(err))
 			diags = append(diags, diag.Diagnostic{
 				Severity: diag.Error,
 				Summary:  "Owner does not exist",
@@ -322,6 +324,7 @@ func resourceGroupOnSystemCreate(ctx context.Context, d *schema.ResourceData, m 
 
 		system, err = client.Systems.GetByUUID(uuidSystem)
 		if err != nil {
+			tflog.Debug(ctx, err.Error(), apiErrorToLogFields(err))
 			diags = append(diags, diag.Diagnostic{
 				Severity: diag.Error,
 				Summary:  "System does not exist",
@@ -399,6 +402,7 @@ func resourceGroupOnSystemCreate(ctx context.Context, d *schema.ResourceData, m 
 
 	newGos, err := client.Systems.CreateGroupOnSystem(gos)
 	if err != nil {
+		tflog.Debug(ctx, err.Error(), apiErrorToLogFields(err))
 		diags = append(diags, diag.Diagnostic{
 			Severity: diag.Error,
 			Summary:  "Could not create GroupOnSystem",

@@ -2,6 +2,7 @@ package keyhub
 
 import (
 	"context"
+	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"strconv"
 
 	"github.com/google/uuid"
@@ -57,6 +58,7 @@ func dataSourceAccountRead(ctx context.Context, d *schema.ResourceData, m interf
 
 	account, err := client.Accounts.GetByUUID(UUID)
 	if err != nil {
+		tflog.Debug(ctx, err.Error(), apiErrorToLogFields(err))
 		diags = append(diags, diag.Diagnostic{
 			Severity: diag.Error,
 			Summary:  "Could not GET account " + uuidString,

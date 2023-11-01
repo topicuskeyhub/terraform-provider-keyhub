@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/google/uuid"
+	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
@@ -269,6 +270,7 @@ func resourceClientApplicationRead(ctx context.Context, d *schema.ResourceData, 
 
 		clientApp, err = client.ClientApplications.GetByUUID(clientUuid)
 		if err != nil {
+			tflog.Debug(ctx, err.Error(), apiErrorToLogFields(err))
 			diags = append(diags, diag.Diagnostic{
 				Severity: diag.Error,
 				Summary:  "Could not GET ClientApplication " + d.Get("id").(string),
@@ -416,6 +418,7 @@ func resourceClientApplicationCreate(ctx context.Context, d *schema.ResourceData
 
 	owner, err = client.Groups.GetByUUID(uuidOwner)
 	if err != nil {
+		tflog.Debug(ctx, err.Error(), apiErrorToLogFields(err))
 		return append(diags, diag.Diagnostic{
 			Severity: diag.Error,
 			Summary:  "Owner does not exist",
@@ -450,6 +453,7 @@ func resourceClientApplicationCreate(ctx context.Context, d *schema.ResourceData
 
 		technicalAdministrator, err = client.Groups.GetByUUID(uuidTechnicalAdministrator)
 		if err != nil {
+			tflog.Debug(ctx, err.Error(), apiErrorToLogFields(err))
 			return append(diags, diag.Diagnostic{
 				Severity: diag.Error,
 				Summary:  "TechnicalAdministrator group does not exist",
@@ -549,6 +553,7 @@ func resourceClientApplicationCreate(ctx context.Context, d *schema.ResourceData
 
 	newApp, err := client.ClientApplications.Create(clientApp)
 	if err != nil {
+		tflog.Debug(ctx, err.Error(), apiErrorToLogFields(err))
 		diags = append(diags, diag.Diagnostic{
 			Severity: diag.Error,
 			Summary:  "Could not create ClientApplication",

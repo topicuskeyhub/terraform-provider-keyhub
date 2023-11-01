@@ -2,7 +2,11 @@ package keyhub
 
 import (
 	"context"
+	"errors"
+	"fmt"
+	keyhubmodel "github.com/topicuskeyhub/go-keyhub/model"
 	"net/http"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -91,4 +95,22 @@ func providerConfigure(ctx context.Context, d *schema.ResourceData) (interface{}
 	}
 
 	return client, diags
+}
+
+func apiErrorToLogFields(err error) map[string]interface{} {
+
+	fields := map[string]interface{}{}
+
+	var apiError keyhubmodel.KeyhubApiError
+	if errors.As(err, &apiError) {
+		fields["code"] = fmt.Sprintf("%d", apiError.Report.Code)
+		fields["reason"] = apiError.Report.Reason
+		fields["exception"] = apiError.Report.Exception
+		fields["message"] = apiError.Report.Message
+		fields["applicationError"] = apiError.Report.ApplicationError
+		fields["stacktrace"] = strings.Join(apiError.Report.StackTrace, "\n")
+	}
+
+	return fields
+
 }

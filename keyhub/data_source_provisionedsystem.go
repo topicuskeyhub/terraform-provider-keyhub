@@ -3,6 +3,7 @@ package keyhub
 import (
 	"context"
 	"github.com/google/uuid"
+	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	keyhubclient "github.com/topicuskeyhub/go-keyhub"
@@ -83,6 +84,7 @@ func dataSourceProvisionedSystemRead(ctx context.Context, d *schema.ResourceData
 
 	system, err := client.Systems.GetByUUID(UUID)
 	if err != nil {
+		tflog.Debug(ctx, err.Error(), apiErrorToLogFields(err))
 		diags = append(diags, diag.Diagnostic{
 			Severity: diag.Error,
 			Summary:  "Could not GET system " + uuidString,
