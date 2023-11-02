@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - #28 Add tflog debug to every call that could return an apiError object
+
 ### Changed
 - go-keyhub upgraded to 1.3.1
 
