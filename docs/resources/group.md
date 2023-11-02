@@ -35,7 +35,7 @@ resource "keyhub_group" "example" {
 
 ### Required
 
-- **member** (Block) At least one manager should be defined
+- **member** (Block) At least one manager or nested_under_groupuuid should be defined
 - **name** (String) The Name field of the group
 
 ### Optional

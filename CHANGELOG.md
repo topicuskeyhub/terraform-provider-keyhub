@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.3.1] - 2023-11-02
+
+### Added
+- #28 Add tflog debug to every call that could return an apiError object
+### Changed
+- go-keyhub upgraded to 1.3.1
+
 ## [1.3.0] - 2023-05-09
 
 ### Added

@@ -1,12 +1,14 @@
 module terraform-provider-keyhub
 
-go 1.18
+go 1.21
+
+toolchain go1.21.0
 
 require github.com/hashicorp/terraform-plugin-sdk/v2 v2.16.0
 
 require (
 	github.com/google/uuid v1.3.0
-	github.com/topicuskeyhub/go-keyhub v1.3.0
+	github.com/topicuskeyhub/go-keyhub v1.3.1
 )
 
 require (
