@@ -1389,6 +1389,11 @@ func tfObjectToTKHDSGroupAccountGroup(ctx context.Context, recurse bool, objVal 
 	}
 	tkh.SetAdmin(objAttrs["admin"].(basetypes.BoolValue).ValueBoolPointer())
 	tkh.SetName(objAttrs["name"].(basetypes.StringValue).ValueStringPointer())
+	{
+		val, d := tfObjectToTKHDSOrganizationOrganizationalUnitPrimer(ctx, recurse, objAttrs["organizational_unit"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		tkh.SetOrganizationalUnit(val)
+	}
 	tkh.SetUuid(objAttrs["uuid"].(basetypes.StringValue).ValueStringPointer())
 	{
 		val, d := parsePointer2(objAttrs["end_date"].(basetypes.StringValue), serialization.ParseDateOnly)
@@ -1516,6 +1521,11 @@ func tfObjectToTKHDSGroupGroup(ctx context.Context, recurse bool, objVal types.O
 	}
 	tkh.SetAdmin(objAttrs["admin"].(basetypes.BoolValue).ValueBoolPointer())
 	tkh.SetName(objAttrs["name"].(basetypes.StringValue).ValueStringPointer())
+	{
+		val, d := tfObjectToTKHDSOrganizationOrganizationalUnitPrimer(ctx, recurse, objAttrs["organizational_unit"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		tkh.SetOrganizationalUnit(val)
+	}
 	tkh.SetUuid(objAttrs["uuid"].(basetypes.StringValue).ValueStringPointer())
 	tkh.SetApplicationAdministration(objAttrs["application_administration"].(basetypes.BoolValue).ValueBoolPointer())
 	{
@@ -1574,11 +1584,6 @@ func tfObjectToTKHDSGroupGroup(ctx context.Context, recurse bool, objVal types.O
 		val, d := tfObjectToTKHDSGroupGroupPrimer(ctx, false, objAttrs["nested_under"].(basetypes.ObjectValue))
 		diags.Append(d...)
 		tkh.SetNestedUnder(val)
-	}
-	{
-		val, d := tfObjectToTKHDSOrganizationOrganizationalUnitPrimer(ctx, false, objAttrs["organizational_unit"].(basetypes.ObjectValue))
-		diags.Append(d...)
-		tkh.SetOrganizationalUnit(val)
 	}
 	tkh.SetPrivateGroup(objAttrs["private_group"].(basetypes.BoolValue).ValueBoolPointer())
 	tkh.SetRecordTrail(objAttrs["record_trail"].(basetypes.BoolValue).ValueBoolPointer())
@@ -2288,6 +2293,11 @@ func tfObjectToTKHDSGroupGroupPrimer(ctx context.Context, recurse bool, objVal t
 	}
 	tkh.SetAdmin(objAttrs["admin"].(basetypes.BoolValue).ValueBoolPointer())
 	tkh.SetName(objAttrs["name"].(basetypes.StringValue).ValueStringPointer())
+	{
+		val, d := tfObjectToTKHDSOrganizationOrganizationalUnitPrimer(ctx, recurse, objAttrs["organizational_unit"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		tkh.SetOrganizationalUnit(val)
+	}
 	tkh.SetUuid(objAttrs["uuid"].(basetypes.StringValue).ValueStringPointer())
 	return tkh, diags
 }
@@ -3229,6 +3239,24 @@ func tfObjectToTKHDSProvisioningProvisionedLDAPDirectory(ctx context.Context, re
 	return tkh, diags
 }
 
+func tfObjectToTKHDSProvisioningProvisionedNamespace(ctx context.Context, recurse bool, objVal types.Object) (keyhubmodel.ProvisioningProvisionedNamespaceable, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	if objVal.IsNull() || objVal.IsUnknown() {
+		return nil, diags
+	}
+	objAttrs := objVal.Attributes()
+	var tkh keyhubmodel.ProvisioningProvisionedNamespaceable
+	tkh = keyhubmodel.NewProvisioningProvisionedNamespace()
+	{
+		val, d := tfObjectToTKHDSProvisioningProvisionedSystemPrimer(ctx, recurse, objAttrs["base_system"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		tkh.SetBaseSystem(val)
+	}
+	tkh.SetGroupDN(objAttrs["group_dn"].(basetypes.StringValue).ValueStringPointer())
+	tkh.SetServiceAccountDN(objAttrs["service_account_dn"].(basetypes.StringValue).ValueStringPointer())
+	return tkh, diags
+}
+
 func tfObjectToTKHDSProvisioningProvisionedSystem(ctx context.Context, recurse bool, objVal types.Object) (keyhubmodel.ProvisioningProvisionedSystemable, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	if objVal.IsNull() || objVal.IsUnknown() {
@@ -3288,6 +3316,7 @@ func tfObjectToTKHDSProvisioningProvisionedSystem(ctx context.Context, recurse b
 	}
 	tkh.SetSelfServiceExistingGroups(objAttrs["self_service_existing_groups"].(basetypes.BoolValue).ValueBoolPointer())
 	tkh.SetSelfServiceNewGroups(objAttrs["self_service_new_groups"].(basetypes.BoolValue).ValueBoolPointer())
+	tkh.SetSelfServiceNewNamespaces(objAttrs["self_service_new_namespaces"].(basetypes.BoolValue).ValueBoolPointer())
 	tkh.SetSelfServiceServiceAccounts(objAttrs["self_service_service_accounts"].(basetypes.BoolValue).ValueBoolPointer())
 	tkh.SetShouldDestroyUnknownAccounts(objAttrs["should_destroy_unknown_accounts"].(basetypes.BoolValue).ValueBoolPointer())
 	{
@@ -3357,6 +3386,14 @@ func tfObjectToTKHDSProvisioningProvisionedSystem(ctx context.Context, recurse b
 		diags.Append(d...)
 		dtype := val.GetTypeEscaped()
 		(*val.(*keyhubmodel.ProvisioningProvisionedLDAPDirectory)).ProvisioningProvisionedSystem = *tkh.(*keyhubmodel.ProvisioningProvisionedSystem)
+		val.SetTypeEscaped(dtype)
+		tkh = val
+	}
+	if !objAttrs["provisioned_namespace"].IsNull() {
+		val, d := tfObjectToTKHDSProvisioningProvisionedNamespace(ctx, false, objAttrs["provisioned_namespace"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		dtype := val.GetTypeEscaped()
+		(*val.(*keyhubmodel.ProvisioningProvisionedNamespace)).ProvisioningProvisionedSystem = *tkh.(*keyhubmodel.ProvisioningProvisionedSystem)
 		val.SetTypeEscaped(dtype)
 		tkh = val
 	}

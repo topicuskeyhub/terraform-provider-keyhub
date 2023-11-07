@@ -494,6 +494,7 @@ type groupAccountGroupDataDS struct {
 	Permissions            types.List   `tfsdk:"permissions"`
 	Admin                  types.Bool   `tfsdk:"admin"`
 	Name                   types.String `tfsdk:"name"`
+	OrganizationalUnit     types.Object `tfsdk:"organizational_unit"`
 	UUID                   types.String `tfsdk:"uuid"`
 	Additional             types.List   `tfsdk:"additional"`
 	Audit                  types.Object `tfsdk:"audit" tkhao:"audit"`
@@ -537,6 +538,7 @@ type groupGroupDataDS struct {
 	Permissions                  types.List   `tfsdk:"permissions"`
 	Admin                        types.Bool   `tfsdk:"admin"`
 	Name                         types.String `tfsdk:"name"`
+	OrganizationalUnit           types.Object `tfsdk:"organizational_unit"`
 	UUID                         types.String `tfsdk:"uuid"`
 	Additional                   types.List   `tfsdk:"additional"`
 	Accounts                     types.List   `tfsdk:"accounts" tkhao:"accounts"`
@@ -580,7 +582,6 @@ type groupGroupDataDS struct {
 	ExtendedAccess               types.String `tfsdk:"extended_access"`
 	HideAuditTrail               types.Bool   `tfsdk:"hide_audit_trail"`
 	NestedUnder                  types.Object `tfsdk:"nested_under"`
-	OrganizationalUnit           types.Object `tfsdk:"organizational_unit"`
 	PrivateGroup                 types.Bool   `tfsdk:"private_group"`
 	RecordTrail                  types.Bool   `tfsdk:"record_trail"`
 	RotatingPasswordRequired     types.Bool   `tfsdk:"rotating_password_required"`
@@ -825,11 +826,12 @@ var groupGroupPrimerAttrTypesDS = objectAttrsTypeDSGroupGroupPrimer(false)
 var groupGroupPrimerAttrTypesDSRecurse = objectAttrsTypeDSGroupGroupPrimer(true)
 
 type groupGroupPrimerDataDS struct {
-	Links       types.List   `tfsdk:"links"`
-	Permissions types.List   `tfsdk:"permissions"`
-	Admin       types.Bool   `tfsdk:"admin"`
-	Name        types.String `tfsdk:"name"`
-	UUID        types.String `tfsdk:"uuid"`
+	Links              types.List   `tfsdk:"links"`
+	Permissions        types.List   `tfsdk:"permissions"`
+	Admin              types.Bool   `tfsdk:"admin"`
+	Name               types.String `tfsdk:"name"`
+	OrganizationalUnit types.Object `tfsdk:"organizational_unit"`
+	UUID               types.String `tfsdk:"uuid"`
 }
 
 var groupGroupPrimerLinkableWrapperAttrTypesDS = objectAttrsTypeDSGroupGroupPrimerLinkableWrapper(false)
@@ -1164,6 +1166,15 @@ type provisioningProvisionedLDAPDirectoryDataDS struct {
 	GroupDN   types.String `tfsdk:"group_dn"`
 }
 
+var provisioningProvisionedNamespaceAttrTypesDS = objectAttrsTypeDSProvisioningProvisionedNamespace(false)
+var provisioningProvisionedNamespaceAttrTypesDSRecurse = objectAttrsTypeDSProvisioningProvisionedNamespace(true)
+
+type provisioningProvisionedNamespaceDataDS struct {
+	BaseSystem       types.Object `tfsdk:"base_system"`
+	GroupDN          types.String `tfsdk:"group_dn"`
+	ServiceAccountDN types.String `tfsdk:"service_account_dn"`
+}
+
 var provisioningProvisionedSystemAttrTypesDS = objectAttrsTypeDSProvisioningProvisionedSystem(false)
 var provisioningProvisionedSystemAttrTypesDSRecurse = objectAttrsTypeDSProvisioningProvisionedSystem(true)
 
@@ -1190,6 +1201,7 @@ type provisioningProvisionedSystemDataDS struct {
 	Owner                                   types.Object `tfsdk:"owner"`
 	SelfServiceExistingGroups               types.Bool   `tfsdk:"self_service_existing_groups"`
 	SelfServiceNewGroups                    types.Bool   `tfsdk:"self_service_new_groups"`
+	SelfServiceNewNamespaces                types.Bool   `tfsdk:"self_service_new_namespaces"`
 	SelfServiceServiceAccounts              types.Bool   `tfsdk:"self_service_service_accounts"`
 	ShouldDestroyUnknownAccounts            types.Bool   `tfsdk:"should_destroy_unknown_accounts"`
 	TechnicalAdministrator                  types.Object `tfsdk:"technical_administrator"`
@@ -1202,6 +1214,7 @@ type provisioningProvisionedSystemDataDS struct {
 	ProvisionedInternalLDAP                 types.Object `tfsdk:"provisioned_internal_ldap"`
 	ProvisionedLDAP                         types.Object `tfsdk:"provisioned_ldap"`
 	ProvisionedLDAPDirectory                types.Object `tfsdk:"provisioned_ldap_directory"`
+	ProvisionedNamespace                    types.Object `tfsdk:"provisioned_namespace"`
 }
 
 var provisioningProvisionedSystemLinkableWrapperAttrTypesDS = objectAttrsTypeDSProvisioningProvisionedSystemLinkableWrapper(false)

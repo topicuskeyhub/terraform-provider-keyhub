@@ -415,6 +415,7 @@ func objectAttrsTypeRSGroupGroup(recurse bool) map[string]attr.Type {
 	objectAttrs["permissions"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeRSAuthPermission(recurse)}}
 	objectAttrs["admin"] = types.BoolType
 	objectAttrs["name"] = types.StringType
+	objectAttrs["organizational_unit_uuid"] = types.StringType
 	objectAttrs["uuid"] = types.StringType
 	objectAttrs["application_administration"] = types.BoolType
 	objectAttrs["audit_config"] = types.ObjectType{AttrTypes: objectAttrsTypeRSGroupGroupAuditConfig(false)}
@@ -430,7 +431,6 @@ func objectAttrsTypeRSGroupGroup(recurse bool) map[string]attr.Type {
 	objectAttrs["extended_access"] = types.StringType
 	objectAttrs["hide_audit_trail"] = types.BoolType
 	objectAttrs["nested_under_uuid"] = types.StringType
-	objectAttrs["organizational_unit_uuid"] = types.StringType
 	objectAttrs["private_group"] = types.BoolType
 	objectAttrs["record_trail"] = types.BoolType
 	objectAttrs["rotating_password_required"] = types.BoolType
@@ -602,6 +602,7 @@ func objectAttrsTypeRSGroupGroupPrimer(recurse bool) map[string]attr.Type {
 	objectAttrs["permissions"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeRSAuthPermission(recurse)}}
 	objectAttrs["admin"] = types.BoolType
 	objectAttrs["name"] = types.StringType
+	objectAttrs["organizational_unit_uuid"] = types.StringType
 	objectAttrs["uuid"] = types.StringType
 	return objectAttrs
 }
@@ -961,6 +962,14 @@ func objectAttrsTypeRSProvisioningProvisionedLDAPDirectory(recurse bool) map[str
 	return objectAttrs
 }
 
+func objectAttrsTypeRSProvisioningProvisionedNamespace(recurse bool) map[string]attr.Type {
+	objectAttrs := make(map[string]attr.Type)
+	objectAttrs["base_system_uuid"] = types.StringType
+	objectAttrs["group_dn"] = types.StringType
+	objectAttrs["service_account_dn"] = types.StringType
+	return objectAttrs
+}
+
 func objectAttrsTypeRSProvisioningProvisionedSystem(recurse bool) map[string]attr.Type {
 	objectAttrs := make(map[string]attr.Type)
 	if recurse {
@@ -986,6 +995,7 @@ func objectAttrsTypeRSProvisioningProvisionedSystem(recurse bool) map[string]att
 	objectAttrs["owner_uuid"] = types.StringType
 	objectAttrs["self_service_existing_groups"] = types.BoolType
 	objectAttrs["self_service_new_groups"] = types.BoolType
+	objectAttrs["self_service_new_namespaces"] = types.BoolType
 	objectAttrs["self_service_service_accounts"] = types.BoolType
 	objectAttrs["should_destroy_unknown_accounts"] = types.BoolType
 	objectAttrs["technical_administrator_uuid"] = types.StringType
@@ -998,6 +1008,7 @@ func objectAttrsTypeRSProvisioningProvisionedSystem(recurse bool) map[string]att
 	objectAttrs["provisioned_internal_ldap"] = types.ObjectType{AttrTypes: objectAttrsTypeRSProvisioningProvisionedInternalLDAP(false)}
 	objectAttrs["provisioned_ldap"] = types.ObjectType{AttrTypes: objectAttrsTypeRSProvisioningProvisionedLDAP(false)}
 	objectAttrs["provisioned_ldap_directory"] = types.ObjectType{AttrTypes: objectAttrsTypeRSProvisioningProvisionedLDAPDirectory(false)}
+	objectAttrs["provisioned_namespace"] = types.ObjectType{AttrTypes: objectAttrsTypeRSProvisioningProvisionedNamespace(false)}
 	return objectAttrs
 }
 

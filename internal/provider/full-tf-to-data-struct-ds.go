@@ -378,6 +378,7 @@ func fillDataStructFromTFObjectDSGroupAccountGroup(data *groupAccountGroupDataDS
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
 	data.Admin = obj.Attributes()["admin"].(basetypes.BoolValue)
 	data.Name = obj.Attributes()["name"].(basetypes.StringValue)
+	data.OrganizationalUnit = obj.Attributes()["organizational_unit"].(basetypes.ObjectValue)
 	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
 	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
@@ -409,6 +410,7 @@ func fillDataStructFromTFObjectDSGroupGroup(data *groupGroupDataDS, obj types.Ob
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
 	data.Admin = obj.Attributes()["admin"].(basetypes.BoolValue)
 	data.Name = obj.Attributes()["name"].(basetypes.StringValue)
+	data.OrganizationalUnit = obj.Attributes()["organizational_unit"].(basetypes.ObjectValue)
 	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
 	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.Accounts = obj.Attributes()["accounts"].(basetypes.ListValue)
@@ -452,7 +454,6 @@ func fillDataStructFromTFObjectDSGroupGroup(data *groupGroupDataDS, obj types.Ob
 	data.ExtendedAccess = obj.Attributes()["extended_access"].(basetypes.StringValue)
 	data.HideAuditTrail = obj.Attributes()["hide_audit_trail"].(basetypes.BoolValue)
 	data.NestedUnder = obj.Attributes()["nested_under"].(basetypes.ObjectValue)
-	data.OrganizationalUnit = obj.Attributes()["organizational_unit"].(basetypes.ObjectValue)
 	data.PrivateGroup = obj.Attributes()["private_group"].(basetypes.BoolValue)
 	data.RecordTrail = obj.Attributes()["record_trail"].(basetypes.BoolValue)
 	data.RotatingPasswordRequired = obj.Attributes()["rotating_password_required"].(basetypes.BoolValue)
@@ -638,6 +639,7 @@ func fillDataStructFromTFObjectDSGroupGroupPrimer(data *groupGroupPrimerDataDS, 
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
 	data.Admin = obj.Attributes()["admin"].(basetypes.BoolValue)
 	data.Name = obj.Attributes()["name"].(basetypes.StringValue)
+	data.OrganizationalUnit = obj.Attributes()["organizational_unit"].(basetypes.ObjectValue)
 	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
 }
 
@@ -877,6 +879,12 @@ func fillDataStructFromTFObjectDSProvisioningProvisionedLDAPDirectory(data *prov
 	data.GroupDN = obj.Attributes()["group_dn"].(basetypes.StringValue)
 }
 
+func fillDataStructFromTFObjectDSProvisioningProvisionedNamespace(data *provisioningProvisionedNamespaceDataDS, obj types.Object) {
+	data.BaseSystem = obj.Attributes()["base_system"].(basetypes.ObjectValue)
+	data.GroupDN = obj.Attributes()["group_dn"].(basetypes.StringValue)
+	data.ServiceAccountDN = obj.Attributes()["service_account_dn"].(basetypes.StringValue)
+}
+
 func fillDataStructFromTFObjectDSProvisioningProvisionedSystem(data *provisioningProvisionedSystemDataDS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
@@ -900,6 +908,7 @@ func fillDataStructFromTFObjectDSProvisioningProvisionedSystem(data *provisionin
 	data.Owner = obj.Attributes()["owner"].(basetypes.ObjectValue)
 	data.SelfServiceExistingGroups = obj.Attributes()["self_service_existing_groups"].(basetypes.BoolValue)
 	data.SelfServiceNewGroups = obj.Attributes()["self_service_new_groups"].(basetypes.BoolValue)
+	data.SelfServiceNewNamespaces = obj.Attributes()["self_service_new_namespaces"].(basetypes.BoolValue)
 	data.SelfServiceServiceAccounts = obj.Attributes()["self_service_service_accounts"].(basetypes.BoolValue)
 	data.ShouldDestroyUnknownAccounts = obj.Attributes()["should_destroy_unknown_accounts"].(basetypes.BoolValue)
 	data.TechnicalAdministrator = obj.Attributes()["technical_administrator"].(basetypes.ObjectValue)
@@ -912,6 +921,7 @@ func fillDataStructFromTFObjectDSProvisioningProvisionedSystem(data *provisionin
 	data.ProvisionedInternalLDAP = obj.Attributes()["provisioned_internal_ldap"].(basetypes.ObjectValue)
 	data.ProvisionedLDAP = obj.Attributes()["provisioned_ldap"].(basetypes.ObjectValue)
 	data.ProvisionedLDAPDirectory = obj.Attributes()["provisioned_ldap_directory"].(basetypes.ObjectValue)
+	data.ProvisionedNamespace = obj.Attributes()["provisioned_namespace"].(basetypes.ObjectValue)
 }
 
 func fillDataStructFromTFObjectDSProvisioningProvisionedSystemLinkableWrapper(data *provisioningProvisionedSystemLinkableWrapperDataDS, obj types.Object) {

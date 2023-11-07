@@ -1241,6 +1241,13 @@ func dataSourceSchemaAttrsGroupAccountGroup(recurse bool) map[string]dsschema.At
 	schemaAttrs["name"] = dsschema.StringAttribute{
 		Computed: true,
 	}
+	{
+		attr := dsschema.SingleNestedAttribute{
+			Attributes: dataSourceSchemaAttrsOrganizationOrganizationalUnitPrimer(recurse),
+		}
+		attr.Computed = true
+		schemaAttrs["organizational_unit"] = attr
+	}
 	schemaAttrs["uuid"] = dsschema.StringAttribute{
 		Required: recurse,
 		Computed: !recurse,
@@ -1346,6 +1353,13 @@ func dataSourceSchemaAttrsGroupGroup(recurse bool) map[string]dsschema.Attribute
 	schemaAttrs["name"] = dsschema.StringAttribute{
 		Computed: true,
 	}
+	{
+		attr := dsschema.SingleNestedAttribute{
+			Attributes: dataSourceSchemaAttrsOrganizationOrganizationalUnitPrimer(recurse),
+		}
+		attr.Computed = true
+		schemaAttrs["organizational_unit"] = attr
+	}
 	schemaAttrs["uuid"] = dsschema.StringAttribute{
 		Required: recurse,
 		Computed: !recurse,
@@ -1433,13 +1447,6 @@ func dataSourceSchemaAttrsGroupGroup(recurse bool) map[string]dsschema.Attribute
 		}
 		attr.Computed = true
 		schemaAttrs["nested_under"] = attr
-	}
-	{
-		attr := dsschema.SingleNestedAttribute{
-			Attributes: dataSourceSchemaAttrsOrganizationOrganizationalUnitPrimer(false),
-		}
-		attr.Computed = true
-		schemaAttrs["organizational_unit"] = attr
 	}
 	schemaAttrs["private_group"] = dsschema.BoolAttribute{
 		Computed: true,
@@ -2046,6 +2053,13 @@ func dataSourceSchemaAttrsGroupGroupPrimer(recurse bool) map[string]dsschema.Att
 	}
 	schemaAttrs["name"] = dsschema.StringAttribute{
 		Computed: true,
+	}
+	{
+		attr := dsschema.SingleNestedAttribute{
+			Attributes: dataSourceSchemaAttrsOrganizationOrganizationalUnitPrimer(recurse),
+		}
+		attr.Computed = true
+		schemaAttrs["organizational_unit"] = attr
 	}
 	schemaAttrs["uuid"] = dsschema.StringAttribute{
 		Required: recurse,
@@ -2852,6 +2866,23 @@ func dataSourceSchemaAttrsProvisioningProvisionedLDAPDirectory(recurse bool) map
 	}
 	return schemaAttrs
 }
+func dataSourceSchemaAttrsProvisioningProvisionedNamespace(recurse bool) map[string]dsschema.Attribute {
+	schemaAttrs := make(map[string]dsschema.Attribute)
+	{
+		attr := dsschema.SingleNestedAttribute{
+			Attributes: dataSourceSchemaAttrsProvisioningProvisionedSystemPrimer(recurse),
+		}
+		attr.Computed = true
+		schemaAttrs["base_system"] = attr
+	}
+	schemaAttrs["group_dn"] = dsschema.StringAttribute{
+		Computed: true,
+	}
+	schemaAttrs["service_account_dn"] = dsschema.StringAttribute{
+		Computed: true,
+	}
+	return schemaAttrs
+}
 func dataSourceSchemaAttrsProvisioningProvisionedSystem(recurse bool) map[string]dsschema.Attribute {
 	schemaAttrs := make(map[string]dsschema.Attribute)
 	if recurse {
@@ -2928,6 +2959,9 @@ func dataSourceSchemaAttrsProvisioningProvisionedSystem(recurse bool) map[string
 	schemaAttrs["self_service_new_groups"] = dsschema.BoolAttribute{
 		Computed: true,
 	}
+	schemaAttrs["self_service_new_namespaces"] = dsschema.BoolAttribute{
+		Computed: true,
+	}
 	schemaAttrs["self_service_service_accounts"] = dsschema.BoolAttribute{
 		Computed: true,
 	}
@@ -2999,6 +3033,13 @@ func dataSourceSchemaAttrsProvisioningProvisionedSystem(recurse bool) map[string
 		}
 		attr.Computed = true
 		schemaAttrs["provisioned_ldap_directory"] = attr
+	}
+	{
+		attr := dsschema.SingleNestedAttribute{
+			Attributes: dataSourceSchemaAttrsProvisioningProvisionedNamespace(false),
+		}
+		attr.Computed = true
+		schemaAttrs["provisioned_namespace"] = attr
 	}
 	return schemaAttrs
 }

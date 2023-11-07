@@ -471,6 +471,7 @@ func objectAttrsTypeDSGroupAccountGroup(recurse bool) map[string]attr.Type {
 	objectAttrs["permissions"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSAuthPermission(recurse)}}
 	objectAttrs["admin"] = types.BoolType
 	objectAttrs["name"] = types.StringType
+	objectAttrs["organizational_unit"] = types.ObjectType{AttrTypes: objectAttrsTypeDSOrganizationOrganizationalUnitPrimer(recurse)}
 	objectAttrs["uuid"] = types.StringType
 	objectAttrs["additional"] = types.ListType{ElemType: types.StringType}
 	objectAttrs["end_date"] = types.StringType
@@ -537,6 +538,7 @@ func objectAttrsTypeDSGroupGroup(recurse bool) map[string]attr.Type {
 	objectAttrs["permissions"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSAuthPermission(recurse)}}
 	objectAttrs["admin"] = types.BoolType
 	objectAttrs["name"] = types.StringType
+	objectAttrs["organizational_unit"] = types.ObjectType{AttrTypes: objectAttrsTypeDSOrganizationOrganizationalUnitPrimer(recurse)}
 	objectAttrs["uuid"] = types.StringType
 	objectAttrs["additional"] = types.ListType{ElemType: types.StringType}
 	objectAttrs["application_administration"] = types.BoolType
@@ -553,7 +555,6 @@ func objectAttrsTypeDSGroupGroup(recurse bool) map[string]attr.Type {
 	objectAttrs["extended_access"] = types.StringType
 	objectAttrs["hide_audit_trail"] = types.BoolType
 	objectAttrs["nested_under"] = types.ObjectType{AttrTypes: objectAttrsTypeDSGroupGroupPrimer(false)}
-	objectAttrs["organizational_unit"] = types.ObjectType{AttrTypes: objectAttrsTypeDSOrganizationOrganizationalUnitPrimer(false)}
 	objectAttrs["private_group"] = types.BoolType
 	objectAttrs["record_trail"] = types.BoolType
 	objectAttrs["rotating_password_required"] = types.BoolType
@@ -791,6 +792,7 @@ func objectAttrsTypeDSGroupGroupPrimer(recurse bool) map[string]attr.Type {
 	objectAttrs["permissions"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSAuthPermission(recurse)}}
 	objectAttrs["admin"] = types.BoolType
 	objectAttrs["name"] = types.StringType
+	objectAttrs["organizational_unit"] = types.ObjectType{AttrTypes: objectAttrsTypeDSOrganizationOrganizationalUnitPrimer(recurse)}
 	objectAttrs["uuid"] = types.StringType
 	return objectAttrs
 }
@@ -1105,6 +1107,14 @@ func objectAttrsTypeDSProvisioningProvisionedLDAPDirectory(recurse bool) map[str
 	return objectAttrs
 }
 
+func objectAttrsTypeDSProvisioningProvisionedNamespace(recurse bool) map[string]attr.Type {
+	objectAttrs := make(map[string]attr.Type)
+	objectAttrs["base_system"] = types.ObjectType{AttrTypes: objectAttrsTypeDSProvisioningProvisionedSystemPrimer(recurse)}
+	objectAttrs["group_dn"] = types.StringType
+	objectAttrs["service_account_dn"] = types.StringType
+	return objectAttrs
+}
+
 func objectAttrsTypeDSProvisioningProvisionedSystem(recurse bool) map[string]attr.Type {
 	objectAttrs := make(map[string]attr.Type)
 	if recurse {
@@ -1131,6 +1141,7 @@ func objectAttrsTypeDSProvisioningProvisionedSystem(recurse bool) map[string]att
 	objectAttrs["owner"] = types.ObjectType{AttrTypes: objectAttrsTypeDSGroupGroupPrimer(false)}
 	objectAttrs["self_service_existing_groups"] = types.BoolType
 	objectAttrs["self_service_new_groups"] = types.BoolType
+	objectAttrs["self_service_new_namespaces"] = types.BoolType
 	objectAttrs["self_service_service_accounts"] = types.BoolType
 	objectAttrs["should_destroy_unknown_accounts"] = types.BoolType
 	objectAttrs["technical_administrator"] = types.ObjectType{AttrTypes: objectAttrsTypeDSGroupGroupPrimer(false)}
@@ -1143,6 +1154,7 @@ func objectAttrsTypeDSProvisioningProvisionedSystem(recurse bool) map[string]att
 	objectAttrs["provisioned_internal_ldap"] = types.ObjectType{AttrTypes: objectAttrsTypeDSProvisioningProvisionedInternalLDAP(false)}
 	objectAttrs["provisioned_ldap"] = types.ObjectType{AttrTypes: objectAttrsTypeDSProvisioningProvisionedLDAP(false)}
 	objectAttrs["provisioned_ldap_directory"] = types.ObjectType{AttrTypes: objectAttrsTypeDSProvisioningProvisionedLDAPDirectory(false)}
+	objectAttrs["provisioned_namespace"] = types.ObjectType{AttrTypes: objectAttrsTypeDSProvisioningProvisionedNamespace(false)}
 	return objectAttrs
 }
 

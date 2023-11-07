@@ -1567,6 +1567,11 @@ func tkhToTFObjectDSGroupAccountGroup(recurse bool, tkh keyhubmodel.GroupAccount
 	}
 	obj["admin"] = types.BoolPointerValue(tkh.GetAdmin())
 	obj["name"] = types.StringPointerValue(tkh.GetName())
+	{
+		val, d := tkhToTFObjectDSOrganizationOrganizationalUnitPrimer(recurse, tkh.GetOrganizationalUnit())
+		diags.Append(d...)
+		obj["organizational_unit"] = val
+	}
 	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
 	obj["additional"] = types.ListNull(types.StringType)
 	obj["end_date"] = stringerToTF(tkh.GetEndDate())
@@ -1715,6 +1720,11 @@ func tkhToTFObjectDSGroupGroup(recurse bool, tkh keyhubmodel.GroupGroupable) (ty
 	}
 	obj["admin"] = types.BoolPointerValue(tkh.GetAdmin())
 	obj["name"] = types.StringPointerValue(tkh.GetName())
+	{
+		val, d := tkhToTFObjectDSOrganizationOrganizationalUnitPrimer(recurse, tkh.GetOrganizationalUnit())
+		diags.Append(d...)
+		obj["organizational_unit"] = val
+	}
 	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
 	obj["additional"] = types.ListNull(types.StringType)
 	obj["application_administration"] = types.BoolPointerValue(tkh.GetApplicationAdministration())
@@ -1765,11 +1775,6 @@ func tkhToTFObjectDSGroupGroup(recurse bool, tkh keyhubmodel.GroupGroupable) (ty
 		val, d := tkhToTFObjectDSGroupGroupPrimer(false, tkh.GetNestedUnder())
 		diags.Append(d...)
 		obj["nested_under"] = val
-	}
-	{
-		val, d := tkhToTFObjectDSOrganizationOrganizationalUnitPrimer(false, tkh.GetOrganizationalUnit())
-		diags.Append(d...)
-		obj["organizational_unit"] = val
 	}
 	obj["private_group"] = types.BoolPointerValue(tkh.GetPrivateGroup())
 	obj["record_trail"] = types.BoolPointerValue(tkh.GetRecordTrail())
@@ -2586,6 +2591,11 @@ func tkhToTFObjectDSGroupGroupPrimer(recurse bool, tkh keyhubmodel.GroupGroupPri
 	}
 	obj["admin"] = types.BoolPointerValue(tkh.GetAdmin())
 	obj["name"] = types.StringPointerValue(tkh.GetName())
+	{
+		val, d := tkhToTFObjectDSOrganizationOrganizationalUnitPrimer(recurse, tkh.GetOrganizationalUnit())
+		diags.Append(d...)
+		obj["organizational_unit"] = val
+	}
 	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
 
 	objVal, d := types.ObjectValue(attrs, obj)
@@ -3757,6 +3767,32 @@ func tkhToTFObjectDSProvisioningProvisionedLDAPDirectory(recurse bool, tkh keyhu
 	return objVal, diags
 }
 
+func tkhToTFObjectDSProvisioningProvisionedNamespace(recurse bool, tkh keyhubmodel.ProvisioningProvisionedNamespaceable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = provisioningProvisionedNamespaceAttrTypesDSRecurse
+	} else {
+		attrs = provisioningProvisionedNamespaceAttrTypesDS
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	{
+		val, d := tkhToTFObjectDSProvisioningProvisionedSystemPrimer(recurse, tkh.GetBaseSystem())
+		diags.Append(d...)
+		obj["base_system"] = val
+	}
+	obj["group_dn"] = types.StringPointerValue(tkh.GetGroupDN())
+	obj["service_account_dn"] = types.StringPointerValue(tkh.GetServiceAccountDN())
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
 func tkhToTFObjectDSProvisioningProvisionedSystem(recurse bool, tkh keyhubmodel.ProvisioningProvisionedSystemable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
@@ -3821,6 +3857,7 @@ func tkhToTFObjectDSProvisioningProvisionedSystem(recurse bool, tkh keyhubmodel.
 	}
 	obj["self_service_existing_groups"] = types.BoolPointerValue(tkh.GetSelfServiceExistingGroups())
 	obj["self_service_new_groups"] = types.BoolPointerValue(tkh.GetSelfServiceNewGroups())
+	obj["self_service_new_namespaces"] = types.BoolPointerValue(tkh.GetSelfServiceNewNamespaces())
 	obj["self_service_service_accounts"] = types.BoolPointerValue(tkh.GetSelfServiceServiceAccounts())
 	obj["should_destroy_unknown_accounts"] = types.BoolPointerValue(tkh.GetShouldDestroyUnknownAccounts())
 	{
@@ -3876,6 +3913,12 @@ func tkhToTFObjectDSProvisioningProvisionedSystem(recurse bool, tkh keyhubmodel.
 		val, d := tkhToTFObjectDSProvisioningProvisionedLDAPDirectory(false, tkhCast)
 		diags.Append(d...)
 		obj["provisioned_ldap_directory"] = val
+	}
+	{
+		tkhCast, _ := tkh.(keyhubmodel.ProvisioningProvisionedNamespaceable)
+		val, d := tkhToTFObjectDSProvisioningProvisionedNamespace(false, tkhCast)
+		diags.Append(d...)
+		obj["provisioned_namespace"] = val
 	}
 
 	objVal, d := types.ObjectValue(attrs, obj)

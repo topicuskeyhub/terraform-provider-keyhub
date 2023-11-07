@@ -409,6 +409,7 @@ type groupGroupDataRS struct {
 	Permissions                      types.List   `tfsdk:"permissions"`
 	Admin                            types.Bool   `tfsdk:"admin"`
 	Name                             types.String `tfsdk:"name"`
+	OrganizationalUnitUUID           types.String `tfsdk:"organizational_unit_uuid"`
 	UUID                             types.String `tfsdk:"uuid"`
 	Accounts                         types.List   `tfsdk:"accounts" tkhao:"accounts"`
 	AdministeredClients              types.List   `tfsdk:"administered_clients" tkhao:"administeredClients"`
@@ -451,7 +452,6 @@ type groupGroupDataRS struct {
 	ExtendedAccess                   types.String `tfsdk:"extended_access"`
 	HideAuditTrail                   types.Bool   `tfsdk:"hide_audit_trail"`
 	NestedUnderUUID                  types.String `tfsdk:"nested_under_uuid"`
-	OrganizationalUnitUUID           types.String `tfsdk:"organizational_unit_uuid"`
 	PrivateGroup                     types.Bool   `tfsdk:"private_group"`
 	RecordTrail                      types.Bool   `tfsdk:"record_trail"`
 	RotatingPasswordRequired         types.Bool   `tfsdk:"rotating_password_required"`
@@ -629,11 +629,12 @@ var groupGroupPrimerAttrTypesRS = objectAttrsTypeRSGroupGroupPrimer(false)
 var groupGroupPrimerAttrTypesRSRecurse = objectAttrsTypeRSGroupGroupPrimer(true)
 
 type groupGroupPrimerDataRS struct {
-	Links       types.List   `tfsdk:"links"`
-	Permissions types.List   `tfsdk:"permissions"`
-	Admin       types.Bool   `tfsdk:"admin"`
-	Name        types.String `tfsdk:"name"`
-	UUID        types.String `tfsdk:"uuid"`
+	Links                  types.List   `tfsdk:"links"`
+	Permissions            types.List   `tfsdk:"permissions"`
+	Admin                  types.Bool   `tfsdk:"admin"`
+	Name                   types.String `tfsdk:"name"`
+	OrganizationalUnitUUID types.String `tfsdk:"organizational_unit_uuid"`
+	UUID                   types.String `tfsdk:"uuid"`
 }
 
 var groupGroupPrimerLinkableWrapperAttrTypesRS = objectAttrsTypeRSGroupGroupPrimerLinkableWrapper(false)
@@ -1012,6 +1013,15 @@ type provisioningProvisionedLDAPDirectoryDataRS struct {
 	GroupDN       types.String `tfsdk:"group_dn"`
 }
 
+var provisioningProvisionedNamespaceAttrTypesRS = objectAttrsTypeRSProvisioningProvisionedNamespace(false)
+var provisioningProvisionedNamespaceAttrTypesRSRecurse = objectAttrsTypeRSProvisioningProvisionedNamespace(true)
+
+type provisioningProvisionedNamespaceDataRS struct {
+	BaseSystemUUID   types.String `tfsdk:"base_system_uuid"`
+	GroupDN          types.String `tfsdk:"group_dn"`
+	ServiceAccountDN types.String `tfsdk:"service_account_dn"`
+}
+
 var provisioningProvisionedSystemAttrTypesRS = objectAttrsTypeRSProvisioningProvisionedSystem(false)
 var provisioningProvisionedSystemAttrTypesRSRecurse = objectAttrsTypeRSProvisioningProvisionedSystem(true)
 
@@ -1037,6 +1047,7 @@ type provisioningProvisionedSystemDataRS struct {
 	OwnerUUID                               types.String `tfsdk:"owner_uuid"`
 	SelfServiceExistingGroups               types.Bool   `tfsdk:"self_service_existing_groups"`
 	SelfServiceNewGroups                    types.Bool   `tfsdk:"self_service_new_groups"`
+	SelfServiceNewNamespaces                types.Bool   `tfsdk:"self_service_new_namespaces"`
 	SelfServiceServiceAccounts              types.Bool   `tfsdk:"self_service_service_accounts"`
 	ShouldDestroyUnknownAccounts            types.Bool   `tfsdk:"should_destroy_unknown_accounts"`
 	TechnicalAdministratorUUID              types.String `tfsdk:"technical_administrator_uuid"`
@@ -1049,6 +1060,7 @@ type provisioningProvisionedSystemDataRS struct {
 	ProvisionedInternalLDAP                 types.Object `tfsdk:"provisioned_internal_ldap"`
 	ProvisionedLDAP                         types.Object `tfsdk:"provisioned_ldap"`
 	ProvisionedLDAPDirectory                types.Object `tfsdk:"provisioned_ldap_directory"`
+	ProvisionedNamespace                    types.Object `tfsdk:"provisioned_namespace"`
 }
 
 var provisioningProvisionedSystemLinkableWrapperAttrTypesRS = objectAttrsTypeRSProvisioningProvisionedSystemLinkableWrapper(false)

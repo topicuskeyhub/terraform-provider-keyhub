@@ -311,6 +311,7 @@ func fillDataStructFromTFObjectRSGroupGroup(data *groupGroupDataRS, obj types.Ob
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
 	data.Admin = obj.Attributes()["admin"].(basetypes.BoolValue)
 	data.Name = obj.Attributes()["name"].(basetypes.StringValue)
+	data.OrganizationalUnitUUID = obj.Attributes()["organizational_unit_uuid"].(basetypes.StringValue)
 	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
 	data.Accounts = obj.Attributes()["accounts"].(basetypes.ListValue)
 	data.AdministeredClients = obj.Attributes()["administered_clients"].(basetypes.ListValue)
@@ -353,7 +354,6 @@ func fillDataStructFromTFObjectRSGroupGroup(data *groupGroupDataRS, obj types.Ob
 	data.ExtendedAccess = obj.Attributes()["extended_access"].(basetypes.StringValue)
 	data.HideAuditTrail = obj.Attributes()["hide_audit_trail"].(basetypes.BoolValue)
 	data.NestedUnderUUID = obj.Attributes()["nested_under_uuid"].(basetypes.StringValue)
-	data.OrganizationalUnitUUID = obj.Attributes()["organizational_unit_uuid"].(basetypes.StringValue)
 	data.PrivateGroup = obj.Attributes()["private_group"].(basetypes.BoolValue)
 	data.RecordTrail = obj.Attributes()["record_trail"].(basetypes.BoolValue)
 	data.RotatingPasswordRequired = obj.Attributes()["rotating_password_required"].(basetypes.BoolValue)
@@ -487,6 +487,7 @@ func fillDataStructFromTFObjectRSGroupGroupPrimer(data *groupGroupPrimerDataRS, 
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
 	data.Admin = obj.Attributes()["admin"].(basetypes.BoolValue)
 	data.Name = obj.Attributes()["name"].(basetypes.StringValue)
+	data.OrganizationalUnitUUID = obj.Attributes()["organizational_unit_uuid"].(basetypes.StringValue)
 	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
 }
 
@@ -761,6 +762,12 @@ func fillDataStructFromTFObjectRSProvisioningProvisionedLDAPDirectory(data *prov
 	data.GroupDN = obj.Attributes()["group_dn"].(basetypes.StringValue)
 }
 
+func fillDataStructFromTFObjectRSProvisioningProvisionedNamespace(data *provisioningProvisionedNamespaceDataRS, obj types.Object) {
+	data.BaseSystemUUID = obj.Attributes()["base_system_uuid"].(basetypes.StringValue)
+	data.GroupDN = obj.Attributes()["group_dn"].(basetypes.StringValue)
+	data.ServiceAccountDN = obj.Attributes()["service_account_dn"].(basetypes.StringValue)
+}
+
 func fillDataStructFromTFObjectRSProvisioningProvisionedSystem(data *provisioningProvisionedSystemDataRS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
@@ -783,6 +790,7 @@ func fillDataStructFromTFObjectRSProvisioningProvisionedSystem(data *provisionin
 	data.OwnerUUID = obj.Attributes()["owner_uuid"].(basetypes.StringValue)
 	data.SelfServiceExistingGroups = obj.Attributes()["self_service_existing_groups"].(basetypes.BoolValue)
 	data.SelfServiceNewGroups = obj.Attributes()["self_service_new_groups"].(basetypes.BoolValue)
+	data.SelfServiceNewNamespaces = obj.Attributes()["self_service_new_namespaces"].(basetypes.BoolValue)
 	data.SelfServiceServiceAccounts = obj.Attributes()["self_service_service_accounts"].(basetypes.BoolValue)
 	data.ShouldDestroyUnknownAccounts = obj.Attributes()["should_destroy_unknown_accounts"].(basetypes.BoolValue)
 	data.TechnicalAdministratorUUID = obj.Attributes()["technical_administrator_uuid"].(basetypes.StringValue)
@@ -795,6 +803,7 @@ func fillDataStructFromTFObjectRSProvisioningProvisionedSystem(data *provisionin
 	data.ProvisionedInternalLDAP = obj.Attributes()["provisioned_internal_ldap"].(basetypes.ObjectValue)
 	data.ProvisionedLDAP = obj.Attributes()["provisioned_ldap"].(basetypes.ObjectValue)
 	data.ProvisionedLDAPDirectory = obj.Attributes()["provisioned_ldap_directory"].(basetypes.ObjectValue)
+	data.ProvisionedNamespace = obj.Attributes()["provisioned_namespace"].(basetypes.ObjectValue)
 }
 
 func fillDataStructFromTFObjectRSProvisioningProvisionedSystemLinkableWrapper(data *provisioningProvisionedSystemLinkableWrapperDataRS, obj types.Object) {

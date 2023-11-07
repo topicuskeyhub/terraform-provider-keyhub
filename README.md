@@ -1,64 +1,75 @@
-# Terraform Provider Scaffolding (Terraform Plugin Framework)
+# Terraform Provider for Topicus KeyHub
 
-_This template repository is built on the [Terraform Plugin Framework](https://github.com/hashicorp/terraform-plugin-framework). The template repository built on the [Terraform Plugin SDK](https://github.com/hashicorp/terraform-plugin-sdk) can be found at [terraform-provider-scaffolding](https://github.com/hashicorp/terraform-provider-scaffolding). See [Which SDK Should I Use?](https://www.terraform.io/docs/plugin/which-sdk.html) in the Terraform documentation for additional information._
+_This provider is currently in preview. It requires a current nightly version of Topicus KeyHub._
 
-This repository is a *template* for a [Terraform](https://www.terraform.io) provider. It is intended as a starting point for creating Terraform providers, containing:
+The Terraform Provider for Topicus KeyHub allows managing resources within a Topicus KeyHub appliance.
+It requires at least Terraform 1.0 and the most recent version of Terraform is recommended.
 
-- A resource and a data source (`internal/provider/`),
-- Examples (`examples/`) and generated documentation (`docs/`),
-- Miscellaneous meta files.
+For more information see:
+* [Terraform Website](https://www.terraform.io)
+* [Topicus KeyHub Provider Documentation](https://registry.terraform.io/providers/topicuskeyhub/keyhubpreview/latest/docs)
 
-These files contain boilerplate code that you will need to edit to create your own Terraform provider. Tutorials for creating Terraform providers can be found on the [HashiCorp Learn](https://learn.hashicorp.com/collections/terraform/providers-plugin-framework) platform. _Terraform Plugin Framework specific guides are titled accordingly._
+The used provider version must match your Topicus KeyHub release.
+For example, use the provider version 0.30.0 for Topicus KeyHub 30.
+An older version of the provider may work on a newer version of Topicus KeyHub.
+A newer version of the provder will fail on an older version of Topicus KeyHub.
 
-Please see the [GitHub template repository documentation](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/creating-a-repository-from-a-template) for how to create a new repository from this template on GitHub.
+## Usage example
 
-Once you've written your provider, you'll want to [publish it on the Terraform Registry](https://www.terraform.io/docs/registry/providers/publishing.html) so that others can use it.
+```hcl
+# 1. Specify the version of the Topicus KeyHub Provider to use
+terraform {
+  required_providers {
+    keyhubpreview = {
+      source = "registry.terraform.io/hashicorp/keyhubpreview"
+      version = "=0.0.2"
+    }
+  }
+}
 
-## Requirements
+# 2. Configure the Topicus KeyHub provider
+variable "keyhub_secret" {
+  type        = string
+  description = "Client secret on KeyHub"
+}
 
-- [Terraform](https://www.terraform.io/downloads.html) >= 1.0
-- [Go](https://golang.org/doc/install) >= 1.19
+provider "keyhubpreview" {
+  issuer       = "https://keyhub.example.com"
+  clientid     = "ebdf81ac-b02b-4335-9dc4-4a9bc4eb406d"
+  clientsecret = var.keyhub_secret
+}
 
-## Building The Provider
+# 3. Create a group in Topicus KeyHub
+resource "keyhubpreview_group" "group_in_keyhub" {
+  name = "Terraform"
+  accounts = [{
+    uuid   = "7ea6622b-f9d2-4e52-a799-217b26f88376"
+    rights = "MANAGER"
+  }]
+  client_permissions = [{
+    client_uuid = "ebdf81ac-b02b-4335-9dc4-4a9bc4eb406d"
+    value       = "GROUP_FULL_VAULT_ACCESS"
+  }]
+}
 
-1. Clone the repository
-1. Enter the repository directory
-1. Build the provider using the Go `install` command:
+# 4. Create a vault record in the newly created group
+resource "keyhubpreview_group_vaultrecord" "vaultrecord_in_keyhub" {
+  name       = "Terraform Record"
+  group_uuid = resource.keyhubpreview_group.group_in_keyhub.uuid
+  secret = {
+    password = "test3"
+  }
+}
 
-```shell
-go install
-```
-
-## Adding Dependencies
-
-This provider uses [Go modules](https://github.com/golang/go/wiki/Modules).
-Please see the Go documentation for the most up to date information about using Go modules.
-
-To add a new dependency `github.com/author/dependency` to your Terraform provider:
-
-```shell
-go get github.com/author/dependency
-go mod tidy
-```
-
-Then commit the changes to `go.mod` and `go.sum`.
-
-## Using the provider
-
-Fill this in for each provider
-
-## Developing the Provider
-
-If you wish to work on the provider, you'll first need [Go](http://www.golang.org) installed on your machine (see [Requirements](#requirements) above).
-
-To compile the provider, run `go install`. This will build the provider and put the provider binary in the `$GOPATH/bin` directory.
-
-To generate or update documentation, run `go generate`.
-
-In order to run the full suite of Acceptance tests, run `make testacc`.
-
-*Note:* Acceptance tests create real resources, and often cost money to run.
-
-```shell
-make testacc
+# 5. Setup provisioning for the group
+resource "keyhubpreview_grouponsystem" "provisioning" {
+  provisioned_system_uuid = "47923975-b1af-47c8-bd7a-e52ebb4b9b84"
+  owner_uuid              = resource.keyhubpreview_group.group_in_keyhub.uuid
+  name_in_system          = "cn=terraform,ou=groups,dc=demo,dc=topicus-keyhub,dc=com"
+  type                    = "GROUP"
+  provgroups = [{
+    activation_required = "false"
+    group_uuid          = "c6c98d08-2cbf-45e9-937a-c5c0427348e2"
+  }]
+}
 ```
