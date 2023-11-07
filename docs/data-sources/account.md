@@ -130,6 +130,7 @@ Read-Only:
 - `last_used` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--groups--links))
 - `name` (String)
+- `organizational_unit` (Attributes) (see [below for nested schema](#nestedatt--groups--organizational_unit))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--groups--permissions))
 - `provisioning_end_time` (String)
 - `rights` (String)
@@ -181,6 +182,39 @@ Read-Only:
 - `id` (Number)
 - `rel` (String)
 - `type_escaped` (String)
+
+
+<a id="nestedatt--groups--organizational_unit"></a>
+### Nested Schema for `groups.organizational_unit`
+
+Read-Only:
+
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--groups--organizational_unit--links))
+- `name` (String)
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--groups--organizational_unit--permissions))
+- `uuid` (String)
+
+<a id="nestedatt--groups--organizational_unit--links"></a>
+### Nested Schema for `groups.organizational_unit.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--groups--organizational_unit--permissions"></a>
+### Nested Schema for `groups.organizational_unit.permissions`
+
+Read-Only:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (List of String)
+- `type_escaped` (String)
+
 
 
 <a id="nestedatt--groups--permissions"></a>

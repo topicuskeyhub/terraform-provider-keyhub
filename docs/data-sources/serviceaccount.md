@@ -239,6 +239,7 @@ Read-Only:
 - `admin` (Boolean)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--technical_administrator--links))
 - `name` (String)
+- `organizational_unit` (Attributes) (see [below for nested schema](#nestedatt--technical_administrator--organizational_unit))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--technical_administrator--permissions))
 - `uuid` (String)
 
@@ -251,6 +252,39 @@ Read-Only:
 - `id` (Number)
 - `rel` (String)
 - `type_escaped` (String)
+
+
+<a id="nestedatt--technical_administrator--organizational_unit"></a>
+### Nested Schema for `technical_administrator.organizational_unit`
+
+Read-Only:
+
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--technical_administrator--organizational_unit--links))
+- `name` (String)
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--technical_administrator--organizational_unit--permissions))
+- `uuid` (String)
+
+<a id="nestedatt--technical_administrator--organizational_unit--links"></a>
+### Nested Schema for `technical_administrator.organizational_unit.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--technical_administrator--organizational_unit--permissions"></a>
+### Nested Schema for `technical_administrator.organizational_unit.permissions`
+
+Read-Only:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (List of String)
+- `type_escaped` (String)
+
 
 
 <a id="nestedatt--technical_administrator--permissions"></a>

@@ -347,8 +347,10 @@ Optional:
 - `provisioned_internal_ldap` (Attributes) (see [below for nested schema](#nestedatt--administered_systems--provisioned_internal_ldap))
 - `provisioned_ldap` (Attributes) (see [below for nested schema](#nestedatt--administered_systems--provisioned_ldap))
 - `provisioned_ldap_directory` (Attributes) (see [below for nested schema](#nestedatt--administered_systems--provisioned_ldap_directory))
+- `provisioned_namespace` (Attributes) (see [below for nested schema](#nestedatt--administered_systems--provisioned_namespace))
 - `self_service_existing_groups` (Boolean)
 - `self_service_new_groups` (Boolean)
+- `self_service_new_namespaces` (Boolean)
 - `self_service_service_accounts` (Boolean)
 - `should_destroy_unknown_accounts` (Boolean)
 - `username_prefix` (String)
@@ -498,6 +500,16 @@ Required:
 
 - `directory_uuid` (String)
 - `group_dn` (String)
+
+
+<a id="nestedatt--administered_systems--provisioned_namespace"></a>
+### Nested Schema for `administered_systems.provisioned_namespace`
+
+Required:
+
+- `base_system_uuid` (String)
+- `group_dn` (String)
+- `service_account_dn` (String)
 
 
 <a id="nestedatt--administered_systems--links"></a>
@@ -700,8 +712,10 @@ Optional:
 - `provisioned_internal_ldap` (Attributes) (see [below for nested schema](#nestedatt--content_administered_systems--provisioned_internal_ldap))
 - `provisioned_ldap` (Attributes) (see [below for nested schema](#nestedatt--content_administered_systems--provisioned_ldap))
 - `provisioned_ldap_directory` (Attributes) (see [below for nested schema](#nestedatt--content_administered_systems--provisioned_ldap_directory))
+- `provisioned_namespace` (Attributes) (see [below for nested schema](#nestedatt--content_administered_systems--provisioned_namespace))
 - `self_service_existing_groups` (Boolean)
 - `self_service_new_groups` (Boolean)
+- `self_service_new_namespaces` (Boolean)
 - `self_service_service_accounts` (Boolean)
 - `should_destroy_unknown_accounts` (Boolean)
 - `username_prefix` (String)
@@ -851,6 +865,16 @@ Required:
 
 - `directory_uuid` (String)
 - `group_dn` (String)
+
+
+<a id="nestedatt--content_administered_systems--provisioned_namespace"></a>
+### Nested Schema for `content_administered_systems.provisioned_namespace`
+
+Required:
+
+- `base_system_uuid` (String)
+- `group_dn` (String)
+- `service_account_dn` (String)
 
 
 <a id="nestedatt--content_administered_systems--links"></a>
@@ -1035,6 +1059,10 @@ Read-Only:
 Required:
 
 - `name` (String)
+
+Optional:
+
+- `organizational_unit_uuid` (String)
 
 Read-Only:
 
@@ -1405,8 +1433,10 @@ Optional:
 - `provisioned_internal_ldap` (Attributes) (see [below for nested schema](#nestedatt--owned_systems--provisioned_internal_ldap))
 - `provisioned_ldap` (Attributes) (see [below for nested schema](#nestedatt--owned_systems--provisioned_ldap))
 - `provisioned_ldap_directory` (Attributes) (see [below for nested schema](#nestedatt--owned_systems--provisioned_ldap_directory))
+- `provisioned_namespace` (Attributes) (see [below for nested schema](#nestedatt--owned_systems--provisioned_namespace))
 - `self_service_existing_groups` (Boolean)
 - `self_service_new_groups` (Boolean)
+- `self_service_new_namespaces` (Boolean)
 - `self_service_service_accounts` (Boolean)
 - `should_destroy_unknown_accounts` (Boolean)
 - `username_prefix` (String)
@@ -1556,6 +1586,16 @@ Required:
 
 - `directory_uuid` (String)
 - `group_dn` (String)
+
+
+<a id="nestedatt--owned_systems--provisioned_namespace"></a>
+### Nested Schema for `owned_systems.provisioned_namespace`
+
+Required:
+
+- `base_system_uuid` (String)
+- `group_dn` (String)
+- `service_account_dn` (String)
 
 
 <a id="nestedatt--owned_systems--links"></a>
