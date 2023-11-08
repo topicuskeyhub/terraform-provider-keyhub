@@ -1,5 +1,5 @@
-// Copyright (c) HashiCorp, Inc.
-// SPDX-License-Identifier: MPL-2.0
+// Copyright (c) Topicus Security B.V.
+// SPDX-License-Identifier: APSL-2.0
 
 //go:build tools
 

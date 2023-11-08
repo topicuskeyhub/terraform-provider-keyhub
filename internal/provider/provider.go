@@ -1,5 +1,5 @@
-// Copyright (c) HashiCorp, Inc.
-// SPDX-License-Identifier: MPL-2.0
+// Copyright (c) Topicus Security B.V.
+// SPDX-License-Identifier: APSL-2.0
 
 package provider
 
@@ -31,7 +31,6 @@ type KeyHubProvider struct {
 
 const ProviderName = "keyhubpreview"
 
-// KeyHubProviderModel describes the provider data model.
 type KeyHubProviderModel struct {
 	Issuer       types.String `tfsdk:"issuer"`
 	ClientID     types.String `tfsdk:"clientid"`

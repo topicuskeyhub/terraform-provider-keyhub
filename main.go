@@ -1,5 +1,5 @@
-// Copyright (c) HashiCorp, Inc.
-// SPDX-License-Identifier: MPL-2.0
+// Copyright (c) Topicus Security B.V.
+// SPDX-License-Identifier: APSL-2.0
 
 package main
 
@@ -31,40 +31,31 @@ import (
 // system/{systemid}/group
 // serviceaccount/{accountid}/group
 
-//go:generate go run github.com/topicuskeyhub/terraform-provider-keyhub-generator@v0.0.6 --mode model
-//go:generate go run github.com/topicuskeyhub/terraform-provider-keyhub-generator@v0.0.6 --mode data --resource account --linkable authAccount
-//go:generate go run github.com/topicuskeyhub/terraform-provider-keyhub-generator@v0.0.6 --mode data --resource certificate --linkable certificateCertificate
-//go:generate go run github.com/topicuskeyhub/terraform-provider-keyhub-generator@v0.0.6 --mode data --resource client --linkable clientClientApplication
-//go:generate go run github.com/topicuskeyhub/terraform-provider-keyhub-generator@v0.0.6 --mode data --resource directory --linkable directoryAccountDirectory
-//go:generate go run github.com/topicuskeyhub/terraform-provider-keyhub-generator@v0.0.6 --mode data --resource group --linkable groupGroup
-//go:generate go run github.com/topicuskeyhub/terraform-provider-keyhub-generator@v0.0.6 --mode data --resource groupclassification --linkable groupGroupClassification
-//go:generate go run github.com/topicuskeyhub/terraform-provider-keyhub-generator@v0.0.6 --mode data --resource organizationalunit --linkable organizationOrganizationalUnit
-//go:generate go run github.com/topicuskeyhub/terraform-provider-keyhub-generator@v0.0.6 --mode data --resource serviceaccount --linkable serviceaccountServiceAccount
-//go:generate go run github.com/topicuskeyhub/terraform-provider-keyhub-generator@v0.0.6 --mode data --resource system --linkable provisioningProvisionedSystem
-//go:generate go run github.com/topicuskeyhub/terraform-provider-keyhub-generator@v0.0.6 --mode data --resource vaultrecord --linkable vaultVaultRecord
-//go:generate go run github.com/topicuskeyhub/terraform-provider-keyhub-generator@v0.0.6 --mode data --resource webhook --linkable webhookWebhook
-//go:generate go run github.com/topicuskeyhub/terraform-provider-keyhub-generator@v0.0.6 --mode resource --resource clientapplication
-//go:generate go run github.com/topicuskeyhub/terraform-provider-keyhub-generator@v0.0.6 --mode resource --resource client_vaultrecord
-//go:generate go run github.com/topicuskeyhub/terraform-provider-keyhub-generator@v0.0.6 --mode resource --resource group_vaultrecord
-//go:generate go run github.com/topicuskeyhub/terraform-provider-keyhub-generator@v0.0.6 --mode resource --resource group
-//go:generate go run github.com/topicuskeyhub/terraform-provider-keyhub-generator@v0.0.6 --mode resource --resource grouponsystem
-//go:generate go run github.com/topicuskeyhub/terraform-provider-keyhub-generator@v0.0.6 --mode resource --resource serviceaccount
-
-// If you do not have terraform installed, you can remove the formatting command, but its suggested to
-// ensure the documentation is formatted properly.
+//go:generate go run github.com/topicuskeyhub/terraform-provider-keyhub-generator --mode model
+//go:generate go run github.com/topicuskeyhub/terraform-provider-keyhub-generator --mode data --resource account --linkable authAccount
+//go:generate go run github.com/topicuskeyhub/terraform-provider-keyhub-generator --mode data --resource certificate --linkable certificateCertificate
+//go:generate go run github.com/topicuskeyhub/terraform-provider-keyhub-generator --mode data --resource client --linkable clientClientApplication
+//go:generate go run github.com/topicuskeyhub/terraform-provider-keyhub-generator --mode data --resource directory --linkable directoryAccountDirectory
+//go:generate go run github.com/topicuskeyhub/terraform-provider-keyhub-generator --mode data --resource group --linkable groupGroup
+//go:generate go run github.com/topicuskeyhub/terraform-provider-keyhub-generator --mode data --resource groupclassification --linkable groupGroupClassification
+//go:generate go run github.com/topicuskeyhub/terraform-provider-keyhub-generator --mode data --resource organizationalunit --linkable organizationOrganizationalUnit
+//go:generate go run github.com/topicuskeyhub/terraform-provider-keyhub-generator --mode data --resource serviceaccount --linkable serviceaccountServiceAccount
+//go:generate go run github.com/topicuskeyhub/terraform-provider-keyhub-generator --mode data --resource system --linkable provisioningProvisionedSystem
+//go:generate go run github.com/topicuskeyhub/terraform-provider-keyhub-generator --mode data --resource vaultrecord --linkable vaultVaultRecord
+//go:generate go run github.com/topicuskeyhub/terraform-provider-keyhub-generator --mode data --resource webhook --linkable webhookWebhook
+//go:generate go run github.com/topicuskeyhub/terraform-provider-keyhub-generator --mode resource --resource clientapplication
+//go:generate go run github.com/topicuskeyhub/terraform-provider-keyhub-generator --mode resource --resource client_vaultrecord
+//go:generate go run github.com/topicuskeyhub/terraform-provider-keyhub-generator --mode resource --resource group_vaultrecord
+//go:generate go run github.com/topicuskeyhub/terraform-provider-keyhub-generator --mode resource --resource group
+//go:generate go run github.com/topicuskeyhub/terraform-provider-keyhub-generator --mode resource --resource grouponsystem
+//go:generate go run github.com/topicuskeyhub/terraform-provider-keyhub-generator --mode resource --resource serviceaccount
 //go:generate terraform fmt -recursive ./examples/
-
-// Run the docs generation tool, check its repository for more information on how it works and how docs
-// can be customized.
 //go:generate go run github.com/hashicorp/terraform-plugin-docs/cmd/tfplugindocs
 
 var (
 	// these will be set by the goreleaser configuration
 	// to appropriate values for the compiled binary.
 	version string = "dev"
-
-	// goreleaser can pass other information to the main package, such as the specific commit
-	// https://goreleaser.com/cookbooks/using-main.version/
 )
 
 func main() {
