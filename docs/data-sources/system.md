@@ -206,10 +206,6 @@ Read-Only:
 <a id="nestedatt--account"></a>
 ### Nested Schema for `account`
 
-Optional:
-
-- `additional` (List of String)
-
 Read-Only:
 
 - `display_name` (String)
@@ -325,10 +321,6 @@ Read-Only:
 
 <a id="nestedatt--issued_permissions"></a>
 ### Nested Schema for `issued_permissions`
-
-Optional:
-
-- `additional` (List of String)
 
 Read-Only:
 
@@ -935,10 +927,6 @@ Read-Only:
 
 <a id="nestedatt--provisioned_ldap--numbering"></a>
 ### Nested Schema for `provisioned_ldap.numbering`
-
-Optional:
-
-- `additional` (List of String)
 
 Read-Only:
 

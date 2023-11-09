@@ -154,6 +154,9 @@ func tkhToTFObjectDSAuthAccount(recurse bool, tkh keyhubmodel.AuthAccountable) (
 
 	obj := make(map[string]attr.Value)
 	if recurse {
+		obj["additional"] = types.ListNull(types.StringType)
+	}
+	if recurse {
 		{
 			val, d := tkhToTFObjectDSAuthAccount_additionalObjects(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
@@ -185,7 +188,6 @@ func tkhToTFObjectDSAuthAccount(recurse bool, tkh keyhubmodel.AuthAccountable) (
 	obj["username"] = types.StringPointerValue(tkh.GetUsername())
 	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
 	obj["validity"] = stringerToTF(tkh.GetValidity())
-	obj["additional"] = types.ListNull(types.StringType)
 	{
 		elemType := attrs["account_permissions"].(types.ListType).ElemType
 		val, d := sliceToTF(elemType, tkh.GetAccountPermissions(), func(tkh keyhubmodel.AuthPermissionable, diags *diag.Diagnostics) attr.Value {
@@ -474,6 +476,9 @@ func tkhToTFObjectDSCertificateCertificate(recurse bool, tkh keyhubmodel.Certifi
 
 	obj := make(map[string]attr.Value)
 	if recurse {
+		obj["additional"] = types.ListNull(types.StringType)
+	}
+	if recurse {
 		{
 			val, d := tkhToTFObjectDSCertificateCertificate_additionalObjects(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
@@ -516,7 +521,6 @@ func tkhToTFObjectDSCertificateCertificate(recurse bool, tkh keyhubmodel.Certifi
 	obj["global"] = types.BoolPointerValue(tkh.GetGlobal())
 	obj["subject_dn"] = types.StringPointerValue(tkh.GetSubjectDN())
 	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
-	obj["additional"] = types.ListNull(types.StringType)
 	{
 		elemType := attrs["key_data"].(types.ListType).ElemType
 		val, d := sliceToTF(elemType, tkh.GetKeyData(), func(tkh string, diags *diag.Diagnostics) attr.Value {
@@ -624,6 +628,9 @@ func tkhToTFObjectDSClientClientApplication(recurse bool, tkh keyhubmodel.Client
 
 	obj := make(map[string]attr.Value)
 	if recurse {
+		obj["additional"] = types.ListNull(types.StringType)
+	}
+	if recurse {
 		{
 			val, d := tkhToTFObjectDSClientClientApplication_additionalObjects(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
@@ -663,7 +670,6 @@ func tkhToTFObjectDSClientClientApplication(recurse bool, tkh keyhubmodel.Client
 	}
 	obj["sso_application"] = types.BoolPointerValue(tkh.GetSsoApplication())
 	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
-	obj["additional"] = types.ListNull(types.StringType)
 	obj["last_modified_at"] = timePointerToTF(tkh.GetLastModifiedAt())
 	{
 		val, d := tkhToTFObjectDSGroupGroupPrimer(false, tkh.GetOwner())
@@ -922,6 +928,9 @@ func tkhToTFObjectDSClientOAuth2ClientPermission(recurse bool, tkh keyhubmodel.C
 
 	obj := make(map[string]attr.Value)
 	if recurse {
+		obj["additional"] = types.ListNull(types.StringType)
+	}
+	if recurse {
 		{
 			val, d := tkhToTFObjectDSClientOAuth2ClientPermission_additionalObjects(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
@@ -948,7 +957,6 @@ func tkhToTFObjectDSClientOAuth2ClientPermission(recurse bool, tkh keyhubmodel.C
 		diags.Append(d...)
 		obj["permissions"] = val
 	}
-	obj["additional"] = types.ListNull(types.StringType)
 	{
 		val, d := tkhToTFObjectDSGroupGroupPrimer(false, tkh.GetForGroup())
 		diags.Append(d...)
@@ -980,6 +988,9 @@ func tkhToTFObjectDSClientOAuth2ClientPermissionWithClient(recurse bool, tkh key
 
 	obj := make(map[string]attr.Value)
 	if recurse {
+		obj["additional"] = types.ListNull(types.StringType)
+	}
+	if recurse {
 		{
 			val, d := tkhToTFObjectDSClientOAuth2ClientPermission_additionalObjects(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
@@ -1006,7 +1017,6 @@ func tkhToTFObjectDSClientOAuth2ClientPermissionWithClient(recurse bool, tkh key
 		diags.Append(d...)
 		obj["permissions"] = val
 	}
-	obj["additional"] = types.ListNull(types.StringType)
 	{
 		val, d := tkhToTFObjectDSGroupGroupPrimer(false, tkh.GetForGroup())
 		diags.Append(d...)
@@ -1126,6 +1136,9 @@ func tkhToTFObjectDSDirectoryAccountDirectory(recurse bool, tkh keyhubmodel.Dire
 
 	obj := make(map[string]attr.Value)
 	if recurse {
+		obj["additional"] = types.ListNull(types.StringType)
+	}
+	if recurse {
 		{
 			val, d := tkhToTFObjectDSDirectoryAccountDirectory_additionalObjects(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
@@ -1157,7 +1170,6 @@ func tkhToTFObjectDSDirectoryAccountDirectory(recurse bool, tkh keyhubmodel.Dire
 	obj["type"] = stringerToTF(tkh.GetDirectoryAccountDirectoryPrimerType())
 	obj["name"] = types.StringPointerValue(tkh.GetName())
 	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
-	obj["additional"] = types.ListNull(types.StringType)
 	{
 		val, d := tkhToTFObjectDSOrganizationOrganizationalUnitPrimer(false, tkh.GetBaseOrganizationalUnit())
 		diags.Append(d...)
@@ -1541,6 +1553,9 @@ func tkhToTFObjectDSGroupAccountGroup(recurse bool, tkh keyhubmodel.GroupAccount
 
 	obj := make(map[string]attr.Value)
 	if recurse {
+		obj["additional"] = types.ListNull(types.StringType)
+	}
+	if recurse {
 		{
 			val, d := tkhToTFObjectDSGroupAccountGroup_additionalObjects(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
@@ -1575,7 +1590,6 @@ func tkhToTFObjectDSGroupAccountGroup(recurse bool, tkh keyhubmodel.GroupAccount
 		obj["organizational_unit"] = val
 	}
 	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
-	obj["additional"] = types.ListNull(types.StringType)
 	obj["end_date"] = stringerToTF(tkh.GetEndDate())
 	{
 		val, d := tkhToTFObjectDSGroupGroupFolder(false, tkh.GetFolder())
@@ -1694,6 +1708,9 @@ func tkhToTFObjectDSGroupGroup(recurse bool, tkh keyhubmodel.GroupGroupable) (ty
 
 	obj := make(map[string]attr.Value)
 	if recurse {
+		obj["additional"] = types.ListNull(types.StringType)
+	}
+	if recurse {
 		{
 			val, d := tkhToTFObjectDSGroupGroup_additionalObjects(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
@@ -1728,7 +1745,6 @@ func tkhToTFObjectDSGroupGroup(recurse bool, tkh keyhubmodel.GroupGroupable) (ty
 		obj["organizational_unit"] = val
 	}
 	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
-	obj["additional"] = types.ListNull(types.StringType)
 	obj["application_administration"] = types.BoolPointerValue(tkh.GetApplicationAdministration())
 	{
 		val, d := tkhToTFObjectDSGroupGroupAuditConfig(false, tkh.GetAuditConfig())
@@ -1804,6 +1820,9 @@ func tkhToTFObjectDSGroupGroupAccount(recurse bool, tkh keyhubmodel.GroupGroupAc
 
 	obj := make(map[string]attr.Value)
 	if recurse {
+		obj["additional"] = types.ListNull(types.StringType)
+	}
+	if recurse {
 		{
 			val, d := tkhToTFObjectDSGroupGroupAccount_additionalObjects(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
@@ -1835,7 +1854,6 @@ func tkhToTFObjectDSGroupGroupAccount(recurse bool, tkh keyhubmodel.GroupGroupAc
 	obj["username"] = types.StringPointerValue(tkh.GetUsername())
 	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
 	obj["validity"] = stringerToTF(tkh.GetValidity())
-	obj["additional"] = types.ListNull(types.StringType)
 	{
 		val, d := tkhToTFObjectDSDirectoryAccountDirectoryPrimer(false, tkh.GetDirectory())
 		diags.Append(d...)
@@ -1922,6 +1940,9 @@ func tkhToTFObjectDSGroupGroupAudit(recurse bool, tkh keyhubmodel.GroupGroupAudi
 
 	obj := make(map[string]attr.Value)
 	if recurse {
+		obj["additional"] = types.ListNull(types.StringType)
+	}
+	if recurse {
 		{
 			val, d := tkhToTFObjectDSGroupGroupAudit_additionalObjects(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
@@ -1948,7 +1969,6 @@ func tkhToTFObjectDSGroupGroupAudit(recurse bool, tkh keyhubmodel.GroupGroupAudi
 		diags.Append(d...)
 		obj["permissions"] = val
 	}
-	obj["additional"] = types.ListNull(types.StringType)
 	{
 		elemType := attrs["accounts"].(types.ListType).ElemType
 		val, d := sliceToTF(elemType, tkh.GetAccounts(), func(tkh keyhubmodel.GroupGroupAuditAccountable, diags *diag.Diagnostics) attr.Value {
@@ -2167,6 +2187,9 @@ func tkhToTFObjectDSGroupGroupClassification(recurse bool, tkh keyhubmodel.Group
 
 	obj := make(map[string]attr.Value)
 	if recurse {
+		obj["additional"] = types.ListNull(types.StringType)
+	}
+	if recurse {
 		{
 			val, d := tkhToTFObjectDSGroupGroupClassification_additionalObjects(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
@@ -2195,7 +2218,6 @@ func tkhToTFObjectDSGroupGroupClassification(recurse bool, tkh keyhubmodel.Group
 	}
 	obj["name"] = types.StringPointerValue(tkh.GetName())
 	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
-	obj["additional"] = types.ListNull(types.StringType)
 	obj["authorizing_group_auditing_required"] = types.BoolPointerValue(tkh.GetAuthorizingGroupAuditingRequired())
 	obj["authorizing_group_delegation_required"] = types.BoolPointerValue(tkh.GetAuthorizingGroupDelegationRequired())
 	obj["authorizing_group_membership_required"] = types.BoolPointerValue(tkh.GetAuthorizingGroupMembershipRequired())
@@ -2325,6 +2347,9 @@ func tkhToTFObjectDSGroupGroupClient(recurse bool, tkh keyhubmodel.GroupGroupCli
 
 	obj := make(map[string]attr.Value)
 	if recurse {
+		obj["additional"] = types.ListNull(types.StringType)
+	}
+	if recurse {
 		{
 			val, d := tkhToTFObjectDSGroupGroupClient_additionalObjects(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
@@ -2351,7 +2376,6 @@ func tkhToTFObjectDSGroupGroupClient(recurse bool, tkh keyhubmodel.GroupGroupCli
 		diags.Append(d...)
 		obj["permissions"] = val
 	}
-	obj["additional"] = types.ListNull(types.StringType)
 	obj["activation_required"] = types.BoolPointerValue(tkh.GetActivationRequired())
 	{
 		val, d := tkhToTFObjectDSClientClientApplicationPrimer(false, tkh.GetClient())
@@ -2446,6 +2470,9 @@ func tkhToTFObjectDSGroupGroupFolder(recurse bool, tkh keyhubmodel.GroupGroupFol
 
 	obj := make(map[string]attr.Value)
 	if recurse {
+		obj["additional"] = types.ListNull(types.StringType)
+	}
+	if recurse {
 		{
 			val, d := tkhToTFObjectDSGroupGroupFolder_additionalObjects(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
@@ -2472,7 +2499,6 @@ func tkhToTFObjectDSGroupGroupFolder(recurse bool, tkh keyhubmodel.GroupGroupFol
 		diags.Append(d...)
 		obj["permissions"] = val
 	}
-	obj["additional"] = types.ListNull(types.StringType)
 	obj["name"] = types.StringPointerValue(tkh.GetName())
 
 	objVal, d := types.ObjectValue(attrs, obj)
@@ -2798,6 +2824,9 @@ func tkhToTFObjectDSGroupProvisioningGroup(recurse bool, tkh keyhubmodel.GroupPr
 
 	obj := make(map[string]attr.Value)
 	if recurse {
+		obj["additional"] = types.ListNull(types.StringType)
+	}
+	if recurse {
 		{
 			val, d := tkhToTFObjectDSGroupProvisioningGroup_additionalObjects(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
@@ -2824,7 +2853,6 @@ func tkhToTFObjectDSGroupProvisioningGroup(recurse bool, tkh keyhubmodel.GroupPr
 		diags.Append(d...)
 		obj["permissions"] = val
 	}
-	obj["additional"] = types.ListNull(types.StringType)
 	obj["activation_required"] = types.BoolPointerValue(tkh.GetActivationRequired())
 	{
 		val, d := tkhToTFObjectDSGroupGroupPrimer(false, tkh.GetGroup())
@@ -3006,6 +3034,9 @@ func tkhToTFObjectDSOrganizationOrganizationalUnit(recurse bool, tkh keyhubmodel
 
 	obj := make(map[string]attr.Value)
 	if recurse {
+		obj["additional"] = types.ListNull(types.StringType)
+	}
+	if recurse {
 		{
 			val, d := tkhToTFObjectDSOrganizationOrganizationalUnit_additionalObjects(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
@@ -3034,7 +3065,6 @@ func tkhToTFObjectDSOrganizationOrganizationalUnit(recurse bool, tkh keyhubmodel
 	}
 	obj["name"] = types.StringPointerValue(tkh.GetName())
 	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
-	obj["additional"] = types.ListNull(types.StringType)
 	obj["depth"] = types.Int64PointerValue(int32PToInt64P(tkh.GetDepth()))
 	obj["description"] = types.StringPointerValue(tkh.GetDescription())
 	{
@@ -3238,6 +3268,9 @@ func tkhToTFObjectDSProvisioningGroupOnSystem(recurse bool, tkh keyhubmodel.Prov
 
 	obj := make(map[string]attr.Value)
 	if recurse {
+		obj["additional"] = types.ListNull(types.StringType)
+	}
+	if recurse {
 		{
 			val, d := tkhToTFObjectDSProvisioningGroupOnSystem_additionalObjects(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
@@ -3268,7 +3301,6 @@ func tkhToTFObjectDSProvisioningGroupOnSystem(recurse bool, tkh keyhubmodel.Prov
 	obj["name_in_system"] = types.StringPointerValue(tkh.GetNameInSystem())
 	obj["type"] = stringerToTF(tkh.GetProvisioningGroupOnSystemPrimerType())
 	obj["short_name_in_system"] = types.StringPointerValue(tkh.GetShortNameInSystem())
-	obj["additional"] = types.ListNull(types.StringType)
 	{
 		val, d := tkhToTFObjectDSGroupGroupPrimer(false, tkh.GetOwner())
 		diags.Append(d...)
@@ -3457,6 +3489,9 @@ func tkhToTFObjectDSProvisioningProvisionNumberSequence(recurse bool, tkh keyhub
 
 	obj := make(map[string]attr.Value)
 	if recurse {
+		obj["additional"] = types.ListNull(types.StringType)
+	}
+	if recurse {
 		{
 			val, d := tkhToTFObjectDSProvisioningProvisionNumberSequence_additionalObjects(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
@@ -3483,7 +3518,6 @@ func tkhToTFObjectDSProvisioningProvisionNumberSequence(recurse bool, tkh keyhub
 		diags.Append(d...)
 		obj["permissions"] = val
 	}
-	obj["additional"] = types.ListNull(types.StringType)
 	obj["account_count"] = types.Int64PointerValue(int32PToInt64P(tkh.GetAccountCount()))
 	obj["name"] = types.StringPointerValue(tkh.GetName())
 	obj["next_uid"] = types.Int64PointerValue(tkh.GetNextUID())
@@ -3556,6 +3590,9 @@ func tkhToTFObjectDSProvisioningProvisionedAccount(recurse bool, tkh keyhubmodel
 
 	obj := make(map[string]attr.Value)
 	if recurse {
+		obj["additional"] = types.ListNull(types.StringType)
+	}
+	if recurse {
 		{
 			val, d := tkhToTFObjectDSProvisioningProvisionedAccount_additionalObjects(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
@@ -3587,7 +3624,6 @@ func tkhToTFObjectDSProvisioningProvisionedAccount(recurse bool, tkh keyhubmodel
 	obj["username"] = types.StringPointerValue(tkh.GetUsername())
 	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
 	obj["validity"] = stringerToTF(tkh.GetValidity())
-	obj["additional"] = types.ListNull(types.StringType)
 	obj["uid"] = types.Int64PointerValue(tkh.GetUid())
 
 	objVal, d := types.ObjectValue(attrs, obj)
@@ -3809,6 +3845,9 @@ func tkhToTFObjectDSProvisioningProvisionedSystem(recurse bool, tkh keyhubmodel.
 
 	obj := make(map[string]attr.Value)
 	if recurse {
+		obj["additional"] = types.ListNull(types.StringType)
+	}
+	if recurse {
 		{
 			val, d := tkhToTFObjectDSProvisioningProvisionedSystem_additionalObjects(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
@@ -3844,7 +3883,6 @@ func tkhToTFObjectDSProvisioningProvisionedSystem(recurse bool, tkh keyhubmodel.
 	}
 	obj["type"] = stringerToTF(tkh.GetProvisioningProvisionedSystemPrimerType())
 	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
-	obj["additional"] = types.ListNull(types.StringType)
 	obj["account_count"] = types.Int64PointerValue(int32PToInt64P(tkh.GetAccountCount()))
 	{
 		val, d := tkhToTFObjectDSGroupGroupPrimer(false, tkh.GetContentAdministrator())
@@ -4125,6 +4163,9 @@ func tkhToTFObjectDSServiceaccountServiceAccount(recurse bool, tkh keyhubmodel.S
 
 	obj := make(map[string]attr.Value)
 	if recurse {
+		obj["additional"] = types.ListNull(types.StringType)
+	}
+	if recurse {
 		{
 			val, d := tkhToTFObjectDSServiceaccountServiceAccount_additionalObjects(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
@@ -4160,7 +4201,6 @@ func tkhToTFObjectDSServiceaccountServiceAccount(recurse bool, tkh keyhubmodel.S
 	}
 	obj["username"] = types.StringPointerValue(tkh.GetUsername())
 	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
-	obj["additional"] = types.ListNull(types.StringType)
 	obj["description"] = types.StringPointerValue(tkh.GetDescription())
 	{
 		val, d := tkhToTFObjectDSVaultVaultRecordPrimer(false, tkh.GetPassword())
@@ -4193,6 +4233,9 @@ func tkhToTFObjectDSServiceaccountServiceAccountGroup(recurse bool, tkh keyhubmo
 
 	obj := make(map[string]attr.Value)
 	if recurse {
+		obj["additional"] = types.ListNull(types.StringType)
+	}
+	if recurse {
 		{
 			val, d := tkhToTFObjectDSServiceaccountServiceAccountGroup_additionalObjects(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
@@ -4223,7 +4266,6 @@ func tkhToTFObjectDSServiceaccountServiceAccountGroup(recurse bool, tkh keyhubmo
 	obj["name_in_system"] = types.StringPointerValue(tkh.GetNameInSystem())
 	obj["type"] = stringerToTF(tkh.GetProvisioningGroupOnSystemPrimerType())
 	obj["short_name_in_system"] = types.StringPointerValue(tkh.GetShortNameInSystem())
-	obj["additional"] = types.ListNull(types.StringType)
 
 	objVal, d := types.ObjectValue(attrs, obj)
 	diags.Append(d...)
@@ -4535,6 +4577,9 @@ func tkhToTFObjectDSVaultVaultRecord(recurse bool, tkh keyhubmodel.VaultVaultRec
 
 	obj := make(map[string]attr.Value)
 	if recurse {
+		obj["additional"] = types.ListNull(types.StringType)
+	}
+	if recurse {
 		{
 			val, d := tkhToTFObjectDSVaultVaultRecord_additionalObjects(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
@@ -4565,7 +4610,6 @@ func tkhToTFObjectDSVaultVaultRecord(recurse bool, tkh keyhubmodel.VaultVaultRec
 	obj["name"] = types.StringPointerValue(tkh.GetName())
 	obj["share_end_time"] = timePointerToTF(tkh.GetShareEndTime())
 	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
-	obj["additional"] = types.ListNull(types.StringType)
 	obj["derived"] = types.BoolPointerValue(tkh.GetDerived())
 	obj["end_date"] = stringerToTF(tkh.GetEndDate())
 	obj["filename"] = types.StringPointerValue(tkh.GetFilename())
@@ -4809,6 +4853,9 @@ func tkhToTFObjectDSWebhookWebhook(recurse bool, tkh keyhubmodel.WebhookWebhooka
 
 	obj := make(map[string]attr.Value)
 	if recurse {
+		obj["additional"] = types.ListNull(types.StringType)
+	}
+	if recurse {
 		{
 			val, d := tkhToTFObjectDSWebhookWebhook_additionalObjects(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
@@ -4835,7 +4882,6 @@ func tkhToTFObjectDSWebhookWebhook(recurse bool, tkh keyhubmodel.WebhookWebhooka
 		diags.Append(d...)
 		obj["permissions"] = val
 	}
-	obj["additional"] = types.ListNull(types.StringType)
 	{
 		val, d := tkhToTFObjectDSAuthAccountPrimer(false, tkh.GetAccount())
 		diags.Append(d...)

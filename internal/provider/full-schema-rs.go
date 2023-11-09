@@ -212,6 +212,17 @@ func resourceSchemaAttrsCertificateCertificatePrimer(recurse bool) map[string]rs
 func resourceSchemaAttrsClientApplicationVaultVaultRecord(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	if recurse {
+		schemaAttrs["additional"] = rsschema.ListAttribute{
+			ElementType: types.StringType,
+			Optional:    true,
+			Validators: []validator.List{
+				listvalidator.ValueStringsAre(stringvalidator.OneOf(
+					"audit", "parent", "passwordMetadata", "secret", "shareSummary", "shares", "tile", "vaultholder",
+				)),
+			},
+		}
+	}
+	if recurse {
 		maps.Copy(schemaAttrs, resourceSchemaAttrsVaultVaultRecord_additionalObjects(false))
 	}
 	schemaAttrs["client_application_uuid"] = rsschema.StringAttribute{
@@ -258,15 +269,6 @@ func resourceSchemaAttrsClientApplicationVaultVaultRecord(recurse bool) map[stri
 		Computed:      true,
 		PlanModifiers: []planmodifier.String{stringplanmodifier.UseStateForUnknown()},
 	}
-	schemaAttrs["additional"] = rsschema.ListAttribute{
-		ElementType: types.StringType,
-		Optional:    true,
-		Validators: []validator.List{
-			listvalidator.ValueStringsAre(stringvalidator.OneOf(
-				"audit", "parent", "passwordMetadata", "secret", "shareSummary", "shares", "tile", "vaultholder",
-			)),
-		},
-	}
 	schemaAttrs["derived"] = rsschema.BoolAttribute{
 		Computed:      true,
 		PlanModifiers: []planmodifier.Bool{boolplanmodifier.UseStateForUnknown()},
@@ -305,6 +307,17 @@ func resourceSchemaAttrsClientApplicationVaultVaultRecord(recurse bool) map[stri
 }
 func resourceSchemaAttrsClientClientApplication(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
+	if recurse {
+		schemaAttrs["additional"] = rsschema.ListAttribute{
+			ElementType: types.StringType,
+			Optional:    true,
+			Validators: []validator.List{
+				listvalidator.ValueStringsAre(stringvalidator.OneOf(
+					"audit", "groupclients", "groups", "secret", "tile", "vaultRecordCount",
+				)),
+			},
+		}
+	}
 	if recurse {
 		maps.Copy(schemaAttrs, resourceSchemaAttrsClientClientApplication_additionalObjects(false))
 	}
@@ -349,15 +362,6 @@ func resourceSchemaAttrsClientClientApplication(recurse bool) map[string]rsschem
 	schemaAttrs["uuid"] = rsschema.StringAttribute{
 		Computed:      true,
 		PlanModifiers: []planmodifier.String{stringplanmodifier.UseStateForUnknown()},
-	}
-	schemaAttrs["additional"] = rsschema.ListAttribute{
-		ElementType: types.StringType,
-		Optional:    true,
-		Validators: []validator.List{
-			listvalidator.ValueStringsAre(stringvalidator.OneOf(
-				"audit", "groupclients", "groups", "secret", "tile", "vaultRecordCount",
-			)),
-		},
 	}
 	schemaAttrs["last_modified_at"] = rsschema.StringAttribute{
 		Computed: true,
@@ -578,6 +582,17 @@ func resourceSchemaAttrsClientOAuth2Client(recurse bool) map[string]rsschema.Att
 func resourceSchemaAttrsClientOAuth2ClientPermission(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	if recurse {
+		schemaAttrs["additional"] = rsschema.ListAttribute{
+			ElementType: types.StringType,
+			Optional:    true,
+			Validators: []validator.List{
+				listvalidator.ValueStringsAre(stringvalidator.OneOf(
+					"audit",
+				)),
+			},
+		}
+	}
+	if recurse {
 		maps.Copy(schemaAttrs, resourceSchemaAttrsClientOAuth2ClientPermission_additionalObjects(false))
 	}
 	schemaAttrs["links"] = rsschema.ListNestedAttribute{
@@ -593,15 +608,6 @@ func resourceSchemaAttrsClientOAuth2ClientPermission(recurse bool) map[string]rs
 		},
 		Computed:      true,
 		PlanModifiers: []planmodifier.List{listplanmodifier.UseStateForUnknown()},
-	}
-	schemaAttrs["additional"] = rsschema.ListAttribute{
-		ElementType: types.StringType,
-		Optional:    true,
-		Validators: []validator.List{
-			listvalidator.ValueStringsAre(stringvalidator.OneOf(
-				"audit",
-			)),
-		},
 	}
 	schemaAttrs["for_group_uuid"] = rsschema.StringAttribute{
 		Computed: true,
@@ -630,6 +636,17 @@ func resourceSchemaAttrsClientOAuth2ClientPermission(recurse bool) map[string]rs
 func resourceSchemaAttrsClientOAuth2ClientPermissionWithClient(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	if recurse {
+		schemaAttrs["additional"] = rsschema.ListAttribute{
+			ElementType: types.StringType,
+			Optional:    true,
+			Validators: []validator.List{
+				listvalidator.ValueStringsAre(stringvalidator.OneOf(
+					"audit",
+				)),
+			},
+		}
+	}
+	if recurse {
 		maps.Copy(schemaAttrs, resourceSchemaAttrsClientOAuth2ClientPermission_additionalObjects(false))
 	}
 	schemaAttrs["links"] = rsschema.ListNestedAttribute{
@@ -645,15 +662,6 @@ func resourceSchemaAttrsClientOAuth2ClientPermissionWithClient(recurse bool) map
 		},
 		Computed:      true,
 		PlanModifiers: []planmodifier.List{listplanmodifier.UseStateForUnknown()},
-	}
-	schemaAttrs["additional"] = rsschema.ListAttribute{
-		ElementType: types.StringType,
-		Optional:    true,
-		Validators: []validator.List{
-			listvalidator.ValueStringsAre(stringvalidator.OneOf(
-				"audit",
-			)),
-		},
 	}
 	schemaAttrs["for_group_uuid"] = rsschema.StringAttribute{
 		Computed: true,
@@ -734,6 +742,17 @@ func resourceSchemaAttrsClientSaml2Client(recurse bool) map[string]rsschema.Attr
 func resourceSchemaAttrsDirectoryAccountDirectory(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	if recurse {
+		schemaAttrs["additional"] = rsschema.ListAttribute{
+			ElementType: types.StringType,
+			Optional:    true,
+			Validators: []validator.List{
+				listvalidator.ValueStringsAre(stringvalidator.OneOf(
+					"audit", "markers", "status",
+				)),
+			},
+		}
+	}
+	if recurse {
 		maps.Copy(schemaAttrs, resourceSchemaAttrsDirectoryAccountDirectory_additionalObjects(false))
 	}
 	schemaAttrs["links"] = rsschema.ListNestedAttribute{
@@ -772,15 +791,6 @@ func resourceSchemaAttrsDirectoryAccountDirectory(recurse bool) map[string]rssch
 	schemaAttrs["uuid"] = rsschema.StringAttribute{
 		Computed:      true,
 		PlanModifiers: []planmodifier.String{stringplanmodifier.UseStateForUnknown()},
-	}
-	schemaAttrs["additional"] = rsschema.ListAttribute{
-		ElementType: types.StringType,
-		Optional:    true,
-		Validators: []validator.List{
-			listvalidator.ValueStringsAre(stringvalidator.OneOf(
-				"audit", "markers", "status",
-			)),
-		},
 	}
 	schemaAttrs["base_organizational_unit_uuid"] = rsschema.StringAttribute{
 		Required: true,
@@ -1188,6 +1198,17 @@ func resourceSchemaAttrsGroupAuthorizedGroupsWrapper(recurse bool) map[string]rs
 func resourceSchemaAttrsGroupGroup(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	if recurse {
+		schemaAttrs["additional"] = rsschema.ListAttribute{
+			ElementType: types.StringType,
+			Optional:    true,
+			Validators: []validator.List{
+				listvalidator.ValueStringsAre(stringvalidator.OneOf(
+					"accounts", "administeredClients", "administeredSystems", "admins", "audit", "authorizedGroups", "clientPermissions", "clients", "contentAdministeredSystems", "groupauditinginfo", "groupinfo", "helpdesk", "markers", "myaccount", "mydelegatedaccount", "nestedGroups", "ownedClients", "ownedDirectories", "ownedGroupsOnSystem", "ownedOrganizationalUnits", "ownedSystems", "recentAudits", "requeststatus", "serviceAccounts", "systems", "vault", "webhooks",
+				)),
+			},
+		}
+	}
+	if recurse {
 		maps.Copy(schemaAttrs, resourceSchemaAttrsGroupGroup_additionalObjects(false))
 	}
 	schemaAttrs["links"] = rsschema.ListNestedAttribute{
@@ -1224,15 +1245,6 @@ func resourceSchemaAttrsGroupGroup(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs["uuid"] = rsschema.StringAttribute{
 		Computed:      true,
 		PlanModifiers: []planmodifier.String{stringplanmodifier.UseStateForUnknown()},
-	}
-	schemaAttrs["additional"] = rsschema.ListAttribute{
-		ElementType: types.StringType,
-		Optional:    true,
-		Validators: []validator.List{
-			listvalidator.ValueStringsAre(stringvalidator.OneOf(
-				"accounts", "administeredClients", "administeredSystems", "admins", "audit", "authorizedGroups", "clientPermissions", "clients", "contentAdministeredSystems", "groupauditinginfo", "groupinfo", "helpdesk", "markers", "myaccount", "mydelegatedaccount", "nestedGroups", "ownedClients", "ownedDirectories", "ownedGroupsOnSystem", "ownedOrganizationalUnits", "ownedSystems", "recentAudits", "requeststatus", "serviceAccounts", "systems", "vault", "webhooks",
-			)),
-		},
 	}
 	schemaAttrs["application_administration"] = rsschema.BoolAttribute{
 		Computed: true,
@@ -1352,21 +1364,23 @@ func resourceSchemaAttrsGroupGroup(recurse bool) map[string]rsschema.Attribute {
 func resourceSchemaAttrsGroupGroupAccount(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	if recurse {
+		schemaAttrs["additional"] = rsschema.ListAttribute{
+			ElementType: types.StringType,
+			Optional:    true,
+			Validators: []validator.List{
+				listvalidator.ValueStringsAre(stringvalidator.OneOf(
+					"audit",
+				)),
+			},
+		}
+	}
+	if recurse {
 		maps.Copy(schemaAttrs, resourceSchemaAttrsGroupGroupAccount_additionalObjects(false))
 	}
 	schemaAttrs["uuid"] = rsschema.StringAttribute{
 		Required: true,
 		Validators: []validator.String{
 			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
-		},
-	}
-	schemaAttrs["additional"] = rsschema.ListAttribute{
-		ElementType: types.StringType,
-		Optional:    true,
-		Validators: []validator.List{
-			listvalidator.ValueStringsAre(stringvalidator.OneOf(
-				"audit",
-			)),
 		},
 	}
 	schemaAttrs["directory_uuid"] = rsschema.StringAttribute{
@@ -1427,6 +1441,17 @@ func resourceSchemaAttrsGroupGroupAccount_additionalObjects(recurse bool) map[st
 func resourceSchemaAttrsGroupGroupAudit(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	if recurse {
+		schemaAttrs["additional"] = rsschema.ListAttribute{
+			ElementType: types.StringType,
+			Optional:    true,
+			Validators: []validator.List{
+				listvalidator.ValueStringsAre(stringvalidator.OneOf(
+					"audit",
+				)),
+			},
+		}
+	}
+	if recurse {
 		maps.Copy(schemaAttrs, resourceSchemaAttrsGroupGroupAudit_additionalObjects(false))
 	}
 	schemaAttrs["links"] = rsschema.ListNestedAttribute{
@@ -1442,15 +1467,6 @@ func resourceSchemaAttrsGroupGroupAudit(recurse bool) map[string]rsschema.Attrib
 		},
 		Computed:      true,
 		PlanModifiers: []planmodifier.List{listplanmodifier.UseStateForUnknown()},
-	}
-	schemaAttrs["additional"] = rsschema.ListAttribute{
-		ElementType: types.StringType,
-		Optional:    true,
-		Validators: []validator.List{
-			listvalidator.ValueStringsAre(stringvalidator.OneOf(
-				"audit",
-			)),
-		},
 	}
 	schemaAttrs["accounts"] = rsschema.ListNestedAttribute{
 		NestedObject: rsschema.NestedAttributeObject{
@@ -1676,6 +1692,17 @@ func resourceSchemaAttrsGroupGroupClassificationPrimer(recurse bool) map[string]
 func resourceSchemaAttrsGroupGroupClient(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	if recurse {
+		schemaAttrs["additional"] = rsschema.ListAttribute{
+			ElementType: types.StringType,
+			Optional:    true,
+			Validators: []validator.List{
+				listvalidator.ValueStringsAre(stringvalidator.OneOf(
+					"audit",
+				)),
+			},
+		}
+	}
+	if recurse {
 		maps.Copy(schemaAttrs, resourceSchemaAttrsGroupGroupClient_additionalObjects(false))
 	}
 	schemaAttrs["links"] = rsschema.ListNestedAttribute{
@@ -1691,15 +1718,6 @@ func resourceSchemaAttrsGroupGroupClient(recurse bool) map[string]rsschema.Attri
 		},
 		Computed:      true,
 		PlanModifiers: []planmodifier.List{listplanmodifier.UseStateForUnknown()},
-	}
-	schemaAttrs["additional"] = rsschema.ListAttribute{
-		ElementType: types.StringType,
-		Optional:    true,
-		Validators: []validator.List{
-			listvalidator.ValueStringsAre(stringvalidator.OneOf(
-				"audit",
-			)),
-		},
 	}
 	schemaAttrs["activation_required"] = rsschema.BoolAttribute{
 		Computed: true,
@@ -1995,6 +2013,17 @@ func resourceSchemaAttrsGroupGroup_additionalObjects(recurse bool) map[string]rs
 func resourceSchemaAttrsGroupProvisioningGroup(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	if recurse {
+		schemaAttrs["additional"] = rsschema.ListAttribute{
+			ElementType: types.StringType,
+			Optional:    true,
+			Validators: []validator.List{
+				listvalidator.ValueStringsAre(stringvalidator.OneOf(
+					"audit",
+				)),
+			},
+		}
+	}
+	if recurse {
 		maps.Copy(schemaAttrs, resourceSchemaAttrsGroupProvisioningGroup_additionalObjects(false))
 	}
 	schemaAttrs["links"] = rsschema.ListNestedAttribute{
@@ -2010,15 +2039,6 @@ func resourceSchemaAttrsGroupProvisioningGroup(recurse bool) map[string]rsschema
 		},
 		Computed:      true,
 		PlanModifiers: []planmodifier.List{listplanmodifier.UseStateForUnknown()},
-	}
-	schemaAttrs["additional"] = rsschema.ListAttribute{
-		ElementType: types.StringType,
-		Optional:    true,
-		Validators: []validator.List{
-			listvalidator.ValueStringsAre(stringvalidator.OneOf(
-				"audit",
-			)),
-		},
 	}
 	schemaAttrs["activation_required"] = rsschema.BoolAttribute{
 		Computed: true,
@@ -2065,6 +2085,17 @@ func resourceSchemaAttrsGroupProvisioningGroup_additionalObjects(recurse bool) m
 func resourceSchemaAttrsGroupVaultVaultRecord(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	if recurse {
+		schemaAttrs["additional"] = rsschema.ListAttribute{
+			ElementType: types.StringType,
+			Optional:    true,
+			Validators: []validator.List{
+				listvalidator.ValueStringsAre(stringvalidator.OneOf(
+					"audit", "parent", "passwordMetadata", "secret", "shareSummary", "shares", "tile", "vaultholder",
+				)),
+			},
+		}
+	}
+	if recurse {
 		maps.Copy(schemaAttrs, resourceSchemaAttrsVaultVaultRecord_additionalObjects(false))
 	}
 	schemaAttrs["group_uuid"] = rsschema.StringAttribute{
@@ -2110,15 +2141,6 @@ func resourceSchemaAttrsGroupVaultVaultRecord(recurse bool) map[string]rsschema.
 	schemaAttrs["uuid"] = rsschema.StringAttribute{
 		Computed:      true,
 		PlanModifiers: []planmodifier.String{stringplanmodifier.UseStateForUnknown()},
-	}
-	schemaAttrs["additional"] = rsschema.ListAttribute{
-		ElementType: types.StringType,
-		Optional:    true,
-		Validators: []validator.List{
-			listvalidator.ValueStringsAre(stringvalidator.OneOf(
-				"audit", "parent", "passwordMetadata", "secret", "shareSummary", "shares", "tile", "vaultholder",
-			)),
-		},
 	}
 	schemaAttrs["derived"] = rsschema.BoolAttribute{
 		Computed:      true,
@@ -2204,6 +2226,17 @@ func resourceSchemaAttrsMarkItemMarkers(recurse bool) map[string]rsschema.Attrib
 func resourceSchemaAttrsNestedProvisioningGroupOnSystem(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	if recurse {
+		schemaAttrs["additional"] = rsschema.ListAttribute{
+			ElementType: types.StringType,
+			Optional:    true,
+			Validators: []validator.List{
+				listvalidator.ValueStringsAre(stringvalidator.OneOf(
+					"audit", "provgroups", "serviceAccounts",
+				)),
+			},
+		}
+	}
+	if recurse {
 		maps.Copy(schemaAttrs, resourceSchemaAttrsProvisioningGroupOnSystem_additionalObjects(false))
 	}
 	schemaAttrs["provisioned_system_uuid"] = rsschema.StringAttribute{
@@ -2246,15 +2279,6 @@ func resourceSchemaAttrsNestedProvisioningGroupOnSystem(recurse bool) map[string
 	schemaAttrs["short_name_in_system"] = rsschema.StringAttribute{
 		Computed: true,
 	}
-	schemaAttrs["additional"] = rsschema.ListAttribute{
-		ElementType: types.StringType,
-		Optional:    true,
-		Validators: []validator.List{
-			listvalidator.ValueStringsAre(stringvalidator.OneOf(
-				"audit", "provgroups", "serviceAccounts",
-			)),
-		},
-	}
 	schemaAttrs["owner_uuid"] = rsschema.StringAttribute{
 		Required: true,
 		Validators: []validator.String{
@@ -2265,6 +2289,17 @@ func resourceSchemaAttrsNestedProvisioningGroupOnSystem(recurse bool) map[string
 }
 func resourceSchemaAttrsOrganizationOrganizationalUnit(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
+	if recurse {
+		schemaAttrs["additional"] = rsschema.ListAttribute{
+			ElementType: types.StringType,
+			Optional:    true,
+			Validators: []validator.List{
+				listvalidator.ValueStringsAre(stringvalidator.OneOf(
+					"audit",
+				)),
+			},
+		}
+	}
 	if recurse {
 		maps.Copy(schemaAttrs, resourceSchemaAttrsOrganizationOrganizationalUnit_additionalObjects(false))
 	}
@@ -2291,15 +2326,6 @@ func resourceSchemaAttrsOrganizationOrganizationalUnit(recurse bool) map[string]
 	schemaAttrs["uuid"] = rsschema.StringAttribute{
 		Computed:      true,
 		PlanModifiers: []planmodifier.String{stringplanmodifier.UseStateForUnknown()},
-	}
-	schemaAttrs["additional"] = rsschema.ListAttribute{
-		ElementType: types.StringType,
-		Optional:    true,
-		Validators: []validator.List{
-			listvalidator.ValueStringsAre(stringvalidator.OneOf(
-				"audit",
-			)),
-		},
 	}
 	schemaAttrs["depth"] = rsschema.Int64Attribute{
 		Computed: true,
@@ -2507,6 +2533,17 @@ func resourceSchemaAttrsProvisioningCircuitBreakerStatistics(recurse bool) map[s
 func resourceSchemaAttrsProvisioningGroupOnSystem(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	if recurse {
+		schemaAttrs["additional"] = rsschema.ListAttribute{
+			ElementType: types.StringType,
+			Optional:    true,
+			Validators: []validator.List{
+				listvalidator.ValueStringsAre(stringvalidator.OneOf(
+					"audit", "provgroups", "serviceAccounts",
+				)),
+			},
+		}
+	}
+	if recurse {
 		maps.Copy(schemaAttrs, resourceSchemaAttrsProvisioningGroupOnSystem_additionalObjects(false))
 	}
 	schemaAttrs["links"] = rsschema.ListNestedAttribute{
@@ -2542,15 +2579,6 @@ func resourceSchemaAttrsProvisioningGroupOnSystem(recurse bool) map[string]rssch
 	}
 	schemaAttrs["short_name_in_system"] = rsschema.StringAttribute{
 		Computed: true,
-	}
-	schemaAttrs["additional"] = rsschema.ListAttribute{
-		ElementType: types.StringType,
-		Optional:    true,
-		Validators: []validator.List{
-			listvalidator.ValueStringsAre(stringvalidator.OneOf(
-				"audit", "provgroups", "serviceAccounts",
-			)),
-		},
 	}
 	schemaAttrs["owner_uuid"] = rsschema.StringAttribute{
 		Required: true,
@@ -2662,6 +2690,17 @@ func resourceSchemaAttrsProvisioningOwnedGroupOnSystemsWrapper(recurse bool) map
 func resourceSchemaAttrsProvisioningProvisionNumberSequence(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	if recurse {
+		schemaAttrs["additional"] = rsschema.ListAttribute{
+			ElementType: types.StringType,
+			Optional:    true,
+			Validators: []validator.List{
+				listvalidator.ValueStringsAre(stringvalidator.OneOf(
+					"audit", "systems",
+				)),
+			},
+		}
+	}
+	if recurse {
 		maps.Copy(schemaAttrs, resourceSchemaAttrsProvisioningProvisionNumberSequence_additionalObjects(false))
 	}
 	schemaAttrs["links"] = rsschema.ListNestedAttribute{
@@ -2677,15 +2716,6 @@ func resourceSchemaAttrsProvisioningProvisionNumberSequence(recurse bool) map[st
 		},
 		Computed:      true,
 		PlanModifiers: []planmodifier.List{listplanmodifier.UseStateForUnknown()},
-	}
-	schemaAttrs["additional"] = rsschema.ListAttribute{
-		ElementType: types.StringType,
-		Optional:    true,
-		Validators: []validator.List{
-			listvalidator.ValueStringsAre(stringvalidator.OneOf(
-				"audit", "systems",
-			)),
-		},
 	}
 	schemaAttrs["account_count"] = rsschema.Int64Attribute{
 		Computed: true,
@@ -2737,21 +2767,23 @@ func resourceSchemaAttrsProvisioningProvisionedAD(recurse bool) map[string]rssch
 func resourceSchemaAttrsProvisioningProvisionedAccount(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	if recurse {
+		schemaAttrs["additional"] = rsschema.ListAttribute{
+			ElementType: types.StringType,
+			Optional:    true,
+			Validators: []validator.List{
+				listvalidator.ValueStringsAre(stringvalidator.OneOf(
+					"audit",
+				)),
+			},
+		}
+	}
+	if recurse {
 		maps.Copy(schemaAttrs, resourceSchemaAttrsProvisioningProvisionedAccount_additionalObjects(false))
 	}
 	schemaAttrs["uuid"] = rsschema.StringAttribute{
 		Required: true,
 		Validators: []validator.String{
 			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
-		},
-	}
-	schemaAttrs["additional"] = rsschema.ListAttribute{
-		ElementType: types.StringType,
-		Optional:    true,
-		Validators: []validator.List{
-			listvalidator.ValueStringsAre(stringvalidator.OneOf(
-				"audit",
-			)),
 		},
 	}
 	schemaAttrs["uid"] = rsschema.Int64Attribute{
@@ -2903,6 +2935,17 @@ func resourceSchemaAttrsProvisioningProvisionedNamespace(recurse bool) map[strin
 func resourceSchemaAttrsProvisioningProvisionedSystem(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	if recurse {
+		schemaAttrs["additional"] = rsschema.ListAttribute{
+			ElementType: types.StringType,
+			Optional:    true,
+			Validators: []validator.List{
+				listvalidator.ValueStringsAre(stringvalidator.OneOf(
+					"account", "audit", "issuedPermissions", "loginName", "managementPermissions", "markers", "statistics", "supportedGroupTypes",
+				)),
+			},
+		}
+	}
+	if recurse {
 		maps.Copy(schemaAttrs, resourceSchemaAttrsProvisioningProvisionedSystem_additionalObjects(false))
 	}
 	schemaAttrs["links"] = rsschema.ListNestedAttribute{
@@ -2943,15 +2986,6 @@ func resourceSchemaAttrsProvisioningProvisionedSystem(recurse bool) map[string]r
 	schemaAttrs["uuid"] = rsschema.StringAttribute{
 		Computed:      true,
 		PlanModifiers: []planmodifier.String{stringplanmodifier.UseStateForUnknown()},
-	}
-	schemaAttrs["additional"] = rsschema.ListAttribute{
-		ElementType: types.StringType,
-		Optional:    true,
-		Validators: []validator.List{
-			listvalidator.ValueStringsAre(stringvalidator.OneOf(
-				"account", "audit", "issuedPermissions", "loginName", "managementPermissions", "markers", "statistics", "supportedGroupTypes",
-			)),
-		},
 	}
 	schemaAttrs["account_count"] = rsschema.Int64Attribute{
 		Computed: true,
@@ -3212,6 +3246,17 @@ func resourceSchemaAttrsProvisioningProvisioningManagementPermissions(recurse bo
 func resourceSchemaAttrsServiceaccountServiceAccount(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	if recurse {
+		schemaAttrs["additional"] = rsschema.ListAttribute{
+			ElementType: types.StringType,
+			Optional:    true,
+			Validators: []validator.List{
+				listvalidator.ValueStringsAre(stringvalidator.OneOf(
+					"audit", "groups", "secret",
+				)),
+			},
+		}
+	}
+	if recurse {
 		maps.Copy(schemaAttrs, resourceSchemaAttrsServiceaccountServiceAccount_additionalObjects(false))
 	}
 	schemaAttrs["links"] = rsschema.ListNestedAttribute{
@@ -3253,15 +3298,6 @@ func resourceSchemaAttrsServiceaccountServiceAccount(recurse bool) map[string]rs
 		Computed:      true,
 		PlanModifiers: []planmodifier.String{stringplanmodifier.UseStateForUnknown()},
 	}
-	schemaAttrs["additional"] = rsschema.ListAttribute{
-		ElementType: types.StringType,
-		Optional:    true,
-		Validators: []validator.List{
-			listvalidator.ValueStringsAre(stringvalidator.OneOf(
-				"audit", "groups", "secret",
-			)),
-		},
-	}
 	schemaAttrs["description"] = rsschema.StringAttribute{
 		Optional: true,
 	}
@@ -3286,6 +3322,17 @@ func resourceSchemaAttrsServiceaccountServiceAccount(recurse bool) map[string]rs
 }
 func resourceSchemaAttrsServiceaccountServiceAccountGroup(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
+	if recurse {
+		schemaAttrs["additional"] = rsschema.ListAttribute{
+			ElementType: types.StringType,
+			Optional:    true,
+			Validators: []validator.List{
+				listvalidator.ValueStringsAre(stringvalidator.OneOf(
+					"audit",
+				)),
+			},
+		}
+	}
 	if recurse {
 		maps.Copy(schemaAttrs, resourceSchemaAttrsServiceaccountServiceAccountGroup_additionalObjects(false))
 	}
@@ -3322,15 +3369,6 @@ func resourceSchemaAttrsServiceaccountServiceAccountGroup(recurse bool) map[stri
 	}
 	schemaAttrs["short_name_in_system"] = rsschema.StringAttribute{
 		Computed: true,
-	}
-	schemaAttrs["additional"] = rsschema.ListAttribute{
-		ElementType: types.StringType,
-		Optional:    true,
-		Validators: []validator.List{
-			listvalidator.ValueStringsAre(stringvalidator.OneOf(
-				"audit",
-			)),
-		},
 	}
 	return schemaAttrs
 }
@@ -3530,6 +3568,17 @@ func resourceSchemaAttrsVaultVaultHolder(recurse bool) map[string]rsschema.Attri
 func resourceSchemaAttrsVaultVaultRecord(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	if recurse {
+		schemaAttrs["additional"] = rsschema.ListAttribute{
+			ElementType: types.StringType,
+			Optional:    true,
+			Validators: []validator.List{
+				listvalidator.ValueStringsAre(stringvalidator.OneOf(
+					"audit", "parent", "passwordMetadata", "secret", "shareSummary", "shares", "tile", "vaultholder",
+				)),
+			},
+		}
+	}
+	if recurse {
 		maps.Copy(schemaAttrs, resourceSchemaAttrsVaultVaultRecord_additionalObjects(false))
 	}
 	schemaAttrs["links"] = rsschema.ListNestedAttribute{
@@ -3569,15 +3618,6 @@ func resourceSchemaAttrsVaultVaultRecord(recurse bool) map[string]rsschema.Attri
 	schemaAttrs["uuid"] = rsschema.StringAttribute{
 		Computed:      true,
 		PlanModifiers: []planmodifier.String{stringplanmodifier.UseStateForUnknown()},
-	}
-	schemaAttrs["additional"] = rsschema.ListAttribute{
-		ElementType: types.StringType,
-		Optional:    true,
-		Validators: []validator.List{
-			listvalidator.ValueStringsAre(stringvalidator.OneOf(
-				"audit", "parent", "passwordMetadata", "secret", "shareSummary", "shares", "tile", "vaultholder",
-			)),
-		},
 	}
 	schemaAttrs["derived"] = rsschema.BoolAttribute{
 		Computed:      true,
@@ -3780,6 +3820,17 @@ func resourceSchemaAttrsVaultVaultRecord_additionalObjects(recurse bool) map[str
 func resourceSchemaAttrsWebhookWebhook(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	if recurse {
+		schemaAttrs["additional"] = rsschema.ListAttribute{
+			ElementType: types.StringType,
+			Optional:    true,
+			Validators: []validator.List{
+				listvalidator.ValueStringsAre(stringvalidator.OneOf(
+					"audit",
+				)),
+			},
+		}
+	}
+	if recurse {
 		maps.Copy(schemaAttrs, resourceSchemaAttrsWebhookWebhook_additionalObjects(false))
 	}
 	schemaAttrs["links"] = rsschema.ListNestedAttribute{
@@ -3795,15 +3846,6 @@ func resourceSchemaAttrsWebhookWebhook(recurse bool) map[string]rsschema.Attribu
 		},
 		Computed:      true,
 		PlanModifiers: []planmodifier.List{listplanmodifier.UseStateForUnknown()},
-	}
-	schemaAttrs["additional"] = rsschema.ListAttribute{
-		ElementType: types.StringType,
-		Optional:    true,
-		Validators: []validator.List{
-			listvalidator.ValueStringsAre(stringvalidator.OneOf(
-				"audit",
-			)),
-		},
 	}
 	schemaAttrs["account_uuid"] = rsschema.StringAttribute{
 		Optional: true,

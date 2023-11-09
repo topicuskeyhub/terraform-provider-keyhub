@@ -103,7 +103,6 @@ Required:
 
 Optional:
 
-- `additional` (List of String)
 - `end_date` (String)
 
 Read-Only:
@@ -127,7 +126,6 @@ Required:
 
 Optional:
 
-- `additional` (List of String)
 - `end_date` (String)
 
 Read-Only:
@@ -185,7 +183,6 @@ Required:
 
 Optional:
 
-- `additional` (List of String)
 - `client_uuid` (String)
 - `for_group_uuid` (String)
 - `for_system_uuid` (String)
@@ -227,7 +224,6 @@ Required:
 
 Optional:
 
-- `additional` (List of String)
 - `client_id` (String)
 - `ldap_client` (Attributes) (see [below for nested schema](#nestedatt--administered_clients--ldap_client))
 - `o_auth2_client` (Attributes) (see [below for nested schema](#nestedatt--administered_clients--o_auth2_client))
@@ -344,7 +340,6 @@ Optional:
 
 - `abstract_provisioned_ldap` (Attributes) (see [below for nested schema](#nestedatt--administered_systems--abstract_provisioned_ldap))
 - `active` (Boolean)
-- `additional` (List of String)
 - `organizational_unit_uuid` (String)
 - `provisioned_a_d` (Attributes) (see [below for nested schema](#nestedatt--administered_systems--provisioned_a_d))
 - `provisioned_azure_oidc_directory` (Attributes) (see [below for nested schema](#nestedatt--administered_systems--provisioned_azure_oidc_directory))
@@ -467,7 +462,6 @@ Required:
 
 Optional:
 
-- `additional` (List of String)
 - `next_uid` (Number)
 
 Read-Only:
@@ -570,7 +564,6 @@ Required:
 
 Optional:
 
-- `additional` (List of String)
 - `application_administration` (Boolean)
 - `audit_config` (Attributes) (see [below for nested schema](#nestedatt--authorized_groups--items--audit_config))
 - `authorizing_group_auditing_uuid` (String)
@@ -665,7 +658,6 @@ Optional:
 Optional:
 
 - `activation_required` (Boolean)
-- `additional` (List of String)
 
 Read-Only:
 
@@ -713,7 +705,6 @@ Optional:
 
 - `abstract_provisioned_ldap` (Attributes) (see [below for nested schema](#nestedatt--content_administered_systems--abstract_provisioned_ldap))
 - `active` (Boolean)
-- `additional` (List of String)
 - `organizational_unit_uuid` (String)
 - `provisioned_a_d` (Attributes) (see [below for nested schema](#nestedatt--content_administered_systems--provisioned_a_d))
 - `provisioned_azure_oidc_directory` (Attributes) (see [below for nested schema](#nestedatt--content_administered_systems--provisioned_azure_oidc_directory))
@@ -836,7 +827,6 @@ Required:
 
 Optional:
 
-- `additional` (List of String)
 - `next_uid` (Number)
 
 Read-Only:
@@ -1028,7 +1018,6 @@ Required:
 
 Optional:
 
-- `additional` (List of String)
 - `end_date` (String)
 
 Read-Only:
@@ -1052,7 +1041,6 @@ Required:
 
 Optional:
 
-- `additional` (List of String)
 - `end_date` (String)
 
 Read-Only:
@@ -1116,7 +1104,6 @@ Required:
 
 Optional:
 
-- `additional` (List of String)
 - `client_id` (String)
 - `ldap_client` (Attributes) (see [below for nested schema](#nestedatt--owned_clients--ldap_client))
 - `o_auth2_client` (Attributes) (see [below for nested schema](#nestedatt--owned_clients--o_auth2_client))
@@ -1231,7 +1218,6 @@ Required:
 Optional:
 
 - `active` (Boolean)
-- `additional` (List of String)
 - `default_directory` (Boolean)
 - `helpdesk_group_uuid` (String)
 - `internal_directory` (Attributes) (see [below for nested schema](#nestedatt--owned_directories--internal_directory))
@@ -1351,7 +1337,6 @@ Required:
 
 Optional:
 
-- `additional` (List of String)
 - `display_name` (String)
 
 Read-Only:
@@ -1394,7 +1379,6 @@ Required:
 
 Optional:
 
-- `additional` (List of String)
 - `description` (String)
 
 Read-Only:
@@ -1442,7 +1426,6 @@ Optional:
 
 - `abstract_provisioned_ldap` (Attributes) (see [below for nested schema](#nestedatt--owned_systems--abstract_provisioned_ldap))
 - `active` (Boolean)
-- `additional` (List of String)
 - `organizational_unit_uuid` (String)
 - `provisioned_a_d` (Attributes) (see [below for nested schema](#nestedatt--owned_systems--provisioned_a_d))
 - `provisioned_azure_oidc_directory` (Attributes) (see [below for nested schema](#nestedatt--owned_systems--provisioned_azure_oidc_directory))
@@ -1565,7 +1548,6 @@ Required:
 
 Optional:
 
-- `additional` (List of String)
 - `next_uid` (Number)
 
 Read-Only:
@@ -1661,7 +1643,6 @@ Required:
 Optional:
 
 - `accounts` (Attributes List) (see [below for nested schema](#nestedatt--recent_audits--accounts))
-- `additional` (List of String)
 - `comment` (String)
 
 Read-Only:
@@ -1758,7 +1739,6 @@ Required:
 Optional:
 
 - `active` (Boolean)
-- `additional` (List of String)
 - `description` (String)
 - `technical_administrator_uuid` (String)
 
@@ -1803,7 +1783,6 @@ Required:
 Optional:
 
 - `activation_required` (Boolean)
-- `additional` (List of String)
 
 Read-Only:
 
@@ -1822,7 +1801,6 @@ Required:
 
 Optional:
 
-- `additional` (List of String)
 - `display_name` (String)
 
 Read-Only:
@@ -1925,7 +1903,6 @@ Optional:
 
 - `account_uuid` (String)
 - `active` (Boolean)
-- `additional` (List of String)
 - `all_types` (Boolean)
 - `authentication_scheme` (String)
 - `basic_auth_password` (String)

@@ -88,10 +88,6 @@ data "keyhubpreview_group" "group_from_keyhub" {
 <a id="nestedatt--accounts"></a>
 ### Nested Schema for `accounts`
 
-Optional:
-
-- `additional` (List of String)
-
 Read-Only:
 
 - `directory` (Attributes) (see [below for nested schema](#nestedatt--accounts--directory))
@@ -172,10 +168,6 @@ Read-Only:
 
 <a id="nestedatt--administered_clients"></a>
 ### Nested Schema for `administered_clients`
-
-Optional:
-
-- `additional` (List of String)
 
 Read-Only:
 
@@ -518,10 +510,6 @@ Read-Only:
 
 <a id="nestedatt--administered_systems"></a>
 ### Nested Schema for `administered_systems`
-
-Optional:
-
-- `additional` (List of String)
 
 Read-Only:
 
@@ -1105,10 +1093,6 @@ Read-Only:
 <a id="nestedatt--administered_systems--provisioned_ldap--numbering"></a>
 ### Nested Schema for `administered_systems.provisioned_ldap.numbering`
 
-Optional:
-
-- `additional` (List of String)
-
 Read-Only:
 
 - `account_count` (Number)
@@ -1337,10 +1321,6 @@ Read-Only:
 <a id="nestedatt--admins"></a>
 ### Nested Schema for `admins`
 
-Optional:
-
-- `additional` (List of String)
-
 Read-Only:
 
 - `directory` (Attributes) (see [below for nested schema](#nestedatt--admins--directory))
@@ -1472,10 +1452,6 @@ Read-Only:
 
 <a id="nestedatt--authorized_groups--items"></a>
 ### Nested Schema for `authorized_groups.items`
-
-Optional:
-
-- `additional` (List of String)
 
 Read-Only:
 
@@ -2276,10 +2252,6 @@ Read-Only:
 <a id="nestedatt--client_permissions"></a>
 ### Nested Schema for `client_permissions`
 
-Optional:
-
-- `additional` (List of String)
-
 Read-Only:
 
 - `client` (Attributes) (see [below for nested schema](#nestedatt--client_permissions--client))
@@ -2516,10 +2488,6 @@ Read-Only:
 
 <a id="nestedatt--clients"></a>
 ### Nested Schema for `clients`
-
-Optional:
-
-- `additional` (List of String)
 
 Read-Only:
 
@@ -2797,10 +2765,6 @@ Read-Only:
 
 <a id="nestedatt--content_administered_systems"></a>
 ### Nested Schema for `content_administered_systems`
-
-Optional:
-
-- `additional` (List of String)
 
 Read-Only:
 
@@ -3384,10 +3348,6 @@ Read-Only:
 <a id="nestedatt--content_administered_systems--provisioned_ldap--numbering"></a>
 ### Nested Schema for `content_administered_systems.provisioned_ldap.numbering`
 
-Optional:
-
-- `additional` (List of String)
-
 Read-Only:
 
 - `account_count` (Number)
@@ -3720,10 +3680,6 @@ Read-Only:
 <a id="nestedatt--myaccount"></a>
 ### Nested Schema for `myaccount`
 
-Optional:
-
-- `additional` (List of String)
-
 Read-Only:
 
 - `directory` (Attributes) (see [below for nested schema](#nestedatt--myaccount--directory))
@@ -3804,10 +3760,6 @@ Read-Only:
 
 <a id="nestedatt--mydelegatedaccount"></a>
 ### Nested Schema for `mydelegatedaccount`
-
-Optional:
-
-- `additional` (List of String)
 
 Read-Only:
 
@@ -4061,10 +4013,6 @@ Read-Only:
 
 <a id="nestedatt--owned_clients"></a>
 ### Nested Schema for `owned_clients`
-
-Optional:
-
-- `additional` (List of String)
 
 Read-Only:
 
@@ -4407,10 +4355,6 @@ Read-Only:
 
 <a id="nestedatt--owned_directories"></a>
 ### Nested Schema for `owned_directories`
-
-Optional:
-
-- `additional` (List of String)
 
 Read-Only:
 
@@ -4806,10 +4750,6 @@ Read-Only:
 <a id="nestedatt--owned_groups_on_system--items"></a>
 ### Nested Schema for `owned_groups_on_system.items`
 
-Optional:
-
-- `additional` (List of String)
-
 Read-Only:
 
 - `display_name` (String)
@@ -4914,10 +4854,6 @@ Read-Only:
 
 <a id="nestedatt--owned_organizational_units"></a>
 ### Nested Schema for `owned_organizational_units`
-
-Optional:
-
-- `additional` (List of String)
 
 Read-Only:
 
@@ -5056,10 +4992,6 @@ Read-Only:
 
 <a id="nestedatt--owned_systems"></a>
 ### Nested Schema for `owned_systems`
-
-Optional:
-
-- `additional` (List of String)
 
 Read-Only:
 
@@ -5643,10 +5575,6 @@ Read-Only:
 <a id="nestedatt--owned_systems--provisioned_ldap--numbering"></a>
 ### Nested Schema for `owned_systems.provisioned_ldap.numbering`
 
-Optional:
-
-- `additional` (List of String)
-
 Read-Only:
 
 - `account_count` (Number)
@@ -5886,10 +5814,6 @@ Read-Only:
 <a id="nestedatt--recent_audits"></a>
 ### Nested Schema for `recent_audits`
 
-Optional:
-
-- `additional` (List of String)
-
 Read-Only:
 
 - `accounts` (Attributes List) (see [below for nested schema](#nestedatt--recent_audits--accounts))
@@ -5974,10 +5898,6 @@ Read-Only:
 
 <a id="nestedatt--service_accounts"></a>
 ### Nested Schema for `service_accounts`
-
-Optional:
-
-- `additional` (List of String)
 
 Read-Only:
 
@@ -6191,10 +6111,6 @@ Read-Only:
 <a id="nestedatt--systems"></a>
 ### Nested Schema for `systems`
 
-Optional:
-
-- `additional` (List of String)
-
 Read-Only:
 
 - `activation_required` (Boolean)
@@ -6273,10 +6189,6 @@ Read-Only:
 
 <a id="nestedatt--systems--group_on_system"></a>
 ### Nested Schema for `systems.group_on_system`
-
-Optional:
-
-- `additional` (List of String)
 
 Read-Only:
 
@@ -6438,10 +6350,6 @@ Read-Only:
 <a id="nestedatt--vault--records"></a>
 ### Nested Schema for `vault.records`
 
-Optional:
-
-- `additional` (List of String)
-
 Read-Only:
 
 - `color` (String)
@@ -6484,10 +6392,6 @@ Read-Only:
 
 <a id="nestedatt--webhooks"></a>
 ### Nested Schema for `webhooks`
-
-Optional:
-
-- `additional` (List of String)
 
 Read-Only:
 

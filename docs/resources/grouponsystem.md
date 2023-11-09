@@ -46,7 +46,6 @@ Required:
 Optional:
 
 - `activation_required` (Boolean)
-- `additional` (List of String)
 
 Read-Only:
 
@@ -65,7 +64,6 @@ Required:
 
 Optional:
 
-- `additional` (List of String)
 - `display_name` (String)
 
 Read-Only:

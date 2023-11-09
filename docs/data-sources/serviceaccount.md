@@ -53,10 +53,6 @@ Read-Only:
 <a id="nestedatt--groups"></a>
 ### Nested Schema for `groups`
 
-Optional:
-
-- `additional` (List of String)
-
 Read-Only:
 
 - `display_name` (String)

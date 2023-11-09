@@ -52,7 +52,6 @@ description: |-
 Optional:
 
 - `activation_required` (Boolean)
-- `additional` (List of String)
 
 Read-Only:
 
@@ -186,7 +185,6 @@ Required:
 
 Optional:
 
-- `additional` (List of String)
 - `application_administration` (Boolean)
 - `audit_config` (Attributes) (see [below for nested schema](#nestedatt--groups--audit_config))
 - `authorizing_group_auditing_uuid` (String)

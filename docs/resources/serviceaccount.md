@@ -70,7 +70,6 @@ Required:
 
 Optional:
 
-- `additional` (List of String)
 - `display_name` (String)
 
 Read-Only:

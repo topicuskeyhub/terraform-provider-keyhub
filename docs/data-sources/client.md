@@ -59,10 +59,6 @@ Read-Only:
 <a id="nestedatt--groupclients"></a>
 ### Nested Schema for `groupclients`
 
-Optional:
-
-- `additional` (List of String)
-
 Read-Only:
 
 - `activation_required` (Boolean)
@@ -339,10 +335,6 @@ Read-Only:
 
 <a id="nestedatt--groups"></a>
 ### Nested Schema for `groups`
-
-Optional:
-
-- `additional` (List of String)
 
 Read-Only:
 
