@@ -34,6 +34,7 @@ resource "keyhubpreview_group" "terra" {
     client_uuid = "ebdf81ac-b02b-4335-9dc4-4a9bc4eb406d"
     value       = "GROUP_FULL_VAULT_ACCESS"
   }]
+  additional = ["audit"]
 }
 
 resource "keyhubpreview_group_vaultrecord" "terrarecord" {

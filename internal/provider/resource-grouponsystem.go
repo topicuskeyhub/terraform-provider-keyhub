@@ -83,6 +83,7 @@ func (r *grouponsystemResource) Create(ctx context.Context, req resource.CreateR
 		return
 	}
 
+	additionalBackup := data.Additional
 	r.providerData.Mutex.Lock()
 	defer r.providerData.Mutex.Unlock()
 	tflog.Info(ctx, "Creating Topicus KeyHub grouponsystem")
@@ -97,7 +98,7 @@ func (r *grouponsystemResource) Create(ctx context.Context, req resource.CreateR
 	wrapper, err := r.providerData.Client.System().BySystemidInt64(*tkhParent.GetLinks()[0].GetId()).Group().Post(
 		ctx, newWrapper, &keyhubreq.ItemGroupRequestBuilderPostRequestConfiguration{
 			QueryParameters: &keyhubreq.ItemGroupRequestBuilderPostQueryParameters{
-				Additional: collectAdditional(data),
+				Additional: collectAdditional(ctx, data, data.Additional),
 			},
 		})
 	tkh, diags := findFirst[keyhubmodels.ProvisioningGroupOnSystemable](ctx, wrapper, "grouponsystem", nil, false, err)
@@ -113,6 +114,7 @@ func (r *grouponsystemResource) Create(ctx context.Context, req resource.CreateR
 	}
 	tf = setAttributeValue(ctx, tf, "provisioned_system_uuid", types.StringValue(data.ProvisionedSystemUUID.ValueString()))
 	fillDataStructFromTFObjectRSNestedProvisioningGroupOnSystem(&data, tf)
+	data.Additional = additionalBackup
 
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 
@@ -127,6 +129,7 @@ func (r *grouponsystemResource) Read(ctx context.Context, req resource.ReadReque
 		return
 	}
 
+	additionalBackup := data.Additional
 	r.providerData.Mutex.RLock()
 	defer r.providerData.Mutex.RUnlock()
 	ctx = context.WithValue(ctx, keyHubClientKey, r.providerData.Client)
@@ -146,7 +149,7 @@ func (r *grouponsystemResource) Read(ctx context.Context, req resource.ReadReque
 	tkh, err := r.providerData.Client.System().BySystemidInt64(*tkhParent.GetLinks()[0].GetId()).Group().ByGroupidInt64(getSelfLink(data.Links).ID.ValueInt64()).Get(
 		ctx, &keyhubreq.ItemGroupWithGroupItemRequestBuilderGetRequestConfiguration{
 			QueryParameters: &keyhubreq.ItemGroupWithGroupItemRequestBuilderGetQueryParameters{
-				Additional: collectAdditional(data),
+				Additional: collectAdditional(ctx, data, data.Additional),
 			},
 		})
 
@@ -167,6 +170,7 @@ func (r *grouponsystemResource) Read(ctx context.Context, req resource.ReadReque
 	}
 	tf = setAttributeValue(ctx, tf, "provisioned_system_uuid", types.StringValue(data.ProvisionedSystemUUID.ValueString()))
 	fillDataStructFromTFObjectRSNestedProvisioningGroupOnSystem(&data, tf)
+	data.Additional = additionalBackup
 
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }

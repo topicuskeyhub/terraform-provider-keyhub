@@ -83,6 +83,7 @@ func (r *serviceaccountResource) Create(ctx context.Context, req resource.Create
 		return
 	}
 
+	additionalBackup := data.Additional
 	r.providerData.Mutex.Lock()
 	defer r.providerData.Mutex.Unlock()
 	tflog.Info(ctx, "Creating Topicus KeyHub serviceaccount")
@@ -91,7 +92,7 @@ func (r *serviceaccountResource) Create(ctx context.Context, req resource.Create
 	wrapper, err := r.providerData.Client.Serviceaccount().Post(
 		ctx, newWrapper, &keyhubreq.ServiceaccountRequestBuilderPostRequestConfiguration{
 			QueryParameters: &keyhubreq.ServiceaccountRequestBuilderPostQueryParameters{
-				Additional: collectAdditional(data),
+				Additional: collectAdditional(ctx, data, data.Additional),
 			},
 		})
 	tkh, diags := findFirst[keyhubmodels.ServiceaccountServiceAccountable](ctx, wrapper, "serviceaccount", nil, false, err)
@@ -106,6 +107,7 @@ func (r *serviceaccountResource) Create(ctx context.Context, req resource.Create
 		return
 	}
 	fillDataStructFromTFObjectRSServiceaccountServiceAccount(&data, tf)
+	data.Additional = additionalBackup
 
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 
@@ -120,6 +122,7 @@ func (r *serviceaccountResource) Read(ctx context.Context, req resource.ReadRequ
 		return
 	}
 
+	additionalBackup := data.Additional
 	r.providerData.Mutex.RLock()
 	defer r.providerData.Mutex.RUnlock()
 	ctx = context.WithValue(ctx, keyHubClientKey, r.providerData.Client)
@@ -127,7 +130,7 @@ func (r *serviceaccountResource) Read(ctx context.Context, req resource.ReadRequ
 	tkh, err := r.providerData.Client.Serviceaccount().ByServiceaccountidInt64(getSelfLink(data.Links).ID.ValueInt64()).Get(
 		ctx, &keyhubreq.WithServiceaccountItemRequestBuilderGetRequestConfiguration{
 			QueryParameters: &keyhubreq.WithServiceaccountItemRequestBuilderGetQueryParameters{
-				Additional: collectAdditional(data),
+				Additional: collectAdditional(ctx, data, data.Additional),
 			},
 		})
 
@@ -147,6 +150,7 @@ func (r *serviceaccountResource) Read(ctx context.Context, req resource.ReadRequ
 		return
 	}
 	fillDataStructFromTFObjectRSServiceaccountServiceAccount(&data, tf)
+	data.Additional = additionalBackup
 
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
@@ -171,13 +175,14 @@ func (r *serviceaccountResource) Update(ctx context.Context, req resource.Update
 		return
 	}
 
+	additionalBackup := data.Additional
 	r.providerData.Mutex.Lock()
 	defer r.providerData.Mutex.Unlock()
 	tflog.Info(ctx, "Updating Topicus KeyHub serviceaccount")
 	tkh, err := r.providerData.Client.Serviceaccount().ByServiceaccountidInt64(getSelfLink(data.Links).ID.ValueInt64()).Put(
 		ctx, newTkh, &keyhubreq.WithServiceaccountItemRequestBuilderPutRequestConfiguration{
 			QueryParameters: &keyhubreq.WithServiceaccountItemRequestBuilderPutQueryParameters{
-				Additional: collectAdditional(data),
+				Additional: collectAdditional(ctx, data, data.Additional),
 			},
 		})
 
@@ -191,6 +196,7 @@ func (r *serviceaccountResource) Update(ctx context.Context, req resource.Update
 		return
 	}
 	fillDataStructFromTFObjectRSServiceaccountServiceAccount(&data, tf)
+	data.Additional = additionalBackup
 
 	tflog.Info(ctx, "Updated a Topicus KeyHub serviceaccount")
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

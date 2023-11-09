@@ -77,6 +77,7 @@ func fillDataStructFromTFObjectRSClientApplicationVaultVaultRecord(data *clientA
 	data.Name = obj.Attributes()["name"].(basetypes.StringValue)
 	data.ShareEndTime = obj.Attributes()["share_end_time"].(basetypes.StringValue)
 	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
 	data.DeleteTile = obj.Attributes()["delete_tile"].(basetypes.BoolValue)
 	data.ParentUUID = obj.Attributes()["parent_uuid"].(basetypes.StringValue)
@@ -104,6 +105,7 @@ func fillDataStructFromTFObjectRSClientClientApplication(data *clientClientAppli
 	data.Scopes = obj.Attributes()["scopes"].(basetypes.ListValue)
 	data.SsoApplication = obj.Attributes()["sso_application"].(basetypes.BoolValue)
 	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
 	data.DeleteTile = obj.Attributes()["delete_tile"].(basetypes.BoolValue)
 	data.Groupclients = obj.Attributes()["groupclients"].(basetypes.ListValue)
@@ -170,6 +172,7 @@ func fillDataStructFromTFObjectRSClientOAuth2Client(data *clientOAuth2ClientData
 func fillDataStructFromTFObjectRSClientOAuth2ClientPermission(data *clientOAuth2ClientPermissionDataRS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
 	data.ForGroupUUID = obj.Attributes()["for_group_uuid"].(basetypes.StringValue)
 	data.ForSystemUUID = obj.Attributes()["for_system_uuid"].(basetypes.StringValue)
@@ -179,6 +182,7 @@ func fillDataStructFromTFObjectRSClientOAuth2ClientPermission(data *clientOAuth2
 func fillDataStructFromTFObjectRSClientOAuth2ClientPermissionWithClient(data *clientOAuth2ClientPermissionWithClientDataRS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
 	data.ForGroupUUID = obj.Attributes()["for_group_uuid"].(basetypes.StringValue)
 	data.ForSystemUUID = obj.Attributes()["for_system_uuid"].(basetypes.StringValue)
@@ -209,6 +213,7 @@ func fillDataStructFromTFObjectRSDirectoryAccountDirectory(data *directoryAccoun
 	data.DirectoryAccountDirectoryPrimerType = obj.Attributes()["type"].(basetypes.StringValue)
 	data.Name = obj.Attributes()["name"].(basetypes.StringValue)
 	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
 	data.Markers = obj.Attributes()["markers"].(basetypes.ObjectValue)
 	data.Status = obj.Attributes()["status"].(basetypes.ObjectValue)
@@ -315,6 +320,7 @@ func fillDataStructFromTFObjectRSGroupGroup(data *groupGroupDataRS, obj types.Ob
 	data.Name = obj.Attributes()["name"].(basetypes.StringValue)
 	data.OrganizationalUnitUUID = obj.Attributes()["organizational_unit_uuid"].(basetypes.StringValue)
 	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.Accounts = obj.Attributes()["accounts"].(basetypes.ListValue)
 	data.AdministeredClients = obj.Attributes()["administered_clients"].(basetypes.ListValue)
 	data.AdministeredSystems = obj.Attributes()["administered_systems"].(basetypes.ListValue)
@@ -366,6 +372,7 @@ func fillDataStructFromTFObjectRSGroupGroup(data *groupGroupDataRS, obj types.Ob
 
 func fillDataStructFromTFObjectRSGroupGroupAccount(data *groupGroupAccountDataRS, obj types.Object) {
 	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
 	data.DirectoryUUID = obj.Attributes()["directory_uuid"].(basetypes.StringValue)
 	data.DisconnectedNested = obj.Attributes()["disconnected_nested"].(basetypes.BoolValue)
@@ -389,6 +396,7 @@ func fillDataStructFromTFObjectRSGroupGroupAccount_additionalObjects(data *group
 func fillDataStructFromTFObjectRSGroupGroupAudit(data *groupGroupAuditDataRS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.Accounts = obj.Attributes()["accounts"].(basetypes.ListValue)
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
 	data.Comment = obj.Attributes()["comment"].(basetypes.StringValue)
@@ -455,6 +463,7 @@ func fillDataStructFromTFObjectRSGroupGroupClassificationPrimer(data *groupGroup
 func fillDataStructFromTFObjectRSGroupGroupClient(data *groupGroupClientDataRS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.ActivationRequired = obj.Attributes()["activation_required"].(basetypes.BoolValue)
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
 	data.ClientUUID = obj.Attributes()["client_uuid"].(basetypes.StringValue)
@@ -530,6 +539,7 @@ func fillDataStructFromTFObjectRSGroupGroup_additionalObjects(data *groupGroup_a
 func fillDataStructFromTFObjectRSGroupProvisioningGroup(data *groupProvisioningGroupDataRS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.ActivationRequired = obj.Attributes()["activation_required"].(basetypes.BoolValue)
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
 	data.GroupUUID = obj.Attributes()["group_uuid"].(basetypes.StringValue)
@@ -552,6 +562,7 @@ func fillDataStructFromTFObjectRSGroupVaultVaultRecord(data *groupVaultVaultReco
 	data.Name = obj.Attributes()["name"].(basetypes.StringValue)
 	data.ShareEndTime = obj.Attributes()["share_end_time"].(basetypes.StringValue)
 	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
 	data.DeleteTile = obj.Attributes()["delete_tile"].(basetypes.BoolValue)
 	data.ParentUUID = obj.Attributes()["parent_uuid"].(basetypes.StringValue)
@@ -595,6 +606,7 @@ func fillDataStructFromTFObjectRSNestedProvisioningGroupOnSystem(data *nestedPro
 	data.NameInSystem = obj.Attributes()["name_in_system"].(basetypes.StringValue)
 	data.ProvisioningGroupOnSystemPrimerType = obj.Attributes()["type"].(basetypes.StringValue)
 	data.ShortNameInSystem = obj.Attributes()["short_name_in_system"].(basetypes.StringValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
 	data.Provgroups = obj.Attributes()["provgroups"].(basetypes.ListValue)
 	data.ServiceAccounts = obj.Attributes()["service_accounts"].(basetypes.ListValue)
@@ -606,6 +618,7 @@ func fillDataStructFromTFObjectRSOrganizationOrganizationalUnit(data *organizati
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
 	data.Name = obj.Attributes()["name"].(basetypes.StringValue)
 	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
 	data.CreateAsParentOf = obj.Attributes()["create_as_parent_of"].(basetypes.ListValue)
 	data.Depth = obj.Attributes()["depth"].(basetypes.Int64Value)
@@ -667,6 +680,7 @@ func fillDataStructFromTFObjectRSProvisioningGroupOnSystem(data *provisioningGro
 	data.NameInSystem = obj.Attributes()["name_in_system"].(basetypes.StringValue)
 	data.ProvisioningGroupOnSystemPrimerType = obj.Attributes()["type"].(basetypes.StringValue)
 	data.ShortNameInSystem = obj.Attributes()["short_name_in_system"].(basetypes.StringValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
 	data.Provgroups = obj.Attributes()["provgroups"].(basetypes.ListValue)
 	data.ServiceAccounts = obj.Attributes()["service_accounts"].(basetypes.ListValue)
@@ -704,6 +718,7 @@ func fillDataStructFromTFObjectRSProvisioningOwnedGroupOnSystemsWrapper(data *pr
 func fillDataStructFromTFObjectRSProvisioningProvisionNumberSequence(data *provisioningProvisionNumberSequenceDataRS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.AccountCount = obj.Attributes()["account_count"].(basetypes.Int64Value)
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
 	data.Systems = obj.Attributes()["systems"].(basetypes.ListValue)
@@ -722,6 +737,7 @@ func fillDataStructFromTFObjectRSProvisioningProvisionedAD(data *provisioningPro
 
 func fillDataStructFromTFObjectRSProvisioningProvisionedAccount(data *provisioningProvisionedAccountDataRS, obj types.Object) {
 	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
 	data.UID = obj.Attributes()["uid"].(basetypes.Int64Value)
 }
@@ -778,6 +794,7 @@ func fillDataStructFromTFObjectRSProvisioningProvisionedSystem(data *provisionin
 	data.OrganizationalUnitUUID = obj.Attributes()["organizational_unit_uuid"].(basetypes.StringValue)
 	data.ProvisioningProvisionedSystemPrimerType = obj.Attributes()["type"].(basetypes.StringValue)
 	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.AccountCount = obj.Attributes()["account_count"].(basetypes.Int64Value)
 	data.Account = obj.Attributes()["account"].(basetypes.ObjectValue)
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
@@ -851,6 +868,7 @@ func fillDataStructFromTFObjectRSServiceaccountServiceAccount(data *serviceaccou
 	data.SystemUUID = obj.Attributes()["system_uuid"].(basetypes.StringValue)
 	data.Username = obj.Attributes()["username"].(basetypes.StringValue)
 	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
 	data.Groups = obj.Attributes()["groups"].(basetypes.ListValue)
 	data.Secret = obj.Attributes()["secret"].(basetypes.ObjectValue)
@@ -867,6 +885,7 @@ func fillDataStructFromTFObjectRSServiceaccountServiceAccountGroup(data *service
 	data.NameInSystem = obj.Attributes()["name_in_system"].(basetypes.StringValue)
 	data.ProvisioningGroupOnSystemPrimerType = obj.Attributes()["type"].(basetypes.StringValue)
 	data.ShortNameInSystem = obj.Attributes()["short_name_in_system"].(basetypes.StringValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
 }
 
@@ -932,6 +951,7 @@ func fillDataStructFromTFObjectRSVaultVaultRecord(data *vaultVaultRecordDataRS, 
 	data.Name = obj.Attributes()["name"].(basetypes.StringValue)
 	data.ShareEndTime = obj.Attributes()["share_end_time"].(basetypes.StringValue)
 	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
 	data.DeleteTile = obj.Attributes()["delete_tile"].(basetypes.BoolValue)
 	data.ParentUUID = obj.Attributes()["parent_uuid"].(basetypes.StringValue)
@@ -996,6 +1016,7 @@ func fillDataStructFromTFObjectRSVaultVaultRecord_additionalObjects(data *vaultV
 func fillDataStructFromTFObjectRSWebhookWebhook(data *webhookWebhookDataRS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.AccountUUID = obj.Attributes()["account_uuid"].(basetypes.StringValue)
 	data.Active = obj.Attributes()["active"].(basetypes.BoolValue)
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)

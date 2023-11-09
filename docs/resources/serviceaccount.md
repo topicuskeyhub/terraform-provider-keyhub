@@ -24,6 +24,7 @@ description: |-
 ### Optional
 
 - `active` (Boolean)
+- `additional` (List of String)
 - `description` (String)
 - `secret` (Attributes) (see [below for nested schema](#nestedatt--secret))
 - `technical_administrator_uuid` (String)
@@ -69,6 +70,7 @@ Required:
 
 Optional:
 
+- `additional` (List of String)
 - `display_name` (String)
 
 Read-Only:

@@ -83,6 +83,7 @@ func (r *clientVaultrecordResource) Create(ctx context.Context, req resource.Cre
 		return
 	}
 
+	additionalBackup := data.Additional
 	r.providerData.Mutex.Lock()
 	defer r.providerData.Mutex.Unlock()
 	tflog.Info(ctx, "Creating Topicus KeyHub client_vaultrecord")
@@ -97,7 +98,7 @@ func (r *clientVaultrecordResource) Create(ctx context.Context, req resource.Cre
 	wrapper, err := r.providerData.Client.Client().ByClientidInt64(*tkhParent.GetLinks()[0].GetId()).Vault().Record().Post(
 		ctx, newWrapper, &keyhubreq.ItemVaultRecordRequestBuilderPostRequestConfiguration{
 			QueryParameters: &keyhubreq.ItemVaultRecordRequestBuilderPostQueryParameters{
-				Additional: collectAdditional(data),
+				Additional: collectAdditional(ctx, data, data.Additional),
 			},
 		})
 	tkh, diags := findFirst[keyhubmodels.VaultVaultRecordable](ctx, wrapper, "client_vaultrecord", nil, false, err)
@@ -113,6 +114,7 @@ func (r *clientVaultrecordResource) Create(ctx context.Context, req resource.Cre
 	}
 	tf = setAttributeValue(ctx, tf, "client_application_uuid", types.StringValue(data.ClientApplicationUUID.ValueString()))
 	fillDataStructFromTFObjectRSClientApplicationVaultVaultRecord(&data, tf)
+	data.Additional = additionalBackup
 
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 
@@ -127,6 +129,7 @@ func (r *clientVaultrecordResource) Read(ctx context.Context, req resource.ReadR
 		return
 	}
 
+	additionalBackup := data.Additional
 	r.providerData.Mutex.RLock()
 	defer r.providerData.Mutex.RUnlock()
 	ctx = context.WithValue(ctx, keyHubClientKey, r.providerData.Client)
@@ -146,7 +149,7 @@ func (r *clientVaultrecordResource) Read(ctx context.Context, req resource.ReadR
 	tkh, err := r.providerData.Client.Client().ByClientidInt64(*tkhParent.GetLinks()[0].GetId()).Vault().Record().ByRecordidInt64(getSelfLink(data.Links).ID.ValueInt64()).Get(
 		ctx, &keyhubreq.ItemVaultRecordWithRecordItemRequestBuilderGetRequestConfiguration{
 			QueryParameters: &keyhubreq.ItemVaultRecordWithRecordItemRequestBuilderGetQueryParameters{
-				Additional: collectAdditional(data),
+				Additional: collectAdditional(ctx, data, data.Additional),
 			},
 		})
 
@@ -167,6 +170,7 @@ func (r *clientVaultrecordResource) Read(ctx context.Context, req resource.ReadR
 	}
 	tf = setAttributeValue(ctx, tf, "client_application_uuid", types.StringValue(data.ClientApplicationUUID.ValueString()))
 	fillDataStructFromTFObjectRSClientApplicationVaultVaultRecord(&data, tf)
+	data.Additional = additionalBackup
 
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
@@ -191,6 +195,7 @@ func (r *clientVaultrecordResource) Update(ctx context.Context, req resource.Upd
 		return
 	}
 
+	additionalBackup := data.Additional
 	r.providerData.Mutex.Lock()
 	defer r.providerData.Mutex.Unlock()
 	tflog.Info(ctx, "Updating Topicus KeyHub client_vaultrecord")
@@ -203,7 +208,7 @@ func (r *clientVaultrecordResource) Update(ctx context.Context, req resource.Upd
 	tkh, err := r.providerData.Client.Client().ByClientidInt64(*tkhParent.GetLinks()[0].GetId()).Vault().Record().ByRecordidInt64(getSelfLink(data.Links).ID.ValueInt64()).Put(
 		ctx, newTkh, &keyhubreq.ItemVaultRecordWithRecordItemRequestBuilderPutRequestConfiguration{
 			QueryParameters: &keyhubreq.ItemVaultRecordWithRecordItemRequestBuilderPutQueryParameters{
-				Additional: collectAdditional(data),
+				Additional: collectAdditional(ctx, data, data.Additional),
 			},
 		})
 
@@ -218,6 +223,7 @@ func (r *clientVaultrecordResource) Update(ctx context.Context, req resource.Upd
 	}
 	tf = setAttributeValue(ctx, tf, "client_application_uuid", types.StringValue(data.ClientApplicationUUID.ValueString()))
 	fillDataStructFromTFObjectRSClientApplicationVaultVaultRecord(&data, tf)
+	data.Additional = additionalBackup
 
 	tflog.Info(ctx, "Updated a Topicus KeyHub client_vaultrecord")
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

@@ -12,6 +12,8 @@ import (
 	"strings"
 	"time"
 
+	"golang.org/x/exp/slices"
+
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	rsschema "github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -569,16 +571,19 @@ func setAttributeValue(ctx context.Context, tf basetypes.ObjectValue, key string
 	return types.ObjectValueMust(tf.AttributeTypes(ctx), obj)
 }
 
-func collectAdditional(data any) []string {
+func collectAdditional(ctx context.Context, data any, additional types.List) []string {
+	listValue, _ := additional.ToListValue(ctx)
+	ret, _ := tfToSlice(listValue, func(val attr.Value, diags *diag.Diagnostics) string {
+		return val.(basetypes.StringValue).ValueString()
+	})
 	reflectValue := reflect.ValueOf(data)
 	reflectType := reflectValue.Type()
-	ret := make([]string, 0)
 	for i := 0; i < reflectType.NumField(); i++ {
 		field := reflectType.Field(i)
 		tkhoa := field.Tag.Get("tkhao")
 		if tkhoa != "" {
 			attr := reflectValue.Field(i).Interface().(attr.Value)
-			if !attr.IsNull() && !attr.IsUnknown() {
+			if !attr.IsNull() && !attr.IsUnknown() && !slices.Contains(ret, tkhoa) {
 				ret = append(ret, tkhoa)
 			}
 		}

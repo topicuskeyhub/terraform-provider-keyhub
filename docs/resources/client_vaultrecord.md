@@ -22,6 +22,7 @@ description: |-
 
 ### Optional
 
+- `additional` (List of String)
 - `color` (String)
 - `delete_tile` (Boolean)
 - `end_date` (String)

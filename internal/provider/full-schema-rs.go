@@ -258,6 +258,15 @@ func resourceSchemaAttrsClientApplicationVaultVaultRecord(recurse bool) map[stri
 		Computed:      true,
 		PlanModifiers: []planmodifier.String{stringplanmodifier.UseStateForUnknown()},
 	}
+	schemaAttrs["additional"] = rsschema.ListAttribute{
+		ElementType: types.StringType,
+		Optional:    true,
+		Validators: []validator.List{
+			listvalidator.ValueStringsAre(stringvalidator.OneOf(
+				"audit", "parent", "passwordMetadata", "secret", "shareSummary", "shares", "tile", "vaultholder",
+			)),
+		},
+	}
 	schemaAttrs["derived"] = rsschema.BoolAttribute{
 		Computed:      true,
 		PlanModifiers: []planmodifier.Bool{boolplanmodifier.UseStateForUnknown()},
@@ -340,6 +349,15 @@ func resourceSchemaAttrsClientClientApplication(recurse bool) map[string]rsschem
 	schemaAttrs["uuid"] = rsschema.StringAttribute{
 		Computed:      true,
 		PlanModifiers: []planmodifier.String{stringplanmodifier.UseStateForUnknown()},
+	}
+	schemaAttrs["additional"] = rsschema.ListAttribute{
+		ElementType: types.StringType,
+		Optional:    true,
+		Validators: []validator.List{
+			listvalidator.ValueStringsAre(stringvalidator.OneOf(
+				"audit", "groupclients", "groups", "secret", "tile", "vaultRecordCount",
+			)),
+		},
 	}
 	schemaAttrs["last_modified_at"] = rsschema.StringAttribute{
 		Computed: true,
@@ -576,6 +594,15 @@ func resourceSchemaAttrsClientOAuth2ClientPermission(recurse bool) map[string]rs
 		Computed:      true,
 		PlanModifiers: []planmodifier.List{listplanmodifier.UseStateForUnknown()},
 	}
+	schemaAttrs["additional"] = rsschema.ListAttribute{
+		ElementType: types.StringType,
+		Optional:    true,
+		Validators: []validator.List{
+			listvalidator.ValueStringsAre(stringvalidator.OneOf(
+				"audit",
+			)),
+		},
+	}
 	schemaAttrs["for_group_uuid"] = rsschema.StringAttribute{
 		Computed: true,
 		Optional: true,
@@ -618,6 +645,15 @@ func resourceSchemaAttrsClientOAuth2ClientPermissionWithClient(recurse bool) map
 		},
 		Computed:      true,
 		PlanModifiers: []planmodifier.List{listplanmodifier.UseStateForUnknown()},
+	}
+	schemaAttrs["additional"] = rsschema.ListAttribute{
+		ElementType: types.StringType,
+		Optional:    true,
+		Validators: []validator.List{
+			listvalidator.ValueStringsAre(stringvalidator.OneOf(
+				"audit",
+			)),
+		},
 	}
 	schemaAttrs["for_group_uuid"] = rsschema.StringAttribute{
 		Computed: true,
@@ -736,6 +772,15 @@ func resourceSchemaAttrsDirectoryAccountDirectory(recurse bool) map[string]rssch
 	schemaAttrs["uuid"] = rsschema.StringAttribute{
 		Computed:      true,
 		PlanModifiers: []planmodifier.String{stringplanmodifier.UseStateForUnknown()},
+	}
+	schemaAttrs["additional"] = rsschema.ListAttribute{
+		ElementType: types.StringType,
+		Optional:    true,
+		Validators: []validator.List{
+			listvalidator.ValueStringsAre(stringvalidator.OneOf(
+				"audit", "markers", "status",
+			)),
+		},
 	}
 	schemaAttrs["base_organizational_unit_uuid"] = rsschema.StringAttribute{
 		Required: true,
@@ -1180,6 +1225,15 @@ func resourceSchemaAttrsGroupGroup(recurse bool) map[string]rsschema.Attribute {
 		Computed:      true,
 		PlanModifiers: []planmodifier.String{stringplanmodifier.UseStateForUnknown()},
 	}
+	schemaAttrs["additional"] = rsschema.ListAttribute{
+		ElementType: types.StringType,
+		Optional:    true,
+		Validators: []validator.List{
+			listvalidator.ValueStringsAre(stringvalidator.OneOf(
+				"accounts", "administeredClients", "administeredSystems", "admins", "audit", "authorizedGroups", "clientPermissions", "clients", "contentAdministeredSystems", "groupauditinginfo", "groupinfo", "helpdesk", "markers", "myaccount", "mydelegatedaccount", "nestedGroups", "ownedClients", "ownedDirectories", "ownedGroupsOnSystem", "ownedOrganizationalUnits", "ownedSystems", "recentAudits", "requeststatus", "serviceAccounts", "systems", "vault", "webhooks",
+			)),
+		},
+	}
 	schemaAttrs["application_administration"] = rsschema.BoolAttribute{
 		Computed: true,
 		Optional: true,
@@ -1306,6 +1360,15 @@ func resourceSchemaAttrsGroupGroupAccount(recurse bool) map[string]rsschema.Attr
 			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
+	schemaAttrs["additional"] = rsschema.ListAttribute{
+		ElementType: types.StringType,
+		Optional:    true,
+		Validators: []validator.List{
+			listvalidator.ValueStringsAre(stringvalidator.OneOf(
+				"audit",
+			)),
+		},
+	}
 	schemaAttrs["directory_uuid"] = rsschema.StringAttribute{
 		Computed: true,
 	}
@@ -1379,6 +1442,15 @@ func resourceSchemaAttrsGroupGroupAudit(recurse bool) map[string]rsschema.Attrib
 		},
 		Computed:      true,
 		PlanModifiers: []planmodifier.List{listplanmodifier.UseStateForUnknown()},
+	}
+	schemaAttrs["additional"] = rsschema.ListAttribute{
+		ElementType: types.StringType,
+		Optional:    true,
+		Validators: []validator.List{
+			listvalidator.ValueStringsAre(stringvalidator.OneOf(
+				"audit",
+			)),
+		},
 	}
 	schemaAttrs["accounts"] = rsschema.ListNestedAttribute{
 		NestedObject: rsschema.NestedAttributeObject{
@@ -1619,6 +1691,15 @@ func resourceSchemaAttrsGroupGroupClient(recurse bool) map[string]rsschema.Attri
 		},
 		Computed:      true,
 		PlanModifiers: []planmodifier.List{listplanmodifier.UseStateForUnknown()},
+	}
+	schemaAttrs["additional"] = rsschema.ListAttribute{
+		ElementType: types.StringType,
+		Optional:    true,
+		Validators: []validator.List{
+			listvalidator.ValueStringsAre(stringvalidator.OneOf(
+				"audit",
+			)),
+		},
 	}
 	schemaAttrs["activation_required"] = rsschema.BoolAttribute{
 		Computed: true,
@@ -1930,6 +2011,15 @@ func resourceSchemaAttrsGroupProvisioningGroup(recurse bool) map[string]rsschema
 		Computed:      true,
 		PlanModifiers: []planmodifier.List{listplanmodifier.UseStateForUnknown()},
 	}
+	schemaAttrs["additional"] = rsschema.ListAttribute{
+		ElementType: types.StringType,
+		Optional:    true,
+		Validators: []validator.List{
+			listvalidator.ValueStringsAre(stringvalidator.OneOf(
+				"audit",
+			)),
+		},
+	}
 	schemaAttrs["activation_required"] = rsschema.BoolAttribute{
 		Computed: true,
 		Optional: true,
@@ -2020,6 +2110,15 @@ func resourceSchemaAttrsGroupVaultVaultRecord(recurse bool) map[string]rsschema.
 	schemaAttrs["uuid"] = rsschema.StringAttribute{
 		Computed:      true,
 		PlanModifiers: []planmodifier.String{stringplanmodifier.UseStateForUnknown()},
+	}
+	schemaAttrs["additional"] = rsschema.ListAttribute{
+		ElementType: types.StringType,
+		Optional:    true,
+		Validators: []validator.List{
+			listvalidator.ValueStringsAre(stringvalidator.OneOf(
+				"audit", "parent", "passwordMetadata", "secret", "shareSummary", "shares", "tile", "vaultholder",
+			)),
+		},
 	}
 	schemaAttrs["derived"] = rsschema.BoolAttribute{
 		Computed:      true,
@@ -2147,6 +2246,15 @@ func resourceSchemaAttrsNestedProvisioningGroupOnSystem(recurse bool) map[string
 	schemaAttrs["short_name_in_system"] = rsschema.StringAttribute{
 		Computed: true,
 	}
+	schemaAttrs["additional"] = rsschema.ListAttribute{
+		ElementType: types.StringType,
+		Optional:    true,
+		Validators: []validator.List{
+			listvalidator.ValueStringsAre(stringvalidator.OneOf(
+				"audit", "provgroups", "serviceAccounts",
+			)),
+		},
+	}
 	schemaAttrs["owner_uuid"] = rsschema.StringAttribute{
 		Required: true,
 		Validators: []validator.String{
@@ -2183,6 +2291,15 @@ func resourceSchemaAttrsOrganizationOrganizationalUnit(recurse bool) map[string]
 	schemaAttrs["uuid"] = rsschema.StringAttribute{
 		Computed:      true,
 		PlanModifiers: []planmodifier.String{stringplanmodifier.UseStateForUnknown()},
+	}
+	schemaAttrs["additional"] = rsschema.ListAttribute{
+		ElementType: types.StringType,
+		Optional:    true,
+		Validators: []validator.List{
+			listvalidator.ValueStringsAre(stringvalidator.OneOf(
+				"audit",
+			)),
+		},
 	}
 	schemaAttrs["depth"] = rsschema.Int64Attribute{
 		Computed: true,
@@ -2426,6 +2543,15 @@ func resourceSchemaAttrsProvisioningGroupOnSystem(recurse bool) map[string]rssch
 	schemaAttrs["short_name_in_system"] = rsschema.StringAttribute{
 		Computed: true,
 	}
+	schemaAttrs["additional"] = rsschema.ListAttribute{
+		ElementType: types.StringType,
+		Optional:    true,
+		Validators: []validator.List{
+			listvalidator.ValueStringsAre(stringvalidator.OneOf(
+				"audit", "provgroups", "serviceAccounts",
+			)),
+		},
+	}
 	schemaAttrs["owner_uuid"] = rsschema.StringAttribute{
 		Required: true,
 		Validators: []validator.String{
@@ -2552,6 +2678,15 @@ func resourceSchemaAttrsProvisioningProvisionNumberSequence(recurse bool) map[st
 		Computed:      true,
 		PlanModifiers: []planmodifier.List{listplanmodifier.UseStateForUnknown()},
 	}
+	schemaAttrs["additional"] = rsschema.ListAttribute{
+		ElementType: types.StringType,
+		Optional:    true,
+		Validators: []validator.List{
+			listvalidator.ValueStringsAre(stringvalidator.OneOf(
+				"audit", "systems",
+			)),
+		},
+	}
 	schemaAttrs["account_count"] = rsschema.Int64Attribute{
 		Computed: true,
 	}
@@ -2608,6 +2743,15 @@ func resourceSchemaAttrsProvisioningProvisionedAccount(recurse bool) map[string]
 		Required: true,
 		Validators: []validator.String{
 			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
+		},
+	}
+	schemaAttrs["additional"] = rsschema.ListAttribute{
+		ElementType: types.StringType,
+		Optional:    true,
+		Validators: []validator.List{
+			listvalidator.ValueStringsAre(stringvalidator.OneOf(
+				"audit",
+			)),
 		},
 	}
 	schemaAttrs["uid"] = rsschema.Int64Attribute{
@@ -2799,6 +2943,15 @@ func resourceSchemaAttrsProvisioningProvisionedSystem(recurse bool) map[string]r
 	schemaAttrs["uuid"] = rsschema.StringAttribute{
 		Computed:      true,
 		PlanModifiers: []planmodifier.String{stringplanmodifier.UseStateForUnknown()},
+	}
+	schemaAttrs["additional"] = rsschema.ListAttribute{
+		ElementType: types.StringType,
+		Optional:    true,
+		Validators: []validator.List{
+			listvalidator.ValueStringsAre(stringvalidator.OneOf(
+				"account", "audit", "issuedPermissions", "loginName", "managementPermissions", "markers", "statistics", "supportedGroupTypes",
+			)),
+		},
 	}
 	schemaAttrs["account_count"] = rsschema.Int64Attribute{
 		Computed: true,
@@ -3100,6 +3253,15 @@ func resourceSchemaAttrsServiceaccountServiceAccount(recurse bool) map[string]rs
 		Computed:      true,
 		PlanModifiers: []planmodifier.String{stringplanmodifier.UseStateForUnknown()},
 	}
+	schemaAttrs["additional"] = rsschema.ListAttribute{
+		ElementType: types.StringType,
+		Optional:    true,
+		Validators: []validator.List{
+			listvalidator.ValueStringsAre(stringvalidator.OneOf(
+				"audit", "groups", "secret",
+			)),
+		},
+	}
 	schemaAttrs["description"] = rsschema.StringAttribute{
 		Optional: true,
 	}
@@ -3160,6 +3322,15 @@ func resourceSchemaAttrsServiceaccountServiceAccountGroup(recurse bool) map[stri
 	}
 	schemaAttrs["short_name_in_system"] = rsschema.StringAttribute{
 		Computed: true,
+	}
+	schemaAttrs["additional"] = rsschema.ListAttribute{
+		ElementType: types.StringType,
+		Optional:    true,
+		Validators: []validator.List{
+			listvalidator.ValueStringsAre(stringvalidator.OneOf(
+				"audit",
+			)),
+		},
 	}
 	return schemaAttrs
 }
@@ -3399,6 +3570,15 @@ func resourceSchemaAttrsVaultVaultRecord(recurse bool) map[string]rsschema.Attri
 		Computed:      true,
 		PlanModifiers: []planmodifier.String{stringplanmodifier.UseStateForUnknown()},
 	}
+	schemaAttrs["additional"] = rsschema.ListAttribute{
+		ElementType: types.StringType,
+		Optional:    true,
+		Validators: []validator.List{
+			listvalidator.ValueStringsAre(stringvalidator.OneOf(
+				"audit", "parent", "passwordMetadata", "secret", "shareSummary", "shares", "tile", "vaultholder",
+			)),
+		},
+	}
 	schemaAttrs["derived"] = rsschema.BoolAttribute{
 		Computed:      true,
 		PlanModifiers: []planmodifier.Bool{boolplanmodifier.UseStateForUnknown()},
@@ -3615,6 +3795,15 @@ func resourceSchemaAttrsWebhookWebhook(recurse bool) map[string]rsschema.Attribu
 		},
 		Computed:      true,
 		PlanModifiers: []planmodifier.List{listplanmodifier.UseStateForUnknown()},
+	}
+	schemaAttrs["additional"] = rsschema.ListAttribute{
+		ElementType: types.StringType,
+		Optional:    true,
+		Validators: []validator.List{
+			listvalidator.ValueStringsAre(stringvalidator.OneOf(
+				"audit",
+			)),
+		},
 	}
 	schemaAttrs["account_uuid"] = rsschema.StringAttribute{
 		Optional: true,

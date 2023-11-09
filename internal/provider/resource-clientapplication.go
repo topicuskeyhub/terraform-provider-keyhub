@@ -83,6 +83,7 @@ func (r *clientapplicationResource) Create(ctx context.Context, req resource.Cre
 		return
 	}
 
+	additionalBackup := data.Additional
 	r.providerData.Mutex.Lock()
 	defer r.providerData.Mutex.Unlock()
 	tflog.Info(ctx, "Creating Topicus KeyHub clientapplication")
@@ -91,7 +92,7 @@ func (r *clientapplicationResource) Create(ctx context.Context, req resource.Cre
 	wrapper, err := r.providerData.Client.Client().Post(
 		ctx, newWrapper, &keyhubreq.ClientRequestBuilderPostRequestConfiguration{
 			QueryParameters: &keyhubreq.ClientRequestBuilderPostQueryParameters{
-				Additional: collectAdditional(data),
+				Additional: collectAdditional(ctx, data, data.Additional),
 			},
 		})
 	tkh, diags := findFirst[keyhubmodels.ClientClientApplicationable](ctx, wrapper, "clientapplication", nil, false, err)
@@ -106,6 +107,7 @@ func (r *clientapplicationResource) Create(ctx context.Context, req resource.Cre
 		return
 	}
 	fillDataStructFromTFObjectRSClientClientApplication(&data, tf)
+	data.Additional = additionalBackup
 
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 
@@ -120,6 +122,7 @@ func (r *clientapplicationResource) Read(ctx context.Context, req resource.ReadR
 		return
 	}
 
+	additionalBackup := data.Additional
 	r.providerData.Mutex.RLock()
 	defer r.providerData.Mutex.RUnlock()
 	ctx = context.WithValue(ctx, keyHubClientKey, r.providerData.Client)
@@ -127,7 +130,7 @@ func (r *clientapplicationResource) Read(ctx context.Context, req resource.ReadR
 	tkh, err := r.providerData.Client.Client().ByClientidInt64(getSelfLink(data.Links).ID.ValueInt64()).Get(
 		ctx, &keyhubreq.WithClientItemRequestBuilderGetRequestConfiguration{
 			QueryParameters: &keyhubreq.WithClientItemRequestBuilderGetQueryParameters{
-				Additional: collectAdditional(data),
+				Additional: collectAdditional(ctx, data, data.Additional),
 			},
 		})
 
@@ -147,6 +150,7 @@ func (r *clientapplicationResource) Read(ctx context.Context, req resource.ReadR
 		return
 	}
 	fillDataStructFromTFObjectRSClientClientApplication(&data, tf)
+	data.Additional = additionalBackup
 
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }

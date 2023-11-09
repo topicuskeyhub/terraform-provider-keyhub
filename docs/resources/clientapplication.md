@@ -21,6 +21,7 @@ description: |-
 
 ### Optional
 
+- `additional` (List of String)
 - `client_id` (String)
 - `delete_tile` (Boolean)
 - `groupclients` (Attributes List) (see [below for nested schema](#nestedatt--groupclients))
@@ -51,6 +52,7 @@ description: |-
 Optional:
 
 - `activation_required` (Boolean)
+- `additional` (List of String)
 
 Read-Only:
 
@@ -184,6 +186,7 @@ Required:
 
 Optional:
 
+- `additional` (List of String)
 - `application_administration` (Boolean)
 - `audit_config` (Attributes) (see [below for nested schema](#nestedatt--groups--audit_config))
 - `authorizing_group_auditing_uuid` (String)

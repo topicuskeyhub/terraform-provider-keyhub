@@ -83,6 +83,7 @@ func (r *groupResource) Create(ctx context.Context, req resource.CreateRequest, 
 		return
 	}
 
+	additionalBackup := data.Additional
 	r.providerData.Mutex.Lock()
 	defer r.providerData.Mutex.Unlock()
 	tflog.Info(ctx, "Creating Topicus KeyHub group")
@@ -91,7 +92,7 @@ func (r *groupResource) Create(ctx context.Context, req resource.CreateRequest, 
 	wrapper, err := r.providerData.Client.Group().Post(
 		ctx, newWrapper, &keyhubreq.GroupRequestBuilderPostRequestConfiguration{
 			QueryParameters: &keyhubreq.GroupRequestBuilderPostQueryParameters{
-				Additional: collectAdditional(data),
+				Additional: collectAdditional(ctx, data, data.Additional),
 			},
 		})
 	tkh, diags := findFirst[keyhubmodels.GroupGroupable](ctx, wrapper, "group", nil, false, err)
@@ -106,6 +107,7 @@ func (r *groupResource) Create(ctx context.Context, req resource.CreateRequest, 
 		return
 	}
 	fillDataStructFromTFObjectRSGroupGroup(&data, tf)
+	data.Additional = additionalBackup
 
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 
@@ -120,6 +122,7 @@ func (r *groupResource) Read(ctx context.Context, req resource.ReadRequest, resp
 		return
 	}
 
+	additionalBackup := data.Additional
 	r.providerData.Mutex.RLock()
 	defer r.providerData.Mutex.RUnlock()
 	ctx = context.WithValue(ctx, keyHubClientKey, r.providerData.Client)
@@ -127,7 +130,7 @@ func (r *groupResource) Read(ctx context.Context, req resource.ReadRequest, resp
 	tkh, err := r.providerData.Client.Group().ByGroupidInt64(getSelfLink(data.Links).ID.ValueInt64()).Get(
 		ctx, &keyhubreq.WithGroupItemRequestBuilderGetRequestConfiguration{
 			QueryParameters: &keyhubreq.WithGroupItemRequestBuilderGetQueryParameters{
-				Additional: collectAdditional(data),
+				Additional: collectAdditional(ctx, data, data.Additional),
 			},
 		})
 
@@ -147,6 +150,7 @@ func (r *groupResource) Read(ctx context.Context, req resource.ReadRequest, resp
 		return
 	}
 	fillDataStructFromTFObjectRSGroupGroup(&data, tf)
+	data.Additional = additionalBackup
 
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }

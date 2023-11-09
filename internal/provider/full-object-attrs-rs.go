@@ -105,6 +105,7 @@ func objectAttrsTypeRSClientApplicationVaultVaultRecord(recurse bool) map[string
 	objectAttrs["name"] = types.StringType
 	objectAttrs["share_end_time"] = types.StringType
 	objectAttrs["uuid"] = types.StringType
+	objectAttrs["additional"] = types.ListType{ElemType: types.StringType}
 	objectAttrs["derived"] = types.BoolType
 	objectAttrs["end_date"] = types.StringType
 	objectAttrs["filename"] = types.StringType
@@ -134,6 +135,7 @@ func objectAttrsTypeRSClientClientApplication(recurse bool) map[string]attr.Type
 	objectAttrs["scopes"] = types.ListType{ElemType: types.StringType}
 	objectAttrs["sso_application"] = types.BoolType
 	objectAttrs["uuid"] = types.StringType
+	objectAttrs["additional"] = types.ListType{ElemType: types.StringType}
 	objectAttrs["last_modified_at"] = types.StringType
 	objectAttrs["owner_uuid"] = types.StringType
 	objectAttrs["technical_administrator_uuid"] = types.StringType
@@ -208,6 +210,7 @@ func objectAttrsTypeRSClientOAuth2ClientPermission(recurse bool) map[string]attr
 	}
 	objectAttrs["links"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeRSRestLink(recurse)}}
 	objectAttrs["permissions"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeRSAuthPermission(recurse)}}
+	objectAttrs["additional"] = types.ListType{ElemType: types.StringType}
 	objectAttrs["for_group_uuid"] = types.StringType
 	objectAttrs["for_system_uuid"] = types.StringType
 	objectAttrs["value"] = types.StringType
@@ -221,6 +224,7 @@ func objectAttrsTypeRSClientOAuth2ClientPermissionWithClient(recurse bool) map[s
 	}
 	objectAttrs["links"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeRSRestLink(recurse)}}
 	objectAttrs["permissions"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeRSAuthPermission(recurse)}}
+	objectAttrs["additional"] = types.ListType{ElemType: types.StringType}
 	objectAttrs["for_group_uuid"] = types.StringType
 	objectAttrs["for_system_uuid"] = types.StringType
 	objectAttrs["value"] = types.StringType
@@ -263,6 +267,7 @@ func objectAttrsTypeRSDirectoryAccountDirectory(recurse bool) map[string]attr.Ty
 	objectAttrs["type"] = types.StringType
 	objectAttrs["name"] = types.StringType
 	objectAttrs["uuid"] = types.StringType
+	objectAttrs["additional"] = types.ListType{ElemType: types.StringType}
 	objectAttrs["base_organizational_unit_uuid"] = types.StringType
 	objectAttrs["default_directory"] = types.BoolType
 	objectAttrs["helpdesk_group_uuid"] = types.StringType
@@ -419,6 +424,7 @@ func objectAttrsTypeRSGroupGroup(recurse bool) map[string]attr.Type {
 	objectAttrs["name"] = types.StringType
 	objectAttrs["organizational_unit_uuid"] = types.StringType
 	objectAttrs["uuid"] = types.StringType
+	objectAttrs["additional"] = types.ListType{ElemType: types.StringType}
 	objectAttrs["application_administration"] = types.BoolType
 	objectAttrs["audit_config"] = types.ObjectType{AttrTypes: objectAttrsTypeRSGroupGroupAuditConfig(false)}
 	objectAttrs["audit_requested"] = types.BoolType
@@ -448,6 +454,7 @@ func objectAttrsTypeRSGroupGroupAccount(recurse bool) map[string]attr.Type {
 		objectAttrs["audit"] = types.ObjectType{AttrTypes: objectAttrsTypeRSAuditInfo(false)}
 	}
 	objectAttrs["uuid"] = types.StringType
+	objectAttrs["additional"] = types.ListType{ElemType: types.StringType}
 	objectAttrs["directory_uuid"] = types.StringType
 	objectAttrs["disconnected_nested"] = types.BoolType
 	objectAttrs["end_date"] = types.StringType
@@ -479,6 +486,7 @@ func objectAttrsTypeRSGroupGroupAudit(recurse bool) map[string]attr.Type {
 	}
 	objectAttrs["links"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeRSRestLink(recurse)}}
 	objectAttrs["permissions"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeRSAuthPermission(recurse)}}
+	objectAttrs["additional"] = types.ListType{ElemType: types.StringType}
 	objectAttrs["accounts"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeRSGroupGroupAuditAccount(false)}}
 	objectAttrs["comment"] = types.StringType
 	objectAttrs["created_at"] = types.StringType
@@ -561,6 +569,7 @@ func objectAttrsTypeRSGroupGroupClient(recurse bool) map[string]attr.Type {
 	}
 	objectAttrs["links"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeRSRestLink(recurse)}}
 	objectAttrs["permissions"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeRSAuthPermission(recurse)}}
+	objectAttrs["additional"] = types.ListType{ElemType: types.StringType}
 	objectAttrs["activation_required"] = types.BoolType
 	objectAttrs["client_uuid"] = types.StringType
 	objectAttrs["group_uuid"] = types.StringType
@@ -654,6 +663,7 @@ func objectAttrsTypeRSGroupProvisioningGroup(recurse bool) map[string]attr.Type 
 	}
 	objectAttrs["links"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeRSRestLink(recurse)}}
 	objectAttrs["permissions"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeRSAuthPermission(recurse)}}
+	objectAttrs["additional"] = types.ListType{ElemType: types.StringType}
 	objectAttrs["activation_required"] = types.BoolType
 	objectAttrs["group_uuid"] = types.StringType
 	objectAttrs["group_on_system"] = types.ObjectType{AttrTypes: objectAttrsTypeRSProvisioningGroupOnSystem(false)}
@@ -692,6 +702,7 @@ func objectAttrsTypeRSGroupVaultVaultRecord(recurse bool) map[string]attr.Type {
 	objectAttrs["name"] = types.StringType
 	objectAttrs["share_end_time"] = types.StringType
 	objectAttrs["uuid"] = types.StringType
+	objectAttrs["additional"] = types.ListType{ElemType: types.StringType}
 	objectAttrs["derived"] = types.BoolType
 	objectAttrs["end_date"] = types.StringType
 	objectAttrs["filename"] = types.StringType
@@ -741,6 +752,7 @@ func objectAttrsTypeRSNestedProvisioningGroupOnSystem(recurse bool) map[string]a
 	objectAttrs["name_in_system"] = types.StringType
 	objectAttrs["type"] = types.StringType
 	objectAttrs["short_name_in_system"] = types.StringType
+	objectAttrs["additional"] = types.ListType{ElemType: types.StringType}
 	objectAttrs["owner_uuid"] = types.StringType
 	return objectAttrs
 }
@@ -755,6 +767,7 @@ func objectAttrsTypeRSOrganizationOrganizationalUnit(recurse bool) map[string]at
 	objectAttrs["permissions"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeRSAuthPermission(recurse)}}
 	objectAttrs["name"] = types.StringType
 	objectAttrs["uuid"] = types.StringType
+	objectAttrs["additional"] = types.ListType{ElemType: types.StringType}
 	objectAttrs["depth"] = types.Int64Type
 	objectAttrs["description"] = types.StringType
 	objectAttrs["owner_uuid"] = types.StringType
@@ -833,6 +846,7 @@ func objectAttrsTypeRSProvisioningGroupOnSystem(recurse bool) map[string]attr.Ty
 	objectAttrs["name_in_system"] = types.StringType
 	objectAttrs["type"] = types.StringType
 	objectAttrs["short_name_in_system"] = types.StringType
+	objectAttrs["additional"] = types.ListType{ElemType: types.StringType}
 	objectAttrs["owner_uuid"] = types.StringType
 	return objectAttrs
 }
@@ -883,6 +897,7 @@ func objectAttrsTypeRSProvisioningProvisionNumberSequence(recurse bool) map[stri
 	}
 	objectAttrs["links"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeRSRestLink(recurse)}}
 	objectAttrs["permissions"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeRSAuthPermission(recurse)}}
+	objectAttrs["additional"] = types.ListType{ElemType: types.StringType}
 	objectAttrs["account_count"] = types.Int64Type
 	objectAttrs["name"] = types.StringType
 	objectAttrs["next_uid"] = types.Int64Type
@@ -908,6 +923,7 @@ func objectAttrsTypeRSProvisioningProvisionedAccount(recurse bool) map[string]at
 		objectAttrs["audit"] = types.ObjectType{AttrTypes: objectAttrsTypeRSAuditInfo(false)}
 	}
 	objectAttrs["uuid"] = types.StringType
+	objectAttrs["additional"] = types.ListType{ElemType: types.StringType}
 	objectAttrs["uid"] = types.Int64Type
 	return objectAttrs
 }
@@ -991,6 +1007,7 @@ func objectAttrsTypeRSProvisioningProvisionedSystem(recurse bool) map[string]att
 	objectAttrs["organizational_unit_uuid"] = types.StringType
 	objectAttrs["type"] = types.StringType
 	objectAttrs["uuid"] = types.StringType
+	objectAttrs["additional"] = types.ListType{ElemType: types.StringType}
 	objectAttrs["account_count"] = types.Int64Type
 	objectAttrs["content_administrator_uuid"] = types.StringType
 	objectAttrs["external_uuid"] = types.StringType
@@ -1073,6 +1090,7 @@ func objectAttrsTypeRSServiceaccountServiceAccount(recurse bool) map[string]attr
 	objectAttrs["system_uuid"] = types.StringType
 	objectAttrs["username"] = types.StringType
 	objectAttrs["uuid"] = types.StringType
+	objectAttrs["additional"] = types.ListType{ElemType: types.StringType}
 	objectAttrs["description"] = types.StringType
 	objectAttrs["password_uuid"] = types.StringType
 	objectAttrs["password_rotation"] = types.StringType
@@ -1091,6 +1109,7 @@ func objectAttrsTypeRSServiceaccountServiceAccountGroup(recurse bool) map[string
 	objectAttrs["name_in_system"] = types.StringType
 	objectAttrs["type"] = types.StringType
 	objectAttrs["short_name_in_system"] = types.StringType
+	objectAttrs["additional"] = types.ListType{ElemType: types.StringType}
 	return objectAttrs
 }
 
@@ -1186,6 +1205,7 @@ func objectAttrsTypeRSVaultVaultRecord(recurse bool) map[string]attr.Type {
 	objectAttrs["name"] = types.StringType
 	objectAttrs["share_end_time"] = types.StringType
 	objectAttrs["uuid"] = types.StringType
+	objectAttrs["additional"] = types.ListType{ElemType: types.StringType}
 	objectAttrs["derived"] = types.BoolType
 	objectAttrs["end_date"] = types.StringType
 	objectAttrs["filename"] = types.StringType
@@ -1258,6 +1278,7 @@ func objectAttrsTypeRSWebhookWebhook(recurse bool) map[string]attr.Type {
 	}
 	objectAttrs["links"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeRSRestLink(recurse)}}
 	objectAttrs["permissions"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeRSAuthPermission(recurse)}}
+	objectAttrs["additional"] = types.ListType{ElemType: types.StringType}
 	objectAttrs["account_uuid"] = types.StringType
 	objectAttrs["active"] = types.BoolType
 	objectAttrs["all_types"] = types.BoolType

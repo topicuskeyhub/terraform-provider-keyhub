@@ -321,6 +321,7 @@ func tkhToTFObjectRSClientApplicationVaultVaultRecord(recurse bool, tkh keyhubmo
 	obj["name"] = types.StringPointerValue(tkh.GetName())
 	obj["share_end_time"] = timePointerToTF(tkh.GetShareEndTime())
 	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
+	obj["additional"] = types.ListNull(types.StringType)
 	obj["derived"] = types.BoolPointerValue(tkh.GetDerived())
 	obj["end_date"] = stringerToTF(tkh.GetEndDate())
 	obj["filename"] = types.StringPointerValue(tkh.GetFilename())
@@ -394,6 +395,7 @@ func tkhToTFObjectRSClientClientApplication(recurse bool, tkh keyhubmodel.Client
 	}
 	obj["sso_application"] = types.BoolPointerValue(tkh.GetSsoApplication())
 	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
+	obj["additional"] = types.ListNull(types.StringType)
 	obj["last_modified_at"] = timePointerToTF(tkh.GetLastModifiedAt())
 	obj["owner_uuid"] = withUuidToTF(tkh.GetOwner())
 	obj["technical_administrator_uuid"] = withUuidToTF(tkh.GetTechnicalAdministrator())
@@ -659,6 +661,7 @@ func tkhToTFObjectRSClientOAuth2ClientPermission(recurse bool, tkh keyhubmodel.C
 		diags.Append(d...)
 		obj["permissions"] = val
 	}
+	obj["additional"] = types.ListNull(types.StringType)
 	obj["for_group_uuid"] = withUuidToTF(tkh.GetForGroup())
 	obj["for_system_uuid"] = withUuidToTF(tkh.GetForSystem())
 	obj["value"] = stringerToTF(tkh.GetValue())
@@ -708,6 +711,7 @@ func tkhToTFObjectRSClientOAuth2ClientPermissionWithClient(recurse bool, tkh key
 		diags.Append(d...)
 		obj["permissions"] = val
 	}
+	obj["additional"] = types.ListNull(types.StringType)
 	obj["for_group_uuid"] = withUuidToTF(tkh.GetForGroup())
 	obj["for_system_uuid"] = withUuidToTF(tkh.GetForSystem())
 	obj["value"] = stringerToTF(tkh.GetValue())
@@ -846,6 +850,7 @@ func tkhToTFObjectRSDirectoryAccountDirectory(recurse bool, tkh keyhubmodel.Dire
 	obj["type"] = stringerToTF(tkh.GetDirectoryAccountDirectoryPrimerType())
 	obj["name"] = types.StringPointerValue(tkh.GetName())
 	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
+	obj["additional"] = types.ListNull(types.StringType)
 	obj["base_organizational_unit_uuid"] = withUuidToTF(tkh.GetBaseOrganizationalUnit())
 	obj["default_directory"] = types.BoolPointerValue(tkh.GetDefaultDirectory())
 	obj["helpdesk_group_uuid"] = withUuidToTF(tkh.GetHelpdeskGroup())
@@ -1265,6 +1270,7 @@ func tkhToTFObjectRSGroupGroup(recurse bool, tkh keyhubmodel.GroupGroupable) (ty
 	obj["name"] = types.StringPointerValue(tkh.GetName())
 	obj["organizational_unit_uuid"] = withUuidToTF(tkh.GetOrganizationalUnit())
 	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
+	obj["additional"] = types.ListNull(types.StringType)
 	obj["application_administration"] = types.BoolPointerValue(tkh.GetApplicationAdministration())
 	{
 		val, d := tkhToTFObjectRSGroupGroupAuditConfig(false, tkh.GetAuditConfig())
@@ -1323,6 +1329,7 @@ func tkhToTFObjectRSGroupGroupAccount(recurse bool, tkh keyhubmodel.GroupGroupAc
 		}
 	}
 	obj["uuid"] = withUuidToTF(tkh)
+	obj["additional"] = types.ListNull(types.StringType)
 	obj["directory_uuid"] = withUuidToTF(tkh.GetDirectory())
 	obj["disconnected_nested"] = types.BoolPointerValue(tkh.GetDisconnectedNested())
 	obj["end_date"] = stringerToTF(tkh.GetEndDate())
@@ -1431,6 +1438,7 @@ func tkhToTFObjectRSGroupGroupAudit(recurse bool, tkh keyhubmodel.GroupGroupAudi
 		diags.Append(d...)
 		obj["permissions"] = val
 	}
+	obj["additional"] = types.ListNull(types.StringType)
 	{
 		elemType := attrs["accounts"].(types.ListType).ElemType
 		val, d := sliceToTF(elemType, tkh.GetAccounts(), func(tkh keyhubmodel.GroupGroupAuditAccountable, diags *diag.Diagnostics) attr.Value {
@@ -1716,6 +1724,7 @@ func tkhToTFObjectRSGroupGroupClient(recurse bool, tkh keyhubmodel.GroupGroupCli
 		diags.Append(d...)
 		obj["permissions"] = val
 	}
+	obj["additional"] = types.ListNull(types.StringType)
 	obj["activation_required"] = types.BoolPointerValue(tkh.GetActivationRequired())
 	obj["client_uuid"] = withUuidToTF(tkh.GetClient())
 	obj["group_uuid"] = withUuidToTF(tkh.GetGroup())
@@ -2096,6 +2105,7 @@ func tkhToTFObjectRSGroupProvisioningGroup(recurse bool, tkh keyhubmodel.GroupPr
 		diags.Append(d...)
 		obj["permissions"] = val
 	}
+	obj["additional"] = types.ListNull(types.StringType)
 	obj["activation_required"] = types.BoolPointerValue(tkh.GetActivationRequired())
 	obj["group_uuid"] = withUuidToTF(tkh.GetGroup())
 	{
@@ -2207,6 +2217,7 @@ func tkhToTFObjectRSGroupVaultVaultRecord(recurse bool, tkh keyhubmodel.VaultVau
 	obj["name"] = types.StringPointerValue(tkh.GetName())
 	obj["share_end_time"] = timePointerToTF(tkh.GetShareEndTime())
 	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
+	obj["additional"] = types.ListNull(types.StringType)
 	obj["derived"] = types.BoolPointerValue(tkh.GetDerived())
 	obj["end_date"] = stringerToTF(tkh.GetEndDate())
 	obj["filename"] = types.StringPointerValue(tkh.GetFilename())
@@ -2369,6 +2380,7 @@ func tkhToTFObjectRSNestedProvisioningGroupOnSystem(recurse bool, tkh keyhubmode
 	obj["name_in_system"] = types.StringPointerValue(tkh.GetNameInSystem())
 	obj["type"] = stringerToTF(tkh.GetProvisioningGroupOnSystemPrimerType())
 	obj["short_name_in_system"] = types.StringPointerValue(tkh.GetShortNameInSystem())
+	obj["additional"] = types.ListNull(types.StringType)
 	obj["owner_uuid"] = withUuidToTF(tkh.GetOwner())
 
 	objVal, d := types.ObjectValue(attrs, obj)
@@ -2418,6 +2430,7 @@ func tkhToTFObjectRSOrganizationOrganizationalUnit(recurse bool, tkh keyhubmodel
 	}
 	obj["name"] = types.StringPointerValue(tkh.GetName())
 	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
+	obj["additional"] = types.ListNull(types.StringType)
 	obj["depth"] = types.Int64PointerValue(int32PToInt64P(tkh.GetDepth()))
 	obj["description"] = types.StringPointerValue(tkh.GetDescription())
 	obj["owner_uuid"] = withUuidToTF(tkh.GetOwner())
@@ -2665,6 +2678,7 @@ func tkhToTFObjectRSProvisioningGroupOnSystem(recurse bool, tkh keyhubmodel.Prov
 	obj["name_in_system"] = types.StringPointerValue(tkh.GetNameInSystem())
 	obj["type"] = stringerToTF(tkh.GetProvisioningGroupOnSystemPrimerType())
 	obj["short_name_in_system"] = types.StringPointerValue(tkh.GetShortNameInSystem())
+	obj["additional"] = types.ListNull(types.StringType)
 	obj["owner_uuid"] = withUuidToTF(tkh.GetOwner())
 
 	objVal, d := types.ObjectValue(attrs, obj)
@@ -2875,6 +2889,7 @@ func tkhToTFObjectRSProvisioningProvisionNumberSequence(recurse bool, tkh keyhub
 		diags.Append(d...)
 		obj["permissions"] = val
 	}
+	obj["additional"] = types.ListNull(types.StringType)
 	obj["account_count"] = types.Int64PointerValue(int32PToInt64P(tkh.GetAccountCount()))
 	obj["name"] = types.StringPointerValue(tkh.GetName())
 	obj["next_uid"] = types.Int64PointerValue(tkh.GetNextUID())
@@ -2954,6 +2969,7 @@ func tkhToTFObjectRSProvisioningProvisionedAccount(recurse bool, tkh keyhubmodel
 		}
 	}
 	obj["uuid"] = withUuidToTF(tkh)
+	obj["additional"] = types.ListNull(types.StringType)
 	obj["uid"] = types.Int64PointerValue(tkh.GetUid())
 
 	objVal, d := types.ObjectValue(attrs, obj)
@@ -3186,6 +3202,7 @@ func tkhToTFObjectRSProvisioningProvisionedSystem(recurse bool, tkh keyhubmodel.
 	obj["organizational_unit_uuid"] = withUuidToTF(tkh.GetOrganizationalUnit())
 	obj["type"] = stringerToTF(tkh.GetProvisioningProvisionedSystemPrimerType())
 	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
+	obj["additional"] = types.ListNull(types.StringType)
 	obj["account_count"] = types.Int64PointerValue(int32PToInt64P(tkh.GetAccountCount()))
 	obj["content_administrator_uuid"] = withUuidToTF(tkh.GetContentAdministrator())
 	obj["external_uuid"] = stringerToTF(tkh.GetExternalUuid())
@@ -3481,6 +3498,7 @@ func tkhToTFObjectRSServiceaccountServiceAccount(recurse bool, tkh keyhubmodel.S
 	obj["system_uuid"] = withUuidToTF(tkh.GetSystem())
 	obj["username"] = types.StringPointerValue(tkh.GetUsername())
 	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
+	obj["additional"] = types.ListNull(types.StringType)
 	obj["description"] = types.StringPointerValue(tkh.GetDescription())
 	obj["password_uuid"] = withUuidToTF(tkh.GetPassword())
 	obj["password_rotation"] = stringerToTF(tkh.GetPasswordRotation())
@@ -3535,6 +3553,7 @@ func tkhToTFObjectRSServiceaccountServiceAccountGroup(recurse bool, tkh keyhubmo
 	obj["name_in_system"] = types.StringPointerValue(tkh.GetNameInSystem())
 	obj["type"] = stringerToTF(tkh.GetProvisioningGroupOnSystemPrimerType())
 	obj["short_name_in_system"] = types.StringPointerValue(tkh.GetShortNameInSystem())
+	obj["additional"] = types.ListNull(types.StringType)
 
 	objVal, d := types.ObjectValue(attrs, obj)
 	diags.Append(d...)
@@ -3870,6 +3889,7 @@ func tkhToTFObjectRSVaultVaultRecord(recurse bool, tkh keyhubmodel.VaultVaultRec
 	obj["name"] = types.StringPointerValue(tkh.GetName())
 	obj["share_end_time"] = timePointerToTF(tkh.GetShareEndTime())
 	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
+	obj["additional"] = types.ListNull(types.StringType)
 	obj["derived"] = types.BoolPointerValue(tkh.GetDerived())
 	obj["end_date"] = stringerToTF(tkh.GetEndDate())
 	obj["filename"] = types.StringPointerValue(tkh.GetFilename())
@@ -4137,6 +4157,7 @@ func tkhToTFObjectRSWebhookWebhook(recurse bool, tkh keyhubmodel.WebhookWebhooka
 		diags.Append(d...)
 		obj["permissions"] = val
 	}
+	obj["additional"] = types.ListNull(types.StringType)
 	obj["account_uuid"] = withUuidToTF(tkh.GetAccount())
 	obj["active"] = types.BoolPointerValue(tkh.GetActive())
 	obj["all_types"] = types.BoolPointerValue(tkh.GetAllTypes())

@@ -24,6 +24,7 @@ description: |-
 
 ### Optional
 
+- `additional` (List of String)
 - `display_name` (String)
 - `provgroups` (Attributes List) (see [below for nested schema](#nestedatt--provgroups))
 - `service_accounts` (Attributes List) (see [below for nested schema](#nestedatt--service_accounts))
@@ -45,6 +46,7 @@ Required:
 Optional:
 
 - `activation_required` (Boolean)
+- `additional` (List of String)
 
 Read-Only:
 
@@ -63,6 +65,7 @@ Required:
 
 Optional:
 
+- `additional` (List of String)
 - `display_name` (String)
 
 Read-Only:

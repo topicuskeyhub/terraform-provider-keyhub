@@ -83,6 +83,7 @@ func (r *groupVaultrecordResource) Create(ctx context.Context, req resource.Crea
 		return
 	}
 
+	additionalBackup := data.Additional
 	r.providerData.Mutex.Lock()
 	defer r.providerData.Mutex.Unlock()
 	tflog.Info(ctx, "Creating Topicus KeyHub group_vaultrecord")
@@ -97,7 +98,7 @@ func (r *groupVaultrecordResource) Create(ctx context.Context, req resource.Crea
 	wrapper, err := r.providerData.Client.Group().ByGroupidInt64(*tkhParent.GetLinks()[0].GetId()).Vault().Record().Post(
 		ctx, newWrapper, &keyhubreq.ItemVaultRecordRequestBuilderPostRequestConfiguration{
 			QueryParameters: &keyhubreq.ItemVaultRecordRequestBuilderPostQueryParameters{
-				Additional: collectAdditional(data),
+				Additional: collectAdditional(ctx, data, data.Additional),
 			},
 		})
 	tkh, diags := findFirst[keyhubmodels.VaultVaultRecordable](ctx, wrapper, "group_vaultrecord", nil, false, err)
@@ -113,6 +114,7 @@ func (r *groupVaultrecordResource) Create(ctx context.Context, req resource.Crea
 	}
 	tf = setAttributeValue(ctx, tf, "group_uuid", types.StringValue(data.GroupUUID.ValueString()))
 	fillDataStructFromTFObjectRSGroupVaultVaultRecord(&data, tf)
+	data.Additional = additionalBackup
 
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 
@@ -127,6 +129,7 @@ func (r *groupVaultrecordResource) Read(ctx context.Context, req resource.ReadRe
 		return
 	}
 
+	additionalBackup := data.Additional
 	r.providerData.Mutex.RLock()
 	defer r.providerData.Mutex.RUnlock()
 	ctx = context.WithValue(ctx, keyHubClientKey, r.providerData.Client)
@@ -146,7 +149,7 @@ func (r *groupVaultrecordResource) Read(ctx context.Context, req resource.ReadRe
 	tkh, err := r.providerData.Client.Group().ByGroupidInt64(*tkhParent.GetLinks()[0].GetId()).Vault().Record().ByRecordidInt64(getSelfLink(data.Links).ID.ValueInt64()).Get(
 		ctx, &keyhubreq.ItemVaultRecordWithRecordItemRequestBuilderGetRequestConfiguration{
 			QueryParameters: &keyhubreq.ItemVaultRecordWithRecordItemRequestBuilderGetQueryParameters{
-				Additional: collectAdditional(data),
+				Additional: collectAdditional(ctx, data, data.Additional),
 			},
 		})
 
@@ -167,6 +170,7 @@ func (r *groupVaultrecordResource) Read(ctx context.Context, req resource.ReadRe
 	}
 	tf = setAttributeValue(ctx, tf, "group_uuid", types.StringValue(data.GroupUUID.ValueString()))
 	fillDataStructFromTFObjectRSGroupVaultVaultRecord(&data, tf)
+	data.Additional = additionalBackup
 
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
@@ -191,6 +195,7 @@ func (r *groupVaultrecordResource) Update(ctx context.Context, req resource.Upda
 		return
 	}
 
+	additionalBackup := data.Additional
 	r.providerData.Mutex.Lock()
 	defer r.providerData.Mutex.Unlock()
 	tflog.Info(ctx, "Updating Topicus KeyHub group_vaultrecord")
@@ -203,7 +208,7 @@ func (r *groupVaultrecordResource) Update(ctx context.Context, req resource.Upda
 	tkh, err := r.providerData.Client.Group().ByGroupidInt64(*tkhParent.GetLinks()[0].GetId()).Vault().Record().ByRecordidInt64(getSelfLink(data.Links).ID.ValueInt64()).Put(
 		ctx, newTkh, &keyhubreq.ItemVaultRecordWithRecordItemRequestBuilderPutRequestConfiguration{
 			QueryParameters: &keyhubreq.ItemVaultRecordWithRecordItemRequestBuilderPutQueryParameters{
-				Additional: collectAdditional(data),
+				Additional: collectAdditional(ctx, data, data.Additional),
 			},
 		})
 
@@ -218,6 +223,7 @@ func (r *groupVaultrecordResource) Update(ctx context.Context, req resource.Upda
 	}
 	tf = setAttributeValue(ctx, tf, "group_uuid", types.StringValue(data.GroupUUID.ValueString()))
 	fillDataStructFromTFObjectRSGroupVaultVaultRecord(&data, tf)
+	data.Additional = additionalBackup
 
 	tflog.Info(ctx, "Updated a Topicus KeyHub group_vaultrecord")
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
