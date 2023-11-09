@@ -8,10 +8,10 @@ require (
 	github.com/hashicorp/terraform-plugin-framework v1.4.2
 	github.com/hashicorp/terraform-plugin-framework-validators v0.12.0
 	github.com/hashicorp/terraform-plugin-log v0.9.0
-	github.com/microsoft/kiota-abstractions-go v1.4.0
-	github.com/topicuskeyhub/sdk-go v0.29.1-0.20231107100645-f5ba1db322e2
-	github.com/topicuskeyhub/terraform-provider-keyhub-generator v0.0.6
-	golang.org/x/exp v0.0.0-20231006140011-7918f672742d
+	github.com/microsoft/kiota-abstractions-go v1.5.0
+	github.com/topicuskeyhub/sdk-go v0.29.1-0.20231109164234-006d9ce6f621
+	github.com/topicuskeyhub/terraform-provider-keyhub-generator v0.0.7
+	golang.org/x/exp v0.0.0-20231108232855-2478ac86f678
 )
 
 require (
@@ -24,9 +24,10 @@ require (
 	github.com/bgentry/speakeasy v0.1.0 // indirect
 	github.com/cjlapao/common-go v0.0.39 // indirect
 	github.com/cloudflare/circl v1.3.3 // indirect
-	github.com/coreos/go-oidc v2.2.1+incompatible // indirect
+	github.com/coreos/go-oidc/v3 v3.7.0 // indirect
 	github.com/fatih/color v1.16.0 // indirect
 	github.com/getkin/kin-openapi v0.120.0 // indirect
+	github.com/go-jose/go-jose/v3 v3.0.1 // indirect
 	github.com/go-logr/logr v1.3.0 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/go-openapi/jsonpointer v0.20.0 // indirect
@@ -64,7 +65,6 @@ require (
 	github.com/oklog/run v1.1.0 // indirect
 	github.com/perimeterx/marshmallow v1.1.5 // indirect
 	github.com/posener/complete v1.2.3 // indirect
-	github.com/pquerna/cachecontrol v0.2.0 // indirect
 	github.com/russross/blackfriday v1.6.0 // indirect
 	github.com/shopspring/decimal v1.3.1 // indirect
 	github.com/spf13/cast v1.5.0 // indirect
@@ -75,16 +75,15 @@ require (
 	go.opentelemetry.io/otel v1.19.0 // indirect
 	go.opentelemetry.io/otel/metric v1.19.0 // indirect
 	go.opentelemetry.io/otel/trace v1.19.0 // indirect
-	golang.org/x/crypto v0.14.0 // indirect
-	golang.org/x/mod v0.13.0 // indirect
-	golang.org/x/net v0.17.0 // indirect
-	golang.org/x/oauth2 v0.13.0 // indirect
+	golang.org/x/crypto v0.15.0 // indirect
+	golang.org/x/mod v0.14.0 // indirect
+	golang.org/x/net v0.18.0 // indirect
+	golang.org/x/oauth2 v0.14.0 // indirect
 	golang.org/x/sys v0.14.0 // indirect
 	golang.org/x/text v0.14.0 // indirect
 	google.golang.org/appengine v1.6.8 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20231106174013-bbf56f31fb17 // indirect
 	google.golang.org/grpc v1.59.0 // indirect
 	google.golang.org/protobuf v1.31.0 // indirect
-	gopkg.in/square/go-jose.v2 v2.6.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
