@@ -7,6 +7,7 @@ import (
 	"context"
 	"net/http"
 	"os"
+	"sync"
 
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -35,6 +36,11 @@ type KeyHubProviderModel struct {
 	Issuer       types.String `tfsdk:"issuer"`
 	ClientID     types.String `tfsdk:"clientid"`
 	ClientSecret types.String `tfsdk:"clientsecret"`
+}
+
+type KeyHubProviderData struct {
+	Client *keyhub.KeyHubClient
+	Mutex  sync.RWMutex
 }
 
 func (p *KeyHubProvider) Metadata(ctx context.Context, req provider.MetadataRequest, resp *provider.MetadataResponse) {
@@ -162,9 +168,11 @@ func (p *KeyHubProvider) Configure(ctx context.Context, req provider.ConfigureRe
 		return
 	}
 
-	client := keyhub.NewKeyHubClient(adapter)
-	resp.DataSourceData = client
-	resp.ResourceData = client
+	data := &KeyHubProviderData{
+		Client: keyhub.NewKeyHubClient(adapter),
+	}
+	resp.DataSourceData = data
+	resp.ResourceData = data
 
 	tflog.Info(ctx, "Connected to Topicus KeyHub", map[string]any{"success": true})
 }
