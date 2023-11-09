@@ -87,7 +87,7 @@ func (d *groupclassificationDataSource) Read(ctx context.Context, req datasource
 		},
 	})
 
-	tkh, diags := findFirst[keyhubmodels.GroupGroupClassificationable](ctx, wrapper, "groupclassification", &uuid, err)
+	tkh, diags := findFirst[keyhubmodels.GroupGroupClassificationable](ctx, wrapper, "groupclassification", &uuid, false, err)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return

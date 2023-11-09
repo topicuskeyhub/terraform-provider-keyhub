@@ -87,7 +87,7 @@ func (d *directoryDataSource) Read(ctx context.Context, req datasource.ReadReque
 		},
 	})
 
-	tkh, diags := findFirst[keyhubmodels.DirectoryAccountDirectoryable](ctx, wrapper, "directory", &uuid, err)
+	tkh, diags := findFirst[keyhubmodels.DirectoryAccountDirectoryable](ctx, wrapper, "directory", &uuid, false, err)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return

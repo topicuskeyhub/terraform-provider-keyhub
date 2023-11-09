@@ -87,7 +87,7 @@ func (d *vaultrecordDataSource) Read(ctx context.Context, req datasource.ReadReq
 		},
 	})
 
-	tkh, diags := findFirst[keyhubmodels.VaultVaultRecordable](ctx, wrapper, "vaultrecord", &uuid, err)
+	tkh, diags := findFirst[keyhubmodels.VaultVaultRecordable](ctx, wrapper, "vaultrecord", &uuid, false, err)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return

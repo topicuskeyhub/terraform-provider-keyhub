@@ -87,7 +87,7 @@ func (d *accountDataSource) Read(ctx context.Context, req datasource.ReadRequest
 		},
 	})
 
-	tkh, diags := findFirst[keyhubmodels.AuthAccountable](ctx, wrapper, "account", &uuid, err)
+	tkh, diags := findFirst[keyhubmodels.AuthAccountable](ctx, wrapper, "account", &uuid, false, err)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return

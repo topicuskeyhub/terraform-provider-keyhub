@@ -87,7 +87,7 @@ func (d *groupDataSource) Read(ctx context.Context, req datasource.ReadRequest, 
 		},
 	})
 
-	tkh, diags := findFirst[keyhubmodels.GroupGroupable](ctx, wrapper, "group", &uuid, err)
+	tkh, diags := findFirst[keyhubmodels.GroupGroupable](ctx, wrapper, "group", &uuid, false, err)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return

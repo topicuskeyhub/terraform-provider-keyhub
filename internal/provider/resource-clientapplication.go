@@ -94,7 +94,7 @@ func (r *clientapplicationResource) Create(ctx context.Context, req resource.Cre
 				Additional: collectAdditional(data),
 			},
 		})
-	tkh, diags := findFirst[keyhubmodels.ClientClientApplicationable](ctx, wrapper, "clientapplication", nil, err)
+	tkh, diags := findFirst[keyhubmodels.ClientClientApplicationable](ctx, wrapper, "clientapplication", nil, false, err)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -131,7 +131,13 @@ func (r *clientapplicationResource) Read(ctx context.Context, req resource.ReadR
 			},
 		})
 
-	if !isHttpStatusCodeOk(ctx, -1, err, &resp.Diagnostics) {
+	if !isHttpStatusCodeOk(ctx, 404, err, &resp.Diagnostics) {
+		return
+	}
+	// only 404 remains
+	if err != nil {
+		tflog.Info(ctx, "clientapplication not found, marking resource as removed")
+		resp.State.RemoveResource(ctx)
 		return
 	}
 

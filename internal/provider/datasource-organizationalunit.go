@@ -87,7 +87,7 @@ func (d *organizationalunitDataSource) Read(ctx context.Context, req datasource.
 		},
 	})
 
-	tkh, diags := findFirst[keyhubmodels.OrganizationOrganizationalUnitable](ctx, wrapper, "organizationalunit", &uuid, err)
+	tkh, diags := findFirst[keyhubmodels.OrganizationOrganizationalUnitable](ctx, wrapper, "organizationalunit", &uuid, false, err)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return

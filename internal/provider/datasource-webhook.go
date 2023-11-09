@@ -87,7 +87,7 @@ func (d *webhookDataSource) Read(ctx context.Context, req datasource.ReadRequest
 		},
 	})
 
-	tkh, diags := findFirst[keyhubmodels.WebhookWebhookable](ctx, wrapper, "webhook", &uuid, err)
+	tkh, diags := findFirst[keyhubmodels.WebhookWebhookable](ctx, wrapper, "webhook", &uuid, false, err)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return

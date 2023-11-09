@@ -87,7 +87,7 @@ func (d *clientDataSource) Read(ctx context.Context, req datasource.ReadRequest,
 		},
 	})
 
-	tkh, diags := findFirst[keyhubmodels.ClientClientApplicationable](ctx, wrapper, "client", &uuid, err)
+	tkh, diags := findFirst[keyhubmodels.ClientClientApplicationable](ctx, wrapper, "client", &uuid, false, err)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return

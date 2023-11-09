@@ -94,7 +94,7 @@ func (r *groupResource) Create(ctx context.Context, req resource.CreateRequest, 
 				Additional: collectAdditional(data),
 			},
 		})
-	tkh, diags := findFirst[keyhubmodels.GroupGroupable](ctx, wrapper, "group", nil, err)
+	tkh, diags := findFirst[keyhubmodels.GroupGroupable](ctx, wrapper, "group", nil, false, err)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -131,7 +131,13 @@ func (r *groupResource) Read(ctx context.Context, req resource.ReadRequest, resp
 			},
 		})
 
-	if !isHttpStatusCodeOk(ctx, -1, err, &resp.Diagnostics) {
+	if !isHttpStatusCodeOk(ctx, 404, err, &resp.Diagnostics) {
+		return
+	}
+	// only 404 remains
+	if err != nil {
+		tflog.Info(ctx, "group not found, marking resource as removed")
+		resp.State.RemoveResource(ctx)
 		return
 	}
 

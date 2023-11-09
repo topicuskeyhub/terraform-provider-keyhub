@@ -100,7 +100,7 @@ func (r *grouponsystemResource) Create(ctx context.Context, req resource.CreateR
 				Additional: collectAdditional(data),
 			},
 		})
-	tkh, diags := findFirst[keyhubmodels.ProvisioningGroupOnSystemable](ctx, wrapper, "grouponsystem", nil, err)
+	tkh, diags := findFirst[keyhubmodels.ProvisioningGroupOnSystemable](ctx, wrapper, "grouponsystem", nil, false, err)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -131,9 +131,15 @@ func (r *grouponsystemResource) Read(ctx context.Context, req resource.ReadReque
 	defer r.providerData.Mutex.RUnlock()
 	ctx = context.WithValue(ctx, keyHubClientKey, r.providerData.Client)
 	tflog.Info(ctx, "Reading grouponsystem from Topicus KeyHub")
-	tkhParent, diags := findProvisioningProvisionedSystemPrimerByUUID(ctx, data.ProvisionedSystemUUID.ValueStringPointer())
+	tkhParent, diags := findProvisioningProvisionedSystemPrimerByUUIDOrNil(ctx, data.ProvisionedSystemUUID.ValueStringPointer())
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	if tkhParent == nil {
+		tflog.Info(ctx, "Parent provisioned_system not found, marking resource as removed")
+		resp.State.RemoveResource(ctx)
 		return
 	}
 
@@ -144,7 +150,13 @@ func (r *grouponsystemResource) Read(ctx context.Context, req resource.ReadReque
 			},
 		})
 
-	if !isHttpStatusCodeOk(ctx, -1, err, &resp.Diagnostics) {
+	if !isHttpStatusCodeOk(ctx, 404, err, &resp.Diagnostics) {
+		return
+	}
+	// only 404 remains
+	if err != nil {
+		tflog.Info(ctx, "grouponsystem not found, marking resource as removed")
+		resp.State.RemoveResource(ctx)
 		return
 	}
 

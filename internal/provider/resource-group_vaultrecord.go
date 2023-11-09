@@ -100,7 +100,7 @@ func (r *groupVaultrecordResource) Create(ctx context.Context, req resource.Crea
 				Additional: collectAdditional(data),
 			},
 		})
-	tkh, diags := findFirst[keyhubmodels.VaultVaultRecordable](ctx, wrapper, "group_vaultrecord", nil, err)
+	tkh, diags := findFirst[keyhubmodels.VaultVaultRecordable](ctx, wrapper, "group_vaultrecord", nil, false, err)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -131,9 +131,15 @@ func (r *groupVaultrecordResource) Read(ctx context.Context, req resource.ReadRe
 	defer r.providerData.Mutex.RUnlock()
 	ctx = context.WithValue(ctx, keyHubClientKey, r.providerData.Client)
 	tflog.Info(ctx, "Reading group_vaultrecord from Topicus KeyHub")
-	tkhParent, diags := findGroupGroupPrimerByUUID(ctx, data.GroupUUID.ValueStringPointer())
+	tkhParent, diags := findGroupGroupPrimerByUUIDOrNil(ctx, data.GroupUUID.ValueStringPointer())
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	if tkhParent == nil {
+		tflog.Info(ctx, "Parent group not found, marking resource as removed")
+		resp.State.RemoveResource(ctx)
 		return
 	}
 
@@ -144,7 +150,13 @@ func (r *groupVaultrecordResource) Read(ctx context.Context, req resource.ReadRe
 			},
 		})
 
-	if !isHttpStatusCodeOk(ctx, -1, err, &resp.Diagnostics) {
+	if !isHttpStatusCodeOk(ctx, 404, err, &resp.Diagnostics) {
+		return
+	}
+	// only 404 remains
+	if err != nil {
+		tflog.Info(ctx, "group_vaultrecord not found, marking resource as removed")
+		resp.State.RemoveResource(ctx)
 		return
 	}
 

@@ -94,7 +94,7 @@ func (r *serviceaccountResource) Create(ctx context.Context, req resource.Create
 				Additional: collectAdditional(data),
 			},
 		})
-	tkh, diags := findFirst[keyhubmodels.ServiceaccountServiceAccountable](ctx, wrapper, "serviceaccount", nil, err)
+	tkh, diags := findFirst[keyhubmodels.ServiceaccountServiceAccountable](ctx, wrapper, "serviceaccount", nil, false, err)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -131,7 +131,13 @@ func (r *serviceaccountResource) Read(ctx context.Context, req resource.ReadRequ
 			},
 		})
 
-	if !isHttpStatusCodeOk(ctx, -1, err, &resp.Diagnostics) {
+	if !isHttpStatusCodeOk(ctx, 404, err, &resp.Diagnostics) {
+		return
+	}
+	// only 404 remains
+	if err != nil {
+		tflog.Info(ctx, "serviceaccount not found, marking resource as removed")
+		resp.State.RemoveResource(ctx)
 		return
 	}
 

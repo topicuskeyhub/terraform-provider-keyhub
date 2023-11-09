@@ -87,7 +87,7 @@ func (d *systemDataSource) Read(ctx context.Context, req datasource.ReadRequest,
 		},
 	})
 
-	tkh, diags := findFirst[keyhubmodels.ProvisioningProvisionedSystemable](ctx, wrapper, "system", &uuid, err)
+	tkh, diags := findFirst[keyhubmodels.ProvisioningProvisionedSystemable](ctx, wrapper, "system", &uuid, false, err)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return

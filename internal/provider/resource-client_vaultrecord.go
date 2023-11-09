@@ -100,7 +100,7 @@ func (r *clientVaultrecordResource) Create(ctx context.Context, req resource.Cre
 				Additional: collectAdditional(data),
 			},
 		})
-	tkh, diags := findFirst[keyhubmodels.VaultVaultRecordable](ctx, wrapper, "client_vaultrecord", nil, err)
+	tkh, diags := findFirst[keyhubmodels.VaultVaultRecordable](ctx, wrapper, "client_vaultrecord", nil, false, err)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -131,9 +131,15 @@ func (r *clientVaultrecordResource) Read(ctx context.Context, req resource.ReadR
 	defer r.providerData.Mutex.RUnlock()
 	ctx = context.WithValue(ctx, keyHubClientKey, r.providerData.Client)
 	tflog.Info(ctx, "Reading client_vaultrecord from Topicus KeyHub")
-	tkhParent, diags := findClientClientApplicationPrimerByUUID(ctx, data.ClientApplicationUUID.ValueStringPointer())
+	tkhParent, diags := findClientClientApplicationPrimerByUUIDOrNil(ctx, data.ClientApplicationUUID.ValueStringPointer())
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	if tkhParent == nil {
+		tflog.Info(ctx, "Parent client_application not found, marking resource as removed")
+		resp.State.RemoveResource(ctx)
 		return
 	}
 
@@ -144,7 +150,13 @@ func (r *clientVaultrecordResource) Read(ctx context.Context, req resource.ReadR
 			},
 		})
 
-	if !isHttpStatusCodeOk(ctx, -1, err, &resp.Diagnostics) {
+	if !isHttpStatusCodeOk(ctx, 404, err, &resp.Diagnostics) {
+		return
+	}
+	// only 404 remains
+	if err != nil {
+		tflog.Info(ctx, "client_vaultrecord not found, marking resource as removed")
+		resp.State.RemoveResource(ctx)
 		return
 	}
 
