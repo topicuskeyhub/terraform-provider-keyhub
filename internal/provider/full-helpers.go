@@ -515,14 +515,27 @@ func errorReportToString(ctx context.Context, err error) string {
 	var msg string
 	if report.GetApplicationError() == nil {
 		msg = fmt.Sprintf("Error %d from backend: %s", *report.GetCode(), stringPointerToString(report.GetMessage()))
-	} else {
+	} else if report.GetApplicationErrorParameters() == nil {
 		msg = fmt.Sprintf("Error %d (%s) from backend: %s", *report.GetCode(), *report.GetApplicationError(), stringPointerToString(report.GetMessage()))
+	} else {
+		msg = fmt.Sprintf("Error %d (%s:%v) from backend: %s", *report.GetCode(), *report.GetApplicationError(),
+			filterErrorParameters(report.GetApplicationErrorParameters().GetAdditionalData()), stringPointerToString(report.GetMessage()))
 	}
 	tflog.Info(ctx, msg)
 	if report.GetStacktrace() != nil {
 		tflog.Info(ctx, strings.Join(report.GetStacktrace(), "\n"))
 	}
 	return msg
+}
+
+func filterErrorParameters(params map[string]any) map[string]string {
+	ret := make(map[string]string)
+	for k, v := range params {
+		if str, ok := v.(*string); ok {
+			ret[k] = *str
+		}
+	}
+	return ret
 }
 
 func stringPointerToString(input *string) string {

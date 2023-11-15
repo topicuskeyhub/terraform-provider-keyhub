@@ -125,6 +125,7 @@ Required:
 
 - `name` (String)
 - `system_uuid` (String)
+- `username` (String)
 
 Optional:
 
@@ -134,7 +135,6 @@ Read-Only:
 
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--service_accounts--links))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--service_accounts--permissions))
-- `username` (String)
 - `uuid` (String)
 
 <a id="nestedatt--service_accounts--links"></a>

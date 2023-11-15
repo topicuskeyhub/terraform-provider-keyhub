@@ -34,7 +34,8 @@ resource "keyhubpreview_group" "terra" {
     client_uuid = "ebdf81ac-b02b-4335-9dc4-4a9bc4eb406d"
     value       = "GROUP_FULL_VAULT_ACCESS"
   }]
-  additional = ["audit"]
+  application_administration = "true"
+  additional                 = ["audit"]
 }
 
 resource "keyhubpreview_group_vaultrecord" "terrarecord" {
@@ -54,4 +55,32 @@ resource "keyhubpreview_grouponsystem" "terragos" {
     activation_required = "false"
     group_uuid          = "c6c98d08-2cbf-45e9-937a-c5c0427348e2"
   }]
+}
+
+resource "keyhubpreview_clientapplication" "oauth2client" {
+  name                         = "Created by Terraform"
+  technical_administrator_uuid = resource.keyhubpreview_group.terra.uuid
+  owner_uuid                   = resource.keyhubpreview_group.terra.uuid
+  scopes                       = ["profile", "access_vault"]
+  o_auth2_client = {
+    debug_mode = "true"
+  }
+}
+
+resource "keyhubpreview_clientapplication" "saml2client" {
+  name                         = "SAML2 Created by Terraform"
+  client_id                    = "https://keyhub-vm3"
+  technical_administrator_uuid = resource.keyhubpreview_group.terra.uuid
+  owner_uuid                   = resource.keyhubpreview_group.terra.uuid
+  saml2_client = {
+    subject_format = "ID"
+    metadata_url   = "https://does.not.exist.localhost:8600/metadata"
+  }
+}
+
+resource "keyhubpreview_serviceaccount" "sa" {
+  name                         = "Service account by Terraform"
+  technical_administrator_uuid = resource.keyhubpreview_group.terra.uuid
+  system_uuid                  = "47923975-b1af-47c8-bd7a-e52ebb4b9b84"
+  username                     = "terraform"
 }

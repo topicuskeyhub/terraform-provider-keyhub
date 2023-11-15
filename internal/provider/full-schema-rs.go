@@ -12,12 +12,14 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/hashicorp/terraform-plugin-framework/attr"
 	rsschema "github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/boolplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64default"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/listplanmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/mapdefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/objectplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
@@ -340,6 +342,7 @@ func resourceSchemaAttrsClientClientApplication(recurse bool) map[string]rsschem
 		PlanModifiers: []planmodifier.String{stringplanmodifier.UseStateForUnknown()},
 	}
 	schemaAttrs["client_id"] = rsschema.StringAttribute{
+		Computed: true,
 		Optional: true,
 		Validators: []validator.String{
 			stringvalidator.UTF8LengthBetween(0, 255),
@@ -354,6 +357,7 @@ func resourceSchemaAttrsClientClientApplication(recurse bool) map[string]rsschem
 	schemaAttrs["scopes"] = rsschema.ListAttribute{
 		ElementType: types.StringType,
 		Optional:    true,
+		Computed:    true,
 	}
 	schemaAttrs["sso_application"] = rsschema.BoolAttribute{
 		Computed:      true,
@@ -367,12 +371,14 @@ func resourceSchemaAttrsClientClientApplication(recurse bool) map[string]rsschem
 		Computed: true,
 	}
 	schemaAttrs["owner_uuid"] = rsschema.StringAttribute{
+		Computed: true,
 		Optional: true,
 		Validators: []validator.String{
 			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
 	schemaAttrs["technical_administrator_uuid"] = rsschema.StringAttribute{
+		Computed: true,
 		Optional: true,
 		Validators: []validator.String{
 			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
@@ -432,6 +438,7 @@ func resourceSchemaAttrsClientClientApplicationPrimer(recurse bool) map[string]r
 		PlanModifiers: []planmodifier.String{stringplanmodifier.UseStateForUnknown()},
 	}
 	schemaAttrs["client_id"] = rsschema.StringAttribute{
+		Computed: true,
 		Optional: true,
 		Validators: []validator.String{
 			stringvalidator.UTF8LengthBetween(0, 255),
@@ -446,6 +453,7 @@ func resourceSchemaAttrsClientClientApplicationPrimer(recurse bool) map[string]r
 	schemaAttrs["scopes"] = rsschema.ListAttribute{
 		ElementType: types.StringType,
 		Optional:    true,
+		Computed:    true,
 	}
 	schemaAttrs["sso_application"] = rsschema.BoolAttribute{
 		Computed:      true,
@@ -484,6 +492,7 @@ func resourceSchemaAttrsClientClientApplication_additionalObjects(recurse bool) 
 			Attributes: resourceSchemaAttrsGeneratedSecret(recurse),
 		}
 		attr.Optional = true
+		attr.Computed = true
 		schemaAttrs["secret"] = attr
 	}
 	{
@@ -533,6 +542,8 @@ func resourceSchemaAttrsClientOAuth2Client(recurse bool) map[string]rsschema.Att
 	schemaAttrs["attributes"] = rsschema.MapAttribute{
 		ElementType: types.StringType,
 		Optional:    true,
+		Computed:    true,
+		Default:     mapdefault.StaticValue(types.MapValueMust(types.StringType, make(map[string]attr.Value))),
 	}
 	schemaAttrs["callback_uri"] = rsschema.StringAttribute{
 		Optional: true,
@@ -719,6 +730,8 @@ func resourceSchemaAttrsClientSaml2Client(recurse bool) map[string]rsschema.Attr
 	schemaAttrs["attributes"] = rsschema.MapAttribute{
 		ElementType: types.StringType,
 		Optional:    true,
+		Computed:    true,
+		Default:     mapdefault.StaticValue(types.MapValueMust(types.StringType, make(map[string]attr.Value))),
 	}
 	schemaAttrs["metadata"] = rsschema.StringAttribute{
 		Optional: true,
@@ -2210,6 +2223,8 @@ func resourceSchemaAttrsMarkItemMarker(recurse bool) map[string]rsschema.Attribu
 	schemaAttrs["parameters"] = rsschema.MapAttribute{
 		ElementType: types.StringType,
 		Optional:    true,
+		Computed:    true,
+		Default:     mapdefault.StaticValue(types.MapValueMust(types.StringType, make(map[string]attr.Value))),
 	}
 	return schemaAttrs
 }
@@ -2413,6 +2428,8 @@ func resourceSchemaAttrsProvisioningAbstractProvisionedLDAP(recurse bool) map[st
 	schemaAttrs["attributes"] = rsschema.MapAttribute{
 		ElementType: types.StringType,
 		Optional:    true,
+		Computed:    true,
+		Default:     mapdefault.StaticValue(types.MapValueMust(types.StringType, make(map[string]attr.Value))),
 	}
 	schemaAttrs["base_dn"] = rsschema.StringAttribute{
 		Required: true,
@@ -2974,6 +2991,7 @@ func resourceSchemaAttrsProvisioningProvisionedSystem(recurse bool) map[string]r
 		},
 	}
 	schemaAttrs["organizational_unit_uuid"] = rsschema.StringAttribute{
+		Computed: true,
 		Optional: true,
 		Validators: []validator.String{
 			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
@@ -2991,7 +3009,7 @@ func resourceSchemaAttrsProvisioningProvisionedSystem(recurse bool) map[string]r
 		Computed: true,
 	}
 	schemaAttrs["content_administrator_uuid"] = rsschema.StringAttribute{
-		Required: true,
+		Optional: true,
 		Validators: []validator.String{
 			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
@@ -3145,6 +3163,7 @@ func resourceSchemaAttrsProvisioningProvisionedSystemPrimer(recurse bool) map[st
 		},
 	}
 	schemaAttrs["organizational_unit_uuid"] = rsschema.StringAttribute{
+		Computed: true,
 		Optional: true,
 		Validators: []validator.String{
 			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
@@ -3291,8 +3310,10 @@ func resourceSchemaAttrsServiceaccountServiceAccount(recurse bool) map[string]rs
 		},
 	}
 	schemaAttrs["username"] = rsschema.StringAttribute{
-		Computed:      true,
-		PlanModifiers: []planmodifier.String{stringplanmodifier.UseStateForUnknown()},
+		Required: true,
+		Validators: []validator.String{
+			stringvalidator.UTF8LengthBetween(0, 255),
+		},
 	}
 	schemaAttrs["uuid"] = rsschema.StringAttribute{
 		Computed:      true,
@@ -3305,7 +3326,9 @@ func resourceSchemaAttrsServiceaccountServiceAccount(recurse bool) map[string]rs
 		Computed: true,
 	}
 	schemaAttrs["password_rotation"] = rsschema.StringAttribute{
-		Required: true,
+		Computed: true,
+		Optional: true,
+		Default:  stringdefault.StaticString("DAILY"),
 		Validators: []validator.String{
 			stringvalidator.OneOf(
 				"MANUAL", "MANUAL_STORED_IN_VAULT", "DAILY",
@@ -3437,8 +3460,10 @@ func resourceSchemaAttrsServiceaccountServiceAccountPrimer(recurse bool) map[str
 		},
 	}
 	schemaAttrs["username"] = rsschema.StringAttribute{
-		Computed:      true,
-		PlanModifiers: []planmodifier.String{stringplanmodifier.UseStateForUnknown()},
+		Required: true,
+		Validators: []validator.String{
+			stringvalidator.UTF8LengthBetween(0, 255),
+		},
 	}
 	schemaAttrs["uuid"] = rsschema.StringAttribute{
 		Computed:      true,

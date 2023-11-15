@@ -18,14 +18,15 @@ description: |-
 ### Required
 
 - `name` (String)
-- `password_rotation` (String)
 - `system_uuid` (String)
+- `username` (String)
 
 ### Optional
 
 - `active` (Boolean)
 - `additional` (List of String)
 - `description` (String)
+- `password_rotation` (String)
 - `secret` (Attributes) (see [below for nested schema](#nestedatt--secret))
 - `technical_administrator_uuid` (String)
 
@@ -36,7 +37,6 @@ description: |-
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--links))
 - `password_uuid` (String)
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--permissions))
-- `username` (String)
 - `uuid` (String)
 
 <a id="nestedatt--secret"></a>

@@ -331,7 +331,6 @@ Optional:
 
 Required:
 
-- `content_administrator_uuid` (String)
 - `name` (String)
 - `owner_uuid` (String)
 - `technical_administrator_uuid` (String)
@@ -340,6 +339,7 @@ Optional:
 
 - `abstract_provisioned_ldap` (Attributes) (see [below for nested schema](#nestedatt--administered_systems--abstract_provisioned_ldap))
 - `active` (Boolean)
+- `content_administrator_uuid` (String)
 - `organizational_unit_uuid` (String)
 - `provisioned_a_d` (Attributes) (see [below for nested schema](#nestedatt--administered_systems--provisioned_a_d))
 - `provisioned_azure_oidc_directory` (Attributes) (see [below for nested schema](#nestedatt--administered_systems--provisioned_azure_oidc_directory))
@@ -696,7 +696,6 @@ Optional:
 
 Required:
 
-- `content_administrator_uuid` (String)
 - `name` (String)
 - `owner_uuid` (String)
 - `technical_administrator_uuid` (String)
@@ -705,6 +704,7 @@ Optional:
 
 - `abstract_provisioned_ldap` (Attributes) (see [below for nested schema](#nestedatt--content_administered_systems--abstract_provisioned_ldap))
 - `active` (Boolean)
+- `content_administrator_uuid` (String)
 - `organizational_unit_uuid` (String)
 - `provisioned_a_d` (Attributes) (see [below for nested schema](#nestedatt--content_administered_systems--provisioned_a_d))
 - `provisioned_azure_oidc_directory` (Attributes) (see [below for nested schema](#nestedatt--content_administered_systems--provisioned_azure_oidc_directory))
@@ -1417,7 +1417,6 @@ Optional:
 
 Required:
 
-- `content_administrator_uuid` (String)
 - `name` (String)
 - `owner_uuid` (String)
 - `technical_administrator_uuid` (String)
@@ -1426,6 +1425,7 @@ Optional:
 
 - `abstract_provisioned_ldap` (Attributes) (see [below for nested schema](#nestedatt--owned_systems--abstract_provisioned_ldap))
 - `active` (Boolean)
+- `content_administrator_uuid` (String)
 - `organizational_unit_uuid` (String)
 - `provisioned_a_d` (Attributes) (see [below for nested schema](#nestedatt--owned_systems--provisioned_a_d))
 - `provisioned_azure_oidc_directory` (Attributes) (see [below for nested schema](#nestedatt--owned_systems--provisioned_azure_oidc_directory))
@@ -1733,13 +1733,14 @@ Optional:
 Required:
 
 - `name` (String)
-- `password_rotation` (String)
 - `system_uuid` (String)
+- `username` (String)
 
 Optional:
 
 - `active` (Boolean)
 - `description` (String)
+- `password_rotation` (String)
 - `technical_administrator_uuid` (String)
 
 Read-Only:
@@ -1747,7 +1748,6 @@ Read-Only:
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--service_accounts--links))
 - `password_uuid` (String)
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--service_accounts--permissions))
-- `username` (String)
 - `uuid` (String)
 
 <a id="nestedatt--service_accounts--links"></a>
