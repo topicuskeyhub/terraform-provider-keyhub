@@ -1,7 +1,7 @@
 terraform {
   required_providers {
-    keyhubpreview = {
-      source  = "registry.terraform.io/hashicorp/keyhubpreview"
+    keyhub = {
+      source  = "registry.terraform.io/hashicorp/keyhub"
       version = "=0.30.0"
     }
   }
@@ -12,7 +12,7 @@ variable "keyhub_secret" {
   description = "Client secret on KeyHub"
 }
 
-provider "keyhubpreview" {
+provider "keyhub" {
   issuer       = "https://keyhub.example.com"
   clientid     = "ebdf81ac-b02b-4335-9dc4-4a9bc4eb406d"
   clientsecret = var.keyhub_secret

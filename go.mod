@@ -1,4 +1,4 @@
-module github.com/topicuskeyhub/terraform-provider-keyhubpreview
+module github.com/topicuskeyhub/terraform-provider-keyhub
 
 go 1.20
 

@@ -1,4 +1,4 @@
-resource "keyhubpreview_group" "terra" {
+resource "keyhub_group" "terra" {
   name                       = "Terraform"
   application_administration = "true"
   accounts = [{

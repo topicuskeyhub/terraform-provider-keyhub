@@ -30,7 +30,7 @@ type KeyHubProvider struct {
 	version string
 }
 
-const ProviderName = "keyhubpreview"
+const ProviderName = "keyhub"
 
 type KeyHubProviderModel struct {
 	Issuer       types.String `tfsdk:"issuer"`
