@@ -10,7 +10,7 @@ require (
 	github.com/hashicorp/terraform-plugin-log v0.9.0
 	github.com/microsoft/kiota-abstractions-go v1.5.3
 	github.com/topicuskeyhub/sdk-go v0.30.1
-	github.com/topicuskeyhub/terraform-provider-keyhub-generator v0.0.8
+	github.com/topicuskeyhub/terraform-provider-keyhub-generator v1.0.0
 	golang.org/x/exp v0.0.0-20231127185646-65229373498e
 )
 
@@ -26,7 +26,7 @@ require (
 	github.com/cloudflare/circl v1.3.3 // indirect
 	github.com/coreos/go-oidc/v3 v3.8.0 // indirect
 	github.com/fatih/color v1.16.0 // indirect
-	github.com/getkin/kin-openapi v0.120.0 // indirect
+	github.com/getkin/kin-openapi v0.121.0 // indirect
 	github.com/go-jose/go-jose/v3 v3.0.1 // indirect
 	github.com/go-logr/logr v1.3.0 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
