@@ -256,14 +256,7 @@ func tkhToTFObjectRSCertificateCertificatePrimer(recurse bool, tkh keyhubmodel.C
 	}
 	obj["alias"] = types.StringPointerValue(tkh.GetAlias())
 	obj["type"] = stringerToTF(tkh.GetCertificateCertificatePrimerType())
-	{
-		elemType := attrs["certificate_data"].(types.ListType).ElemType
-		val, d := sliceToTF(elemType, tkh.GetCertificateData(), func(tkh string, diags *diag.Diagnostics) attr.Value {
-			return types.StringValue(tkh)
-		})
-		diags.Append(d...)
-		obj["certificate_data"] = val
-	}
+	obj["certificate_data"] = types.StringPointerValue(tkh.GetCertificateData())
 	obj["expiration"] = timePointerToTF(tkh.GetExpiration())
 	obj["fingerprint_sha1"] = types.StringPointerValue(tkh.GetFingerprintSha1())
 	obj["fingerprint_sha256"] = types.StringPointerValue(tkh.GetFingerprintSha256())
@@ -3189,6 +3182,33 @@ func tkhToTFObjectRSProvisioningProvisionedNamespace(recurse bool, tkh keyhubmod
 	return objVal, diags
 }
 
+func tkhToTFObjectRSProvisioningProvisionedSCIM(recurse bool, tkh keyhubmodel.ProvisioningProvisionedSCIMable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = provisioningProvisionedSCIMAttrTypesRSRecurse
+	} else {
+		attrs = provisioningProvisionedSCIMAttrTypesRS
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	obj["authentication_scheme"] = stringerToTF(tkh.GetAuthenticationScheme())
+	obj["basic_auth_password"] = types.StringPointerValue(tkh.GetBasicAuthPassword())
+	obj["basic_auth_username"] = types.StringPointerValue(tkh.GetBasicAuthUsername())
+	obj["bearer_token"] = types.StringPointerValue(tkh.GetBearerToken())
+	obj["custom_header_name"] = types.StringPointerValue(tkh.GetCustomHeaderName())
+	obj["custom_header_value"] = types.StringPointerValue(tkh.GetCustomHeaderValue())
+	obj["url"] = types.StringPointerValue(tkh.GetUrl())
+	obj["vendor_escaped"] = stringerToTF(tkh.GetVendorEscaped())
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
 func tkhToTFObjectRSProvisioningProvisionedSystem(recurse bool, tkh keyhubmodel.ProvisioningProvisionedSystemable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
@@ -3301,6 +3321,12 @@ func tkhToTFObjectRSProvisioningProvisionedSystem(recurse bool, tkh keyhubmodel.
 		val, d := tkhToTFObjectRSProvisioningProvisionedNamespace(false, tkhCast)
 		diags.Append(d...)
 		obj["provisioned_namespace"] = val
+	}
+	{
+		tkhCast, _ := tkh.(keyhubmodel.ProvisioningProvisionedSCIMable)
+		val, d := tkhToTFObjectRSProvisioningProvisionedSCIM(false, tkhCast)
+		diags.Append(d...)
+		obj["provisioned_scim"] = val
 	}
 
 	objVal, d := types.ObjectValue(attrs, obj)

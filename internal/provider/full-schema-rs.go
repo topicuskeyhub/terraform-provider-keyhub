@@ -184,9 +184,8 @@ func resourceSchemaAttrsCertificateCertificatePrimer(recurse bool) map[string]rs
 		Computed:      true,
 		PlanModifiers: []planmodifier.String{stringplanmodifier.UseStateForUnknown()},
 	}
-	schemaAttrs["certificate_data"] = rsschema.ListAttribute{
-		ElementType: types.StringType,
-		Optional:    true,
+	schemaAttrs["certificate_data"] = rsschema.StringAttribute{
+		Optional: true,
 	}
 	schemaAttrs["expiration"] = rsschema.StringAttribute{
 		Computed: true,
@@ -2287,7 +2286,7 @@ func resourceSchemaAttrsNestedProvisioningGroupOnSystem(recurse bool) map[string
 		Required: true,
 		Validators: []validator.String{
 			stringvalidator.OneOf(
-				"POSIX_GROUP", "GROUP_OF_NAMES", "GROUP_OF_UNIQUE_NAMES", "GROUP", "AZURE_ROLE", "AZURE_UNIFIED_GROUP", "AZURE_SECURITY_GROUP",
+				"POSIX_GROUP", "GROUP_OF_NAMES", "GROUP_OF_UNIQUE_NAMES", "GROUP", "AZURE_ROLE", "AZURE_UNIFIED_GROUP", "AZURE_SECURITY_GROUP", "SCIM",
 			),
 		},
 	}
@@ -2590,7 +2589,7 @@ func resourceSchemaAttrsProvisioningGroupOnSystem(recurse bool) map[string]rssch
 		Required: true,
 		Validators: []validator.String{
 			stringvalidator.OneOf(
-				"POSIX_GROUP", "GROUP_OF_NAMES", "GROUP_OF_UNIQUE_NAMES", "GROUP", "AZURE_ROLE", "AZURE_UNIFIED_GROUP", "AZURE_SECURITY_GROUP",
+				"POSIX_GROUP", "GROUP_OF_NAMES", "GROUP_OF_UNIQUE_NAMES", "GROUP", "AZURE_ROLE", "AZURE_UNIFIED_GROUP", "AZURE_SECURITY_GROUP", "SCIM",
 			),
 		},
 	}
@@ -2644,7 +2643,7 @@ func resourceSchemaAttrsProvisioningGroupOnSystemPrimer(recurse bool) map[string
 		Required: true,
 		Validators: []validator.String{
 			stringvalidator.OneOf(
-				"POSIX_GROUP", "GROUP_OF_NAMES", "GROUP_OF_UNIQUE_NAMES", "GROUP", "AZURE_ROLE", "AZURE_UNIFIED_GROUP", "AZURE_SECURITY_GROUP",
+				"POSIX_GROUP", "GROUP_OF_NAMES", "GROUP_OF_UNIQUE_NAMES", "GROUP", "AZURE_ROLE", "AZURE_UNIFIED_GROUP", "AZURE_SECURITY_GROUP", "SCIM",
 			),
 		},
 	}
@@ -2661,7 +2660,7 @@ func resourceSchemaAttrsProvisioningGroupOnSystemTypes(recurse bool) map[string]
 		Validators: []validator.List{
 			listvalidator.ValueStringsAre(
 				stringvalidator.OneOf(
-					"POSIX_GROUP", "GROUP_OF_NAMES", "GROUP_OF_UNIQUE_NAMES", "GROUP", "AZURE_ROLE", "AZURE_UNIFIED_GROUP", "AZURE_SECURITY_GROUP",
+					"POSIX_GROUP", "GROUP_OF_NAMES", "GROUP_OF_UNIQUE_NAMES", "GROUP", "AZURE_ROLE", "AZURE_UNIFIED_GROUP", "AZURE_SECURITY_GROUP", "SCIM",
 				),
 			),
 		},
@@ -2949,6 +2948,66 @@ func resourceSchemaAttrsProvisioningProvisionedNamespace(recurse bool) map[strin
 	}
 	return schemaAttrs
 }
+func resourceSchemaAttrsProvisioningProvisionedSCIM(recurse bool) map[string]rsschema.Attribute {
+	schemaAttrs := make(map[string]rsschema.Attribute)
+	schemaAttrs["authentication_scheme"] = rsschema.StringAttribute{
+		Computed: true,
+		Optional: true,
+		Default:  stringdefault.StaticString("NONE"),
+		Validators: []validator.String{
+			stringvalidator.OneOf(
+				"NONE", "BASIC", "BEARER", "CUSTOM",
+			),
+		},
+	}
+	schemaAttrs["basic_auth_password"] = rsschema.StringAttribute{
+		Optional: true,
+		Validators: []validator.String{
+			stringvalidator.UTF8LengthBetween(0, 512),
+		},
+	}
+	schemaAttrs["basic_auth_username"] = rsschema.StringAttribute{
+		Optional: true,
+		Validators: []validator.String{
+			stringvalidator.UTF8LengthBetween(0, 512),
+		},
+	}
+	schemaAttrs["bearer_token"] = rsschema.StringAttribute{
+		Optional: true,
+		Validators: []validator.String{
+			stringvalidator.UTF8LengthBetween(0, 1024),
+		},
+	}
+	schemaAttrs["custom_header_name"] = rsschema.StringAttribute{
+		Optional: true,
+		Validators: []validator.String{
+			stringvalidator.UTF8LengthBetween(0, 64),
+		},
+	}
+	schemaAttrs["custom_header_value"] = rsschema.StringAttribute{
+		Optional: true,
+		Validators: []validator.String{
+			stringvalidator.UTF8LengthBetween(0, 1024),
+		},
+	}
+	schemaAttrs["url"] = rsschema.StringAttribute{
+		Required: true,
+		Validators: []validator.String{
+			stringvalidator.UTF8LengthBetween(0, 512),
+		},
+	}
+	schemaAttrs["vendor_escaped"] = rsschema.StringAttribute{
+		Computed: true,
+		Optional: true,
+		Default:  stringdefault.StaticString("DEFAULT"),
+		Validators: []validator.String{
+			stringvalidator.OneOf(
+				"DEFAULT", "AWS", "KEYSTONE",
+			),
+		},
+	}
+	return schemaAttrs
+}
 func resourceSchemaAttrsProvisioningProvisionedSystem(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	if recurse {
@@ -3009,6 +3068,7 @@ func resourceSchemaAttrsProvisioningProvisionedSystem(recurse bool) map[string]r
 		Computed: true,
 	}
 	schemaAttrs["content_administrator_uuid"] = rsschema.StringAttribute{
+		Computed: true,
 		Optional: true,
 		Validators: []validator.String{
 			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
@@ -3122,6 +3182,13 @@ func resourceSchemaAttrsProvisioningProvisionedSystem(recurse bool) map[string]r
 		}
 		attr.Optional = true
 		schemaAttrs["provisioned_namespace"] = attr
+	}
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsProvisioningProvisionedSCIM(false),
+		}
+		attr.Optional = true
+		schemaAttrs["provisioned_scim"] = attr
 	}
 	return schemaAttrs
 }
@@ -3386,7 +3453,7 @@ func resourceSchemaAttrsServiceaccountServiceAccountGroup(recurse bool) map[stri
 		Required: true,
 		Validators: []validator.String{
 			stringvalidator.OneOf(
-				"POSIX_GROUP", "GROUP_OF_NAMES", "GROUP_OF_UNIQUE_NAMES", "GROUP", "AZURE_ROLE", "AZURE_UNIFIED_GROUP", "AZURE_SECURITY_GROUP",
+				"POSIX_GROUP", "GROUP_OF_NAMES", "GROUP_OF_UNIQUE_NAMES", "GROUP", "AZURE_ROLE", "AZURE_UNIFIED_GROUP", "AZURE_SECURITY_GROUP", "SCIM",
 			),
 		},
 	}

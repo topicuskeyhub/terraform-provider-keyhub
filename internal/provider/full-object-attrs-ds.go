@@ -172,14 +172,14 @@ func objectAttrsTypeDSCertificateCertificate(recurse bool) map[string]attr.Type 
 	objectAttrs["permissions"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSAuthPermission(recurse)}}
 	objectAttrs["alias"] = types.StringType
 	objectAttrs["type"] = types.StringType
-	objectAttrs["certificate_data"] = types.ListType{ElemType: types.StringType}
+	objectAttrs["certificate_data"] = types.StringType
 	objectAttrs["expiration"] = types.StringType
 	objectAttrs["fingerprint_sha1"] = types.StringType
 	objectAttrs["fingerprint_sha256"] = types.StringType
 	objectAttrs["global"] = types.BoolType
 	objectAttrs["subject_dn"] = types.StringType
 	objectAttrs["uuid"] = types.StringType
-	objectAttrs["key_data"] = types.ListType{ElemType: types.StringType}
+	objectAttrs["key_data"] = types.StringType
 	return objectAttrs
 }
 
@@ -189,7 +189,7 @@ func objectAttrsTypeDSCertificateCertificatePrimer(recurse bool) map[string]attr
 	objectAttrs["permissions"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSAuthPermission(recurse)}}
 	objectAttrs["alias"] = types.StringType
 	objectAttrs["type"] = types.StringType
-	objectAttrs["certificate_data"] = types.ListType{ElemType: types.StringType}
+	objectAttrs["certificate_data"] = types.StringType
 	objectAttrs["expiration"] = types.StringType
 	objectAttrs["fingerprint_sha1"] = types.StringType
 	objectAttrs["fingerprint_sha256"] = types.StringType
@@ -1153,6 +1153,19 @@ func objectAttrsTypeDSProvisioningProvisionedNamespace(recurse bool) map[string]
 	return objectAttrs
 }
 
+func objectAttrsTypeDSProvisioningProvisionedSCIM(recurse bool) map[string]attr.Type {
+	objectAttrs := make(map[string]attr.Type)
+	objectAttrs["authentication_scheme"] = types.StringType
+	objectAttrs["basic_auth_password"] = types.StringType
+	objectAttrs["basic_auth_username"] = types.StringType
+	objectAttrs["bearer_token"] = types.StringType
+	objectAttrs["custom_header_name"] = types.StringType
+	objectAttrs["custom_header_value"] = types.StringType
+	objectAttrs["url"] = types.StringType
+	objectAttrs["vendor_escaped"] = types.StringType
+	return objectAttrs
+}
+
 func objectAttrsTypeDSProvisioningProvisionedSystem(recurse bool) map[string]attr.Type {
 	objectAttrs := make(map[string]attr.Type)
 	if recurse {
@@ -1195,6 +1208,7 @@ func objectAttrsTypeDSProvisioningProvisionedSystem(recurse bool) map[string]att
 	objectAttrs["provisioned_ldap"] = types.ObjectType{AttrTypes: objectAttrsTypeDSProvisioningProvisionedLDAP(false)}
 	objectAttrs["provisioned_ldap_directory"] = types.ObjectType{AttrTypes: objectAttrsTypeDSProvisioningProvisionedLDAPDirectory(false)}
 	objectAttrs["provisioned_namespace"] = types.ObjectType{AttrTypes: objectAttrsTypeDSProvisioningProvisionedNamespace(false)}
+	objectAttrs["provisioned_scim"] = types.ObjectType{AttrTypes: objectAttrsTypeDSProvisioningProvisionedSCIM(false)}
 	return objectAttrs
 }
 

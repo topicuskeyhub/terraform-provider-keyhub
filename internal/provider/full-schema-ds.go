@@ -399,9 +399,8 @@ func dataSourceSchemaAttrsCertificateCertificate(recurse bool) map[string]dssche
 	schemaAttrs["type"] = dsschema.StringAttribute{
 		Computed: true,
 	}
-	schemaAttrs["certificate_data"] = dsschema.ListAttribute{
-		ElementType: types.StringType,
-		Computed:    true,
+	schemaAttrs["certificate_data"] = dsschema.StringAttribute{
+		Computed: true,
 	}
 	schemaAttrs["expiration"] = dsschema.StringAttribute{
 		Computed: true,
@@ -426,9 +425,8 @@ func dataSourceSchemaAttrsCertificateCertificate(recurse bool) map[string]dssche
 			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
-	schemaAttrs["key_data"] = dsschema.ListAttribute{
-		ElementType: types.StringType,
-		Computed:    true,
+	schemaAttrs["key_data"] = dsschema.StringAttribute{
+		Computed: true,
 	}
 	return schemaAttrs
 }
@@ -452,9 +450,8 @@ func dataSourceSchemaAttrsCertificateCertificatePrimer(recurse bool) map[string]
 	schemaAttrs["type"] = dsschema.StringAttribute{
 		Computed: true,
 	}
-	schemaAttrs["certificate_data"] = dsschema.ListAttribute{
-		ElementType: types.StringType,
-		Computed:    true,
+	schemaAttrs["certificate_data"] = dsschema.StringAttribute{
+		Computed: true,
 	}
 	schemaAttrs["expiration"] = dsschema.StringAttribute{
 		Computed: true,
@@ -2921,6 +2918,34 @@ func dataSourceSchemaAttrsProvisioningProvisionedNamespace(recurse bool) map[str
 	}
 	return schemaAttrs
 }
+func dataSourceSchemaAttrsProvisioningProvisionedSCIM(recurse bool) map[string]dsschema.Attribute {
+	schemaAttrs := make(map[string]dsschema.Attribute)
+	schemaAttrs["authentication_scheme"] = dsschema.StringAttribute{
+		Computed: true,
+	}
+	schemaAttrs["basic_auth_password"] = dsschema.StringAttribute{
+		Computed: true,
+	}
+	schemaAttrs["basic_auth_username"] = dsschema.StringAttribute{
+		Computed: true,
+	}
+	schemaAttrs["bearer_token"] = dsschema.StringAttribute{
+		Computed: true,
+	}
+	schemaAttrs["custom_header_name"] = dsschema.StringAttribute{
+		Computed: true,
+	}
+	schemaAttrs["custom_header_value"] = dsschema.StringAttribute{
+		Computed: true,
+	}
+	schemaAttrs["url"] = dsschema.StringAttribute{
+		Computed: true,
+	}
+	schemaAttrs["vendor_escaped"] = dsschema.StringAttribute{
+		Computed: true,
+	}
+	return schemaAttrs
+}
 func dataSourceSchemaAttrsProvisioningProvisionedSystem(recurse bool) map[string]dsschema.Attribute {
 	schemaAttrs := make(map[string]dsschema.Attribute)
 	if recurse {
@@ -3080,6 +3105,13 @@ func dataSourceSchemaAttrsProvisioningProvisionedSystem(recurse bool) map[string
 		}
 		attr.Computed = true
 		schemaAttrs["provisioned_namespace"] = attr
+	}
+	{
+		attr := dsschema.SingleNestedAttribute{
+			Attributes: dataSourceSchemaAttrsProvisioningProvisionedSCIM(false),
+		}
+		attr.Computed = true
+		schemaAttrs["provisioned_scim"] = attr
 	}
 	return schemaAttrs
 }

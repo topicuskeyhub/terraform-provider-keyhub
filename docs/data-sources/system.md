@@ -49,6 +49,7 @@ description: |-
 - `provisioned_ldap` (Attributes) (see [below for nested schema](#nestedatt--provisioned_ldap))
 - `provisioned_ldap_directory` (Attributes) (see [below for nested schema](#nestedatt--provisioned_ldap_directory))
 - `provisioned_namespace` (Attributes) (see [below for nested schema](#nestedatt--provisioned_namespace))
+- `provisioned_scim` (Attributes) (see [below for nested schema](#nestedatt--provisioned_scim))
 - `self_service_existing_groups` (Boolean)
 - `self_service_new_groups` (Boolean)
 - `self_service_new_namespaces` (Boolean)
@@ -88,7 +89,7 @@ Read-Only:
 Read-Only:
 
 - `alias` (String)
-- `certificate_data` (List of String)
+- `certificate_data` (String)
 - `expiration` (String)
 - `fingerprint_sha1` (String)
 - `fingerprint_sha256` (String)
@@ -128,7 +129,7 @@ Read-Only:
 Read-Only:
 
 - `alias` (String)
-- `certificate_data` (List of String)
+- `certificate_data` (String)
 - `expiration` (String)
 - `fingerprint_sha1` (String)
 - `fingerprint_sha256` (String)
@@ -168,7 +169,7 @@ Read-Only:
 Read-Only:
 
 - `alias` (String)
-- `certificate_data` (List of String)
+- `certificate_data` (String)
 - `expiration` (String)
 - `fingerprint_sha1` (String)
 - `fingerprint_sha256` (String)
@@ -845,7 +846,7 @@ Read-Only:
 Read-Only:
 
 - `alias` (String)
-- `certificate_data` (List of String)
+- `certificate_data` (String)
 - `expiration` (String)
 - `fingerprint_sha1` (String)
 - `fingerprint_sha256` (String)
@@ -1082,6 +1083,21 @@ Read-Only:
 - `type_escaped` (String)
 
 
+
+
+<a id="nestedatt--provisioned_scim"></a>
+### Nested Schema for `provisioned_scim`
+
+Read-Only:
+
+- `authentication_scheme` (String)
+- `basic_auth_password` (String)
+- `basic_auth_username` (String)
+- `bearer_token` (String)
+- `custom_header_name` (String)
+- `custom_header_value` (String)
+- `url` (String)
+- `vendor_escaped` (String)
 
 
 <a id="nestedatt--statistics"></a>

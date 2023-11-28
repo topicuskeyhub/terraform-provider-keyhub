@@ -83,7 +83,7 @@ type certificateCertificatePrimerDataRS struct {
 	Permissions                      types.List   `tfsdk:"permissions"`
 	Alias                            types.String `tfsdk:"alias"`
 	CertificateCertificatePrimerType types.String `tfsdk:"type"`
-	CertificateData                  types.List   `tfsdk:"certificate_data"`
+	CertificateData                  types.String `tfsdk:"certificate_data"`
 	Expiration                       types.String `tfsdk:"expiration"`
 	FingerprintSha1                  types.String `tfsdk:"fingerprint_sha1"`
 	FingerprintSha256                types.String `tfsdk:"fingerprint_sha256"`
@@ -1040,6 +1040,20 @@ type provisioningProvisionedNamespaceDataRS struct {
 	ServiceAccountDN types.String `tfsdk:"service_account_dn"`
 }
 
+var provisioningProvisionedSCIMAttrTypesRS = objectAttrsTypeRSProvisioningProvisionedSCIM(false)
+var provisioningProvisionedSCIMAttrTypesRSRecurse = objectAttrsTypeRSProvisioningProvisionedSCIM(true)
+
+type provisioningProvisionedSCIMDataRS struct {
+	AuthenticationScheme types.String `tfsdk:"authentication_scheme"`
+	BasicAuthPassword    types.String `tfsdk:"basic_auth_password"`
+	BasicAuthUsername    types.String `tfsdk:"basic_auth_username"`
+	BearerToken          types.String `tfsdk:"bearer_token"`
+	CustomHeaderName     types.String `tfsdk:"custom_header_name"`
+	CustomHeaderValue    types.String `tfsdk:"custom_header_value"`
+	URL                  types.String `tfsdk:"url"`
+	VendorEscaped        types.String `tfsdk:"vendor_escaped"`
+}
+
 var provisioningProvisionedSystemAttrTypesRS = objectAttrsTypeRSProvisioningProvisionedSystem(false)
 var provisioningProvisionedSystemAttrTypesRSRecurse = objectAttrsTypeRSProvisioningProvisionedSystem(true)
 
@@ -1080,6 +1094,7 @@ type provisioningProvisionedSystemDataRS struct {
 	ProvisionedLDAP                         types.Object `tfsdk:"provisioned_ldap"`
 	ProvisionedLDAPDirectory                types.Object `tfsdk:"provisioned_ldap_directory"`
 	ProvisionedNamespace                    types.Object `tfsdk:"provisioned_namespace"`
+	ProvisionedSCIM                         types.Object `tfsdk:"provisioned_scim"`
 }
 
 var provisioningProvisionedSystemLinkableWrapperAttrTypesRS = objectAttrsTypeRSProvisioningProvisionedSystemLinkableWrapper(false)

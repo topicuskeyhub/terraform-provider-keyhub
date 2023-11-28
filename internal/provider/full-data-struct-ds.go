@@ -176,7 +176,7 @@ type certificateCertificateDataDS struct {
 	Permissions                      types.List   `tfsdk:"permissions"`
 	Alias                            types.String `tfsdk:"alias"`
 	CertificateCertificatePrimerType types.String `tfsdk:"type"`
-	CertificateData                  types.List   `tfsdk:"certificate_data"`
+	CertificateData                  types.String `tfsdk:"certificate_data"`
 	Expiration                       types.String `tfsdk:"expiration"`
 	FingerprintSha1                  types.String `tfsdk:"fingerprint_sha1"`
 	FingerprintSha256                types.String `tfsdk:"fingerprint_sha256"`
@@ -185,7 +185,7 @@ type certificateCertificateDataDS struct {
 	UUID                             types.String `tfsdk:"uuid"`
 	Additional                       types.List   `tfsdk:"additional"`
 	Audit                            types.Object `tfsdk:"audit" tkhao:"audit"`
-	KeyData                          types.List   `tfsdk:"key_data"`
+	KeyData                          types.String `tfsdk:"key_data"`
 }
 
 var certificateCertificatePrimerAttrTypesDS = objectAttrsTypeDSCertificateCertificatePrimer(false)
@@ -196,7 +196,7 @@ type certificateCertificatePrimerDataDS struct {
 	Permissions                      types.List   `tfsdk:"permissions"`
 	Alias                            types.String `tfsdk:"alias"`
 	CertificateCertificatePrimerType types.String `tfsdk:"type"`
-	CertificateData                  types.List   `tfsdk:"certificate_data"`
+	CertificateData                  types.String `tfsdk:"certificate_data"`
 	Expiration                       types.String `tfsdk:"expiration"`
 	FingerprintSha1                  types.String `tfsdk:"fingerprint_sha1"`
 	FingerprintSha256                types.String `tfsdk:"fingerprint_sha256"`
@@ -1177,6 +1177,20 @@ type provisioningProvisionedNamespaceDataDS struct {
 	ServiceAccountDN types.String `tfsdk:"service_account_dn"`
 }
 
+var provisioningProvisionedSCIMAttrTypesDS = objectAttrsTypeDSProvisioningProvisionedSCIM(false)
+var provisioningProvisionedSCIMAttrTypesDSRecurse = objectAttrsTypeDSProvisioningProvisionedSCIM(true)
+
+type provisioningProvisionedSCIMDataDS struct {
+	AuthenticationScheme types.String `tfsdk:"authentication_scheme"`
+	BasicAuthPassword    types.String `tfsdk:"basic_auth_password"`
+	BasicAuthUsername    types.String `tfsdk:"basic_auth_username"`
+	BearerToken          types.String `tfsdk:"bearer_token"`
+	CustomHeaderName     types.String `tfsdk:"custom_header_name"`
+	CustomHeaderValue    types.String `tfsdk:"custom_header_value"`
+	URL                  types.String `tfsdk:"url"`
+	VendorEscaped        types.String `tfsdk:"vendor_escaped"`
+}
+
 var provisioningProvisionedSystemAttrTypesDS = objectAttrsTypeDSProvisioningProvisionedSystem(false)
 var provisioningProvisionedSystemAttrTypesDSRecurse = objectAttrsTypeDSProvisioningProvisionedSystem(true)
 
@@ -1217,6 +1231,7 @@ type provisioningProvisionedSystemDataDS struct {
 	ProvisionedLDAP                         types.Object `tfsdk:"provisioned_ldap"`
 	ProvisionedLDAPDirectory                types.Object `tfsdk:"provisioned_ldap_directory"`
 	ProvisionedNamespace                    types.Object `tfsdk:"provisioned_namespace"`
+	ProvisionedSCIM                         types.Object `tfsdk:"provisioned_scim"`
 }
 
 var provisioningProvisionedSystemLinkableWrapperAttrTypesDS = objectAttrsTypeDSProvisioningProvisionedSystemLinkableWrapper(false)

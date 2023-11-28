@@ -75,7 +75,7 @@ func objectAttrsTypeRSCertificateCertificatePrimer(recurse bool) map[string]attr
 	objectAttrs["permissions"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeRSAuthPermission(recurse)}}
 	objectAttrs["alias"] = types.StringType
 	objectAttrs["type"] = types.StringType
-	objectAttrs["certificate_data"] = types.ListType{ElemType: types.StringType}
+	objectAttrs["certificate_data"] = types.StringType
 	objectAttrs["expiration"] = types.StringType
 	objectAttrs["fingerprint_sha1"] = types.StringType
 	objectAttrs["fingerprint_sha256"] = types.StringType
@@ -1020,6 +1020,19 @@ func objectAttrsTypeRSProvisioningProvisionedNamespace(recurse bool) map[string]
 	return objectAttrs
 }
 
+func objectAttrsTypeRSProvisioningProvisionedSCIM(recurse bool) map[string]attr.Type {
+	objectAttrs := make(map[string]attr.Type)
+	objectAttrs["authentication_scheme"] = types.StringType
+	objectAttrs["basic_auth_password"] = types.StringType
+	objectAttrs["basic_auth_username"] = types.StringType
+	objectAttrs["bearer_token"] = types.StringType
+	objectAttrs["custom_header_name"] = types.StringType
+	objectAttrs["custom_header_value"] = types.StringType
+	objectAttrs["url"] = types.StringType
+	objectAttrs["vendor_escaped"] = types.StringType
+	return objectAttrs
+}
+
 func objectAttrsTypeRSProvisioningProvisionedSystem(recurse bool) map[string]attr.Type {
 	objectAttrs := make(map[string]attr.Type)
 	if recurse {
@@ -1062,6 +1075,7 @@ func objectAttrsTypeRSProvisioningProvisionedSystem(recurse bool) map[string]att
 	objectAttrs["provisioned_ldap"] = types.ObjectType{AttrTypes: objectAttrsTypeRSProvisioningProvisionedLDAP(false)}
 	objectAttrs["provisioned_ldap_directory"] = types.ObjectType{AttrTypes: objectAttrsTypeRSProvisioningProvisionedLDAPDirectory(false)}
 	objectAttrs["provisioned_namespace"] = types.ObjectType{AttrTypes: objectAttrsTypeRSProvisioningProvisionedNamespace(false)}
+	objectAttrs["provisioned_scim"] = types.ObjectType{AttrTypes: objectAttrsTypeRSProvisioningProvisionedSCIM(false)}
 	return objectAttrs
 }
 

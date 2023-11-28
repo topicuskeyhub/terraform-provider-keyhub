@@ -349,6 +349,7 @@ Optional:
 - `provisioned_ldap` (Attributes) (see [below for nested schema](#nestedatt--administered_systems--provisioned_ldap))
 - `provisioned_ldap_directory` (Attributes) (see [below for nested schema](#nestedatt--administered_systems--provisioned_ldap_directory))
 - `provisioned_namespace` (Attributes) (see [below for nested schema](#nestedatt--administered_systems--provisioned_namespace))
+- `provisioned_scim` (Attributes) (see [below for nested schema](#nestedatt--administered_systems--provisioned_scim))
 - `self_service_existing_groups` (Boolean)
 - `self_service_new_groups` (Boolean)
 - `self_service_new_namespaces` (Boolean)
@@ -511,6 +512,24 @@ Required:
 - `base_system_uuid` (String)
 - `group_dn` (String)
 - `service_account_dn` (String)
+
+
+<a id="nestedatt--administered_systems--provisioned_scim"></a>
+### Nested Schema for `administered_systems.provisioned_scim`
+
+Required:
+
+- `url` (String)
+
+Optional:
+
+- `authentication_scheme` (String)
+- `basic_auth_password` (String)
+- `basic_auth_username` (String)
+- `bearer_token` (String)
+- `custom_header_name` (String)
+- `custom_header_value` (String)
+- `vendor_escaped` (String)
 
 
 <a id="nestedatt--administered_systems--links"></a>
@@ -714,6 +733,7 @@ Optional:
 - `provisioned_ldap` (Attributes) (see [below for nested schema](#nestedatt--content_administered_systems--provisioned_ldap))
 - `provisioned_ldap_directory` (Attributes) (see [below for nested schema](#nestedatt--content_administered_systems--provisioned_ldap_directory))
 - `provisioned_namespace` (Attributes) (see [below for nested schema](#nestedatt--content_administered_systems--provisioned_namespace))
+- `provisioned_scim` (Attributes) (see [below for nested schema](#nestedatt--content_administered_systems--provisioned_scim))
 - `self_service_existing_groups` (Boolean)
 - `self_service_new_groups` (Boolean)
 - `self_service_new_namespaces` (Boolean)
@@ -876,6 +896,24 @@ Required:
 - `base_system_uuid` (String)
 - `group_dn` (String)
 - `service_account_dn` (String)
+
+
+<a id="nestedatt--content_administered_systems--provisioned_scim"></a>
+### Nested Schema for `content_administered_systems.provisioned_scim`
+
+Required:
+
+- `url` (String)
+
+Optional:
+
+- `authentication_scheme` (String)
+- `basic_auth_password` (String)
+- `basic_auth_username` (String)
+- `bearer_token` (String)
+- `custom_header_name` (String)
+- `custom_header_value` (String)
+- `vendor_escaped` (String)
 
 
 <a id="nestedatt--content_administered_systems--links"></a>
@@ -1435,6 +1473,7 @@ Optional:
 - `provisioned_ldap` (Attributes) (see [below for nested schema](#nestedatt--owned_systems--provisioned_ldap))
 - `provisioned_ldap_directory` (Attributes) (see [below for nested schema](#nestedatt--owned_systems--provisioned_ldap_directory))
 - `provisioned_namespace` (Attributes) (see [below for nested schema](#nestedatt--owned_systems--provisioned_namespace))
+- `provisioned_scim` (Attributes) (see [below for nested schema](#nestedatt--owned_systems--provisioned_scim))
 - `self_service_existing_groups` (Boolean)
 - `self_service_new_groups` (Boolean)
 - `self_service_new_namespaces` (Boolean)
@@ -1597,6 +1636,24 @@ Required:
 - `base_system_uuid` (String)
 - `group_dn` (String)
 - `service_account_dn` (String)
+
+
+<a id="nestedatt--owned_systems--provisioned_scim"></a>
+### Nested Schema for `owned_systems.provisioned_scim`
+
+Required:
+
+- `url` (String)
+
+Optional:
+
+- `authentication_scheme` (String)
+- `basic_auth_password` (String)
+- `basic_auth_username` (String)
+- `bearer_token` (String)
+- `custom_header_name` (String)
+- `custom_header_value` (String)
+- `vendor_escaped` (String)
 
 
 <a id="nestedatt--owned_systems--links"></a>

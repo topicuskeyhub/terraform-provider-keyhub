@@ -60,7 +60,7 @@ func fillDataStructFromTFObjectRSCertificateCertificatePrimer(data *certificateC
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
 	data.Alias = obj.Attributes()["alias"].(basetypes.StringValue)
 	data.CertificateCertificatePrimerType = obj.Attributes()["type"].(basetypes.StringValue)
-	data.CertificateData = obj.Attributes()["certificate_data"].(basetypes.ListValue)
+	data.CertificateData = obj.Attributes()["certificate_data"].(basetypes.StringValue)
 	data.Expiration = obj.Attributes()["expiration"].(basetypes.StringValue)
 	data.FingerprintSha1 = obj.Attributes()["fingerprint_sha1"].(basetypes.StringValue)
 	data.FingerprintSha256 = obj.Attributes()["fingerprint_sha256"].(basetypes.StringValue)
@@ -786,6 +786,17 @@ func fillDataStructFromTFObjectRSProvisioningProvisionedNamespace(data *provisio
 	data.ServiceAccountDN = obj.Attributes()["service_account_dn"].(basetypes.StringValue)
 }
 
+func fillDataStructFromTFObjectRSProvisioningProvisionedSCIM(data *provisioningProvisionedSCIMDataRS, obj types.Object) {
+	data.AuthenticationScheme = obj.Attributes()["authentication_scheme"].(basetypes.StringValue)
+	data.BasicAuthPassword = obj.Attributes()["basic_auth_password"].(basetypes.StringValue)
+	data.BasicAuthUsername = obj.Attributes()["basic_auth_username"].(basetypes.StringValue)
+	data.BearerToken = obj.Attributes()["bearer_token"].(basetypes.StringValue)
+	data.CustomHeaderName = obj.Attributes()["custom_header_name"].(basetypes.StringValue)
+	data.CustomHeaderValue = obj.Attributes()["custom_header_value"].(basetypes.StringValue)
+	data.URL = obj.Attributes()["url"].(basetypes.StringValue)
+	data.VendorEscaped = obj.Attributes()["vendor_escaped"].(basetypes.StringValue)
+}
+
 func fillDataStructFromTFObjectRSProvisioningProvisionedSystem(data *provisioningProvisionedSystemDataRS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
@@ -823,6 +834,7 @@ func fillDataStructFromTFObjectRSProvisioningProvisionedSystem(data *provisionin
 	data.ProvisionedLDAP = obj.Attributes()["provisioned_ldap"].(basetypes.ObjectValue)
 	data.ProvisionedLDAPDirectory = obj.Attributes()["provisioned_ldap_directory"].(basetypes.ObjectValue)
 	data.ProvisionedNamespace = obj.Attributes()["provisioned_namespace"].(basetypes.ObjectValue)
+	data.ProvisionedSCIM = obj.Attributes()["provisioned_scim"].(basetypes.ObjectValue)
 }
 
 func fillDataStructFromTFObjectRSProvisioningProvisionedSystemLinkableWrapper(data *provisioningProvisionedSystemLinkableWrapperDataRS, obj types.Object) {

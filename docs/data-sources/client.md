@@ -843,7 +843,7 @@ Read-Only:
 Read-Only:
 
 - `alias` (String)
-- `certificate_data` (List of String)
+- `certificate_data` (String)
 - `expiration` (String)
 - `fingerprint_sha1` (String)
 - `fingerprint_sha256` (String)

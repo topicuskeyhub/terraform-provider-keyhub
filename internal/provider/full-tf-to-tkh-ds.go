@@ -452,13 +452,7 @@ func tfObjectToTKHDSCertificateCertificate(ctx context.Context, recurse bool, ob
 		diags.Append(d...)
 		tkh.SetCertificateCertificatePrimerType(val)
 	}
-	{
-		val, d := tfToSlice(objAttrs["certificate_data"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) string {
-			return val.(basetypes.StringValue).ValueString()
-		})
-		diags.Append(d...)
-		tkh.SetCertificateData(val)
-	}
+	tkh.SetCertificateData(objAttrs["certificate_data"].(basetypes.StringValue).ValueStringPointer())
 	{
 		val, d := tfToTimePointer(objAttrs["expiration"].(basetypes.StringValue))
 		diags.Append(d...)
@@ -469,13 +463,7 @@ func tfObjectToTKHDSCertificateCertificate(ctx context.Context, recurse bool, ob
 	tkh.SetGlobal(objAttrs["global"].(basetypes.BoolValue).ValueBoolPointer())
 	tkh.SetSubjectDN(objAttrs["subject_dn"].(basetypes.StringValue).ValueStringPointer())
 	tkh.SetUuid(objAttrs["uuid"].(basetypes.StringValue).ValueStringPointer())
-	{
-		val, d := tfToSlice(objAttrs["key_data"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) string {
-			return val.(basetypes.StringValue).ValueString()
-		})
-		diags.Append(d...)
-		tkh.SetKeyData(val)
-	}
+	tkh.SetKeyData(objAttrs["key_data"].(basetypes.StringValue).ValueStringPointer())
 	if recurse {
 		{
 			val, d := tfObjectToTKHDSCertificateCertificate_additionalObjects(ctx, false, objVal)
@@ -520,13 +508,7 @@ func tfObjectToTKHDSCertificateCertificatePrimer(ctx context.Context, recurse bo
 		diags.Append(d...)
 		tkh.SetCertificateCertificatePrimerType(val)
 	}
-	{
-		val, d := tfToSlice(objAttrs["certificate_data"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) string {
-			return val.(basetypes.StringValue).ValueString()
-		})
-		diags.Append(d...)
-		tkh.SetCertificateData(val)
-	}
+	tkh.SetCertificateData(objAttrs["certificate_data"].(basetypes.StringValue).ValueStringPointer())
 	{
 		val, d := tfToTimePointer(objAttrs["expiration"].(basetypes.StringValue))
 		diags.Append(d...)
@@ -3259,6 +3241,37 @@ func tfObjectToTKHDSProvisioningProvisionedNamespace(ctx context.Context, recurs
 	return tkh, diags
 }
 
+func tfObjectToTKHDSProvisioningProvisionedSCIM(ctx context.Context, recurse bool, objVal types.Object) (keyhubmodel.ProvisioningProvisionedSCIMable, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	if objVal.IsNull() || objVal.IsUnknown() {
+		return nil, diags
+	}
+	objAttrs := objVal.Attributes()
+	var tkh keyhubmodel.ProvisioningProvisionedSCIMable
+	tkh = keyhubmodel.NewProvisioningProvisionedSCIM()
+	{
+		val, d := parseCastPointer(objAttrs["authentication_scheme"].(basetypes.StringValue), keyhubmodel.ParseHttpAuthenticationScheme, func(val any) keyhubmodel.HttpAuthenticationScheme {
+			return *val.(*keyhubmodel.HttpAuthenticationScheme)
+		})
+		diags.Append(d...)
+		tkh.SetAuthenticationScheme(val)
+	}
+	tkh.SetBasicAuthPassword(objAttrs["basic_auth_password"].(basetypes.StringValue).ValueStringPointer())
+	tkh.SetBasicAuthUsername(objAttrs["basic_auth_username"].(basetypes.StringValue).ValueStringPointer())
+	tkh.SetBearerToken(objAttrs["bearer_token"].(basetypes.StringValue).ValueStringPointer())
+	tkh.SetCustomHeaderName(objAttrs["custom_header_name"].(basetypes.StringValue).ValueStringPointer())
+	tkh.SetCustomHeaderValue(objAttrs["custom_header_value"].(basetypes.StringValue).ValueStringPointer())
+	tkh.SetUrl(objAttrs["url"].(basetypes.StringValue).ValueStringPointer())
+	{
+		val, d := parseCastPointer(objAttrs["vendor_escaped"].(basetypes.StringValue), keyhubmodel.ParseProvisioningProvisionedSCIMVendor, func(val any) keyhubmodel.ProvisioningProvisionedSCIMVendor {
+			return *val.(*keyhubmodel.ProvisioningProvisionedSCIMVendor)
+		})
+		diags.Append(d...)
+		tkh.SetVendorEscaped(val)
+	}
+	return tkh, diags
+}
+
 func tfObjectToTKHDSProvisioningProvisionedSystem(ctx context.Context, recurse bool, objVal types.Object) (keyhubmodel.ProvisioningProvisionedSystemable, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	if objVal.IsNull() || objVal.IsUnknown() {
@@ -3396,6 +3409,14 @@ func tfObjectToTKHDSProvisioningProvisionedSystem(ctx context.Context, recurse b
 		diags.Append(d...)
 		dtype := val.GetTypeEscaped()
 		(*val.(*keyhubmodel.ProvisioningProvisionedNamespace)).ProvisioningProvisionedSystem = *tkh.(*keyhubmodel.ProvisioningProvisionedSystem)
+		val.SetTypeEscaped(dtype)
+		tkh = val
+	}
+	if !objAttrs["provisioned_scim"].IsNull() {
+		val, d := tfObjectToTKHDSProvisioningProvisionedSCIM(ctx, false, objAttrs["provisioned_scim"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		dtype := val.GetTypeEscaped()
+		(*val.(*keyhubmodel.ProvisioningProvisionedSCIM)).ProvisioningProvisionedSystem = *tkh.(*keyhubmodel.ProvisioningProvisionedSystem)
 		val.SetTypeEscaped(dtype)
 		tkh = val
 	}
@@ -4149,8 +4170,8 @@ func tfObjectToTKHDSWebhookWebhook(ctx context.Context, recurse bool, objVal typ
 	tkh.SetActive(objAttrs["active"].(basetypes.BoolValue).ValueBoolPointer())
 	tkh.SetAllTypes(objAttrs["all_types"].(basetypes.BoolValue).ValueBoolPointer())
 	{
-		val, d := parseCastPointer(objAttrs["authentication_scheme"].(basetypes.StringValue), keyhubmodel.ParseWebhookWebhookAuthenticationScheme, func(val any) keyhubmodel.WebhookWebhookAuthenticationScheme {
-			return *val.(*keyhubmodel.WebhookWebhookAuthenticationScheme)
+		val, d := parseCastPointer(objAttrs["authentication_scheme"].(basetypes.StringValue), keyhubmodel.ParseHttpAuthenticationScheme, func(val any) keyhubmodel.HttpAuthenticationScheme {
+			return *val.(*keyhubmodel.HttpAuthenticationScheme)
 		})
 		diags.Append(d...)
 		tkh.SetAuthenticationScheme(val)
