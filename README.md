@@ -8,7 +8,7 @@ For more information see:
 * [Topicus KeyHub Provider Documentation](https://registry.terraform.io/providers/topicuskeyhub/keyhub/latest/docs)
 
 The used provider version must match your Topicus KeyHub release.
-For example, use the provider version 0.30.0 for Topicus KeyHub 30.
+For example, use the provider version 2.30.0 for Topicus KeyHub 30.
 An older version of the provider may work on a newer version of Topicus KeyHub.
 A newer version of the provder will fail on an older version of Topicus KeyHub.
 
@@ -20,7 +20,7 @@ terraform {
   required_providers {
     keyhub = {
       source = "registry.terraform.io/hashicorp/keyhub"
-      version = "=0.0.2"
+      version = "=2.30.0"
     }
   }
 }

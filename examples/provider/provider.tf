@@ -2,7 +2,7 @@ terraform {
   required_providers {
     keyhub = {
       source  = "registry.terraform.io/hashicorp/keyhub"
-      version = "=0.30.0"
+      version = "=2.30.0"
     }
   }
 }
