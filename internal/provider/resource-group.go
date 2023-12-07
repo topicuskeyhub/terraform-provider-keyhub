@@ -127,18 +127,25 @@ func (r *groupResource) Read(ctx context.Context, req resource.ReadRequest, resp
 	defer r.providerData.Mutex.RUnlock()
 	ctx = context.WithValue(ctx, keyHubClientKey, r.providerData.Client)
 	tflog.Info(ctx, "Reading group from Topicus KeyHub")
-	tkh, err := r.providerData.Client.Group().ByGroupidInt64(getSelfLink(data.Links).ID.ValueInt64()).Get(
-		ctx, &keyhubreq.WithGroupItemRequestBuilderGetRequestConfiguration{
-			QueryParameters: &keyhubreq.WithGroupItemRequestBuilderGetQueryParameters{
+	wrapper, err := r.providerData.Client.Group().Get(
+		ctx, &keyhubreq.GroupRequestBuilderGetRequestConfiguration{
+			QueryParameters: &keyhubreq.GroupRequestBuilderGetQueryParameters{
 				Additional: collectAdditional(ctx, data, data.Additional),
+				Uuid:       []string{data.UUID.ValueString()},
 			},
 		})
 
-	if !isHttpStatusCodeOk(ctx, 404, err, &resp.Diagnostics) {
+	if !isHttpStatusCodeOk(ctx, -1, err, &resp.Diagnostics) {
 		return
 	}
-	// only 404 remains
-	if err != nil {
+
+	tkh, diags := findFirst[keyhubmodels.GroupGroupable](ctx, wrapper, "group", data.UUID.ValueStringPointer(), true, err)
+	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	if tkh == nil {
 		tflog.Info(ctx, "group not found, marking resource as removed")
 		resp.State.RemoveResource(ctx)
 		return

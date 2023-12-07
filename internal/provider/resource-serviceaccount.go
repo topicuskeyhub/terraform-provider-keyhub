@@ -127,18 +127,25 @@ func (r *serviceaccountResource) Read(ctx context.Context, req resource.ReadRequ
 	defer r.providerData.Mutex.RUnlock()
 	ctx = context.WithValue(ctx, keyHubClientKey, r.providerData.Client)
 	tflog.Info(ctx, "Reading serviceaccount from Topicus KeyHub")
-	tkh, err := r.providerData.Client.Serviceaccount().ByServiceaccountidInt64(getSelfLink(data.Links).ID.ValueInt64()).Get(
-		ctx, &keyhubreq.WithServiceaccountItemRequestBuilderGetRequestConfiguration{
-			QueryParameters: &keyhubreq.WithServiceaccountItemRequestBuilderGetQueryParameters{
+	wrapper, err := r.providerData.Client.Serviceaccount().Get(
+		ctx, &keyhubreq.ServiceaccountRequestBuilderGetRequestConfiguration{
+			QueryParameters: &keyhubreq.ServiceaccountRequestBuilderGetQueryParameters{
 				Additional: collectAdditional(ctx, data, data.Additional),
+				Uuid:       []string{data.UUID.ValueString()},
 			},
 		})
 
-	if !isHttpStatusCodeOk(ctx, 404, err, &resp.Diagnostics) {
+	if !isHttpStatusCodeOk(ctx, -1, err, &resp.Diagnostics) {
 		return
 	}
-	// only 404 remains
-	if err != nil {
+
+	tkh, diags := findFirst[keyhubmodels.ServiceaccountServiceAccountable](ctx, wrapper, "serviceaccount", data.UUID.ValueStringPointer(), true, err)
+	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	if tkh == nil {
 		tflog.Info(ctx, "serviceaccount not found, marking resource as removed")
 		resp.State.RemoveResource(ctx)
 		return

@@ -10,8 +10,8 @@ require (
 	github.com/hashicorp/terraform-plugin-log v0.9.0
 	github.com/microsoft/kiota-abstractions-go v1.5.3
 	github.com/topicuskeyhub/sdk-go v0.30.1
-	github.com/topicuskeyhub/terraform-provider-keyhub-generator v1.0.1
-	golang.org/x/exp v0.0.0-20231127185646-65229373498e
+	github.com/topicuskeyhub/terraform-provider-keyhub-generator v1.0.3
+	golang.org/x/exp v0.0.0-20231206192017-f3f8817b8deb
 )
 
 require (
@@ -26,7 +26,7 @@ require (
 	github.com/cloudflare/circl v1.3.3 // indirect
 	github.com/coreos/go-oidc/v3 v3.8.0 // indirect
 	github.com/fatih/color v1.16.0 // indirect
-	github.com/getkin/kin-openapi v0.121.0 // indirect
+	github.com/getkin/kin-openapi v0.122.0 // indirect
 	github.com/go-jose/go-jose/v3 v3.0.1 // indirect
 	github.com/go-logr/logr v1.3.0 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
@@ -36,7 +36,7 @@ require (
 	github.com/hashicorp/errwrap v1.1.0 // indirect
 	github.com/hashicorp/go-checkpoint v0.5.0 // indirect
 	github.com/hashicorp/go-cleanhttp v0.5.2 // indirect
-	github.com/hashicorp/go-hclog v1.5.0 // indirect
+	github.com/hashicorp/go-hclog v1.6.1 // indirect
 	github.com/hashicorp/go-multierror v1.1.1 // indirect
 	github.com/hashicorp/go-plugin v1.6.0 // indirect
 	github.com/hashicorp/go-uuid v1.0.3 // indirect
@@ -68,7 +68,7 @@ require (
 	github.com/russross/blackfriday v1.6.0 // indirect
 	github.com/shopspring/decimal v1.3.1 // indirect
 	github.com/spf13/cast v1.5.0 // indirect
-	github.com/std-uritemplate/std-uritemplate/go v0.0.47 // indirect
+	github.com/std-uritemplate/std-uritemplate/go v0.0.48 // indirect
 	github.com/vmihailenco/msgpack/v5 v5.4.1 // indirect
 	github.com/vmihailenco/tagparser/v2 v2.0.0 // indirect
 	github.com/zclconf/go-cty v1.14.1 // indirect

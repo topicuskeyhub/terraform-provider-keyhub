@@ -127,18 +127,25 @@ func (r *clientapplicationResource) Read(ctx context.Context, req resource.ReadR
 	defer r.providerData.Mutex.RUnlock()
 	ctx = context.WithValue(ctx, keyHubClientKey, r.providerData.Client)
 	tflog.Info(ctx, "Reading clientapplication from Topicus KeyHub")
-	tkh, err := r.providerData.Client.Client().ByClientidInt64(getSelfLink(data.Links).ID.ValueInt64()).Get(
-		ctx, &keyhubreq.WithClientItemRequestBuilderGetRequestConfiguration{
-			QueryParameters: &keyhubreq.WithClientItemRequestBuilderGetQueryParameters{
+	wrapper, err := r.providerData.Client.Client().Get(
+		ctx, &keyhubreq.ClientRequestBuilderGetRequestConfiguration{
+			QueryParameters: &keyhubreq.ClientRequestBuilderGetQueryParameters{
 				Additional: collectAdditional(ctx, data, data.Additional),
+				Uuid:       []string{data.UUID.ValueString()},
 			},
 		})
 
-	if !isHttpStatusCodeOk(ctx, 404, err, &resp.Diagnostics) {
+	if !isHttpStatusCodeOk(ctx, -1, err, &resp.Diagnostics) {
 		return
 	}
-	// only 404 remains
-	if err != nil {
+
+	tkh, diags := findFirst[keyhubmodels.ClientClientApplicationable](ctx, wrapper, "clientapplication", data.UUID.ValueStringPointer(), true, err)
+	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	if tkh == nil {
 		tflog.Info(ctx, "clientapplication not found, marking resource as removed")
 		resp.State.RemoveResource(ctx)
 		return

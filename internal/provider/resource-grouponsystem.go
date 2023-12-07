@@ -7,6 +7,7 @@ package provider
 import (
 	"context"
 	"fmt"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -146,18 +147,25 @@ func (r *grouponsystemResource) Read(ctx context.Context, req resource.ReadReque
 		return
 	}
 
-	tkh, err := r.providerData.Client.System().BySystemidInt64(*tkhParent.GetLinks()[0].GetId()).Group().ByGroupidInt64(getSelfLink(data.Links).ID.ValueInt64()).Get(
-		ctx, &keyhubreq.ItemGroupWithGroupItemRequestBuilderGetRequestConfiguration{
-			QueryParameters: &keyhubreq.ItemGroupWithGroupItemRequestBuilderGetQueryParameters{
-				Additional: collectAdditional(ctx, data, data.Additional),
+	wrapper, err := r.providerData.Client.System().BySystemidInt64(*tkhParent.GetLinks()[0].GetId()).Group().Get(
+		ctx, &keyhubreq.ItemGroupRequestBuilderGetRequestConfiguration{
+			QueryParameters: &keyhubreq.ItemGroupRequestBuilderGetQueryParameters{
+				Additional:   collectAdditional(ctx, data, data.Additional),
+				NameInSystem: []string{data.NameInSystem.ValueString()},
 			},
 		})
 
-	if !isHttpStatusCodeOk(ctx, 404, err, &resp.Diagnostics) {
+	if !isHttpStatusCodeOk(ctx, -1, err, &resp.Diagnostics) {
 		return
 	}
-	// only 404 remains
-	if err != nil {
+
+	tkh, diags := findFirst[keyhubmodels.ProvisioningGroupOnSystemable](ctx, wrapper, "grouponsystem", data.NameInSystem.ValueStringPointer(), true, err)
+	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	if tkh == nil {
 		tflog.Info(ctx, "grouponsystem not found, marking resource as removed")
 		resp.State.RemoveResource(ctx)
 		return
@@ -184,5 +192,15 @@ func (r *grouponsystemResource) Delete(ctx context.Context, req resource.DeleteR
 }
 
 func (r *grouponsystemResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("uuid"), req, resp)
+	idParts := strings.Split(req.ID, ".")
+
+	if len(idParts) != 2 || idParts[0] == "" || idParts[1] == "" {
+		resp.Diagnostics.AddError(
+			"Unexpected Import Identifier",
+			fmt.Sprintf("Expected import identifier with format: provisioned_system_uuid.name_in_system. Got: %q", req.ID),
+		)
+		return
+	}
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("provisioned_system_uuid"), idParts[0])...)
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("name_in_system"), idParts[1])...)
 }

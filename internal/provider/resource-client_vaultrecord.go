@@ -7,6 +7,7 @@ package provider
 import (
 	"context"
 	"fmt"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -146,18 +147,25 @@ func (r *clientVaultrecordResource) Read(ctx context.Context, req resource.ReadR
 		return
 	}
 
-	tkh, err := r.providerData.Client.Client().ByClientidInt64(*tkhParent.GetLinks()[0].GetId()).Vault().Record().ByRecordidInt64(getSelfLink(data.Links).ID.ValueInt64()).Get(
-		ctx, &keyhubreq.ItemVaultRecordWithRecordItemRequestBuilderGetRequestConfiguration{
-			QueryParameters: &keyhubreq.ItemVaultRecordWithRecordItemRequestBuilderGetQueryParameters{
+	wrapper, err := r.providerData.Client.Client().ByClientidInt64(*tkhParent.GetLinks()[0].GetId()).Vault().Record().Get(
+		ctx, &keyhubreq.ItemVaultRecordRequestBuilderGetRequestConfiguration{
+			QueryParameters: &keyhubreq.ItemVaultRecordRequestBuilderGetQueryParameters{
 				Additional: collectAdditional(ctx, data, data.Additional),
+				Uuid:       []string{data.UUID.ValueString()},
 			},
 		})
 
-	if !isHttpStatusCodeOk(ctx, 404, err, &resp.Diagnostics) {
+	if !isHttpStatusCodeOk(ctx, -1, err, &resp.Diagnostics) {
 		return
 	}
-	// only 404 remains
-	if err != nil {
+
+	tkh, diags := findFirst[keyhubmodels.VaultVaultRecordable](ctx, wrapper, "client_vaultrecord", data.UUID.ValueStringPointer(), true, err)
+	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	if tkh == nil {
 		tflog.Info(ctx, "client_vaultrecord not found, marking resource as removed")
 		resp.State.RemoveResource(ctx)
 		return
@@ -248,5 +256,15 @@ func (r *clientVaultrecordResource) Delete(ctx context.Context, req resource.Del
 }
 
 func (r *clientVaultrecordResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("uuid"), req, resp)
+	idParts := strings.Split(req.ID, ".")
+
+	if len(idParts) != 2 || idParts[0] == "" || idParts[1] == "" {
+		resp.Diagnostics.AddError(
+			"Unexpected Import Identifier",
+			fmt.Sprintf("Expected import identifier with format: client_application_uuid.uuid. Got: %q", req.ID),
+		)
+		return
+	}
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("client_application_uuid"), idParts[0])...)
+	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("uuid"), idParts[1])...)
 }
