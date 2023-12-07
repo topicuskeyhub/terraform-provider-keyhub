@@ -235,7 +235,7 @@ type clientClientApplicationDataDS struct {
 	Owner                             types.Object `tfsdk:"owner"`
 	TechnicalAdministrator            types.Object `tfsdk:"technical_administrator"`
 	LDAPClient                        types.Object `tfsdk:"ldap_client"`
-	OAuth2Client                      types.Object `tfsdk:"o_auth2_client"`
+	OAuth2Client                      types.Object `tfsdk:"oauth2_client"`
 	Saml2Client                       types.Object `tfsdk:"saml2_client"`
 }
 
@@ -374,9 +374,9 @@ type directoryAccountDirectoryDataDS struct {
 	RotatingPassword                    types.String `tfsdk:"rotating_password"`
 	UsernameCustomizable                types.Bool   `tfsdk:"username_customizable"`
 	InternalDirectory                   types.Object `tfsdk:"internal_directory"`
-	LDAPDirectory                       types.Object `tfsdk:"l_d_a_p_directory"`
+	LDAPDirectory                       types.Object `tfsdk:"ldap_directory"`
 	MaintenanceDirectory                types.Object `tfsdk:"maintenance_directory"`
-	OIDCDirectory                       types.Object `tfsdk:"o_id_c_directory"`
+	OIDCDirectory                       types.Object `tfsdk:"oidc_directory"`
 }
 
 var directoryAccountDirectoryLinkableWrapperAttrTypesDS = objectAttrsTypeDSDirectoryAccountDirectoryLinkableWrapper(false)

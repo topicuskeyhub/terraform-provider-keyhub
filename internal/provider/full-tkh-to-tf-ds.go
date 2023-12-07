@@ -670,7 +670,7 @@ func tkhToTFObjectDSClientClientApplication(recurse bool, tkh keyhubmodel.Client
 		tkhCast, _ := tkh.(keyhubmodel.ClientOAuth2Clientable)
 		val, d := tkhToTFObjectDSClientOAuth2Client(false, tkhCast)
 		diags.Append(d...)
-		obj["o_auth2_client"] = val
+		obj["oauth2_client"] = val
 	}
 	{
 		tkhCast, _ := tkh.(keyhubmodel.ClientSaml2Clientable)
@@ -1173,7 +1173,7 @@ func tkhToTFObjectDSDirectoryAccountDirectory(recurse bool, tkh keyhubmodel.Dire
 		tkhCast, _ := tkh.(keyhubmodel.DirectoryLDAPDirectoryable)
 		val, d := tkhToTFObjectDSDirectoryLDAPDirectory(false, tkhCast)
 		diags.Append(d...)
-		obj["l_d_a_p_directory"] = val
+		obj["ldap_directory"] = val
 	}
 	{
 		tkhCast, _ := tkh.(keyhubmodel.DirectoryMaintenanceDirectoryable)
@@ -1185,7 +1185,7 @@ func tkhToTFObjectDSDirectoryAccountDirectory(recurse bool, tkh keyhubmodel.Dire
 		tkhCast, _ := tkh.(keyhubmodel.DirectoryOIDCDirectoryable)
 		val, d := tkhToTFObjectDSDirectoryOIDCDirectory(false, tkhCast)
 		diags.Append(d...)
-		obj["o_id_c_directory"] = val
+		obj["oidc_directory"] = val
 	}
 
 	objVal, d := types.ObjectValue(attrs, obj)

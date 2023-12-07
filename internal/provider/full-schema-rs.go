@@ -395,7 +395,7 @@ func resourceSchemaAttrsClientClientApplication(recurse bool) map[string]rsschem
 			Attributes: resourceSchemaAttrsClientOAuth2Client(false),
 		}
 		attr.Optional = true
-		schemaAttrs["o_auth2_client"] = attr
+		schemaAttrs["oauth2_client"] = attr
 	}
 	{
 		attr := rsschema.SingleNestedAttribute{
@@ -851,7 +851,7 @@ func resourceSchemaAttrsDirectoryAccountDirectory(recurse bool) map[string]rssch
 			Attributes: resourceSchemaAttrsDirectoryLDAPDirectory(false),
 		}
 		attr.Optional = true
-		schemaAttrs["l_d_a_p_directory"] = attr
+		schemaAttrs["ldap_directory"] = attr
 	}
 	{
 		attr := rsschema.SingleNestedAttribute{
@@ -865,7 +865,7 @@ func resourceSchemaAttrsDirectoryAccountDirectory(recurse bool) map[string]rssch
 			Attributes: resourceSchemaAttrsDirectoryOIDCDirectory(false),
 		}
 		attr.Optional = true
-		schemaAttrs["o_id_c_directory"] = attr
+		schemaAttrs["oidc_directory"] = attr
 	}
 	return schemaAttrs
 }

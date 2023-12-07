@@ -34,7 +34,7 @@ import (
 //go:generate go run github.com/topicuskeyhub/terraform-provider-keyhub-generator --mode model
 //go:generate go run github.com/topicuskeyhub/terraform-provider-keyhub-generator --mode data --resource account --linkable authAccount
 //go:generate go run github.com/topicuskeyhub/terraform-provider-keyhub-generator --mode data --resource certificate --linkable certificateCertificate
-//go:generate go run github.com/topicuskeyhub/terraform-provider-keyhub-generator --mode data --resource client --linkable clientClientApplication
+//go:generate go run github.com/topicuskeyhub/terraform-provider-keyhub-generator --mode data --resource clientapplication --linkable clientClientApplication
 //go:generate go run github.com/topicuskeyhub/terraform-provider-keyhub-generator --mode data --resource directory --linkable directoryAccountDirectory
 //go:generate go run github.com/topicuskeyhub/terraform-provider-keyhub-generator --mode data --resource group --linkable groupGroup
 //go:generate go run github.com/topicuskeyhub/terraform-provider-keyhub-generator --mode data --resource groupclassification --linkable groupGroupClassification

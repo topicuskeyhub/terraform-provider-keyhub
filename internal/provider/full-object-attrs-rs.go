@@ -144,7 +144,7 @@ func objectAttrsTypeRSClientClientApplication(recurse bool) map[string]attr.Type
 	objectAttrs["owner_uuid"] = types.StringType
 	objectAttrs["technical_administrator_uuid"] = types.StringType
 	objectAttrs["ldap_client"] = types.ObjectType{AttrTypes: objectAttrsTypeRSClientLdapClient(false)}
-	objectAttrs["o_auth2_client"] = types.ObjectType{AttrTypes: objectAttrsTypeRSClientOAuth2Client(false)}
+	objectAttrs["oauth2_client"] = types.ObjectType{AttrTypes: objectAttrsTypeRSClientOAuth2Client(false)}
 	objectAttrs["saml2_client"] = types.ObjectType{AttrTypes: objectAttrsTypeRSClientSaml2Client(false)}
 	return objectAttrs
 }
@@ -285,9 +285,9 @@ func objectAttrsTypeRSDirectoryAccountDirectory(recurse bool) map[string]attr.Ty
 	objectAttrs["rotating_password"] = types.StringType
 	objectAttrs["username_customizable"] = types.BoolType
 	objectAttrs["internal_directory"] = types.ObjectType{AttrTypes: objectAttrsTypeRSDirectoryInternalDirectory(false)}
-	objectAttrs["l_d_a_p_directory"] = types.ObjectType{AttrTypes: objectAttrsTypeRSDirectoryLDAPDirectory(false)}
+	objectAttrs["ldap_directory"] = types.ObjectType{AttrTypes: objectAttrsTypeRSDirectoryLDAPDirectory(false)}
 	objectAttrs["maintenance_directory"] = types.ObjectType{AttrTypes: objectAttrsTypeRSDirectoryMaintenanceDirectory(false)}
-	objectAttrs["o_id_c_directory"] = types.ObjectType{AttrTypes: objectAttrsTypeRSDirectoryOIDCDirectory(false)}
+	objectAttrs["oidc_directory"] = types.ObjectType{AttrTypes: objectAttrsTypeRSDirectoryOIDCDirectory(false)}
 	return objectAttrs
 }
 

@@ -192,7 +192,7 @@ func (p *KeyHubProvider) DataSources(ctx context.Context) []func() datasource.Da
 	return []func() datasource.DataSource{
 		NewAccountDataSource,
 		NewCertificateDataSource,
-		NewClientDataSource,
+		NewClientapplicationDataSource,
 		NewDirectoryDataSource,
 		NewGroupDataSource,
 		NewGroupclassificationDataSource,

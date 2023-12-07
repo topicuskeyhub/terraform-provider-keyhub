@@ -26,7 +26,7 @@ description: |-
 - `delete_tile` (Boolean)
 - `groupclients` (Attributes List) (see [below for nested schema](#nestedatt--groupclients))
 - `ldap_client` (Attributes) (see [below for nested schema](#nestedatt--ldap_client))
-- `o_auth2_client` (Attributes) (see [below for nested schema](#nestedatt--o_auth2_client))
+- `oauth2_client` (Attributes) (see [below for nested schema](#nestedatt--oauth2_client))
 - `owner_uuid` (String)
 - `saml2_client` (Attributes) (see [below for nested schema](#nestedatt--saml2_client))
 - `scopes` (List of String)
@@ -100,8 +100,8 @@ Read-Only:
 - `used_for_provisioning` (Boolean)
 
 
-<a id="nestedatt--o_auth2_client"></a>
-### Nested Schema for `o_auth2_client`
+<a id="nestedatt--oauth2_client"></a>
+### Nested Schema for `oauth2_client`
 
 Optional:
 
@@ -118,11 +118,11 @@ Optional:
 
 Read-Only:
 
-- `account_permissions` (Attributes List) (see [below for nested schema](#nestedatt--o_auth2_client--account_permissions))
+- `account_permissions` (Attributes List) (see [below for nested schema](#nestedatt--oauth2_client--account_permissions))
 - `shared_secret_uuid` (String)
 
-<a id="nestedatt--o_auth2_client--account_permissions"></a>
-### Nested Schema for `o_auth2_client.account_permissions`
+<a id="nestedatt--oauth2_client--account_permissions"></a>
+### Nested Schema for `oauth2_client.account_permissions`
 
 Optional:
 

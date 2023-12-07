@@ -570,7 +570,7 @@ func dataSourceSchemaAttrsClientClientApplication(recurse bool) map[string]dssch
 			Attributes: dataSourceSchemaAttrsClientOAuth2Client(false),
 		}
 		attr.Computed = true
-		schemaAttrs["o_auth2_client"] = attr
+		schemaAttrs["oauth2_client"] = attr
 	}
 	{
 		attr := dsschema.SingleNestedAttribute{
@@ -969,7 +969,7 @@ func dataSourceSchemaAttrsDirectoryAccountDirectory(recurse bool) map[string]dss
 			Attributes: dataSourceSchemaAttrsDirectoryLDAPDirectory(false),
 		}
 		attr.Computed = true
-		schemaAttrs["l_d_a_p_directory"] = attr
+		schemaAttrs["ldap_directory"] = attr
 	}
 	{
 		attr := dsschema.SingleNestedAttribute{
@@ -983,7 +983,7 @@ func dataSourceSchemaAttrsDirectoryAccountDirectory(recurse bool) map[string]dss
 			Attributes: dataSourceSchemaAttrsDirectoryOIDCDirectory(false),
 		}
 		attr.Computed = true
-		schemaAttrs["o_id_c_directory"] = attr
+		schemaAttrs["oidc_directory"] = attr
 	}
 	return schemaAttrs
 }

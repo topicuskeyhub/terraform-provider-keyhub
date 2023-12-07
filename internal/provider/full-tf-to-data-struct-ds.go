@@ -185,7 +185,7 @@ func fillDataStructFromTFObjectDSClientClientApplication(data *clientClientAppli
 	data.Owner = obj.Attributes()["owner"].(basetypes.ObjectValue)
 	data.TechnicalAdministrator = obj.Attributes()["technical_administrator"].(basetypes.ObjectValue)
 	data.LDAPClient = obj.Attributes()["ldap_client"].(basetypes.ObjectValue)
-	data.OAuth2Client = obj.Attributes()["o_auth2_client"].(basetypes.ObjectValue)
+	data.OAuth2Client = obj.Attributes()["oauth2_client"].(basetypes.ObjectValue)
 	data.Saml2Client = obj.Attributes()["saml2_client"].(basetypes.ObjectValue)
 }
 
@@ -291,9 +291,9 @@ func fillDataStructFromTFObjectDSDirectoryAccountDirectory(data *directoryAccoun
 	data.RotatingPassword = obj.Attributes()["rotating_password"].(basetypes.StringValue)
 	data.UsernameCustomizable = obj.Attributes()["username_customizable"].(basetypes.BoolValue)
 	data.InternalDirectory = obj.Attributes()["internal_directory"].(basetypes.ObjectValue)
-	data.LDAPDirectory = obj.Attributes()["l_d_a_p_directory"].(basetypes.ObjectValue)
+	data.LDAPDirectory = obj.Attributes()["ldap_directory"].(basetypes.ObjectValue)
 	data.MaintenanceDirectory = obj.Attributes()["maintenance_directory"].(basetypes.ObjectValue)
-	data.OIDCDirectory = obj.Attributes()["o_id_c_directory"].(basetypes.ObjectValue)
+	data.OIDCDirectory = obj.Attributes()["oidc_directory"].(basetypes.ObjectValue)
 }
 
 func fillDataStructFromTFObjectDSDirectoryAccountDirectoryLinkableWrapper(data *directoryAccountDirectoryLinkableWrapperDataDS, obj types.Object) {

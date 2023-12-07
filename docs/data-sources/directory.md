@@ -32,12 +32,12 @@ description: |-
 - `default_directory` (Boolean)
 - `helpdesk_group` (Attributes) (see [below for nested schema](#nestedatt--helpdesk_group))
 - `internal_directory` (Attributes) (see [below for nested schema](#nestedatt--internal_directory))
-- `l_d_a_p_directory` (Attributes) (see [below for nested schema](#nestedatt--l_d_a_p_directory))
+- `ldap_directory` (Attributes) (see [below for nested schema](#nestedatt--ldap_directory))
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--links))
 - `maintenance_directory` (Attributes) (see [below for nested schema](#nestedatt--maintenance_directory))
 - `markers` (Attributes) (see [below for nested schema](#nestedatt--markers))
 - `name` (String)
-- `o_id_c_directory` (Attributes) (see [below for nested schema](#nestedatt--o_id_c_directory))
+- `oidc_directory` (Attributes) (see [below for nested schema](#nestedatt--oidc_directory))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--permissions))
 - `restrict2fa` (Boolean)
 - `rotating_password` (String)
@@ -233,17 +233,17 @@ Read-Only:
 
 
 
-<a id="nestedatt--l_d_a_p_directory"></a>
-### Nested Schema for `l_d_a_p_directory`
+<a id="nestedatt--ldap_directory"></a>
+### Nested Schema for `ldap_directory`
 
 Read-Only:
 
 - `attributes_to_store` (String)
 - `base_dn` (String)
-- `client_certificate` (Attributes) (see [below for nested schema](#nestedatt--l_d_a_p_directory--client_certificate))
+- `client_certificate` (Attributes) (see [below for nested schema](#nestedatt--ldap_directory--client_certificate))
 - `dialect` (String)
 - `failover_host` (String)
-- `failover_trusted_certificate` (Attributes) (see [below for nested schema](#nestedatt--l_d_a_p_directory--failover_trusted_certificate))
+- `failover_trusted_certificate` (Attributes) (see [below for nested schema](#nestedatt--ldap_directory--failover_trusted_certificate))
 - `host` (String)
 - `password_recovery` (String)
 - `port` (Number)
@@ -251,10 +251,10 @@ Read-Only:
 - `search_bind_password` (String)
 - `search_filter` (String)
 - `tls` (String)
-- `trusted_certificate` (Attributes) (see [below for nested schema](#nestedatt--l_d_a_p_directory--trusted_certificate))
+- `trusted_certificate` (Attributes) (see [below for nested schema](#nestedatt--ldap_directory--trusted_certificate))
 
-<a id="nestedatt--l_d_a_p_directory--client_certificate"></a>
-### Nested Schema for `l_d_a_p_directory.client_certificate`
+<a id="nestedatt--ldap_directory--client_certificate"></a>
+### Nested Schema for `ldap_directory.client_certificate`
 
 Read-Only:
 
@@ -264,14 +264,14 @@ Read-Only:
 - `fingerprint_sha1` (String)
 - `fingerprint_sha256` (String)
 - `global` (Boolean)
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--l_d_a_p_directory--client_certificate--links))
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--l_d_a_p_directory--client_certificate--permissions))
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--ldap_directory--client_certificate--links))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--ldap_directory--client_certificate--permissions))
 - `subject_dn` (String)
 - `type` (String)
 - `uuid` (String)
 
-<a id="nestedatt--l_d_a_p_directory--client_certificate--links"></a>
-### Nested Schema for `l_d_a_p_directory.client_certificate.links`
+<a id="nestedatt--ldap_directory--client_certificate--links"></a>
+### Nested Schema for `ldap_directory.client_certificate.links`
 
 Read-Only:
 
@@ -281,8 +281,8 @@ Read-Only:
 - `type_escaped` (String)
 
 
-<a id="nestedatt--l_d_a_p_directory--client_certificate--permissions"></a>
-### Nested Schema for `l_d_a_p_directory.client_certificate.permissions`
+<a id="nestedatt--ldap_directory--client_certificate--permissions"></a>
+### Nested Schema for `ldap_directory.client_certificate.permissions`
 
 Read-Only:
 
@@ -293,8 +293,8 @@ Read-Only:
 
 
 
-<a id="nestedatt--l_d_a_p_directory--failover_trusted_certificate"></a>
-### Nested Schema for `l_d_a_p_directory.failover_trusted_certificate`
+<a id="nestedatt--ldap_directory--failover_trusted_certificate"></a>
+### Nested Schema for `ldap_directory.failover_trusted_certificate`
 
 Read-Only:
 
@@ -304,14 +304,14 @@ Read-Only:
 - `fingerprint_sha1` (String)
 - `fingerprint_sha256` (String)
 - `global` (Boolean)
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--l_d_a_p_directory--failover_trusted_certificate--links))
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--l_d_a_p_directory--failover_trusted_certificate--permissions))
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--ldap_directory--failover_trusted_certificate--links))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--ldap_directory--failover_trusted_certificate--permissions))
 - `subject_dn` (String)
 - `type` (String)
 - `uuid` (String)
 
-<a id="nestedatt--l_d_a_p_directory--failover_trusted_certificate--links"></a>
-### Nested Schema for `l_d_a_p_directory.failover_trusted_certificate.links`
+<a id="nestedatt--ldap_directory--failover_trusted_certificate--links"></a>
+### Nested Schema for `ldap_directory.failover_trusted_certificate.links`
 
 Read-Only:
 
@@ -321,8 +321,8 @@ Read-Only:
 - `type_escaped` (String)
 
 
-<a id="nestedatt--l_d_a_p_directory--failover_trusted_certificate--permissions"></a>
-### Nested Schema for `l_d_a_p_directory.failover_trusted_certificate.permissions`
+<a id="nestedatt--ldap_directory--failover_trusted_certificate--permissions"></a>
+### Nested Schema for `ldap_directory.failover_trusted_certificate.permissions`
 
 Read-Only:
 
@@ -333,8 +333,8 @@ Read-Only:
 
 
 
-<a id="nestedatt--l_d_a_p_directory--trusted_certificate"></a>
-### Nested Schema for `l_d_a_p_directory.trusted_certificate`
+<a id="nestedatt--ldap_directory--trusted_certificate"></a>
+### Nested Schema for `ldap_directory.trusted_certificate`
 
 Read-Only:
 
@@ -344,14 +344,14 @@ Read-Only:
 - `fingerprint_sha1` (String)
 - `fingerprint_sha256` (String)
 - `global` (Boolean)
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--l_d_a_p_directory--trusted_certificate--links))
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--l_d_a_p_directory--trusted_certificate--permissions))
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--ldap_directory--trusted_certificate--links))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--ldap_directory--trusted_certificate--permissions))
 - `subject_dn` (String)
 - `type` (String)
 - `uuid` (String)
 
-<a id="nestedatt--l_d_a_p_directory--trusted_certificate--links"></a>
-### Nested Schema for `l_d_a_p_directory.trusted_certificate.links`
+<a id="nestedatt--ldap_directory--trusted_certificate--links"></a>
+### Nested Schema for `ldap_directory.trusted_certificate.links`
 
 Read-Only:
 
@@ -361,8 +361,8 @@ Read-Only:
 - `type_escaped` (String)
 
 
-<a id="nestedatt--l_d_a_p_directory--trusted_certificate--permissions"></a>
-### Nested Schema for `l_d_a_p_directory.trusted_certificate.permissions`
+<a id="nestedatt--ldap_directory--trusted_certificate--permissions"></a>
+### Nested Schema for `ldap_directory.trusted_certificate.permissions`
 
 Read-Only:
 
@@ -407,8 +407,8 @@ Read-Only:
 
 
 
-<a id="nestedatt--o_id_c_directory"></a>
-### Nested Schema for `o_id_c_directory`
+<a id="nestedatt--oidc_directory"></a>
+### Nested Schema for `oidc_directory`
 
 Read-Only:
 

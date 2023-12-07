@@ -366,8 +366,8 @@ func tfObjectToTKHRSClientClientApplication(ctx context.Context, recurse bool, o
 		val.SetTypeEscaped(dtype)
 		tkh = val
 	}
-	if !objAttrs["o_auth2_client"].IsNull() {
-		val, d := tfObjectToTKHRSClientOAuth2Client(ctx, false, objAttrs["o_auth2_client"].(basetypes.ObjectValue))
+	if !objAttrs["oauth2_client"].IsNull() {
+		val, d := tfObjectToTKHRSClientOAuth2Client(ctx, false, objAttrs["oauth2_client"].(basetypes.ObjectValue))
 		diags.Append(d...)
 		dtype := val.GetTypeEscaped()
 		(*val.(*keyhubmodel.ClientOAuth2Client)).ClientClientApplication = *tkh.(*keyhubmodel.ClientClientApplication)
@@ -802,8 +802,8 @@ func tfObjectToTKHRSDirectoryAccountDirectory(ctx context.Context, recurse bool,
 		val.SetTypeEscaped(dtype)
 		tkh = val
 	}
-	if !objAttrs["l_d_a_p_directory"].IsNull() {
-		val, d := tfObjectToTKHRSDirectoryLDAPDirectory(ctx, false, objAttrs["l_d_a_p_directory"].(basetypes.ObjectValue))
+	if !objAttrs["ldap_directory"].IsNull() {
+		val, d := tfObjectToTKHRSDirectoryLDAPDirectory(ctx, false, objAttrs["ldap_directory"].(basetypes.ObjectValue))
 		diags.Append(d...)
 		dtype := val.GetTypeEscaped()
 		(*val.(*keyhubmodel.DirectoryLDAPDirectory)).DirectoryAccountDirectory = *tkh.(*keyhubmodel.DirectoryAccountDirectory)
@@ -818,8 +818,8 @@ func tfObjectToTKHRSDirectoryAccountDirectory(ctx context.Context, recurse bool,
 		val.SetTypeEscaped(dtype)
 		tkh = val
 	}
-	if !objAttrs["o_id_c_directory"].IsNull() {
-		val, d := tfObjectToTKHRSDirectoryOIDCDirectory(ctx, false, objAttrs["o_id_c_directory"].(basetypes.ObjectValue))
+	if !objAttrs["oidc_directory"].IsNull() {
+		val, d := tfObjectToTKHRSDirectoryOIDCDirectory(ctx, false, objAttrs["oidc_directory"].(basetypes.ObjectValue))
 		diags.Append(d...)
 		dtype := val.GetTypeEscaped()
 		(*val.(*keyhubmodel.DirectoryOIDCDirectory)).DirectoryAccountDirectory = *tkh.(*keyhubmodel.DirectoryAccountDirectory)

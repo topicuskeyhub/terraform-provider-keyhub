@@ -21,30 +21,30 @@ import (
 
 // Ensure provider defined types fully satisfy framework interfaces.
 var (
-	_ datasource.DataSource              = &clientDataSource{}
-	_ datasource.DataSourceWithConfigure = &clientDataSource{}
+	_ datasource.DataSource              = &clientapplicationDataSource{}
+	_ datasource.DataSourceWithConfigure = &clientapplicationDataSource{}
 )
 
-func NewClientDataSource() datasource.DataSource {
-	return &clientDataSource{}
+func NewClientapplicationDataSource() datasource.DataSource {
+	return &clientapplicationDataSource{}
 }
 
-type clientDataSource struct {
+type clientapplicationDataSource struct {
 	providerData *KeyHubProviderData
 }
 
-func (d *clientDataSource) Metadata(ctx context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
-	resp.TypeName = ProviderName + "_client"
+func (d *clientapplicationDataSource) Metadata(ctx context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
+	resp.TypeName = ProviderName + "_clientapplication"
 	log.Printf("Registered data source %s", resp.TypeName)
 }
 
-func (d *clientDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
+func (d *clientapplicationDataSource) Schema(ctx context.Context, req datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		Attributes: dataSourceSchemaAttrsClientClientApplication(true),
 	}
 }
 
-func (d *clientDataSource) Configure(ctx context.Context, req datasource.ConfigureRequest, resp *datasource.ConfigureResponse) {
+func (d *clientapplicationDataSource) Configure(ctx context.Context, req datasource.ConfigureRequest, resp *datasource.ConfigureResponse) {
 	// Prevent panic if the provider has not been configured.
 	if req.ProviderData == nil {
 		return
@@ -64,14 +64,14 @@ func (d *clientDataSource) Configure(ctx context.Context, req datasource.Configu
 	d.providerData = providerData
 }
 
-func (d *clientDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
+func (d *clientapplicationDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
 	var data clientClientApplicationDataDS
 	resp.Diagnostics.Append(req.Config.Get(ctx, &data)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	tflog.Debug(ctx, "Reading client from Topicus KeyHub by UUID")
+	tflog.Debug(ctx, "Reading clientapplication from Topicus KeyHub by UUID")
 	additionalBackup := data.Additional
 	additional, _ := tfToSlice(data.Additional, func(val attr.Value, diags *diag.Diagnostics) string {
 		return val.(basetypes.StringValue).ValueString()
@@ -87,7 +87,7 @@ func (d *clientDataSource) Read(ctx context.Context, req datasource.ReadRequest,
 		},
 	})
 
-	tkh, diags := findFirst[keyhubmodels.ClientClientApplicationable](ctx, wrapper, "client", &uuid, false, err)
+	tkh, diags := findFirst[keyhubmodels.ClientClientApplicationable](ctx, wrapper, "clientapplication", &uuid, false, err)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
