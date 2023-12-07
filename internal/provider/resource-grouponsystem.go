@@ -192,7 +192,7 @@ func (r *grouponsystemResource) Delete(ctx context.Context, req resource.DeleteR
 }
 
 func (r *grouponsystemResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	idParts := strings.Split(req.ID, ".")
+	idParts := strings.SplitN(req.ID, ".", 2)
 
 	if len(idParts) != 2 || idParts[0] == "" || idParts[1] == "" {
 		resp.Diagnostics.AddError(
