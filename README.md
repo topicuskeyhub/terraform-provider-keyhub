@@ -3,6 +3,10 @@
 The Terraform Provider for Topicus KeyHub allows managing resources within a Topicus KeyHub appliance.
 It requires at least Terraform 1.0 and the most recent version of Terraform is recommended.
 
+~> **Important** Interacting with Topicus KeyHub from Terraform causes any secrets that you read and write to be persisted in plain text in both Terraform's state file *and* in any generated plan files.
+For any Terraform module that reads or writes Topicus KeyHub secrets, these files should be treated as sensitive and protected accordingly.
+Access to secrets should be restricted as much as possible.
+
 For more information see:
 * [Terraform Website](https://www.terraform.io)
 * [Topicus KeyHub Provider Documentation](https://registry.terraform.io/providers/topicuskeyhub/keyhub/latest/docs)
