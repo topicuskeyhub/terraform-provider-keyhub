@@ -23,7 +23,7 @@ A newer version of the provder will fail on an older version of Topicus KeyHub.
 terraform {
   required_providers {
     keyhub = {
-      source = "registry.terraform.io/hashicorp/keyhub"
+      source = "registry.terraform.io/topicuskeyhub/keyhub"
       version = "=2.30.0"
     }
   }

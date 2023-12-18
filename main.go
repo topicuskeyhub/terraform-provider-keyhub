@@ -65,7 +65,7 @@ func main() {
 	flag.Parse()
 
 	opts := providerserver.ServeOpts{
-		Address: "registry.terraform.io/hashicorp/keyhub",
+		Address: "registry.terraform.io/topicuskeyhub/keyhub",
 		Debug:   debug,
 	}
 

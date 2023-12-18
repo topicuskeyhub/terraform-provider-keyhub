@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     keyhub = {
-      source = "registry.terraform.io/hashicorp/keyhub"
+      source = "registry.terraform.io/topicuskeyhub/keyhub"
     }
   }
 }
@@ -29,8 +29,8 @@ resource "keyhub_group" "terra" {
   accounts = [{
     uuid   = "2948741d-f852-4599-be0e-cf187b306b4b"
     rights = "MANAGER"
-  },{
-  	uuid   = "7ea6622b-f9d2-4e52-a799-217b26f88376"
+    }, {
+    uuid   = "7ea6622b-f9d2-4e52-a799-217b26f88376"
     rights = "MANAGER"
   }]
   client_permissions = [{
@@ -87,3 +87,25 @@ resource "keyhub_serviceaccount" "sa" {
   system_uuid                  = "47923975-b1af-47c8-bd7a-e52ebb4b9b84"
   username                     = "terraform"
 }
+
+resource "keyhub_group" "terra2" {
+  name       = "Terraform2"
+  additional = ["accounts", "clientPermissions"]
+  accounts = [{
+    uuid   = "2948741d-f852-4599-be0e-cf187b306b4b"
+    rights = "MANAGER"
+    }, {
+    uuid   = "7ea6622b-f9d2-4e52-a799-217b26f88376"
+    rights = "MANAGER"
+  }]
+  client_permissions = [{
+    client_uuid = "ebdf81ac-b02b-4335-9dc4-4a9bc4eb406d"
+    value       = "GROUP_FULL_VAULT_ACCESS"
+    #  }, {
+    #    client_uuid = resource.keyhub_clientapplication.oauth2client.uuid
+    #    value       = "GROUP_FULL_VAULT_ACCESS"
+  }]
+  application_administration = "true"
+}
+
+
