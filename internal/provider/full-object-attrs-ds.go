@@ -142,7 +142,7 @@ func objectAttrsTypeDSAuthPermission(recurse bool) map[string]attr.Type {
 	objectAttrs := make(map[string]attr.Type)
 	objectAttrs["full"] = types.StringType
 	objectAttrs["instances"] = types.ListType{ElemType: types.StringType}
-	objectAttrs["operations"] = types.ListType{ElemType: types.StringType}
+	objectAttrs["operations"] = types.SetType{ElemType: types.StringType}
 	objectAttrs["type_escaped"] = types.StringType
 	return objectAttrs
 }
@@ -567,7 +567,7 @@ func objectAttrsTypeDSGroupGroup(recurse bool) map[string]attr.Type {
 	objectAttrs["authorizing_group_delegation"] = types.ObjectType{AttrTypes: objectAttrsTypeDSGroupGroupPrimer(false)}
 	objectAttrs["authorizing_group_membership"] = types.ObjectType{AttrTypes: objectAttrsTypeDSGroupGroupPrimer(false)}
 	objectAttrs["authorizing_group_provisioning"] = types.ObjectType{AttrTypes: objectAttrsTypeDSGroupGroupPrimer(false)}
-	objectAttrs["authorizing_group_types"] = types.ListType{ElemType: types.StringType}
+	objectAttrs["authorizing_group_types"] = types.SetType{ElemType: types.StringType}
 	objectAttrs["classification"] = types.ObjectType{AttrTypes: objectAttrsTypeDSGroupGroupClassificationPrimer(false)}
 	objectAttrs["description"] = types.StringType
 	objectAttrs["extended_access"] = types.StringType
@@ -668,7 +668,7 @@ func objectAttrsTypeDSGroupGroupAuditConfig(recurse bool) map[string]attr.Type {
 	objectAttrs := make(map[string]attr.Type)
 	objectAttrs["links"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSRestLink(recurse)}}
 	objectAttrs["permissions"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSAuthPermission(recurse)}}
-	objectAttrs["months"] = types.ListType{ElemType: types.StringType}
+	objectAttrs["months"] = types.SetType{ElemType: types.StringType}
 	return objectAttrs
 }
 
@@ -719,7 +719,7 @@ func objectAttrsTypeDSGroupGroupClassification(recurse bool) map[string]attr.Typ
 	objectAttrs["maximum_audit_interval"] = types.Int64Type
 	objectAttrs["minimum_nr_managers"] = types.Int64Type
 	objectAttrs["record_trail_required"] = types.BoolType
-	objectAttrs["required_months"] = types.ListType{ElemType: types.StringType}
+	objectAttrs["required_months"] = types.SetType{ElemType: types.StringType}
 	objectAttrs["rotating_password_required"] = types.BoolType
 	objectAttrs["vault_requires_activation"] = types.BoolType
 	return objectAttrs
@@ -1395,7 +1395,7 @@ func objectAttrsTypeDSVaultVaultRecord(recurse bool) map[string]attr.Type {
 	objectAttrs["derived"] = types.BoolType
 	objectAttrs["end_date"] = types.StringType
 	objectAttrs["filename"] = types.StringType
-	objectAttrs["types"] = types.ListType{ElemType: types.StringType}
+	objectAttrs["types"] = types.SetType{ElemType: types.StringType}
 	objectAttrs["url"] = types.StringType
 	objectAttrs["username"] = types.StringType
 	objectAttrs["warning_period"] = types.StringType

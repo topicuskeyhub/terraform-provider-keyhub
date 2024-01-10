@@ -68,7 +68,7 @@ resource "keyhub_group" "terra" {
 - `audit_requested` (Boolean)
 - `auditor` (Boolean)
 - `authorized_groups` (Attributes) (see [below for nested schema](#nestedatt--authorized_groups))
-- `authorizing_group_types` (List of String)
+- `authorizing_group_types` (Set of String)
 - `clients` (Attributes List) (see [below for nested schema](#nestedatt--clients))
 - `content_administered_systems` (Attributes List) (see [below for nested schema](#nestedatt--content_administered_systems))
 - `groupauditinginfo` (Attributes) (see [below for nested schema](#nestedatt--groupauditinginfo))
@@ -144,7 +144,7 @@ Read-Only:
 
 Optional:
 
-- `months` (List of String)
+- `months` (Set of String)
 
 Read-Only:
 
@@ -169,7 +169,7 @@ Optional:
 
 - `full` (String)
 - `instances` (List of String)
-- `operations` (List of String)
+- `operations` (Set of String)
 - `type_escaped` (String)
 
 
@@ -210,7 +210,7 @@ Optional:
 
 - `full` (String)
 - `instances` (List of String)
-- `operations` (List of String)
+- `operations` (Set of String)
 - `type_escaped` (String)
 
 
@@ -284,7 +284,7 @@ Optional:
 
 - `full` (String)
 - `instances` (List of String)
-- `operations` (List of String)
+- `operations` (Set of String)
 - `type_escaped` (String)
 
 
@@ -321,7 +321,7 @@ Optional:
 
 - `full` (String)
 - `instances` (List of String)
-- `operations` (List of String)
+- `operations` (Set of String)
 - `type_escaped` (String)
 
 
@@ -489,7 +489,7 @@ Optional:
 
 - `full` (String)
 - `instances` (List of String)
-- `operations` (List of String)
+- `operations` (Set of String)
 - `type_escaped` (String)
 
 
@@ -550,7 +550,7 @@ Optional:
 
 - `full` (String)
 - `instances` (List of String)
-- `operations` (List of String)
+- `operations` (Set of String)
 - `type_escaped` (String)
 
 
@@ -607,7 +607,7 @@ Read-Only:
 - `admin` (Boolean)
 - `audit_requested` (Boolean)
 - `auditor` (Boolean)
-- `authorizing_group_types` (List of String)
+- `authorizing_group_types` (Set of String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--authorized_groups--items--links))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--authorized_groups--items--permissions))
 - `uuid` (String)
@@ -617,7 +617,7 @@ Read-Only:
 
 Optional:
 
-- `months` (List of String)
+- `months` (Set of String)
 
 Read-Only:
 
@@ -642,7 +642,7 @@ Optional:
 
 - `full` (String)
 - `instances` (List of String)
-- `operations` (List of String)
+- `operations` (Set of String)
 - `type_escaped` (String)
 
 
@@ -665,7 +665,7 @@ Optional:
 
 - `full` (String)
 - `instances` (List of String)
-- `operations` (List of String)
+- `operations` (Set of String)
 - `type_escaped` (String)
 
 
@@ -705,7 +705,7 @@ Optional:
 
 - `full` (String)
 - `instances` (List of String)
-- `operations` (List of String)
+- `operations` (Set of String)
 - `type_escaped` (String)
 
 
@@ -873,7 +873,7 @@ Optional:
 
 - `full` (String)
 - `instances` (List of String)
-- `operations` (List of String)
+- `operations` (Set of String)
 - `type_escaped` (String)
 
 
@@ -934,7 +934,7 @@ Optional:
 
 - `full` (String)
 - `instances` (List of String)
-- `operations` (List of String)
+- `operations` (Set of String)
 - `type_escaped` (String)
 
 
@@ -1012,7 +1012,7 @@ Optional:
 
 - `full` (String)
 - `instances` (List of String)
-- `operations` (List of String)
+- `operations` (Set of String)
 - `type_escaped` (String)
 
 
@@ -1128,7 +1128,7 @@ Optional:
 
 - `full` (String)
 - `instances` (List of String)
-- `operations` (List of String)
+- `operations` (Set of String)
 - `type_escaped` (String)
 
 
@@ -1202,7 +1202,7 @@ Optional:
 
 - `full` (String)
 - `instances` (List of String)
-- `operations` (List of String)
+- `operations` (Set of String)
 - `type_escaped` (String)
 
 
@@ -1239,7 +1239,7 @@ Optional:
 
 - `full` (String)
 - `instances` (List of String)
-- `operations` (List of String)
+- `operations` (Set of String)
 - `type_escaped` (String)
 
 
@@ -1351,7 +1351,7 @@ Optional:
 
 - `full` (String)
 - `instances` (List of String)
-- `operations` (List of String)
+- `operations` (Set of String)
 - `type_escaped` (String)
 
 
@@ -1401,7 +1401,7 @@ Optional:
 
 - `full` (String)
 - `instances` (List of String)
-- `operations` (List of String)
+- `operations` (Set of String)
 - `type_escaped` (String)
 
 
@@ -1445,7 +1445,7 @@ Optional:
 
 - `full` (String)
 - `instances` (List of String)
-- `operations` (List of String)
+- `operations` (Set of String)
 - `type_escaped` (String)
 
 
@@ -1613,7 +1613,7 @@ Optional:
 
 - `full` (String)
 - `instances` (List of String)
-- `operations` (List of String)
+- `operations` (Set of String)
 - `type_escaped` (String)
 
 
@@ -1674,7 +1674,7 @@ Optional:
 
 - `full` (String)
 - `instances` (List of String)
-- `operations` (List of String)
+- `operations` (Set of String)
 - `type_escaped` (String)
 
 
@@ -1686,7 +1686,7 @@ Optional:
 
 - `full` (String)
 - `instances` (List of String)
-- `operations` (List of String)
+- `operations` (Set of String)
 - `type_escaped` (String)
 
 
@@ -1756,7 +1756,7 @@ Optional:
 
 - `full` (String)
 - `instances` (List of String)
-- `operations` (List of String)
+- `operations` (Set of String)
 - `type_escaped` (String)
 
 
@@ -1779,7 +1779,7 @@ Optional:
 
 - `full` (String)
 - `instances` (List of String)
-- `operations` (List of String)
+- `operations` (Set of String)
 - `type_escaped` (String)
 
 
@@ -1825,7 +1825,7 @@ Optional:
 
 - `full` (String)
 - `instances` (List of String)
-- `operations` (List of String)
+- `operations` (Set of String)
 - `type_escaped` (String)
 
 
@@ -1884,7 +1884,7 @@ Optional:
 
 - `full` (String)
 - `instances` (List of String)
-- `operations` (List of String)
+- `operations` (Set of String)
 - `type_escaped` (String)
 
 
@@ -1907,7 +1907,7 @@ Optional:
 
 - `full` (String)
 - `instances` (List of String)
-- `operations` (List of String)
+- `operations` (Set of String)
 - `type_escaped` (String)
 
 
@@ -1944,7 +1944,7 @@ Optional:
 
 - `full` (String)
 - `instances` (List of String)
-- `operations` (List of String)
+- `operations` (Set of String)
 - `type_escaped` (String)
 
 
@@ -2002,5 +2002,5 @@ Optional:
 
 - `full` (String)
 - `instances` (List of String)
-- `operations` (List of String)
+- `operations` (Set of String)
 - `type_escaped` (String)

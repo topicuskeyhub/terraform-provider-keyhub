@@ -336,7 +336,7 @@ func dataSourceSchemaAttrsAuthPermission(recurse bool) map[string]dsschema.Attri
 		ElementType: types.StringType,
 		Computed:    true,
 	}
-	schemaAttrs["operations"] = dsschema.ListAttribute{
+	schemaAttrs["operations"] = dsschema.SetAttribute{
 		ElementType: types.StringType,
 		Computed:    true,
 	}
@@ -1436,7 +1436,7 @@ func dataSourceSchemaAttrsGroupGroup(recurse bool) map[string]dsschema.Attribute
 		attr.Computed = true
 		schemaAttrs["authorizing_group_provisioning"] = attr
 	}
-	schemaAttrs["authorizing_group_types"] = dsschema.ListAttribute{
+	schemaAttrs["authorizing_group_types"] = dsschema.SetAttribute{
 		ElementType: types.StringType,
 		Computed:    true,
 	}
@@ -1716,7 +1716,7 @@ func dataSourceSchemaAttrsGroupGroupAuditConfig(recurse bool) map[string]dsschem
 		},
 		Computed: true,
 	}
-	schemaAttrs["months"] = dsschema.ListAttribute{
+	schemaAttrs["months"] = dsschema.SetAttribute{
 		ElementType: types.StringType,
 		Computed:    true,
 	}
@@ -1837,7 +1837,7 @@ func dataSourceSchemaAttrsGroupGroupClassification(recurse bool) map[string]dssc
 	schemaAttrs["record_trail_required"] = dsschema.BoolAttribute{
 		Computed: true,
 	}
-	schemaAttrs["required_months"] = dsschema.ListAttribute{
+	schemaAttrs["required_months"] = dsschema.SetAttribute{
 		ElementType: types.StringType,
 		Computed:    true,
 	}
@@ -3579,7 +3579,7 @@ func dataSourceSchemaAttrsVaultVaultRecord(recurse bool) map[string]dsschema.Att
 	schemaAttrs["filename"] = dsschema.StringAttribute{
 		Computed: true,
 	}
-	schemaAttrs["types"] = dsschema.ListAttribute{
+	schemaAttrs["types"] = dsschema.SetAttribute{
 		ElementType: types.StringType,
 		Computed:    true,
 	}

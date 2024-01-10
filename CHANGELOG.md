@@ -1,3 +1,6 @@
+## 2.30.7
+* Use Set Attribute for unordered sets
+
 ## 2.30.6
 * Fix OAuth2 client application custom attributes
 

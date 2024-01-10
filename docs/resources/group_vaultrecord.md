@@ -44,7 +44,7 @@ description: |-
 - `share_end_time` (String)
 - `share_summary` (Attributes) (see [below for nested schema](#nestedatt--share_summary))
 - `shares` (Attributes List) (see [below for nested schema](#nestedatt--shares))
-- `types` (List of String)
+- `types` (Set of String)
 - `uuid` (String)
 - `vaultholder` (Attributes) (see [below for nested schema](#nestedatt--vaultholder))
 
@@ -109,7 +109,7 @@ Optional:
 
 - `full` (String)
 - `instances` (List of String)
-- `operations` (List of String)
+- `operations` (Set of String)
 - `type_escaped` (String)
 
 
@@ -176,7 +176,7 @@ Optional:
 
 - `full` (String)
 - `instances` (List of String)
-- `operations` (List of String)
+- `operations` (Set of String)
 - `type_escaped` (String)
 
 

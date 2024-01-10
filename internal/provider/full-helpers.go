@@ -41,7 +41,7 @@ const (
 	keyHubClientKey contextKey = iota
 )
 
-func sliceToTF[T any](elemType attr.Type, vals []T, toValue func(T, *diag.Diagnostics) attr.Value) (attr.Value, diag.Diagnostics) {
+func sliceToTFList[T any](elemType attr.Type, vals []T, toValue func(T, *diag.Diagnostics) attr.Value) (attr.Value, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	ret := make([]attr.Value, 0, len(vals))
 	for _, curVal := range vals {
@@ -50,7 +50,26 @@ func sliceToTF[T any](elemType attr.Type, vals []T, toValue func(T, *diag.Diagno
 	return types.ListValue(elemType, ret)
 }
 
-func tfToSlice[T any](val basetypes.ListValue, toValue func(attr.Value, *diag.Diagnostics) T) ([]T, diag.Diagnostics) {
+func tfToSliceList[T any](val basetypes.ListValue, toValue func(attr.Value, *diag.Diagnostics) T) ([]T, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	vals := val.Elements()
+	ret := make([]T, 0, len(vals))
+	for _, curVal := range vals {
+		ret = append(ret, toValue(curVal, &diags))
+	}
+	return ret, diags
+}
+
+func sliceToTFSet[T any](elemType attr.Type, vals []T, toValue func(T, *diag.Diagnostics) attr.Value) (attr.Value, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	ret := make([]attr.Value, 0, len(vals))
+	for _, curVal := range vals {
+		ret = append(ret, toValue(curVal, &diags))
+	}
+	return types.SetValue(elemType, ret)
+}
+
+func tfToSliceSet[T any](val basetypes.SetValue, toValue func(attr.Value, *diag.Diagnostics) T) ([]T, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	vals := val.Elements()
 	ret := make([]T, 0, len(vals))
@@ -586,7 +605,7 @@ func setAttributeValue(ctx context.Context, tf basetypes.ObjectValue, key string
 
 func collectAdditional(ctx context.Context, data any, additional types.List) []string {
 	listValue, _ := additional.ToListValue(ctx)
-	ret, _ := tfToSlice(listValue, func(val attr.Value, diags *diag.Diagnostics) string {
+	ret, _ := tfToSliceList(listValue, func(val attr.Value, diags *diag.Diagnostics) string {
 		return val.(basetypes.StringValue).ValueString()
 	})
 	reflectValue := reflect.ValueOf(data)

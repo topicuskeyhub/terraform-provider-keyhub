@@ -40,7 +40,7 @@ description: |-
 - `share_summary` (Attributes) (see [below for nested schema](#nestedatt--share_summary))
 - `shares` (Attributes List) (see [below for nested schema](#nestedatt--shares))
 - `tile` (Attributes) (see [below for nested schema](#nestedatt--tile))
-- `types` (List of String)
+- `types` (Set of String)
 - `url` (String)
 - `username` (String)
 - `vaultholder` (Attributes) (see [below for nested schema](#nestedatt--vaultholder))
@@ -98,7 +98,7 @@ Read-Only:
 
 - `full` (String)
 - `instances` (List of String)
-- `operations` (List of String)
+- `operations` (Set of String)
 - `type_escaped` (String)
 
 
@@ -126,7 +126,7 @@ Read-Only:
 
 - `full` (String)
 - `instances` (List of String)
-- `operations` (List of String)
+- `operations` (Set of String)
 - `type_escaped` (String)
 
 
@@ -198,7 +198,7 @@ Read-Only:
 
 - `full` (String)
 - `instances` (List of String)
-- `operations` (List of String)
+- `operations` (Set of String)
 - `type_escaped` (String)
 
 

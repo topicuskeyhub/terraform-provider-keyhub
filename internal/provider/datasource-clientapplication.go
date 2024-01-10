@@ -73,7 +73,7 @@ func (d *clientapplicationDataSource) Read(ctx context.Context, req datasource.R
 
 	tflog.Debug(ctx, "Reading clientapplication from Topicus KeyHub by UUID")
 	additionalBackup := data.Additional
-	additional, _ := tfToSlice(data.Additional, func(val attr.Value, diags *diag.Diagnostics) string {
+	additional, _ := tfToSliceList(data.Additional, func(val attr.Value, diags *diag.Diagnostics) string {
 		return val.(basetypes.StringValue).ValueString()
 	})
 	uuid := data.UUID.ValueString()

@@ -51,7 +51,7 @@ func fillDataStructFromTFObjectRSAuthAccountPrimer(data *authAccountPrimerDataRS
 func fillDataStructFromTFObjectRSAuthPermission(data *authPermissionDataRS, obj types.Object) {
 	data.Full = obj.Attributes()["full"].(basetypes.StringValue)
 	data.Instances = obj.Attributes()["instances"].(basetypes.ListValue)
-	data.Operations = obj.Attributes()["operations"].(basetypes.ListValue)
+	data.Operations = obj.Attributes()["operations"].(basetypes.SetValue)
 	data.TypeEscaped = obj.Attributes()["type_escaped"].(basetypes.StringValue)
 }
 
@@ -90,7 +90,7 @@ func fillDataStructFromTFObjectRSClientApplicationVaultVaultRecord(data *clientA
 	data.Derived = obj.Attributes()["derived"].(basetypes.BoolValue)
 	data.EndDate = obj.Attributes()["end_date"].(basetypes.StringValue)
 	data.Filename = obj.Attributes()["filename"].(basetypes.StringValue)
-	data.Types = obj.Attributes()["types"].(basetypes.ListValue)
+	data.Types = obj.Attributes()["types"].(basetypes.SetValue)
 	data.URL = obj.Attributes()["url"].(basetypes.StringValue)
 	data.Username = obj.Attributes()["username"].(basetypes.StringValue)
 	data.WarningPeriod = obj.Attributes()["warning_period"].(basetypes.StringValue)
@@ -356,7 +356,7 @@ func fillDataStructFromTFObjectRSGroupGroup(data *groupGroupDataRS, obj types.Ob
 	data.AuthorizingGroupDelegationUUID = obj.Attributes()["authorizing_group_delegation_uuid"].(basetypes.StringValue)
 	data.AuthorizingGroupMembershipUUID = obj.Attributes()["authorizing_group_membership_uuid"].(basetypes.StringValue)
 	data.AuthorizingGroupProvisioningUUID = obj.Attributes()["authorizing_group_provisioning_uuid"].(basetypes.StringValue)
-	data.AuthorizingGroupTypes = obj.Attributes()["authorizing_group_types"].(basetypes.ListValue)
+	data.AuthorizingGroupTypes = obj.Attributes()["authorizing_group_types"].(basetypes.SetValue)
 	data.ClassificationUUID = obj.Attributes()["classification_uuid"].(basetypes.StringValue)
 	data.Description = obj.Attributes()["description"].(basetypes.StringValue)
 	data.ExtendedAccess = obj.Attributes()["extended_access"].(basetypes.StringValue)
@@ -431,7 +431,7 @@ func fillDataStructFromTFObjectRSGroupGroupAuditAccount(data *groupGroupAuditAcc
 func fillDataStructFromTFObjectRSGroupGroupAuditConfig(data *groupGroupAuditConfigDataRS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
-	data.Months = obj.Attributes()["months"].(basetypes.ListValue)
+	data.Months = obj.Attributes()["months"].(basetypes.SetValue)
 }
 
 func fillDataStructFromTFObjectRSGroupGroupAuditLinkableWrapper(data *groupGroupAuditLinkableWrapperDataRS, obj types.Object) {
@@ -575,7 +575,7 @@ func fillDataStructFromTFObjectRSGroupVaultVaultRecord(data *groupVaultVaultReco
 	data.Derived = obj.Attributes()["derived"].(basetypes.BoolValue)
 	data.EndDate = obj.Attributes()["end_date"].(basetypes.StringValue)
 	data.Filename = obj.Attributes()["filename"].(basetypes.StringValue)
-	data.Types = obj.Attributes()["types"].(basetypes.ListValue)
+	data.Types = obj.Attributes()["types"].(basetypes.SetValue)
 	data.URL = obj.Attributes()["url"].(basetypes.StringValue)
 	data.Username = obj.Attributes()["username"].(basetypes.StringValue)
 	data.WarningPeriod = obj.Attributes()["warning_period"].(basetypes.StringValue)
@@ -976,7 +976,7 @@ func fillDataStructFromTFObjectRSVaultVaultRecord(data *vaultVaultRecordDataRS, 
 	data.Derived = obj.Attributes()["derived"].(basetypes.BoolValue)
 	data.EndDate = obj.Attributes()["end_date"].(basetypes.StringValue)
 	data.Filename = obj.Attributes()["filename"].(basetypes.StringValue)
-	data.Types = obj.Attributes()["types"].(basetypes.ListValue)
+	data.Types = obj.Attributes()["types"].(basetypes.SetValue)
 	data.URL = obj.Attributes()["url"].(basetypes.StringValue)
 	data.Username = obj.Attributes()["username"].(basetypes.StringValue)
 	data.WarningPeriod = obj.Attributes()["warning_period"].(basetypes.StringValue)

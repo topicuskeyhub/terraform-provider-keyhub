@@ -149,7 +149,7 @@ var authPermissionAttrTypesDSRecurse = objectAttrsTypeDSAuthPermission(true)
 type authPermissionDataDS struct {
 	Full        types.String `tfsdk:"full"`
 	Instances   types.List   `tfsdk:"instances"`
-	Operations  types.List   `tfsdk:"operations"`
+	Operations  types.Set    `tfsdk:"operations"`
 	TypeEscaped types.String `tfsdk:"type_escaped"`
 }
 
@@ -578,7 +578,7 @@ type groupGroupDataDS struct {
 	AuthorizingGroupDelegation   types.Object `tfsdk:"authorizing_group_delegation"`
 	AuthorizingGroupMembership   types.Object `tfsdk:"authorizing_group_membership"`
 	AuthorizingGroupProvisioning types.Object `tfsdk:"authorizing_group_provisioning"`
-	AuthorizingGroupTypes        types.List   `tfsdk:"authorizing_group_types"`
+	AuthorizingGroupTypes        types.Set    `tfsdk:"authorizing_group_types"`
 	Classification               types.Object `tfsdk:"classification"`
 	Description                  types.String `tfsdk:"description"`
 	ExtendedAccess               types.String `tfsdk:"extended_access"`
@@ -677,7 +677,7 @@ var groupGroupAuditConfigAttrTypesDSRecurse = objectAttrsTypeDSGroupGroupAuditCo
 type groupGroupAuditConfigDataDS struct {
 	Links       types.List `tfsdk:"links"`
 	Permissions types.List `tfsdk:"permissions"`
-	Months      types.List `tfsdk:"months"`
+	Months      types.Set  `tfsdk:"months"`
 }
 
 var groupGroupAuditLinkableWrapperAttrTypesDS = objectAttrsTypeDSGroupGroupAuditLinkableWrapper(false)
@@ -728,7 +728,7 @@ type groupGroupClassificationDataDS struct {
 	MaximumAuditInterval                 types.Int64  `tfsdk:"maximum_audit_interval"`
 	MinimumNrManagers                    types.Int64  `tfsdk:"minimum_nr_managers"`
 	RecordTrailRequired                  types.Bool   `tfsdk:"record_trail_required"`
-	RequiredMonths                       types.List   `tfsdk:"required_months"`
+	RequiredMonths                       types.Set    `tfsdk:"required_months"`
 	RotatingPasswordRequired             types.Bool   `tfsdk:"rotating_password_required"`
 	VaultRequiresActivation              types.Bool   `tfsdk:"vault_requires_activation"`
 }
@@ -1423,7 +1423,7 @@ type vaultVaultRecordDataDS struct {
 	Derived          types.Bool   `tfsdk:"derived"`
 	EndDate          types.String `tfsdk:"end_date"`
 	Filename         types.String `tfsdk:"filename"`
-	Types            types.List   `tfsdk:"types"`
+	Types            types.Set    `tfsdk:"types"`
 	URL              types.String `tfsdk:"url"`
 	Username         types.String `tfsdk:"username"`
 	WarningPeriod    types.String `tfsdk:"warning_period"`

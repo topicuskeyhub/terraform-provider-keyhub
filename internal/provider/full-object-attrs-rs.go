@@ -64,7 +64,7 @@ func objectAttrsTypeRSAuthPermission(recurse bool) map[string]attr.Type {
 	objectAttrs := make(map[string]attr.Type)
 	objectAttrs["full"] = types.StringType
 	objectAttrs["instances"] = types.ListType{ElemType: types.StringType}
-	objectAttrs["operations"] = types.ListType{ElemType: types.StringType}
+	objectAttrs["operations"] = types.SetType{ElemType: types.StringType}
 	objectAttrs["type_escaped"] = types.StringType
 	return objectAttrs
 }
@@ -111,7 +111,7 @@ func objectAttrsTypeRSClientApplicationVaultVaultRecord(recurse bool) map[string
 	objectAttrs["derived"] = types.BoolType
 	objectAttrs["end_date"] = types.StringType
 	objectAttrs["filename"] = types.StringType
-	objectAttrs["types"] = types.ListType{ElemType: types.StringType}
+	objectAttrs["types"] = types.SetType{ElemType: types.StringType}
 	objectAttrs["url"] = types.StringType
 	objectAttrs["username"] = types.StringType
 	objectAttrs["warning_period"] = types.StringType
@@ -445,7 +445,7 @@ func objectAttrsTypeRSGroupGroup(recurse bool) map[string]attr.Type {
 	objectAttrs["authorizing_group_delegation_uuid"] = types.StringType
 	objectAttrs["authorizing_group_membership_uuid"] = types.StringType
 	objectAttrs["authorizing_group_provisioning_uuid"] = types.StringType
-	objectAttrs["authorizing_group_types"] = types.ListType{ElemType: types.StringType}
+	objectAttrs["authorizing_group_types"] = types.SetType{ElemType: types.StringType}
 	objectAttrs["classification_uuid"] = types.StringType
 	objectAttrs["description"] = types.StringType
 	objectAttrs["extended_access"] = types.StringType
@@ -540,7 +540,7 @@ func objectAttrsTypeRSGroupGroupAuditConfig(recurse bool) map[string]attr.Type {
 	objectAttrs := make(map[string]attr.Type)
 	objectAttrs["links"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeRSRestLink(recurse)}}
 	objectAttrs["permissions"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeRSAuthPermission(recurse)}}
-	objectAttrs["months"] = types.ListType{ElemType: types.StringType}
+	objectAttrs["months"] = types.SetType{ElemType: types.StringType}
 	return objectAttrs
 }
 
@@ -728,7 +728,7 @@ func objectAttrsTypeRSGroupVaultVaultRecord(recurse bool) map[string]attr.Type {
 	objectAttrs["derived"] = types.BoolType
 	objectAttrs["end_date"] = types.StringType
 	objectAttrs["filename"] = types.StringType
-	objectAttrs["types"] = types.ListType{ElemType: types.StringType}
+	objectAttrs["types"] = types.SetType{ElemType: types.StringType}
 	objectAttrs["url"] = types.StringType
 	objectAttrs["username"] = types.StringType
 	objectAttrs["warning_period"] = types.StringType
@@ -1263,7 +1263,7 @@ func objectAttrsTypeRSVaultVaultRecord(recurse bool) map[string]attr.Type {
 	objectAttrs["derived"] = types.BoolType
 	objectAttrs["end_date"] = types.StringType
 	objectAttrs["filename"] = types.StringType
-	objectAttrs["types"] = types.ListType{ElemType: types.StringType}
+	objectAttrs["types"] = types.SetType{ElemType: types.StringType}
 	objectAttrs["url"] = types.StringType
 	objectAttrs["username"] = types.StringType
 	objectAttrs["warning_period"] = types.StringType

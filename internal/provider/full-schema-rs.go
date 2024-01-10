@@ -11,6 +11,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/setvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	rsschema "github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -142,11 +143,11 @@ func resourceSchemaAttrsAuthPermission(recurse bool) map[string]rsschema.Attribu
 		ElementType: types.StringType,
 		Optional:    true,
 	}
-	schemaAttrs["operations"] = rsschema.ListAttribute{
+	schemaAttrs["operations"] = rsschema.SetAttribute{
 		ElementType: types.StringType,
 		Optional:    true,
-		Validators: []validator.List{
-			listvalidator.ValueStringsAre(
+		Validators: []validator.Set{
+			setvalidator.ValueStringsAre(
 				stringvalidator.OneOf(
 					"CREATE", "READ", "UPDATE", "DELETE",
 				),
@@ -283,7 +284,7 @@ func resourceSchemaAttrsClientApplicationVaultVaultRecord(recurse bool) map[stri
 			stringvalidator.UTF8LengthBetween(0, 255),
 		},
 	}
-	schemaAttrs["types"] = rsschema.ListAttribute{
+	schemaAttrs["types"] = rsschema.SetAttribute{
 		ElementType: types.StringType,
 		Computed:    true,
 	}
@@ -1301,7 +1302,7 @@ func resourceSchemaAttrsGroupGroup(recurse bool) map[string]rsschema.Attribute {
 			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
-	schemaAttrs["authorizing_group_types"] = rsschema.ListAttribute{
+	schemaAttrs["authorizing_group_types"] = rsschema.SetAttribute{
 		ElementType: types.StringType,
 		Computed:    true,
 	}
@@ -1598,12 +1599,12 @@ func resourceSchemaAttrsGroupGroupAuditConfig(recurse bool) map[string]rsschema.
 		Computed:      true,
 		PlanModifiers: []planmodifier.List{listplanmodifier.UseStateForUnknown()},
 	}
-	schemaAttrs["months"] = rsschema.ListAttribute{
+	schemaAttrs["months"] = rsschema.SetAttribute{
 		ElementType: types.StringType,
 		Optional:    true,
 		Computed:    true,
-		Validators: []validator.List{
-			listvalidator.ValueStringsAre(
+		Validators: []validator.Set{
+			setvalidator.ValueStringsAre(
 				stringvalidator.OneOf(
 					"JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER",
 				),
@@ -2167,7 +2168,7 @@ func resourceSchemaAttrsGroupVaultVaultRecord(recurse bool) map[string]rsschema.
 			stringvalidator.UTF8LengthBetween(0, 255),
 		},
 	}
-	schemaAttrs["types"] = rsschema.ListAttribute{
+	schemaAttrs["types"] = rsschema.SetAttribute{
 		ElementType: types.StringType,
 		Computed:    true,
 	}
@@ -3724,7 +3725,7 @@ func resourceSchemaAttrsVaultVaultRecord(recurse bool) map[string]rsschema.Attri
 			stringvalidator.UTF8LengthBetween(0, 255),
 		},
 	}
-	schemaAttrs["types"] = rsschema.ListAttribute{
+	schemaAttrs["types"] = rsschema.SetAttribute{
 		ElementType: types.StringType,
 		Computed:    true,
 	}

@@ -64,7 +64,7 @@ Read-Only:
 
 - `full` (String)
 - `instances` (List of String)
-- `operations` (List of String)
+- `operations` (Set of String)
 - `type_escaped` (String)
 
 
@@ -110,7 +110,7 @@ Read-Only:
 
 - `full` (String)
 - `instances` (List of String)
-- `operations` (List of String)
+- `operations` (Set of String)
 - `type_escaped` (String)
 
 
@@ -160,7 +160,7 @@ Read-Only:
 
 - `full` (String)
 - `instances` (List of String)
-- `operations` (List of String)
+- `operations` (Set of String)
 - `type_escaped` (String)
 
 
@@ -204,7 +204,7 @@ Read-Only:
 
 - `full` (String)
 - `instances` (List of String)
-- `operations` (List of String)
+- `operations` (Set of String)
 - `type_escaped` (String)
 
 
@@ -216,7 +216,7 @@ Read-Only:
 
 - `full` (String)
 - `instances` (List of String)
-- `operations` (List of String)
+- `operations` (Set of String)
 - `type_escaped` (String)
 
 
@@ -248,7 +248,7 @@ Read-Only:
 
 - `full` (String)
 - `instances` (List of String)
-- `operations` (List of String)
+- `operations` (Set of String)
 - `type_escaped` (String)
 
 
@@ -298,7 +298,7 @@ Read-Only:
 
 - `full` (String)
 - `instances` (List of String)
-- `operations` (List of String)
+- `operations` (Set of String)
 - `type_escaped` (String)
 
 
@@ -350,7 +350,7 @@ Read-Only:
 
 - `full` (String)
 - `instances` (List of String)
-- `operations` (List of String)
+- `operations` (Set of String)
 - `type_escaped` (String)
 
 
@@ -367,7 +367,7 @@ Read-Only:
 - `name` (String)
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--vault--records--permissions))
 - `share_end_time` (String)
-- `types` (List of String)
+- `types` (Set of String)
 - `url` (String)
 - `username` (String)
 - `uuid` (String)
@@ -391,5 +391,5 @@ Read-Only:
 
 - `full` (String)
 - `instances` (List of String)
-- `operations` (List of String)
+- `operations` (Set of String)
 - `type_escaped` (String)

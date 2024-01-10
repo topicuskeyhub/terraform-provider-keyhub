@@ -80,7 +80,7 @@ Optional:
 
 - `full` (String)
 - `instances` (List of String)
-- `operations` (List of String)
+- `operations` (Set of String)
 - `type_escaped` (String)
 
 
@@ -128,7 +128,7 @@ Optional:
 
 - `full` (String)
 - `instances` (List of String)
-- `operations` (List of String)
+- `operations` (Set of String)
 - `type_escaped` (String)
 
 
@@ -209,7 +209,7 @@ Read-Only:
 - `admin` (Boolean)
 - `audit_requested` (Boolean)
 - `auditor` (Boolean)
-- `authorizing_group_types` (List of String)
+- `authorizing_group_types` (Set of String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--groups--links))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--groups--permissions))
 - `uuid` (String)
@@ -219,7 +219,7 @@ Read-Only:
 
 Optional:
 
-- `months` (List of String)
+- `months` (Set of String)
 
 Read-Only:
 
@@ -244,7 +244,7 @@ Optional:
 
 - `full` (String)
 - `instances` (List of String)
-- `operations` (List of String)
+- `operations` (Set of String)
 - `type_escaped` (String)
 
 
@@ -267,7 +267,7 @@ Optional:
 
 - `full` (String)
 - `instances` (List of String)
-- `operations` (List of String)
+- `operations` (Set of String)
 - `type_escaped` (String)
 
 
@@ -290,5 +290,5 @@ Optional:
 
 - `full` (String)
 - `instances` (List of String)
-- `operations` (List of String)
+- `operations` (Set of String)
 - `type_escaped` (String)

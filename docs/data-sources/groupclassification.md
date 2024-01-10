@@ -39,7 +39,7 @@ description: |-
 - `name` (String)
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--permissions))
 - `record_trail_required` (Boolean)
-- `required_months` (List of String)
+- `required_months` (Set of String)
 - `rotating_password_required` (Boolean)
 - `vault_requires_activation` (Boolean)
 
@@ -80,5 +80,5 @@ Read-Only:
 
 - `full` (String)
 - `instances` (List of String)
-- `operations` (List of String)
+- `operations` (Set of String)
 - `type_escaped` (String)

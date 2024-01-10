@@ -71,7 +71,7 @@ var authPermissionAttrTypesRSRecurse = objectAttrsTypeRSAuthPermission(true)
 type authPermissionDataRS struct {
 	Full        types.String `tfsdk:"full"`
 	Instances   types.List   `tfsdk:"instances"`
-	Operations  types.List   `tfsdk:"operations"`
+	Operations  types.Set    `tfsdk:"operations"`
 	TypeEscaped types.String `tfsdk:"type_escaped"`
 }
 
@@ -116,7 +116,7 @@ type clientApplicationVaultVaultRecordDataRS struct {
 	Derived               types.Bool   `tfsdk:"derived"`
 	EndDate               types.String `tfsdk:"end_date"`
 	Filename              types.String `tfsdk:"filename"`
-	Types                 types.List   `tfsdk:"types"`
+	Types                 types.Set    `tfsdk:"types"`
 	URL                   types.String `tfsdk:"url"`
 	Username              types.String `tfsdk:"username"`
 	WarningPeriod         types.String `tfsdk:"warning_period"`
@@ -454,7 +454,7 @@ type groupGroupDataRS struct {
 	AuthorizingGroupDelegationUUID   types.String `tfsdk:"authorizing_group_delegation_uuid"`
 	AuthorizingGroupMembershipUUID   types.String `tfsdk:"authorizing_group_membership_uuid"`
 	AuthorizingGroupProvisioningUUID types.String `tfsdk:"authorizing_group_provisioning_uuid"`
-	AuthorizingGroupTypes            types.List   `tfsdk:"authorizing_group_types"`
+	AuthorizingGroupTypes            types.Set    `tfsdk:"authorizing_group_types"`
 	ClassificationUUID               types.String `tfsdk:"classification_uuid"`
 	Description                      types.String `tfsdk:"description"`
 	ExtendedAccess                   types.String `tfsdk:"extended_access"`
@@ -547,7 +547,7 @@ var groupGroupAuditConfigAttrTypesRSRecurse = objectAttrsTypeRSGroupGroupAuditCo
 type groupGroupAuditConfigDataRS struct {
 	Links       types.List `tfsdk:"links"`
 	Permissions types.List `tfsdk:"permissions"`
-	Months      types.List `tfsdk:"months"`
+	Months      types.Set  `tfsdk:"months"`
 }
 
 var groupGroupAuditLinkableWrapperAttrTypesRS = objectAttrsTypeRSGroupGroupAuditLinkableWrapper(false)
@@ -739,7 +739,7 @@ type groupVaultVaultRecordDataRS struct {
 	Derived          types.Bool   `tfsdk:"derived"`
 	EndDate          types.String `tfsdk:"end_date"`
 	Filename         types.String `tfsdk:"filename"`
-	Types            types.List   `tfsdk:"types"`
+	Types            types.Set    `tfsdk:"types"`
 	URL              types.String `tfsdk:"url"`
 	Username         types.String `tfsdk:"username"`
 	WarningPeriod    types.String `tfsdk:"warning_period"`
@@ -1287,7 +1287,7 @@ type vaultVaultRecordDataRS struct {
 	Derived          types.Bool   `tfsdk:"derived"`
 	EndDate          types.String `tfsdk:"end_date"`
 	Filename         types.String `tfsdk:"filename"`
-	Types            types.List   `tfsdk:"types"`
+	Types            types.Set    `tfsdk:"types"`
 	URL              types.String `tfsdk:"url"`
 	Username         types.String `tfsdk:"username"`
 	WarningPeriod    types.String `tfsdk:"warning_period"`
