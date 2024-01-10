@@ -1,3 +1,19 @@
+## 2.30.6
+* Fix OAuth2 client application custom attributes
+
+## 2.30.5
+* Minor updates to the documentation
+
+## 2.30.4
+* Add support for import command
+
+## 2.30.2
+* Renamed client resource to clientapplication
+* Fixed naming of some properties
+
+## 2.30.0
+* First official release for the new Topicus KeyHub Terraform provider, supporting version 30
+
 ## 0.0.2
 * Add support for provisioned namespaces
 * Updated documentation
