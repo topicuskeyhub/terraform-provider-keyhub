@@ -69,7 +69,7 @@ Read-Only:
 - `attributes` (Map of String)
 - `base_dn` (String)
 - `bind_dn` (String)
-- `bind_password` (String)
+- `bind_password` (String, Sensitive)
 - `client_certificate` (Attributes) (see [below for nested schema](#nestedatt--abstract_provisioned_ldap--client_certificate))
 - `failover_host` (String)
 - `failover_trusted_certificate` (Attributes) (see [below for nested schema](#nestedatt--abstract_provisioned_ldap--failover_trusted_certificate))
@@ -770,7 +770,7 @@ Read-Only:
 Read-Only:
 
 - `client_id` (String)
-- `client_secret` (String)
+- `client_secret` (String, Sensitive)
 - `directory` (Attributes) (see [below for nested schema](#nestedatt--provisioned_azure_sync_ldap_directory--directory))
 - `tenant` (String)
 
@@ -817,7 +817,7 @@ Read-Only:
 Read-Only:
 
 - `client_id` (String)
-- `client_secret` (String)
+- `client_secret` (String, Sensitive)
 - `idp_domain` (String)
 - `tenant` (String)
 
@@ -1091,11 +1091,11 @@ Read-Only:
 Read-Only:
 
 - `authentication_scheme` (String)
-- `basic_auth_password` (String)
+- `basic_auth_password` (String, Sensitive)
 - `basic_auth_username` (String)
-- `bearer_token` (String)
+- `bearer_token` (String, Sensitive)
 - `custom_header_name` (String)
-- `custom_header_value` (String)
+- `custom_header_value` (String, Sensitive)
 - `url` (String)
 - `vendor_escaped` (String)
 

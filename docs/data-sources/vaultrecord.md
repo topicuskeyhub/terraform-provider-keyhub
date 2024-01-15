@@ -135,10 +135,10 @@ Read-Only:
 
 Read-Only:
 
-- `comment` (String)
-- `file` (String)
-- `password` (String)
-- `totp` (String)
+- `comment` (String, Sensitive)
+- `file` (String, Sensitive)
+- `password` (String, Sensitive)
+- `totp` (String, Sensitive)
 
 
 <a id="nestedatt--share_summary"></a>

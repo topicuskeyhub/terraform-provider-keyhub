@@ -35,7 +35,8 @@ func dataSourceSchemaAttrsAuditInfo(recurse bool) map[string]dsschema.Attribute 
 func dataSourceSchemaAttrsGeneratedSecret(recurse bool) map[string]dsschema.Attribute {
 	schemaAttrs := make(map[string]dsschema.Attribute)
 	schemaAttrs["generated_secret"] = dsschema.StringAttribute{
-		Computed: true,
+		Computed:  true,
+		Sensitive: true,
 	}
 	return schemaAttrs
 }
@@ -593,7 +594,8 @@ func dataSourceSchemaAttrsCertificateCertificate(recurse bool) map[string]dssche
 		},
 	}
 	schemaAttrs["key_data"] = dsschema.StringAttribute{
-		Computed: true,
+		Computed:  true,
+		Sensitive: true,
 	}
 	return schemaAttrs
 }
@@ -1338,7 +1340,8 @@ func dataSourceSchemaAttrsDirectoryLDAPDirectory(recurse bool) map[string]dssche
 		Computed: true,
 	}
 	schemaAttrs["search_bind_password"] = dsschema.StringAttribute{
-		Computed: true,
+		Computed:  true,
+		Sensitive: true,
 	}
 	schemaAttrs["search_filter"] = dsschema.StringAttribute{
 		Computed: true,
@@ -1371,7 +1374,8 @@ func dataSourceSchemaAttrsDirectoryOIDCDirectory(recurse bool) map[string]dssche
 		Computed: true,
 	}
 	schemaAttrs["client_secret"] = dsschema.StringAttribute{
-		Computed: true,
+		Computed:  true,
+		Sensitive: true,
 	}
 	schemaAttrs["domain_restriction"] = dsschema.StringAttribute{
 		Computed: true,
@@ -2515,7 +2519,8 @@ func dataSourceSchemaAttrsProvisioningAbstractProvisionedLDAP(recurse bool) map[
 		Computed: true,
 	}
 	schemaAttrs["bind_password"] = dsschema.StringAttribute{
-		Computed: true,
+		Computed:  true,
+		Sensitive: true,
 	}
 	{
 		attr := dsschema.SingleNestedAttribute{
@@ -2857,7 +2862,8 @@ func dataSourceSchemaAttrsProvisioningProvisionedAzureSyncLDAPDirectory(recurse 
 		Computed: true,
 	}
 	schemaAttrs["client_secret"] = dsschema.StringAttribute{
-		Computed: true,
+		Computed:  true,
+		Sensitive: true,
 	}
 	{
 		attr := dsschema.SingleNestedAttribute{
@@ -2877,7 +2883,8 @@ func dataSourceSchemaAttrsProvisioningProvisionedAzureTenant(recurse bool) map[s
 		Computed: true,
 	}
 	schemaAttrs["client_secret"] = dsschema.StringAttribute{
-		Computed: true,
+		Computed:  true,
+		Sensitive: true,
 	}
 	schemaAttrs["idp_domain"] = dsschema.StringAttribute{
 		Computed: true,
@@ -2952,19 +2959,22 @@ func dataSourceSchemaAttrsProvisioningProvisionedSCIM(recurse bool) map[string]d
 		Computed: true,
 	}
 	schemaAttrs["basic_auth_password"] = dsschema.StringAttribute{
-		Computed: true,
+		Computed:  true,
+		Sensitive: true,
 	}
 	schemaAttrs["basic_auth_username"] = dsschema.StringAttribute{
 		Computed: true,
 	}
 	schemaAttrs["bearer_token"] = dsschema.StringAttribute{
-		Computed: true,
+		Computed:  true,
+		Sensitive: true,
 	}
 	schemaAttrs["custom_header_name"] = dsschema.StringAttribute{
 		Computed: true,
 	}
 	schemaAttrs["custom_header_value"] = dsschema.StringAttribute{
-		Computed: true,
+		Computed:  true,
+		Sensitive: true,
 	}
 	schemaAttrs["url"] = dsschema.StringAttribute{
 		Computed: true,
@@ -3668,16 +3678,20 @@ func dataSourceSchemaAttrsVaultVaultRecordPrimerLinkableWrapper(recurse bool) ma
 func dataSourceSchemaAttrsVaultVaultRecordSecrets(recurse bool) map[string]dsschema.Attribute {
 	schemaAttrs := make(map[string]dsschema.Attribute)
 	schemaAttrs["comment"] = dsschema.StringAttribute{
-		Computed: true,
+		Computed:  true,
+		Sensitive: true,
 	}
 	schemaAttrs["file"] = dsschema.StringAttribute{
-		Computed: true,
+		Computed:  true,
+		Sensitive: true,
 	}
 	schemaAttrs["password"] = dsschema.StringAttribute{
-		Computed: true,
+		Computed:  true,
+		Sensitive: true,
 	}
 	schemaAttrs["totp"] = dsschema.StringAttribute{
-		Computed: true,
+		Computed:  true,
+		Sensitive: true,
 	}
 	return schemaAttrs
 }
@@ -3811,13 +3825,15 @@ func dataSourceSchemaAttrsWebhookWebhook(recurse bool) map[string]dsschema.Attri
 		Computed: true,
 	}
 	schemaAttrs["basic_auth_password"] = dsschema.StringAttribute{
-		Computed: true,
+		Computed:  true,
+		Sensitive: true,
 	}
 	schemaAttrs["basic_auth_username"] = dsschema.StringAttribute{
 		Computed: true,
 	}
 	schemaAttrs["bearer_token"] = dsschema.StringAttribute{
-		Computed: true,
+		Computed:  true,
+		Sensitive: true,
 	}
 	{
 		attr := dsschema.SingleNestedAttribute{
@@ -3837,7 +3853,8 @@ func dataSourceSchemaAttrsWebhookWebhook(recurse bool) map[string]dsschema.Attri
 		Computed: true,
 	}
 	schemaAttrs["custom_header_value"] = dsschema.StringAttribute{
-		Computed: true,
+		Computed:  true,
+		Sensitive: true,
 	}
 	{
 		attr := dsschema.SingleNestedAttribute{

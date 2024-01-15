@@ -147,7 +147,7 @@ Read-Only:
 
 Read-Only:
 
-- `generated_secret` (String)
+- `generated_secret` (String, Sensitive)
 
 
 <a id="nestedatt--system"></a>

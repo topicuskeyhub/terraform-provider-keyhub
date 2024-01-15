@@ -379,7 +379,7 @@ Optional:
 
 - `attributes` (Map of String)
 - `bind_dn` (String)
-- `bind_password` (String)
+- `bind_password` (String, Sensitive)
 - `client_certificate_uuid` (String)
 - `failover_host` (String)
 - `failover_trusted_certificate_uuid` (String)
@@ -415,7 +415,7 @@ Required:
 Required:
 
 - `client_id` (String)
-- `client_secret` (String)
+- `client_secret` (String, Sensitive)
 - `directory_uuid` (String)
 - `tenant` (String)
 
@@ -426,7 +426,7 @@ Required:
 Required:
 
 - `client_id` (String)
-- `client_secret` (String)
+- `client_secret` (String, Sensitive)
 - `tenant` (String)
 
 Optional:
@@ -524,11 +524,11 @@ Required:
 Optional:
 
 - `authentication_scheme` (String)
-- `basic_auth_password` (String)
+- `basic_auth_password` (String, Sensitive)
 - `basic_auth_username` (String)
-- `bearer_token` (String)
+- `bearer_token` (String, Sensitive)
 - `custom_header_name` (String)
-- `custom_header_value` (String)
+- `custom_header_value` (String, Sensitive)
 - `vendor_escaped` (String)
 
 
@@ -763,7 +763,7 @@ Optional:
 
 - `attributes` (Map of String)
 - `bind_dn` (String)
-- `bind_password` (String)
+- `bind_password` (String, Sensitive)
 - `client_certificate_uuid` (String)
 - `failover_host` (String)
 - `failover_trusted_certificate_uuid` (String)
@@ -799,7 +799,7 @@ Required:
 Required:
 
 - `client_id` (String)
-- `client_secret` (String)
+- `client_secret` (String, Sensitive)
 - `directory_uuid` (String)
 - `tenant` (String)
 
@@ -810,7 +810,7 @@ Required:
 Required:
 
 - `client_id` (String)
-- `client_secret` (String)
+- `client_secret` (String, Sensitive)
 - `tenant` (String)
 
 Optional:
@@ -908,11 +908,11 @@ Required:
 Optional:
 
 - `authentication_scheme` (String)
-- `basic_auth_password` (String)
+- `basic_auth_password` (String, Sensitive)
 - `basic_auth_username` (String)
-- `bearer_token` (String)
+- `bearer_token` (String, Sensitive)
 - `custom_header_name` (String)
-- `custom_header_value` (String)
+- `custom_header_value` (String, Sensitive)
 - `vendor_escaped` (String)
 
 
@@ -1300,7 +1300,7 @@ Optional:
 - `failover_trusted_certificate_uuid` (String)
 - `port` (Number)
 - `search_bind_dn` (String)
-- `search_bind_password` (String)
+- `search_bind_password` (String, Sensitive)
 - `search_filter` (String)
 - `trusted_certificate_uuid` (String)
 
@@ -1315,7 +1315,7 @@ Optional:
 Required:
 
 - `client_id` (String)
-- `client_secret` (String)
+- `client_secret` (String, Sensitive)
 - `issuer` (String)
 - `vendor_escaped` (String)
 
@@ -1503,7 +1503,7 @@ Optional:
 
 - `attributes` (Map of String)
 - `bind_dn` (String)
-- `bind_password` (String)
+- `bind_password` (String, Sensitive)
 - `client_certificate_uuid` (String)
 - `failover_host` (String)
 - `failover_trusted_certificate_uuid` (String)
@@ -1539,7 +1539,7 @@ Required:
 Required:
 
 - `client_id` (String)
-- `client_secret` (String)
+- `client_secret` (String, Sensitive)
 - `directory_uuid` (String)
 - `tenant` (String)
 
@@ -1550,7 +1550,7 @@ Required:
 Required:
 
 - `client_id` (String)
-- `client_secret` (String)
+- `client_secret` (String, Sensitive)
 - `tenant` (String)
 
 Optional:
@@ -1648,11 +1648,11 @@ Required:
 Optional:
 
 - `authentication_scheme` (String)
-- `basic_auth_password` (String)
+- `basic_auth_password` (String, Sensitive)
 - `basic_auth_username` (String)
-- `bearer_token` (String)
+- `bearer_token` (String, Sensitive)
 - `custom_header_name` (String)
-- `custom_header_value` (String)
+- `custom_header_value` (String, Sensitive)
 - `vendor_escaped` (String)
 
 
@@ -2001,13 +2001,13 @@ Optional:
 - `active` (Boolean)
 - `all_types` (Boolean)
 - `authentication_scheme` (String)
-- `basic_auth_password` (String)
+- `basic_auth_password` (String, Sensitive)
 - `basic_auth_username` (String)
-- `bearer_token` (String)
+- `bearer_token` (String, Sensitive)
 - `client_certificate_uuid` (String)
 - `client_uuid` (String)
 - `custom_header_name` (String)
-- `custom_header_value` (String)
+- `custom_header_value` (String, Sensitive)
 - `directory_uuid` (String)
 - `group_uuid` (String)
 - `name` (String)

@@ -1,3 +1,6 @@
+## 2.31.1
+* Mark passwords and keys as sensitive
+
 ## 2.31.0
 * Upgrade API to Topicus KeyHub version 31
 

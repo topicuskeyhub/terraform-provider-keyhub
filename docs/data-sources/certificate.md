@@ -32,7 +32,7 @@ description: |-
 - `fingerprint_sha1` (String)
 - `fingerprint_sha256` (String)
 - `global` (Boolean)
-- `key_data` (String)
+- `key_data` (String, Sensitive)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--links))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--permissions))
 - `subject_dn` (String)

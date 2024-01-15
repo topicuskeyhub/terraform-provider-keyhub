@@ -152,12 +152,12 @@ Optional:
 
 Optional:
 
-- `old_secret` (String)
+- `old_secret` (String, Sensitive)
 - `regenerate` (Boolean)
 
 Read-Only:
 
-- `generated_secret` (String)
+- `generated_secret` (String, Sensitive)
 
 
 <a id="nestedatt--tile"></a>

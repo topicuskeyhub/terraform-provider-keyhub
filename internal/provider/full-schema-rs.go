@@ -48,10 +48,12 @@ func resourceSchemaAttrsAuditInfo(recurse bool) map[string]rsschema.Attribute {
 func resourceSchemaAttrsGeneratedSecret(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	schemaAttrs["generated_secret"] = rsschema.StringAttribute{
-		Computed: true,
+		Computed:  true,
+		Sensitive: true,
 	}
 	schemaAttrs["old_secret"] = rsschema.StringAttribute{
-		Optional: true,
+		Optional:  true,
+		Sensitive: true,
 	}
 	schemaAttrs["regenerate"] = rsschema.BoolAttribute{
 		Optional: true,
@@ -1301,6 +1303,7 @@ func resourceSchemaAttrsDirectoryLDAPDirectory(recurse bool) map[string]rsschema
 		Validators: []validator.String{
 			stringvalidator.UTF8LengthBetween(0, 128),
 		},
+		Sensitive: true,
 	}
 	schemaAttrs["search_filter"] = rsschema.StringAttribute{
 		Optional: true,
@@ -1349,7 +1352,8 @@ func resourceSchemaAttrsDirectoryOIDCDirectory(recurse bool) map[string]rsschema
 		},
 	}
 	schemaAttrs["client_secret"] = rsschema.StringAttribute{
-		Required: true,
+		Required:  true,
+		Sensitive: true,
 	}
 	schemaAttrs["domain_restriction"] = rsschema.StringAttribute{
 		Optional: true,
@@ -2494,6 +2498,7 @@ func resourceSchemaAttrsProvisioningAbstractProvisionedLDAP(recurse bool) map[st
 		Validators: []validator.String{
 			stringvalidator.UTF8LengthBetween(0, 128),
 		},
+		Sensitive: true,
 	}
 	schemaAttrs["client_certificate_uuid"] = rsschema.StringAttribute{
 		Optional: true,
@@ -2888,7 +2893,8 @@ func resourceSchemaAttrsProvisioningProvisionedAzureSyncLDAPDirectory(recurse bo
 		},
 	}
 	schemaAttrs["client_secret"] = rsschema.StringAttribute{
-		Required: true,
+		Required:  true,
+		Sensitive: true,
 	}
 	schemaAttrs["directory_uuid"] = rsschema.StringAttribute{
 		Required: true,
@@ -2910,7 +2916,8 @@ func resourceSchemaAttrsProvisioningProvisionedAzureTenant(recurse bool) map[str
 		},
 	}
 	schemaAttrs["client_secret"] = rsschema.StringAttribute{
-		Required: true,
+		Required:  true,
+		Sensitive: true,
 	}
 	schemaAttrs["idp_domain"] = rsschema.StringAttribute{
 		Optional: true,
@@ -3012,6 +3019,7 @@ func resourceSchemaAttrsProvisioningProvisionedSCIM(recurse bool) map[string]rss
 		Validators: []validator.String{
 			stringvalidator.UTF8LengthBetween(0, 512),
 		},
+		Sensitive: true,
 	}
 	schemaAttrs["basic_auth_username"] = rsschema.StringAttribute{
 		Optional: true,
@@ -3024,6 +3032,7 @@ func resourceSchemaAttrsProvisioningProvisionedSCIM(recurse bool) map[string]rss
 		Validators: []validator.String{
 			stringvalidator.UTF8LengthBetween(0, 1024),
 		},
+		Sensitive: true,
 	}
 	schemaAttrs["custom_header_name"] = rsschema.StringAttribute{
 		Optional: true,
@@ -3036,6 +3045,7 @@ func resourceSchemaAttrsProvisioningProvisionedSCIM(recurse bool) map[string]rss
 		Validators: []validator.String{
 			stringvalidator.UTF8LengthBetween(0, 1024),
 		},
+		Sensitive: true,
 	}
 	schemaAttrs["url"] = rsschema.StringAttribute{
 		Required: true,
@@ -3849,16 +3859,20 @@ func resourceSchemaAttrsVaultVaultRecordPrimerLinkableWrapper(recurse bool) map[
 func resourceSchemaAttrsVaultVaultRecordSecrets(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	schemaAttrs["comment"] = rsschema.StringAttribute{
-		Optional: true,
+		Optional:  true,
+		Sensitive: true,
 	}
 	schemaAttrs["file"] = rsschema.StringAttribute{
-		Optional: true,
+		Optional:  true,
+		Sensitive: true,
 	}
 	schemaAttrs["password"] = rsschema.StringAttribute{
-		Optional: true,
+		Optional:  true,
+		Sensitive: true,
 	}
 	schemaAttrs["totp"] = rsschema.StringAttribute{
-		Optional: true,
+		Optional:  true,
+		Sensitive: true,
 	}
 	schemaAttrs["write_totp"] = rsschema.BoolAttribute{
 		Computed: true,
@@ -4017,6 +4031,7 @@ func resourceSchemaAttrsWebhookWebhook(recurse bool) map[string]rsschema.Attribu
 		Validators: []validator.String{
 			stringvalidator.UTF8LengthBetween(0, 512),
 		},
+		Sensitive: true,
 	}
 	schemaAttrs["basic_auth_username"] = rsschema.StringAttribute{
 		Optional: true,
@@ -4029,6 +4044,7 @@ func resourceSchemaAttrsWebhookWebhook(recurse bool) map[string]rsschema.Attribu
 		Validators: []validator.String{
 			stringvalidator.UTF8LengthBetween(0, 255),
 		},
+		Sensitive: true,
 	}
 	schemaAttrs["client_uuid"] = rsschema.StringAttribute{
 		Optional: true,
@@ -4053,6 +4069,7 @@ func resourceSchemaAttrsWebhookWebhook(recurse bool) map[string]rsschema.Attribu
 		Validators: []validator.String{
 			stringvalidator.UTF8LengthBetween(0, 1024),
 		},
+		Sensitive: true,
 	}
 	schemaAttrs["directory_uuid"] = rsschema.StringAttribute{
 		Optional: true,
