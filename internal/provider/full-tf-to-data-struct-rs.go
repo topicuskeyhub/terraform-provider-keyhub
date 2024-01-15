@@ -38,6 +38,59 @@ func fillDataStructFromTFObjectRSRestLink(data *restLinkDataRS, obj types.Object
 	data.TypeEscaped = obj.Attributes()["type_escaped"].(basetypes.StringValue)
 }
 
+func fillDataStructFromTFObjectRSAuditGroupAudit(data *auditGroupAuditDataRS, obj types.Object) {
+	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
+	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
+	data.Accounts = obj.Attributes()["accounts"].(basetypes.ListValue)
+	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
+	data.Comment = obj.Attributes()["comment"].(basetypes.StringValue)
+	data.CreatedAt = obj.Attributes()["created_at"].(basetypes.StringValue)
+	data.CreatedBy = obj.Attributes()["created_by"].(basetypes.StringValue)
+	data.GroupName = obj.Attributes()["group_name"].(basetypes.StringValue)
+	data.NameOnAudit = obj.Attributes()["name_on_audit"].(basetypes.StringValue)
+	data.NestedGroups = obj.Attributes()["nested_groups"].(basetypes.ListValue)
+	data.ReviewedAt = obj.Attributes()["reviewed_at"].(basetypes.StringValue)
+	data.ReviewedBy = obj.Attributes()["reviewed_by"].(basetypes.StringValue)
+	data.Status = obj.Attributes()["status"].(basetypes.StringValue)
+	data.SubmittedAt = obj.Attributes()["submitted_at"].(basetypes.StringValue)
+	data.SubmittedBy = obj.Attributes()["submitted_by"].(basetypes.StringValue)
+}
+
+func fillDataStructFromTFObjectRSAuditGroupAuditAccount(data *auditGroupAuditAccountDataRS, obj types.Object) {
+	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
+	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.AccountUUID = obj.Attributes()["account_uuid"].(basetypes.StringValue)
+	data.AccountValid = obj.Attributes()["account_valid"].(basetypes.BoolValue)
+	data.Action = obj.Attributes()["action"].(basetypes.StringValue)
+	data.Comment = obj.Attributes()["comment"].(basetypes.StringValue)
+	data.DisconnectedNested = obj.Attributes()["disconnected_nested"].(basetypes.BoolValue)
+	data.DisplayName = obj.Attributes()["display_name"].(basetypes.StringValue)
+	data.EndDate = obj.Attributes()["end_date"].(basetypes.StringValue)
+	data.LastActive = obj.Attributes()["last_active"].(basetypes.StringValue)
+	data.LastUsed = obj.Attributes()["last_used"].(basetypes.StringValue)
+	data.Nested = obj.Attributes()["nested"].(basetypes.BoolValue)
+	data.Rights = obj.Attributes()["rights"].(basetypes.StringValue)
+	data.Username = obj.Attributes()["username"].(basetypes.StringValue)
+}
+
+func fillDataStructFromTFObjectRSAuditGroupAuditLinkableWrapper(data *auditGroupAuditLinkableWrapperDataRS, obj types.Object) {
+	data.Items = obj.Attributes()["items"].(basetypes.ListValue)
+}
+
+func fillDataStructFromTFObjectRSAuditGroupAudit_additionalObjects(data *auditGroupAudit_additionalObjectsDataRS, obj types.Object) {
+	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
+}
+
+func fillDataStructFromTFObjectRSAuditNestedGroupAudit(data *auditNestedGroupAuditDataRS, obj types.Object) {
+	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
+	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Action = obj.Attributes()["action"].(basetypes.StringValue)
+	data.Comment = obj.Attributes()["comment"].(basetypes.StringValue)
+	data.GroupUUID = obj.Attributes()["group_uuid"].(basetypes.StringValue)
+	data.Name = obj.Attributes()["name"].(basetypes.StringValue)
+}
+
 func fillDataStructFromTFObjectRSAuthAccountPrimer(data *authAccountPrimerDataRS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
@@ -158,10 +211,10 @@ func fillDataStructFromTFObjectRSClientOAuth2Client(data *clientOAuth2ClientData
 	data.AccountPermissions = obj.Attributes()["account_permissions"].(basetypes.ListValue)
 	data.Attributes = obj.Attributes()["attributes"].(basetypes.MapValue)
 	data.CallbackURI = obj.Attributes()["callback_uri"].(basetypes.StringValue)
-	data.Confidential = obj.Attributes()["confidential"].(basetypes.BoolValue)
 	data.DebugMode = obj.Attributes()["debug_mode"].(basetypes.BoolValue)
 	data.IDTokenClaims = obj.Attributes()["id_token_claims"].(basetypes.StringValue)
 	data.InitiateLoginURI = obj.Attributes()["initiate_login_uri"].(basetypes.StringValue)
+	data.Profile = obj.Attributes()["profile"].(basetypes.StringValue)
 	data.ResourceURIs = obj.Attributes()["resource_uris"].(basetypes.StringValue)
 	data.ShareSecretInVault = obj.Attributes()["share_secret_in_vault"].(basetypes.BoolValue)
 	data.SharedSecretUUID = obj.Attributes()["shared_secret_uuid"].(basetypes.StringValue)
@@ -393,53 +446,10 @@ func fillDataStructFromTFObjectRSGroupGroupAccount_additionalObjects(data *group
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
 }
 
-func fillDataStructFromTFObjectRSGroupGroupAudit(data *groupGroupAuditDataRS, obj types.Object) {
-	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
-	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
-	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
-	data.Accounts = obj.Attributes()["accounts"].(basetypes.ListValue)
-	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
-	data.Comment = obj.Attributes()["comment"].(basetypes.StringValue)
-	data.CreatedAt = obj.Attributes()["created_at"].(basetypes.StringValue)
-	data.CreatedBy = obj.Attributes()["created_by"].(basetypes.StringValue)
-	data.GroupName = obj.Attributes()["group_name"].(basetypes.StringValue)
-	data.NameOnAudit = obj.Attributes()["name_on_audit"].(basetypes.StringValue)
-	data.ReviewedAt = obj.Attributes()["reviewed_at"].(basetypes.StringValue)
-	data.ReviewedBy = obj.Attributes()["reviewed_by"].(basetypes.StringValue)
-	data.Status = obj.Attributes()["status"].(basetypes.StringValue)
-	data.SubmittedAt = obj.Attributes()["submitted_at"].(basetypes.StringValue)
-	data.SubmittedBy = obj.Attributes()["submitted_by"].(basetypes.StringValue)
-}
-
-func fillDataStructFromTFObjectRSGroupGroupAuditAccount(data *groupGroupAuditAccountDataRS, obj types.Object) {
-	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
-	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
-	data.AccountUUID = obj.Attributes()["account_uuid"].(basetypes.StringValue)
-	data.AccountValid = obj.Attributes()["account_valid"].(basetypes.BoolValue)
-	data.Action = obj.Attributes()["action"].(basetypes.StringValue)
-	data.Comment = obj.Attributes()["comment"].(basetypes.StringValue)
-	data.DisconnectedNested = obj.Attributes()["disconnected_nested"].(basetypes.BoolValue)
-	data.DisplayName = obj.Attributes()["display_name"].(basetypes.StringValue)
-	data.EndDate = obj.Attributes()["end_date"].(basetypes.StringValue)
-	data.LastActive = obj.Attributes()["last_active"].(basetypes.StringValue)
-	data.LastUsed = obj.Attributes()["last_used"].(basetypes.StringValue)
-	data.Nested = obj.Attributes()["nested"].(basetypes.BoolValue)
-	data.Rights = obj.Attributes()["rights"].(basetypes.StringValue)
-	data.Username = obj.Attributes()["username"].(basetypes.StringValue)
-}
-
 func fillDataStructFromTFObjectRSGroupGroupAuditConfig(data *groupGroupAuditConfigDataRS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
 	data.Months = obj.Attributes()["months"].(basetypes.SetValue)
-}
-
-func fillDataStructFromTFObjectRSGroupGroupAuditLinkableWrapper(data *groupGroupAuditLinkableWrapperDataRS, obj types.Object) {
-	data.Items = obj.Attributes()["items"].(basetypes.ListValue)
-}
-
-func fillDataStructFromTFObjectRSGroupGroupAudit_additionalObjects(data *groupGroupAudit_additionalObjectsDataRS, obj types.Object) {
-	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
 }
 
 func fillDataStructFromTFObjectRSGroupGroupAuditingInfo(data *groupGroupAuditingInfoDataRS, obj types.Object) {

@@ -263,10 +263,10 @@ Optional:
 
 - `attributes` (Map of String)
 - `callback_uri` (String)
-- `confidential` (Boolean)
 - `debug_mode` (Boolean)
 - `id_token_claims` (String)
 - `initiate_login_uri` (String)
+- `profile` (String)
 - `resource_uris` (String)
 - `share_secret_in_vault` (Boolean)
 - `show_landing_page` (Boolean)
@@ -1181,10 +1181,10 @@ Optional:
 
 - `attributes` (Map of String)
 - `callback_uri` (String)
-- `confidential` (Boolean)
 - `debug_mode` (Boolean)
 - `id_token_claims` (String)
 - `initiate_login_uri` (String)
+- `profile` (String)
 - `resource_uris` (String)
 - `share_secret_in_vault` (Boolean)
 - `show_landing_page` (Boolean)
@@ -1701,6 +1701,7 @@ Optional:
 
 - `accounts` (Attributes List) (see [below for nested schema](#nestedatt--recent_audits--accounts))
 - `comment` (String)
+- `nested_groups` (Attributes List) (see [below for nested schema](#nestedatt--recent_audits--nested_groups))
 
 Read-Only:
 
@@ -1751,6 +1752,44 @@ Read-Only:
 
 <a id="nestedatt--recent_audits--accounts--permissions"></a>
 ### Nested Schema for `recent_audits.accounts.permissions`
+
+Optional:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
+
+<a id="nestedatt--recent_audits--nested_groups"></a>
+### Nested Schema for `recent_audits.nested_groups`
+
+Optional:
+
+- `action` (String)
+- `comment` (String)
+- `group_uuid` (String)
+
+Read-Only:
+
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--recent_audits--nested_groups--links))
+- `name` (String)
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--recent_audits--nested_groups--permissions))
+
+<a id="nestedatt--recent_audits--nested_groups--links"></a>
+### Nested Schema for `recent_audits.nested_groups.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--recent_audits--nested_groups--permissions"></a>
+### Nested Schema for `recent_audits.nested_groups.permissions`
 
 Optional:
 

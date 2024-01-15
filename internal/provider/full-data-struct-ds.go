@@ -24,8 +24,6 @@ var generatedSecretAttrTypesDSRecurse = objectAttrsTypeDSGeneratedSecret(true)
 
 type generatedSecretDataDS struct {
 	GeneratedSecret types.String `tfsdk:"generated_secret"`
-	OldSecret       types.String `tfsdk:"old_secret"`
-	Regenerate      types.Bool   `tfsdk:"regenerate"`
 }
 
 var linkableAttrTypesDS = objectAttrsTypeDSLinkable(false)
@@ -50,6 +48,74 @@ type restLinkDataDS struct {
 	ID          types.Int64  `tfsdk:"id"`
 	Rel         types.String `tfsdk:"rel"`
 	TypeEscaped types.String `tfsdk:"type_escaped"`
+}
+
+var auditGroupAuditAttrTypesDS = objectAttrsTypeDSAuditGroupAudit(false)
+var auditGroupAuditAttrTypesDSRecurse = objectAttrsTypeDSAuditGroupAudit(true)
+
+type auditGroupAuditDataDS struct {
+	Links        types.List   `tfsdk:"links"`
+	Permissions  types.List   `tfsdk:"permissions"`
+	Additional   types.List   `tfsdk:"additional"`
+	Accounts     types.List   `tfsdk:"accounts"`
+	Audit        types.Object `tfsdk:"audit" tkhao:"audit"`
+	Comment      types.String `tfsdk:"comment"`
+	CreatedAt    types.String `tfsdk:"created_at"`
+	CreatedBy    types.String `tfsdk:"created_by"`
+	GroupName    types.String `tfsdk:"group_name"`
+	NameOnAudit  types.String `tfsdk:"name_on_audit"`
+	NestedGroups types.List   `tfsdk:"nested_groups"`
+	ReviewedAt   types.String `tfsdk:"reviewed_at"`
+	ReviewedBy   types.String `tfsdk:"reviewed_by"`
+	Status       types.String `tfsdk:"status"`
+	SubmittedAt  types.String `tfsdk:"submitted_at"`
+	SubmittedBy  types.String `tfsdk:"submitted_by"`
+}
+
+var auditGroupAuditAccountAttrTypesDS = objectAttrsTypeDSAuditGroupAuditAccount(false)
+var auditGroupAuditAccountAttrTypesDSRecurse = objectAttrsTypeDSAuditGroupAuditAccount(true)
+
+type auditGroupAuditAccountDataDS struct {
+	Links              types.List   `tfsdk:"links"`
+	Permissions        types.List   `tfsdk:"permissions"`
+	AccountUUID        types.String `tfsdk:"account_uuid"`
+	AccountValid       types.Bool   `tfsdk:"account_valid"`
+	Action             types.String `tfsdk:"action"`
+	Comment            types.String `tfsdk:"comment"`
+	DisconnectedNested types.Bool   `tfsdk:"disconnected_nested"`
+	DisplayName        types.String `tfsdk:"display_name"`
+	EndDate            types.String `tfsdk:"end_date"`
+	LastActive         types.String `tfsdk:"last_active"`
+	LastUsed           types.String `tfsdk:"last_used"`
+	Nested             types.Bool   `tfsdk:"nested"`
+	Rights             types.String `tfsdk:"rights"`
+	Username           types.String `tfsdk:"username"`
+}
+
+var auditGroupAuditLinkableWrapperAttrTypesDS = objectAttrsTypeDSAuditGroupAuditLinkableWrapper(false)
+var auditGroupAuditLinkableWrapperAttrTypesDSRecurse = objectAttrsTypeDSAuditGroupAuditLinkableWrapper(true)
+
+type auditGroupAuditLinkableWrapperDataDS struct {
+	Items types.List `tfsdk:"items"`
+}
+
+var auditGroupAudit_additionalObjectsAttrTypesDS = objectAttrsTypeDSAuditGroupAudit_additionalObjects(false)
+var auditGroupAudit_additionalObjectsAttrTypesDSRecurse = objectAttrsTypeDSAuditGroupAudit_additionalObjects(true)
+
+type auditGroupAudit_additionalObjectsDataDS struct {
+	Audit types.Object `tfsdk:"audit"`
+}
+
+var auditNestedGroupAuditAttrTypesDS = objectAttrsTypeDSAuditNestedGroupAudit(false)
+var auditNestedGroupAuditAttrTypesDSRecurse = objectAttrsTypeDSAuditNestedGroupAudit(true)
+
+type auditNestedGroupAuditDataDS struct {
+	Links       types.List   `tfsdk:"links"`
+	Permissions types.List   `tfsdk:"permissions"`
+	Action      types.String `tfsdk:"action"`
+	Comment     types.String `tfsdk:"comment"`
+	GroupUUID   types.String `tfsdk:"group_uuid"`
+	Name        types.String `tfsdk:"name"`
 }
 
 var authAccountAttrTypesDS = objectAttrsTypeDSAuthAccount(false)
@@ -290,10 +356,10 @@ type clientOAuth2ClientDataDS struct {
 	AccountPermissions   types.List   `tfsdk:"account_permissions"`
 	Attributes           types.Map    `tfsdk:"attributes"`
 	CallbackURI          types.String `tfsdk:"callback_uri"`
-	Confidential         types.Bool   `tfsdk:"confidential"`
 	DebugMode            types.Bool   `tfsdk:"debug_mode"`
 	IDTokenClaims        types.String `tfsdk:"id_token_claims"`
 	InitiateLoginURI     types.String `tfsdk:"initiate_login_uri"`
+	Profile              types.String `tfsdk:"profile"`
 	ResourceURIs         types.String `tfsdk:"resource_uris"`
 	ShareSecretInVault   types.Bool   `tfsdk:"share_secret_in_vault"`
 	SharedSecret         types.Object `tfsdk:"shared_secret"`
@@ -630,47 +696,6 @@ type groupGroupAccount_additionalObjectsDataDS struct {
 	Audit types.Object `tfsdk:"audit"`
 }
 
-var groupGroupAuditAttrTypesDS = objectAttrsTypeDSGroupGroupAudit(false)
-var groupGroupAuditAttrTypesDSRecurse = objectAttrsTypeDSGroupGroupAudit(true)
-
-type groupGroupAuditDataDS struct {
-	Links       types.List   `tfsdk:"links"`
-	Permissions types.List   `tfsdk:"permissions"`
-	Additional  types.List   `tfsdk:"additional"`
-	Accounts    types.List   `tfsdk:"accounts"`
-	Audit       types.Object `tfsdk:"audit" tkhao:"audit"`
-	Comment     types.String `tfsdk:"comment"`
-	CreatedAt   types.String `tfsdk:"created_at"`
-	CreatedBy   types.String `tfsdk:"created_by"`
-	GroupName   types.String `tfsdk:"group_name"`
-	NameOnAudit types.String `tfsdk:"name_on_audit"`
-	ReviewedAt  types.String `tfsdk:"reviewed_at"`
-	ReviewedBy  types.String `tfsdk:"reviewed_by"`
-	Status      types.String `tfsdk:"status"`
-	SubmittedAt types.String `tfsdk:"submitted_at"`
-	SubmittedBy types.String `tfsdk:"submitted_by"`
-}
-
-var groupGroupAuditAccountAttrTypesDS = objectAttrsTypeDSGroupGroupAuditAccount(false)
-var groupGroupAuditAccountAttrTypesDSRecurse = objectAttrsTypeDSGroupGroupAuditAccount(true)
-
-type groupGroupAuditAccountDataDS struct {
-	Links              types.List   `tfsdk:"links"`
-	Permissions        types.List   `tfsdk:"permissions"`
-	AccountUUID        types.String `tfsdk:"account_uuid"`
-	AccountValid       types.Bool   `tfsdk:"account_valid"`
-	Action             types.String `tfsdk:"action"`
-	Comment            types.String `tfsdk:"comment"`
-	DisconnectedNested types.Bool   `tfsdk:"disconnected_nested"`
-	DisplayName        types.String `tfsdk:"display_name"`
-	EndDate            types.String `tfsdk:"end_date"`
-	LastActive         types.String `tfsdk:"last_active"`
-	LastUsed           types.String `tfsdk:"last_used"`
-	Nested             types.Bool   `tfsdk:"nested"`
-	Rights             types.String `tfsdk:"rights"`
-	Username           types.String `tfsdk:"username"`
-}
-
 var groupGroupAuditConfigAttrTypesDS = objectAttrsTypeDSGroupGroupAuditConfig(false)
 var groupGroupAuditConfigAttrTypesDSRecurse = objectAttrsTypeDSGroupGroupAuditConfig(true)
 
@@ -678,20 +703,6 @@ type groupGroupAuditConfigDataDS struct {
 	Links       types.List `tfsdk:"links"`
 	Permissions types.List `tfsdk:"permissions"`
 	Months      types.Set  `tfsdk:"months"`
-}
-
-var groupGroupAuditLinkableWrapperAttrTypesDS = objectAttrsTypeDSGroupGroupAuditLinkableWrapper(false)
-var groupGroupAuditLinkableWrapperAttrTypesDSRecurse = objectAttrsTypeDSGroupGroupAuditLinkableWrapper(true)
-
-type groupGroupAuditLinkableWrapperDataDS struct {
-	Items types.List `tfsdk:"items"`
-}
-
-var groupGroupAudit_additionalObjectsAttrTypesDS = objectAttrsTypeDSGroupGroupAudit_additionalObjects(false)
-var groupGroupAudit_additionalObjectsAttrTypesDSRecurse = objectAttrsTypeDSGroupGroupAudit_additionalObjects(true)
-
-type groupGroupAudit_additionalObjectsDataDS struct {
-	Audit types.Object `tfsdk:"audit"`
 }
 
 var groupGroupAuditingInfoAttrTypesDS = objectAttrsTypeDSGroupGroupAuditingInfo(false)

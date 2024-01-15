@@ -44,9 +44,12 @@ description: |-
 
 Optional:
 
-- `generated_secret` (String)
 - `old_secret` (String)
 - `regenerate` (Boolean)
+
+Read-Only:
+
+- `generated_secret` (String)
 
 
 <a id="nestedatt--audit"></a>

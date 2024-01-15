@@ -292,10 +292,10 @@ Read-Only:
 - `account_permissions` (Attributes List) (see [below for nested schema](#nestedatt--administered_clients--oauth2_client--account_permissions))
 - `attributes` (Map of String)
 - `callback_uri` (String)
-- `confidential` (Boolean)
 - `debug_mode` (Boolean)
 - `id_token_claims` (String)
 - `initiate_login_uri` (String)
+- `profile` (String)
 - `resource_uris` (String)
 - `share_secret_in_vault` (Boolean)
 - `shared_secret` (Attributes) (see [below for nested schema](#nestedatt--administered_clients--oauth2_client--shared_secret))
@@ -2285,10 +2285,10 @@ Read-Only:
 - `account_permissions` (Attributes List) (see [below for nested schema](#nestedatt--client_permissions--client--account_permissions))
 - `attributes` (Map of String)
 - `callback_uri` (String)
-- `confidential` (Boolean)
 - `debug_mode` (Boolean)
 - `id_token_claims` (String)
 - `initiate_login_uri` (String)
+- `profile` (String)
 - `resource_uris` (String)
 - `share_secret_in_vault` (Boolean)
 - `shared_secret` (Attributes) (see [below for nested schema](#nestedatt--client_permissions--client--shared_secret))
@@ -4169,10 +4169,10 @@ Read-Only:
 - `account_permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_clients--oauth2_client--account_permissions))
 - `attributes` (Map of String)
 - `callback_uri` (String)
-- `confidential` (Boolean)
 - `debug_mode` (Boolean)
 - `id_token_claims` (String)
 - `initiate_login_uri` (String)
+- `profile` (String)
 - `resource_uris` (String)
 - `share_secret_in_vault` (Boolean)
 - `shared_secret` (Attributes) (see [below for nested schema](#nestedatt--owned_clients--oauth2_client--shared_secret))
@@ -5871,6 +5871,7 @@ Read-Only:
 - `group_name` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--recent_audits--links))
 - `name_on_audit` (String)
+- `nested_groups` (Attributes List) (see [below for nested schema](#nestedatt--recent_audits--nested_groups))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--recent_audits--permissions))
 - `reviewed_at` (String)
 - `reviewed_by` (String)
@@ -5930,6 +5931,41 @@ Read-Only:
 - `id` (Number)
 - `rel` (String)
 - `type_escaped` (String)
+
+
+<a id="nestedatt--recent_audits--nested_groups"></a>
+### Nested Schema for `recent_audits.nested_groups`
+
+Read-Only:
+
+- `action` (String)
+- `comment` (String)
+- `group_uuid` (String)
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--recent_audits--nested_groups--links))
+- `name` (String)
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--recent_audits--nested_groups--permissions))
+
+<a id="nestedatt--recent_audits--nested_groups--links"></a>
+### Nested Schema for `recent_audits.nested_groups.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--recent_audits--nested_groups--permissions"></a>
+### Nested Schema for `recent_audits.nested_groups.permissions`
+
+Read-Only:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
 
 
 <a id="nestedatt--recent_audits--permissions"></a>

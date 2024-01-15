@@ -37,12 +37,6 @@ func dataSourceSchemaAttrsGeneratedSecret(recurse bool) map[string]dsschema.Attr
 	schemaAttrs["generated_secret"] = dsschema.StringAttribute{
 		Computed: true,
 	}
-	schemaAttrs["old_secret"] = dsschema.StringAttribute{
-		Computed: true,
-	}
-	schemaAttrs["regenerate"] = dsschema.BoolAttribute{
-		Computed: true,
-	}
 	return schemaAttrs
 }
 func dataSourceSchemaAttrsLinkable(recurse bool) map[string]dsschema.Attribute {
@@ -77,6 +71,179 @@ func dataSourceSchemaAttrsRestLink(recurse bool) map[string]dsschema.Attribute {
 		Computed: true,
 	}
 	schemaAttrs["type_escaped"] = dsschema.StringAttribute{
+		Computed: true,
+	}
+	return schemaAttrs
+}
+func dataSourceSchemaAttrsAuditGroupAudit(recurse bool) map[string]dsschema.Attribute {
+	schemaAttrs := make(map[string]dsschema.Attribute)
+	if recurse {
+		schemaAttrs["additional"] = dsschema.ListAttribute{
+			ElementType: types.StringType,
+			Optional:    true,
+			Validators: []validator.List{
+				listvalidator.ValueStringsAre(stringvalidator.OneOf(
+					"audit",
+				)),
+			},
+		}
+	}
+	if recurse {
+		maps.Copy(schemaAttrs, dataSourceSchemaAttrsAuditGroupAudit_additionalObjects(false))
+	}
+	schemaAttrs["links"] = dsschema.ListNestedAttribute{
+		NestedObject: dsschema.NestedAttributeObject{
+			Attributes: dataSourceSchemaAttrsRestLink(recurse),
+		},
+		Computed: true,
+	}
+	schemaAttrs["permissions"] = dsschema.ListNestedAttribute{
+		NestedObject: dsschema.NestedAttributeObject{
+			Attributes: dataSourceSchemaAttrsAuthPermission(recurse),
+		},
+		Computed: true,
+	}
+	schemaAttrs["accounts"] = dsschema.ListNestedAttribute{
+		NestedObject: dsschema.NestedAttributeObject{
+			Attributes: dataSourceSchemaAttrsAuditGroupAuditAccount(false),
+		},
+		Computed: true,
+	}
+	schemaAttrs["comment"] = dsschema.StringAttribute{
+		Computed: true,
+	}
+	schemaAttrs["created_at"] = dsschema.StringAttribute{
+		Computed: true,
+	}
+	schemaAttrs["created_by"] = dsschema.StringAttribute{
+		Computed: true,
+	}
+	schemaAttrs["group_name"] = dsschema.StringAttribute{
+		Computed: true,
+	}
+	schemaAttrs["name_on_audit"] = dsschema.StringAttribute{
+		Computed: true,
+	}
+	schemaAttrs["nested_groups"] = dsschema.ListNestedAttribute{
+		NestedObject: dsschema.NestedAttributeObject{
+			Attributes: dataSourceSchemaAttrsAuditNestedGroupAudit(false),
+		},
+		Computed: true,
+	}
+	schemaAttrs["reviewed_at"] = dsschema.StringAttribute{
+		Computed: true,
+	}
+	schemaAttrs["reviewed_by"] = dsschema.StringAttribute{
+		Computed: true,
+	}
+	schemaAttrs["status"] = dsschema.StringAttribute{
+		Computed: true,
+	}
+	schemaAttrs["submitted_at"] = dsschema.StringAttribute{
+		Computed: true,
+	}
+	schemaAttrs["submitted_by"] = dsschema.StringAttribute{
+		Computed: true,
+	}
+	return schemaAttrs
+}
+func dataSourceSchemaAttrsAuditGroupAuditAccount(recurse bool) map[string]dsschema.Attribute {
+	schemaAttrs := make(map[string]dsschema.Attribute)
+	schemaAttrs["links"] = dsschema.ListNestedAttribute{
+		NestedObject: dsschema.NestedAttributeObject{
+			Attributes: dataSourceSchemaAttrsRestLink(recurse),
+		},
+		Computed: true,
+	}
+	schemaAttrs["permissions"] = dsschema.ListNestedAttribute{
+		NestedObject: dsschema.NestedAttributeObject{
+			Attributes: dataSourceSchemaAttrsAuthPermission(recurse),
+		},
+		Computed: true,
+	}
+	schemaAttrs["account_uuid"] = dsschema.StringAttribute{
+		Computed: true,
+	}
+	schemaAttrs["account_valid"] = dsschema.BoolAttribute{
+		Computed: true,
+	}
+	schemaAttrs["action"] = dsschema.StringAttribute{
+		Computed: true,
+	}
+	schemaAttrs["comment"] = dsschema.StringAttribute{
+		Computed: true,
+	}
+	schemaAttrs["disconnected_nested"] = dsschema.BoolAttribute{
+		Computed: true,
+	}
+	schemaAttrs["display_name"] = dsschema.StringAttribute{
+		Computed: true,
+	}
+	schemaAttrs["end_date"] = dsschema.StringAttribute{
+		Computed: true,
+	}
+	schemaAttrs["last_active"] = dsschema.StringAttribute{
+		Computed: true,
+	}
+	schemaAttrs["last_used"] = dsschema.StringAttribute{
+		Computed: true,
+	}
+	schemaAttrs["nested"] = dsschema.BoolAttribute{
+		Computed: true,
+	}
+	schemaAttrs["rights"] = dsschema.StringAttribute{
+		Computed: true,
+	}
+	schemaAttrs["username"] = dsschema.StringAttribute{
+		Computed: true,
+	}
+	return schemaAttrs
+}
+func dataSourceSchemaAttrsAuditGroupAuditLinkableWrapper(recurse bool) map[string]dsschema.Attribute {
+	schemaAttrs := make(map[string]dsschema.Attribute)
+	schemaAttrs["items"] = dsschema.ListNestedAttribute{
+		NestedObject: dsschema.NestedAttributeObject{
+			Attributes: dataSourceSchemaAttrsAuditGroupAudit(recurse),
+		},
+		Computed: true,
+	}
+	return schemaAttrs
+}
+func dataSourceSchemaAttrsAuditGroupAudit_additionalObjects(recurse bool) map[string]dsschema.Attribute {
+	schemaAttrs := make(map[string]dsschema.Attribute)
+	{
+		attr := dsschema.SingleNestedAttribute{
+			Attributes: dataSourceSchemaAttrsAuditInfo(recurse),
+		}
+		attr.Computed = true
+		schemaAttrs["audit"] = attr
+	}
+	return schemaAttrs
+}
+func dataSourceSchemaAttrsAuditNestedGroupAudit(recurse bool) map[string]dsschema.Attribute {
+	schemaAttrs := make(map[string]dsschema.Attribute)
+	schemaAttrs["links"] = dsschema.ListNestedAttribute{
+		NestedObject: dsschema.NestedAttributeObject{
+			Attributes: dataSourceSchemaAttrsRestLink(recurse),
+		},
+		Computed: true,
+	}
+	schemaAttrs["permissions"] = dsschema.ListNestedAttribute{
+		NestedObject: dsschema.NestedAttributeObject{
+			Attributes: dataSourceSchemaAttrsAuthPermission(recurse),
+		},
+		Computed: true,
+	}
+	schemaAttrs["action"] = dsschema.StringAttribute{
+		Computed: true,
+	}
+	schemaAttrs["comment"] = dsschema.StringAttribute{
+		Computed: true,
+	}
+	schemaAttrs["group_uuid"] = dsschema.StringAttribute{
+		Computed: true,
+	}
+	schemaAttrs["name"] = dsschema.StringAttribute{
 		Computed: true,
 	}
 	return schemaAttrs
@@ -711,9 +878,6 @@ func dataSourceSchemaAttrsClientOAuth2Client(recurse bool) map[string]dsschema.A
 	schemaAttrs["callback_uri"] = dsschema.StringAttribute{
 		Computed: true,
 	}
-	schemaAttrs["confidential"] = dsschema.BoolAttribute{
-		Computed: true,
-	}
 	schemaAttrs["debug_mode"] = dsschema.BoolAttribute{
 		Computed: true,
 	}
@@ -721,6 +885,9 @@ func dataSourceSchemaAttrsClientOAuth2Client(recurse bool) map[string]dsschema.A
 		Computed: true,
 	}
 	schemaAttrs["initiate_login_uri"] = dsschema.StringAttribute{
+		Computed: true,
+	}
+	schemaAttrs["profile"] = dsschema.StringAttribute{
 		Computed: true,
 	}
 	schemaAttrs["resource_uris"] = dsschema.StringAttribute{
@@ -1584,124 +1751,6 @@ func dataSourceSchemaAttrsGroupGroupAccount_additionalObjects(recurse bool) map[
 	}
 	return schemaAttrs
 }
-func dataSourceSchemaAttrsGroupGroupAudit(recurse bool) map[string]dsschema.Attribute {
-	schemaAttrs := make(map[string]dsschema.Attribute)
-	if recurse {
-		schemaAttrs["additional"] = dsschema.ListAttribute{
-			ElementType: types.StringType,
-			Optional:    true,
-			Validators: []validator.List{
-				listvalidator.ValueStringsAre(stringvalidator.OneOf(
-					"audit",
-				)),
-			},
-		}
-	}
-	if recurse {
-		maps.Copy(schemaAttrs, dataSourceSchemaAttrsGroupGroupAudit_additionalObjects(false))
-	}
-	schemaAttrs["links"] = dsschema.ListNestedAttribute{
-		NestedObject: dsschema.NestedAttributeObject{
-			Attributes: dataSourceSchemaAttrsRestLink(recurse),
-		},
-		Computed: true,
-	}
-	schemaAttrs["permissions"] = dsschema.ListNestedAttribute{
-		NestedObject: dsschema.NestedAttributeObject{
-			Attributes: dataSourceSchemaAttrsAuthPermission(recurse),
-		},
-		Computed: true,
-	}
-	schemaAttrs["accounts"] = dsschema.ListNestedAttribute{
-		NestedObject: dsschema.NestedAttributeObject{
-			Attributes: dataSourceSchemaAttrsGroupGroupAuditAccount(false),
-		},
-		Computed: true,
-	}
-	schemaAttrs["comment"] = dsschema.StringAttribute{
-		Computed: true,
-	}
-	schemaAttrs["created_at"] = dsschema.StringAttribute{
-		Computed: true,
-	}
-	schemaAttrs["created_by"] = dsschema.StringAttribute{
-		Computed: true,
-	}
-	schemaAttrs["group_name"] = dsschema.StringAttribute{
-		Computed: true,
-	}
-	schemaAttrs["name_on_audit"] = dsschema.StringAttribute{
-		Computed: true,
-	}
-	schemaAttrs["reviewed_at"] = dsschema.StringAttribute{
-		Computed: true,
-	}
-	schemaAttrs["reviewed_by"] = dsschema.StringAttribute{
-		Computed: true,
-	}
-	schemaAttrs["status"] = dsschema.StringAttribute{
-		Computed: true,
-	}
-	schemaAttrs["submitted_at"] = dsschema.StringAttribute{
-		Computed: true,
-	}
-	schemaAttrs["submitted_by"] = dsschema.StringAttribute{
-		Computed: true,
-	}
-	return schemaAttrs
-}
-func dataSourceSchemaAttrsGroupGroupAuditAccount(recurse bool) map[string]dsschema.Attribute {
-	schemaAttrs := make(map[string]dsschema.Attribute)
-	schemaAttrs["links"] = dsschema.ListNestedAttribute{
-		NestedObject: dsschema.NestedAttributeObject{
-			Attributes: dataSourceSchemaAttrsRestLink(recurse),
-		},
-		Computed: true,
-	}
-	schemaAttrs["permissions"] = dsschema.ListNestedAttribute{
-		NestedObject: dsschema.NestedAttributeObject{
-			Attributes: dataSourceSchemaAttrsAuthPermission(recurse),
-		},
-		Computed: true,
-	}
-	schemaAttrs["account_uuid"] = dsschema.StringAttribute{
-		Computed: true,
-	}
-	schemaAttrs["account_valid"] = dsschema.BoolAttribute{
-		Computed: true,
-	}
-	schemaAttrs["action"] = dsschema.StringAttribute{
-		Computed: true,
-	}
-	schemaAttrs["comment"] = dsschema.StringAttribute{
-		Computed: true,
-	}
-	schemaAttrs["disconnected_nested"] = dsschema.BoolAttribute{
-		Computed: true,
-	}
-	schemaAttrs["display_name"] = dsschema.StringAttribute{
-		Computed: true,
-	}
-	schemaAttrs["end_date"] = dsschema.StringAttribute{
-		Computed: true,
-	}
-	schemaAttrs["last_active"] = dsschema.StringAttribute{
-		Computed: true,
-	}
-	schemaAttrs["last_used"] = dsschema.StringAttribute{
-		Computed: true,
-	}
-	schemaAttrs["nested"] = dsschema.BoolAttribute{
-		Computed: true,
-	}
-	schemaAttrs["rights"] = dsschema.StringAttribute{
-		Computed: true,
-	}
-	schemaAttrs["username"] = dsschema.StringAttribute{
-		Computed: true,
-	}
-	return schemaAttrs
-}
 func dataSourceSchemaAttrsGroupGroupAuditConfig(recurse bool) map[string]dsschema.Attribute {
 	schemaAttrs := make(map[string]dsschema.Attribute)
 	schemaAttrs["links"] = dsschema.ListNestedAttribute{
@@ -1719,27 +1768,6 @@ func dataSourceSchemaAttrsGroupGroupAuditConfig(recurse bool) map[string]dsschem
 	schemaAttrs["months"] = dsschema.SetAttribute{
 		ElementType: types.StringType,
 		Computed:    true,
-	}
-	return schemaAttrs
-}
-func dataSourceSchemaAttrsGroupGroupAuditLinkableWrapper(recurse bool) map[string]dsschema.Attribute {
-	schemaAttrs := make(map[string]dsschema.Attribute)
-	schemaAttrs["items"] = dsschema.ListNestedAttribute{
-		NestedObject: dsschema.NestedAttributeObject{
-			Attributes: dataSourceSchemaAttrsGroupGroupAudit(recurse),
-		},
-		Computed: true,
-	}
-	return schemaAttrs
-}
-func dataSourceSchemaAttrsGroupGroupAudit_additionalObjects(recurse bool) map[string]dsschema.Attribute {
-	schemaAttrs := make(map[string]dsschema.Attribute)
-	{
-		attr := dsschema.SingleNestedAttribute{
-			Attributes: dataSourceSchemaAttrsAuditInfo(recurse),
-		}
-		attr.Computed = true
-		schemaAttrs["audit"] = attr
 	}
 	return schemaAttrs
 }
@@ -2231,7 +2259,7 @@ func dataSourceSchemaAttrsGroupGroup_additionalObjects(recurse bool) map[string]
 		schemaAttrs["owned_systems"] = attr
 	}
 	{
-		attr := dataSourceSchemaAttrsGroupGroupAuditLinkableWrapper(recurse)["items"].(dsschema.ListNestedAttribute)
+		attr := dataSourceSchemaAttrsAuditGroupAuditLinkableWrapper(recurse)["items"].(dsschema.ListNestedAttribute)
 		attr.Computed = true
 		schemaAttrs["recent_audits"] = attr
 	}

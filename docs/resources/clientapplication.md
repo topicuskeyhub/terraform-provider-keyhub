@@ -107,10 +107,10 @@ Optional:
 
 - `attributes` (Map of String)
 - `callback_uri` (String)
-- `confidential` (Boolean)
 - `debug_mode` (Boolean)
 - `id_token_claims` (String)
 - `initiate_login_uri` (String)
+- `profile` (String)
 - `resource_uris` (String)
 - `share_secret_in_vault` (Boolean)
 - `show_landing_page` (Boolean)
@@ -152,9 +152,12 @@ Optional:
 
 Optional:
 
-- `generated_secret` (String)
 - `old_secret` (String)
 - `regenerate` (Boolean)
+
+Read-Only:
+
+- `generated_secret` (String)
 
 
 <a id="nestedatt--tile"></a>

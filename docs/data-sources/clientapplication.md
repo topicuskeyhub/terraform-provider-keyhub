@@ -932,10 +932,10 @@ Read-Only:
 - `account_permissions` (Attributes List) (see [below for nested schema](#nestedatt--oauth2_client--account_permissions))
 - `attributes` (Map of String)
 - `callback_uri` (String)
-- `confidential` (Boolean)
 - `debug_mode` (Boolean)
 - `id_token_claims` (String)
 - `initiate_login_uri` (String)
+- `profile` (String)
 - `resource_uris` (String)
 - `share_secret_in_vault` (Boolean)
 - `shared_secret` (Attributes) (see [below for nested schema](#nestedatt--oauth2_client--shared_secret))
@@ -1085,8 +1085,6 @@ Read-Only:
 Read-Only:
 
 - `generated_secret` (String)
-- `old_secret` (String)
-- `regenerate` (Boolean)
 
 
 <a id="nestedatt--technical_administrator"></a>

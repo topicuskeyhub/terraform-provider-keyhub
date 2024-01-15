@@ -107,6 +107,222 @@ func tfObjectToTKHRSRestLink(ctx context.Context, recurse bool, objVal types.Obj
 	return tkh, diags
 }
 
+func tfObjectToTKHRSAuditGroupAudit(ctx context.Context, recurse bool, objVal types.Object) (keyhubmodel.AuditGroupAuditable, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	if objVal.IsNull() || objVal.IsUnknown() {
+		return nil, diags
+	}
+	objAttrs := objVal.Attributes()
+	var tkh keyhubmodel.AuditGroupAuditable
+	tkh = keyhubmodel.NewAuditGroupAudit()
+	{
+		val, d := tfToSliceList(objAttrs["links"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, val.(basetypes.ObjectValue))
+			diags.Append(d...)
+			return tkh
+		})
+		diags.Append(d...)
+		tkh.SetLinks(val)
+	}
+	{
+		val, d := tfToSliceList(objAttrs["permissions"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, val.(basetypes.ObjectValue))
+			diags.Append(d...)
+			return tkh
+		})
+		diags.Append(d...)
+		tkh.SetPermissions(val)
+	}
+	{
+		val, d := tfToSliceList(objAttrs["accounts"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuditGroupAuditAccountable {
+			tkh, d := tfObjectToTKHRSAuditGroupAuditAccount(ctx, false, val.(basetypes.ObjectValue))
+			diags.Append(d...)
+			return tkh
+		})
+		diags.Append(d...)
+		tkh.SetAccounts(val)
+	}
+	tkh.SetComment(objAttrs["comment"].(basetypes.StringValue).ValueStringPointer())
+	{
+		val, d := tfToTimePointer(objAttrs["created_at"].(basetypes.StringValue))
+		diags.Append(d...)
+		tkh.SetCreatedAt(val)
+	}
+	tkh.SetCreatedBy(objAttrs["created_by"].(basetypes.StringValue).ValueStringPointer())
+	tkh.SetGroupName(objAttrs["group_name"].(basetypes.StringValue).ValueStringPointer())
+	tkh.SetNameOnAudit(objAttrs["name_on_audit"].(basetypes.StringValue).ValueStringPointer())
+	{
+		val, d := tfToSliceList(objAttrs["nested_groups"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuditNestedGroupAuditable {
+			tkh, d := tfObjectToTKHRSAuditNestedGroupAudit(ctx, false, val.(basetypes.ObjectValue))
+			diags.Append(d...)
+			return tkh
+		})
+		diags.Append(d...)
+		tkh.SetNestedGroups(val)
+	}
+	{
+		val, d := tfToTimePointer(objAttrs["reviewed_at"].(basetypes.StringValue))
+		diags.Append(d...)
+		tkh.SetReviewedAt(val)
+	}
+	tkh.SetReviewedBy(objAttrs["reviewed_by"].(basetypes.StringValue).ValueStringPointer())
+	{
+		val, d := parseCastPointer(objAttrs["status"].(basetypes.StringValue), keyhubmodel.ParseAuditGroupAuditStatus, func(val any) keyhubmodel.AuditGroupAuditStatus { return *val.(*keyhubmodel.AuditGroupAuditStatus) })
+		diags.Append(d...)
+		tkh.SetStatus(val)
+	}
+	{
+		val, d := tfToTimePointer(objAttrs["submitted_at"].(basetypes.StringValue))
+		diags.Append(d...)
+		tkh.SetSubmittedAt(val)
+	}
+	tkh.SetSubmittedBy(objAttrs["submitted_by"].(basetypes.StringValue).ValueStringPointer())
+	if recurse {
+		{
+			val, d := tfObjectToTKHRSAuditGroupAudit_additionalObjects(ctx, false, objVal)
+			diags.Append(d...)
+			tkh.SetAdditionalObjects(val)
+		}
+	}
+	return tkh, diags
+}
+
+func tfObjectToTKHRSAuditGroupAuditAccount(ctx context.Context, recurse bool, objVal types.Object) (keyhubmodel.AuditGroupAuditAccountable, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	if objVal.IsNull() || objVal.IsUnknown() {
+		return nil, diags
+	}
+	objAttrs := objVal.Attributes()
+	var tkh keyhubmodel.AuditGroupAuditAccountable
+	tkh = keyhubmodel.NewAuditGroupAuditAccount()
+	{
+		val, d := tfToSliceList(objAttrs["links"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, val.(basetypes.ObjectValue))
+			diags.Append(d...)
+			return tkh
+		})
+		diags.Append(d...)
+		tkh.SetLinks(val)
+	}
+	{
+		val, d := tfToSliceList(objAttrs["permissions"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, val.(basetypes.ObjectValue))
+			diags.Append(d...)
+			return tkh
+		})
+		diags.Append(d...)
+		tkh.SetPermissions(val)
+	}
+	tkh.SetAccountUuid(objAttrs["account_uuid"].(basetypes.StringValue).ValueStringPointer())
+	tkh.SetAccountValid(objAttrs["account_valid"].(basetypes.BoolValue).ValueBoolPointer())
+	{
+		val, d := parseCastPointer(objAttrs["action"].(basetypes.StringValue), keyhubmodel.ParseAuditAuditAccountAction, func(val any) keyhubmodel.AuditAuditAccountAction { return *val.(*keyhubmodel.AuditAuditAccountAction) })
+		diags.Append(d...)
+		tkh.SetAction(val)
+	}
+	tkh.SetComment(objAttrs["comment"].(basetypes.StringValue).ValueStringPointer())
+	tkh.SetDisconnectedNested(objAttrs["disconnected_nested"].(basetypes.BoolValue).ValueBoolPointer())
+	tkh.SetDisplayName(objAttrs["display_name"].(basetypes.StringValue).ValueStringPointer())
+	{
+		val, d := parsePointer2(objAttrs["end_date"].(basetypes.StringValue), serialization.ParseDateOnly)
+		diags.Append(d...)
+		tkh.SetEndDate(val)
+	}
+	{
+		val, d := tfToTimePointer(objAttrs["last_active"].(basetypes.StringValue))
+		diags.Append(d...)
+		tkh.SetLastActive(val)
+	}
+	{
+		val, d := parsePointer2(objAttrs["last_used"].(basetypes.StringValue), serialization.ParseDateOnly)
+		diags.Append(d...)
+		tkh.SetLastUsed(val)
+	}
+	tkh.SetNested(objAttrs["nested"].(basetypes.BoolValue).ValueBoolPointer())
+	{
+		val, d := parseCastPointer(objAttrs["rights"].(basetypes.StringValue), keyhubmodel.ParseGroupGroupRights, func(val any) keyhubmodel.GroupGroupRights { return *val.(*keyhubmodel.GroupGroupRights) })
+		diags.Append(d...)
+		tkh.SetRights(val)
+	}
+	tkh.SetUsername(objAttrs["username"].(basetypes.StringValue).ValueStringPointer())
+	return tkh, diags
+}
+
+func tfObjectToTKHRSAuditGroupAuditLinkableWrapper(ctx context.Context, recurse bool, objVal types.Object) (keyhubmodel.AuditGroupAuditLinkableWrapperable, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	if objVal.IsNull() || objVal.IsUnknown() {
+		return nil, diags
+	}
+	objAttrs := objVal.Attributes()
+	var tkh keyhubmodel.AuditGroupAuditLinkableWrapperable
+	tkh = keyhubmodel.NewAuditGroupAuditLinkableWrapper()
+	{
+		val, d := tfToSliceList(objAttrs["items"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuditGroupAuditable {
+			tkh, d := tfObjectToTKHRSAuditGroupAudit(ctx, recurse, val.(basetypes.ObjectValue))
+			diags.Append(d...)
+			return tkh
+		})
+		diags.Append(d...)
+		tkh.SetItems(val)
+	}
+	return tkh, diags
+}
+
+func tfObjectToTKHRSAuditGroupAudit_additionalObjects(ctx context.Context, recurse bool, objVal types.Object) (keyhubmodel.AuditGroupAudit_additionalObjectsable, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	if objVal.IsNull() || objVal.IsUnknown() {
+		return nil, diags
+	}
+	objAttrs := objVal.Attributes()
+	var tkh keyhubmodel.AuditGroupAudit_additionalObjectsable
+	tkh = keyhubmodel.NewAuditGroupAudit_additionalObjects()
+	{
+		val, d := tfObjectToTKHRSAuditInfo(ctx, recurse, objAttrs["audit"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		tkh.SetAudit(val)
+	}
+	return tkh, diags
+}
+
+func tfObjectToTKHRSAuditNestedGroupAudit(ctx context.Context, recurse bool, objVal types.Object) (keyhubmodel.AuditNestedGroupAuditable, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	if objVal.IsNull() || objVal.IsUnknown() {
+		return nil, diags
+	}
+	objAttrs := objVal.Attributes()
+	var tkh keyhubmodel.AuditNestedGroupAuditable
+	tkh = keyhubmodel.NewAuditNestedGroupAudit()
+	{
+		val, d := tfToSliceList(objAttrs["links"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, val.(basetypes.ObjectValue))
+			diags.Append(d...)
+			return tkh
+		})
+		diags.Append(d...)
+		tkh.SetLinks(val)
+	}
+	{
+		val, d := tfToSliceList(objAttrs["permissions"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, val.(basetypes.ObjectValue))
+			diags.Append(d...)
+			return tkh
+		})
+		diags.Append(d...)
+		tkh.SetPermissions(val)
+	}
+	{
+		val, d := parseCastPointer(objAttrs["action"].(basetypes.StringValue), keyhubmodel.ParseAuditAuditNestedGroupAction, func(val any) keyhubmodel.AuditAuditNestedGroupAction {
+			return *val.(*keyhubmodel.AuditAuditNestedGroupAction)
+		})
+		diags.Append(d...)
+		tkh.SetAction(val)
+	}
+	tkh.SetComment(objAttrs["comment"].(basetypes.StringValue).ValueStringPointer())
+	tkh.SetGroupUuid(objAttrs["group_uuid"].(basetypes.StringValue).ValueStringPointer())
+	tkh.SetName(objAttrs["name"].(basetypes.StringValue).ValueStringPointer())
+	return tkh, diags
+}
+
 func tfObjectToTKHRSAuthAccountPrimer(ctx context.Context, recurse bool, objVal types.Object) (keyhubmodel.AuthAccountPrimerable, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	if objVal.IsNull() || objVal.IsUnknown() {
@@ -549,10 +765,16 @@ func tfObjectToTKHRSClientOAuth2Client(ctx context.Context, recurse bool, objVal
 		tkh.SetAttributes(val)
 	}
 	tkh.SetCallbackURI(objAttrs["callback_uri"].(basetypes.StringValue).ValueStringPointer())
-	tkh.SetConfidential(objAttrs["confidential"].(basetypes.BoolValue).ValueBoolPointer())
 	tkh.SetDebugMode(objAttrs["debug_mode"].(basetypes.BoolValue).ValueBoolPointer())
 	tkh.SetIdTokenClaims(objAttrs["id_token_claims"].(basetypes.StringValue).ValueStringPointer())
 	tkh.SetInitiateLoginURI(objAttrs["initiate_login_uri"].(basetypes.StringValue).ValueStringPointer())
+	{
+		val, d := parseCastPointer(objAttrs["profile"].(basetypes.StringValue), keyhubmodel.ParseClientOAuth2ClientProfile, func(val any) keyhubmodel.ClientOAuth2ClientProfile {
+			return *val.(*keyhubmodel.ClientOAuth2ClientProfile)
+		})
+		diags.Append(d...)
+		tkh.SetProfile(val)
+	}
 	tkh.SetResourceURIs(objAttrs["resource_uris"].(basetypes.StringValue).ValueStringPointer())
 	tkh.SetShareSecretInVault(objAttrs["share_secret_in_vault"].(basetypes.BoolValue).ValueBoolPointer())
 	{
@@ -1343,138 +1565,6 @@ func tfObjectToTKHRSGroupGroupAccount_additionalObjects(ctx context.Context, rec
 	return tkh, diags
 }
 
-func tfObjectToTKHRSGroupGroupAudit(ctx context.Context, recurse bool, objVal types.Object) (keyhubmodel.GroupGroupAuditable, diag.Diagnostics) {
-	var diags diag.Diagnostics
-	if objVal.IsNull() || objVal.IsUnknown() {
-		return nil, diags
-	}
-	objAttrs := objVal.Attributes()
-	var tkh keyhubmodel.GroupGroupAuditable
-	tkh = keyhubmodel.NewGroupGroupAudit()
-	{
-		val, d := tfToSliceList(objAttrs["links"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
-			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, val.(basetypes.ObjectValue))
-			diags.Append(d...)
-			return tkh
-		})
-		diags.Append(d...)
-		tkh.SetLinks(val)
-	}
-	{
-		val, d := tfToSliceList(objAttrs["permissions"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
-			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, val.(basetypes.ObjectValue))
-			diags.Append(d...)
-			return tkh
-		})
-		diags.Append(d...)
-		tkh.SetPermissions(val)
-	}
-	{
-		val, d := tfToSliceList(objAttrs["accounts"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.GroupGroupAuditAccountable {
-			tkh, d := tfObjectToTKHRSGroupGroupAuditAccount(ctx, false, val.(basetypes.ObjectValue))
-			diags.Append(d...)
-			return tkh
-		})
-		diags.Append(d...)
-		tkh.SetAccounts(val)
-	}
-	tkh.SetComment(objAttrs["comment"].(basetypes.StringValue).ValueStringPointer())
-	{
-		val, d := tfToTimePointer(objAttrs["created_at"].(basetypes.StringValue))
-		diags.Append(d...)
-		tkh.SetCreatedAt(val)
-	}
-	tkh.SetCreatedBy(objAttrs["created_by"].(basetypes.StringValue).ValueStringPointer())
-	tkh.SetGroupName(objAttrs["group_name"].(basetypes.StringValue).ValueStringPointer())
-	tkh.SetNameOnAudit(objAttrs["name_on_audit"].(basetypes.StringValue).ValueStringPointer())
-	{
-		val, d := tfToTimePointer(objAttrs["reviewed_at"].(basetypes.StringValue))
-		diags.Append(d...)
-		tkh.SetReviewedAt(val)
-	}
-	tkh.SetReviewedBy(objAttrs["reviewed_by"].(basetypes.StringValue).ValueStringPointer())
-	{
-		val, d := parseCastPointer(objAttrs["status"].(basetypes.StringValue), keyhubmodel.ParseGroupGroupAuditStatus, func(val any) keyhubmodel.GroupGroupAuditStatus { return *val.(*keyhubmodel.GroupGroupAuditStatus) })
-		diags.Append(d...)
-		tkh.SetStatus(val)
-	}
-	{
-		val, d := tfToTimePointer(objAttrs["submitted_at"].(basetypes.StringValue))
-		diags.Append(d...)
-		tkh.SetSubmittedAt(val)
-	}
-	tkh.SetSubmittedBy(objAttrs["submitted_by"].(basetypes.StringValue).ValueStringPointer())
-	if recurse {
-		{
-			val, d := tfObjectToTKHRSGroupGroupAudit_additionalObjects(ctx, false, objVal)
-			diags.Append(d...)
-			tkh.SetAdditionalObjects(val)
-		}
-	}
-	return tkh, diags
-}
-
-func tfObjectToTKHRSGroupGroupAuditAccount(ctx context.Context, recurse bool, objVal types.Object) (keyhubmodel.GroupGroupAuditAccountable, diag.Diagnostics) {
-	var diags diag.Diagnostics
-	if objVal.IsNull() || objVal.IsUnknown() {
-		return nil, diags
-	}
-	objAttrs := objVal.Attributes()
-	var tkh keyhubmodel.GroupGroupAuditAccountable
-	tkh = keyhubmodel.NewGroupGroupAuditAccount()
-	{
-		val, d := tfToSliceList(objAttrs["links"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
-			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, val.(basetypes.ObjectValue))
-			diags.Append(d...)
-			return tkh
-		})
-		diags.Append(d...)
-		tkh.SetLinks(val)
-	}
-	{
-		val, d := tfToSliceList(objAttrs["permissions"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
-			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, val.(basetypes.ObjectValue))
-			diags.Append(d...)
-			return tkh
-		})
-		diags.Append(d...)
-		tkh.SetPermissions(val)
-	}
-	tkh.SetAccountUuid(objAttrs["account_uuid"].(basetypes.StringValue).ValueStringPointer())
-	tkh.SetAccountValid(objAttrs["account_valid"].(basetypes.BoolValue).ValueBoolPointer())
-	{
-		val, d := parseCastPointer(objAttrs["action"].(basetypes.StringValue), keyhubmodel.ParseAuditAuditAccountAction, func(val any) keyhubmodel.AuditAuditAccountAction { return *val.(*keyhubmodel.AuditAuditAccountAction) })
-		diags.Append(d...)
-		tkh.SetAction(val)
-	}
-	tkh.SetComment(objAttrs["comment"].(basetypes.StringValue).ValueStringPointer())
-	tkh.SetDisconnectedNested(objAttrs["disconnected_nested"].(basetypes.BoolValue).ValueBoolPointer())
-	tkh.SetDisplayName(objAttrs["display_name"].(basetypes.StringValue).ValueStringPointer())
-	{
-		val, d := parsePointer2(objAttrs["end_date"].(basetypes.StringValue), serialization.ParseDateOnly)
-		diags.Append(d...)
-		tkh.SetEndDate(val)
-	}
-	{
-		val, d := tfToTimePointer(objAttrs["last_active"].(basetypes.StringValue))
-		diags.Append(d...)
-		tkh.SetLastActive(val)
-	}
-	{
-		val, d := parsePointer2(objAttrs["last_used"].(basetypes.StringValue), serialization.ParseDateOnly)
-		diags.Append(d...)
-		tkh.SetLastUsed(val)
-	}
-	tkh.SetNested(objAttrs["nested"].(basetypes.BoolValue).ValueBoolPointer())
-	{
-		val, d := parseCastPointer(objAttrs["rights"].(basetypes.StringValue), keyhubmodel.ParseGroupGroupRights, func(val any) keyhubmodel.GroupGroupRights { return *val.(*keyhubmodel.GroupGroupRights) })
-		diags.Append(d...)
-		tkh.SetRights(val)
-	}
-	tkh.SetUsername(objAttrs["username"].(basetypes.StringValue).ValueStringPointer())
-	return tkh, diags
-}
-
 func tfObjectToTKHRSGroupGroupAuditConfig(ctx context.Context, recurse bool, objVal types.Object) (keyhubmodel.GroupGroupAuditConfigable, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	if objVal.IsNull() || objVal.IsUnknown() {
@@ -1509,42 +1599,6 @@ func tfObjectToTKHRSGroupGroupAuditConfig(ctx context.Context, recurse bool, obj
 		})
 		diags.Append(d...)
 		tkh.SetMonths(val)
-	}
-	return tkh, diags
-}
-
-func tfObjectToTKHRSGroupGroupAuditLinkableWrapper(ctx context.Context, recurse bool, objVal types.Object) (keyhubmodel.GroupGroupAuditLinkableWrapperable, diag.Diagnostics) {
-	var diags diag.Diagnostics
-	if objVal.IsNull() || objVal.IsUnknown() {
-		return nil, diags
-	}
-	objAttrs := objVal.Attributes()
-	var tkh keyhubmodel.GroupGroupAuditLinkableWrapperable
-	tkh = keyhubmodel.NewGroupGroupAuditLinkableWrapper()
-	{
-		val, d := tfToSliceList(objAttrs["items"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.GroupGroupAuditable {
-			tkh, d := tfObjectToTKHRSGroupGroupAudit(ctx, recurse, val.(basetypes.ObjectValue))
-			diags.Append(d...)
-			return tkh
-		})
-		diags.Append(d...)
-		tkh.SetItems(val)
-	}
-	return tkh, diags
-}
-
-func tfObjectToTKHRSGroupGroupAudit_additionalObjects(ctx context.Context, recurse bool, objVal types.Object) (keyhubmodel.GroupGroupAudit_additionalObjectsable, diag.Diagnostics) {
-	var diags diag.Diagnostics
-	if objVal.IsNull() || objVal.IsUnknown() {
-		return nil, diags
-	}
-	objAttrs := objVal.Attributes()
-	var tkh keyhubmodel.GroupGroupAudit_additionalObjectsable
-	tkh = keyhubmodel.NewGroupGroupAudit_additionalObjects()
-	{
-		val, d := tfObjectToTKHRSAuditInfo(ctx, recurse, objAttrs["audit"].(basetypes.ObjectValue))
-		diags.Append(d...)
-		tkh.SetAudit(val)
 	}
 	return tkh, diags
 }
@@ -1941,7 +1995,7 @@ func tfObjectToTKHRSGroupGroup_additionalObjects(ctx context.Context, recurse bo
 		tkh.SetOwnedSystems(val)
 	}
 	{
-		val, d := tfObjectToTKHRSGroupGroupAuditLinkableWrapper(ctx, recurse, toItemsList(ctx, objAttrs["recent_audits"]))
+		val, d := tfObjectToTKHRSAuditGroupAuditLinkableWrapper(ctx, recurse, toItemsList(ctx, objAttrs["recent_audits"]))
 		diags.Append(d...)
 		tkh.SetRecentAudits(val)
 		if val != nil {

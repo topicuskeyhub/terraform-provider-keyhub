@@ -148,8 +148,6 @@ Read-Only:
 Read-Only:
 
 - `generated_secret` (String)
-- `old_secret` (String)
-- `regenerate` (Boolean)
 
 
 <a id="nestedatt--system"></a>
