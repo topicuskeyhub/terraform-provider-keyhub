@@ -564,9 +564,14 @@ func stringPointerToString(input *string) string {
 	return ""
 }
 
-func getSelfLink(linksAttr basetypes.ListValue) restLinkDataRS {
+func getSelfLink(linksAttr basetypes.SetValue) restLinkDataRS {
 	var links restLinkDataRS
-	fillDataStructFromTFObjectRSRestLink(&links, linksAttr.Elements()[0].(basetypes.ObjectValue))
+	for _, e := range linksAttr.Elements() {
+		fillDataStructFromTFObjectRSRestLink(&links, e.(basetypes.ObjectValue))
+		if links.Rel.ValueString() == "self" {
+			return links
+		}
+	}
 	return links
 }
 

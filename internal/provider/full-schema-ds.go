@@ -500,7 +500,7 @@ func dataSourceSchemaAttrsAuthPermission(recurse bool) map[string]dsschema.Attri
 	schemaAttrs["full"] = dsschema.StringAttribute{
 		Computed: true,
 	}
-	schemaAttrs["instances"] = dsschema.ListAttribute{
+	schemaAttrs["instances"] = dsschema.SetAttribute{
 		ElementType: types.StringType,
 		Computed:    true,
 	}
@@ -695,7 +695,7 @@ func dataSourceSchemaAttrsClientClientApplication(recurse bool) map[string]dssch
 	schemaAttrs["name"] = dsschema.StringAttribute{
 		Computed: true,
 	}
-	schemaAttrs["scopes"] = dsschema.ListAttribute{
+	schemaAttrs["scopes"] = dsschema.SetAttribute{
 		ElementType: types.StringType,
 		Computed:    true,
 	}
@@ -783,7 +783,7 @@ func dataSourceSchemaAttrsClientClientApplicationPrimer(recurse bool) map[string
 	schemaAttrs["name"] = dsschema.StringAttribute{
 		Computed: true,
 	}
-	schemaAttrs["scopes"] = dsschema.ListAttribute{
+	schemaAttrs["scopes"] = dsschema.SetAttribute{
 		ElementType: types.StringType,
 		Computed:    true,
 	}
@@ -2677,7 +2677,7 @@ func dataSourceSchemaAttrsProvisioningGroupOnSystemPrimer(recurse bool) map[stri
 }
 func dataSourceSchemaAttrsProvisioningGroupOnSystemTypes(recurse bool) map[string]dsschema.Attribute {
 	schemaAttrs := make(map[string]dsschema.Attribute)
-	schemaAttrs["types"] = dsschema.ListAttribute{
+	schemaAttrs["types"] = dsschema.SetAttribute{
 		ElementType: types.StringType,
 		Computed:    true,
 	}
@@ -3890,7 +3890,7 @@ func dataSourceSchemaAttrsWebhookWebhook(recurse bool) map[string]dsschema.Attri
 		attr.Computed = true
 		schemaAttrs["trusted_certificate"] = attr
 	}
-	schemaAttrs["types"] = dsschema.ListAttribute{
+	schemaAttrs["types"] = dsschema.SetAttribute{
 		ElementType: types.StringType,
 		Computed:    true,
 	}

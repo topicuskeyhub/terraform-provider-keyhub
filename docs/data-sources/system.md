@@ -117,7 +117,7 @@ Read-Only:
 Read-Only:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -157,7 +157,7 @@ Read-Only:
 Read-Only:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -197,7 +197,7 @@ Read-Only:
 Read-Only:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -235,7 +235,7 @@ Read-Only:
 Read-Only:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -302,7 +302,7 @@ Read-Only:
 Read-Only:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -314,7 +314,7 @@ Read-Only:
 Read-Only:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -356,7 +356,7 @@ Read-Only:
 Read-Only:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -390,7 +390,7 @@ Read-Only:
 Read-Only:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -447,7 +447,7 @@ Read-Only:
 Read-Only:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -459,7 +459,7 @@ Read-Only:
 Read-Only:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -516,7 +516,7 @@ Read-Only:
 Read-Only:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -528,7 +528,7 @@ Read-Only:
 Read-Only:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -551,7 +551,7 @@ Read-Only:
 Read-Only:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -626,7 +626,7 @@ Read-Only:
 Read-Only:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -682,7 +682,7 @@ Read-Only:
 Read-Only:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -694,7 +694,7 @@ Read-Only:
 Read-Only:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -706,7 +706,7 @@ Read-Only:
 Read-Only:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -757,7 +757,7 @@ Read-Only:
 Read-Only:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -804,7 +804,7 @@ Read-Only:
 Read-Only:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -874,7 +874,7 @@ Read-Only:
 Read-Only:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -909,7 +909,7 @@ Read-Only:
 Read-Only:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -954,7 +954,7 @@ Read-Only:
 Read-Only:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -999,7 +999,7 @@ Read-Only:
 Read-Only:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -1066,7 +1066,7 @@ Read-Only:
 Read-Only:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -1078,7 +1078,7 @@ Read-Only:
 Read-Only:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -1116,7 +1116,7 @@ Read-Only:
 
 Read-Only:
 
-- `types` (List of String)
+- `types` (Set of String)
 
 
 <a id="nestedatt--technical_administrator"></a>
@@ -1169,7 +1169,7 @@ Read-Only:
 Read-Only:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -1181,6 +1181,6 @@ Read-Only:
 Read-Only:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)

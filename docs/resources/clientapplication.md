@@ -29,7 +29,7 @@ description: |-
 - `oauth2_client` (Attributes) (see [below for nested schema](#nestedatt--oauth2_client))
 - `owner_uuid` (String)
 - `saml2_client` (Attributes) (see [below for nested schema](#nestedatt--saml2_client))
-- `scopes` (List of String)
+- `scopes` (Set of String)
 - `secret` (Attributes) (see [below for nested schema](#nestedatt--secret))
 - `technical_administrator_uuid` (String)
 - `tile` (Attributes) (see [below for nested schema](#nestedatt--tile))
@@ -79,7 +79,7 @@ Read-Only:
 Optional:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -127,7 +127,7 @@ Read-Only:
 Optional:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -246,7 +246,7 @@ Read-Only:
 Optional:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -269,7 +269,7 @@ Read-Only:
 Optional:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -292,6 +292,6 @@ Read-Only:
 Optional:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)

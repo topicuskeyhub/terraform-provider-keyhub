@@ -10,7 +10,7 @@ require (
 	github.com/hashicorp/terraform-plugin-log v0.9.0
 	github.com/microsoft/kiota-abstractions-go v1.5.3
 	github.com/topicuskeyhub/sdk-go v0.31.0
-	github.com/topicuskeyhub/terraform-provider-keyhub-generator v1.0.9
+	github.com/topicuskeyhub/terraform-provider-keyhub-generator v1.0.10
 	golang.org/x/exp v0.0.0-20240112132812-db7319d0e0e3
 )
 

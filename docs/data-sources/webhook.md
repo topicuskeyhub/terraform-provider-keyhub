@@ -45,7 +45,7 @@ description: |-
 - `system` (Attributes) (see [below for nested schema](#nestedatt--system))
 - `tls` (String)
 - `trusted_certificate` (Attributes) (see [below for nested schema](#nestedatt--trusted_certificate))
-- `types` (List of String)
+- `types` (Set of String)
 - `url` (String)
 - `verbose_payloads` (Boolean)
 
@@ -79,7 +79,7 @@ Read-Only:
 Read-Only:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -105,7 +105,7 @@ Read-Only:
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--client--links))
 - `name` (String)
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--client--permissions))
-- `scopes` (List of String)
+- `scopes` (Set of String)
 - `sso_application` (Boolean)
 - `type` (String)
 - `uuid` (String)
@@ -127,7 +127,7 @@ Read-Only:
 Read-Only:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -167,7 +167,7 @@ Read-Only:
 Read-Only:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -203,7 +203,7 @@ Read-Only:
 Read-Only:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -259,7 +259,7 @@ Read-Only:
 Read-Only:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -271,7 +271,7 @@ Read-Only:
 Read-Only:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -294,7 +294,7 @@ Read-Only:
 Read-Only:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -350,7 +350,7 @@ Read-Only:
 Read-Only:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -362,7 +362,7 @@ Read-Only:
 Read-Only:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -402,6 +402,6 @@ Read-Only:
 Read-Only:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)

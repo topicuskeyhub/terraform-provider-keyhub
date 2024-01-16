@@ -183,8 +183,8 @@ github.com/stretchr/testify v1.7.2/go.mod h1:R6va5+xMeoiuVRoj+gSkQ7d3FALtqAAGI1F
 github.com/stretchr/testify v1.8.4 h1:CcVxjf3Q8PM0mHUKJCdn+eZZtm5yQwehR5yeSVQQcUk=
 github.com/topicuskeyhub/sdk-go v0.31.0 h1:2NhTzbLpdpBg9fUmwFOFCXftp1EfauDIDAoTxndHUkA=
 github.com/topicuskeyhub/sdk-go v0.31.0/go.mod h1:Zl7mxDC2DcR9dul8TgEW9/uSCntkBkLinz7kUloYMjM=
-github.com/topicuskeyhub/terraform-provider-keyhub-generator v1.0.9 h1:FlSiwWGiuuVJpuxr3o39t/sXMxbnaFC85oQoLhqHksg=
-github.com/topicuskeyhub/terraform-provider-keyhub-generator v1.0.9/go.mod h1:jnOBOVkzQQFrbOTN9A0NyIInyW36KqzGaawQeW03e6A=
+github.com/topicuskeyhub/terraform-provider-keyhub-generator v1.0.10 h1:AqeFeQ22Qv7BNifA4h3on+0vv4kCVNFjFoaTlePrxXY=
+github.com/topicuskeyhub/terraform-provider-keyhub-generator v1.0.10/go.mod h1:jnOBOVkzQQFrbOTN9A0NyIInyW36KqzGaawQeW03e6A=
 github.com/ugorji/go/codec v1.2.7 h1:YPXUKf7fYbp/y8xloBqZOw2qaVggbfwMlI8WM3wZUJ0=
 github.com/vmihailenco/msgpack/v5 v5.4.1 h1:cQriyiUvjTwOHg8QZaPihLWeRAAVoCpE00IUPn0Bjt8=
 github.com/vmihailenco/msgpack/v5 v5.4.1/go.mod h1:GaZTsDaehaPpQVyxrf5mtQlH+pc21PIudVV/E3rRQok=

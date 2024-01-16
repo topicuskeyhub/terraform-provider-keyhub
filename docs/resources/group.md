@@ -168,7 +168,7 @@ Read-Only:
 Optional:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -209,7 +209,7 @@ Read-Only:
 Optional:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -229,7 +229,7 @@ Optional:
 - `oauth2_client` (Attributes) (see [below for nested schema](#nestedatt--administered_clients--oauth2_client))
 - `owner_uuid` (String)
 - `saml2_client` (Attributes) (see [below for nested schema](#nestedatt--administered_clients--saml2_client))
-- `scopes` (List of String)
+- `scopes` (Set of String)
 - `technical_administrator_uuid` (String)
 
 Read-Only:
@@ -283,7 +283,7 @@ Read-Only:
 Optional:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -320,7 +320,7 @@ Read-Only:
 Optional:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -488,7 +488,7 @@ Read-Only:
 Optional:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -549,7 +549,7 @@ Read-Only:
 Optional:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -641,7 +641,7 @@ Read-Only:
 Optional:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -664,7 +664,7 @@ Read-Only:
 Optional:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -704,7 +704,7 @@ Read-Only:
 Optional:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -872,7 +872,7 @@ Read-Only:
 Optional:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -933,7 +933,7 @@ Read-Only:
 Optional:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -1011,7 +1011,7 @@ Read-Only:
 Optional:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -1127,7 +1127,7 @@ Read-Only:
 Optional:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -1147,7 +1147,7 @@ Optional:
 - `oauth2_client` (Attributes) (see [below for nested schema](#nestedatt--owned_clients--oauth2_client))
 - `owner_uuid` (String)
 - `saml2_client` (Attributes) (see [below for nested schema](#nestedatt--owned_clients--saml2_client))
-- `scopes` (List of String)
+- `scopes` (Set of String)
 - `technical_administrator_uuid` (String)
 
 Read-Only:
@@ -1201,7 +1201,7 @@ Read-Only:
 Optional:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -1238,7 +1238,7 @@ Read-Only:
 Optional:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -1350,7 +1350,7 @@ Read-Only:
 Optional:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -1400,7 +1400,7 @@ Read-Only:
 Optional:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -1444,7 +1444,7 @@ Read-Only:
 Optional:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -1612,7 +1612,7 @@ Read-Only:
 Optional:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -1673,7 +1673,7 @@ Read-Only:
 Optional:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -1685,7 +1685,7 @@ Optional:
 Optional:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -1756,7 +1756,7 @@ Read-Only:
 Optional:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -1794,7 +1794,7 @@ Read-Only:
 Optional:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -1817,7 +1817,7 @@ Read-Only:
 Optional:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -1863,7 +1863,7 @@ Read-Only:
 Optional:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -1922,7 +1922,7 @@ Read-Only:
 Optional:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -1945,7 +1945,7 @@ Read-Only:
 Optional:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -1958,7 +1958,7 @@ Optional:
 
 - `access_available` (Boolean)
 - `name` (String)
-- `records` (List of String)
+- `records` (Set of String)
 
 Read-Only:
 
@@ -1982,7 +1982,7 @@ Read-Only:
 Optional:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -2014,7 +2014,7 @@ Optional:
 - `system_uuid` (String)
 - `tls` (String)
 - `trusted_certificate_uuid` (String)
-- `types` (List of String)
+- `types` (Set of String)
 - `verbose_payloads` (Boolean)
 
 Read-Only:
@@ -2040,6 +2040,6 @@ Read-Only:
 Optional:
 
 - `full` (String)
-- `instances` (List of String)
+- `instances` (Set of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
