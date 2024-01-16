@@ -33,10 +33,10 @@ description: |-
 ### Read-Only
 
 - `audit` (Attributes) (see [below for nested schema](#nestedatt--audit))
-- `groups` (Attributes List) (see [below for nested schema](#nestedatt--groups))
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--links))
+- `groups` (Attributes Set) (see [below for nested schema](#nestedatt--groups))
+- `links` (Attributes Set) (see [below for nested schema](#nestedatt--links))
 - `password_uuid` (String)
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--permissions))
+- `permissions` (Attributes Set) (see [below for nested schema](#nestedatt--permissions))
 - `uuid` (String)
 
 <a id="nestedatt--secret"></a>
@@ -77,8 +77,8 @@ Optional:
 
 Read-Only:
 
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--groups--links))
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--groups--permissions))
+- `links` (Attributes Set) (see [below for nested schema](#nestedatt--groups--links))
+- `permissions` (Attributes Set) (see [below for nested schema](#nestedatt--groups--permissions))
 - `short_name_in_system` (String)
 
 <a id="nestedatt--groups--links"></a>

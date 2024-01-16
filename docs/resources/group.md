@@ -36,9 +36,9 @@ resource "keyhub_group" "terra" {
 
 ### Optional
 
-- `accounts` (Attributes List) (see [below for nested schema](#nestedatt--accounts))
+- `accounts` (Attributes Set) (see [below for nested schema](#nestedatt--accounts))
 - `additional` (List of String)
-- `admins` (Attributes List, Deprecated) (see [below for nested schema](#nestedatt--admins))
+- `admins` (Attributes Set, Deprecated) (see [below for nested schema](#nestedatt--admins))
 - `application_administration` (Boolean)
 - `audit_config` (Attributes) (see [below for nested schema](#nestedatt--audit_config))
 - `authorizing_group_auditing_uuid` (String)
@@ -46,7 +46,7 @@ resource "keyhub_group" "terra" {
 - `authorizing_group_membership_uuid` (String)
 - `authorizing_group_provisioning_uuid` (String)
 - `classification_uuid` (String)
-- `client_permissions` (Attributes List) (see [below for nested schema](#nestedatt--client_permissions))
+- `client_permissions` (Attributes Set) (see [below for nested schema](#nestedatt--client_permissions))
 - `description` (String)
 - `extended_access` (String)
 - `hide_audit_trail` (Boolean)
@@ -62,36 +62,36 @@ resource "keyhub_group" "terra" {
 ### Read-Only
 
 - `admin` (Boolean)
-- `administered_clients` (Attributes List) (see [below for nested schema](#nestedatt--administered_clients))
-- `administered_systems` (Attributes List) (see [below for nested schema](#nestedatt--administered_systems))
+- `administered_clients` (Attributes Set) (see [below for nested schema](#nestedatt--administered_clients))
+- `administered_systems` (Attributes Set) (see [below for nested schema](#nestedatt--administered_systems))
 - `audit` (Attributes) (see [below for nested schema](#nestedatt--audit))
 - `audit_requested` (Boolean)
 - `auditor` (Boolean)
 - `authorized_groups` (Attributes) (see [below for nested schema](#nestedatt--authorized_groups))
 - `authorizing_group_types` (Set of String)
-- `clients` (Attributes List) (see [below for nested schema](#nestedatt--clients))
-- `content_administered_systems` (Attributes List) (see [below for nested schema](#nestedatt--content_administered_systems))
+- `clients` (Attributes Set) (see [below for nested schema](#nestedatt--clients))
+- `content_administered_systems` (Attributes Set) (see [below for nested schema](#nestedatt--content_administered_systems))
 - `groupauditinginfo` (Attributes) (see [below for nested schema](#nestedatt--groupauditinginfo))
 - `groupinfo` (Attributes) (see [below for nested schema](#nestedatt--groupinfo))
-- `helpdesk` (Attributes List) (see [below for nested schema](#nestedatt--helpdesk))
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--links))
+- `helpdesk` (Attributes Set) (see [below for nested schema](#nestedatt--helpdesk))
+- `links` (Attributes Set) (see [below for nested schema](#nestedatt--links))
 - `markers` (Attributes) (see [below for nested schema](#nestedatt--markers))
 - `myaccount` (Attributes) (see [below for nested schema](#nestedatt--myaccount))
 - `mydelegatedaccount` (Attributes) (see [below for nested schema](#nestedatt--mydelegatedaccount))
-- `nested_groups` (Attributes List) (see [below for nested schema](#nestedatt--nested_groups))
-- `owned_clients` (Attributes List) (see [below for nested schema](#nestedatt--owned_clients))
-- `owned_directories` (Attributes List) (see [below for nested schema](#nestedatt--owned_directories))
+- `nested_groups` (Attributes Set) (see [below for nested schema](#nestedatt--nested_groups))
+- `owned_clients` (Attributes Set) (see [below for nested schema](#nestedatt--owned_clients))
+- `owned_directories` (Attributes Set) (see [below for nested schema](#nestedatt--owned_directories))
 - `owned_groups_on_system` (Attributes) (see [below for nested schema](#nestedatt--owned_groups_on_system))
-- `owned_organizational_units` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units))
-- `owned_systems` (Attributes List) (see [below for nested schema](#nestedatt--owned_systems))
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--permissions))
-- `recent_audits` (Attributes List) (see [below for nested schema](#nestedatt--recent_audits))
+- `owned_organizational_units` (Attributes Set) (see [below for nested schema](#nestedatt--owned_organizational_units))
+- `owned_systems` (Attributes Set) (see [below for nested schema](#nestedatt--owned_systems))
+- `permissions` (Attributes Set) (see [below for nested schema](#nestedatt--permissions))
+- `recent_audits` (Attributes Set) (see [below for nested schema](#nestedatt--recent_audits))
 - `requeststatus` (String)
-- `service_accounts` (Attributes List) (see [below for nested schema](#nestedatt--service_accounts))
-- `systems` (Attributes List) (see [below for nested schema](#nestedatt--systems))
+- `service_accounts` (Attributes Set) (see [below for nested schema](#nestedatt--service_accounts))
+- `systems` (Attributes Set) (see [below for nested schema](#nestedatt--systems))
 - `uuid` (String)
 - `vault` (Attributes) (see [below for nested schema](#nestedatt--vault))
-- `webhooks` (Attributes List) (see [below for nested schema](#nestedatt--webhooks))
+- `webhooks` (Attributes Set) (see [below for nested schema](#nestedatt--webhooks))
 
 <a id="nestedatt--accounts"></a>
 ### Nested Schema for `accounts`
@@ -148,8 +148,8 @@ Optional:
 
 Read-Only:
 
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--audit_config--links))
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--audit_config--permissions))
+- `links` (Attributes Set) (see [below for nested schema](#nestedatt--audit_config--links))
+- `permissions` (Attributes Set) (see [below for nested schema](#nestedatt--audit_config--permissions))
 
 <a id="nestedatt--audit_config--links"></a>
 ### Nested Schema for `audit_config.links`
@@ -189,8 +189,8 @@ Optional:
 
 Read-Only:
 
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--client_permissions--links))
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--client_permissions--permissions))
+- `links` (Attributes Set) (see [below for nested schema](#nestedatt--client_permissions--links))
+- `permissions` (Attributes Set) (see [below for nested schema](#nestedatt--client_permissions--permissions))
 
 <a id="nestedatt--client_permissions--links"></a>
 ### Nested Schema for `client_permissions.links`
@@ -235,8 +235,8 @@ Optional:
 Read-Only:
 
 - `last_modified_at` (String)
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--administered_clients--links))
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--administered_clients--permissions))
+- `links` (Attributes Set) (see [below for nested schema](#nestedatt--administered_clients--links))
+- `permissions` (Attributes Set) (see [below for nested schema](#nestedatt--administered_clients--permissions))
 - `sso_application` (Boolean)
 - `type` (String)
 - `uuid` (String)
@@ -274,7 +274,7 @@ Optional:
 
 Read-Only:
 
-- `account_permissions` (Attributes List) (see [below for nested schema](#nestedatt--administered_clients--oauth2_client--account_permissions))
+- `account_permissions` (Attributes Set) (see [below for nested schema](#nestedatt--administered_clients--oauth2_client--account_permissions))
 - `shared_secret_uuid` (String)
 
 <a id="nestedatt--administered_clients--oauth2_client--account_permissions"></a>
@@ -361,8 +361,8 @@ Read-Only:
 
 - `account_count` (Number)
 - `external_uuid` (String)
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--administered_systems--links))
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--administered_systems--permissions))
+- `links` (Attributes Set) (see [below for nested schema](#nestedatt--administered_systems--links))
+- `permissions` (Attributes Set) (see [below for nested schema](#nestedatt--administered_systems--permissions))
 - `type` (String)
 - `uuid` (String)
 
@@ -468,8 +468,8 @@ Optional:
 Read-Only:
 
 - `account_count` (Number)
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--administered_systems--provisioned_ldap--numbering--links))
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--administered_systems--provisioned_ldap--numbering--permissions))
+- `links` (Attributes Set) (see [below for nested schema](#nestedatt--administered_systems--provisioned_ldap--numbering--links))
+- `permissions` (Attributes Set) (see [below for nested schema](#nestedatt--administered_systems--provisioned_ldap--numbering--permissions))
 
 <a id="nestedatt--administered_systems--provisioned_ldap--numbering--links"></a>
 ### Nested Schema for `administered_systems.provisioned_ldap.numbering.permissions`
@@ -572,7 +572,7 @@ Optional:
 Optional:
 
 - `group_count` (Number)
-- `items` (Attributes List) (see [below for nested schema](#nestedatt--authorized_groups--items))
+- `items` (Attributes Set) (see [below for nested schema](#nestedatt--authorized_groups--items))
 
 <a id="nestedatt--authorized_groups--items"></a>
 ### Nested Schema for `authorized_groups.items`
@@ -608,8 +608,8 @@ Read-Only:
 - `audit_requested` (Boolean)
 - `auditor` (Boolean)
 - `authorizing_group_types` (Set of String)
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--authorized_groups--items--links))
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--authorized_groups--items--permissions))
+- `links` (Attributes Set) (see [below for nested schema](#nestedatt--authorized_groups--items--links))
+- `permissions` (Attributes Set) (see [below for nested schema](#nestedatt--authorized_groups--items--permissions))
 - `uuid` (String)
 
 <a id="nestedatt--authorized_groups--items--audit_config"></a>
@@ -621,8 +621,8 @@ Optional:
 
 Read-Only:
 
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--authorized_groups--items--audit_config--links))
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--authorized_groups--items--audit_config--permissions))
+- `links` (Attributes Set) (see [below for nested schema](#nestedatt--authorized_groups--items--audit_config--links))
+- `permissions` (Attributes Set) (see [below for nested schema](#nestedatt--authorized_groups--items--audit_config--permissions))
 
 <a id="nestedatt--authorized_groups--items--audit_config--links"></a>
 ### Nested Schema for `authorized_groups.items.audit_config.permissions`
@@ -682,9 +682,9 @@ Read-Only:
 
 - `client_uuid` (String)
 - `group_uuid` (String)
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--clients--links))
+- `links` (Attributes Set) (see [below for nested schema](#nestedatt--clients--links))
 - `owner_uuid` (String)
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--clients--permissions))
+- `permissions` (Attributes Set) (see [below for nested schema](#nestedatt--clients--permissions))
 - `technical_administrator_uuid` (String)
 
 <a id="nestedatt--clients--links"></a>
@@ -745,8 +745,8 @@ Read-Only:
 
 - `account_count` (Number)
 - `external_uuid` (String)
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--content_administered_systems--links))
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--content_administered_systems--permissions))
+- `links` (Attributes Set) (see [below for nested schema](#nestedatt--content_administered_systems--links))
+- `permissions` (Attributes Set) (see [below for nested schema](#nestedatt--content_administered_systems--permissions))
 - `type` (String)
 - `uuid` (String)
 
@@ -852,8 +852,8 @@ Optional:
 Read-Only:
 
 - `account_count` (Number)
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--content_administered_systems--provisioned_ldap--numbering--links))
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--content_administered_systems--provisioned_ldap--numbering--permissions))
+- `links` (Attributes Set) (see [below for nested schema](#nestedatt--content_administered_systems--provisioned_ldap--numbering--links))
+- `permissions` (Attributes Set) (see [below for nested schema](#nestedatt--content_administered_systems--provisioned_ldap--numbering--permissions))
 
 <a id="nestedatt--content_administered_systems--provisioned_ldap--numbering--links"></a>
 ### Nested Schema for `content_administered_systems.provisioned_ldap.numbering.permissions`
@@ -981,8 +981,8 @@ Optional:
 
 Read-Only:
 
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--helpdesk--links))
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--helpdesk--permissions))
+- `links` (Attributes Set) (see [below for nested schema](#nestedatt--helpdesk--links))
+- `permissions` (Attributes Set) (see [below for nested schema](#nestedatt--helpdesk--permissions))
 
 <a id="nestedatt--helpdesk--status"></a>
 ### Nested Schema for `helpdesk.status`
@@ -1033,7 +1033,7 @@ Read-Only:
 
 Optional:
 
-- `markers` (Attributes List) (see [below for nested schema](#nestedatt--markers--markers))
+- `markers` (Attributes Set) (see [below for nested schema](#nestedatt--markers--markers))
 
 <a id="nestedatt--markers--markers"></a>
 ### Nested Schema for `markers.markers`
@@ -1106,8 +1106,8 @@ Optional:
 Read-Only:
 
 - `admin` (Boolean)
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--nested_groups--links))
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--nested_groups--permissions))
+- `links` (Attributes Set) (see [below for nested schema](#nestedatt--nested_groups--links))
+- `permissions` (Attributes Set) (see [below for nested schema](#nestedatt--nested_groups--permissions))
 - `uuid` (String)
 
 <a id="nestedatt--nested_groups--links"></a>
@@ -1153,8 +1153,8 @@ Optional:
 Read-Only:
 
 - `last_modified_at` (String)
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_clients--links))
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_clients--permissions))
+- `links` (Attributes Set) (see [below for nested schema](#nestedatt--owned_clients--links))
+- `permissions` (Attributes Set) (see [below for nested schema](#nestedatt--owned_clients--permissions))
 - `sso_application` (Boolean)
 - `type` (String)
 - `uuid` (String)
@@ -1192,7 +1192,7 @@ Optional:
 
 Read-Only:
 
-- `account_permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_clients--oauth2_client--account_permissions))
+- `account_permissions` (Attributes Set) (see [below for nested schema](#nestedatt--owned_clients--oauth2_client--account_permissions))
 - `shared_secret_uuid` (String)
 
 <a id="nestedatt--owned_clients--oauth2_client--account_permissions"></a>
@@ -1268,8 +1268,8 @@ Optional:
 Read-Only:
 
 - `account_validity_supported` (Boolean)
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_directories--links))
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_directories--permissions))
+- `links` (Attributes Set) (see [below for nested schema](#nestedatt--owned_directories--links))
+- `permissions` (Attributes Set) (see [below for nested schema](#nestedatt--owned_directories--permissions))
 - `type` (String)
 - `uuid` (String)
 
@@ -1361,7 +1361,7 @@ Optional:
 
 Optional:
 
-- `items` (Attributes List) (see [below for nested schema](#nestedatt--owned_groups_on_system--items))
+- `items` (Attributes Set) (see [below for nested schema](#nestedatt--owned_groups_on_system--items))
 - `unlinked_count` (Number)
 
 <a id="nestedatt--owned_groups_on_system--items"></a>
@@ -1379,8 +1379,8 @@ Optional:
 
 Read-Only:
 
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_groups_on_system--items--links))
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_groups_on_system--items--permissions))
+- `links` (Attributes Set) (see [below for nested schema](#nestedatt--owned_groups_on_system--items--links))
+- `permissions` (Attributes Set) (see [below for nested schema](#nestedatt--owned_groups_on_system--items--permissions))
 - `short_name_in_system` (String)
 
 <a id="nestedatt--owned_groups_on_system--items--links"></a>
@@ -1422,9 +1422,9 @@ Optional:
 Read-Only:
 
 - `depth` (Number)
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--links))
+- `links` (Attributes Set) (see [below for nested schema](#nestedatt--owned_organizational_units--links))
 - `parent_uuid` (String)
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--permissions))
+- `permissions` (Attributes Set) (see [below for nested schema](#nestedatt--owned_organizational_units--permissions))
 - `uuid` (String)
 
 <a id="nestedatt--owned_organizational_units--links"></a>
@@ -1485,8 +1485,8 @@ Read-Only:
 
 - `account_count` (Number)
 - `external_uuid` (String)
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_systems--links))
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_systems--permissions))
+- `links` (Attributes Set) (see [below for nested schema](#nestedatt--owned_systems--links))
+- `permissions` (Attributes Set) (see [below for nested schema](#nestedatt--owned_systems--permissions))
 - `type` (String)
 - `uuid` (String)
 
@@ -1592,8 +1592,8 @@ Optional:
 Read-Only:
 
 - `account_count` (Number)
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_systems--provisioned_ldap--numbering--links))
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_systems--provisioned_ldap--numbering--permissions))
+- `links` (Attributes Set) (see [below for nested schema](#nestedatt--owned_systems--provisioned_ldap--numbering--links))
+- `permissions` (Attributes Set) (see [below for nested schema](#nestedatt--owned_systems--provisioned_ldap--numbering--permissions))
 
 <a id="nestedatt--owned_systems--provisioned_ldap--numbering--links"></a>
 ### Nested Schema for `owned_systems.provisioned_ldap.numbering.permissions`
@@ -1699,18 +1699,18 @@ Required:
 
 Optional:
 
-- `accounts` (Attributes List) (see [below for nested schema](#nestedatt--recent_audits--accounts))
+- `accounts` (Attributes Set) (see [below for nested schema](#nestedatt--recent_audits--accounts))
 - `comment` (String)
-- `nested_groups` (Attributes List) (see [below for nested schema](#nestedatt--recent_audits--nested_groups))
+- `nested_groups` (Attributes Set) (see [below for nested schema](#nestedatt--recent_audits--nested_groups))
 
 Read-Only:
 
 - `created_at` (String)
 - `created_by` (String)
 - `group_name` (String)
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--recent_audits--links))
+- `links` (Attributes Set) (see [below for nested schema](#nestedatt--recent_audits--links))
 - `name_on_audit` (String)
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--recent_audits--permissions))
+- `permissions` (Attributes Set) (see [below for nested schema](#nestedatt--recent_audits--permissions))
 - `reviewed_at` (String)
 - `reviewed_by` (String)
 - `submitted_at` (String)
@@ -1733,9 +1733,9 @@ Read-Only:
 - `end_date` (String)
 - `last_active` (String)
 - `last_used` (String)
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--recent_audits--accounts--links))
+- `links` (Attributes Set) (see [below for nested schema](#nestedatt--recent_audits--accounts--links))
 - `nested` (Boolean)
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--recent_audits--accounts--permissions))
+- `permissions` (Attributes Set) (see [below for nested schema](#nestedatt--recent_audits--accounts--permissions))
 - `rights` (String)
 - `username` (String)
 
@@ -1773,9 +1773,9 @@ Optional:
 
 Read-Only:
 
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--recent_audits--nested_groups--links))
+- `links` (Attributes Set) (see [below for nested schema](#nestedatt--recent_audits--nested_groups--links))
 - `name` (String)
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--recent_audits--nested_groups--permissions))
+- `permissions` (Attributes Set) (see [below for nested schema](#nestedatt--recent_audits--nested_groups--permissions))
 
 <a id="nestedatt--recent_audits--nested_groups--links"></a>
 ### Nested Schema for `recent_audits.nested_groups.links`
@@ -1841,9 +1841,9 @@ Optional:
 
 Read-Only:
 
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--service_accounts--links))
+- `links` (Attributes Set) (see [below for nested schema](#nestedatt--service_accounts--links))
 - `password_uuid` (String)
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--service_accounts--permissions))
+- `permissions` (Attributes Set) (see [below for nested schema](#nestedatt--service_accounts--permissions))
 - `uuid` (String)
 
 <a id="nestedatt--service_accounts--links"></a>
@@ -1883,8 +1883,8 @@ Optional:
 Read-Only:
 
 - `group_on_system` (Attributes) (see [below for nested schema](#nestedatt--systems--group_on_system))
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--systems--links))
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--systems--permissions))
+- `links` (Attributes Set) (see [below for nested schema](#nestedatt--systems--links))
+- `permissions` (Attributes Set) (see [below for nested schema](#nestedatt--systems--permissions))
 
 <a id="nestedatt--systems--group_on_system"></a>
 ### Nested Schema for `systems.group_on_system`
@@ -1901,8 +1901,8 @@ Optional:
 
 Read-Only:
 
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--systems--group_on_system--links))
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--systems--group_on_system--permissions))
+- `links` (Attributes Set) (see [below for nested schema](#nestedatt--systems--group_on_system--links))
+- `permissions` (Attributes Set) (see [below for nested schema](#nestedatt--systems--group_on_system--permissions))
 - `short_name_in_system` (String)
 
 <a id="nestedatt--systems--group_on_system--links"></a>
@@ -1962,8 +1962,8 @@ Optional:
 
 Read-Only:
 
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--vault--links))
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--vault--permissions))
+- `links` (Attributes Set) (see [below for nested schema](#nestedatt--vault--links))
+- `permissions` (Attributes Set) (see [below for nested schema](#nestedatt--vault--permissions))
 
 <a id="nestedatt--vault--links"></a>
 ### Nested Schema for `vault.links`
@@ -2019,8 +2019,8 @@ Optional:
 
 Read-Only:
 
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--webhooks--links))
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--webhooks--permissions))
+- `links` (Attributes Set) (see [below for nested schema](#nestedatt--webhooks--links))
+- `permissions` (Attributes Set) (see [below for nested schema](#nestedatt--webhooks--permissions))
 - `uuid` (String)
 
 <a id="nestedatt--webhooks--links"></a>

@@ -26,14 +26,14 @@ description: |-
 
 - `additional` (List of String)
 - `display_name` (String)
-- `provgroups` (Attributes List) (see [below for nested schema](#nestedatt--provgroups))
-- `service_accounts` (Attributes List) (see [below for nested schema](#nestedatt--service_accounts))
+- `provgroups` (Attributes Set) (see [below for nested schema](#nestedatt--provgroups))
+- `service_accounts` (Attributes Set) (see [below for nested schema](#nestedatt--service_accounts))
 
 ### Read-Only
 
 - `audit` (Attributes) (see [below for nested schema](#nestedatt--audit))
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--links))
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--permissions))
+- `links` (Attributes Set) (see [below for nested schema](#nestedatt--links))
+- `permissions` (Attributes Set) (see [below for nested schema](#nestedatt--permissions))
 - `short_name_in_system` (String)
 
 <a id="nestedatt--provgroups"></a>
@@ -50,8 +50,8 @@ Optional:
 Read-Only:
 
 - `group_on_system` (Attributes) (see [below for nested schema](#nestedatt--provgroups--group_on_system))
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--provgroups--links))
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--provgroups--permissions))
+- `links` (Attributes Set) (see [below for nested schema](#nestedatt--provgroups--links))
+- `permissions` (Attributes Set) (see [below for nested schema](#nestedatt--provgroups--permissions))
 
 <a id="nestedatt--provgroups--group_on_system"></a>
 ### Nested Schema for `provgroups.group_on_system`
@@ -68,8 +68,8 @@ Optional:
 
 Read-Only:
 
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--provgroups--group_on_system--links))
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--provgroups--group_on_system--permissions))
+- `links` (Attributes Set) (see [below for nested schema](#nestedatt--provgroups--group_on_system--links))
+- `permissions` (Attributes Set) (see [below for nested schema](#nestedatt--provgroups--group_on_system--permissions))
 - `short_name_in_system` (String)
 
 <a id="nestedatt--provgroups--group_on_system--links"></a>
@@ -133,8 +133,8 @@ Optional:
 
 Read-Only:
 
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--service_accounts--links))
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--service_accounts--permissions))
+- `links` (Attributes Set) (see [below for nested schema](#nestedatt--service_accounts--links))
+- `permissions` (Attributes Set) (see [below for nested schema](#nestedatt--service_accounts--permissions))
 - `uuid` (String)
 
 <a id="nestedatt--service_accounts--links"></a>

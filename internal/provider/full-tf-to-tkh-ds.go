@@ -543,7 +543,7 @@ func tfObjectToTKHDSAuthAccount_additionalObjects(ctx context.Context, recurse b
 		tkh.SetAudit(val)
 	}
 	{
-		val, d := tfObjectToTKHDSGroupAccountGroupLinkableWrapper(ctx, recurse, toItemsList(ctx, objAttrs["groups"]))
+		val, d := tfObjectToTKHDSGroupAccountGroupLinkableWrapper(ctx, recurse, toItemsSet(ctx, objAttrs["groups"]))
 		diags.Append(d...)
 		tkh.SetGroups(val)
 	}
@@ -926,12 +926,12 @@ func tfObjectToTKHDSClientClientApplication_additionalObjects(ctx context.Contex
 		tkh.SetAudit(val)
 	}
 	{
-		val, d := tfObjectToTKHDSGroupGroupClientLinkableWrapper(ctx, recurse, toItemsList(ctx, objAttrs["groupclients"]))
+		val, d := tfObjectToTKHDSGroupGroupClientLinkableWrapper(ctx, recurse, toItemsSet(ctx, objAttrs["groupclients"]))
 		diags.Append(d...)
 		tkh.SetGroupclients(val)
 	}
 	{
-		val, d := tfObjectToTKHDSGroupGroupLinkableWrapper(ctx, recurse, toItemsList(ctx, objAttrs["groups"]))
+		val, d := tfObjectToTKHDSGroupGroupLinkableWrapper(ctx, recurse, toItemsSet(ctx, objAttrs["groups"]))
 		diags.Append(d...)
 		tkh.SetGroups(val)
 	}
@@ -2367,22 +2367,22 @@ func tfObjectToTKHDSGroupGroup_additionalObjects(ctx context.Context, recurse bo
 	var tkh keyhubmodel.GroupGroup_additionalObjectsable
 	tkh = keyhubmodel.NewGroupGroup_additionalObjects()
 	{
-		val, d := tfObjectToTKHDSGroupGroupAccountLinkableWrapper(ctx, recurse, toItemsList(ctx, objAttrs["accounts"]))
+		val, d := tfObjectToTKHDSGroupGroupAccountLinkableWrapper(ctx, recurse, toItemsSet(ctx, objAttrs["accounts"]))
 		diags.Append(d...)
 		tkh.SetAccounts(val)
 	}
 	{
-		val, d := tfObjectToTKHDSClientClientApplicationLinkableWrapper(ctx, recurse, toItemsList(ctx, objAttrs["administered_clients"]))
+		val, d := tfObjectToTKHDSClientClientApplicationLinkableWrapper(ctx, recurse, toItemsSet(ctx, objAttrs["administered_clients"]))
 		diags.Append(d...)
 		tkh.SetAdministeredClients(val)
 	}
 	{
-		val, d := tfObjectToTKHDSProvisioningProvisionedSystemLinkableWrapper(ctx, recurse, toItemsList(ctx, objAttrs["administered_systems"]))
+		val, d := tfObjectToTKHDSProvisioningProvisionedSystemLinkableWrapper(ctx, recurse, toItemsSet(ctx, objAttrs["administered_systems"]))
 		diags.Append(d...)
 		tkh.SetAdministeredSystems(val)
 	}
 	{
-		val, d := tfObjectToTKHDSGroupGroupAccountLinkableWrapper(ctx, recurse, toItemsList(ctx, objAttrs["admins"]))
+		val, d := tfObjectToTKHDSGroupGroupAccountLinkableWrapper(ctx, recurse, toItemsSet(ctx, objAttrs["admins"]))
 		diags.Append(d...)
 		tkh.SetAdmins(val)
 	}
@@ -2397,17 +2397,17 @@ func tfObjectToTKHDSGroupGroup_additionalObjects(ctx context.Context, recurse bo
 		tkh.SetAuthorizedGroups(val)
 	}
 	{
-		val, d := tfObjectToTKHDSClientOAuth2ClientPermissionWithClientLinkableWrapper(ctx, recurse, toItemsList(ctx, objAttrs["client_permissions"]))
+		val, d := tfObjectToTKHDSClientOAuth2ClientPermissionWithClientLinkableWrapper(ctx, recurse, toItemsSet(ctx, objAttrs["client_permissions"]))
 		diags.Append(d...)
 		tkh.SetClientPermissions(val)
 	}
 	{
-		val, d := tfObjectToTKHDSGroupGroupClientLinkableWrapper(ctx, recurse, toItemsList(ctx, objAttrs["clients"]))
+		val, d := tfObjectToTKHDSGroupGroupClientLinkableWrapper(ctx, recurse, toItemsSet(ctx, objAttrs["clients"]))
 		diags.Append(d...)
 		tkh.SetClients(val)
 	}
 	{
-		val, d := tfObjectToTKHDSProvisioningProvisionedSystemLinkableWrapper(ctx, recurse, toItemsList(ctx, objAttrs["content_administered_systems"]))
+		val, d := tfObjectToTKHDSProvisioningProvisionedSystemLinkableWrapper(ctx, recurse, toItemsSet(ctx, objAttrs["content_administered_systems"]))
 		diags.Append(d...)
 		tkh.SetContentAdministeredSystems(val)
 	}
@@ -2422,7 +2422,7 @@ func tfObjectToTKHDSGroupGroup_additionalObjects(ctx context.Context, recurse bo
 		tkh.SetGroupinfo(val)
 	}
 	{
-		val, d := tfObjectToTKHDSDirectoryAccountDirectorySummaryLinkableWrapper(ctx, recurse, toItemsList(ctx, objAttrs["helpdesk"]))
+		val, d := tfObjectToTKHDSDirectoryAccountDirectorySummaryLinkableWrapper(ctx, recurse, toItemsSet(ctx, objAttrs["helpdesk"]))
 		diags.Append(d...)
 		tkh.SetHelpdesk(val)
 	}
@@ -2442,17 +2442,17 @@ func tfObjectToTKHDSGroupGroup_additionalObjects(ctx context.Context, recurse bo
 		tkh.SetMydelegatedaccount(val)
 	}
 	{
-		val, d := tfObjectToTKHDSGroupGroupPrimerLinkableWrapper(ctx, recurse, toItemsList(ctx, objAttrs["nested_groups"]))
+		val, d := tfObjectToTKHDSGroupGroupPrimerLinkableWrapper(ctx, recurse, toItemsSet(ctx, objAttrs["nested_groups"]))
 		diags.Append(d...)
 		tkh.SetNestedGroups(val)
 	}
 	{
-		val, d := tfObjectToTKHDSClientClientApplicationLinkableWrapper(ctx, recurse, toItemsList(ctx, objAttrs["owned_clients"]))
+		val, d := tfObjectToTKHDSClientClientApplicationLinkableWrapper(ctx, recurse, toItemsSet(ctx, objAttrs["owned_clients"]))
 		diags.Append(d...)
 		tkh.SetOwnedClients(val)
 	}
 	{
-		val, d := tfObjectToTKHDSDirectoryAccountDirectoryLinkableWrapper(ctx, recurse, toItemsList(ctx, objAttrs["owned_directories"]))
+		val, d := tfObjectToTKHDSDirectoryAccountDirectoryLinkableWrapper(ctx, recurse, toItemsSet(ctx, objAttrs["owned_directories"]))
 		diags.Append(d...)
 		tkh.SetOwnedDirectories(val)
 	}
@@ -2462,17 +2462,17 @@ func tfObjectToTKHDSGroupGroup_additionalObjects(ctx context.Context, recurse bo
 		tkh.SetOwnedGroupsOnSystem(val)
 	}
 	{
-		val, d := tfObjectToTKHDSOrganizationOrganizationalUnitLinkableWrapper(ctx, recurse, toItemsList(ctx, objAttrs["owned_organizational_units"]))
+		val, d := tfObjectToTKHDSOrganizationOrganizationalUnitLinkableWrapper(ctx, recurse, toItemsSet(ctx, objAttrs["owned_organizational_units"]))
 		diags.Append(d...)
 		tkh.SetOwnedOrganizationalUnits(val)
 	}
 	{
-		val, d := tfObjectToTKHDSProvisioningProvisionedSystemLinkableWrapper(ctx, recurse, toItemsList(ctx, objAttrs["owned_systems"]))
+		val, d := tfObjectToTKHDSProvisioningProvisionedSystemLinkableWrapper(ctx, recurse, toItemsSet(ctx, objAttrs["owned_systems"]))
 		diags.Append(d...)
 		tkh.SetOwnedSystems(val)
 	}
 	{
-		val, d := tfObjectToTKHDSAuditGroupAuditLinkableWrapper(ctx, recurse, toItemsList(ctx, objAttrs["recent_audits"]))
+		val, d := tfObjectToTKHDSAuditGroupAuditLinkableWrapper(ctx, recurse, toItemsSet(ctx, objAttrs["recent_audits"]))
 		diags.Append(d...)
 		tkh.SetRecentAudits(val)
 	}
@@ -2482,12 +2482,12 @@ func tfObjectToTKHDSGroupGroup_additionalObjects(ctx context.Context, recurse bo
 		tkh.SetRequeststatus(val)
 	}
 	{
-		val, d := tfObjectToTKHDSServiceaccountServiceAccountLinkableWrapper(ctx, recurse, toItemsList(ctx, objAttrs["service_accounts"]))
+		val, d := tfObjectToTKHDSServiceaccountServiceAccountLinkableWrapper(ctx, recurse, toItemsSet(ctx, objAttrs["service_accounts"]))
 		diags.Append(d...)
 		tkh.SetServiceAccounts(val)
 	}
 	{
-		val, d := tfObjectToTKHDSGroupProvisioningGroupLinkableWrapper(ctx, recurse, toItemsList(ctx, objAttrs["systems"]))
+		val, d := tfObjectToTKHDSGroupProvisioningGroupLinkableWrapper(ctx, recurse, toItemsSet(ctx, objAttrs["systems"]))
 		diags.Append(d...)
 		tkh.SetSystems(val)
 	}
@@ -2497,7 +2497,7 @@ func tfObjectToTKHDSGroupGroup_additionalObjects(ctx context.Context, recurse bo
 		tkh.SetVault(val)
 	}
 	{
-		val, d := tfObjectToTKHDSWebhookWebhookLinkableWrapper(ctx, recurse, toItemsList(ctx, objAttrs["webhooks"]))
+		val, d := tfObjectToTKHDSWebhookWebhookLinkableWrapper(ctx, recurse, toItemsSet(ctx, objAttrs["webhooks"]))
 		diags.Append(d...)
 		tkh.SetWebhooks(val)
 	}
@@ -2990,12 +2990,12 @@ func tfObjectToTKHDSProvisioningGroupOnSystem_additionalObjects(ctx context.Cont
 		tkh.SetAudit(val)
 	}
 	{
-		val, d := tfObjectToTKHDSGroupProvisioningGroupLinkableWrapper(ctx, recurse, toItemsList(ctx, objAttrs["provgroups"]))
+		val, d := tfObjectToTKHDSGroupProvisioningGroupLinkableWrapper(ctx, recurse, toItemsSet(ctx, objAttrs["provgroups"]))
 		diags.Append(d...)
 		tkh.SetProvgroups(val)
 	}
 	{
-		val, d := tfObjectToTKHDSServiceaccountServiceAccountPrimerLinkableWrapper(ctx, recurse, toItemsList(ctx, objAttrs["service_accounts"]))
+		val, d := tfObjectToTKHDSServiceaccountServiceAccountPrimerLinkableWrapper(ctx, recurse, toItemsSet(ctx, objAttrs["service_accounts"]))
 		diags.Append(d...)
 		tkh.SetServiceAccounts(val)
 	}
@@ -3076,7 +3076,7 @@ func tfObjectToTKHDSProvisioningProvisionNumberSequence_additionalObjects(ctx co
 		tkh.SetAudit(val)
 	}
 	{
-		val, d := tfObjectToTKHDSProvisioningProvisionedSystemPrimerLinkableWrapper(ctx, recurse, toItemsList(ctx, objAttrs["systems"]))
+		val, d := tfObjectToTKHDSProvisioningProvisionedSystemPrimerLinkableWrapper(ctx, recurse, toItemsSet(ctx, objAttrs["systems"]))
 		diags.Append(d...)
 		tkh.SetSystems(val)
 	}
@@ -3585,7 +3585,7 @@ func tfObjectToTKHDSProvisioningProvisionedSystem_additionalObjects(ctx context.
 		tkh.SetAudit(val)
 	}
 	{
-		val, d := tfObjectToTKHDSClientOAuth2ClientPermissionWithClientLinkableWrapper(ctx, recurse, toItemsList(ctx, objAttrs["issued_permissions"]))
+		val, d := tfObjectToTKHDSClientOAuth2ClientPermissionWithClientLinkableWrapper(ctx, recurse, toItemsSet(ctx, objAttrs["issued_permissions"]))
 		diags.Append(d...)
 		tkh.SetIssuedPermissions(val)
 	}
@@ -3864,7 +3864,7 @@ func tfObjectToTKHDSServiceaccountServiceAccount_additionalObjects(ctx context.C
 		tkh.SetAudit(val)
 	}
 	{
-		val, d := tfObjectToTKHDSServiceaccountServiceAccountGroupLinkableWrapper(ctx, recurse, toItemsList(ctx, objAttrs["groups"]))
+		val, d := tfObjectToTKHDSServiceaccountServiceAccountGroupLinkableWrapper(ctx, recurse, toItemsSet(ctx, objAttrs["groups"]))
 		diags.Append(d...)
 		tkh.SetGroups(val)
 	}
@@ -4171,7 +4171,7 @@ func tfObjectToTKHDSVaultVaultRecord_additionalObjects(ctx context.Context, recu
 		tkh.SetShareSummary(val)
 	}
 	{
-		val, d := tfObjectToTKHDSVaultVaultRecordPrimerLinkableWrapper(ctx, recurse, toItemsList(ctx, objAttrs["shares"]))
+		val, d := tfObjectToTKHDSVaultVaultRecordPrimerLinkableWrapper(ctx, recurse, toItemsSet(ctx, objAttrs["shares"]))
 		diags.Append(d...)
 		tkh.SetShares(val)
 	}

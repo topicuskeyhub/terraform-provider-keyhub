@@ -39,9 +39,9 @@ description: |-
 - `custom_header_value` (String, Sensitive)
 - `directory` (Attributes) (see [below for nested schema](#nestedatt--directory))
 - `group` (Attributes) (see [below for nested schema](#nestedatt--group))
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--links))
+- `links` (Attributes Set) (see [below for nested schema](#nestedatt--links))
 - `name` (String)
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--permissions))
+- `permissions` (Attributes Set) (see [below for nested schema](#nestedatt--permissions))
 - `system` (Attributes) (see [below for nested schema](#nestedatt--system))
 - `tls` (String)
 - `trusted_certificate` (Attributes) (see [below for nested schema](#nestedatt--trusted_certificate))
@@ -56,8 +56,8 @@ Read-Only:
 
 - `display_name` (String)
 - `last_active` (String)
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--account--links))
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--account--permissions))
+- `links` (Attributes Set) (see [below for nested schema](#nestedatt--account--links))
+- `permissions` (Attributes Set) (see [below for nested schema](#nestedatt--account--permissions))
 - `username` (String)
 - `uuid` (String)
 - `validity` (String)
@@ -102,9 +102,9 @@ Read-Only:
 Read-Only:
 
 - `client_id` (String)
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--client--links))
+- `links` (Attributes Set) (see [below for nested schema](#nestedatt--client--links))
 - `name` (String)
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--client--permissions))
+- `permissions` (Attributes Set) (see [below for nested schema](#nestedatt--client--permissions))
 - `scopes` (Set of String)
 - `sso_application` (Boolean)
 - `type` (String)
@@ -144,8 +144,8 @@ Read-Only:
 - `fingerprint_sha1` (String)
 - `fingerprint_sha256` (String)
 - `global` (Boolean)
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--client_certificate--links))
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--client_certificate--permissions))
+- `links` (Attributes Set) (see [below for nested schema](#nestedatt--client_certificate--links))
+- `permissions` (Attributes Set) (see [below for nested schema](#nestedatt--client_certificate--permissions))
 - `subject_dn` (String)
 - `type` (String)
 - `uuid` (String)
@@ -180,9 +180,9 @@ Read-Only:
 
 - `account_validity_supported` (Boolean)
 - `active` (Boolean)
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--directory--links))
+- `links` (Attributes Set) (see [below for nested schema](#nestedatt--directory--links))
 - `name` (String)
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--directory--permissions))
+- `permissions` (Attributes Set) (see [below for nested schema](#nestedatt--directory--permissions))
 - `type` (String)
 - `uuid` (String)
 
@@ -215,10 +215,10 @@ Read-Only:
 Read-Only:
 
 - `admin` (Boolean)
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--group--links))
+- `links` (Attributes Set) (see [below for nested schema](#nestedatt--group--links))
 - `name` (String)
 - `organizational_unit` (Attributes) (see [below for nested schema](#nestedatt--group--organizational_unit))
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--group--permissions))
+- `permissions` (Attributes Set) (see [below for nested schema](#nestedatt--group--permissions))
 - `uuid` (String)
 
 <a id="nestedatt--group--links"></a>
@@ -237,9 +237,9 @@ Read-Only:
 
 Read-Only:
 
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--group--organizational_unit--links))
+- `links` (Attributes Set) (see [below for nested schema](#nestedatt--group--organizational_unit--links))
 - `name` (String)
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--group--organizational_unit--permissions))
+- `permissions` (Attributes Set) (see [below for nested schema](#nestedatt--group--organizational_unit--permissions))
 - `uuid` (String)
 
 <a id="nestedatt--group--organizational_unit--links"></a>
@@ -305,10 +305,10 @@ Read-Only:
 Read-Only:
 
 - `active` (Boolean)
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--system--links))
+- `links` (Attributes Set) (see [below for nested schema](#nestedatt--system--links))
 - `name` (String)
 - `organizational_unit` (Attributes) (see [below for nested schema](#nestedatt--system--organizational_unit))
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--system--permissions))
+- `permissions` (Attributes Set) (see [below for nested schema](#nestedatt--system--permissions))
 - `type` (String)
 - `uuid` (String)
 
@@ -328,9 +328,9 @@ Read-Only:
 
 Read-Only:
 
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--system--organizational_unit--links))
+- `links` (Attributes Set) (see [below for nested schema](#nestedatt--system--organizational_unit--links))
 - `name` (String)
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--system--organizational_unit--permissions))
+- `permissions` (Attributes Set) (see [below for nested schema](#nestedatt--system--organizational_unit--permissions))
 - `uuid` (String)
 
 <a id="nestedatt--system--organizational_unit--links"></a>
@@ -379,8 +379,8 @@ Read-Only:
 - `fingerprint_sha1` (String)
 - `fingerprint_sha256` (String)
 - `global` (Boolean)
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--trusted_certificate--links))
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--trusted_certificate--permissions))
+- `links` (Attributes Set) (see [below for nested schema](#nestedatt--trusted_certificate--links))
+- `permissions` (Attributes Set) (see [below for nested schema](#nestedatt--trusted_certificate--permissions))
 - `subject_dn` (String)
 - `type` (String)
 - `uuid` (String)
