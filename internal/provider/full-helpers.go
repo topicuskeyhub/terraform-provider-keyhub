@@ -169,7 +169,7 @@ func toItemsSet(ctx context.Context, val attr.Value) basetypes.ObjectValue {
 
 func getItemsAttr(val basetypes.ObjectValue, attrType attr.Type) attr.Value {
 	if val.IsNull() || val.IsUnknown() {
-		return types.SetNull(attrType.(basetypes.ListType).ElementType())
+		return types.SetNull(attrType.(basetypes.SetType).ElementType())
 	}
 	return val.Attributes()["items"]
 }
