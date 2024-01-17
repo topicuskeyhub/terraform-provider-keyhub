@@ -1,3 +1,6 @@
+## 2.31.3
+* Fix various crashes caused by #35
+
 ## 2.31.2
 * Use sets for all collections to ignore changes in order (#35)
 * Force replace when the parent uuid of sub resources changes (#36)
