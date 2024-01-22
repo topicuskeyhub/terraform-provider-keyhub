@@ -33,11 +33,11 @@ description: |-
 - `default_classification` (Boolean)
 - `description` (String)
 - `info` (Attributes) (see [below for nested schema](#nestedatt--info))
-- `links` (Attributes Set) (see [below for nested schema](#nestedatt--links))
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--links))
 - `maximum_audit_interval` (Number)
 - `minimum_nr_managers` (Number)
 - `name` (String)
-- `permissions` (Attributes Set) (see [below for nested schema](#nestedatt--permissions))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--permissions))
 - `record_trail_required` (Boolean)
 - `required_months` (Set of String)
 - `rotating_password_required` (Boolean)
@@ -79,6 +79,6 @@ Read-Only:
 Read-Only:
 
 - `full` (String)
-- `instances` (Set of String)
+- `instances` (List of String)
 - `operations` (Set of String)
 - `type_escaped` (String)

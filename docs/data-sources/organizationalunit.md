@@ -28,11 +28,11 @@ description: |-
 - `audit` (Attributes) (see [below for nested schema](#nestedatt--audit))
 - `depth` (Number)
 - `description` (String)
-- `links` (Attributes Set) (see [below for nested schema](#nestedatt--links))
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--links))
 - `name` (String)
 - `owner` (Attributes) (see [below for nested schema](#nestedatt--owner))
 - `parent` (Attributes) (see [below for nested schema](#nestedatt--parent))
-- `permissions` (Attributes Set) (see [below for nested schema](#nestedatt--permissions))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--permissions))
 
 <a id="nestedatt--audit"></a>
 ### Nested Schema for `audit`
@@ -62,10 +62,10 @@ Read-Only:
 Read-Only:
 
 - `admin` (Boolean)
-- `links` (Attributes Set) (see [below for nested schema](#nestedatt--owner--links))
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--owner--links))
 - `name` (String)
 - `organizational_unit` (Attributes) (see [below for nested schema](#nestedatt--owner--organizational_unit))
-- `permissions` (Attributes Set) (see [below for nested schema](#nestedatt--owner--permissions))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owner--permissions))
 - `uuid` (String)
 
 <a id="nestedatt--owner--links"></a>
@@ -84,9 +84,9 @@ Read-Only:
 
 Read-Only:
 
-- `links` (Attributes Set) (see [below for nested schema](#nestedatt--owner--organizational_unit--links))
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--owner--organizational_unit--links))
 - `name` (String)
-- `permissions` (Attributes Set) (see [below for nested schema](#nestedatt--owner--organizational_unit--permissions))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owner--organizational_unit--permissions))
 - `uuid` (String)
 
 <a id="nestedatt--owner--organizational_unit--links"></a>
@@ -106,7 +106,7 @@ Read-Only:
 Read-Only:
 
 - `full` (String)
-- `instances` (Set of String)
+- `instances` (List of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -118,7 +118,7 @@ Read-Only:
 Read-Only:
 
 - `full` (String)
-- `instances` (Set of String)
+- `instances` (List of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -129,9 +129,9 @@ Read-Only:
 
 Read-Only:
 
-- `links` (Attributes Set) (see [below for nested schema](#nestedatt--parent--links))
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--parent--links))
 - `name` (String)
-- `permissions` (Attributes Set) (see [below for nested schema](#nestedatt--parent--permissions))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--parent--permissions))
 - `uuid` (String)
 
 <a id="nestedatt--parent--links"></a>
@@ -151,7 +151,7 @@ Read-Only:
 Read-Only:
 
 - `full` (String)
-- `instances` (Set of String)
+- `instances` (List of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -163,6 +163,6 @@ Read-Only:
 Read-Only:
 
 - `full` (String)
-- `instances` (Set of String)
+- `instances` (List of String)
 - `operations` (Set of String)
 - `type_escaped` (String)

@@ -24,12 +24,12 @@ description: |-
 - `additional` (List of String)
 - `client_id` (String)
 - `delete_tile` (Boolean)
-- `groupclients` (Attributes Set) (see [below for nested schema](#nestedatt--groupclients))
+- `groupclients` (Attributes List) (see [below for nested schema](#nestedatt--groupclients))
 - `ldap_client` (Attributes) (see [below for nested schema](#nestedatt--ldap_client))
 - `oauth2_client` (Attributes) (see [below for nested schema](#nestedatt--oauth2_client))
 - `owner_uuid` (String)
 - `saml2_client` (Attributes) (see [below for nested schema](#nestedatt--saml2_client))
-- `scopes` (Set of String)
+- `scopes` (List of String)
 - `secret` (Attributes) (see [below for nested schema](#nestedatt--secret))
 - `technical_administrator_uuid` (String)
 - `tile` (Attributes) (see [below for nested schema](#nestedatt--tile))
@@ -37,10 +37,10 @@ description: |-
 ### Read-Only
 
 - `audit` (Attributes) (see [below for nested schema](#nestedatt--audit))
-- `groups` (Attributes Set) (see [below for nested schema](#nestedatt--groups))
+- `groups` (Attributes List) (see [below for nested schema](#nestedatt--groups))
 - `last_modified_at` (String)
-- `links` (Attributes Set) (see [below for nested schema](#nestedatt--links))
-- `permissions` (Attributes Set) (see [below for nested schema](#nestedatt--permissions))
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--links))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--permissions))
 - `sso_application` (Boolean)
 - `type` (String)
 - `uuid` (String)
@@ -57,9 +57,9 @@ Read-Only:
 
 - `client_uuid` (String)
 - `group_uuid` (String)
-- `links` (Attributes Set) (see [below for nested schema](#nestedatt--groupclients--links))
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--groupclients--links))
 - `owner_uuid` (String)
-- `permissions` (Attributes Set) (see [below for nested schema](#nestedatt--groupclients--permissions))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--groupclients--permissions))
 - `technical_administrator_uuid` (String)
 
 <a id="nestedatt--groupclients--links"></a>
@@ -79,7 +79,7 @@ Read-Only:
 Optional:
 
 - `full` (String)
-- `instances` (Set of String)
+- `instances` (List of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -118,7 +118,7 @@ Optional:
 
 Read-Only:
 
-- `account_permissions` (Attributes Set) (see [below for nested schema](#nestedatt--oauth2_client--account_permissions))
+- `account_permissions` (Attributes List) (see [below for nested schema](#nestedatt--oauth2_client--account_permissions))
 - `shared_secret_uuid` (String)
 
 <a id="nestedatt--oauth2_client--account_permissions"></a>
@@ -127,7 +127,7 @@ Read-Only:
 Optional:
 
 - `full` (String)
-- `instances` (Set of String)
+- `instances` (List of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -213,8 +213,8 @@ Read-Only:
 - `audit_requested` (Boolean)
 - `auditor` (Boolean)
 - `authorizing_group_types` (Set of String)
-- `links` (Attributes Set) (see [below for nested schema](#nestedatt--groups--links))
-- `permissions` (Attributes Set) (see [below for nested schema](#nestedatt--groups--permissions))
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--groups--links))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--groups--permissions))
 - `uuid` (String)
 
 <a id="nestedatt--groups--audit_config"></a>
@@ -226,8 +226,8 @@ Optional:
 
 Read-Only:
 
-- `links` (Attributes Set) (see [below for nested schema](#nestedatt--groups--audit_config--links))
-- `permissions` (Attributes Set) (see [below for nested schema](#nestedatt--groups--audit_config--permissions))
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--groups--audit_config--links))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--groups--audit_config--permissions))
 
 <a id="nestedatt--groups--audit_config--links"></a>
 ### Nested Schema for `groups.audit_config.links`
@@ -246,7 +246,7 @@ Read-Only:
 Optional:
 
 - `full` (String)
-- `instances` (Set of String)
+- `instances` (List of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -269,7 +269,7 @@ Read-Only:
 Optional:
 
 - `full` (String)
-- `instances` (Set of String)
+- `instances` (List of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -292,6 +292,6 @@ Read-Only:
 Optional:
 
 - `full` (String)
-- `instances` (Set of String)
+- `instances` (List of String)
 - `operations` (Set of String)
 - `type_escaped` (String)

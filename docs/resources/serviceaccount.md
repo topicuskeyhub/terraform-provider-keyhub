@@ -33,10 +33,10 @@ description: |-
 ### Read-Only
 
 - `audit` (Attributes) (see [below for nested schema](#nestedatt--audit))
-- `groups` (Attributes Set) (see [below for nested schema](#nestedatt--groups))
-- `links` (Attributes Set) (see [below for nested schema](#nestedatt--links))
+- `groups` (Attributes List) (see [below for nested schema](#nestedatt--groups))
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--links))
 - `password_uuid` (String)
-- `permissions` (Attributes Set) (see [below for nested schema](#nestedatt--permissions))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--permissions))
 - `uuid` (String)
 
 <a id="nestedatt--secret"></a>
@@ -77,8 +77,8 @@ Optional:
 
 Read-Only:
 
-- `links` (Attributes Set) (see [below for nested schema](#nestedatt--groups--links))
-- `permissions` (Attributes Set) (see [below for nested schema](#nestedatt--groups--permissions))
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--groups--links))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--groups--permissions))
 - `short_name_in_system` (String)
 
 <a id="nestedatt--groups--links"></a>
@@ -98,7 +98,7 @@ Read-Only:
 Optional:
 
 - `full` (String)
-- `instances` (Set of String)
+- `instances` (List of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -121,6 +121,6 @@ Read-Only:
 Optional:
 
 - `full` (String)
-- `instances` (Set of String)
+- `instances` (List of String)
 - `operations` (Set of String)
 - `type_escaped` (String)

@@ -33,8 +33,8 @@ description: |-
 - `fingerprint_sha256` (String)
 - `global` (Boolean)
 - `key_data` (String, Sensitive)
-- `links` (Attributes Set) (see [below for nested schema](#nestedatt--links))
-- `permissions` (Attributes Set) (see [below for nested schema](#nestedatt--permissions))
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--links))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--permissions))
 - `subject_dn` (String)
 - `type` (String)
 
@@ -66,6 +66,6 @@ Read-Only:
 Read-Only:
 
 - `full` (String)
-- `instances` (Set of String)
+- `instances` (List of String)
 - `operations` (Set of String)
 - `type_escaped` (String)

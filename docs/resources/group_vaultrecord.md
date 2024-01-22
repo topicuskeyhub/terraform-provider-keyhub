@@ -37,13 +37,13 @@ description: |-
 
 - `audit` (Attributes) (see [below for nested schema](#nestedatt--audit))
 - `derived` (Boolean)
-- `links` (Attributes Set) (see [below for nested schema](#nestedatt--links))
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--links))
 - `parent_uuid` (String)
 - `password_metadata` (Attributes) (see [below for nested schema](#nestedatt--password_metadata))
-- `permissions` (Attributes Set) (see [below for nested schema](#nestedatt--permissions))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--permissions))
 - `share_end_time` (String)
 - `share_summary` (Attributes) (see [below for nested schema](#nestedatt--share_summary))
-- `shares` (Attributes Set) (see [below for nested schema](#nestedatt--shares))
+- `shares` (Attributes List) (see [below for nested schema](#nestedatt--shares))
 - `types` (Set of String)
 - `uuid` (String)
 - `vaultholder` (Attributes) (see [below for nested schema](#nestedatt--vaultholder))
@@ -108,7 +108,7 @@ Optional:
 Optional:
 
 - `full` (String)
-- `instances` (Set of String)
+- `instances` (List of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 
@@ -118,7 +118,7 @@ Optional:
 
 Optional:
 
-- `children` (Attributes Set) (see [below for nested schema](#nestedatt--share_summary--children))
+- `children` (Attributes List) (see [below for nested schema](#nestedatt--share_summary--children))
 - `parent` (Attributes) (see [below for nested schema](#nestedatt--share_summary--parent))
 
 <a id="nestedatt--share_summary--children"></a>
@@ -153,8 +153,8 @@ Optional:
 
 Read-Only:
 
-- `links` (Attributes Set) (see [below for nested schema](#nestedatt--shares--links))
-- `permissions` (Attributes Set) (see [below for nested schema](#nestedatt--shares--permissions))
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--shares--links))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--shares--permissions))
 - `share_end_time` (String)
 - `uuid` (String)
 
@@ -175,7 +175,7 @@ Read-Only:
 Optional:
 
 - `full` (String)
-- `instances` (Set of String)
+- `instances` (List of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
 

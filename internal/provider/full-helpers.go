@@ -159,7 +159,7 @@ func withUuidToTF(val interface{ GetUuid() *string }) attr.Value {
 	return types.StringPointerValue(val.GetUuid())
 }
 
-func toItemsSet(ctx context.Context, val attr.Value) basetypes.ObjectValue {
+func toItemsList(ctx context.Context, val attr.Value) basetypes.ObjectValue {
 	attrType := map[string]attr.Type{"items": val.Type(ctx)}
 	if val.IsNull() || val.IsUnknown() {
 		return types.ObjectNull(attrType)
@@ -169,7 +169,7 @@ func toItemsSet(ctx context.Context, val attr.Value) basetypes.ObjectValue {
 
 func getItemsAttr(val basetypes.ObjectValue, attrType attr.Type) attr.Value {
 	if val.IsNull() || val.IsUnknown() {
-		return types.SetNull(attrType.(basetypes.SetType).ElementType())
+		return types.ListNull(attrType.(basetypes.ListType).ElementType())
 	}
 	return val.Attributes()["items"]
 }
@@ -564,7 +564,7 @@ func stringPointerToString(input *string) string {
 	return ""
 }
 
-func getSelfLink(linksAttr basetypes.SetValue) restLinkDataRS {
+func getSelfLink(linksAttr basetypes.ListValue) restLinkDataRS {
 	var links restLinkDataRS
 	for _, e := range linksAttr.Elements() {
 		fillDataStructFromTFObjectRSRestLink(&links, e.(basetypes.ObjectValue))
@@ -575,7 +575,7 @@ func getSelfLink(linksAttr basetypes.SetValue) restLinkDataRS {
 	return links
 }
 
-func resetSetNestedAttributeFlags(schema rsschema.SetNestedAttribute) rsschema.SetNestedAttribute {
+func resetListNestedAttributeFlags(schema rsschema.ListNestedAttribute) rsschema.ListNestedAttribute {
 	schema.Optional = false
 	schema.Computed = false
 	schema.Required = false
@@ -583,7 +583,7 @@ func resetSetNestedAttributeFlags(schema rsschema.SetNestedAttribute) rsschema.S
 	return schema
 }
 
-func resetSetAttributeFlags(schema rsschema.SetAttribute) rsschema.SetAttribute {
+func resetListAttributeFlags(schema rsschema.ListAttribute) rsschema.ListAttribute {
 	schema.Optional = false
 	schema.Computed = false
 	schema.Required = false

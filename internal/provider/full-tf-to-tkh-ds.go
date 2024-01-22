@@ -60,7 +60,7 @@ func tfObjectToTKHDSLinkable(ctx context.Context, recurse bool, objVal types.Obj
 	var tkh keyhubmodel.Linkableable
 	tkh = keyhubmodel.NewLinkable()
 	{
-		val, d := tfToSliceSet(objAttrs["links"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+		val, d := tfToSliceList(objAttrs["links"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
 			tkh, d := tfObjectToTKHDSRestLink(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -69,7 +69,7 @@ func tfObjectToTKHDSLinkable(ctx context.Context, recurse bool, objVal types.Obj
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceSet(objAttrs["permissions"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+		val, d := tfToSliceList(objAttrs["permissions"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
 			tkh, d := tfObjectToTKHDSAuthPermission(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -114,7 +114,7 @@ func tfObjectToTKHDSAuditGroupAudit(ctx context.Context, recurse bool, objVal ty
 	var tkh keyhubmodel.AuditGroupAuditable
 	tkh = keyhubmodel.NewAuditGroupAudit()
 	{
-		val, d := tfToSliceSet(objAttrs["links"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+		val, d := tfToSliceList(objAttrs["links"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
 			tkh, d := tfObjectToTKHDSRestLink(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -123,7 +123,7 @@ func tfObjectToTKHDSAuditGroupAudit(ctx context.Context, recurse bool, objVal ty
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceSet(objAttrs["permissions"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+		val, d := tfToSliceList(objAttrs["permissions"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
 			tkh, d := tfObjectToTKHDSAuthPermission(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -132,7 +132,7 @@ func tfObjectToTKHDSAuditGroupAudit(ctx context.Context, recurse bool, objVal ty
 		tkh.SetPermissions(val)
 	}
 	{
-		val, d := tfToSliceSet(objAttrs["accounts"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuditGroupAuditAccountable {
+		val, d := tfToSliceList(objAttrs["accounts"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuditGroupAuditAccountable {
 			tkh, d := tfObjectToTKHDSAuditGroupAuditAccount(ctx, false, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -150,7 +150,7 @@ func tfObjectToTKHDSAuditGroupAudit(ctx context.Context, recurse bool, objVal ty
 	tkh.SetGroupName(objAttrs["group_name"].(basetypes.StringValue).ValueStringPointer())
 	tkh.SetNameOnAudit(objAttrs["name_on_audit"].(basetypes.StringValue).ValueStringPointer())
 	{
-		val, d := tfToSliceSet(objAttrs["nested_groups"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuditNestedGroupAuditable {
+		val, d := tfToSliceList(objAttrs["nested_groups"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuditNestedGroupAuditable {
 			tkh, d := tfObjectToTKHDSAuditNestedGroupAudit(ctx, false, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -194,7 +194,7 @@ func tfObjectToTKHDSAuditGroupAuditAccount(ctx context.Context, recurse bool, ob
 	var tkh keyhubmodel.AuditGroupAuditAccountable
 	tkh = keyhubmodel.NewAuditGroupAuditAccount()
 	{
-		val, d := tfToSliceSet(objAttrs["links"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+		val, d := tfToSliceList(objAttrs["links"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
 			tkh, d := tfObjectToTKHDSRestLink(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -203,7 +203,7 @@ func tfObjectToTKHDSAuditGroupAuditAccount(ctx context.Context, recurse bool, ob
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceSet(objAttrs["permissions"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+		val, d := tfToSliceList(objAttrs["permissions"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
 			tkh, d := tfObjectToTKHDSAuthPermission(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -255,7 +255,7 @@ func tfObjectToTKHDSAuditGroupAuditLinkableWrapper(ctx context.Context, recurse 
 	var tkh keyhubmodel.AuditGroupAuditLinkableWrapperable
 	tkh = keyhubmodel.NewAuditGroupAuditLinkableWrapper()
 	{
-		val, d := tfToSliceSet(objAttrs["items"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuditGroupAuditable {
+		val, d := tfToSliceList(objAttrs["items"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuditGroupAuditable {
 			tkh, d := tfObjectToTKHDSAuditGroupAudit(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -291,7 +291,7 @@ func tfObjectToTKHDSAuditNestedGroupAudit(ctx context.Context, recurse bool, obj
 	var tkh keyhubmodel.AuditNestedGroupAuditable
 	tkh = keyhubmodel.NewAuditNestedGroupAudit()
 	{
-		val, d := tfToSliceSet(objAttrs["links"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+		val, d := tfToSliceList(objAttrs["links"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
 			tkh, d := tfObjectToTKHDSRestLink(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -300,7 +300,7 @@ func tfObjectToTKHDSAuditNestedGroupAudit(ctx context.Context, recurse bool, obj
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceSet(objAttrs["permissions"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+		val, d := tfToSliceList(objAttrs["permissions"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
 			tkh, d := tfObjectToTKHDSAuthPermission(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -330,7 +330,7 @@ func tfObjectToTKHDSAuthAccount(ctx context.Context, recurse bool, objVal types.
 	var tkh keyhubmodel.AuthAccountable
 	tkh = keyhubmodel.NewAuthAccount()
 	{
-		val, d := tfToSliceSet(objAttrs["links"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+		val, d := tfToSliceList(objAttrs["links"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
 			tkh, d := tfObjectToTKHDSRestLink(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -339,7 +339,7 @@ func tfObjectToTKHDSAuthAccount(ctx context.Context, recurse bool, objVal types.
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceSet(objAttrs["permissions"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+		val, d := tfToSliceList(objAttrs["permissions"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
 			tkh, d := tfObjectToTKHDSAuthPermission(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -361,7 +361,7 @@ func tfObjectToTKHDSAuthAccount(ctx context.Context, recurse bool, objVal types.
 		tkh.SetValidity(val)
 	}
 	{
-		val, d := tfToSliceSet(objAttrs["account_permissions"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+		val, d := tfToSliceList(objAttrs["account_permissions"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
 			tkh, d := tfObjectToTKHDSAuthPermission(ctx, false, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -435,7 +435,7 @@ func tfObjectToTKHDSAuthAccountPrimer(ctx context.Context, recurse bool, objVal 
 	var tkh keyhubmodel.AuthAccountPrimerable
 	tkh = keyhubmodel.NewAuthAccountPrimer()
 	{
-		val, d := tfToSliceSet(objAttrs["links"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+		val, d := tfToSliceList(objAttrs["links"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
 			tkh, d := tfObjectToTKHDSRestLink(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -444,7 +444,7 @@ func tfObjectToTKHDSAuthAccountPrimer(ctx context.Context, recurse bool, objVal 
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceSet(objAttrs["permissions"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+		val, d := tfToSliceList(objAttrs["permissions"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
 			tkh, d := tfObjectToTKHDSAuthPermission(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -543,7 +543,7 @@ func tfObjectToTKHDSAuthAccount_additionalObjects(ctx context.Context, recurse b
 		tkh.SetAudit(val)
 	}
 	{
-		val, d := tfObjectToTKHDSGroupAccountGroupLinkableWrapper(ctx, recurse, toItemsSet(ctx, objAttrs["groups"]))
+		val, d := tfObjectToTKHDSGroupAccountGroupLinkableWrapper(ctx, recurse, toItemsList(ctx, objAttrs["groups"]))
 		diags.Append(d...)
 		tkh.SetGroups(val)
 	}
@@ -580,7 +580,7 @@ func tfObjectToTKHDSAuthPermission(ctx context.Context, recurse bool, objVal typ
 	tkh = keyhubmodel.NewAuthPermission()
 	tkh.SetFull(objAttrs["full"].(basetypes.StringValue).ValueStringPointer())
 	{
-		val, d := tfToSliceSet(objAttrs["instances"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) string {
+		val, d := tfToSliceList(objAttrs["instances"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) string {
 			return val.(basetypes.StringValue).ValueString()
 		})
 		diags.Append(d...)
@@ -621,7 +621,7 @@ func tfObjectToTKHDSAuthStoredAccountAttributes(ctx context.Context, recurse boo
 	var tkh keyhubmodel.AuthStoredAccountAttributesable
 	tkh = keyhubmodel.NewAuthStoredAccountAttributes()
 	{
-		val, d := tfToSliceSet(objAttrs["attributes"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthStoredAccountAttributeable {
+		val, d := tfToSliceList(objAttrs["attributes"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthStoredAccountAttributeable {
 			tkh, d := tfObjectToTKHDSAuthStoredAccountAttribute(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -641,7 +641,7 @@ func tfObjectToTKHDSCertificateCertificate(ctx context.Context, recurse bool, ob
 	var tkh keyhubmodel.CertificateCertificateable
 	tkh = keyhubmodel.NewCertificateCertificate()
 	{
-		val, d := tfToSliceSet(objAttrs["links"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+		val, d := tfToSliceList(objAttrs["links"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
 			tkh, d := tfObjectToTKHDSRestLink(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -650,7 +650,7 @@ func tfObjectToTKHDSCertificateCertificate(ctx context.Context, recurse bool, ob
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceSet(objAttrs["permissions"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+		val, d := tfToSliceList(objAttrs["permissions"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
 			tkh, d := tfObjectToTKHDSAuthPermission(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -697,7 +697,7 @@ func tfObjectToTKHDSCertificateCertificatePrimer(ctx context.Context, recurse bo
 	var tkh keyhubmodel.CertificateCertificatePrimerable
 	tkh = keyhubmodel.NewCertificateCertificatePrimer()
 	{
-		val, d := tfToSliceSet(objAttrs["links"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+		val, d := tfToSliceList(objAttrs["links"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
 			tkh, d := tfObjectToTKHDSRestLink(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -706,7 +706,7 @@ func tfObjectToTKHDSCertificateCertificatePrimer(ctx context.Context, recurse bo
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceSet(objAttrs["permissions"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+		val, d := tfToSliceList(objAttrs["permissions"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
 			tkh, d := tfObjectToTKHDSAuthPermission(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -761,7 +761,7 @@ func tfObjectToTKHDSClientClientApplication(ctx context.Context, recurse bool, o
 	var tkh keyhubmodel.ClientClientApplicationable
 	tkh = keyhubmodel.NewClientClientApplication()
 	{
-		val, d := tfToSliceSet(objAttrs["links"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+		val, d := tfToSliceList(objAttrs["links"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
 			tkh, d := tfObjectToTKHDSRestLink(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -770,7 +770,7 @@ func tfObjectToTKHDSClientClientApplication(ctx context.Context, recurse bool, o
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceSet(objAttrs["permissions"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+		val, d := tfToSliceList(objAttrs["permissions"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
 			tkh, d := tfObjectToTKHDSAuthPermission(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -788,7 +788,7 @@ func tfObjectToTKHDSClientClientApplication(ctx context.Context, recurse bool, o
 	tkh.SetClientId(objAttrs["client_id"].(basetypes.StringValue).ValueStringPointer())
 	tkh.SetName(objAttrs["name"].(basetypes.StringValue).ValueStringPointer())
 	{
-		val, d := tfToSliceSet(objAttrs["scopes"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) string {
+		val, d := tfToSliceList(objAttrs["scopes"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) string {
 			return val.(basetypes.StringValue).ValueString()
 		})
 		diags.Append(d...)
@@ -854,7 +854,7 @@ func tfObjectToTKHDSClientClientApplicationLinkableWrapper(ctx context.Context, 
 	var tkh keyhubmodel.ClientClientApplicationLinkableWrapperable
 	tkh = keyhubmodel.NewClientClientApplicationLinkableWrapper()
 	{
-		val, d := tfToSliceSet(objAttrs["items"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.ClientClientApplicationable {
+		val, d := tfToSliceList(objAttrs["items"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.ClientClientApplicationable {
 			tkh, d := tfObjectToTKHDSClientClientApplication(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -874,7 +874,7 @@ func tfObjectToTKHDSClientClientApplicationPrimer(ctx context.Context, recurse b
 	var tkh keyhubmodel.ClientClientApplicationPrimerable
 	tkh = keyhubmodel.NewClientClientApplicationPrimer()
 	{
-		val, d := tfToSliceSet(objAttrs["links"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+		val, d := tfToSliceList(objAttrs["links"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
 			tkh, d := tfObjectToTKHDSRestLink(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -883,7 +883,7 @@ func tfObjectToTKHDSClientClientApplicationPrimer(ctx context.Context, recurse b
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceSet(objAttrs["permissions"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+		val, d := tfToSliceList(objAttrs["permissions"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
 			tkh, d := tfObjectToTKHDSAuthPermission(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -901,7 +901,7 @@ func tfObjectToTKHDSClientClientApplicationPrimer(ctx context.Context, recurse b
 	tkh.SetClientId(objAttrs["client_id"].(basetypes.StringValue).ValueStringPointer())
 	tkh.SetName(objAttrs["name"].(basetypes.StringValue).ValueStringPointer())
 	{
-		val, d := tfToSliceSet(objAttrs["scopes"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) string {
+		val, d := tfToSliceList(objAttrs["scopes"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) string {
 			return val.(basetypes.StringValue).ValueString()
 		})
 		diags.Append(d...)
@@ -926,12 +926,12 @@ func tfObjectToTKHDSClientClientApplication_additionalObjects(ctx context.Contex
 		tkh.SetAudit(val)
 	}
 	{
-		val, d := tfObjectToTKHDSGroupGroupClientLinkableWrapper(ctx, recurse, toItemsSet(ctx, objAttrs["groupclients"]))
+		val, d := tfObjectToTKHDSGroupGroupClientLinkableWrapper(ctx, recurse, toItemsList(ctx, objAttrs["groupclients"]))
 		diags.Append(d...)
 		tkh.SetGroupclients(val)
 	}
 	{
-		val, d := tfObjectToTKHDSGroupGroupLinkableWrapper(ctx, recurse, toItemsSet(ctx, objAttrs["groups"]))
+		val, d := tfObjectToTKHDSGroupGroupLinkableWrapper(ctx, recurse, toItemsList(ctx, objAttrs["groups"]))
 		diags.Append(d...)
 		tkh.SetGroups(val)
 	}
@@ -982,7 +982,7 @@ func tfObjectToTKHDSClientOAuth2Client(ctx context.Context, recurse bool, objVal
 	var tkh keyhubmodel.ClientOAuth2Clientable
 	tkh = keyhubmodel.NewClientOAuth2Client()
 	{
-		val, d := tfToSliceSet(objAttrs["account_permissions"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+		val, d := tfToSliceList(objAttrs["account_permissions"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
 			tkh, d := tfObjectToTKHDSAuthPermission(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -1029,7 +1029,7 @@ func tfObjectToTKHDSClientOAuth2ClientPermission(ctx context.Context, recurse bo
 	var tkh keyhubmodel.ClientOAuth2ClientPermissionable
 	tkh = keyhubmodel.NewClientOAuth2ClientPermission()
 	{
-		val, d := tfToSliceSet(objAttrs["links"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+		val, d := tfToSliceList(objAttrs["links"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
 			tkh, d := tfObjectToTKHDSRestLink(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -1038,7 +1038,7 @@ func tfObjectToTKHDSClientOAuth2ClientPermission(ctx context.Context, recurse bo
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceSet(objAttrs["permissions"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+		val, d := tfToSliceList(objAttrs["permissions"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
 			tkh, d := tfObjectToTKHDSAuthPermission(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -1082,7 +1082,7 @@ func tfObjectToTKHDSClientOAuth2ClientPermissionWithClient(ctx context.Context, 
 	var tkh keyhubmodel.ClientOAuth2ClientPermissionWithClientable
 	tkh = keyhubmodel.NewClientOAuth2ClientPermissionWithClient()
 	{
-		val, d := tfToSliceSet(objAttrs["links"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+		val, d := tfToSliceList(objAttrs["links"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
 			tkh, d := tfObjectToTKHDSRestLink(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -1091,7 +1091,7 @@ func tfObjectToTKHDSClientOAuth2ClientPermissionWithClient(ctx context.Context, 
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceSet(objAttrs["permissions"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+		val, d := tfToSliceList(objAttrs["permissions"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
 			tkh, d := tfObjectToTKHDSAuthPermission(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -1140,7 +1140,7 @@ func tfObjectToTKHDSClientOAuth2ClientPermissionWithClientLinkableWrapper(ctx co
 	var tkh keyhubmodel.ClientOAuth2ClientPermissionWithClientLinkableWrapperable
 	tkh = keyhubmodel.NewClientOAuth2ClientPermissionWithClientLinkableWrapper()
 	{
-		val, d := tfToSliceSet(objAttrs["items"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.ClientOAuth2ClientPermissionWithClientable {
+		val, d := tfToSliceList(objAttrs["items"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.ClientOAuth2ClientPermissionWithClientable {
 			tkh, d := tfObjectToTKHDSClientOAuth2ClientPermissionWithClient(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -1201,7 +1201,7 @@ func tfObjectToTKHDSDirectoryAccountDirectory(ctx context.Context, recurse bool,
 	var tkh keyhubmodel.DirectoryAccountDirectoryable
 	tkh = keyhubmodel.NewDirectoryAccountDirectory()
 	{
-		val, d := tfToSliceSet(objAttrs["links"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+		val, d := tfToSliceList(objAttrs["links"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
 			tkh, d := tfObjectToTKHDSRestLink(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -1210,7 +1210,7 @@ func tfObjectToTKHDSDirectoryAccountDirectory(ctx context.Context, recurse bool,
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceSet(objAttrs["permissions"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+		val, d := tfToSliceList(objAttrs["permissions"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
 			tkh, d := tfObjectToTKHDSAuthPermission(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -1300,7 +1300,7 @@ func tfObjectToTKHDSDirectoryAccountDirectoryLinkableWrapper(ctx context.Context
 	var tkh keyhubmodel.DirectoryAccountDirectoryLinkableWrapperable
 	tkh = keyhubmodel.NewDirectoryAccountDirectoryLinkableWrapper()
 	{
-		val, d := tfToSliceSet(objAttrs["items"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.DirectoryAccountDirectoryable {
+		val, d := tfToSliceList(objAttrs["items"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.DirectoryAccountDirectoryable {
 			tkh, d := tfObjectToTKHDSDirectoryAccountDirectory(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -1320,7 +1320,7 @@ func tfObjectToTKHDSDirectoryAccountDirectoryPrimer(ctx context.Context, recurse
 	var tkh keyhubmodel.DirectoryAccountDirectoryPrimerable
 	tkh = keyhubmodel.NewDirectoryAccountDirectoryPrimer()
 	{
-		val, d := tfToSliceSet(objAttrs["links"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+		val, d := tfToSliceList(objAttrs["links"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
 			tkh, d := tfObjectToTKHDSRestLink(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -1329,7 +1329,7 @@ func tfObjectToTKHDSDirectoryAccountDirectoryPrimer(ctx context.Context, recurse
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceSet(objAttrs["permissions"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+		val, d := tfToSliceList(objAttrs["permissions"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
 			tkh, d := tfObjectToTKHDSAuthPermission(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -1380,7 +1380,7 @@ func tfObjectToTKHDSDirectoryAccountDirectorySummary(ctx context.Context, recurs
 	var tkh keyhubmodel.DirectoryAccountDirectorySummaryable
 	tkh = keyhubmodel.NewDirectoryAccountDirectorySummary()
 	{
-		val, d := tfToSliceSet(objAttrs["links"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+		val, d := tfToSliceList(objAttrs["links"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
 			tkh, d := tfObjectToTKHDSRestLink(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -1389,7 +1389,7 @@ func tfObjectToTKHDSDirectoryAccountDirectorySummary(ctx context.Context, recurs
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceSet(objAttrs["permissions"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+		val, d := tfToSliceList(objAttrs["permissions"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
 			tkh, d := tfObjectToTKHDSAuthPermission(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -1425,7 +1425,7 @@ func tfObjectToTKHDSDirectoryAccountDirectorySummaryLinkableWrapper(ctx context.
 	var tkh keyhubmodel.DirectoryAccountDirectorySummaryLinkableWrapperable
 	tkh = keyhubmodel.NewDirectoryAccountDirectorySummaryLinkableWrapper()
 	{
-		val, d := tfToSliceSet(objAttrs["items"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.DirectoryAccountDirectorySummaryable {
+		val, d := tfToSliceList(objAttrs["items"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.DirectoryAccountDirectorySummaryable {
 			tkh, d := tfObjectToTKHDSDirectoryAccountDirectorySummary(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -1574,7 +1574,7 @@ func tfObjectToTKHDSGroupAccountGroup(ctx context.Context, recurse bool, objVal 
 	var tkh keyhubmodel.GroupAccountGroupable
 	tkh = keyhubmodel.NewGroupAccountGroup()
 	{
-		val, d := tfToSliceSet(objAttrs["links"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+		val, d := tfToSliceList(objAttrs["links"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
 			tkh, d := tfObjectToTKHDSRestLink(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -1583,7 +1583,7 @@ func tfObjectToTKHDSGroupAccountGroup(ctx context.Context, recurse bool, objVal 
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceSet(objAttrs["permissions"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+		val, d := tfToSliceList(objAttrs["permissions"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
 			tkh, d := tfObjectToTKHDSAuthPermission(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -1644,7 +1644,7 @@ func tfObjectToTKHDSGroupAccountGroupLinkableWrapper(ctx context.Context, recurs
 	var tkh keyhubmodel.GroupAccountGroupLinkableWrapperable
 	tkh = keyhubmodel.NewGroupAccountGroupLinkableWrapper()
 	{
-		val, d := tfToSliceSet(objAttrs["items"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.GroupAccountGroupable {
+		val, d := tfToSliceList(objAttrs["items"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.GroupAccountGroupable {
 			tkh, d := tfObjectToTKHDSGroupAccountGroup(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -1685,7 +1685,7 @@ func tfObjectToTKHDSGroupAuthorizedGroupsWrapper(ctx context.Context, recurse bo
 	var tkh keyhubmodel.GroupAuthorizedGroupsWrapperable
 	tkh = keyhubmodel.NewGroupAuthorizedGroupsWrapper()
 	{
-		val, d := tfToSliceSet(objAttrs["items"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.GroupGroupable {
+		val, d := tfToSliceList(objAttrs["items"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.GroupGroupable {
 			tkh, d := tfObjectToTKHDSGroupGroup(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -1706,7 +1706,7 @@ func tfObjectToTKHDSGroupGroup(ctx context.Context, recurse bool, objVal types.O
 	var tkh keyhubmodel.GroupGroupable
 	tkh = keyhubmodel.NewGroupGroup()
 	{
-		val, d := tfToSliceSet(objAttrs["links"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+		val, d := tfToSliceList(objAttrs["links"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
 			tkh, d := tfObjectToTKHDSRestLink(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -1715,7 +1715,7 @@ func tfObjectToTKHDSGroupGroup(ctx context.Context, recurse bool, objVal types.O
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceSet(objAttrs["permissions"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+		val, d := tfToSliceList(objAttrs["permissions"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
 			tkh, d := tfObjectToTKHDSAuthPermission(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -1820,7 +1820,7 @@ func tfObjectToTKHDSGroupGroupAccount(ctx context.Context, recurse bool, objVal 
 	var tkh keyhubmodel.GroupGroupAccountable
 	tkh = keyhubmodel.NewGroupGroupAccount()
 	{
-		val, d := tfToSliceSet(objAttrs["links"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+		val, d := tfToSliceList(objAttrs["links"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
 			tkh, d := tfObjectToTKHDSRestLink(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -1829,7 +1829,7 @@ func tfObjectToTKHDSGroupGroupAccount(ctx context.Context, recurse bool, objVal 
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceSet(objAttrs["permissions"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+		val, d := tfToSliceList(objAttrs["permissions"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
 			tkh, d := tfObjectToTKHDSAuthPermission(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -1904,7 +1904,7 @@ func tfObjectToTKHDSGroupGroupAccountLinkableWrapper(ctx context.Context, recurs
 	var tkh keyhubmodel.GroupGroupAccountLinkableWrapperable
 	tkh = keyhubmodel.NewGroupGroupAccountLinkableWrapper()
 	{
-		val, d := tfToSliceSet(objAttrs["items"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.GroupGroupAccountable {
+		val, d := tfToSliceList(objAttrs["items"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.GroupGroupAccountable {
 			tkh, d := tfObjectToTKHDSGroupGroupAccount(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -1940,7 +1940,7 @@ func tfObjectToTKHDSGroupGroupAuditConfig(ctx context.Context, recurse bool, obj
 	var tkh keyhubmodel.GroupGroupAuditConfigable
 	tkh = keyhubmodel.NewGroupGroupAuditConfig()
 	{
-		val, d := tfToSliceSet(objAttrs["links"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+		val, d := tfToSliceList(objAttrs["links"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
 			tkh, d := tfObjectToTKHDSRestLink(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -1949,7 +1949,7 @@ func tfObjectToTKHDSGroupGroupAuditConfig(ctx context.Context, recurse bool, obj
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceSet(objAttrs["permissions"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+		val, d := tfToSliceList(objAttrs["permissions"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
 			tkh, d := tfObjectToTKHDSAuthPermission(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -2005,7 +2005,7 @@ func tfObjectToTKHDSGroupGroupClassification(ctx context.Context, recurse bool, 
 	var tkh keyhubmodel.GroupGroupClassificationable
 	tkh = keyhubmodel.NewGroupGroupClassification()
 	{
-		val, d := tfToSliceSet(objAttrs["links"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+		val, d := tfToSliceList(objAttrs["links"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
 			tkh, d := tfObjectToTKHDSRestLink(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -2014,7 +2014,7 @@ func tfObjectToTKHDSGroupGroupClassification(ctx context.Context, recurse bool, 
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceSet(objAttrs["permissions"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+		val, d := tfToSliceList(objAttrs["permissions"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
 			tkh, d := tfObjectToTKHDSAuthPermission(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -2075,7 +2075,7 @@ func tfObjectToTKHDSGroupGroupClassificationPrimer(ctx context.Context, recurse 
 	var tkh keyhubmodel.GroupGroupClassificationPrimerable
 	tkh = keyhubmodel.NewGroupGroupClassificationPrimer()
 	{
-		val, d := tfToSliceSet(objAttrs["links"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+		val, d := tfToSliceList(objAttrs["links"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
 			tkh, d := tfObjectToTKHDSRestLink(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -2084,7 +2084,7 @@ func tfObjectToTKHDSGroupGroupClassificationPrimer(ctx context.Context, recurse 
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceSet(objAttrs["permissions"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+		val, d := tfToSliceList(objAttrs["permissions"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
 			tkh, d := tfObjectToTKHDSAuthPermission(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -2127,7 +2127,7 @@ func tfObjectToTKHDSGroupGroupClient(ctx context.Context, recurse bool, objVal t
 	var tkh keyhubmodel.GroupGroupClientable
 	tkh = keyhubmodel.NewGroupGroupClient()
 	{
-		val, d := tfToSliceSet(objAttrs["links"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+		val, d := tfToSliceList(objAttrs["links"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
 			tkh, d := tfObjectToTKHDSRestLink(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -2136,7 +2136,7 @@ func tfObjectToTKHDSGroupGroupClient(ctx context.Context, recurse bool, objVal t
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceSet(objAttrs["permissions"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+		val, d := tfToSliceList(objAttrs["permissions"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
 			tkh, d := tfObjectToTKHDSAuthPermission(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -2184,7 +2184,7 @@ func tfObjectToTKHDSGroupGroupClientLinkableWrapper(ctx context.Context, recurse
 	var tkh keyhubmodel.GroupGroupClientLinkableWrapperable
 	tkh = keyhubmodel.NewGroupGroupClientLinkableWrapper()
 	{
-		val, d := tfToSliceSet(objAttrs["items"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.GroupGroupClientable {
+		val, d := tfToSliceList(objAttrs["items"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.GroupGroupClientable {
 			tkh, d := tfObjectToTKHDSGroupGroupClient(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -2220,7 +2220,7 @@ func tfObjectToTKHDSGroupGroupFolder(ctx context.Context, recurse bool, objVal t
 	var tkh keyhubmodel.GroupGroupFolderable
 	tkh = keyhubmodel.NewGroupGroupFolder()
 	{
-		val, d := tfToSliceSet(objAttrs["links"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+		val, d := tfToSliceList(objAttrs["links"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
 			tkh, d := tfObjectToTKHDSRestLink(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -2229,7 +2229,7 @@ func tfObjectToTKHDSGroupGroupFolder(ctx context.Context, recurse bool, objVal t
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceSet(objAttrs["permissions"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+		val, d := tfToSliceList(objAttrs["permissions"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
 			tkh, d := tfObjectToTKHDSAuthPermission(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -2290,7 +2290,7 @@ func tfObjectToTKHDSGroupGroupLinkableWrapper(ctx context.Context, recurse bool,
 	var tkh keyhubmodel.GroupGroupLinkableWrapperable
 	tkh = keyhubmodel.NewGroupGroupLinkableWrapper()
 	{
-		val, d := tfToSliceSet(objAttrs["items"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.GroupGroupable {
+		val, d := tfToSliceList(objAttrs["items"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.GroupGroupable {
 			tkh, d := tfObjectToTKHDSGroupGroup(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -2310,7 +2310,7 @@ func tfObjectToTKHDSGroupGroupPrimer(ctx context.Context, recurse bool, objVal t
 	var tkh keyhubmodel.GroupGroupPrimerable
 	tkh = keyhubmodel.NewGroupGroupPrimer()
 	{
-		val, d := tfToSliceSet(objAttrs["links"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+		val, d := tfToSliceList(objAttrs["links"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
 			tkh, d := tfObjectToTKHDSRestLink(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -2319,7 +2319,7 @@ func tfObjectToTKHDSGroupGroupPrimer(ctx context.Context, recurse bool, objVal t
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceSet(objAttrs["permissions"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+		val, d := tfToSliceList(objAttrs["permissions"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
 			tkh, d := tfObjectToTKHDSAuthPermission(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -2347,7 +2347,7 @@ func tfObjectToTKHDSGroupGroupPrimerLinkableWrapper(ctx context.Context, recurse
 	var tkh keyhubmodel.GroupGroupPrimerLinkableWrapperable
 	tkh = keyhubmodel.NewGroupGroupPrimerLinkableWrapper()
 	{
-		val, d := tfToSliceSet(objAttrs["items"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.GroupGroupPrimerable {
+		val, d := tfToSliceList(objAttrs["items"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.GroupGroupPrimerable {
 			tkh, d := tfObjectToTKHDSGroupGroupPrimer(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -2367,22 +2367,22 @@ func tfObjectToTKHDSGroupGroup_additionalObjects(ctx context.Context, recurse bo
 	var tkh keyhubmodel.GroupGroup_additionalObjectsable
 	tkh = keyhubmodel.NewGroupGroup_additionalObjects()
 	{
-		val, d := tfObjectToTKHDSGroupGroupAccountLinkableWrapper(ctx, recurse, toItemsSet(ctx, objAttrs["accounts"]))
+		val, d := tfObjectToTKHDSGroupGroupAccountLinkableWrapper(ctx, recurse, toItemsList(ctx, objAttrs["accounts"]))
 		diags.Append(d...)
 		tkh.SetAccounts(val)
 	}
 	{
-		val, d := tfObjectToTKHDSClientClientApplicationLinkableWrapper(ctx, recurse, toItemsSet(ctx, objAttrs["administered_clients"]))
+		val, d := tfObjectToTKHDSClientClientApplicationLinkableWrapper(ctx, recurse, toItemsList(ctx, objAttrs["administered_clients"]))
 		diags.Append(d...)
 		tkh.SetAdministeredClients(val)
 	}
 	{
-		val, d := tfObjectToTKHDSProvisioningProvisionedSystemLinkableWrapper(ctx, recurse, toItemsSet(ctx, objAttrs["administered_systems"]))
+		val, d := tfObjectToTKHDSProvisioningProvisionedSystemLinkableWrapper(ctx, recurse, toItemsList(ctx, objAttrs["administered_systems"]))
 		diags.Append(d...)
 		tkh.SetAdministeredSystems(val)
 	}
 	{
-		val, d := tfObjectToTKHDSGroupGroupAccountLinkableWrapper(ctx, recurse, toItemsSet(ctx, objAttrs["admins"]))
+		val, d := tfObjectToTKHDSGroupGroupAccountLinkableWrapper(ctx, recurse, toItemsList(ctx, objAttrs["admins"]))
 		diags.Append(d...)
 		tkh.SetAdmins(val)
 	}
@@ -2397,17 +2397,17 @@ func tfObjectToTKHDSGroupGroup_additionalObjects(ctx context.Context, recurse bo
 		tkh.SetAuthorizedGroups(val)
 	}
 	{
-		val, d := tfObjectToTKHDSClientOAuth2ClientPermissionWithClientLinkableWrapper(ctx, recurse, toItemsSet(ctx, objAttrs["client_permissions"]))
+		val, d := tfObjectToTKHDSClientOAuth2ClientPermissionWithClientLinkableWrapper(ctx, recurse, toItemsList(ctx, objAttrs["client_permissions"]))
 		diags.Append(d...)
 		tkh.SetClientPermissions(val)
 	}
 	{
-		val, d := tfObjectToTKHDSGroupGroupClientLinkableWrapper(ctx, recurse, toItemsSet(ctx, objAttrs["clients"]))
+		val, d := tfObjectToTKHDSGroupGroupClientLinkableWrapper(ctx, recurse, toItemsList(ctx, objAttrs["clients"]))
 		diags.Append(d...)
 		tkh.SetClients(val)
 	}
 	{
-		val, d := tfObjectToTKHDSProvisioningProvisionedSystemLinkableWrapper(ctx, recurse, toItemsSet(ctx, objAttrs["content_administered_systems"]))
+		val, d := tfObjectToTKHDSProvisioningProvisionedSystemLinkableWrapper(ctx, recurse, toItemsList(ctx, objAttrs["content_administered_systems"]))
 		diags.Append(d...)
 		tkh.SetContentAdministeredSystems(val)
 	}
@@ -2422,7 +2422,7 @@ func tfObjectToTKHDSGroupGroup_additionalObjects(ctx context.Context, recurse bo
 		tkh.SetGroupinfo(val)
 	}
 	{
-		val, d := tfObjectToTKHDSDirectoryAccountDirectorySummaryLinkableWrapper(ctx, recurse, toItemsSet(ctx, objAttrs["helpdesk"]))
+		val, d := tfObjectToTKHDSDirectoryAccountDirectorySummaryLinkableWrapper(ctx, recurse, toItemsList(ctx, objAttrs["helpdesk"]))
 		diags.Append(d...)
 		tkh.SetHelpdesk(val)
 	}
@@ -2442,17 +2442,17 @@ func tfObjectToTKHDSGroupGroup_additionalObjects(ctx context.Context, recurse bo
 		tkh.SetMydelegatedaccount(val)
 	}
 	{
-		val, d := tfObjectToTKHDSGroupGroupPrimerLinkableWrapper(ctx, recurse, toItemsSet(ctx, objAttrs["nested_groups"]))
+		val, d := tfObjectToTKHDSGroupGroupPrimerLinkableWrapper(ctx, recurse, toItemsList(ctx, objAttrs["nested_groups"]))
 		diags.Append(d...)
 		tkh.SetNestedGroups(val)
 	}
 	{
-		val, d := tfObjectToTKHDSClientClientApplicationLinkableWrapper(ctx, recurse, toItemsSet(ctx, objAttrs["owned_clients"]))
+		val, d := tfObjectToTKHDSClientClientApplicationLinkableWrapper(ctx, recurse, toItemsList(ctx, objAttrs["owned_clients"]))
 		diags.Append(d...)
 		tkh.SetOwnedClients(val)
 	}
 	{
-		val, d := tfObjectToTKHDSDirectoryAccountDirectoryLinkableWrapper(ctx, recurse, toItemsSet(ctx, objAttrs["owned_directories"]))
+		val, d := tfObjectToTKHDSDirectoryAccountDirectoryLinkableWrapper(ctx, recurse, toItemsList(ctx, objAttrs["owned_directories"]))
 		diags.Append(d...)
 		tkh.SetOwnedDirectories(val)
 	}
@@ -2462,17 +2462,17 @@ func tfObjectToTKHDSGroupGroup_additionalObjects(ctx context.Context, recurse bo
 		tkh.SetOwnedGroupsOnSystem(val)
 	}
 	{
-		val, d := tfObjectToTKHDSOrganizationOrganizationalUnitLinkableWrapper(ctx, recurse, toItemsSet(ctx, objAttrs["owned_organizational_units"]))
+		val, d := tfObjectToTKHDSOrganizationOrganizationalUnitLinkableWrapper(ctx, recurse, toItemsList(ctx, objAttrs["owned_organizational_units"]))
 		diags.Append(d...)
 		tkh.SetOwnedOrganizationalUnits(val)
 	}
 	{
-		val, d := tfObjectToTKHDSProvisioningProvisionedSystemLinkableWrapper(ctx, recurse, toItemsSet(ctx, objAttrs["owned_systems"]))
+		val, d := tfObjectToTKHDSProvisioningProvisionedSystemLinkableWrapper(ctx, recurse, toItemsList(ctx, objAttrs["owned_systems"]))
 		diags.Append(d...)
 		tkh.SetOwnedSystems(val)
 	}
 	{
-		val, d := tfObjectToTKHDSAuditGroupAuditLinkableWrapper(ctx, recurse, toItemsSet(ctx, objAttrs["recent_audits"]))
+		val, d := tfObjectToTKHDSAuditGroupAuditLinkableWrapper(ctx, recurse, toItemsList(ctx, objAttrs["recent_audits"]))
 		diags.Append(d...)
 		tkh.SetRecentAudits(val)
 	}
@@ -2482,12 +2482,12 @@ func tfObjectToTKHDSGroupGroup_additionalObjects(ctx context.Context, recurse bo
 		tkh.SetRequeststatus(val)
 	}
 	{
-		val, d := tfObjectToTKHDSServiceaccountServiceAccountLinkableWrapper(ctx, recurse, toItemsSet(ctx, objAttrs["service_accounts"]))
+		val, d := tfObjectToTKHDSServiceaccountServiceAccountLinkableWrapper(ctx, recurse, toItemsList(ctx, objAttrs["service_accounts"]))
 		diags.Append(d...)
 		tkh.SetServiceAccounts(val)
 	}
 	{
-		val, d := tfObjectToTKHDSGroupProvisioningGroupLinkableWrapper(ctx, recurse, toItemsSet(ctx, objAttrs["systems"]))
+		val, d := tfObjectToTKHDSGroupProvisioningGroupLinkableWrapper(ctx, recurse, toItemsList(ctx, objAttrs["systems"]))
 		diags.Append(d...)
 		tkh.SetSystems(val)
 	}
@@ -2497,7 +2497,7 @@ func tfObjectToTKHDSGroupGroup_additionalObjects(ctx context.Context, recurse bo
 		tkh.SetVault(val)
 	}
 	{
-		val, d := tfObjectToTKHDSWebhookWebhookLinkableWrapper(ctx, recurse, toItemsSet(ctx, objAttrs["webhooks"]))
+		val, d := tfObjectToTKHDSWebhookWebhookLinkableWrapper(ctx, recurse, toItemsList(ctx, objAttrs["webhooks"]))
 		diags.Append(d...)
 		tkh.SetWebhooks(val)
 	}
@@ -2513,7 +2513,7 @@ func tfObjectToTKHDSGroupProvisioningGroup(ctx context.Context, recurse bool, ob
 	var tkh keyhubmodel.GroupProvisioningGroupable
 	tkh = keyhubmodel.NewGroupProvisioningGroup()
 	{
-		val, d := tfToSliceSet(objAttrs["links"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+		val, d := tfToSliceList(objAttrs["links"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
 			tkh, d := tfObjectToTKHDSRestLink(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -2522,7 +2522,7 @@ func tfObjectToTKHDSGroupProvisioningGroup(ctx context.Context, recurse bool, ob
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceSet(objAttrs["permissions"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+		val, d := tfToSliceList(objAttrs["permissions"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
 			tkh, d := tfObjectToTKHDSAuthPermission(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -2560,7 +2560,7 @@ func tfObjectToTKHDSGroupProvisioningGroupLinkableWrapper(ctx context.Context, r
 	var tkh keyhubmodel.GroupProvisioningGroupLinkableWrapperable
 	tkh = keyhubmodel.NewGroupProvisioningGroupLinkableWrapper()
 	{
-		val, d := tfToSliceSet(objAttrs["items"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.GroupProvisioningGroupable {
+		val, d := tfToSliceList(objAttrs["items"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.GroupProvisioningGroupable {
 			tkh, d := tfObjectToTKHDSGroupProvisioningGroup(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -2646,7 +2646,7 @@ func tfObjectToTKHDSMarkItemMarkers(ctx context.Context, recurse bool, objVal ty
 	var tkh keyhubmodel.MarkItemMarkersable
 	tkh = keyhubmodel.NewMarkItemMarkers()
 	{
-		val, d := tfToSliceSet(objAttrs["markers"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.MarkItemMarkerable {
+		val, d := tfToSliceList(objAttrs["markers"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.MarkItemMarkerable {
 			tkh, d := tfObjectToTKHDSMarkItemMarker(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -2666,7 +2666,7 @@ func tfObjectToTKHDSOrganizationOrganizationalUnit(ctx context.Context, recurse 
 	var tkh keyhubmodel.OrganizationOrganizationalUnitable
 	tkh = keyhubmodel.NewOrganizationOrganizationalUnit()
 	{
-		val, d := tfToSliceSet(objAttrs["links"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+		val, d := tfToSliceList(objAttrs["links"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
 			tkh, d := tfObjectToTKHDSRestLink(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -2675,7 +2675,7 @@ func tfObjectToTKHDSOrganizationOrganizationalUnit(ctx context.Context, recurse 
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceSet(objAttrs["permissions"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+		val, d := tfToSliceList(objAttrs["permissions"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
 			tkh, d := tfObjectToTKHDSAuthPermission(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -2716,7 +2716,7 @@ func tfObjectToTKHDSOrganizationOrganizationalUnitLinkableWrapper(ctx context.Co
 	var tkh keyhubmodel.OrganizationOrganizationalUnitLinkableWrapperable
 	tkh = keyhubmodel.NewOrganizationOrganizationalUnitLinkableWrapper()
 	{
-		val, d := tfToSliceSet(objAttrs["items"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.OrganizationOrganizationalUnitable {
+		val, d := tfToSliceList(objAttrs["items"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.OrganizationOrganizationalUnitable {
 			tkh, d := tfObjectToTKHDSOrganizationOrganizationalUnit(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -2736,7 +2736,7 @@ func tfObjectToTKHDSOrganizationOrganizationalUnitPrimer(ctx context.Context, re
 	var tkh keyhubmodel.OrganizationOrganizationalUnitPrimerable
 	tkh = keyhubmodel.NewOrganizationOrganizationalUnitPrimer()
 	{
-		val, d := tfToSliceSet(objAttrs["links"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+		val, d := tfToSliceList(objAttrs["links"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
 			tkh, d := tfObjectToTKHDSRestLink(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -2745,7 +2745,7 @@ func tfObjectToTKHDSOrganizationOrganizationalUnitPrimer(ctx context.Context, re
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceSet(objAttrs["permissions"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+		val, d := tfToSliceList(objAttrs["permissions"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
 			tkh, d := tfObjectToTKHDSAuthPermission(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -2853,7 +2853,7 @@ func tfObjectToTKHDSProvisioningGroupOnSystem(ctx context.Context, recurse bool,
 	var tkh keyhubmodel.ProvisioningGroupOnSystemable
 	tkh = keyhubmodel.NewProvisioningGroupOnSystem()
 	{
-		val, d := tfToSliceSet(objAttrs["links"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+		val, d := tfToSliceList(objAttrs["links"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
 			tkh, d := tfObjectToTKHDSRestLink(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -2862,7 +2862,7 @@ func tfObjectToTKHDSProvisioningGroupOnSystem(ctx context.Context, recurse bool,
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceSet(objAttrs["permissions"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+		val, d := tfToSliceList(objAttrs["permissions"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
 			tkh, d := tfObjectToTKHDSAuthPermission(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -2904,7 +2904,7 @@ func tfObjectToTKHDSProvisioningGroupOnSystemLinkableWrapper(ctx context.Context
 	var tkh keyhubmodel.ProvisioningGroupOnSystemLinkableWrapperable
 	tkh = keyhubmodel.NewProvisioningGroupOnSystemLinkableWrapper()
 	{
-		val, d := tfToSliceSet(objAttrs["items"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.ProvisioningGroupOnSystemable {
+		val, d := tfToSliceList(objAttrs["items"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.ProvisioningGroupOnSystemable {
 			tkh, d := tfObjectToTKHDSProvisioningGroupOnSystem(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -2924,7 +2924,7 @@ func tfObjectToTKHDSProvisioningGroupOnSystemPrimer(ctx context.Context, recurse
 	var tkh keyhubmodel.ProvisioningGroupOnSystemPrimerable
 	tkh = keyhubmodel.NewProvisioningGroupOnSystemPrimer()
 	{
-		val, d := tfToSliceSet(objAttrs["links"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+		val, d := tfToSliceList(objAttrs["links"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
 			tkh, d := tfObjectToTKHDSRestLink(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -2933,7 +2933,7 @@ func tfObjectToTKHDSProvisioningGroupOnSystemPrimer(ctx context.Context, recurse
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceSet(objAttrs["permissions"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+		val, d := tfToSliceList(objAttrs["permissions"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
 			tkh, d := tfObjectToTKHDSAuthPermission(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -2963,7 +2963,7 @@ func tfObjectToTKHDSProvisioningGroupOnSystemTypes(ctx context.Context, recurse 
 	var tkh keyhubmodel.ProvisioningGroupOnSystemTypesable
 	tkh = keyhubmodel.NewProvisioningGroupOnSystemTypes()
 	{
-		val, d := tfToSliceSet(objAttrs["types"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.ProvisioningGroupOnSystemType {
+		val, d := tfToSliceList(objAttrs["types"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.ProvisioningGroupOnSystemType {
 			tkh, d := parseCast(val.(basetypes.StringValue), keyhubmodel.ParseProvisioningGroupOnSystemType, func(val any) keyhubmodel.ProvisioningGroupOnSystemType {
 				return *val.(*keyhubmodel.ProvisioningGroupOnSystemType)
 			})
@@ -2990,12 +2990,12 @@ func tfObjectToTKHDSProvisioningGroupOnSystem_additionalObjects(ctx context.Cont
 		tkh.SetAudit(val)
 	}
 	{
-		val, d := tfObjectToTKHDSGroupProvisioningGroupLinkableWrapper(ctx, recurse, toItemsSet(ctx, objAttrs["provgroups"]))
+		val, d := tfObjectToTKHDSGroupProvisioningGroupLinkableWrapper(ctx, recurse, toItemsList(ctx, objAttrs["provgroups"]))
 		diags.Append(d...)
 		tkh.SetProvgroups(val)
 	}
 	{
-		val, d := tfObjectToTKHDSServiceaccountServiceAccountPrimerLinkableWrapper(ctx, recurse, toItemsSet(ctx, objAttrs["service_accounts"]))
+		val, d := tfObjectToTKHDSServiceaccountServiceAccountPrimerLinkableWrapper(ctx, recurse, toItemsList(ctx, objAttrs["service_accounts"]))
 		diags.Append(d...)
 		tkh.SetServiceAccounts(val)
 	}
@@ -3011,7 +3011,7 @@ func tfObjectToTKHDSProvisioningOwnedGroupOnSystemsWrapper(ctx context.Context, 
 	var tkh keyhubmodel.ProvisioningOwnedGroupOnSystemsWrapperable
 	tkh = keyhubmodel.NewProvisioningOwnedGroupOnSystemsWrapper()
 	{
-		val, d := tfToSliceSet(objAttrs["items"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.ProvisioningGroupOnSystemable {
+		val, d := tfToSliceList(objAttrs["items"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.ProvisioningGroupOnSystemable {
 			tkh, d := tfObjectToTKHDSProvisioningGroupOnSystem(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -3032,7 +3032,7 @@ func tfObjectToTKHDSProvisioningProvisionNumberSequence(ctx context.Context, rec
 	var tkh keyhubmodel.ProvisioningProvisionNumberSequenceable
 	tkh = keyhubmodel.NewProvisioningProvisionNumberSequence()
 	{
-		val, d := tfToSliceSet(objAttrs["links"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+		val, d := tfToSliceList(objAttrs["links"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
 			tkh, d := tfObjectToTKHDSRestLink(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -3041,7 +3041,7 @@ func tfObjectToTKHDSProvisioningProvisionNumberSequence(ctx context.Context, rec
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceSet(objAttrs["permissions"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+		val, d := tfToSliceList(objAttrs["permissions"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
 			tkh, d := tfObjectToTKHDSAuthPermission(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -3076,7 +3076,7 @@ func tfObjectToTKHDSProvisioningProvisionNumberSequence_additionalObjects(ctx co
 		tkh.SetAudit(val)
 	}
 	{
-		val, d := tfObjectToTKHDSProvisioningProvisionedSystemPrimerLinkableWrapper(ctx, recurse, toItemsSet(ctx, objAttrs["systems"]))
+		val, d := tfObjectToTKHDSProvisioningProvisionedSystemPrimerLinkableWrapper(ctx, recurse, toItemsList(ctx, objAttrs["systems"]))
 		diags.Append(d...)
 		tkh.SetSystems(val)
 	}
@@ -3110,7 +3110,7 @@ func tfObjectToTKHDSProvisioningProvisionedAccount(ctx context.Context, recurse 
 	var tkh keyhubmodel.ProvisioningProvisionedAccountable
 	tkh = keyhubmodel.NewProvisioningProvisionedAccount()
 	{
-		val, d := tfToSliceSet(objAttrs["links"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+		val, d := tfToSliceList(objAttrs["links"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
 			tkh, d := tfObjectToTKHDSRestLink(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -3119,7 +3119,7 @@ func tfObjectToTKHDSProvisioningProvisionedAccount(ctx context.Context, recurse 
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceSet(objAttrs["permissions"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+		val, d := tfToSliceList(objAttrs["permissions"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
 			tkh, d := tfObjectToTKHDSAuthPermission(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -3333,7 +3333,7 @@ func tfObjectToTKHDSProvisioningProvisionedSystem(ctx context.Context, recurse b
 	var tkh keyhubmodel.ProvisioningProvisionedSystemable
 	tkh = keyhubmodel.NewProvisioningProvisionedSystem()
 	{
-		val, d := tfToSliceSet(objAttrs["links"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+		val, d := tfToSliceList(objAttrs["links"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
 			tkh, d := tfObjectToTKHDSRestLink(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -3342,7 +3342,7 @@ func tfObjectToTKHDSProvisioningProvisionedSystem(ctx context.Context, recurse b
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceSet(objAttrs["permissions"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+		val, d := tfToSliceList(objAttrs["permissions"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
 			tkh, d := tfObjectToTKHDSAuthPermission(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -3491,7 +3491,7 @@ func tfObjectToTKHDSProvisioningProvisionedSystemLinkableWrapper(ctx context.Con
 	var tkh keyhubmodel.ProvisioningProvisionedSystemLinkableWrapperable
 	tkh = keyhubmodel.NewProvisioningProvisionedSystemLinkableWrapper()
 	{
-		val, d := tfToSliceSet(objAttrs["items"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.ProvisioningProvisionedSystemable {
+		val, d := tfToSliceList(objAttrs["items"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.ProvisioningProvisionedSystemable {
 			tkh, d := tfObjectToTKHDSProvisioningProvisionedSystem(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -3511,7 +3511,7 @@ func tfObjectToTKHDSProvisioningProvisionedSystemPrimer(ctx context.Context, rec
 	var tkh keyhubmodel.ProvisioningProvisionedSystemPrimerable
 	tkh = keyhubmodel.NewProvisioningProvisionedSystemPrimer()
 	{
-		val, d := tfToSliceSet(objAttrs["links"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+		val, d := tfToSliceList(objAttrs["links"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
 			tkh, d := tfObjectToTKHDSRestLink(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -3520,7 +3520,7 @@ func tfObjectToTKHDSProvisioningProvisionedSystemPrimer(ctx context.Context, rec
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceSet(objAttrs["permissions"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+		val, d := tfToSliceList(objAttrs["permissions"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
 			tkh, d := tfObjectToTKHDSAuthPermission(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -3555,7 +3555,7 @@ func tfObjectToTKHDSProvisioningProvisionedSystemPrimerLinkableWrapper(ctx conte
 	var tkh keyhubmodel.ProvisioningProvisionedSystemPrimerLinkableWrapperable
 	tkh = keyhubmodel.NewProvisioningProvisionedSystemPrimerLinkableWrapper()
 	{
-		val, d := tfToSliceSet(objAttrs["items"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.ProvisioningProvisionedSystemPrimerable {
+		val, d := tfToSliceList(objAttrs["items"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.ProvisioningProvisionedSystemPrimerable {
 			tkh, d := tfObjectToTKHDSProvisioningProvisionedSystemPrimer(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -3585,7 +3585,7 @@ func tfObjectToTKHDSProvisioningProvisionedSystem_additionalObjects(ctx context.
 		tkh.SetAudit(val)
 	}
 	{
-		val, d := tfObjectToTKHDSClientOAuth2ClientPermissionWithClientLinkableWrapper(ctx, recurse, toItemsSet(ctx, objAttrs["issued_permissions"]))
+		val, d := tfObjectToTKHDSClientOAuth2ClientPermissionWithClientLinkableWrapper(ctx, recurse, toItemsList(ctx, objAttrs["issued_permissions"]))
 		diags.Append(d...)
 		tkh.SetIssuedPermissions(val)
 	}
@@ -3636,7 +3636,7 @@ func tfObjectToTKHDSServiceaccountServiceAccount(ctx context.Context, recurse bo
 	var tkh keyhubmodel.ServiceaccountServiceAccountable
 	tkh = keyhubmodel.NewServiceaccountServiceAccount()
 	{
-		val, d := tfToSliceSet(objAttrs["links"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+		val, d := tfToSliceList(objAttrs["links"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
 			tkh, d := tfObjectToTKHDSRestLink(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -3645,7 +3645,7 @@ func tfObjectToTKHDSServiceaccountServiceAccount(ctx context.Context, recurse bo
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceSet(objAttrs["permissions"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+		val, d := tfToSliceList(objAttrs["permissions"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
 			tkh, d := tfObjectToTKHDSAuthPermission(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -3699,7 +3699,7 @@ func tfObjectToTKHDSServiceaccountServiceAccountGroup(ctx context.Context, recur
 	var tkh keyhubmodel.ServiceaccountServiceAccountGroupable
 	tkh = keyhubmodel.NewServiceaccountServiceAccountGroup()
 	{
-		val, d := tfToSliceSet(objAttrs["links"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+		val, d := tfToSliceList(objAttrs["links"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
 			tkh, d := tfObjectToTKHDSRestLink(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -3708,7 +3708,7 @@ func tfObjectToTKHDSServiceaccountServiceAccountGroup(ctx context.Context, recur
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceSet(objAttrs["permissions"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+		val, d := tfToSliceList(objAttrs["permissions"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
 			tkh, d := tfObjectToTKHDSAuthPermission(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -3745,7 +3745,7 @@ func tfObjectToTKHDSServiceaccountServiceAccountGroupLinkableWrapper(ctx context
 	var tkh keyhubmodel.ServiceaccountServiceAccountGroupLinkableWrapperable
 	tkh = keyhubmodel.NewServiceaccountServiceAccountGroupLinkableWrapper()
 	{
-		val, d := tfToSliceSet(objAttrs["items"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.ServiceaccountServiceAccountGroupable {
+		val, d := tfToSliceList(objAttrs["items"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.ServiceaccountServiceAccountGroupable {
 			tkh, d := tfObjectToTKHDSServiceaccountServiceAccountGroup(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -3781,7 +3781,7 @@ func tfObjectToTKHDSServiceaccountServiceAccountLinkableWrapper(ctx context.Cont
 	var tkh keyhubmodel.ServiceaccountServiceAccountLinkableWrapperable
 	tkh = keyhubmodel.NewServiceaccountServiceAccountLinkableWrapper()
 	{
-		val, d := tfToSliceSet(objAttrs["items"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.ServiceaccountServiceAccountable {
+		val, d := tfToSliceList(objAttrs["items"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.ServiceaccountServiceAccountable {
 			tkh, d := tfObjectToTKHDSServiceaccountServiceAccount(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -3801,7 +3801,7 @@ func tfObjectToTKHDSServiceaccountServiceAccountPrimer(ctx context.Context, recu
 	var tkh keyhubmodel.ServiceaccountServiceAccountPrimerable
 	tkh = keyhubmodel.NewServiceaccountServiceAccountPrimer()
 	{
-		val, d := tfToSliceSet(objAttrs["links"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+		val, d := tfToSliceList(objAttrs["links"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
 			tkh, d := tfObjectToTKHDSRestLink(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -3810,7 +3810,7 @@ func tfObjectToTKHDSServiceaccountServiceAccountPrimer(ctx context.Context, recu
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceSet(objAttrs["permissions"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+		val, d := tfToSliceList(objAttrs["permissions"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
 			tkh, d := tfObjectToTKHDSAuthPermission(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -3839,7 +3839,7 @@ func tfObjectToTKHDSServiceaccountServiceAccountPrimerLinkableWrapper(ctx contex
 	var tkh keyhubmodel.ServiceaccountServiceAccountPrimerLinkableWrapperable
 	tkh = keyhubmodel.NewServiceaccountServiceAccountPrimerLinkableWrapper()
 	{
-		val, d := tfToSliceSet(objAttrs["items"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.ServiceaccountServiceAccountPrimerable {
+		val, d := tfToSliceList(objAttrs["items"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.ServiceaccountServiceAccountPrimerable {
 			tkh, d := tfObjectToTKHDSServiceaccountServiceAccountPrimer(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -3864,7 +3864,7 @@ func tfObjectToTKHDSServiceaccountServiceAccount_additionalObjects(ctx context.C
 		tkh.SetAudit(val)
 	}
 	{
-		val, d := tfObjectToTKHDSServiceaccountServiceAccountGroupLinkableWrapper(ctx, recurse, toItemsSet(ctx, objAttrs["groups"]))
+		val, d := tfObjectToTKHDSServiceaccountServiceAccountGroupLinkableWrapper(ctx, recurse, toItemsList(ctx, objAttrs["groups"]))
 		diags.Append(d...)
 		tkh.SetGroups(val)
 	}
@@ -3905,7 +3905,7 @@ func tfObjectToTKHDSVaultVault(ctx context.Context, recurse bool, objVal types.O
 	var tkh keyhubmodel.VaultVaultable
 	tkh = keyhubmodel.NewVaultVault()
 	{
-		val, d := tfToSliceSet(objAttrs["links"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+		val, d := tfToSliceList(objAttrs["links"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
 			tkh, d := tfObjectToTKHDSRestLink(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -3914,7 +3914,7 @@ func tfObjectToTKHDSVaultVault(ctx context.Context, recurse bool, objVal types.O
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceSet(objAttrs["permissions"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+		val, d := tfToSliceList(objAttrs["permissions"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
 			tkh, d := tfObjectToTKHDSAuthPermission(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -3925,7 +3925,7 @@ func tfObjectToTKHDSVaultVault(ctx context.Context, recurse bool, objVal types.O
 	tkh.SetAccessAvailable(objAttrs["access_available"].(basetypes.BoolValue).ValueBoolPointer())
 	tkh.SetName(objAttrs["name"].(basetypes.StringValue).ValueStringPointer())
 	{
-		val, d := tfToSliceSet(objAttrs["records"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.VaultVaultRecordable {
+		val, d := tfToSliceList(objAttrs["records"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.VaultVaultRecordable {
 			tkh, d := tfObjectToTKHDSVaultVaultRecord(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -3955,7 +3955,7 @@ func tfObjectToTKHDSVaultVaultRecord(ctx context.Context, recurse bool, objVal t
 	var tkh keyhubmodel.VaultVaultRecordable
 	tkh = keyhubmodel.NewVaultVaultRecord()
 	{
-		val, d := tfToSliceSet(objAttrs["links"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+		val, d := tfToSliceList(objAttrs["links"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
 			tkh, d := tfObjectToTKHDSRestLink(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -3964,7 +3964,7 @@ func tfObjectToTKHDSVaultVaultRecord(ctx context.Context, recurse bool, objVal t
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceSet(objAttrs["permissions"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+		val, d := tfToSliceList(objAttrs["permissions"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
 			tkh, d := tfObjectToTKHDSAuthPermission(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -4028,7 +4028,7 @@ func tfObjectToTKHDSVaultVaultRecordPrimer(ctx context.Context, recurse bool, ob
 	var tkh keyhubmodel.VaultVaultRecordPrimerable
 	tkh = keyhubmodel.NewVaultVaultRecordPrimer()
 	{
-		val, d := tfToSliceSet(objAttrs["links"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+		val, d := tfToSliceList(objAttrs["links"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
 			tkh, d := tfObjectToTKHDSRestLink(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -4037,7 +4037,7 @@ func tfObjectToTKHDSVaultVaultRecordPrimer(ctx context.Context, recurse bool, ob
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceSet(objAttrs["permissions"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+		val, d := tfToSliceList(objAttrs["permissions"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
 			tkh, d := tfObjectToTKHDSAuthPermission(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -4069,7 +4069,7 @@ func tfObjectToTKHDSVaultVaultRecordPrimerLinkableWrapper(ctx context.Context, r
 	var tkh keyhubmodel.VaultVaultRecordPrimerLinkableWrapperable
 	tkh = keyhubmodel.NewVaultVaultRecordPrimerLinkableWrapper()
 	{
-		val, d := tfToSliceSet(objAttrs["items"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.VaultVaultRecordPrimerable {
+		val, d := tfToSliceList(objAttrs["items"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.VaultVaultRecordPrimerable {
 			tkh, d := tfObjectToTKHDSVaultVaultRecordPrimer(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -4121,7 +4121,7 @@ func tfObjectToTKHDSVaultVaultRecordShareSummary(ctx context.Context, recurse bo
 	var tkh keyhubmodel.VaultVaultRecordShareSummaryable
 	tkh = keyhubmodel.NewVaultVaultRecordShareSummary()
 	{
-		val, d := tfToSliceSet(objAttrs["children"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.VaultVaultRecordShareable {
+		val, d := tfToSliceList(objAttrs["children"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.VaultVaultRecordShareable {
 			tkh, d := tfObjectToTKHDSVaultVaultRecordShare(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -4171,7 +4171,7 @@ func tfObjectToTKHDSVaultVaultRecord_additionalObjects(ctx context.Context, recu
 		tkh.SetShareSummary(val)
 	}
 	{
-		val, d := tfObjectToTKHDSVaultVaultRecordPrimerLinkableWrapper(ctx, recurse, toItemsSet(ctx, objAttrs["shares"]))
+		val, d := tfObjectToTKHDSVaultVaultRecordPrimerLinkableWrapper(ctx, recurse, toItemsList(ctx, objAttrs["shares"]))
 		diags.Append(d...)
 		tkh.SetShares(val)
 	}
@@ -4197,7 +4197,7 @@ func tfObjectToTKHDSWebhookWebhook(ctx context.Context, recurse bool, objVal typ
 	var tkh keyhubmodel.WebhookWebhookable
 	tkh = keyhubmodel.NewWebhookWebhook()
 	{
-		val, d := tfToSliceSet(objAttrs["links"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+		val, d := tfToSliceList(objAttrs["links"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
 			tkh, d := tfObjectToTKHDSRestLink(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -4206,7 +4206,7 @@ func tfObjectToTKHDSWebhookWebhook(ctx context.Context, recurse bool, objVal typ
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceSet(objAttrs["permissions"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+		val, d := tfToSliceList(objAttrs["permissions"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
 			tkh, d := tfObjectToTKHDSAuthPermission(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
@@ -4270,7 +4270,7 @@ func tfObjectToTKHDSWebhookWebhook(ctx context.Context, recurse bool, objVal typ
 		tkh.SetTrustedCertificate(val)
 	}
 	{
-		val, d := tfToSliceSet(objAttrs["types"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuditAuditRecordType {
+		val, d := tfToSliceList(objAttrs["types"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuditAuditRecordType {
 			tkh, d := parseCast(val.(basetypes.StringValue), keyhubmodel.ParseAuditAuditRecordType, func(val any) keyhubmodel.AuditAuditRecordType { return *val.(*keyhubmodel.AuditAuditRecordType) })
 			diags.Append(d...)
 			return tkh
@@ -4300,7 +4300,7 @@ func tfObjectToTKHDSWebhookWebhookLinkableWrapper(ctx context.Context, recurse b
 	var tkh keyhubmodel.WebhookWebhookLinkableWrapperable
 	tkh = keyhubmodel.NewWebhookWebhookLinkableWrapper()
 	{
-		val, d := tfToSliceSet(objAttrs["items"].(basetypes.SetValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.WebhookWebhookable {
+		val, d := tfToSliceList(objAttrs["items"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.WebhookWebhookable {
 			tkh, d := tfObjectToTKHDSWebhookWebhook(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
 			return tkh
