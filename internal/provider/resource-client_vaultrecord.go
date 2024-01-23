@@ -72,13 +72,13 @@ func (r *clientVaultrecordResource) Create(ctx context.Context, req resource.Cre
 	}
 
 	ctx = context.WithValue(ctx, keyHubClientKey, r.providerData.Client)
-	obj, diags := types.ObjectValueFrom(ctx, clientApplicationVaultVaultRecordAttrTypesRSRecurse, data)
+	plannedState, diags := types.ObjectValueFrom(ctx, clientApplicationVaultVaultRecordAttrTypesRSRecurse, data)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	newTkh, diags := tfObjectToTKHRSClientApplicationVaultVaultRecord(ctx, true, obj)
+	newTkh, diags := tfObjectToTKHRSClientApplicationVaultVaultRecord(ctx, true, plannedState)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -108,13 +108,14 @@ func (r *clientVaultrecordResource) Create(ctx context.Context, req resource.Cre
 		return
 	}
 
-	tf, diags := tkhToTFObjectRSClientApplicationVaultVaultRecord(true, tkh)
+	postState, diags := tkhToTFObjectRSClientApplicationVaultVaultRecord(true, tkh)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	tf = setAttributeValue(ctx, tf, "client_application_uuid", types.StringValue(data.ClientApplicationUUID.ValueString()))
-	fillDataStructFromTFObjectRSClientApplicationVaultVaultRecord(&data, tf)
+	postState = setAttributeValue(ctx, postState, "client_application_uuid", types.StringValue(data.ClientApplicationUUID.ValueString()))
+	postState = reorderClientApplicationVaultVaultRecord(postState, plannedState, true)
+	fillDataStructFromTFObjectRSClientApplicationVaultVaultRecord(&data, postState)
 	data.Additional = additionalBackup
 
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -126,6 +127,11 @@ func (r *clientVaultrecordResource) Create(ctx context.Context, req resource.Cre
 func (r *clientVaultrecordResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
 	var data clientApplicationVaultVaultRecordDataRS
 	resp.Diagnostics.Append(req.State.Get(ctx, &data)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+	priorState, diags := types.ObjectValueFrom(ctx, clientApplicationVaultVaultRecordAttrTypesRSRecurse, data)
+	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
@@ -171,13 +177,14 @@ func (r *clientVaultrecordResource) Read(ctx context.Context, req resource.ReadR
 		return
 	}
 
-	tf, diags := tkhToTFObjectRSClientApplicationVaultVaultRecord(true, tkh)
+	postState, diags := tkhToTFObjectRSClientApplicationVaultVaultRecord(true, tkh)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	tf = setAttributeValue(ctx, tf, "client_application_uuid", types.StringValue(data.ClientApplicationUUID.ValueString()))
-	fillDataStructFromTFObjectRSClientApplicationVaultVaultRecord(&data, tf)
+	postState = setAttributeValue(ctx, postState, "client_application_uuid", types.StringValue(data.ClientApplicationUUID.ValueString()))
+	postState = reorderClientApplicationVaultVaultRecord(postState, priorState, true)
+	fillDataStructFromTFObjectRSClientApplicationVaultVaultRecord(&data, postState)
 	data.Additional = additionalBackup
 
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -191,13 +198,13 @@ func (r *clientVaultrecordResource) Update(ctx context.Context, req resource.Upd
 	}
 
 	ctx = context.WithValue(ctx, keyHubClientKey, r.providerData.Client)
-	obj, diags := types.ObjectValueFrom(ctx, clientApplicationVaultVaultRecordAttrTypesRSRecurse, data)
+	priorState, diags := types.ObjectValueFrom(ctx, clientApplicationVaultVaultRecordAttrTypesRSRecurse, data)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	newTkh, diags := tfObjectToTKHRSClientApplicationVaultVaultRecord(ctx, true, obj)
+	newTkh, diags := tfObjectToTKHRSClientApplicationVaultVaultRecord(ctx, true, priorState)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -224,13 +231,14 @@ func (r *clientVaultrecordResource) Update(ctx context.Context, req resource.Upd
 		return
 	}
 
-	tf, diags := tkhToTFObjectRSClientApplicationVaultVaultRecord(true, tkh)
+	postState, diags := tkhToTFObjectRSClientApplicationVaultVaultRecord(true, tkh)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	tf = setAttributeValue(ctx, tf, "client_application_uuid", types.StringValue(data.ClientApplicationUUID.ValueString()))
-	fillDataStructFromTFObjectRSClientApplicationVaultVaultRecord(&data, tf)
+	postState = setAttributeValue(ctx, postState, "client_application_uuid", types.StringValue(data.ClientApplicationUUID.ValueString()))
+	postState = reorderClientApplicationVaultVaultRecord(postState, priorState, true)
+	fillDataStructFromTFObjectRSClientApplicationVaultVaultRecord(&data, postState)
 	data.Additional = additionalBackup
 
 	tflog.Info(ctx, "Updated a Topicus KeyHub client_vaultrecord")

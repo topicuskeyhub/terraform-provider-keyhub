@@ -71,13 +71,13 @@ func (r *serviceaccountResource) Create(ctx context.Context, req resource.Create
 	}
 
 	ctx = context.WithValue(ctx, keyHubClientKey, r.providerData.Client)
-	obj, diags := types.ObjectValueFrom(ctx, serviceaccountServiceAccountAttrTypesRSRecurse, data)
+	plannedState, diags := types.ObjectValueFrom(ctx, serviceaccountServiceAccountAttrTypesRSRecurse, data)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	newTkh, diags := tfObjectToTKHRSServiceaccountServiceAccount(ctx, true, obj)
+	newTkh, diags := tfObjectToTKHRSServiceaccountServiceAccount(ctx, true, plannedState)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -101,12 +101,13 @@ func (r *serviceaccountResource) Create(ctx context.Context, req resource.Create
 		return
 	}
 
-	tf, diags := tkhToTFObjectRSServiceaccountServiceAccount(true, tkh)
+	postState, diags := tkhToTFObjectRSServiceaccountServiceAccount(true, tkh)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	fillDataStructFromTFObjectRSServiceaccountServiceAccount(&data, tf)
+	postState = reorderServiceaccountServiceAccount(postState, plannedState, true)
+	fillDataStructFromTFObjectRSServiceaccountServiceAccount(&data, postState)
 	data.Additional = additionalBackup
 
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -118,6 +119,11 @@ func (r *serviceaccountResource) Create(ctx context.Context, req resource.Create
 func (r *serviceaccountResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
 	var data serviceaccountServiceAccountDataRS
 	resp.Diagnostics.Append(req.State.Get(ctx, &data)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+	priorState, diags := types.ObjectValueFrom(ctx, serviceaccountServiceAccountAttrTypesRSRecurse, data)
+	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
@@ -151,12 +157,13 @@ func (r *serviceaccountResource) Read(ctx context.Context, req resource.ReadRequ
 		return
 	}
 
-	tf, diags := tkhToTFObjectRSServiceaccountServiceAccount(true, tkh)
+	postState, diags := tkhToTFObjectRSServiceaccountServiceAccount(true, tkh)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	fillDataStructFromTFObjectRSServiceaccountServiceAccount(&data, tf)
+	postState = reorderServiceaccountServiceAccount(postState, priorState, true)
+	fillDataStructFromTFObjectRSServiceaccountServiceAccount(&data, postState)
 	data.Additional = additionalBackup
 
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -170,13 +177,13 @@ func (r *serviceaccountResource) Update(ctx context.Context, req resource.Update
 	}
 
 	ctx = context.WithValue(ctx, keyHubClientKey, r.providerData.Client)
-	obj, diags := types.ObjectValueFrom(ctx, serviceaccountServiceAccountAttrTypesRSRecurse, data)
+	priorState, diags := types.ObjectValueFrom(ctx, serviceaccountServiceAccountAttrTypesRSRecurse, data)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	newTkh, diags := tfObjectToTKHRSServiceaccountServiceAccount(ctx, true, obj)
+	newTkh, diags := tfObjectToTKHRSServiceaccountServiceAccount(ctx, true, priorState)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -197,12 +204,13 @@ func (r *serviceaccountResource) Update(ctx context.Context, req resource.Update
 		return
 	}
 
-	tf, diags := tkhToTFObjectRSServiceaccountServiceAccount(true, tkh)
+	postState, diags := tkhToTFObjectRSServiceaccountServiceAccount(true, tkh)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	fillDataStructFromTFObjectRSServiceaccountServiceAccount(&data, tf)
+	postState = reorderServiceaccountServiceAccount(postState, priorState, true)
+	fillDataStructFromTFObjectRSServiceaccountServiceAccount(&data, postState)
 	data.Additional = additionalBackup
 
 	tflog.Info(ctx, "Updated a Topicus KeyHub serviceaccount")

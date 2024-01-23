@@ -648,3 +648,36 @@ func findSuperStruct(data any, targetType reflect.Type) (any, bool) {
 	}
 	return nil, false
 }
+
+func reorderList(newState []attr.Value, priorState []attr.Value, identifyingProps []string) []attr.Value {
+	ret := make([]attr.Value, len(priorState))
+	for pi, ps := range priorState {
+		for ni, ns := range newState {
+			match := false
+			for _, prop := range identifyingProps {
+				if !attrMatches(ns.(types.Object), ps.(types.Object), prop) {
+					break
+				}
+			}
+			if match {
+				ret[pi] = ns
+				newState = slices.Delete(newState, ni, ni+1)
+				break
+			}
+		}
+	}
+	ret = slices.DeleteFunc(ret, func(e attr.Value) bool {
+		return e == nil
+	})
+	ret = append(ret, newState...)
+	return ret
+}
+
+func attrMatches(newState types.Object, priorState types.Object, prop string) bool {
+	newAttr := newState.Attributes()[prop]
+	priorAttr := priorState.Attributes()[prop]
+	if newAttr.IsNull() || newAttr.IsUnknown() || priorAttr.IsNull() || priorAttr.IsUnknown() {
+		return false
+	}
+	return newAttr.Equal(priorAttr)
+}

@@ -72,13 +72,13 @@ func (r *grouponsystemResource) Create(ctx context.Context, req resource.CreateR
 	}
 
 	ctx = context.WithValue(ctx, keyHubClientKey, r.providerData.Client)
-	obj, diags := types.ObjectValueFrom(ctx, nestedProvisioningGroupOnSystemAttrTypesRSRecurse, data)
+	plannedState, diags := types.ObjectValueFrom(ctx, nestedProvisioningGroupOnSystemAttrTypesRSRecurse, data)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	newTkh, diags := tfObjectToTKHRSNestedProvisioningGroupOnSystem(ctx, true, obj)
+	newTkh, diags := tfObjectToTKHRSNestedProvisioningGroupOnSystem(ctx, true, plannedState)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -108,13 +108,14 @@ func (r *grouponsystemResource) Create(ctx context.Context, req resource.CreateR
 		return
 	}
 
-	tf, diags := tkhToTFObjectRSNestedProvisioningGroupOnSystem(true, tkh)
+	postState, diags := tkhToTFObjectRSNestedProvisioningGroupOnSystem(true, tkh)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	tf = setAttributeValue(ctx, tf, "provisioned_system_uuid", types.StringValue(data.ProvisionedSystemUUID.ValueString()))
-	fillDataStructFromTFObjectRSNestedProvisioningGroupOnSystem(&data, tf)
+	postState = setAttributeValue(ctx, postState, "provisioned_system_uuid", types.StringValue(data.ProvisionedSystemUUID.ValueString()))
+	postState = reorderNestedProvisioningGroupOnSystem(postState, plannedState, true)
+	fillDataStructFromTFObjectRSNestedProvisioningGroupOnSystem(&data, postState)
 	data.Additional = additionalBackup
 
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -126,6 +127,11 @@ func (r *grouponsystemResource) Create(ctx context.Context, req resource.CreateR
 func (r *grouponsystemResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
 	var data nestedProvisioningGroupOnSystemDataRS
 	resp.Diagnostics.Append(req.State.Get(ctx, &data)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+	priorState, diags := types.ObjectValueFrom(ctx, nestedProvisioningGroupOnSystemAttrTypesRSRecurse, data)
+	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
@@ -171,13 +177,14 @@ func (r *grouponsystemResource) Read(ctx context.Context, req resource.ReadReque
 		return
 	}
 
-	tf, diags := tkhToTFObjectRSNestedProvisioningGroupOnSystem(true, tkh)
+	postState, diags := tkhToTFObjectRSNestedProvisioningGroupOnSystem(true, tkh)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	tf = setAttributeValue(ctx, tf, "provisioned_system_uuid", types.StringValue(data.ProvisionedSystemUUID.ValueString()))
-	fillDataStructFromTFObjectRSNestedProvisioningGroupOnSystem(&data, tf)
+	postState = setAttributeValue(ctx, postState, "provisioned_system_uuid", types.StringValue(data.ProvisionedSystemUUID.ValueString()))
+	postState = reorderNestedProvisioningGroupOnSystem(postState, priorState, true)
+	fillDataStructFromTFObjectRSNestedProvisioningGroupOnSystem(&data, postState)
 	data.Additional = additionalBackup
 
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

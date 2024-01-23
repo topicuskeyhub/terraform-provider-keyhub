@@ -71,13 +71,13 @@ func (r *clientapplicationResource) Create(ctx context.Context, req resource.Cre
 	}
 
 	ctx = context.WithValue(ctx, keyHubClientKey, r.providerData.Client)
-	obj, diags := types.ObjectValueFrom(ctx, clientClientApplicationAttrTypesRSRecurse, data)
+	plannedState, diags := types.ObjectValueFrom(ctx, clientClientApplicationAttrTypesRSRecurse, data)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	newTkh, diags := tfObjectToTKHRSClientClientApplication(ctx, true, obj)
+	newTkh, diags := tfObjectToTKHRSClientClientApplication(ctx, true, plannedState)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -101,12 +101,13 @@ func (r *clientapplicationResource) Create(ctx context.Context, req resource.Cre
 		return
 	}
 
-	tf, diags := tkhToTFObjectRSClientClientApplication(true, tkh)
+	postState, diags := tkhToTFObjectRSClientClientApplication(true, tkh)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	fillDataStructFromTFObjectRSClientClientApplication(&data, tf)
+	postState = reorderClientClientApplication(postState, plannedState, true)
+	fillDataStructFromTFObjectRSClientClientApplication(&data, postState)
 	data.Additional = additionalBackup
 
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -118,6 +119,11 @@ func (r *clientapplicationResource) Create(ctx context.Context, req resource.Cre
 func (r *clientapplicationResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
 	var data clientClientApplicationDataRS
 	resp.Diagnostics.Append(req.State.Get(ctx, &data)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+	priorState, diags := types.ObjectValueFrom(ctx, clientClientApplicationAttrTypesRSRecurse, data)
+	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
@@ -151,12 +157,13 @@ func (r *clientapplicationResource) Read(ctx context.Context, req resource.ReadR
 		return
 	}
 
-	tf, diags := tkhToTFObjectRSClientClientApplication(true, tkh)
+	postState, diags := tkhToTFObjectRSClientClientApplication(true, tkh)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	fillDataStructFromTFObjectRSClientClientApplication(&data, tf)
+	postState = reorderClientClientApplication(postState, priorState, true)
+	fillDataStructFromTFObjectRSClientClientApplication(&data, postState)
 	data.Additional = additionalBackup
 
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

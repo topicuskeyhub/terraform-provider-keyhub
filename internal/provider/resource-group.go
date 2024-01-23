@@ -71,13 +71,13 @@ func (r *groupResource) Create(ctx context.Context, req resource.CreateRequest, 
 	}
 
 	ctx = context.WithValue(ctx, keyHubClientKey, r.providerData.Client)
-	obj, diags := types.ObjectValueFrom(ctx, groupGroupAttrTypesRSRecurse, data)
+	plannedState, diags := types.ObjectValueFrom(ctx, groupGroupAttrTypesRSRecurse, data)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	newTkh, diags := tfObjectToTKHRSGroupGroup(ctx, true, obj)
+	newTkh, diags := tfObjectToTKHRSGroupGroup(ctx, true, plannedState)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -101,12 +101,13 @@ func (r *groupResource) Create(ctx context.Context, req resource.CreateRequest, 
 		return
 	}
 
-	tf, diags := tkhToTFObjectRSGroupGroup(true, tkh)
+	postState, diags := tkhToTFObjectRSGroupGroup(true, tkh)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	fillDataStructFromTFObjectRSGroupGroup(&data, tf)
+	postState = reorderGroupGroup(postState, plannedState, true)
+	fillDataStructFromTFObjectRSGroupGroup(&data, postState)
 	data.Additional = additionalBackup
 
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -118,6 +119,11 @@ func (r *groupResource) Create(ctx context.Context, req resource.CreateRequest, 
 func (r *groupResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
 	var data groupGroupDataRS
 	resp.Diagnostics.Append(req.State.Get(ctx, &data)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+	priorState, diags := types.ObjectValueFrom(ctx, groupGroupAttrTypesRSRecurse, data)
+	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
@@ -151,12 +157,13 @@ func (r *groupResource) Read(ctx context.Context, req resource.ReadRequest, resp
 		return
 	}
 
-	tf, diags := tkhToTFObjectRSGroupGroup(true, tkh)
+	postState, diags := tkhToTFObjectRSGroupGroup(true, tkh)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	fillDataStructFromTFObjectRSGroupGroup(&data, tf)
+	postState = reorderGroupGroup(postState, priorState, true)
+	fillDataStructFromTFObjectRSGroupGroup(&data, postState)
 	data.Additional = additionalBackup
 
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

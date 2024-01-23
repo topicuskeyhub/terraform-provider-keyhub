@@ -72,13 +72,13 @@ func (r *groupVaultrecordResource) Create(ctx context.Context, req resource.Crea
 	}
 
 	ctx = context.WithValue(ctx, keyHubClientKey, r.providerData.Client)
-	obj, diags := types.ObjectValueFrom(ctx, groupVaultVaultRecordAttrTypesRSRecurse, data)
+	plannedState, diags := types.ObjectValueFrom(ctx, groupVaultVaultRecordAttrTypesRSRecurse, data)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	newTkh, diags := tfObjectToTKHRSGroupVaultVaultRecord(ctx, true, obj)
+	newTkh, diags := tfObjectToTKHRSGroupVaultVaultRecord(ctx, true, plannedState)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -108,13 +108,14 @@ func (r *groupVaultrecordResource) Create(ctx context.Context, req resource.Crea
 		return
 	}
 
-	tf, diags := tkhToTFObjectRSGroupVaultVaultRecord(true, tkh)
+	postState, diags := tkhToTFObjectRSGroupVaultVaultRecord(true, tkh)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	tf = setAttributeValue(ctx, tf, "group_uuid", types.StringValue(data.GroupUUID.ValueString()))
-	fillDataStructFromTFObjectRSGroupVaultVaultRecord(&data, tf)
+	postState = setAttributeValue(ctx, postState, "group_uuid", types.StringValue(data.GroupUUID.ValueString()))
+	postState = reorderGroupVaultVaultRecord(postState, plannedState, true)
+	fillDataStructFromTFObjectRSGroupVaultVaultRecord(&data, postState)
 	data.Additional = additionalBackup
 
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -126,6 +127,11 @@ func (r *groupVaultrecordResource) Create(ctx context.Context, req resource.Crea
 func (r *groupVaultrecordResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
 	var data groupVaultVaultRecordDataRS
 	resp.Diagnostics.Append(req.State.Get(ctx, &data)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+	priorState, diags := types.ObjectValueFrom(ctx, groupVaultVaultRecordAttrTypesRSRecurse, data)
+	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
@@ -171,13 +177,14 @@ func (r *groupVaultrecordResource) Read(ctx context.Context, req resource.ReadRe
 		return
 	}
 
-	tf, diags := tkhToTFObjectRSGroupVaultVaultRecord(true, tkh)
+	postState, diags := tkhToTFObjectRSGroupVaultVaultRecord(true, tkh)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	tf = setAttributeValue(ctx, tf, "group_uuid", types.StringValue(data.GroupUUID.ValueString()))
-	fillDataStructFromTFObjectRSGroupVaultVaultRecord(&data, tf)
+	postState = setAttributeValue(ctx, postState, "group_uuid", types.StringValue(data.GroupUUID.ValueString()))
+	postState = reorderGroupVaultVaultRecord(postState, priorState, true)
+	fillDataStructFromTFObjectRSGroupVaultVaultRecord(&data, postState)
 	data.Additional = additionalBackup
 
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -191,13 +198,13 @@ func (r *groupVaultrecordResource) Update(ctx context.Context, req resource.Upda
 	}
 
 	ctx = context.WithValue(ctx, keyHubClientKey, r.providerData.Client)
-	obj, diags := types.ObjectValueFrom(ctx, groupVaultVaultRecordAttrTypesRSRecurse, data)
+	priorState, diags := types.ObjectValueFrom(ctx, groupVaultVaultRecordAttrTypesRSRecurse, data)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	newTkh, diags := tfObjectToTKHRSGroupVaultVaultRecord(ctx, true, obj)
+	newTkh, diags := tfObjectToTKHRSGroupVaultVaultRecord(ctx, true, priorState)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -224,13 +231,14 @@ func (r *groupVaultrecordResource) Update(ctx context.Context, req resource.Upda
 		return
 	}
 
-	tf, diags := tkhToTFObjectRSGroupVaultVaultRecord(true, tkh)
+	postState, diags := tkhToTFObjectRSGroupVaultVaultRecord(true, tkh)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	tf = setAttributeValue(ctx, tf, "group_uuid", types.StringValue(data.GroupUUID.ValueString()))
-	fillDataStructFromTFObjectRSGroupVaultVaultRecord(&data, tf)
+	postState = setAttributeValue(ctx, postState, "group_uuid", types.StringValue(data.GroupUUID.ValueString()))
+	postState = reorderGroupVaultVaultRecord(postState, priorState, true)
+	fillDataStructFromTFObjectRSGroupVaultVaultRecord(&data, postState)
 	data.Additional = additionalBackup
 
 	tflog.Info(ctx, "Updated a Topicus KeyHub group_vaultrecord")
