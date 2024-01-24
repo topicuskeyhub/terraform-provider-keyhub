@@ -653,9 +653,10 @@ func reorderList(newState []attr.Value, priorState []attr.Value, identifyingProp
 	ret := make([]attr.Value, len(priorState))
 	for pi, ps := range priorState {
 		for ni, ns := range newState {
-			match := false
+			match := true
 			for _, prop := range identifyingProps {
 				if !attrMatches(ns.(types.Object), ps.(types.Object), prop) {
+					match = false
 					break
 				}
 			}
@@ -676,8 +677,19 @@ func reorderList(newState []attr.Value, priorState []attr.Value, identifyingProp
 func attrMatches(newState types.Object, priorState types.Object, prop string) bool {
 	newAttr := newState.Attributes()[prop]
 	priorAttr := priorState.Attributes()[prop]
-	if newAttr.IsNull() || newAttr.IsUnknown() || priorAttr.IsNull() || priorAttr.IsUnknown() {
-		return false
+	if newAttr.IsUnknown() || priorAttr.IsUnknown() {
+		return true
+	}
+	if newAttr.IsNull() || priorAttr.IsNull() {
+		return newAttr.IsNull() == priorAttr.IsNull()
 	}
 	return newAttr.Equal(priorAttr)
+}
+
+func filterAttributes(attributes map[string]attr.Value, types map[string]attr.Type) map[string]attr.Value {
+	ret := make(map[string]attr.Value)
+	for k := range types {
+		ret[k] = attributes[k]
+	}
+	return ret
 }

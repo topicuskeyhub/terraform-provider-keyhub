@@ -27,10 +27,10 @@ provider "keyhub" {
 resource "keyhub_group" "terra" {
   name = "Terraform"
   accounts = [{
-    uuid   = "2948741d-f852-4599-be0e-cf187b306b4b"
+    uuid   = "7ea6622b-f9d2-4e52-a799-217b26f88376"
     rights = "MANAGER"
     }, {
-    uuid   = "7ea6622b-f9d2-4e52-a799-217b26f88376"
+    uuid   = "2948741d-f852-4599-be0e-cf187b306b4b"
     rights = "MANAGER"
   }]
   client_permissions = [{
@@ -64,7 +64,7 @@ resource "keyhub_clientapplication" "oauth2client" {
   name                         = "Created by Terraform"
   technical_administrator_uuid = resource.keyhub_group.terra.uuid
   owner_uuid                   = resource.keyhub_group.terra.uuid
-  scopes                       = ["profile", "access_vault"]
+  scopes                       = ["access_vault", "profile"]
   oauth2_client = {
     debug_mode = "true"
   }

@@ -6,6 +6,8 @@
 package provider
 
 import (
+	"golang.org/x/exp/maps"
+
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
@@ -21,7 +23,7 @@ func reorderAuditInfo(state basetypes.ObjectValue, priorState basetypes.ObjectVa
 	} else {
 		attrs = auditInfoAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -36,7 +38,7 @@ func reorderGeneratedSecret(state basetypes.ObjectValue, priorState basetypes.Ob
 	} else {
 		attrs = generatedSecretAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -51,7 +53,7 @@ func reorderLinkable(state basetypes.ObjectValue, priorState basetypes.ObjectVal
 	} else {
 		attrs = linkableAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -66,7 +68,7 @@ func reorderNonLinkable(state basetypes.ObjectValue, priorState basetypes.Object
 	} else {
 		attrs = nonLinkableAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -81,7 +83,7 @@ func reorderRestLink(state basetypes.ObjectValue, priorState basetypes.ObjectVal
 	} else {
 		attrs = restLinkAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -96,11 +98,11 @@ func reorderAuditGroupAudit(state basetypes.ObjectValue, priorState basetypes.Ob
 	} else {
 		attrs = auditGroupAuditAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 	if recurse {
 	}
 	if recurse {
-		obj = reorderAuditGroupAudit_additionalObjects(state, priorState, false).Attributes()
+		maps.Copy(obj, reorderAuditGroupAudit_additionalObjects(state, priorState, false).Attributes())
 	}
 	// Reordering not supported for accounts with type List
 	// Reordering not supported for nested_groups with type List
@@ -118,7 +120,7 @@ func reorderAuditGroupAuditAccount(state basetypes.ObjectValue, priorState baset
 	} else {
 		attrs = auditGroupAuditAccountAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -133,7 +135,7 @@ func reorderAuditGroupAuditLinkableWrapper(state basetypes.ObjectValue, priorSta
 	} else {
 		attrs = auditGroupAuditLinkableWrapperAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 	// Reordering not supported for items with type List
 
 	return types.ObjectValueMust(attrs, obj)
@@ -149,7 +151,7 @@ func reorderAuditGroupAudit_additionalObjects(state basetypes.ObjectValue, prior
 	} else {
 		attrs = auditGroupAudit_additionalObjectsAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -164,7 +166,7 @@ func reorderAuditNestedGroupAudit(state basetypes.ObjectValue, priorState basety
 	} else {
 		attrs = auditNestedGroupAuditAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -179,7 +181,7 @@ func reorderAuthAccountPrimer(state basetypes.ObjectValue, priorState basetypes.
 	} else {
 		attrs = authAccountPrimerAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -194,7 +196,7 @@ func reorderAuthPermission(state basetypes.ObjectValue, priorState basetypes.Obj
 	} else {
 		attrs = authPermissionAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -209,7 +211,7 @@ func reorderCertificateCertificatePrimer(state basetypes.ObjectValue, priorState
 	} else {
 		attrs = certificateCertificatePrimerAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -224,11 +226,11 @@ func reorderClientApplicationVaultVaultRecord(state basetypes.ObjectValue, prior
 	} else {
 		attrs = clientApplicationVaultVaultRecordAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 	if recurse {
 	}
 	if recurse {
-		obj = reorderVaultVaultRecord_additionalObjects(state, priorState, false).Attributes()
+		maps.Copy(obj, reorderVaultVaultRecord_additionalObjects(state, priorState, false).Attributes())
 	}
 
 	return types.ObjectValueMust(attrs, obj)
@@ -244,11 +246,11 @@ func reorderClientClientApplication(state basetypes.ObjectValue, priorState base
 	} else {
 		attrs = clientClientApplicationAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 	if recurse {
 	}
 	if recurse {
-		obj = reorderClientClientApplication_additionalObjects(state, priorState, false).Attributes()
+		maps.Copy(obj, reorderClientClientApplication_additionalObjects(state, priorState, false).Attributes())
 	}
 	obj["ldap_client"] = reorderClientLdapClient(state.Attributes()["ldap_client"].(types.Object), priorState.Attributes()["ldap_client"].(types.Object), recurse)
 	obj["oauth2_client"] = reorderClientOAuth2Client(state.Attributes()["oauth2_client"].(types.Object), priorState.Attributes()["oauth2_client"].(types.Object), recurse)
@@ -267,7 +269,7 @@ func reorderClientClientApplicationLinkableWrapper(state basetypes.ObjectValue, 
 	} else {
 		attrs = clientClientApplicationLinkableWrapperAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 	// Reordering not supported for items with type List
 
 	return types.ObjectValueMust(attrs, obj)
@@ -283,7 +285,7 @@ func reorderClientClientApplicationPrimer(state basetypes.ObjectValue, priorStat
 	} else {
 		attrs = clientClientApplicationPrimerAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -298,18 +300,24 @@ func reorderClientClientApplication_additionalObjects(state basetypes.ObjectValu
 	} else {
 		attrs = clientClientApplication_additionalObjectsAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 	{
-		attrState := (state.Attributes()["groupclients"].(types.List)).Elements()
-		attrPriorState := (priorState.Attributes()["groupclients"].(types.List)).Elements()
-		newAttrState := make([]attr.Value, 0, len(attrState))
-		for i, s := range attrState {
-			newAttrState = append(newAttrState, reorderGroupGroupClient(s.(types.Object), attrPriorState[i].(types.Object), recurse))
+		attrState := state.Attributes()["groupclients"]
+		attrPriorState := priorState.Attributes()["groupclients"]
+		if attrState.IsNull() || attrState.IsUnknown() || attrPriorState.IsNull() || attrPriorState.IsUnknown() {
+			obj["groupclients"] = attrState
+		} else {
+			attrStateEl := (attrState.(types.List)).Elements()
+			attrPriorStateEl := (attrPriorState.(types.List)).Elements()
+			newAttrState := make([]attr.Value, 0, len(attrStateEl))
+			for i, s := range attrStateEl {
+				newAttrState = append(newAttrState, reorderGroupGroupClient(s.(types.Object), attrPriorStateEl[i].(types.Object), recurse))
+			}
+			newAttrState = reorderList(newAttrState, attrPriorStateEl, []string{
+				"activation_required",
+			})
+			obj["groupclients"] = types.ListValueMust(attrs["groupclients"].(types.ListType).ElemType, newAttrState)
 		}
-		newAttrState = reorderList(newAttrState, attrPriorState, []string{
-			"activation_required",
-		})
-		obj["groupclients"] = types.ListValueMust(attrs["groupclients"].(types.ListType).ElemType, newAttrState)
 	}
 	obj["secret"] = reorderGeneratedSecret(state.Attributes()["secret"].(types.Object), priorState.Attributes()["secret"].(types.Object), recurse)
 	obj["tile"] = reorderLaunchpadSsoApplicationLaunchpadTile(state.Attributes()["tile"].(types.Object), priorState.Attributes()["tile"].(types.Object), recurse)
@@ -327,7 +335,7 @@ func reorderClientLdapClient(state basetypes.ObjectValue, priorState basetypes.O
 	} else {
 		attrs = clientLdapClientAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -342,7 +350,7 @@ func reorderClientOAuth2Client(state basetypes.ObjectValue, priorState basetypes
 	} else {
 		attrs = clientOAuth2ClientAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 	// Reordering not supported for attributes with type Map
 
 	return types.ObjectValueMust(attrs, obj)
@@ -358,11 +366,11 @@ func reorderClientOAuth2ClientPermission(state basetypes.ObjectValue, priorState
 	} else {
 		attrs = clientOAuth2ClientPermissionAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 	if recurse {
 	}
 	if recurse {
-		obj = reorderClientOAuth2ClientPermission_additionalObjects(state, priorState, false).Attributes()
+		maps.Copy(obj, reorderClientOAuth2ClientPermission_additionalObjects(state, priorState, false).Attributes())
 	}
 
 	return types.ObjectValueMust(attrs, obj)
@@ -378,11 +386,11 @@ func reorderClientOAuth2ClientPermissionWithClient(state basetypes.ObjectValue, 
 	} else {
 		attrs = clientOAuth2ClientPermissionWithClientAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 	if recurse {
 	}
 	if recurse {
-		obj = reorderClientOAuth2ClientPermission_additionalObjects(state, priorState, false).Attributes()
+		maps.Copy(obj, reorderClientOAuth2ClientPermission_additionalObjects(state, priorState, false).Attributes())
 	}
 
 	return types.ObjectValueMust(attrs, obj)
@@ -398,7 +406,7 @@ func reorderClientOAuth2ClientPermissionWithClientLinkableWrapper(state basetype
 	} else {
 		attrs = clientOAuth2ClientPermissionWithClientLinkableWrapperAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 	// Reordering not supported for items with type List
 
 	return types.ObjectValueMust(attrs, obj)
@@ -414,7 +422,7 @@ func reorderClientOAuth2ClientPermission_additionalObjects(state basetypes.Objec
 	} else {
 		attrs = clientOAuth2ClientPermission_additionalObjectsAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -429,7 +437,7 @@ func reorderClientSaml2Client(state basetypes.ObjectValue, priorState basetypes.
 	} else {
 		attrs = clientSaml2ClientAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 	// Reordering not supported for attributes with type Map
 
 	return types.ObjectValueMust(attrs, obj)
@@ -445,11 +453,11 @@ func reorderDirectoryAccountDirectory(state basetypes.ObjectValue, priorState ba
 	} else {
 		attrs = directoryAccountDirectoryAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 	if recurse {
 	}
 	if recurse {
-		obj = reorderDirectoryAccountDirectory_additionalObjects(state, priorState, false).Attributes()
+		maps.Copy(obj, reorderDirectoryAccountDirectory_additionalObjects(state, priorState, false).Attributes())
 	}
 	obj["internal_directory"] = reorderDirectoryInternalDirectory(state.Attributes()["internal_directory"].(types.Object), priorState.Attributes()["internal_directory"].(types.Object), recurse)
 	obj["ldap_directory"] = reorderDirectoryLDAPDirectory(state.Attributes()["ldap_directory"].(types.Object), priorState.Attributes()["ldap_directory"].(types.Object), recurse)
@@ -469,7 +477,7 @@ func reorderDirectoryAccountDirectoryLinkableWrapper(state basetypes.ObjectValue
 	} else {
 		attrs = directoryAccountDirectoryLinkableWrapperAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 	// Reordering not supported for items with type List
 
 	return types.ObjectValueMust(attrs, obj)
@@ -485,7 +493,7 @@ func reorderDirectoryAccountDirectoryPrimer(state basetypes.ObjectValue, priorSt
 	} else {
 		attrs = directoryAccountDirectoryPrimerAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -500,7 +508,7 @@ func reorderDirectoryAccountDirectoryStatusReport(state basetypes.ObjectValue, p
 	} else {
 		attrs = directoryAccountDirectoryStatusReportAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -515,7 +523,7 @@ func reorderDirectoryAccountDirectorySummary(state basetypes.ObjectValue, priorS
 	} else {
 		attrs = directoryAccountDirectorySummaryAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 	obj["status"] = reorderDirectoryAccountDirectoryStatusReport(state.Attributes()["status"].(types.Object), priorState.Attributes()["status"].(types.Object), recurse)
 
 	return types.ObjectValueMust(attrs, obj)
@@ -531,7 +539,7 @@ func reorderDirectoryAccountDirectorySummaryLinkableWrapper(state basetypes.Obje
 	} else {
 		attrs = directoryAccountDirectorySummaryLinkableWrapperAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 	// Reordering not supported for items with type List
 
 	return types.ObjectValueMust(attrs, obj)
@@ -547,7 +555,7 @@ func reorderDirectoryAccountDirectory_additionalObjects(state basetypes.ObjectVa
 	} else {
 		attrs = directoryAccountDirectory_additionalObjectsAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -562,7 +570,7 @@ func reorderDirectoryInternalDirectory(state basetypes.ObjectValue, priorState b
 	} else {
 		attrs = directoryInternalDirectoryAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -577,7 +585,7 @@ func reorderDirectoryLDAPDirectory(state basetypes.ObjectValue, priorState baset
 	} else {
 		attrs = directoryLDAPDirectoryAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -592,7 +600,7 @@ func reorderDirectoryMaintenanceDirectory(state basetypes.ObjectValue, priorStat
 	} else {
 		attrs = directoryMaintenanceDirectoryAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -607,7 +615,7 @@ func reorderDirectoryOIDCDirectory(state basetypes.ObjectValue, priorState baset
 	} else {
 		attrs = directoryOIDCDirectoryAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -622,7 +630,7 @@ func reorderGroupAuthorizedGroupsWrapper(state basetypes.ObjectValue, priorState
 	} else {
 		attrs = groupAuthorizedGroupsWrapperAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 	// Reordering not supported for items with type List
 
 	return types.ObjectValueMust(attrs, obj)
@@ -638,11 +646,11 @@ func reorderGroupGroup(state basetypes.ObjectValue, priorState basetypes.ObjectV
 	} else {
 		attrs = groupGroupAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 	if recurse {
 	}
 	if recurse {
-		obj = reorderGroupGroup_additionalObjects(state, priorState, false).Attributes()
+		maps.Copy(obj, reorderGroupGroup_additionalObjects(state, priorState, false).Attributes())
 	}
 	obj["audit_config"] = reorderGroupGroupAuditConfig(state.Attributes()["audit_config"].(types.Object), priorState.Attributes()["audit_config"].(types.Object), recurse)
 
@@ -659,11 +667,11 @@ func reorderGroupGroupAccount(state basetypes.ObjectValue, priorState basetypes.
 	} else {
 		attrs = groupGroupAccountAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 	if recurse {
 	}
 	if recurse {
-		obj = reorderGroupGroupAccount_additionalObjects(state, priorState, false).Attributes()
+		maps.Copy(obj, reorderGroupGroupAccount_additionalObjects(state, priorState, false).Attributes())
 	}
 
 	return types.ObjectValueMust(attrs, obj)
@@ -679,7 +687,7 @@ func reorderGroupGroupAccountLinkableWrapper(state basetypes.ObjectValue, priorS
 	} else {
 		attrs = groupGroupAccountLinkableWrapperAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 	// Reordering not supported for items with type List
 
 	return types.ObjectValueMust(attrs, obj)
@@ -695,7 +703,7 @@ func reorderGroupGroupAccount_additionalObjects(state basetypes.ObjectValue, pri
 	} else {
 		attrs = groupGroupAccount_additionalObjectsAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -710,7 +718,7 @@ func reorderGroupGroupAuditConfig(state basetypes.ObjectValue, priorState basety
 	} else {
 		attrs = groupGroupAuditConfigAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -725,7 +733,7 @@ func reorderGroupGroupAuditingInfo(state basetypes.ObjectValue, priorState baset
 	} else {
 		attrs = groupGroupAuditingInfoAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -740,7 +748,7 @@ func reorderGroupGroupClassificationPrimer(state basetypes.ObjectValue, priorSta
 	} else {
 		attrs = groupGroupClassificationPrimerAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -755,11 +763,11 @@ func reorderGroupGroupClient(state basetypes.ObjectValue, priorState basetypes.O
 	} else {
 		attrs = groupGroupClientAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 	if recurse {
 	}
 	if recurse {
-		obj = reorderGroupGroupClient_additionalObjects(state, priorState, false).Attributes()
+		maps.Copy(obj, reorderGroupGroupClient_additionalObjects(state, priorState, false).Attributes())
 	}
 
 	return types.ObjectValueMust(attrs, obj)
@@ -775,7 +783,7 @@ func reorderGroupGroupClientLinkableWrapper(state basetypes.ObjectValue, priorSt
 	} else {
 		attrs = groupGroupClientLinkableWrapperAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 	// Reordering not supported for items with type List
 
 	return types.ObjectValueMust(attrs, obj)
@@ -791,7 +799,7 @@ func reorderGroupGroupClient_additionalObjects(state basetypes.ObjectValue, prio
 	} else {
 		attrs = groupGroupClient_additionalObjectsAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -806,7 +814,7 @@ func reorderGroupGroupInfo(state basetypes.ObjectValue, priorState basetypes.Obj
 	} else {
 		attrs = groupGroupInfoAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -821,7 +829,7 @@ func reorderGroupGroupLinkableWrapper(state basetypes.ObjectValue, priorState ba
 	} else {
 		attrs = groupGroupLinkableWrapperAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 	// Reordering not supported for items with type List
 
 	return types.ObjectValueMust(attrs, obj)
@@ -837,7 +845,7 @@ func reorderGroupGroupPrimer(state basetypes.ObjectValue, priorState basetypes.O
 	} else {
 		attrs = groupGroupPrimerAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -852,7 +860,7 @@ func reorderGroupGroupPrimerLinkableWrapper(state basetypes.ObjectValue, priorSt
 	} else {
 		attrs = groupGroupPrimerLinkableWrapperAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 	// Reordering not supported for items with type List
 
 	return types.ObjectValueMust(attrs, obj)
@@ -868,49 +876,67 @@ func reorderGroupGroup_additionalObjects(state basetypes.ObjectValue, priorState
 	} else {
 		attrs = groupGroup_additionalObjectsAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 	{
-		attrState := (state.Attributes()["accounts"].(types.List)).Elements()
-		attrPriorState := (priorState.Attributes()["accounts"].(types.List)).Elements()
-		newAttrState := make([]attr.Value, 0, len(attrState))
-		for i, s := range attrState {
-			newAttrState = append(newAttrState, reorderGroupGroupAccount(s.(types.Object), attrPriorState[i].(types.Object), recurse))
+		attrState := state.Attributes()["accounts"]
+		attrPriorState := priorState.Attributes()["accounts"]
+		if attrState.IsNull() || attrState.IsUnknown() || attrPriorState.IsNull() || attrPriorState.IsUnknown() {
+			obj["accounts"] = attrState
+		} else {
+			attrStateEl := (attrState.(types.List)).Elements()
+			attrPriorStateEl := (attrPriorState.(types.List)).Elements()
+			newAttrState := make([]attr.Value, 0, len(attrStateEl))
+			for i, s := range attrStateEl {
+				newAttrState = append(newAttrState, reorderGroupGroupAccount(s.(types.Object), attrPriorStateEl[i].(types.Object), recurse))
+			}
+			newAttrState = reorderList(newAttrState, attrPriorStateEl, []string{
+				"uuid",
+				"rights",
+				"end_date",
+			})
+			obj["accounts"] = types.ListValueMust(attrs["accounts"].(types.ListType).ElemType, newAttrState)
 		}
-		newAttrState = reorderList(newAttrState, attrPriorState, []string{
-			"uuid",
-			"rights",
-			"end_date",
-		})
-		obj["accounts"] = types.ListValueMust(attrs["accounts"].(types.ListType).ElemType, newAttrState)
 	}
 	{
-		attrState := (state.Attributes()["admins"].(types.List)).Elements()
-		attrPriorState := (priorState.Attributes()["admins"].(types.List)).Elements()
-		newAttrState := make([]attr.Value, 0, len(attrState))
-		for i, s := range attrState {
-			newAttrState = append(newAttrState, reorderGroupGroupAccount(s.(types.Object), attrPriorState[i].(types.Object), recurse))
+		attrState := state.Attributes()["admins"]
+		attrPriorState := priorState.Attributes()["admins"]
+		if attrState.IsNull() || attrState.IsUnknown() || attrPriorState.IsNull() || attrPriorState.IsUnknown() {
+			obj["admins"] = attrState
+		} else {
+			attrStateEl := (attrState.(types.List)).Elements()
+			attrPriorStateEl := (attrPriorState.(types.List)).Elements()
+			newAttrState := make([]attr.Value, 0, len(attrStateEl))
+			for i, s := range attrStateEl {
+				newAttrState = append(newAttrState, reorderGroupGroupAccount(s.(types.Object), attrPriorStateEl[i].(types.Object), recurse))
+			}
+			newAttrState = reorderList(newAttrState, attrPriorStateEl, []string{
+				"uuid",
+				"rights",
+				"end_date",
+			})
+			obj["admins"] = types.ListValueMust(attrs["admins"].(types.ListType).ElemType, newAttrState)
 		}
-		newAttrState = reorderList(newAttrState, attrPriorState, []string{
-			"uuid",
-			"rights",
-			"end_date",
-		})
-		obj["admins"] = types.ListValueMust(attrs["admins"].(types.ListType).ElemType, newAttrState)
 	}
 	{
-		attrState := (state.Attributes()["client_permissions"].(types.List)).Elements()
-		attrPriorState := (priorState.Attributes()["client_permissions"].(types.List)).Elements()
-		newAttrState := make([]attr.Value, 0, len(attrState))
-		for i, s := range attrState {
-			newAttrState = append(newAttrState, reorderClientOAuth2ClientPermissionWithClient(s.(types.Object), attrPriorState[i].(types.Object), recurse))
+		attrState := state.Attributes()["client_permissions"]
+		attrPriorState := priorState.Attributes()["client_permissions"]
+		if attrState.IsNull() || attrState.IsUnknown() || attrPriorState.IsNull() || attrPriorState.IsUnknown() {
+			obj["client_permissions"] = attrState
+		} else {
+			attrStateEl := (attrState.(types.List)).Elements()
+			attrPriorStateEl := (attrPriorState.(types.List)).Elements()
+			newAttrState := make([]attr.Value, 0, len(attrStateEl))
+			for i, s := range attrStateEl {
+				newAttrState = append(newAttrState, reorderClientOAuth2ClientPermissionWithClient(s.(types.Object), attrPriorStateEl[i].(types.Object), recurse))
+			}
+			newAttrState = reorderList(newAttrState, attrPriorStateEl, []string{
+				"value",
+				"for_group_uuid",
+				"for_system_uuid",
+				"client_uuid",
+			})
+			obj["client_permissions"] = types.ListValueMust(attrs["client_permissions"].(types.ListType).ElemType, newAttrState)
 		}
-		newAttrState = reorderList(newAttrState, attrPriorState, []string{
-			"value",
-			"for_group_uuid",
-			"for_system_uuid",
-			"client_uuid",
-		})
-		obj["client_permissions"] = types.ListValueMust(attrs["client_permissions"].(types.ListType).ElemType, newAttrState)
 	}
 
 	return types.ObjectValueMust(attrs, obj)
@@ -926,11 +952,11 @@ func reorderGroupProvisioningGroup(state basetypes.ObjectValue, priorState baset
 	} else {
 		attrs = groupProvisioningGroupAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 	if recurse {
 	}
 	if recurse {
-		obj = reorderGroupProvisioningGroup_additionalObjects(state, priorState, false).Attributes()
+		maps.Copy(obj, reorderGroupProvisioningGroup_additionalObjects(state, priorState, false).Attributes())
 	}
 
 	return types.ObjectValueMust(attrs, obj)
@@ -946,7 +972,7 @@ func reorderGroupProvisioningGroupLinkableWrapper(state basetypes.ObjectValue, p
 	} else {
 		attrs = groupProvisioningGroupLinkableWrapperAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 	// Reordering not supported for items with type List
 
 	return types.ObjectValueMust(attrs, obj)
@@ -962,7 +988,7 @@ func reorderGroupProvisioningGroup_additionalObjects(state basetypes.ObjectValue
 	} else {
 		attrs = groupProvisioningGroup_additionalObjectsAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -977,11 +1003,11 @@ func reorderGroupVaultVaultRecord(state basetypes.ObjectValue, priorState basety
 	} else {
 		attrs = groupVaultVaultRecordAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 	if recurse {
 	}
 	if recurse {
-		obj = reorderVaultVaultRecord_additionalObjects(state, priorState, false).Attributes()
+		maps.Copy(obj, reorderVaultVaultRecord_additionalObjects(state, priorState, false).Attributes())
 	}
 
 	return types.ObjectValueMust(attrs, obj)
@@ -997,7 +1023,7 @@ func reorderLaunchpadSsoApplicationLaunchpadTile(state basetypes.ObjectValue, pr
 	} else {
 		attrs = launchpadSsoApplicationLaunchpadTileAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -1012,7 +1038,7 @@ func reorderLaunchpadVaultRecordLaunchpadTile(state basetypes.ObjectValue, prior
 	} else {
 		attrs = launchpadVaultRecordLaunchpadTileAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -1027,7 +1053,7 @@ func reorderMarkItemMarker(state basetypes.ObjectValue, priorState basetypes.Obj
 	} else {
 		attrs = markItemMarkerAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 	// Reordering not supported for parameters with type Map
 
 	return types.ObjectValueMust(attrs, obj)
@@ -1043,7 +1069,7 @@ func reorderMarkItemMarkers(state basetypes.ObjectValue, priorState basetypes.Ob
 	} else {
 		attrs = markItemMarkersAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 	// Reordering not supported for markers with type List
 
 	return types.ObjectValueMust(attrs, obj)
@@ -1059,11 +1085,11 @@ func reorderNestedProvisioningGroupOnSystem(state basetypes.ObjectValue, priorSt
 	} else {
 		attrs = nestedProvisioningGroupOnSystemAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 	if recurse {
 	}
 	if recurse {
-		obj = reorderProvisioningGroupOnSystem_additionalObjects(state, priorState, false).Attributes()
+		maps.Copy(obj, reorderProvisioningGroupOnSystem_additionalObjects(state, priorState, false).Attributes())
 	}
 
 	return types.ObjectValueMust(attrs, obj)
@@ -1079,11 +1105,11 @@ func reorderOrganizationOrganizationalUnit(state basetypes.ObjectValue, priorSta
 	} else {
 		attrs = organizationOrganizationalUnitAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 	if recurse {
 	}
 	if recurse {
-		obj = reorderOrganizationOrganizationalUnit_additionalObjects(state, priorState, false).Attributes()
+		maps.Copy(obj, reorderOrganizationOrganizationalUnit_additionalObjects(state, priorState, false).Attributes())
 	}
 
 	return types.ObjectValueMust(attrs, obj)
@@ -1099,7 +1125,7 @@ func reorderOrganizationOrganizationalUnitLinkableWrapper(state basetypes.Object
 	} else {
 		attrs = organizationOrganizationalUnitLinkableWrapperAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 	// Reordering not supported for items with type List
 
 	return types.ObjectValueMust(attrs, obj)
@@ -1115,7 +1141,7 @@ func reorderOrganizationOrganizationalUnitPrimer(state basetypes.ObjectValue, pr
 	} else {
 		attrs = organizationOrganizationalUnitPrimerAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -1130,7 +1156,7 @@ func reorderOrganizationOrganizationalUnitPrimerLinkableWrapper(state basetypes.
 	} else {
 		attrs = organizationOrganizationalUnitPrimerLinkableWrapperAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 	// Reordering not supported for items with type List
 
 	return types.ObjectValueMust(attrs, obj)
@@ -1146,18 +1172,24 @@ func reorderOrganizationOrganizationalUnit_additionalObjects(state basetypes.Obj
 	} else {
 		attrs = organizationOrganizationalUnit_additionalObjectsAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 	{
-		attrState := (state.Attributes()["create_as_parent_of"].(types.List)).Elements()
-		attrPriorState := (priorState.Attributes()["create_as_parent_of"].(types.List)).Elements()
-		newAttrState := make([]attr.Value, 0, len(attrState))
-		for i, s := range attrState {
-			newAttrState = append(newAttrState, reorderOrganizationOrganizationalUnitPrimer(s.(types.Object), attrPriorState[i].(types.Object), recurse))
+		attrState := state.Attributes()["create_as_parent_of"]
+		attrPriorState := priorState.Attributes()["create_as_parent_of"]
+		if attrState.IsNull() || attrState.IsUnknown() || attrPriorState.IsNull() || attrPriorState.IsUnknown() {
+			obj["create_as_parent_of"] = attrState
+		} else {
+			attrStateEl := (attrState.(types.List)).Elements()
+			attrPriorStateEl := (attrPriorState.(types.List)).Elements()
+			newAttrState := make([]attr.Value, 0, len(attrStateEl))
+			for i, s := range attrStateEl {
+				newAttrState = append(newAttrState, reorderOrganizationOrganizationalUnitPrimer(s.(types.Object), attrPriorStateEl[i].(types.Object), recurse))
+			}
+			newAttrState = reorderList(newAttrState, attrPriorStateEl, []string{
+				"name",
+			})
+			obj["create_as_parent_of"] = types.ListValueMust(attrs["create_as_parent_of"].(types.ListType).ElemType, newAttrState)
 		}
-		newAttrState = reorderList(newAttrState, attrPriorState, []string{
-			"name",
-		})
-		obj["create_as_parent_of"] = types.ListValueMust(attrs["create_as_parent_of"].(types.ListType).ElemType, newAttrState)
 	}
 
 	return types.ObjectValueMust(attrs, obj)
@@ -1173,7 +1205,7 @@ func reorderProvisioningAbstractProvisionedLDAP(state basetypes.ObjectValue, pri
 	} else {
 		attrs = provisioningAbstractProvisionedLDAPAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 	// Reordering not supported for attributes with type Map
 
 	return types.ObjectValueMust(attrs, obj)
@@ -1189,7 +1221,7 @@ func reorderProvisioningCircuitBreakerStatistics(state basetypes.ObjectValue, pr
 	} else {
 		attrs = provisioningCircuitBreakerStatisticsAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -1204,11 +1236,11 @@ func reorderProvisioningGroupOnSystem(state basetypes.ObjectValue, priorState ba
 	} else {
 		attrs = provisioningGroupOnSystemAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 	if recurse {
 	}
 	if recurse {
-		obj = reorderProvisioningGroupOnSystem_additionalObjects(state, priorState, false).Attributes()
+		maps.Copy(obj, reorderProvisioningGroupOnSystem_additionalObjects(state, priorState, false).Attributes())
 	}
 
 	return types.ObjectValueMust(attrs, obj)
@@ -1224,7 +1256,7 @@ func reorderProvisioningGroupOnSystemLinkableWrapper(state basetypes.ObjectValue
 	} else {
 		attrs = provisioningGroupOnSystemLinkableWrapperAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 	// Reordering not supported for items with type List
 
 	return types.ObjectValueMust(attrs, obj)
@@ -1240,7 +1272,7 @@ func reorderProvisioningGroupOnSystemPrimer(state basetypes.ObjectValue, priorSt
 	} else {
 		attrs = provisioningGroupOnSystemPrimerAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -1255,7 +1287,7 @@ func reorderProvisioningGroupOnSystemTypes(state basetypes.ObjectValue, priorSta
 	} else {
 		attrs = provisioningGroupOnSystemTypesAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -1270,34 +1302,46 @@ func reorderProvisioningGroupOnSystem_additionalObjects(state basetypes.ObjectVa
 	} else {
 		attrs = provisioningGroupOnSystem_additionalObjectsAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 	{
-		attrState := (state.Attributes()["provgroups"].(types.List)).Elements()
-		attrPriorState := (priorState.Attributes()["provgroups"].(types.List)).Elements()
-		newAttrState := make([]attr.Value, 0, len(attrState))
-		for i, s := range attrState {
-			newAttrState = append(newAttrState, reorderGroupProvisioningGroup(s.(types.Object), attrPriorState[i].(types.Object), recurse))
+		attrState := state.Attributes()["provgroups"]
+		attrPriorState := priorState.Attributes()["provgroups"]
+		if attrState.IsNull() || attrState.IsUnknown() || attrPriorState.IsNull() || attrPriorState.IsUnknown() {
+			obj["provgroups"] = attrState
+		} else {
+			attrStateEl := (attrState.(types.List)).Elements()
+			attrPriorStateEl := (attrPriorState.(types.List)).Elements()
+			newAttrState := make([]attr.Value, 0, len(attrStateEl))
+			for i, s := range attrStateEl {
+				newAttrState = append(newAttrState, reorderGroupProvisioningGroup(s.(types.Object), attrPriorStateEl[i].(types.Object), recurse))
+			}
+			newAttrState = reorderList(newAttrState, attrPriorStateEl, []string{
+				"group_uuid",
+				"activation_required",
+			})
+			obj["provgroups"] = types.ListValueMust(attrs["provgroups"].(types.ListType).ElemType, newAttrState)
 		}
-		newAttrState = reorderList(newAttrState, attrPriorState, []string{
-			"group_uuid",
-			"activation_required",
-		})
-		obj["provgroups"] = types.ListValueMust(attrs["provgroups"].(types.ListType).ElemType, newAttrState)
 	}
 	{
-		attrState := (state.Attributes()["service_accounts"].(types.List)).Elements()
-		attrPriorState := (priorState.Attributes()["service_accounts"].(types.List)).Elements()
-		newAttrState := make([]attr.Value, 0, len(attrState))
-		for i, s := range attrState {
-			newAttrState = append(newAttrState, reorderServiceaccountServiceAccountPrimer(s.(types.Object), attrPriorState[i].(types.Object), recurse))
+		attrState := state.Attributes()["service_accounts"]
+		attrPriorState := priorState.Attributes()["service_accounts"]
+		if attrState.IsNull() || attrState.IsUnknown() || attrPriorState.IsNull() || attrPriorState.IsUnknown() {
+			obj["service_accounts"] = attrState
+		} else {
+			attrStateEl := (attrState.(types.List)).Elements()
+			attrPriorStateEl := (attrPriorState.(types.List)).Elements()
+			newAttrState := make([]attr.Value, 0, len(attrStateEl))
+			for i, s := range attrStateEl {
+				newAttrState = append(newAttrState, reorderServiceaccountServiceAccountPrimer(s.(types.Object), attrPriorStateEl[i].(types.Object), recurse))
+			}
+			newAttrState = reorderList(newAttrState, attrPriorStateEl, []string{
+				"name",
+				"system_uuid",
+				"username",
+				"active",
+			})
+			obj["service_accounts"] = types.ListValueMust(attrs["service_accounts"].(types.ListType).ElemType, newAttrState)
 		}
-		newAttrState = reorderList(newAttrState, attrPriorState, []string{
-			"name",
-			"system_uuid",
-			"username",
-			"active",
-		})
-		obj["service_accounts"] = types.ListValueMust(attrs["service_accounts"].(types.ListType).ElemType, newAttrState)
 	}
 
 	return types.ObjectValueMust(attrs, obj)
@@ -1313,7 +1357,7 @@ func reorderProvisioningOwnedGroupOnSystemsWrapper(state basetypes.ObjectValue, 
 	} else {
 		attrs = provisioningOwnedGroupOnSystemsWrapperAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 	// Reordering not supported for items with type List
 
 	return types.ObjectValueMust(attrs, obj)
@@ -1329,11 +1373,11 @@ func reorderProvisioningProvisionNumberSequence(state basetypes.ObjectValue, pri
 	} else {
 		attrs = provisioningProvisionNumberSequenceAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 	if recurse {
 	}
 	if recurse {
-		obj = reorderProvisioningProvisionNumberSequence_additionalObjects(state, priorState, false).Attributes()
+		maps.Copy(obj, reorderProvisioningProvisionNumberSequence_additionalObjects(state, priorState, false).Attributes())
 	}
 
 	return types.ObjectValueMust(attrs, obj)
@@ -1349,7 +1393,7 @@ func reorderProvisioningProvisionNumberSequence_additionalObjects(state basetype
 	} else {
 		attrs = provisioningProvisionNumberSequence_additionalObjectsAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -1364,7 +1408,7 @@ func reorderProvisioningProvisionedAD(state basetypes.ObjectValue, priorState ba
 	} else {
 		attrs = provisioningProvisionedADAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -1379,11 +1423,11 @@ func reorderProvisioningProvisionedAccount(state basetypes.ObjectValue, priorSta
 	} else {
 		attrs = provisioningProvisionedAccountAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 	if recurse {
 	}
 	if recurse {
-		obj = reorderProvisioningProvisionedAccount_additionalObjects(state, priorState, false).Attributes()
+		maps.Copy(obj, reorderProvisioningProvisionedAccount_additionalObjects(state, priorState, false).Attributes())
 	}
 
 	return types.ObjectValueMust(attrs, obj)
@@ -1399,7 +1443,7 @@ func reorderProvisioningProvisionedAccount_additionalObjects(state basetypes.Obj
 	} else {
 		attrs = provisioningProvisionedAccount_additionalObjectsAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -1414,7 +1458,7 @@ func reorderProvisioningProvisionedAzureOIDCDirectory(state basetypes.ObjectValu
 	} else {
 		attrs = provisioningProvisionedAzureOIDCDirectoryAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -1429,7 +1473,7 @@ func reorderProvisioningProvisionedAzureSyncLDAPDirectory(state basetypes.Object
 	} else {
 		attrs = provisioningProvisionedAzureSyncLDAPDirectoryAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -1444,7 +1488,7 @@ func reorderProvisioningProvisionedAzureTenant(state basetypes.ObjectValue, prio
 	} else {
 		attrs = provisioningProvisionedAzureTenantAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -1459,7 +1503,7 @@ func reorderProvisioningProvisionedInternalLDAP(state basetypes.ObjectValue, pri
 	} else {
 		attrs = provisioningProvisionedInternalLDAPAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -1474,7 +1518,7 @@ func reorderProvisioningProvisionedLDAP(state basetypes.ObjectValue, priorState 
 	} else {
 		attrs = provisioningProvisionedLDAPAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 	obj["numbering"] = reorderProvisioningProvisionNumberSequence(state.Attributes()["numbering"].(types.Object), priorState.Attributes()["numbering"].(types.Object), recurse)
 
 	return types.ObjectValueMust(attrs, obj)
@@ -1490,7 +1534,7 @@ func reorderProvisioningProvisionedLDAPDirectory(state basetypes.ObjectValue, pr
 	} else {
 		attrs = provisioningProvisionedLDAPDirectoryAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -1505,7 +1549,7 @@ func reorderProvisioningProvisionedNamespace(state basetypes.ObjectValue, priorS
 	} else {
 		attrs = provisioningProvisionedNamespaceAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -1520,7 +1564,7 @@ func reorderProvisioningProvisionedSCIM(state basetypes.ObjectValue, priorState 
 	} else {
 		attrs = provisioningProvisionedSCIMAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -1535,11 +1579,11 @@ func reorderProvisioningProvisionedSystem(state basetypes.ObjectValue, priorStat
 	} else {
 		attrs = provisioningProvisionedSystemAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 	if recurse {
 	}
 	if recurse {
-		obj = reorderProvisioningProvisionedSystem_additionalObjects(state, priorState, false).Attributes()
+		maps.Copy(obj, reorderProvisioningProvisionedSystem_additionalObjects(state, priorState, false).Attributes())
 	}
 	obj["abstract_provisioned_ldap"] = reorderProvisioningAbstractProvisionedLDAP(state.Attributes()["abstract_provisioned_ldap"].(types.Object), priorState.Attributes()["abstract_provisioned_ldap"].(types.Object), recurse)
 	obj["provisioned_a_d"] = reorderProvisioningProvisionedAD(state.Attributes()["provisioned_a_d"].(types.Object), priorState.Attributes()["provisioned_a_d"].(types.Object), recurse)
@@ -1565,7 +1609,7 @@ func reorderProvisioningProvisionedSystemLinkableWrapper(state basetypes.ObjectV
 	} else {
 		attrs = provisioningProvisionedSystemLinkableWrapperAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 	// Reordering not supported for items with type List
 
 	return types.ObjectValueMust(attrs, obj)
@@ -1581,7 +1625,7 @@ func reorderProvisioningProvisionedSystemPrimer(state basetypes.ObjectValue, pri
 	} else {
 		attrs = provisioningProvisionedSystemPrimerAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -1596,7 +1640,7 @@ func reorderProvisioningProvisionedSystemPrimerLinkableWrapper(state basetypes.O
 	} else {
 		attrs = provisioningProvisionedSystemPrimerLinkableWrapperAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 	// Reordering not supported for items with type List
 
 	return types.ObjectValueMust(attrs, obj)
@@ -1612,7 +1656,7 @@ func reorderProvisioningProvisionedSystem_additionalObjects(state basetypes.Obje
 	} else {
 		attrs = provisioningProvisionedSystem_additionalObjectsAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -1627,7 +1671,7 @@ func reorderProvisioningProvisioningManagementPermissions(state basetypes.Object
 	} else {
 		attrs = provisioningProvisioningManagementPermissionsAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -1642,11 +1686,11 @@ func reorderServiceaccountServiceAccount(state basetypes.ObjectValue, priorState
 	} else {
 		attrs = serviceaccountServiceAccountAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 	if recurse {
 	}
 	if recurse {
-		obj = reorderServiceaccountServiceAccount_additionalObjects(state, priorState, false).Attributes()
+		maps.Copy(obj, reorderServiceaccountServiceAccount_additionalObjects(state, priorState, false).Attributes())
 	}
 
 	return types.ObjectValueMust(attrs, obj)
@@ -1662,11 +1706,11 @@ func reorderServiceaccountServiceAccountGroup(state basetypes.ObjectValue, prior
 	} else {
 		attrs = serviceaccountServiceAccountGroupAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 	if recurse {
 	}
 	if recurse {
-		obj = reorderServiceaccountServiceAccountGroup_additionalObjects(state, priorState, false).Attributes()
+		maps.Copy(obj, reorderServiceaccountServiceAccountGroup_additionalObjects(state, priorState, false).Attributes())
 	}
 
 	return types.ObjectValueMust(attrs, obj)
@@ -1682,7 +1726,7 @@ func reorderServiceaccountServiceAccountGroupLinkableWrapper(state basetypes.Obj
 	} else {
 		attrs = serviceaccountServiceAccountGroupLinkableWrapperAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 	// Reordering not supported for items with type List
 
 	return types.ObjectValueMust(attrs, obj)
@@ -1698,7 +1742,7 @@ func reorderServiceaccountServiceAccountGroup_additionalObjects(state basetypes.
 	} else {
 		attrs = serviceaccountServiceAccountGroup_additionalObjectsAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -1713,7 +1757,7 @@ func reorderServiceaccountServiceAccountLinkableWrapper(state basetypes.ObjectVa
 	} else {
 		attrs = serviceaccountServiceAccountLinkableWrapperAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 	// Reordering not supported for items with type List
 
 	return types.ObjectValueMust(attrs, obj)
@@ -1729,7 +1773,7 @@ func reorderServiceaccountServiceAccountPrimer(state basetypes.ObjectValue, prio
 	} else {
 		attrs = serviceaccountServiceAccountPrimerAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -1744,7 +1788,7 @@ func reorderServiceaccountServiceAccountPrimerLinkableWrapper(state basetypes.Ob
 	} else {
 		attrs = serviceaccountServiceAccountPrimerLinkableWrapperAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 	// Reordering not supported for items with type List
 
 	return types.ObjectValueMust(attrs, obj)
@@ -1760,7 +1804,7 @@ func reorderServiceaccountServiceAccount_additionalObjects(state basetypes.Objec
 	} else {
 		attrs = serviceaccountServiceAccount_additionalObjectsAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 	obj["secret"] = reorderGeneratedSecret(state.Attributes()["secret"].(types.Object), priorState.Attributes()["secret"].(types.Object), recurse)
 
 	return types.ObjectValueMust(attrs, obj)
@@ -1776,7 +1820,7 @@ func reorderVaultPasswordMetadata(state basetypes.ObjectValue, priorState basety
 	} else {
 		attrs = vaultPasswordMetadataAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -1791,7 +1835,7 @@ func reorderVaultVault(state basetypes.ObjectValue, priorState basetypes.ObjectV
 	} else {
 		attrs = vaultVaultAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -1806,7 +1850,7 @@ func reorderVaultVaultHolder(state basetypes.ObjectValue, priorState basetypes.O
 	} else {
 		attrs = vaultVaultHolderAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -1821,11 +1865,11 @@ func reorderVaultVaultRecord(state basetypes.ObjectValue, priorState basetypes.O
 	} else {
 		attrs = vaultVaultRecordAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 	if recurse {
 	}
 	if recurse {
-		obj = reorderVaultVaultRecord_additionalObjects(state, priorState, false).Attributes()
+		maps.Copy(obj, reorderVaultVaultRecord_additionalObjects(state, priorState, false).Attributes())
 	}
 
 	return types.ObjectValueMust(attrs, obj)
@@ -1841,7 +1885,7 @@ func reorderVaultVaultRecordPrimer(state basetypes.ObjectValue, priorState baset
 	} else {
 		attrs = vaultVaultRecordPrimerAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -1856,7 +1900,7 @@ func reorderVaultVaultRecordPrimerLinkableWrapper(state basetypes.ObjectValue, p
 	} else {
 		attrs = vaultVaultRecordPrimerLinkableWrapperAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 	// Reordering not supported for items with type List
 
 	return types.ObjectValueMust(attrs, obj)
@@ -1872,7 +1916,7 @@ func reorderVaultVaultRecordSecrets(state basetypes.ObjectValue, priorState base
 	} else {
 		attrs = vaultVaultRecordSecretsAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -1887,7 +1931,7 @@ func reorderVaultVaultRecordShare(state basetypes.ObjectValue, priorState basety
 	} else {
 		attrs = vaultVaultRecordShareAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -1902,7 +1946,7 @@ func reorderVaultVaultRecordShareSummary(state basetypes.ObjectValue, priorState
 	} else {
 		attrs = vaultVaultRecordShareSummaryAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 	// Reordering not supported for children with type List
 	obj["parent"] = reorderVaultVaultRecordShare(state.Attributes()["parent"].(types.Object), priorState.Attributes()["parent"].(types.Object), recurse)
 
@@ -1919,7 +1963,7 @@ func reorderVaultVaultRecord_additionalObjects(state basetypes.ObjectValue, prio
 	} else {
 		attrs = vaultVaultRecord_additionalObjectsAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 	obj["secret"] = reorderVaultVaultRecordSecrets(state.Attributes()["secret"].(types.Object), priorState.Attributes()["secret"].(types.Object), recurse)
 	obj["tile"] = reorderLaunchpadVaultRecordLaunchpadTile(state.Attributes()["tile"].(types.Object), priorState.Attributes()["tile"].(types.Object), recurse)
 
@@ -1936,11 +1980,11 @@ func reorderWebhookWebhook(state basetypes.ObjectValue, priorState basetypes.Obj
 	} else {
 		attrs = webhookWebhookAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 	if recurse {
 	}
 	if recurse {
-		obj = reorderWebhookWebhook_additionalObjects(state, priorState, false).Attributes()
+		maps.Copy(obj, reorderWebhookWebhook_additionalObjects(state, priorState, false).Attributes())
 	}
 
 	return types.ObjectValueMust(attrs, obj)
@@ -1956,7 +2000,7 @@ func reorderWebhookWebhookLinkableWrapper(state basetypes.ObjectValue, priorStat
 	} else {
 		attrs = webhookWebhookLinkableWrapperAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 	// Reordering not supported for items with type List
 
 	return types.ObjectValueMust(attrs, obj)
@@ -1972,7 +2016,7 @@ func reorderWebhookWebhook_additionalObjects(state basetypes.ObjectValue, priorS
 	} else {
 		attrs = webhookWebhook_additionalObjectsAttrTypesRS
 	}
-	obj := state.Attributes()
+	obj := filterAttributes(state.Attributes(), attrs)
 
 	return types.ObjectValueMust(attrs, obj)
 }
