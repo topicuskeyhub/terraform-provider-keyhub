@@ -1,3 +1,12 @@
+##
+* Fix a crash in the reordering code
+
+## 2.31.4
+* Switch back to lists and use explicit reordering to fix #35
+
+## 2.31.3
+* Fix various crashes caused by #35
+
 ## 2.31.3
 * Fix various crashes caused by #35
 

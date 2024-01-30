@@ -27,10 +27,10 @@ provider "keyhub" {
 resource "keyhub_group" "terra" {
   name = "Terraform"
   accounts = [{
-    uuid   = "7ea6622b-f9d2-4e52-a799-217b26f88376"
+    uuid   = "2948741d-f852-4599-be0e-cf187b306b4b"
     rights = "MANAGER"
     }, {
-    uuid   = "2948741d-f852-4599-be0e-cf187b306b4b"
+    uuid   = "7ea6622b-f9d2-4e52-a799-217b26f88376"
     rights = "MANAGER"
   }]
   client_permissions = [{

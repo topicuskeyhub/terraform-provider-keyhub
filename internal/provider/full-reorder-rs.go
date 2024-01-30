@@ -309,13 +309,9 @@ func reorderClientClientApplication_additionalObjects(state basetypes.ObjectValu
 		} else {
 			attrStateEl := (attrState.(types.List)).Elements()
 			attrPriorStateEl := (attrPriorState.(types.List)).Elements()
-			newAttrState := make([]attr.Value, 0, len(attrStateEl))
-			for i, s := range attrStateEl {
-				newAttrState = append(newAttrState, reorderGroupGroupClient(s.(types.Object), attrPriorStateEl[i].(types.Object), recurse))
-			}
-			newAttrState = reorderList(newAttrState, attrPriorStateEl, []string{
+			newAttrState := reorderList(attrStateEl, attrPriorStateEl, recurse, []string{
 				"activation_required",
-			})
+			}, reorderGroupGroupClient)
 			obj["groupclients"] = types.ListValueMust(attrs["groupclients"].(types.ListType).ElemType, newAttrState)
 		}
 	}
@@ -885,15 +881,11 @@ func reorderGroupGroup_additionalObjects(state basetypes.ObjectValue, priorState
 		} else {
 			attrStateEl := (attrState.(types.List)).Elements()
 			attrPriorStateEl := (attrPriorState.(types.List)).Elements()
-			newAttrState := make([]attr.Value, 0, len(attrStateEl))
-			for i, s := range attrStateEl {
-				newAttrState = append(newAttrState, reorderGroupGroupAccount(s.(types.Object), attrPriorStateEl[i].(types.Object), recurse))
-			}
-			newAttrState = reorderList(newAttrState, attrPriorStateEl, []string{
+			newAttrState := reorderList(attrStateEl, attrPriorStateEl, recurse, []string{
 				"uuid",
 				"rights",
 				"end_date",
-			})
+			}, reorderGroupGroupAccount)
 			obj["accounts"] = types.ListValueMust(attrs["accounts"].(types.ListType).ElemType, newAttrState)
 		}
 	}
@@ -905,15 +897,11 @@ func reorderGroupGroup_additionalObjects(state basetypes.ObjectValue, priorState
 		} else {
 			attrStateEl := (attrState.(types.List)).Elements()
 			attrPriorStateEl := (attrPriorState.(types.List)).Elements()
-			newAttrState := make([]attr.Value, 0, len(attrStateEl))
-			for i, s := range attrStateEl {
-				newAttrState = append(newAttrState, reorderGroupGroupAccount(s.(types.Object), attrPriorStateEl[i].(types.Object), recurse))
-			}
-			newAttrState = reorderList(newAttrState, attrPriorStateEl, []string{
+			newAttrState := reorderList(attrStateEl, attrPriorStateEl, recurse, []string{
 				"uuid",
 				"rights",
 				"end_date",
-			})
+			}, reorderGroupGroupAccount)
 			obj["admins"] = types.ListValueMust(attrs["admins"].(types.ListType).ElemType, newAttrState)
 		}
 	}
@@ -925,16 +913,12 @@ func reorderGroupGroup_additionalObjects(state basetypes.ObjectValue, priorState
 		} else {
 			attrStateEl := (attrState.(types.List)).Elements()
 			attrPriorStateEl := (attrPriorState.(types.List)).Elements()
-			newAttrState := make([]attr.Value, 0, len(attrStateEl))
-			for i, s := range attrStateEl {
-				newAttrState = append(newAttrState, reorderClientOAuth2ClientPermissionWithClient(s.(types.Object), attrPriorStateEl[i].(types.Object), recurse))
-			}
-			newAttrState = reorderList(newAttrState, attrPriorStateEl, []string{
+			newAttrState := reorderList(attrStateEl, attrPriorStateEl, recurse, []string{
 				"value",
 				"for_group_uuid",
 				"for_system_uuid",
 				"client_uuid",
-			})
+			}, reorderClientOAuth2ClientPermissionWithClient)
 			obj["client_permissions"] = types.ListValueMust(attrs["client_permissions"].(types.ListType).ElemType, newAttrState)
 		}
 	}
@@ -1181,13 +1165,9 @@ func reorderOrganizationOrganizationalUnit_additionalObjects(state basetypes.Obj
 		} else {
 			attrStateEl := (attrState.(types.List)).Elements()
 			attrPriorStateEl := (attrPriorState.(types.List)).Elements()
-			newAttrState := make([]attr.Value, 0, len(attrStateEl))
-			for i, s := range attrStateEl {
-				newAttrState = append(newAttrState, reorderOrganizationOrganizationalUnitPrimer(s.(types.Object), attrPriorStateEl[i].(types.Object), recurse))
-			}
-			newAttrState = reorderList(newAttrState, attrPriorStateEl, []string{
+			newAttrState := reorderList(attrStateEl, attrPriorStateEl, recurse, []string{
 				"name",
-			})
+			}, reorderOrganizationOrganizationalUnitPrimer)
 			obj["create_as_parent_of"] = types.ListValueMust(attrs["create_as_parent_of"].(types.ListType).ElemType, newAttrState)
 		}
 	}
@@ -1311,14 +1291,10 @@ func reorderProvisioningGroupOnSystem_additionalObjects(state basetypes.ObjectVa
 		} else {
 			attrStateEl := (attrState.(types.List)).Elements()
 			attrPriorStateEl := (attrPriorState.(types.List)).Elements()
-			newAttrState := make([]attr.Value, 0, len(attrStateEl))
-			for i, s := range attrStateEl {
-				newAttrState = append(newAttrState, reorderGroupProvisioningGroup(s.(types.Object), attrPriorStateEl[i].(types.Object), recurse))
-			}
-			newAttrState = reorderList(newAttrState, attrPriorStateEl, []string{
+			newAttrState := reorderList(attrStateEl, attrPriorStateEl, recurse, []string{
 				"group_uuid",
 				"activation_required",
-			})
+			}, reorderGroupProvisioningGroup)
 			obj["provgroups"] = types.ListValueMust(attrs["provgroups"].(types.ListType).ElemType, newAttrState)
 		}
 	}
@@ -1330,16 +1306,12 @@ func reorderProvisioningGroupOnSystem_additionalObjects(state basetypes.ObjectVa
 		} else {
 			attrStateEl := (attrState.(types.List)).Elements()
 			attrPriorStateEl := (attrPriorState.(types.List)).Elements()
-			newAttrState := make([]attr.Value, 0, len(attrStateEl))
-			for i, s := range attrStateEl {
-				newAttrState = append(newAttrState, reorderServiceaccountServiceAccountPrimer(s.(types.Object), attrPriorStateEl[i].(types.Object), recurse))
-			}
-			newAttrState = reorderList(newAttrState, attrPriorStateEl, []string{
+			newAttrState := reorderList(attrStateEl, attrPriorStateEl, recurse, []string{
 				"name",
 				"system_uuid",
 				"username",
 				"active",
-			})
+			}, reorderServiceaccountServiceAccountPrimer)
 			obj["service_accounts"] = types.ListValueMust(attrs["service_accounts"].(types.ListType).ElemType, newAttrState)
 		}
 	}

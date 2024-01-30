@@ -649,7 +649,8 @@ func findSuperStruct(data any, targetType reflect.Type) (any, bool) {
 	return nil, false
 }
 
-func reorderList(newState []attr.Value, priorState []attr.Value, identifyingProps []string) []attr.Value {
+func reorderList(newState []attr.Value, priorState []attr.Value, recurse bool, identifyingProps []string,
+	reorderElement func(types.Object, types.Object, bool) basetypes.ObjectValue) []attr.Value {
 	ret := make([]attr.Value, len(priorState))
 	for pi, ps := range priorState {
 		for ni, ns := range newState {
@@ -661,7 +662,7 @@ func reorderList(newState []attr.Value, priorState []attr.Value, identifyingProp
 				}
 			}
 			if match {
-				ret[pi] = ns
+				ret[pi] = reorderElement(ns.(types.Object), ps.(types.Object), recurse)
 				newState = slices.Delete(newState, ni, ni+1)
 				break
 			}
