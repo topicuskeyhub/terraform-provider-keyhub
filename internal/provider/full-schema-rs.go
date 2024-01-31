@@ -32,16 +32,16 @@ import (
 func resourceSchemaAttrsAuditInfo(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	schemaAttrs["created_at"] = rsschema.StringAttribute{
-		Optional: true,
+		Computed: true,
 	}
 	schemaAttrs["created_by"] = rsschema.StringAttribute{
-		Optional: true,
+		Computed: true,
 	}
 	schemaAttrs["last_modified_at"] = rsschema.StringAttribute{
-		Optional: true,
+		Computed: true,
 	}
 	schemaAttrs["last_modified_by"] = rsschema.StringAttribute{
-		Optional: true,
+		Computed: true,
 	}
 	return schemaAttrs
 }
@@ -1149,19 +1149,12 @@ func resourceSchemaAttrsDirectoryAccountDirectoryStatusReport(recurse bool) map[
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	schemaAttrs["accounts"] = rsschema.Int64Attribute{
 		Computed: true,
-		Optional: true,
-		Default:  int64default.StaticInt64(0),
 	}
 	schemaAttrs["reason"] = rsschema.StringAttribute{
-		Optional: true,
+		Computed: true,
 	}
 	schemaAttrs["status"] = rsschema.StringAttribute{
-		Optional: true,
-		Validators: []validator.String{
-			stringvalidator.OneOf(
-				"INIT_REQUIRED", "ONLINE", "DEGRADED", "NON_REDUNDANT", "OFFLINE", "DISABLED",
-			),
-		},
+		Computed: true,
 	}
 	return schemaAttrs
 }
@@ -1433,8 +1426,6 @@ func resourceSchemaAttrsGroupAuthorizedGroupsWrapper(recurse bool) map[string]rs
 	}
 	schemaAttrs["group_count"] = rsschema.Int64Attribute{
 		Computed: true,
-		Optional: true,
-		Default:  int64default.StaticInt64(0),
 	}
 	return schemaAttrs
 }
@@ -1718,40 +1709,28 @@ func resourceSchemaAttrsGroupGroupAuditConfig(recurse bool) map[string]rsschema.
 func resourceSchemaAttrsGroupGroupAuditingInfo(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	schemaAttrs["audit_due_date"] = rsschema.StringAttribute{
-		Optional: true,
+		Computed: true,
 	}
 	schemaAttrs["last_audit_date"] = rsschema.StringAttribute{
-		Optional: true,
+		Computed: true,
 	}
 	schemaAttrs["nr_accounts"] = rsschema.Int64Attribute{
 		Computed: true,
-		Optional: true,
-		Default:  int64default.StaticInt64(0),
 	}
 	schemaAttrs["nr_disabled_accounts"] = rsschema.Int64Attribute{
 		Computed: true,
-		Optional: true,
-		Default:  int64default.StaticInt64(0),
 	}
 	schemaAttrs["nr_disabled_managers"] = rsschema.Int64Attribute{
 		Computed: true,
-		Optional: true,
-		Default:  int64default.StaticInt64(0),
 	}
 	schemaAttrs["nr_expired_vault_records"] = rsschema.Int64Attribute{
 		Computed: true,
-		Optional: true,
-		Default:  int64default.StaticInt64(0),
 	}
 	schemaAttrs["nr_managers"] = rsschema.Int64Attribute{
 		Computed: true,
-		Optional: true,
-		Default:  int64default.StaticInt64(0),
 	}
 	schemaAttrs["nr_vault_records_with_end_date"] = rsschema.Int64Attribute{
 		Computed: true,
-		Optional: true,
-		Default:  int64default.StaticInt64(0),
 	}
 	return schemaAttrs
 }
@@ -1824,14 +1803,24 @@ func resourceSchemaAttrsGroupGroupClient(recurse bool) map[string]rsschema.Attri
 		PlanModifiers: []planmodifier.String{stringplanmodifier.UseStateForUnknown()},
 	}
 	schemaAttrs["group_uuid"] = rsschema.StringAttribute{
-		Computed:      true,
-		PlanModifiers: []planmodifier.String{stringplanmodifier.UseStateForUnknown()},
+		Required: true,
+		Validators: []validator.String{
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
+		},
 	}
 	schemaAttrs["owner_uuid"] = rsschema.StringAttribute{
 		Computed: true,
+		Optional: true,
+		Validators: []validator.String{
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
+		},
 	}
 	schemaAttrs["technical_administrator_uuid"] = rsschema.StringAttribute{
 		Computed: true,
+		Optional: true,
+		Validators: []validator.String{
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
+		},
 	}
 	return schemaAttrs
 }
@@ -1861,33 +1850,21 @@ func resourceSchemaAttrsGroupGroupInfo(recurse bool) map[string]rsschema.Attribu
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	schemaAttrs["nr_accounts"] = rsschema.Int64Attribute{
 		Computed: true,
-		Optional: true,
-		Default:  int64default.StaticInt64(0),
 	}
 	schemaAttrs["nr_accounts_with_vault"] = rsschema.Int64Attribute{
 		Computed: true,
-		Optional: true,
-		Default:  int64default.StaticInt64(0),
 	}
 	schemaAttrs["nr_audits"] = rsschema.Int64Attribute{
 		Computed: true,
-		Optional: true,
-		Default:  int64default.StaticInt64(0),
 	}
 	schemaAttrs["nr_clients"] = rsschema.Int64Attribute{
 		Computed: true,
-		Optional: true,
-		Default:  int64default.StaticInt64(0),
 	}
 	schemaAttrs["nr_provisioned_systems"] = rsschema.Int64Attribute{
 		Computed: true,
-		Optional: true,
-		Default:  int64default.StaticInt64(0),
 	}
 	schemaAttrs["nr_vault_records"] = rsschema.Int64Attribute{
 		Computed: true,
-		Optional: true,
-		Default:  int64default.StaticInt64(0),
 	}
 	return schemaAttrs
 }
@@ -2319,26 +2296,14 @@ func resourceSchemaAttrsLaunchpadVaultRecordLaunchpadTile(recurse bool) map[stri
 func resourceSchemaAttrsMarkItemMarker(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	schemaAttrs["level"] = rsschema.StringAttribute{
-		Optional: true,
-		Validators: []validator.String{
-			stringvalidator.OneOf(
-				"INFO", "WARNING",
-			),
-		},
+		Computed: true,
 	}
 	schemaAttrs["type"] = rsschema.StringAttribute{
-		Optional: true,
-		Validators: []validator.String{
-			stringvalidator.OneOf(
-				"TLS_DISABLED", "TLS_UNVERIFIED", "WEAK_PASSWORD_HASHING", "GROUP_NO_MANAGER", "GROUP_ONE_MANAGER", "GROUP_UNREADABLE_VAULT", "GROUP_UNRECOVERABLE_VAULT", "GROUP_CRITERIA_UNSATISFIED_AUDIT_INTERVAL", "GROUP_CRITERIA_UNSATISFIED_AUDIT_MONTHS", "GROUP_CRITERIA_UNSATISFIED_AUTHORIZING_GROUP_PROVISIONING", "GROUP_CRITERIA_UNSATISFIED_AUTHORIZING_GROUP_MEMBERSHIP", "GROUP_CRITERIA_UNSATISFIED_AUTHORIZING_GROUP_DELEGATION", "GROUP_CRITERIA_UNSATISFIED_AUTHORIZING_GROUP_AUDITING", "GROUP_CRITERIA_UNSATISFIED_RECORD_TRAIL", "GROUP_CRITERIA_UNSATISFIED_ROTATING_PASSWORD_REQUIRED", "GROUP_CRITERIA_UNSATISFIED_VAULT_REQUIRES_ACTIVATION", "GROUP_CRITERIA_UNSATISFIED_MINIMUM_NR_MANAGERS",
-			),
-		},
+		Computed: true,
 	}
 	schemaAttrs["parameters"] = rsschema.MapAttribute{
 		ElementType: types.StringType,
-		Optional:    true,
 		Computed:    true,
-		Default:     mapdefault.StaticValue(types.MapValueMust(types.StringType, make(map[string]attr.Value))),
 	}
 
 	return schemaAttrs
@@ -2646,26 +2611,15 @@ func resourceSchemaAttrsProvisioningCircuitBreakerStatistics(recurse bool) map[s
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	schemaAttrs["number_of_failed_calls"] = rsschema.Int64Attribute{
 		Computed: true,
-		Optional: true,
-		Default:  int64default.StaticInt64(0),
 	}
 	schemaAttrs["number_of_not_permitted_calls"] = rsschema.Int64Attribute{
 		Computed: true,
-		Optional: true,
-		Default:  int64default.StaticInt64(0),
 	}
 	schemaAttrs["number_of_successful_calls"] = rsschema.Int64Attribute{
 		Computed: true,
-		Optional: true,
-		Default:  int64default.StaticInt64(0),
 	}
 	schemaAttrs["state"] = rsschema.StringAttribute{
-		Optional: true,
-		Validators: []validator.String{
-			stringvalidator.OneOf(
-				"CLOSED", "OPEN", "HALF_OPEN",
-			),
-		},
+		Computed: true,
 	}
 	return schemaAttrs
 }
@@ -2825,8 +2779,6 @@ func resourceSchemaAttrsProvisioningOwnedGroupOnSystemsWrapper(recurse bool) map
 	}
 	schemaAttrs["unlinked_count"] = rsschema.Int64Attribute{
 		Computed: true,
-		Optional: true,
-		Default:  int64default.StaticInt64(0),
 	}
 	return schemaAttrs
 }
@@ -3470,18 +3422,12 @@ func resourceSchemaAttrsProvisioningProvisioningManagementPermissions(recurse bo
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	schemaAttrs["create_new_groups_allowed"] = rsschema.BoolAttribute{
 		Computed: true,
-		Optional: true,
-		Default:  booldefault.StaticBool(false),
 	}
 	schemaAttrs["create_service_accounts_allowed"] = rsschema.BoolAttribute{
 		Computed: true,
-		Optional: true,
-		Default:  booldefault.StaticBool(false),
 	}
 	schemaAttrs["reuse_existing_groups_allowed"] = rsschema.BoolAttribute{
 		Computed: true,
-		Optional: true,
-		Default:  booldefault.StaticBool(false),
 	}
 	return schemaAttrs
 }
@@ -3737,46 +3683,30 @@ func resourceSchemaAttrsVaultPasswordMetadata(recurse bool) map[string]rsschema.
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	schemaAttrs["dictionary"] = rsschema.BoolAttribute{
 		Computed: true,
-		Optional: true,
-		Default:  booldefault.StaticBool(false),
 	}
 	schemaAttrs["duplicate"] = rsschema.BoolAttribute{
 		Computed: true,
-		Optional: true,
-		Default:  booldefault.StaticBool(false),
 	}
 	schemaAttrs["hash"] = rsschema.StringAttribute{
-		Optional: true,
+		Computed: true,
 	}
 	schemaAttrs["length"] = rsschema.Int64Attribute{
 		Computed: true,
-		Optional: true,
-		Default:  int64default.StaticInt64(0),
 	}
 	schemaAttrs["lower_count"] = rsschema.Int64Attribute{
 		Computed: true,
-		Optional: true,
-		Default:  int64default.StaticInt64(0),
 	}
 	schemaAttrs["number_count"] = rsschema.Int64Attribute{
 		Computed: true,
-		Optional: true,
-		Default:  int64default.StaticInt64(0),
 	}
 	schemaAttrs["special_count"] = rsschema.Int64Attribute{
 		Computed: true,
-		Optional: true,
-		Default:  int64default.StaticInt64(0),
 	}
 	schemaAttrs["strength"] = rsschema.Int64Attribute{
 		Computed: true,
-		Optional: true,
-		Default:  int64default.StaticInt64(0),
 	}
 	schemaAttrs["upper_count"] = rsschema.Int64Attribute{
 		Computed: true,
-		Optional: true,
-		Default:  int64default.StaticInt64(0),
 	}
 	return schemaAttrs
 }

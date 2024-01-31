@@ -310,7 +310,10 @@ func reorderClientClientApplication_additionalObjects(state basetypes.ObjectValu
 			attrStateEl := (attrState.(types.List)).Elements()
 			attrPriorStateEl := (attrPriorState.(types.List)).Elements()
 			newAttrState := reorderList(attrStateEl, attrPriorStateEl, recurse, []string{
+				"group_uuid",
 				"activation_required",
+				"owner_uuid",
+				"technical_administrator_uuid",
 			}, reorderGroupGroupClient)
 			obj["groupclients"] = types.ListValueMust(attrs["groupclients"].(types.ListType).ElemType, newAttrState)
 		}
@@ -1038,7 +1041,6 @@ func reorderMarkItemMarker(state basetypes.ObjectValue, priorState basetypes.Obj
 		attrs = markItemMarkerAttrTypesRS
 	}
 	obj := filterAttributes(state.Attributes(), attrs)
-	// Reordering not supported for parameters with type Map
 
 	return types.ObjectValueMust(attrs, obj)
 }

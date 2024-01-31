@@ -67,7 +67,7 @@ Optional:
 <a id="nestedatt--audit"></a>
 ### Nested Schema for `audit`
 
-Optional:
+Read-Only:
 
 - `created_at` (String)
 - `created_by` (String)
@@ -89,7 +89,7 @@ Read-Only:
 <a id="nestedatt--password_metadata"></a>
 ### Nested Schema for `password_metadata`
 
-Optional:
+Read-Only:
 
 - `dictionary` (Boolean)
 - `duplicate` (Boolean)

@@ -558,7 +558,7 @@ Optional:
 <a id="nestedatt--audit"></a>
 ### Nested Schema for `audit`
 
-Optional:
+Read-Only:
 
 - `created_at` (String)
 - `created_by` (String)
@@ -571,8 +571,11 @@ Optional:
 
 Optional:
 
-- `group_count` (Number)
 - `items` (Attributes List) (see [below for nested schema](#nestedatt--authorized_groups--items))
+
+Read-Only:
+
+- `group_count` (Number)
 
 <a id="nestedatt--authorized_groups--items"></a>
 ### Nested Schema for `authorized_groups.items`
@@ -674,18 +677,21 @@ Optional:
 <a id="nestedatt--clients"></a>
 ### Nested Schema for `clients`
 
+Required:
+
+- `group_uuid` (String)
+
 Optional:
 
 - `activation_required` (Boolean)
+- `owner_uuid` (String)
+- `technical_administrator_uuid` (String)
 
 Read-Only:
 
 - `client_uuid` (String)
-- `group_uuid` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--clients--links))
-- `owner_uuid` (String)
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--clients--permissions))
-- `technical_administrator_uuid` (String)
 
 <a id="nestedatt--clients--links"></a>
 ### Nested Schema for `clients.links`
@@ -942,7 +948,7 @@ Optional:
 <a id="nestedatt--groupauditinginfo"></a>
 ### Nested Schema for `groupauditinginfo`
 
-Optional:
+Read-Only:
 
 - `audit_due_date` (String)
 - `last_audit_date` (String)
@@ -957,7 +963,7 @@ Optional:
 <a id="nestedatt--groupinfo"></a>
 ### Nested Schema for `groupinfo`
 
-Optional:
+Read-Only:
 
 - `nr_accounts` (Number)
 - `nr_accounts_with_vault` (Number)
@@ -987,7 +993,7 @@ Read-Only:
 <a id="nestedatt--helpdesk--status"></a>
 ### Nested Schema for `helpdesk.status`
 
-Optional:
+Read-Only:
 
 - `accounts` (Number)
 - `reason` (String)
@@ -1038,7 +1044,7 @@ Optional:
 <a id="nestedatt--markers--markers"></a>
 ### Nested Schema for `markers.markers`
 
-Optional:
+Read-Only:
 
 - `level` (String)
 - `parameters` (Map of String)
@@ -1362,6 +1368,9 @@ Optional:
 Optional:
 
 - `items` (Attributes List) (see [below for nested schema](#nestedatt--owned_groups_on_system--items))
+
+Read-Only:
+
 - `unlinked_count` (Number)
 
 <a id="nestedatt--owned_groups_on_system--items"></a>

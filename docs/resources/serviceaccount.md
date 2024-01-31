@@ -55,7 +55,7 @@ Read-Only:
 <a id="nestedatt--audit"></a>
 ### Nested Schema for `audit`
 
-Optional:
+Read-Only:
 
 - `created_at` (String)
 - `created_by` (String)

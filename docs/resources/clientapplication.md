@@ -49,18 +49,21 @@ description: |-
 <a id="nestedatt--groupclients"></a>
 ### Nested Schema for `groupclients`
 
+Required:
+
+- `group_uuid` (String)
+
 Optional:
 
 - `activation_required` (Boolean)
+- `owner_uuid` (String)
+- `technical_administrator_uuid` (String)
 
 Read-Only:
 
 - `client_uuid` (String)
-- `group_uuid` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--groupclients--links))
-- `owner_uuid` (String)
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--groupclients--permissions))
-- `technical_administrator_uuid` (String)
 
 <a id="nestedatt--groupclients--links"></a>
 ### Nested Schema for `groupclients.links`
@@ -171,7 +174,7 @@ Optional:
 <a id="nestedatt--audit"></a>
 ### Nested Schema for `audit`
 
-Optional:
+Read-Only:
 
 - `created_at` (String)
 - `created_by` (String)
