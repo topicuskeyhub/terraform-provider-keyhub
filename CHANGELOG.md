@@ -1,4 +1,7 @@
-##
+## 2.32.0
+* Upgrade API to Topicus KeyHub version 32
+
+## 2.31.5
 * Fix a crash in the reordering code
 
 ## 2.31.4

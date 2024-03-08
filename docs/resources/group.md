@@ -270,12 +270,12 @@ Optional:
 - `resource_uris` (String)
 - `share_secret_in_vault` (Boolean)
 - `show_landing_page` (Boolean)
-- `use_client_credentials` (Boolean)
 
 Read-Only:
 
 - `account_permissions` (Attributes List) (see [below for nested schema](#nestedatt--administered_clients--oauth2_client--account_permissions))
 - `shared_secret_uuid` (String)
+- `use_client_credentials` (Boolean)
 
 <a id="nestedatt--administered_clients--oauth2_client--account_permissions"></a>
 ### Nested Schema for `administered_clients.oauth2_client.account_permissions`
@@ -1194,12 +1194,12 @@ Optional:
 - `resource_uris` (String)
 - `share_secret_in_vault` (Boolean)
 - `show_landing_page` (Boolean)
-- `use_client_credentials` (Boolean)
 
 Read-Only:
 
 - `account_permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_clients--oauth2_client--account_permissions))
 - `shared_secret_uuid` (String)
+- `use_client_credentials` (Boolean)
 
 <a id="nestedatt--owned_clients--oauth2_client--account_permissions"></a>
 ### Nested Schema for `owned_clients.oauth2_client.account_permissions`

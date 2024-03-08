@@ -117,12 +117,12 @@ Optional:
 - `resource_uris` (String)
 - `share_secret_in_vault` (Boolean)
 - `show_landing_page` (Boolean)
-- `use_client_credentials` (Boolean)
 
 Read-Only:
 
 - `account_permissions` (Attributes List) (see [below for nested schema](#nestedatt--oauth2_client--account_permissions))
 - `shared_secret_uuid` (String)
+- `use_client_credentials` (Boolean)
 
 <a id="nestedatt--oauth2_client--account_permissions"></a>
 ### Nested Schema for `oauth2_client.account_permissions`
