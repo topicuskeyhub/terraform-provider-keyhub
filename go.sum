@@ -151,8 +151,8 @@ github.com/mattn/go-isatty v0.0.14/go.mod h1:7GGIvUiUoEMVVmxf/4nioHXj79iQHKdU27k
 github.com/mattn/go-isatty v0.0.16/go.mod h1:kYGgaQfpe5nmfYZH+SKPsOc2e4SrIfOl2e/yFXSvRLM=
 github.com/mattn/go-isatty v0.0.20 h1:xfD0iDuEKnDkl03q4limB+vH+GxLEtL/jb4xVJSWWEY=
 github.com/mattn/go-isatty v0.0.20/go.mod h1:W+V8PltTTMOvKvAeJH7IuucS94S2C6jfK/D7dTCTo3Y=
-github.com/microsoft/kiota-abstractions-go v1.5.6 h1:3hd1sACWB2B9grv8KG1T8g/gGQ4A8kTLv91OUxHSxkE=
-github.com/microsoft/kiota-abstractions-go v1.5.6/go.mod h1:2WX7Oh8V9SAdZ80OGeE53rcbdys54Pd38rAeDUghrpM=
+github.com/microsoft/kiota-abstractions-go v1.6.0 h1:qbGBNMU0/o5myKbikCBXJFohVCFrrpx2cO15Rta2WyA=
+github.com/microsoft/kiota-abstractions-go v1.6.0/go.mod h1:7YH20ZbRWXGfHSSvdHkdztzgCB9mRdtFx13+hrYIEpo=
 github.com/microsoft/kiota-http-go v1.3.2 h1:HSrbw6MDMmgLaqU1qT3SgdmD/18KPW2usfyUtE017Lw=
 github.com/microsoft/kiota-http-go v1.3.2/go.mod h1:pEs3eLpCJBhsesjtvM/3T4ODKCofPgDlDsGHHetau2g=
 github.com/microsoft/kiota-serialization-json-go v1.0.6 h1:8v8IXMGurLCRYZs1l0Ck75lN0wzKDLko69mNdQGVWeQ=
@@ -194,8 +194,8 @@ github.com/skeema/knownhosts v1.2.1/go.mod h1:xYbVRSPxqBZFrdmDyMmsOs+uX1UZC3nTN3
 github.com/spf13/cast v1.3.1/go.mod h1:Qx5cxh0v+4UWYiBimWS+eyWzqEqokIECu5etghLkUJE=
 github.com/spf13/cast v1.5.0 h1:rj3WzYc11XZaIZMPKmwP96zkFEnnAmV8s6XbB2aY32w=
 github.com/spf13/cast v1.5.0/go.mod h1:SpXXQ5YoyJw6s3/6cMTQuxvgRl3PCJiyaX9p6b155UU=
-github.com/std-uritemplate/std-uritemplate/go v0.0.54 h1:8t7J7tNuMDj4Vkqq+IRENQDZTZzXJZZbN+iD60PEiAs=
-github.com/std-uritemplate/std-uritemplate/go v0.0.54/go.mod h1:CLZ1543WRCuUQQjK0BvPM4QrG2toY8xNZUm8Vbt7vTc=
+github.com/std-uritemplate/std-uritemplate/go v0.0.55 h1:muSH037g97K7U2f94G9LUuE8tZlJsoSSrPsO9V281WY=
+github.com/std-uritemplate/std-uritemplate/go v0.0.55/go.mod h1:rG/bqh/ThY4xE5de7Rap3vaDkYUT76B0GPJ0loYeTTc=
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
 github.com/stretchr/testify v1.2.2/go.mod h1:a8OnRcib4nhh0OaRAV+Yts87kKdq0PP7pXfy6kDkUVs=
 github.com/stretchr/testify v1.4.0/go.mod h1:j7eGeouHqKxXV5pUuKE4zz7dFj8WfuZ+81PSLYec5m4=
