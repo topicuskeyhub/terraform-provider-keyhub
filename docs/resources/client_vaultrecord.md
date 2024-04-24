@@ -35,6 +35,7 @@ description: |-
 
 ### Read-Only
 
+- `activation_status` (Attributes) (see [below for nested schema](#nestedatt--activation_status))
 - `audit` (Attributes) (see [below for nested schema](#nestedatt--audit))
 - `derived` (Boolean)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--links))
@@ -62,6 +63,15 @@ Optional:
 
 <a id="nestedatt--tile"></a>
 ### Nested Schema for `tile`
+
+
+<a id="nestedatt--activation_status"></a>
+### Nested Schema for `activation_status`
+
+Optional:
+
+- `activated` (Boolean)
+- `activation_required` (Boolean)
 
 
 <a id="nestedatt--audit"></a>

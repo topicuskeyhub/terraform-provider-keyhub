@@ -35,6 +35,8 @@ description: |-
 - `password_rotation` (String)
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--permissions))
 - `secret` (Attributes) (see [below for nested schema](#nestedatt--secret))
+- `ssh_public_key` (String)
+- `supported_features` (Attributes) (see [below for nested schema](#nestedatt--supported_features))
 - `system` (Attributes) (see [below for nested schema](#nestedatt--system))
 - `technical_administrator` (Attributes) (see [below for nested schema](#nestedatt--technical_administrator))
 - `username` (String)
@@ -148,6 +150,14 @@ Read-Only:
 Read-Only:
 
 - `generated_secret` (String, Sensitive)
+
+
+<a id="nestedatt--supported_features"></a>
+### Nested Schema for `supported_features`
+
+Read-Only:
+
+- `ssh_public_key` (Boolean)
 
 
 <a id="nestedatt--system"></a>

@@ -25,6 +25,7 @@ description: |-
 
 ### Read-Only
 
+- `activation_status` (Attributes) (see [below for nested schema](#nestedatt--activation_status))
 - `audit` (Attributes) (see [below for nested schema](#nestedatt--audit))
 - `color` (String)
 - `derived` (Boolean)
@@ -45,6 +46,15 @@ description: |-
 - `username` (String)
 - `vaultholder` (Attributes) (see [below for nested schema](#nestedatt--vaultholder))
 - `warning_period` (String)
+
+<a id="nestedatt--activation_status"></a>
+### Nested Schema for `activation_status`
+
+Read-Only:
+
+- `activated` (Boolean)
+- `activation_required` (Boolean)
+
 
 <a id="nestedatt--audit"></a>
 ### Nested Schema for `audit`

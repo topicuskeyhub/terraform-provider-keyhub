@@ -30,6 +30,7 @@ description: |-
 - `account_count` (Number)
 - `active` (Boolean)
 - `audit` (Attributes) (see [below for nested schema](#nestedatt--audit))
+- `cleanup_period` (Attributes) (see [below for nested schema](#nestedatt--cleanup_period))
 - `content_administrator` (Attributes) (see [below for nested schema](#nestedatt--content_administrator))
 - `external_uuid` (String)
 - `issued_permissions` (Attributes List) (see [below for nested schema](#nestedatt--issued_permissions))
@@ -78,7 +79,7 @@ Read-Only:
 - `object_classes` (String)
 - `port` (Number)
 - `service_account_dn` (String)
-- `ssh_public_key_supported` (Boolean)
+- `ssh_public_key_support` (String)
 - `tls` (String)
 - `trusted_certificate` (Attributes) (see [below for nested schema](#nestedatt--abstract_provisioned_ldap--trusted_certificate))
 - `user_dn` (String)
@@ -250,6 +251,16 @@ Read-Only:
 - `created_by` (String)
 - `last_modified_at` (String)
 - `last_modified_by` (String)
+
+
+<a id="nestedatt--cleanup_period"></a>
+### Nested Schema for `cleanup_period`
+
+Read-Only:
+
+- `days` (Number)
+- `months` (Number)
+- `years` (Number)
 
 
 <a id="nestedatt--content_administrator"></a>

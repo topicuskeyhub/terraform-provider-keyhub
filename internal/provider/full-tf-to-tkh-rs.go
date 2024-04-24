@@ -1446,6 +1446,7 @@ func tfObjectToTKHRSGroupGroup(ctx context.Context, recurse bool, objVal types.O
 		tkh.SetNestedUnder(val)
 	}
 	tkh.SetPrivateGroup(objAttrs["private_group"].(basetypes.BoolValue).ValueBoolPointer())
+	tkh.SetProfileAdministration(objAttrs["profile_administration"].(basetypes.BoolValue).ValueBoolPointer())
 	tkh.SetRecordTrail(objAttrs["record_trail"].(basetypes.BoolValue).ValueBoolPointer())
 	tkh.SetRotatingPasswordRequired(objAttrs["rotating_password_required"].(basetypes.BoolValue).ValueBoolPointer())
 	tkh.SetSingleManaged(objAttrs["single_managed"].(basetypes.BoolValue).ValueBoolPointer())
@@ -2338,8 +2339,19 @@ func tfObjectToTKHRSOrganizationOrganizationalUnit(ctx context.Context, recurse 
 	}
 	tkh.SetName(objAttrs["name"].(basetypes.StringValue).ValueStringPointer())
 	tkh.SetUuid(objAttrs["uuid"].(basetypes.StringValue).ValueStringPointer())
+	{
+		val, d := findGroupGroupByUUID(ctx, objAttrs["create_group_approve_group_uuid"].(basetypes.StringValue).ValueStringPointer())
+		diags.Append(d...)
+		tkh.SetCreateGroupApproveGroup(val)
+	}
+	tkh.SetCreateGroupPlaceholder(objAttrs["create_group_placeholder"].(basetypes.StringValue).ValueStringPointer())
 	tkh.SetDepth(int64PToInt32P(objAttrs["depth"].(basetypes.Int64Value).ValueInt64Pointer()))
 	tkh.SetDescription(objAttrs["description"].(basetypes.StringValue).ValueStringPointer())
+	{
+		val, d := findGroupGroupByUUID(ctx, objAttrs["enable_tech_admin_approve_group_uuid"].(basetypes.StringValue).ValueStringPointer())
+		diags.Append(d...)
+		tkh.SetEnableTechAdminApproveGroup(val)
+	}
 	{
 		val, d := findGroupGroupPrimerByUUID(ctx, objAttrs["owner_uuid"].(basetypes.StringValue).ValueStringPointer())
 		diags.Append(d...)
@@ -2349,6 +2361,11 @@ func tfObjectToTKHRSOrganizationOrganizationalUnit(ctx context.Context, recurse 
 		val, d := findOrganizationOrganizationalUnitPrimerByUUID(ctx, objAttrs["parent_uuid"].(basetypes.StringValue).ValueStringPointer())
 		diags.Append(d...)
 		tkh.SetParent(val)
+	}
+	{
+		val, d := findGroupGroupByUUID(ctx, objAttrs["remove_group_approve_group_uuid"].(basetypes.StringValue).ValueStringPointer())
+		diags.Append(d...)
+		tkh.SetRemoveGroupApproveGroup(val)
 	}
 	if recurse {
 		{
@@ -2431,6 +2448,33 @@ func tfObjectToTKHRSOrganizationOrganizationalUnitPrimerLinkableWrapper(ctx cont
 	return tkh, diags
 }
 
+func tfObjectToTKHRSOrganizationOrganizationalUnitSettings(ctx context.Context, recurse bool, objVal types.Object) (keyhubmodel.OrganizationOrganizationalUnitSettingsable, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	if objVal.IsNull() || objVal.IsUnknown() {
+		return nil, diags
+	}
+	objAttrs := objVal.Attributes()
+	var tkh keyhubmodel.OrganizationOrganizationalUnitSettingsable
+	tkh = keyhubmodel.NewOrganizationOrganizationalUnitSettings()
+	{
+		val, d := tfObjectToTKHRSGroupGroup(ctx, recurse, objAttrs["create_group_approve_group"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		tkh.SetCreateGroupApproveGroup(val)
+	}
+	tkh.SetCreateGroupPlaceholder(objAttrs["create_group_placeholder"].(basetypes.StringValue).ValueStringPointer())
+	{
+		val, d := tfObjectToTKHRSGroupGroup(ctx, recurse, objAttrs["enable_tech_admin_approve_group"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		tkh.SetEnableTechAdminApproveGroup(val)
+	}
+	{
+		val, d := tfObjectToTKHRSGroupGroup(ctx, recurse, objAttrs["remove_group_approve_group"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		tkh.SetRemoveGroupApproveGroup(val)
+	}
+	return tkh, diags
+}
+
 func tfObjectToTKHRSOrganizationOrganizationalUnit_additionalObjects(ctx context.Context, recurse bool, objVal types.Object) (keyhubmodel.OrganizationOrganizationalUnit_additionalObjectsable, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	if objVal.IsNull() || objVal.IsUnknown() {
@@ -2451,6 +2495,11 @@ func tfObjectToTKHRSOrganizationOrganizationalUnit_additionalObjects(ctx context
 		if val != nil {
 			val.SetAdditionalData(map[string]any{"$type": "LinkableWrapper"})
 		}
+	}
+	{
+		val, d := tfObjectToTKHRSOrganizationOrganizationalUnitSettings(ctx, recurse, objAttrs["settings"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		tkh.SetSettings(val)
 	}
 	return tkh, diags
 }
@@ -2489,7 +2538,13 @@ func tfObjectToTKHRSProvisioningAbstractProvisionedLDAP(ctx context.Context, rec
 	tkh.SetObjectClasses(objAttrs["object_classes"].(basetypes.StringValue).ValueStringPointer())
 	tkh.SetPort(int64PToInt32P(objAttrs["port"].(basetypes.Int64Value).ValueInt64Pointer()))
 	tkh.SetServiceAccountDN(objAttrs["service_account_dn"].(basetypes.StringValue).ValueStringPointer())
-	tkh.SetSshPublicKeySupported(objAttrs["ssh_public_key_supported"].(basetypes.BoolValue).ValueBoolPointer())
+	{
+		val, d := parseCastPointer(objAttrs["ssh_public_key_support"].(basetypes.StringValue), keyhubmodel.ParseProvisioningLDAPSshPublicKeySupport, func(val any) keyhubmodel.ProvisioningLDAPSshPublicKeySupport {
+			return *val.(*keyhubmodel.ProvisioningLDAPSshPublicKeySupport)
+		})
+		diags.Append(d...)
+		tkh.SetSshPublicKeySupport(val)
+	}
 	{
 		val, d := parseCastPointer(objAttrs["tls"].(basetypes.StringValue), keyhubmodel.ParseTLSLevel, func(val any) keyhubmodel.TLSLevel { return *val.(*keyhubmodel.TLSLevel) })
 		diags.Append(d...)
@@ -3035,6 +3090,11 @@ func tfObjectToTKHRSProvisioningProvisionedSystem(ctx context.Context, recurse b
 	tkh.SetUuid(objAttrs["uuid"].(basetypes.StringValue).ValueStringPointer())
 	tkh.SetAccountCount(int64PToInt32P(objAttrs["account_count"].(basetypes.Int64Value).ValueInt64Pointer()))
 	{
+		val, d := tfObjectToTKHRSProvisioningProvisionedSystem_cleanupPeriod(ctx, false, objAttrs["cleanup_period"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		tkh.SetCleanupPeriod(val)
+	}
+	{
 		val, d := findGroupGroupPrimerByUUID(ctx, objAttrs["content_administrator_uuid"].(basetypes.StringValue).ValueStringPointer())
 		diags.Append(d...)
 		tkh.SetContentAdministrator(val)
@@ -3284,6 +3344,20 @@ func tfObjectToTKHRSProvisioningProvisionedSystem_additionalObjects(ctx context.
 	return tkh, diags
 }
 
+func tfObjectToTKHRSProvisioningProvisionedSystem_cleanupPeriod(ctx context.Context, recurse bool, objVal types.Object) (keyhubmodel.ProvisioningProvisionedSystem_cleanupPeriodable, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	if objVal.IsNull() || objVal.IsUnknown() {
+		return nil, diags
+	}
+	objAttrs := objVal.Attributes()
+	var tkh keyhubmodel.ProvisioningProvisionedSystem_cleanupPeriodable
+	tkh = keyhubmodel.NewProvisioningProvisionedSystem_cleanupPeriod()
+	tkh.SetDays(int64PToInt32P(objAttrs["days"].(basetypes.Int64Value).ValueInt64Pointer()))
+	tkh.SetMonths(int64PToInt32P(objAttrs["months"].(basetypes.Int64Value).ValueInt64Pointer()))
+	tkh.SetYears(int64PToInt32P(objAttrs["years"].(basetypes.Int64Value).ValueInt64Pointer()))
+	return tkh, diags
+}
+
 func tfObjectToTKHRSProvisioningProvisioningManagementPermissions(ctx context.Context, recurse bool, objVal types.Object) (keyhubmodel.ProvisioningProvisioningManagementPermissionsable, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	if objVal.IsNull() || objVal.IsUnknown() {
@@ -3346,6 +3420,7 @@ func tfObjectToTKHRSServiceaccountServiceAccount(ctx context.Context, recurse bo
 		diags.Append(d...)
 		tkh.SetPasswordRotation(val)
 	}
+	tkh.SetSshPublicKey(objAttrs["ssh_public_key"].(basetypes.StringValue).ValueStringPointer())
 	{
 		val, d := findGroupGroupPrimerByUUID(ctx, objAttrs["technical_administrator_uuid"].(basetypes.StringValue).ValueStringPointer())
 		diags.Append(d...)
@@ -3521,6 +3596,18 @@ func tfObjectToTKHRSServiceaccountServiceAccountPrimerLinkableWrapper(ctx contex
 	return tkh, diags
 }
 
+func tfObjectToTKHRSServiceaccountServiceAccountSupportedFeatures(ctx context.Context, recurse bool, objVal types.Object) (keyhubmodel.ServiceaccountServiceAccountSupportedFeaturesable, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	if objVal.IsNull() || objVal.IsUnknown() {
+		return nil, diags
+	}
+	objAttrs := objVal.Attributes()
+	var tkh keyhubmodel.ServiceaccountServiceAccountSupportedFeaturesable
+	tkh = keyhubmodel.NewServiceaccountServiceAccountSupportedFeatures()
+	tkh.SetSshPublicKey(objAttrs["ssh_public_key"].(basetypes.BoolValue).ValueBoolPointer())
+	return tkh, diags
+}
+
 func tfObjectToTKHRSServiceaccountServiceAccount_additionalObjects(ctx context.Context, recurse bool, objVal types.Object) (keyhubmodel.ServiceaccountServiceAccount_additionalObjectsable, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	if objVal.IsNull() || objVal.IsUnknown() {
@@ -3546,6 +3633,11 @@ func tfObjectToTKHRSServiceaccountServiceAccount_additionalObjects(ctx context.C
 		val, d := tfObjectToTKHRSGeneratedSecret(ctx, recurse, objAttrs["secret"].(basetypes.ObjectValue))
 		diags.Append(d...)
 		tkh.SetSecret(val)
+	}
+	{
+		val, d := tfObjectToTKHRSServiceaccountServiceAccountSupportedFeatures(ctx, recurse, objAttrs["supported_features"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		tkh.SetSupportedFeatures(val)
 	}
 	return tkh, diags
 }
@@ -3607,6 +3699,19 @@ func tfObjectToTKHRSVaultVault(ctx context.Context, recurse bool, objVal types.O
 		diags.Append(d...)
 		tkh.SetRecords(val)
 	}
+	return tkh, diags
+}
+
+func tfObjectToTKHRSVaultVaultActivationStatus(ctx context.Context, recurse bool, objVal types.Object) (keyhubmodel.VaultVaultActivationStatusable, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	if objVal.IsNull() || objVal.IsUnknown() {
+		return nil, diags
+	}
+	objAttrs := objVal.Attributes()
+	var tkh keyhubmodel.VaultVaultActivationStatusable
+	tkh = keyhubmodel.NewVaultVaultActivationStatus()
+	tkh.SetActivated(objAttrs["activated"].(basetypes.BoolValue).ValueBoolPointer())
+	tkh.SetActivationRequired(objAttrs["activation_required"].(basetypes.BoolValue).ValueBoolPointer())
 	return tkh, diags
 }
 
@@ -3820,6 +3925,11 @@ func tfObjectToTKHRSVaultVaultRecord_additionalObjects(ctx context.Context, recu
 	objAttrs := objVal.Attributes()
 	var tkh keyhubmodel.VaultVaultRecord_additionalObjectsable
 	tkh = keyhubmodel.NewVaultVaultRecord_additionalObjects()
+	{
+		val, d := tfObjectToTKHRSVaultVaultActivationStatus(ctx, recurse, objAttrs["activation_status"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		tkh.SetActivationStatus(val)
+	}
 	{
 		val, d := tfObjectToTKHRSAuditInfo(ctx, recurse, objAttrs["audit"].(basetypes.ObjectValue))
 		diags.Append(d...)

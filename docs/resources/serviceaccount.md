@@ -28,6 +28,7 @@ description: |-
 - `description` (String)
 - `password_rotation` (String)
 - `secret` (Attributes) (see [below for nested schema](#nestedatt--secret))
+- `ssh_public_key` (String)
 - `technical_administrator_uuid` (String)
 
 ### Read-Only
@@ -37,6 +38,7 @@ description: |-
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--links))
 - `password_uuid` (String)
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--permissions))
+- `supported_features` (Attributes) (see [below for nested schema](#nestedatt--supported_features))
 - `uuid` (String)
 
 <a id="nestedatt--secret"></a>
@@ -124,3 +126,11 @@ Optional:
 - `instances` (List of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
+
+
+<a id="nestedatt--supported_features"></a>
+### Nested Schema for `supported_features`
+
+Optional:
+
+- `ssh_public_key` (Boolean)

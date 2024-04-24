@@ -172,6 +172,7 @@ type clientApplicationVaultVaultRecordDataRS struct {
 	ShareEndTime          types.String `tfsdk:"share_end_time"`
 	UUID                  types.String `tfsdk:"uuid"`
 	Additional            types.List   `tfsdk:"additional"`
+	ActivationStatus      types.Object `tfsdk:"activation_status" tkhao:"activationStatus"`
 	Audit                 types.Object `tfsdk:"audit" tkhao:"audit"`
 	DeleteTile            types.Bool   `tfsdk:"delete_tile" tkhao:"deleteTile"`
 	ParentUUID            types.String `tfsdk:"parent_uuid" tkhao:"parent"`
@@ -529,6 +530,7 @@ type groupGroupDataRS struct {
 	HideAuditTrail                   types.Bool   `tfsdk:"hide_audit_trail"`
 	NestedUnderUUID                  types.String `tfsdk:"nested_under_uuid"`
 	PrivateGroup                     types.Bool   `tfsdk:"private_group"`
+	ProfileAdministration            types.Bool   `tfsdk:"profile_administration"`
 	RecordTrail                      types.Bool   `tfsdk:"record_trail"`
 	RotatingPasswordRequired         types.Bool   `tfsdk:"rotating_password_required"`
 	SingleManaged                    types.Bool   `tfsdk:"single_managed"`
@@ -740,6 +742,7 @@ type groupVaultVaultRecordDataRS struct {
 	ShareEndTime     types.String `tfsdk:"share_end_time"`
 	UUID             types.String `tfsdk:"uuid"`
 	Additional       types.List   `tfsdk:"additional"`
+	ActivationStatus types.Object `tfsdk:"activation_status" tkhao:"activationStatus"`
 	Audit            types.Object `tfsdk:"audit" tkhao:"audit"`
 	DeleteTile       types.Bool   `tfsdk:"delete_tile" tkhao:"deleteTile"`
 	ParentUUID       types.String `tfsdk:"parent_uuid" tkhao:"parent"`
@@ -809,17 +812,22 @@ var organizationOrganizationalUnitAttrTypesRS = objectAttrsTypeRSOrganizationOrg
 var organizationOrganizationalUnitAttrTypesRSRecurse = objectAttrsTypeRSOrganizationOrganizationalUnit(true)
 
 type organizationOrganizationalUnitDataRS struct {
-	Links            types.List   `tfsdk:"links"`
-	Permissions      types.List   `tfsdk:"permissions"`
-	Name             types.String `tfsdk:"name"`
-	UUID             types.String `tfsdk:"uuid"`
-	Additional       types.List   `tfsdk:"additional"`
-	Audit            types.Object `tfsdk:"audit" tkhao:"audit"`
-	CreateAsParentOf types.List   `tfsdk:"create_as_parent_of" tkhao:"createAsParentOf"`
-	Depth            types.Int64  `tfsdk:"depth"`
-	Description      types.String `tfsdk:"description"`
-	OwnerUUID        types.String `tfsdk:"owner_uuid"`
-	ParentUUID       types.String `tfsdk:"parent_uuid"`
+	Links                           types.List   `tfsdk:"links"`
+	Permissions                     types.List   `tfsdk:"permissions"`
+	Name                            types.String `tfsdk:"name"`
+	UUID                            types.String `tfsdk:"uuid"`
+	Additional                      types.List   `tfsdk:"additional"`
+	Audit                           types.Object `tfsdk:"audit" tkhao:"audit"`
+	CreateAsParentOf                types.List   `tfsdk:"create_as_parent_of" tkhao:"createAsParentOf"`
+	Settings                        types.Object `tfsdk:"settings" tkhao:"settings"`
+	CreateGroupApproveGroupUUID     types.String `tfsdk:"create_group_approve_group_uuid"`
+	CreateGroupPlaceholder          types.String `tfsdk:"create_group_placeholder"`
+	Depth                           types.Int64  `tfsdk:"depth"`
+	Description                     types.String `tfsdk:"description"`
+	EnableTechAdminApproveGroupUUID types.String `tfsdk:"enable_tech_admin_approve_group_uuid"`
+	OwnerUUID                       types.String `tfsdk:"owner_uuid"`
+	ParentUUID                      types.String `tfsdk:"parent_uuid"`
+	RemoveGroupApproveGroupUUID     types.String `tfsdk:"remove_group_approve_group_uuid"`
 }
 
 var organizationOrganizationalUnitLinkableWrapperAttrTypesRS = objectAttrsTypeRSOrganizationOrganizationalUnitLinkableWrapper(false)
@@ -846,12 +854,23 @@ type organizationOrganizationalUnitPrimerLinkableWrapperDataRS struct {
 	Items types.List `tfsdk:"items"`
 }
 
+var organizationOrganizationalUnitSettingsAttrTypesRS = objectAttrsTypeRSOrganizationOrganizationalUnitSettings(false)
+var organizationOrganizationalUnitSettingsAttrTypesRSRecurse = objectAttrsTypeRSOrganizationOrganizationalUnitSettings(true)
+
+type organizationOrganizationalUnitSettingsDataRS struct {
+	CreateGroupApproveGroup     types.Object `tfsdk:"create_group_approve_group"`
+	CreateGroupPlaceholder      types.String `tfsdk:"create_group_placeholder"`
+	EnableTechAdminApproveGroup types.Object `tfsdk:"enable_tech_admin_approve_group"`
+	RemoveGroupApproveGroup     types.Object `tfsdk:"remove_group_approve_group"`
+}
+
 var organizationOrganizationalUnit_additionalObjectsAttrTypesRS = objectAttrsTypeRSOrganizationOrganizationalUnit_additionalObjects(false)
 var organizationOrganizationalUnit_additionalObjectsAttrTypesRSRecurse = objectAttrsTypeRSOrganizationOrganizationalUnit_additionalObjects(true)
 
 type organizationOrganizationalUnit_additionalObjectsDataRS struct {
 	Audit            types.Object `tfsdk:"audit"`
 	CreateAsParentOf types.List   `tfsdk:"create_as_parent_of"`
+	Settings         types.Object `tfsdk:"settings"`
 }
 
 var provisioningAbstractProvisionedLDAPAttrTypesRS = objectAttrsTypeRSProvisioningAbstractProvisionedLDAP(false)
@@ -870,7 +889,7 @@ type provisioningAbstractProvisionedLDAPDataRS struct {
 	ObjectClasses                  types.String `tfsdk:"object_classes"`
 	Port                           types.Int64  `tfsdk:"port"`
 	ServiceAccountDN               types.String `tfsdk:"service_account_dn"`
-	SshPublicKeySupported          types.Bool   `tfsdk:"ssh_public_key_supported"`
+	SshPublicKeySupport            types.String `tfsdk:"ssh_public_key_support"`
 	TLS                            types.String `tfsdk:"tls"`
 	TrustedCertificateUUID         types.String `tfsdk:"trusted_certificate_uuid"`
 	UserDN                         types.String `tfsdk:"user_dn"`
@@ -1088,6 +1107,7 @@ type provisioningProvisionedSystemDataRS struct {
 	Markers                                 types.Object `tfsdk:"markers" tkhao:"markers"`
 	Statistics                              types.Object `tfsdk:"statistics" tkhao:"statistics"`
 	SupportedGroupTypes                     types.Object `tfsdk:"supported_group_types" tkhao:"supportedGroupTypes"`
+	CleanupPeriod                           types.Object `tfsdk:"cleanup_period"`
 	ContentAdministratorUUID                types.String `tfsdk:"content_administrator_uuid"`
 	ExternalUUID                            types.String `tfsdk:"external_uuid"`
 	OwnerUUID                               types.String `tfsdk:"owner_uuid"`
@@ -1151,6 +1171,15 @@ type provisioningProvisionedSystem_additionalObjectsDataRS struct {
 	SupportedGroupTypes   types.Object `tfsdk:"supported_group_types"`
 }
 
+var provisioningProvisionedSystem_cleanupPeriodAttrTypesRS = objectAttrsTypeRSProvisioningProvisionedSystem_cleanupPeriod(false)
+var provisioningProvisionedSystem_cleanupPeriodAttrTypesRSRecurse = objectAttrsTypeRSProvisioningProvisionedSystem_cleanupPeriod(true)
+
+type provisioningProvisionedSystem_cleanupPeriodDataRS struct {
+	Days   types.Int64 `tfsdk:"days"`
+	Months types.Int64 `tfsdk:"months"`
+	Years  types.Int64 `tfsdk:"years"`
+}
+
 var provisioningProvisioningManagementPermissionsAttrTypesRS = objectAttrsTypeRSProvisioningProvisioningManagementPermissions(false)
 var provisioningProvisioningManagementPermissionsAttrTypesRSRecurse = objectAttrsTypeRSProvisioningProvisioningManagementPermissions(true)
 
@@ -1175,9 +1204,11 @@ type serviceaccountServiceAccountDataRS struct {
 	Audit                      types.Object `tfsdk:"audit" tkhao:"audit"`
 	Groups                     types.List   `tfsdk:"groups" tkhao:"groups"`
 	Secret                     types.Object `tfsdk:"secret" tkhao:"secret"`
+	SupportedFeatures          types.Object `tfsdk:"supported_features" tkhao:"supportedFeatures"`
 	Description                types.String `tfsdk:"description"`
 	PasswordUUID               types.String `tfsdk:"password_uuid"`
 	PasswordRotation           types.String `tfsdk:"password_rotation"`
+	SshPublicKey               types.String `tfsdk:"ssh_public_key"`
 	TechnicalAdministratorUUID types.String `tfsdk:"technical_administrator_uuid"`
 }
 
@@ -1236,13 +1267,21 @@ type serviceaccountServiceAccountPrimerLinkableWrapperDataRS struct {
 	Items types.List `tfsdk:"items"`
 }
 
+var serviceaccountServiceAccountSupportedFeaturesAttrTypesRS = objectAttrsTypeRSServiceaccountServiceAccountSupportedFeatures(false)
+var serviceaccountServiceAccountSupportedFeaturesAttrTypesRSRecurse = objectAttrsTypeRSServiceaccountServiceAccountSupportedFeatures(true)
+
+type serviceaccountServiceAccountSupportedFeaturesDataRS struct {
+	SshPublicKey types.Bool `tfsdk:"ssh_public_key"`
+}
+
 var serviceaccountServiceAccount_additionalObjectsAttrTypesRS = objectAttrsTypeRSServiceaccountServiceAccount_additionalObjects(false)
 var serviceaccountServiceAccount_additionalObjectsAttrTypesRSRecurse = objectAttrsTypeRSServiceaccountServiceAccount_additionalObjects(true)
 
 type serviceaccountServiceAccount_additionalObjectsDataRS struct {
-	Audit  types.Object `tfsdk:"audit"`
-	Groups types.List   `tfsdk:"groups"`
-	Secret types.Object `tfsdk:"secret"`
+	Audit             types.Object `tfsdk:"audit"`
+	Groups            types.List   `tfsdk:"groups"`
+	Secret            types.Object `tfsdk:"secret"`
+	SupportedFeatures types.Object `tfsdk:"supported_features"`
 }
 
 var vaultPasswordMetadataAttrTypesRS = objectAttrsTypeRSVaultPasswordMetadata(false)
@@ -1271,6 +1310,14 @@ type vaultVaultDataRS struct {
 	Records         types.List   `tfsdk:"records"`
 }
 
+var vaultVaultActivationStatusAttrTypesRS = objectAttrsTypeRSVaultVaultActivationStatus(false)
+var vaultVaultActivationStatusAttrTypesRSRecurse = objectAttrsTypeRSVaultVaultActivationStatus(true)
+
+type vaultVaultActivationStatusDataRS struct {
+	Activated          types.Bool `tfsdk:"activated"`
+	ActivationRequired types.Bool `tfsdk:"activation_required"`
+}
+
 var vaultVaultHolderAttrTypesRS = objectAttrsTypeRSVaultVaultHolder(false)
 var vaultVaultHolderAttrTypesRSRecurse = objectAttrsTypeRSVaultVaultHolder(true)
 
@@ -1288,6 +1335,7 @@ type vaultVaultRecordDataRS struct {
 	ShareEndTime     types.String `tfsdk:"share_end_time"`
 	UUID             types.String `tfsdk:"uuid"`
 	Additional       types.List   `tfsdk:"additional"`
+	ActivationStatus types.Object `tfsdk:"activation_status" tkhao:"activationStatus"`
 	Audit            types.Object `tfsdk:"audit" tkhao:"audit"`
 	DeleteTile       types.Bool   `tfsdk:"delete_tile" tkhao:"deleteTile"`
 	ParentUUID       types.String `tfsdk:"parent_uuid" tkhao:"parent"`
@@ -1356,6 +1404,7 @@ var vaultVaultRecord_additionalObjectsAttrTypesRS = objectAttrsTypeRSVaultVaultR
 var vaultVaultRecord_additionalObjectsAttrTypesRSRecurse = objectAttrsTypeRSVaultVaultRecord_additionalObjects(true)
 
 type vaultVaultRecord_additionalObjectsDataRS struct {
+	ActivationStatus types.Object `tfsdk:"activation_status"`
 	Audit            types.Object `tfsdk:"audit"`
 	DeleteTile       types.Bool   `tfsdk:"delete_tile"`
 	ParentUUID       types.String `tfsdk:"parent_uuid"`

@@ -508,6 +508,7 @@ func fillDataStructFromTFObjectDSGroupGroup(data *groupGroupDataDS, obj types.Ob
 	data.HideAuditTrail = obj.Attributes()["hide_audit_trail"].(basetypes.BoolValue)
 	data.NestedUnder = obj.Attributes()["nested_under"].(basetypes.ObjectValue)
 	data.PrivateGroup = obj.Attributes()["private_group"].(basetypes.BoolValue)
+	data.ProfileAdministration = obj.Attributes()["profile_administration"].(basetypes.BoolValue)
 	data.RecordTrail = obj.Attributes()["record_trail"].(basetypes.BoolValue)
 	data.RotatingPasswordRequired = obj.Attributes()["rotating_password_required"].(basetypes.BoolValue)
 	data.SingleManaged = obj.Attributes()["single_managed"].(basetypes.BoolValue)
@@ -729,10 +730,15 @@ func fillDataStructFromTFObjectDSOrganizationOrganizationalUnit(data *organizati
 	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
 	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
+	data.Settings = obj.Attributes()["settings"].(basetypes.ObjectValue)
+	data.CreateGroupApproveGroup = obj.Attributes()["create_group_approve_group"].(basetypes.ObjectValue)
+	data.CreateGroupPlaceholder = obj.Attributes()["create_group_placeholder"].(basetypes.StringValue)
 	data.Depth = obj.Attributes()["depth"].(basetypes.Int64Value)
 	data.Description = obj.Attributes()["description"].(basetypes.StringValue)
+	data.EnableTechAdminApproveGroup = obj.Attributes()["enable_tech_admin_approve_group"].(basetypes.ObjectValue)
 	data.Owner = obj.Attributes()["owner"].(basetypes.ObjectValue)
 	data.Parent = obj.Attributes()["parent"].(basetypes.ObjectValue)
+	data.RemoveGroupApproveGroup = obj.Attributes()["remove_group_approve_group"].(basetypes.ObjectValue)
 }
 
 func fillDataStructFromTFObjectDSOrganizationOrganizationalUnitLinkableWrapper(data *organizationOrganizationalUnitLinkableWrapperDataDS, obj types.Object) {
@@ -746,8 +752,16 @@ func fillDataStructFromTFObjectDSOrganizationOrganizationalUnitPrimer(data *orga
 	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
 }
 
+func fillDataStructFromTFObjectDSOrganizationOrganizationalUnitSettings(data *organizationOrganizationalUnitSettingsDataDS, obj types.Object) {
+	data.CreateGroupApproveGroup = obj.Attributes()["create_group_approve_group"].(basetypes.ObjectValue)
+	data.CreateGroupPlaceholder = obj.Attributes()["create_group_placeholder"].(basetypes.StringValue)
+	data.EnableTechAdminApproveGroup = obj.Attributes()["enable_tech_admin_approve_group"].(basetypes.ObjectValue)
+	data.RemoveGroupApproveGroup = obj.Attributes()["remove_group_approve_group"].(basetypes.ObjectValue)
+}
+
 func fillDataStructFromTFObjectDSOrganizationOrganizationalUnit_additionalObjects(data *organizationOrganizationalUnit_additionalObjectsDataDS, obj types.Object) {
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
+	data.Settings = obj.Attributes()["settings"].(basetypes.ObjectValue)
 }
 
 func fillDataStructFromTFObjectDSProvisioningAbstractProvisionedLDAP(data *provisioningAbstractProvisionedLDAPDataDS, obj types.Object) {
@@ -763,7 +777,7 @@ func fillDataStructFromTFObjectDSProvisioningAbstractProvisionedLDAP(data *provi
 	data.ObjectClasses = obj.Attributes()["object_classes"].(basetypes.StringValue)
 	data.Port = obj.Attributes()["port"].(basetypes.Int64Value)
 	data.ServiceAccountDN = obj.Attributes()["service_account_dn"].(basetypes.StringValue)
-	data.SshPublicKeySupported = obj.Attributes()["ssh_public_key_supported"].(basetypes.BoolValue)
+	data.SshPublicKeySupport = obj.Attributes()["ssh_public_key_support"].(basetypes.StringValue)
 	data.TLS = obj.Attributes()["tls"].(basetypes.StringValue)
 	data.TrustedCertificate = obj.Attributes()["trusted_certificate"].(basetypes.ObjectValue)
 	data.UserDN = obj.Attributes()["user_dn"].(basetypes.StringValue)
@@ -924,6 +938,7 @@ func fillDataStructFromTFObjectDSProvisioningProvisionedSystem(data *provisionin
 	data.Markers = obj.Attributes()["markers"].(basetypes.ObjectValue)
 	data.Statistics = obj.Attributes()["statistics"].(basetypes.ObjectValue)
 	data.SupportedGroupTypes = obj.Attributes()["supported_group_types"].(basetypes.ObjectValue)
+	data.CleanupPeriod = obj.Attributes()["cleanup_period"].(basetypes.ObjectValue)
 	data.ContentAdministrator = obj.Attributes()["content_administrator"].(basetypes.ObjectValue)
 	data.ExternalUUID = obj.Attributes()["external_uuid"].(basetypes.StringValue)
 	data.Owner = obj.Attributes()["owner"].(basetypes.ObjectValue)
@@ -975,6 +990,12 @@ func fillDataStructFromTFObjectDSProvisioningProvisionedSystem_additionalObjects
 	data.SupportedGroupTypes = obj.Attributes()["supported_group_types"].(basetypes.ObjectValue)
 }
 
+func fillDataStructFromTFObjectDSProvisioningProvisionedSystem_cleanupPeriod(data *provisioningProvisionedSystem_cleanupPeriodDataDS, obj types.Object) {
+	data.Days = obj.Attributes()["days"].(basetypes.Int64Value)
+	data.Months = obj.Attributes()["months"].(basetypes.Int64Value)
+	data.Years = obj.Attributes()["years"].(basetypes.Int64Value)
+}
+
 func fillDataStructFromTFObjectDSProvisioningProvisioningManagementPermissions(data *provisioningProvisioningManagementPermissionsDataDS, obj types.Object) {
 	data.CreateNewGroupsAllowed = obj.Attributes()["create_new_groups_allowed"].(basetypes.BoolValue)
 	data.CreateServiceAccountsAllowed = obj.Attributes()["create_service_accounts_allowed"].(basetypes.BoolValue)
@@ -993,9 +1014,11 @@ func fillDataStructFromTFObjectDSServiceaccountServiceAccount(data *serviceaccou
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
 	data.Groups = obj.Attributes()["groups"].(basetypes.ListValue)
 	data.Secret = obj.Attributes()["secret"].(basetypes.ObjectValue)
+	data.SupportedFeatures = obj.Attributes()["supported_features"].(basetypes.ObjectValue)
 	data.Description = obj.Attributes()["description"].(basetypes.StringValue)
 	data.Password = obj.Attributes()["password"].(basetypes.ObjectValue)
 	data.PasswordRotation = obj.Attributes()["password_rotation"].(basetypes.StringValue)
+	data.SshPublicKey = obj.Attributes()["ssh_public_key"].(basetypes.StringValue)
 	data.TechnicalAdministrator = obj.Attributes()["technical_administrator"].(basetypes.ObjectValue)
 }
 
@@ -1036,10 +1059,15 @@ func fillDataStructFromTFObjectDSServiceaccountServiceAccountPrimerLinkableWrapp
 	data.Items = obj.Attributes()["items"].(basetypes.ListValue)
 }
 
+func fillDataStructFromTFObjectDSServiceaccountServiceAccountSupportedFeatures(data *serviceaccountServiceAccountSupportedFeaturesDataDS, obj types.Object) {
+	data.SshPublicKey = obj.Attributes()["ssh_public_key"].(basetypes.BoolValue)
+}
+
 func fillDataStructFromTFObjectDSServiceaccountServiceAccount_additionalObjects(data *serviceaccountServiceAccount_additionalObjectsDataDS, obj types.Object) {
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
 	data.Groups = obj.Attributes()["groups"].(basetypes.ListValue)
 	data.Secret = obj.Attributes()["secret"].(basetypes.ObjectValue)
+	data.SupportedFeatures = obj.Attributes()["supported_features"].(basetypes.ObjectValue)
 }
 
 func fillDataStructFromTFObjectDSVaultPasswordMetadata(data *vaultPasswordMetadataDataDS, obj types.Object) {
@@ -1062,6 +1090,11 @@ func fillDataStructFromTFObjectDSVaultVault(data *vaultVaultDataDS, obj types.Ob
 	data.Records = obj.Attributes()["records"].(basetypes.ListValue)
 }
 
+func fillDataStructFromTFObjectDSVaultVaultActivationStatus(data *vaultVaultActivationStatusDataDS, obj types.Object) {
+	data.Activated = obj.Attributes()["activated"].(basetypes.BoolValue)
+	data.ActivationRequired = obj.Attributes()["activation_required"].(basetypes.BoolValue)
+}
+
 func fillDataStructFromTFObjectDSVaultVaultHolder(data *vaultVaultHolderDataDS, obj types.Object) {
 }
 
@@ -1073,6 +1106,7 @@ func fillDataStructFromTFObjectDSVaultVaultRecord(data *vaultVaultRecordDataDS, 
 	data.ShareEndTime = obj.Attributes()["share_end_time"].(basetypes.StringValue)
 	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
 	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
+	data.ActivationStatus = obj.Attributes()["activation_status"].(basetypes.ObjectValue)
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
 	data.Parent = obj.Attributes()["parent"].(basetypes.ObjectValue)
 	data.PasswordMetadata = obj.Attributes()["password_metadata"].(basetypes.ObjectValue)
@@ -1121,6 +1155,7 @@ func fillDataStructFromTFObjectDSVaultVaultRecordShareSummary(data *vaultVaultRe
 }
 
 func fillDataStructFromTFObjectDSVaultVaultRecord_additionalObjects(data *vaultVaultRecord_additionalObjectsDataDS, obj types.Object) {
+	data.ActivationStatus = obj.Attributes()["activation_status"].(basetypes.ObjectValue)
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
 	data.Parent = obj.Attributes()["parent"].(basetypes.ObjectValue)
 	data.PasswordMetadata = obj.Attributes()["password_metadata"].(basetypes.ObjectValue)

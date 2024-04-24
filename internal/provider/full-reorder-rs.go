@@ -1148,6 +1148,24 @@ func reorderOrganizationOrganizationalUnitPrimerLinkableWrapper(state basetypes.
 	return types.ObjectValueMust(attrs, obj)
 }
 
+func reorderOrganizationOrganizationalUnitSettings(state basetypes.ObjectValue, priorState basetypes.ObjectValue, recurse bool) basetypes.ObjectValue {
+	if state.IsNull() || state.IsUnknown() || priorState.IsNull() || priorState.IsUnknown() {
+		return state
+	}
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = organizationOrganizationalUnitSettingsAttrTypesRSRecurse
+	} else {
+		attrs = organizationOrganizationalUnitSettingsAttrTypesRS
+	}
+	obj := filterAttributes(state.Attributes(), attrs)
+	obj["create_group_approve_group"] = reorderGroupGroup(state.Attributes()["create_group_approve_group"].(types.Object), priorState.Attributes()["create_group_approve_group"].(types.Object), recurse)
+	obj["enable_tech_admin_approve_group"] = reorderGroupGroup(state.Attributes()["enable_tech_admin_approve_group"].(types.Object), priorState.Attributes()["enable_tech_admin_approve_group"].(types.Object), recurse)
+	obj["remove_group_approve_group"] = reorderGroupGroup(state.Attributes()["remove_group_approve_group"].(types.Object), priorState.Attributes()["remove_group_approve_group"].(types.Object), recurse)
+
+	return types.ObjectValueMust(attrs, obj)
+}
+
 func reorderOrganizationOrganizationalUnit_additionalObjects(state basetypes.ObjectValue, priorState basetypes.ObjectValue, recurse bool) basetypes.ObjectValue {
 	if state.IsNull() || state.IsUnknown() || priorState.IsNull() || priorState.IsUnknown() {
 		return state
@@ -1559,6 +1577,7 @@ func reorderProvisioningProvisionedSystem(state basetypes.ObjectValue, priorStat
 	if recurse {
 		maps.Copy(obj, reorderProvisioningProvisionedSystem_additionalObjects(state, priorState, false).Attributes())
 	}
+	obj["cleanup_period"] = reorderProvisioningProvisionedSystem_cleanupPeriod(state.Attributes()["cleanup_period"].(types.Object), priorState.Attributes()["cleanup_period"].(types.Object), recurse)
 	obj["abstract_provisioned_ldap"] = reorderProvisioningAbstractProvisionedLDAP(state.Attributes()["abstract_provisioned_ldap"].(types.Object), priorState.Attributes()["abstract_provisioned_ldap"].(types.Object), recurse)
 	obj["provisioned_a_d"] = reorderProvisioningProvisionedAD(state.Attributes()["provisioned_a_d"].(types.Object), priorState.Attributes()["provisioned_a_d"].(types.Object), recurse)
 	obj["provisioned_azure_oidc_directory"] = reorderProvisioningProvisionedAzureOIDCDirectory(state.Attributes()["provisioned_azure_oidc_directory"].(types.Object), priorState.Attributes()["provisioned_azure_oidc_directory"].(types.Object), recurse)
@@ -1629,6 +1648,21 @@ func reorderProvisioningProvisionedSystem_additionalObjects(state basetypes.Obje
 		attrs = provisioningProvisionedSystem_additionalObjectsAttrTypesRSRecurse
 	} else {
 		attrs = provisioningProvisionedSystem_additionalObjectsAttrTypesRS
+	}
+	obj := filterAttributes(state.Attributes(), attrs)
+
+	return types.ObjectValueMust(attrs, obj)
+}
+
+func reorderProvisioningProvisionedSystem_cleanupPeriod(state basetypes.ObjectValue, priorState basetypes.ObjectValue, recurse bool) basetypes.ObjectValue {
+	if state.IsNull() || state.IsUnknown() || priorState.IsNull() || priorState.IsUnknown() {
+		return state
+	}
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = provisioningProvisionedSystem_cleanupPeriodAttrTypesRSRecurse
+	} else {
+		attrs = provisioningProvisionedSystem_cleanupPeriodAttrTypesRS
 	}
 	obj := filterAttributes(state.Attributes(), attrs)
 
@@ -1768,6 +1802,21 @@ func reorderServiceaccountServiceAccountPrimerLinkableWrapper(state basetypes.Ob
 	return types.ObjectValueMust(attrs, obj)
 }
 
+func reorderServiceaccountServiceAccountSupportedFeatures(state basetypes.ObjectValue, priorState basetypes.ObjectValue, recurse bool) basetypes.ObjectValue {
+	if state.IsNull() || state.IsUnknown() || priorState.IsNull() || priorState.IsUnknown() {
+		return state
+	}
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = serviceaccountServiceAccountSupportedFeaturesAttrTypesRSRecurse
+	} else {
+		attrs = serviceaccountServiceAccountSupportedFeaturesAttrTypesRS
+	}
+	obj := filterAttributes(state.Attributes(), attrs)
+
+	return types.ObjectValueMust(attrs, obj)
+}
+
 func reorderServiceaccountServiceAccount_additionalObjects(state basetypes.ObjectValue, priorState basetypes.ObjectValue, recurse bool) basetypes.ObjectValue {
 	if state.IsNull() || state.IsUnknown() || priorState.IsNull() || priorState.IsUnknown() {
 		return state
@@ -1808,6 +1857,21 @@ func reorderVaultVault(state basetypes.ObjectValue, priorState basetypes.ObjectV
 		attrs = vaultVaultAttrTypesRSRecurse
 	} else {
 		attrs = vaultVaultAttrTypesRS
+	}
+	obj := filterAttributes(state.Attributes(), attrs)
+
+	return types.ObjectValueMust(attrs, obj)
+}
+
+func reorderVaultVaultActivationStatus(state basetypes.ObjectValue, priorState basetypes.ObjectValue, recurse bool) basetypes.ObjectValue {
+	if state.IsNull() || state.IsUnknown() || priorState.IsNull() || priorState.IsUnknown() {
+		return state
+	}
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = vaultVaultActivationStatusAttrTypesRSRecurse
+	} else {
+		attrs = vaultVaultActivationStatusAttrTypesRS
 	}
 	obj := filterAttributes(state.Attributes(), attrs)
 

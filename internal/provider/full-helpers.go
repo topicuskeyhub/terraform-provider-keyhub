@@ -262,6 +262,19 @@ func findGroupGroupPrimerByUUIDOptionallyNil(ctx context.Context, uuid *string, 
 	return nil, diag
 }
 
+func findGroupGroupByUUID(ctx context.Context, uuid *string) (keyhubmodels.GroupGroupable, diag.Diagnostics) {
+	if uuid == nil || *uuid == "" {
+		return nil, diag.Diagnostics{}
+	}
+	client := ctx.Value(keyHubClientKey).(*keyhub.KeyHubClient)
+	wrapper, err := client.Group().Get(ctx, &keyhubgroup.GroupRequestBuilderGetRequestConfiguration{
+		QueryParameters: &keyhubgroup.GroupRequestBuilderGetQueryParameters{
+			Uuid: []string{*uuid},
+		},
+	})
+	return findFirst[keyhubmodels.GroupGroupable](ctx, wrapper, "group", uuid, false, err)
+}
+
 func findDirectoryAccountDirectoryPrimerByUUID(ctx context.Context, uuid *string) (keyhubmodels.DirectoryAccountDirectoryPrimerable, diag.Diagnostics) {
 	if uuid == nil || *uuid == "" {
 		return nil, diag.Diagnostics{}

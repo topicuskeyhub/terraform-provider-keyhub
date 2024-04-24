@@ -53,6 +53,7 @@ resource "keyhub_group" "terra" {
 - `nested_under_uuid` (String)
 - `organizational_unit_uuid` (String)
 - `private_group` (Boolean)
+- `profile_administration` (Boolean)
 - `record_trail` (Boolean)
 - `rotating_password_required` (Boolean)
 - `single_managed` (Boolean)
@@ -331,6 +332,7 @@ Optional:
 
 Required:
 
+- `cleanup_period` (Attributes) (see [below for nested schema](#nestedatt--administered_systems--cleanup_period))
 - `name` (String)
 - `owner_uuid` (String)
 - `technical_administrator_uuid` (String)
@@ -366,6 +368,16 @@ Read-Only:
 - `type` (String)
 - `uuid` (String)
 
+<a id="nestedatt--administered_systems--cleanup_period"></a>
+### Nested Schema for `administered_systems.cleanup_period`
+
+Optional:
+
+- `days` (Number)
+- `months` (Number)
+- `years` (Number)
+
+
 <a id="nestedatt--administered_systems--abstract_provisioned_ldap"></a>
 ### Nested Schema for `administered_systems.abstract_provisioned_ldap`
 
@@ -387,7 +399,7 @@ Optional:
 - `object_classes` (String)
 - `port` (Number)
 - `service_account_dn` (String)
-- `ssh_public_key_supported` (Boolean)
+- `ssh_public_key_support` (String)
 - `trusted_certificate_uuid` (String)
 - `user_dn` (String)
 
@@ -599,6 +611,7 @@ Optional:
 - `nested_under_uuid` (String)
 - `organizational_unit_uuid` (String)
 - `private_group` (Boolean)
+- `profile_administration` (Boolean)
 - `record_trail` (Boolean)
 - `rotating_password_required` (Boolean)
 - `single_managed` (Boolean)
@@ -721,6 +734,7 @@ Optional:
 
 Required:
 
+- `cleanup_period` (Attributes) (see [below for nested schema](#nestedatt--content_administered_systems--cleanup_period))
 - `name` (String)
 - `owner_uuid` (String)
 - `technical_administrator_uuid` (String)
@@ -756,6 +770,16 @@ Read-Only:
 - `type` (String)
 - `uuid` (String)
 
+<a id="nestedatt--content_administered_systems--cleanup_period"></a>
+### Nested Schema for `content_administered_systems.cleanup_period`
+
+Optional:
+
+- `days` (Number)
+- `months` (Number)
+- `years` (Number)
+
+
 <a id="nestedatt--content_administered_systems--abstract_provisioned_ldap"></a>
 ### Nested Schema for `content_administered_systems.abstract_provisioned_ldap`
 
@@ -777,7 +801,7 @@ Optional:
 - `object_classes` (String)
 - `port` (Number)
 - `service_account_dn` (String)
-- `ssh_public_key_supported` (Boolean)
+- `ssh_public_key_support` (String)
 - `trusted_certificate_uuid` (String)
 - `user_dn` (String)
 
@@ -1426,7 +1450,11 @@ Required:
 
 Optional:
 
+- `create_group_approve_group_uuid` (String)
+- `create_group_placeholder` (String)
 - `description` (String)
+- `enable_tech_admin_approve_group_uuid` (String)
+- `remove_group_approve_group_uuid` (String)
 
 Read-Only:
 
@@ -1464,6 +1492,7 @@ Optional:
 
 Required:
 
+- `cleanup_period` (Attributes) (see [below for nested schema](#nestedatt--owned_systems--cleanup_period))
 - `name` (String)
 - `owner_uuid` (String)
 - `technical_administrator_uuid` (String)
@@ -1499,6 +1528,16 @@ Read-Only:
 - `type` (String)
 - `uuid` (String)
 
+<a id="nestedatt--owned_systems--cleanup_period"></a>
+### Nested Schema for `owned_systems.cleanup_period`
+
+Optional:
+
+- `days` (Number)
+- `months` (Number)
+- `years` (Number)
+
+
 <a id="nestedatt--owned_systems--abstract_provisioned_ldap"></a>
 ### Nested Schema for `owned_systems.abstract_provisioned_ldap`
 
@@ -1520,7 +1559,7 @@ Optional:
 - `object_classes` (String)
 - `port` (Number)
 - `service_account_dn` (String)
-- `ssh_public_key_supported` (Boolean)
+- `ssh_public_key_support` (String)
 - `trusted_certificate_uuid` (String)
 - `user_dn` (String)
 
@@ -1846,6 +1885,7 @@ Optional:
 - `active` (Boolean)
 - `description` (String)
 - `password_rotation` (String)
+- `ssh_public_key` (String)
 - `technical_administrator_uuid` (String)
 
 Read-Only:

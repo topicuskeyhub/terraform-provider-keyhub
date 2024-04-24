@@ -358,6 +358,7 @@ Read-Only:
 - `organizational_unit` (Attributes) (see [below for nested schema](#nestedatt--groups--organizational_unit))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--groups--permissions))
 - `private_group` (Boolean)
+- `profile_administration` (Boolean)
 - `record_trail` (Boolean)
 - `rotating_password_required` (Boolean)
 - `single_managed` (Boolean)

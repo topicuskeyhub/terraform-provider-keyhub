@@ -204,6 +204,7 @@ Optional:
 - `nested_under_uuid` (String)
 - `organizational_unit_uuid` (String)
 - `private_group` (Boolean)
+- `profile_administration` (Boolean)
 - `record_trail` (Boolean)
 - `rotating_password_required` (Boolean)
 - `single_managed` (Boolean)
