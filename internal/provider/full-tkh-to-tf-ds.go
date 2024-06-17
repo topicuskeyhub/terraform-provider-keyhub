@@ -1411,6 +1411,12 @@ func tkhToTFObjectDSDirectoryAccountDirectory(recurse bool, tkh keyhubmodel.Dire
 		diags.Append(d...)
 		obj["oidc_directory"] = val
 	}
+	{
+		tkhCast, _ := tkh.(keyhubmodel.DirectoryPendingAccountsDirectoryable)
+		val, d := tkhToTFObjectDSDirectoryPendingAccountsDirectory(false, tkhCast)
+		diags.Append(d...)
+		obj["pending_accounts_directory"] = val
+	}
 
 	objVal, d := types.ObjectValue(attrs, obj)
 	diags.Append(d...)
@@ -1742,6 +1748,25 @@ func tkhToTFObjectDSDirectoryOIDCDirectory(recurse bool, tkh keyhubmodel.Directo
 	return objVal, diags
 }
 
+func tkhToTFObjectDSDirectoryPendingAccountsDirectory(recurse bool, tkh keyhubmodel.DirectoryPendingAccountsDirectoryable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = directoryPendingAccountsDirectoryAttrTypesDSRecurse
+	} else {
+		attrs = directoryPendingAccountsDirectoryAttrTypesDS
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
 func tkhToTFObjectDSGroupAccountGroup(recurse bool, tkh keyhubmodel.GroupAccountGroupable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
@@ -1955,7 +1980,6 @@ func tkhToTFObjectDSGroupGroup(recurse bool, tkh keyhubmodel.GroupGroupable) (ty
 		obj["audit_config"] = val
 	}
 	obj["audit_requested"] = types.BoolPointerValue(tkh.GetAuditRequested())
-	obj["auditor"] = types.BoolPointerValue(tkh.GetAuditor())
 	{
 		val, d := tkhToTFObjectDSGroupGroupPrimer(false, tkh.GetAuthorizingGroupAuditing())
 		diags.Append(d...)
@@ -3097,7 +3121,12 @@ func tkhToTFObjectDSOrganizationOrganizationalUnit(recurse bool, tkh keyhubmodel
 	obj["name"] = types.StringPointerValue(tkh.GetName())
 	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
 	{
-		val, d := tkhToTFObjectDSGroupGroup(false, tkh.GetCreateGroupApproveGroup())
+		val, d := tkhToTFObjectDSGroupGroupPrimer(false, tkh.GetAuditorGroup())
+		diags.Append(d...)
+		obj["auditor_group"] = val
+	}
+	{
+		val, d := tkhToTFObjectDSGroupGroupPrimer(false, tkh.GetCreateGroupApproveGroup())
 		diags.Append(d...)
 		obj["create_group_approve_group"] = val
 	}
@@ -3105,7 +3134,7 @@ func tkhToTFObjectDSOrganizationOrganizationalUnit(recurse bool, tkh keyhubmodel
 	obj["depth"] = types.Int64PointerValue(int32PToInt64P(tkh.GetDepth()))
 	obj["description"] = types.StringPointerValue(tkh.GetDescription())
 	{
-		val, d := tkhToTFObjectDSGroupGroup(false, tkh.GetEnableTechAdminApproveGroup())
+		val, d := tkhToTFObjectDSGroupGroupPrimer(false, tkh.GetEnableTechAdminApproveGroup())
 		diags.Append(d...)
 		obj["enable_tech_admin_approve_group"] = val
 	}
@@ -3120,7 +3149,12 @@ func tkhToTFObjectDSOrganizationOrganizationalUnit(recurse bool, tkh keyhubmodel
 		obj["parent"] = val
 	}
 	{
-		val, d := tkhToTFObjectDSGroupGroup(false, tkh.GetRemoveGroupApproveGroup())
+		val, d := tkhToTFObjectDSGroupGroupPrimer(false, tkh.GetRecoveryFallbackGroup())
+		diags.Append(d...)
+		obj["recovery_fallback_group"] = val
+	}
+	{
+		val, d := tkhToTFObjectDSGroupGroupPrimer(false, tkh.GetRemoveGroupApproveGroup())
 		diags.Append(d...)
 		obj["remove_group_approve_group"] = val
 	}
@@ -3214,18 +3248,23 @@ func tkhToTFObjectDSOrganizationOrganizationalUnitSettings(recurse bool, tkh key
 
 	obj := make(map[string]attr.Value)
 	{
-		val, d := tkhToTFObjectDSGroupGroup(recurse, tkh.GetCreateGroupApproveGroup())
+		val, d := tkhToTFObjectDSGroupGroupPrimer(recurse, tkh.GetCreateGroupApproveGroup())
 		diags.Append(d...)
 		obj["create_group_approve_group"] = val
 	}
 	obj["create_group_placeholder"] = types.StringPointerValue(tkh.GetCreateGroupPlaceholder())
 	{
-		val, d := tkhToTFObjectDSGroupGroup(recurse, tkh.GetEnableTechAdminApproveGroup())
+		val, d := tkhToTFObjectDSGroupGroupPrimer(recurse, tkh.GetEnableTechAdminApproveGroup())
 		diags.Append(d...)
 		obj["enable_tech_admin_approve_group"] = val
 	}
 	{
-		val, d := tkhToTFObjectDSGroupGroup(recurse, tkh.GetRemoveGroupApproveGroup())
+		val, d := tkhToTFObjectDSGroupGroupPrimer(recurse, tkh.GetRecoveryFallbackGroup())
+		diags.Append(d...)
+		obj["recovery_fallback_group"] = val
+	}
+	{
+		val, d := tkhToTFObjectDSGroupGroupPrimer(recurse, tkh.GetRemoveGroupApproveGroup())
 		diags.Append(d...)
 		obj["remove_group_approve_group"] = val
 	}

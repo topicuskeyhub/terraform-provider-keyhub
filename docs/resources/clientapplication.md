@@ -215,7 +215,6 @@ Read-Only:
 
 - `admin` (Boolean)
 - `audit_requested` (Boolean)
-- `auditor` (Boolean)
 - `authorizing_group_types` (Set of String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--groups--links))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--groups--permissions))

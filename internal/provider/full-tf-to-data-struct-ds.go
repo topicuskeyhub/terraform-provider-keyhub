@@ -345,6 +345,7 @@ func fillDataStructFromTFObjectDSDirectoryAccountDirectory(data *directoryAccoun
 	data.LDAPDirectory = obj.Attributes()["ldap_directory"].(basetypes.ObjectValue)
 	data.MaintenanceDirectory = obj.Attributes()["maintenance_directory"].(basetypes.ObjectValue)
 	data.OIDCDirectory = obj.Attributes()["oidc_directory"].(basetypes.ObjectValue)
+	data.PendingAccountsDirectory = obj.Attributes()["pending_accounts_directory"].(basetypes.ObjectValue)
 }
 
 func fillDataStructFromTFObjectDSDirectoryAccountDirectoryLinkableWrapper(data *directoryAccountDirectoryLinkableWrapperDataDS, obj types.Object) {
@@ -426,6 +427,9 @@ func fillDataStructFromTFObjectDSDirectoryOIDCDirectory(data *directoryOIDCDirec
 	data.VendorEscaped = obj.Attributes()["vendor_escaped"].(basetypes.StringValue)
 }
 
+func fillDataStructFromTFObjectDSDirectoryPendingAccountsDirectory(data *directoryPendingAccountsDirectoryDataDS, obj types.Object) {
+}
+
 func fillDataStructFromTFObjectDSGroupAccountGroup(data *groupAccountGroupDataDS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
@@ -496,7 +500,6 @@ func fillDataStructFromTFObjectDSGroupGroup(data *groupGroupDataDS, obj types.Ob
 	data.ApplicationAdministration = obj.Attributes()["application_administration"].(basetypes.BoolValue)
 	data.AuditConfig = obj.Attributes()["audit_config"].(basetypes.ObjectValue)
 	data.AuditRequested = obj.Attributes()["audit_requested"].(basetypes.BoolValue)
-	data.Auditor = obj.Attributes()["auditor"].(basetypes.BoolValue)
 	data.AuthorizingGroupAuditing = obj.Attributes()["authorizing_group_auditing"].(basetypes.ObjectValue)
 	data.AuthorizingGroupDelegation = obj.Attributes()["authorizing_group_delegation"].(basetypes.ObjectValue)
 	data.AuthorizingGroupMembership = obj.Attributes()["authorizing_group_membership"].(basetypes.ObjectValue)
@@ -731,6 +734,7 @@ func fillDataStructFromTFObjectDSOrganizationOrganizationalUnit(data *organizati
 	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
 	data.Settings = obj.Attributes()["settings"].(basetypes.ObjectValue)
+	data.AuditorGroup = obj.Attributes()["auditor_group"].(basetypes.ObjectValue)
 	data.CreateGroupApproveGroup = obj.Attributes()["create_group_approve_group"].(basetypes.ObjectValue)
 	data.CreateGroupPlaceholder = obj.Attributes()["create_group_placeholder"].(basetypes.StringValue)
 	data.Depth = obj.Attributes()["depth"].(basetypes.Int64Value)
@@ -738,6 +742,7 @@ func fillDataStructFromTFObjectDSOrganizationOrganizationalUnit(data *organizati
 	data.EnableTechAdminApproveGroup = obj.Attributes()["enable_tech_admin_approve_group"].(basetypes.ObjectValue)
 	data.Owner = obj.Attributes()["owner"].(basetypes.ObjectValue)
 	data.Parent = obj.Attributes()["parent"].(basetypes.ObjectValue)
+	data.RecoveryFallbackGroup = obj.Attributes()["recovery_fallback_group"].(basetypes.ObjectValue)
 	data.RemoveGroupApproveGroup = obj.Attributes()["remove_group_approve_group"].(basetypes.ObjectValue)
 }
 
@@ -756,6 +761,7 @@ func fillDataStructFromTFObjectDSOrganizationOrganizationalUnitSettings(data *or
 	data.CreateGroupApproveGroup = obj.Attributes()["create_group_approve_group"].(basetypes.ObjectValue)
 	data.CreateGroupPlaceholder = obj.Attributes()["create_group_placeholder"].(basetypes.StringValue)
 	data.EnableTechAdminApproveGroup = obj.Attributes()["enable_tech_admin_approve_group"].(basetypes.ObjectValue)
+	data.RecoveryFallbackGroup = obj.Attributes()["recovery_fallback_group"].(basetypes.ObjectValue)
 	data.RemoveGroupApproveGroup = obj.Attributes()["remove_group_approve_group"].(basetypes.ObjectValue)
 }
 

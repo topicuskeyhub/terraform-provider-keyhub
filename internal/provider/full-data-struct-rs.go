@@ -358,6 +358,7 @@ type directoryAccountDirectoryDataRS struct {
 	LDAPDirectory                       types.Object `tfsdk:"ldap_directory"`
 	MaintenanceDirectory                types.Object `tfsdk:"maintenance_directory"`
 	OIDCDirectory                       types.Object `tfsdk:"oidc_directory"`
+	PendingAccountsDirectory            types.Object `tfsdk:"pending_accounts_directory"`
 }
 
 var directoryAccountDirectoryLinkableWrapperAttrTypesRS = objectAttrsTypeRSDirectoryAccountDirectoryLinkableWrapper(false)
@@ -469,6 +470,12 @@ type directoryOIDCDirectoryDataRS struct {
 	VendorEscaped       types.String `tfsdk:"vendor_escaped"`
 }
 
+var directoryPendingAccountsDirectoryAttrTypesRS = objectAttrsTypeRSDirectoryPendingAccountsDirectory(false)
+var directoryPendingAccountsDirectoryAttrTypesRSRecurse = objectAttrsTypeRSDirectoryPendingAccountsDirectory(true)
+
+type directoryPendingAccountsDirectoryDataRS struct {
+}
+
 var groupAuthorizedGroupsWrapperAttrTypesRS = objectAttrsTypeRSGroupAuthorizedGroupsWrapper(false)
 var groupAuthorizedGroupsWrapperAttrTypesRSRecurse = objectAttrsTypeRSGroupAuthorizedGroupsWrapper(true)
 
@@ -518,7 +525,6 @@ type groupGroupDataRS struct {
 	ApplicationAdministration        types.Bool   `tfsdk:"application_administration"`
 	AuditConfig                      types.Object `tfsdk:"audit_config"`
 	AuditRequested                   types.Bool   `tfsdk:"audit_requested"`
-	Auditor                          types.Bool   `tfsdk:"auditor"`
 	AuthorizingGroupAuditingUUID     types.String `tfsdk:"authorizing_group_auditing_uuid"`
 	AuthorizingGroupDelegationUUID   types.String `tfsdk:"authorizing_group_delegation_uuid"`
 	AuthorizingGroupMembershipUUID   types.String `tfsdk:"authorizing_group_membership_uuid"`
@@ -820,6 +826,7 @@ type organizationOrganizationalUnitDataRS struct {
 	Audit                           types.Object `tfsdk:"audit" tkhao:"audit"`
 	CreateAsParentOf                types.List   `tfsdk:"create_as_parent_of" tkhao:"createAsParentOf"`
 	Settings                        types.Object `tfsdk:"settings" tkhao:"settings"`
+	AuditorGroupUUID                types.String `tfsdk:"auditor_group_uuid"`
 	CreateGroupApproveGroupUUID     types.String `tfsdk:"create_group_approve_group_uuid"`
 	CreateGroupPlaceholder          types.String `tfsdk:"create_group_placeholder"`
 	Depth                           types.Int64  `tfsdk:"depth"`
@@ -827,6 +834,7 @@ type organizationOrganizationalUnitDataRS struct {
 	EnableTechAdminApproveGroupUUID types.String `tfsdk:"enable_tech_admin_approve_group_uuid"`
 	OwnerUUID                       types.String `tfsdk:"owner_uuid"`
 	ParentUUID                      types.String `tfsdk:"parent_uuid"`
+	RecoveryFallbackGroupUUID       types.String `tfsdk:"recovery_fallback_group_uuid"`
 	RemoveGroupApproveGroupUUID     types.String `tfsdk:"remove_group_approve_group_uuid"`
 }
 
@@ -861,6 +869,7 @@ type organizationOrganizationalUnitSettingsDataRS struct {
 	CreateGroupApproveGroup     types.Object `tfsdk:"create_group_approve_group"`
 	CreateGroupPlaceholder      types.String `tfsdk:"create_group_placeholder"`
 	EnableTechAdminApproveGroup types.Object `tfsdk:"enable_tech_admin_approve_group"`
+	RecoveryFallbackGroup       types.Object `tfsdk:"recovery_fallback_group"`
 	RemoveGroupApproveGroup     types.Object `tfsdk:"remove_group_approve_group"`
 }
 

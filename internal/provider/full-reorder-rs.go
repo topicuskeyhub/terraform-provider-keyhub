@@ -462,6 +462,7 @@ func reorderDirectoryAccountDirectory(state basetypes.ObjectValue, priorState ba
 	obj["ldap_directory"] = reorderDirectoryLDAPDirectory(state.Attributes()["ldap_directory"].(types.Object), priorState.Attributes()["ldap_directory"].(types.Object), recurse)
 	obj["maintenance_directory"] = reorderDirectoryMaintenanceDirectory(state.Attributes()["maintenance_directory"].(types.Object), priorState.Attributes()["maintenance_directory"].(types.Object), recurse)
 	obj["oidc_directory"] = reorderDirectoryOIDCDirectory(state.Attributes()["oidc_directory"].(types.Object), priorState.Attributes()["oidc_directory"].(types.Object), recurse)
+	obj["pending_accounts_directory"] = reorderDirectoryPendingAccountsDirectory(state.Attributes()["pending_accounts_directory"].(types.Object), priorState.Attributes()["pending_accounts_directory"].(types.Object), recurse)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -613,6 +614,21 @@ func reorderDirectoryOIDCDirectory(state basetypes.ObjectValue, priorState baset
 		attrs = directoryOIDCDirectoryAttrTypesRSRecurse
 	} else {
 		attrs = directoryOIDCDirectoryAttrTypesRS
+	}
+	obj := filterAttributes(state.Attributes(), attrs)
+
+	return types.ObjectValueMust(attrs, obj)
+}
+
+func reorderDirectoryPendingAccountsDirectory(state basetypes.ObjectValue, priorState basetypes.ObjectValue, recurse bool) basetypes.ObjectValue {
+	if state.IsNull() || state.IsUnknown() || priorState.IsNull() || priorState.IsUnknown() {
+		return state
+	}
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = directoryPendingAccountsDirectoryAttrTypesRSRecurse
+	} else {
+		attrs = directoryPendingAccountsDirectoryAttrTypesRS
 	}
 	obj := filterAttributes(state.Attributes(), attrs)
 
@@ -1159,9 +1175,10 @@ func reorderOrganizationOrganizationalUnitSettings(state basetypes.ObjectValue, 
 		attrs = organizationOrganizationalUnitSettingsAttrTypesRS
 	}
 	obj := filterAttributes(state.Attributes(), attrs)
-	obj["create_group_approve_group"] = reorderGroupGroup(state.Attributes()["create_group_approve_group"].(types.Object), priorState.Attributes()["create_group_approve_group"].(types.Object), recurse)
-	obj["enable_tech_admin_approve_group"] = reorderGroupGroup(state.Attributes()["enable_tech_admin_approve_group"].(types.Object), priorState.Attributes()["enable_tech_admin_approve_group"].(types.Object), recurse)
-	obj["remove_group_approve_group"] = reorderGroupGroup(state.Attributes()["remove_group_approve_group"].(types.Object), priorState.Attributes()["remove_group_approve_group"].(types.Object), recurse)
+	obj["create_group_approve_group"] = reorderGroupGroupPrimer(state.Attributes()["create_group_approve_group"].(types.Object), priorState.Attributes()["create_group_approve_group"].(types.Object), recurse)
+	obj["enable_tech_admin_approve_group"] = reorderGroupGroupPrimer(state.Attributes()["enable_tech_admin_approve_group"].(types.Object), priorState.Attributes()["enable_tech_admin_approve_group"].(types.Object), recurse)
+	obj["recovery_fallback_group"] = reorderGroupGroupPrimer(state.Attributes()["recovery_fallback_group"].(types.Object), priorState.Attributes()["recovery_fallback_group"].(types.Object), recurse)
+	obj["remove_group_approve_group"] = reorderGroupGroupPrimer(state.Attributes()["remove_group_approve_group"].(types.Object), priorState.Attributes()["remove_group_approve_group"].(types.Object), recurse)
 
 	return types.ObjectValueMust(attrs, obj)
 }

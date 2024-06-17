@@ -1196,6 +1196,14 @@ func dataSourceSchemaAttrsDirectoryAccountDirectory(recurse bool) map[string]dss
 		schemaAttrs["oidc_directory"] = attr
 	}
 
+	{
+		attr := dsschema.SingleNestedAttribute{
+			Attributes: dataSourceSchemaAttrsDirectoryPendingAccountsDirectory(false),
+		}
+		attr.Computed = true
+		schemaAttrs["pending_accounts_directory"] = attr
+	}
+
 	return schemaAttrs
 }
 func dataSourceSchemaAttrsDirectoryAccountDirectoryLinkableWrapper(recurse bool) map[string]dsschema.Attribute {
@@ -1450,6 +1458,10 @@ func dataSourceSchemaAttrsDirectoryOIDCDirectory(recurse bool) map[string]dssche
 	}
 	return schemaAttrs
 }
+func dataSourceSchemaAttrsDirectoryPendingAccountsDirectory(recurse bool) map[string]dsschema.Attribute {
+	schemaAttrs := make(map[string]dsschema.Attribute)
+	return schemaAttrs
+}
 func dataSourceSchemaAttrsGroupAccountGroup(recurse bool) map[string]dsschema.Attribute {
 	schemaAttrs := make(map[string]dsschema.Attribute)
 	if recurse {
@@ -1632,9 +1644,6 @@ func dataSourceSchemaAttrsGroupGroup(recurse bool) map[string]dsschema.Attribute
 	}
 
 	schemaAttrs["audit_requested"] = dsschema.BoolAttribute{
-		Computed: true,
-	}
-	schemaAttrs["auditor"] = dsschema.BoolAttribute{
 		Computed: true,
 	}
 	{
@@ -2551,7 +2560,15 @@ func dataSourceSchemaAttrsOrganizationOrganizationalUnit(recurse bool) map[strin
 	}
 	{
 		attr := dsschema.SingleNestedAttribute{
-			Attributes: dataSourceSchemaAttrsGroupGroup(false),
+			Attributes: dataSourceSchemaAttrsGroupGroupPrimer(false),
+		}
+		attr.Computed = true
+		schemaAttrs["auditor_group"] = attr
+	}
+
+	{
+		attr := dsschema.SingleNestedAttribute{
+			Attributes: dataSourceSchemaAttrsGroupGroupPrimer(false),
 		}
 		attr.Computed = true
 		schemaAttrs["create_group_approve_group"] = attr
@@ -2568,7 +2585,7 @@ func dataSourceSchemaAttrsOrganizationOrganizationalUnit(recurse bool) map[strin
 	}
 	{
 		attr := dsschema.SingleNestedAttribute{
-			Attributes: dataSourceSchemaAttrsGroupGroup(false),
+			Attributes: dataSourceSchemaAttrsGroupGroupPrimer(false),
 		}
 		attr.Computed = true
 		schemaAttrs["enable_tech_admin_approve_group"] = attr
@@ -2592,7 +2609,15 @@ func dataSourceSchemaAttrsOrganizationOrganizationalUnit(recurse bool) map[strin
 
 	{
 		attr := dsschema.SingleNestedAttribute{
-			Attributes: dataSourceSchemaAttrsGroupGroup(false),
+			Attributes: dataSourceSchemaAttrsGroupGroupPrimer(false),
+		}
+		attr.Computed = true
+		schemaAttrs["recovery_fallback_group"] = attr
+	}
+
+	{
+		attr := dsschema.SingleNestedAttribute{
+			Attributes: dataSourceSchemaAttrsGroupGroupPrimer(false),
 		}
 		attr.Computed = true
 		schemaAttrs["remove_group_approve_group"] = attr
@@ -2641,7 +2666,7 @@ func dataSourceSchemaAttrsOrganizationOrganizationalUnitSettings(recurse bool) m
 	schemaAttrs := make(map[string]dsschema.Attribute)
 	{
 		attr := dsschema.SingleNestedAttribute{
-			Attributes: dataSourceSchemaAttrsGroupGroup(recurse),
+			Attributes: dataSourceSchemaAttrsGroupGroupPrimer(recurse),
 		}
 		attr.Computed = true
 		schemaAttrs["create_group_approve_group"] = attr
@@ -2652,7 +2677,7 @@ func dataSourceSchemaAttrsOrganizationOrganizationalUnitSettings(recurse bool) m
 	}
 	{
 		attr := dsschema.SingleNestedAttribute{
-			Attributes: dataSourceSchemaAttrsGroupGroup(recurse),
+			Attributes: dataSourceSchemaAttrsGroupGroupPrimer(recurse),
 		}
 		attr.Computed = true
 		schemaAttrs["enable_tech_admin_approve_group"] = attr
@@ -2660,7 +2685,15 @@ func dataSourceSchemaAttrsOrganizationOrganizationalUnitSettings(recurse bool) m
 
 	{
 		attr := dsschema.SingleNestedAttribute{
-			Attributes: dataSourceSchemaAttrsGroupGroup(recurse),
+			Attributes: dataSourceSchemaAttrsGroupGroupPrimer(recurse),
+		}
+		attr.Computed = true
+		schemaAttrs["recovery_fallback_group"] = attr
+	}
+
+	{
+		attr := dsschema.SingleNestedAttribute{
+			Attributes: dataSourceSchemaAttrsGroupGroupPrimer(recurse),
 		}
 		attr.Computed = true
 		schemaAttrs["remove_group_approve_group"] = attr

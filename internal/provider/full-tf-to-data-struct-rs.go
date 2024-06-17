@@ -281,6 +281,7 @@ func fillDataStructFromTFObjectRSDirectoryAccountDirectory(data *directoryAccoun
 	data.LDAPDirectory = obj.Attributes()["ldap_directory"].(basetypes.ObjectValue)
 	data.MaintenanceDirectory = obj.Attributes()["maintenance_directory"].(basetypes.ObjectValue)
 	data.OIDCDirectory = obj.Attributes()["oidc_directory"].(basetypes.ObjectValue)
+	data.PendingAccountsDirectory = obj.Attributes()["pending_accounts_directory"].(basetypes.ObjectValue)
 }
 
 func fillDataStructFromTFObjectRSDirectoryAccountDirectoryLinkableWrapper(data *directoryAccountDirectoryLinkableWrapperDataRS, obj types.Object) {
@@ -362,6 +363,9 @@ func fillDataStructFromTFObjectRSDirectoryOIDCDirectory(data *directoryOIDCDirec
 	data.VendorEscaped = obj.Attributes()["vendor_escaped"].(basetypes.StringValue)
 }
 
+func fillDataStructFromTFObjectRSDirectoryPendingAccountsDirectory(data *directoryPendingAccountsDirectoryDataRS, obj types.Object) {
+}
+
 func fillDataStructFromTFObjectRSGroupAuthorizedGroupsWrapper(data *groupAuthorizedGroupsWrapperDataRS, obj types.Object) {
 	data.Items = obj.Attributes()["items"].(basetypes.ListValue)
 	data.GroupCount = obj.Attributes()["group_count"].(basetypes.Int64Value)
@@ -405,7 +409,6 @@ func fillDataStructFromTFObjectRSGroupGroup(data *groupGroupDataRS, obj types.Ob
 	data.ApplicationAdministration = obj.Attributes()["application_administration"].(basetypes.BoolValue)
 	data.AuditConfig = obj.Attributes()["audit_config"].(basetypes.ObjectValue)
 	data.AuditRequested = obj.Attributes()["audit_requested"].(basetypes.BoolValue)
-	data.Auditor = obj.Attributes()["auditor"].(basetypes.BoolValue)
 	data.AuthorizingGroupAuditingUUID = obj.Attributes()["authorizing_group_auditing_uuid"].(basetypes.StringValue)
 	data.AuthorizingGroupDelegationUUID = obj.Attributes()["authorizing_group_delegation_uuid"].(basetypes.StringValue)
 	data.AuthorizingGroupMembershipUUID = obj.Attributes()["authorizing_group_membership_uuid"].(basetypes.StringValue)
@@ -635,6 +638,7 @@ func fillDataStructFromTFObjectRSOrganizationOrganizationalUnit(data *organizati
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
 	data.CreateAsParentOf = obj.Attributes()["create_as_parent_of"].(basetypes.ListValue)
 	data.Settings = obj.Attributes()["settings"].(basetypes.ObjectValue)
+	data.AuditorGroupUUID = obj.Attributes()["auditor_group_uuid"].(basetypes.StringValue)
 	data.CreateGroupApproveGroupUUID = obj.Attributes()["create_group_approve_group_uuid"].(basetypes.StringValue)
 	data.CreateGroupPlaceholder = obj.Attributes()["create_group_placeholder"].(basetypes.StringValue)
 	data.Depth = obj.Attributes()["depth"].(basetypes.Int64Value)
@@ -642,6 +646,7 @@ func fillDataStructFromTFObjectRSOrganizationOrganizationalUnit(data *organizati
 	data.EnableTechAdminApproveGroupUUID = obj.Attributes()["enable_tech_admin_approve_group_uuid"].(basetypes.StringValue)
 	data.OwnerUUID = obj.Attributes()["owner_uuid"].(basetypes.StringValue)
 	data.ParentUUID = obj.Attributes()["parent_uuid"].(basetypes.StringValue)
+	data.RecoveryFallbackGroupUUID = obj.Attributes()["recovery_fallback_group_uuid"].(basetypes.StringValue)
 	data.RemoveGroupApproveGroupUUID = obj.Attributes()["remove_group_approve_group_uuid"].(basetypes.StringValue)
 }
 
@@ -664,6 +669,7 @@ func fillDataStructFromTFObjectRSOrganizationOrganizationalUnitSettings(data *or
 	data.CreateGroupApproveGroup = obj.Attributes()["create_group_approve_group"].(basetypes.ObjectValue)
 	data.CreateGroupPlaceholder = obj.Attributes()["create_group_placeholder"].(basetypes.StringValue)
 	data.EnableTechAdminApproveGroup = obj.Attributes()["enable_tech_admin_approve_group"].(basetypes.ObjectValue)
+	data.RecoveryFallbackGroup = obj.Attributes()["recovery_fallback_group"].(basetypes.ObjectValue)
 	data.RemoveGroupApproveGroup = obj.Attributes()["remove_group_approve_group"].(basetypes.ObjectValue)
 }
 

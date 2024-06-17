@@ -342,7 +342,6 @@ Read-Only:
 - `application_administration` (Boolean)
 - `audit_config` (Attributes) (see [below for nested schema](#nestedatt--groups--audit_config))
 - `audit_requested` (Boolean)
-- `auditor` (Boolean)
 - `authorizing_group_auditing` (Attributes) (see [below for nested schema](#nestedatt--groups--authorizing_group_auditing))
 - `authorizing_group_delegation` (Attributes) (see [below for nested schema](#nestedatt--groups--authorizing_group_delegation))
 - `authorizing_group_membership` (Attributes) (see [below for nested schema](#nestedatt--groups--authorizing_group_membership))

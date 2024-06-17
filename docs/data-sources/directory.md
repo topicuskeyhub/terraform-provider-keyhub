@@ -38,6 +38,7 @@ description: |-
 - `markers` (Attributes) (see [below for nested schema](#nestedatt--markers))
 - `name` (String)
 - `oidc_directory` (Attributes) (see [below for nested schema](#nestedatt--oidc_directory))
+- `pending_accounts_directory` (Attributes) (see [below for nested schema](#nestedatt--pending_accounts_directory))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--permissions))
 - `restrict2fa` (Boolean)
 - `rotating_password` (String)
@@ -423,6 +424,10 @@ Read-Only:
 - `logout_url` (String)
 - `send_login_hint` (Boolean)
 - `vendor_escaped` (String)
+
+
+<a id="nestedatt--pending_accounts_directory"></a>
+### Nested Schema for `pending_accounts_directory`
 
 
 <a id="nestedatt--permissions"></a>

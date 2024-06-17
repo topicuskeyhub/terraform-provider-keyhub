@@ -356,6 +356,7 @@ func objectAttrsTypeRSDirectoryAccountDirectory(recurse bool) map[string]attr.Ty
 	objectAttrs["ldap_directory"] = types.ObjectType{AttrTypes: objectAttrsTypeRSDirectoryLDAPDirectory(false)}
 	objectAttrs["maintenance_directory"] = types.ObjectType{AttrTypes: objectAttrsTypeRSDirectoryMaintenanceDirectory(false)}
 	objectAttrs["oidc_directory"] = types.ObjectType{AttrTypes: objectAttrsTypeRSDirectoryOIDCDirectory(false)}
+	objectAttrs["pending_accounts_directory"] = types.ObjectType{AttrTypes: objectAttrsTypeRSDirectoryPendingAccountsDirectory(false)}
 	return objectAttrs
 }
 
@@ -458,6 +459,11 @@ func objectAttrsTypeRSDirectoryOIDCDirectory(recurse bool) map[string]attr.Type 
 	return objectAttrs
 }
 
+func objectAttrsTypeRSDirectoryPendingAccountsDirectory(recurse bool) map[string]attr.Type {
+	objectAttrs := make(map[string]attr.Type)
+	return objectAttrs
+}
+
 func objectAttrsTypeRSGroupAuthorizedGroupsWrapper(recurse bool) map[string]attr.Type {
 	objectAttrs := make(map[string]attr.Type)
 	objectAttrs["items"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeRSGroupGroup(recurse)}}
@@ -508,7 +514,6 @@ func objectAttrsTypeRSGroupGroup(recurse bool) map[string]attr.Type {
 	objectAttrs["application_administration"] = types.BoolType
 	objectAttrs["audit_config"] = types.ObjectType{AttrTypes: objectAttrsTypeRSGroupGroupAuditConfig(false)}
 	objectAttrs["audit_requested"] = types.BoolType
-	objectAttrs["auditor"] = types.BoolType
 	objectAttrs["authorizing_group_auditing_uuid"] = types.StringType
 	objectAttrs["authorizing_group_delegation_uuid"] = types.StringType
 	objectAttrs["authorizing_group_membership_uuid"] = types.StringType
@@ -810,6 +815,7 @@ func objectAttrsTypeRSOrganizationOrganizationalUnit(recurse bool) map[string]at
 	objectAttrs["permissions"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeRSAuthPermission(recurse)}}
 	objectAttrs["name"] = types.StringType
 	objectAttrs["uuid"] = types.StringType
+	objectAttrs["auditor_group_uuid"] = types.StringType
 	objectAttrs["create_group_approve_group_uuid"] = types.StringType
 	objectAttrs["create_group_placeholder"] = types.StringType
 	objectAttrs["depth"] = types.Int64Type
@@ -817,6 +823,7 @@ func objectAttrsTypeRSOrganizationOrganizationalUnit(recurse bool) map[string]at
 	objectAttrs["enable_tech_admin_approve_group_uuid"] = types.StringType
 	objectAttrs["owner_uuid"] = types.StringType
 	objectAttrs["parent_uuid"] = types.StringType
+	objectAttrs["recovery_fallback_group_uuid"] = types.StringType
 	objectAttrs["remove_group_approve_group_uuid"] = types.StringType
 	return objectAttrs
 }
@@ -844,10 +851,11 @@ func objectAttrsTypeRSOrganizationOrganizationalUnitPrimerLinkableWrapper(recurs
 
 func objectAttrsTypeRSOrganizationOrganizationalUnitSettings(recurse bool) map[string]attr.Type {
 	objectAttrs := make(map[string]attr.Type)
-	objectAttrs["create_group_approve_group"] = types.ObjectType{AttrTypes: objectAttrsTypeRSGroupGroup(recurse)}
+	objectAttrs["create_group_approve_group"] = types.ObjectType{AttrTypes: objectAttrsTypeRSGroupGroupPrimer(recurse)}
 	objectAttrs["create_group_placeholder"] = types.StringType
-	objectAttrs["enable_tech_admin_approve_group"] = types.ObjectType{AttrTypes: objectAttrsTypeRSGroupGroup(recurse)}
-	objectAttrs["remove_group_approve_group"] = types.ObjectType{AttrTypes: objectAttrsTypeRSGroupGroup(recurse)}
+	objectAttrs["enable_tech_admin_approve_group"] = types.ObjectType{AttrTypes: objectAttrsTypeRSGroupGroupPrimer(recurse)}
+	objectAttrs["recovery_fallback_group"] = types.ObjectType{AttrTypes: objectAttrsTypeRSGroupGroupPrimer(recurse)}
+	objectAttrs["remove_group_approve_group"] = types.ObjectType{AttrTypes: objectAttrsTypeRSGroupGroupPrimer(recurse)}
 	return objectAttrs
 }
 

@@ -67,7 +67,6 @@ resource "keyhub_group" "terra" {
 - `administered_systems` (Attributes List) (see [below for nested schema](#nestedatt--administered_systems))
 - `audit` (Attributes) (see [below for nested schema](#nestedatt--audit))
 - `audit_requested` (Boolean)
-- `auditor` (Boolean)
 - `authorized_groups` (Attributes) (see [below for nested schema](#nestedatt--authorized_groups))
 - `authorizing_group_types` (Set of String)
 - `clients` (Attributes List) (see [below for nested schema](#nestedatt--clients))
@@ -622,7 +621,6 @@ Read-Only:
 
 - `admin` (Boolean)
 - `audit_requested` (Boolean)
-- `auditor` (Boolean)
 - `authorizing_group_types` (Set of String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--authorized_groups--items--links))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--authorized_groups--items--permissions))
@@ -1292,6 +1290,7 @@ Optional:
 - `ldap_directory` (Attributes) (see [below for nested schema](#nestedatt--owned_directories--ldap_directory))
 - `maintenance_directory` (Attributes) (see [below for nested schema](#nestedatt--owned_directories--maintenance_directory))
 - `oidc_directory` (Attributes) (see [below for nested schema](#nestedatt--owned_directories--oidc_directory))
+- `pending_accounts_directory` (Attributes) (see [below for nested schema](#nestedatt--owned_directories--pending_accounts_directory))
 - `restrict2fa` (Boolean)
 - `username_customizable` (Boolean)
 
@@ -1361,6 +1360,10 @@ Optional:
 Read-Only:
 
 - `fully_resolved_issuer` (String)
+
+
+<a id="nestedatt--owned_directories--pending_accounts_directory"></a>
+### Nested Schema for `owned_directories.pending_accounts_directory`
 
 
 <a id="nestedatt--owned_directories--links"></a>
@@ -1450,10 +1453,12 @@ Required:
 
 Optional:
 
+- `auditor_group_uuid` (String)
 - `create_group_approve_group_uuid` (String)
 - `create_group_placeholder` (String)
 - `description` (String)
 - `enable_tech_admin_approve_group_uuid` (String)
+- `recovery_fallback_group_uuid` (String)
 - `remove_group_approve_group_uuid` (String)
 
 Read-Only:

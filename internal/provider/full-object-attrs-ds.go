@@ -438,6 +438,7 @@ func objectAttrsTypeDSDirectoryAccountDirectory(recurse bool) map[string]attr.Ty
 	objectAttrs["ldap_directory"] = types.ObjectType{AttrTypes: objectAttrsTypeDSDirectoryLDAPDirectory(false)}
 	objectAttrs["maintenance_directory"] = types.ObjectType{AttrTypes: objectAttrsTypeDSDirectoryMaintenanceDirectory(false)}
 	objectAttrs["oidc_directory"] = types.ObjectType{AttrTypes: objectAttrsTypeDSDirectoryOIDCDirectory(false)}
+	objectAttrs["pending_accounts_directory"] = types.ObjectType{AttrTypes: objectAttrsTypeDSDirectoryPendingAccountsDirectory(false)}
 	return objectAttrs
 }
 
@@ -540,6 +541,11 @@ func objectAttrsTypeDSDirectoryOIDCDirectory(recurse bool) map[string]attr.Type 
 	return objectAttrs
 }
 
+func objectAttrsTypeDSDirectoryPendingAccountsDirectory(recurse bool) map[string]attr.Type {
+	objectAttrs := make(map[string]attr.Type)
+	return objectAttrs
+}
+
 func objectAttrsTypeDSGroupAccountGroup(recurse bool) map[string]attr.Type {
 	objectAttrs := make(map[string]attr.Type)
 	if recurse {
@@ -627,7 +633,6 @@ func objectAttrsTypeDSGroupGroup(recurse bool) map[string]attr.Type {
 	objectAttrs["application_administration"] = types.BoolType
 	objectAttrs["audit_config"] = types.ObjectType{AttrTypes: objectAttrsTypeDSGroupGroupAuditConfig(false)}
 	objectAttrs["audit_requested"] = types.BoolType
-	objectAttrs["auditor"] = types.BoolType
 	objectAttrs["authorizing_group_auditing"] = types.ObjectType{AttrTypes: objectAttrsTypeDSGroupGroupPrimer(false)}
 	objectAttrs["authorizing_group_delegation"] = types.ObjectType{AttrTypes: objectAttrsTypeDSGroupGroupPrimer(false)}
 	objectAttrs["authorizing_group_membership"] = types.ObjectType{AttrTypes: objectAttrsTypeDSGroupGroupPrimer(false)}
@@ -940,14 +945,16 @@ func objectAttrsTypeDSOrganizationOrganizationalUnit(recurse bool) map[string]at
 	objectAttrs["permissions"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSAuthPermission(recurse)}}
 	objectAttrs["name"] = types.StringType
 	objectAttrs["uuid"] = types.StringType
-	objectAttrs["create_group_approve_group"] = types.ObjectType{AttrTypes: objectAttrsTypeDSGroupGroup(false)}
+	objectAttrs["auditor_group"] = types.ObjectType{AttrTypes: objectAttrsTypeDSGroupGroupPrimer(false)}
+	objectAttrs["create_group_approve_group"] = types.ObjectType{AttrTypes: objectAttrsTypeDSGroupGroupPrimer(false)}
 	objectAttrs["create_group_placeholder"] = types.StringType
 	objectAttrs["depth"] = types.Int64Type
 	objectAttrs["description"] = types.StringType
-	objectAttrs["enable_tech_admin_approve_group"] = types.ObjectType{AttrTypes: objectAttrsTypeDSGroupGroup(false)}
+	objectAttrs["enable_tech_admin_approve_group"] = types.ObjectType{AttrTypes: objectAttrsTypeDSGroupGroupPrimer(false)}
 	objectAttrs["owner"] = types.ObjectType{AttrTypes: objectAttrsTypeDSGroupGroupPrimer(false)}
 	objectAttrs["parent"] = types.ObjectType{AttrTypes: objectAttrsTypeDSOrganizationOrganizationalUnitPrimer(false)}
-	objectAttrs["remove_group_approve_group"] = types.ObjectType{AttrTypes: objectAttrsTypeDSGroupGroup(false)}
+	objectAttrs["recovery_fallback_group"] = types.ObjectType{AttrTypes: objectAttrsTypeDSGroupGroupPrimer(false)}
+	objectAttrs["remove_group_approve_group"] = types.ObjectType{AttrTypes: objectAttrsTypeDSGroupGroupPrimer(false)}
 	return objectAttrs
 }
 
@@ -968,10 +975,11 @@ func objectAttrsTypeDSOrganizationOrganizationalUnitPrimer(recurse bool) map[str
 
 func objectAttrsTypeDSOrganizationOrganizationalUnitSettings(recurse bool) map[string]attr.Type {
 	objectAttrs := make(map[string]attr.Type)
-	objectAttrs["create_group_approve_group"] = types.ObjectType{AttrTypes: objectAttrsTypeDSGroupGroup(recurse)}
+	objectAttrs["create_group_approve_group"] = types.ObjectType{AttrTypes: objectAttrsTypeDSGroupGroupPrimer(recurse)}
 	objectAttrs["create_group_placeholder"] = types.StringType
-	objectAttrs["enable_tech_admin_approve_group"] = types.ObjectType{AttrTypes: objectAttrsTypeDSGroupGroup(recurse)}
-	objectAttrs["remove_group_approve_group"] = types.ObjectType{AttrTypes: objectAttrsTypeDSGroupGroup(recurse)}
+	objectAttrs["enable_tech_admin_approve_group"] = types.ObjectType{AttrTypes: objectAttrsTypeDSGroupGroupPrimer(recurse)}
+	objectAttrs["recovery_fallback_group"] = types.ObjectType{AttrTypes: objectAttrsTypeDSGroupGroupPrimer(recurse)}
+	objectAttrs["remove_group_approve_group"] = types.ObjectType{AttrTypes: objectAttrsTypeDSGroupGroupPrimer(recurse)}
 	return objectAttrs
 }
 

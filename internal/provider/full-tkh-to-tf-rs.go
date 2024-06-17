@@ -1110,6 +1110,12 @@ func tkhToTFObjectRSDirectoryAccountDirectory(recurse bool, tkh keyhubmodel.Dire
 		diags.Append(d...)
 		obj["oidc_directory"] = val
 	}
+	{
+		tkhCast, _ := tkh.(keyhubmodel.DirectoryPendingAccountsDirectoryable)
+		val, d := tkhToTFObjectRSDirectoryPendingAccountsDirectory(false, tkhCast)
+		diags.Append(d...)
+		obj["pending_accounts_directory"] = val
+	}
 
 	objVal, d := types.ObjectValue(attrs, obj)
 	diags.Append(d...)
@@ -1425,6 +1431,25 @@ func tkhToTFObjectRSDirectoryOIDCDirectory(recurse bool, tkh keyhubmodel.Directo
 	return objVal, diags
 }
 
+func tkhToTFObjectRSDirectoryPendingAccountsDirectory(recurse bool, tkh keyhubmodel.DirectoryPendingAccountsDirectoryable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = directoryPendingAccountsDirectoryAttrTypesRSRecurse
+	} else {
+		attrs = directoryPendingAccountsDirectoryAttrTypesRS
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
 func tkhToTFObjectRSGroupAuthorizedGroupsWrapper(recurse bool, tkh keyhubmodel.GroupAuthorizedGroupsWrapperable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
@@ -1509,7 +1534,6 @@ func tkhToTFObjectRSGroupGroup(recurse bool, tkh keyhubmodel.GroupGroupable) (ty
 		obj["audit_config"] = val
 	}
 	obj["audit_requested"] = types.BoolPointerValue(tkh.GetAuditRequested())
-	obj["auditor"] = types.BoolPointerValue(tkh.GetAuditor())
 	obj["authorizing_group_auditing_uuid"] = withUuidToTF(tkh.GetAuthorizingGroupAuditing())
 	obj["authorizing_group_delegation_uuid"] = withUuidToTF(tkh.GetAuthorizingGroupDelegation())
 	obj["authorizing_group_membership_uuid"] = withUuidToTF(tkh.GetAuthorizingGroupMembership())
@@ -2504,6 +2528,7 @@ func tkhToTFObjectRSOrganizationOrganizationalUnit(recurse bool, tkh keyhubmodel
 	}
 	obj["name"] = types.StringPointerValue(tkh.GetName())
 	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
+	obj["auditor_group_uuid"] = withUuidToTF(tkh.GetAuditorGroup())
 	obj["create_group_approve_group_uuid"] = withUuidToTF(tkh.GetCreateGroupApproveGroup())
 	obj["create_group_placeholder"] = types.StringPointerValue(tkh.GetCreateGroupPlaceholder())
 	obj["depth"] = types.Int64PointerValue(int32PToInt64P(tkh.GetDepth()))
@@ -2511,6 +2536,7 @@ func tkhToTFObjectRSOrganizationOrganizationalUnit(recurse bool, tkh keyhubmodel
 	obj["enable_tech_admin_approve_group_uuid"] = withUuidToTF(tkh.GetEnableTechAdminApproveGroup())
 	obj["owner_uuid"] = withUuidToTF(tkh.GetOwner())
 	obj["parent_uuid"] = withUuidToTF(tkh.GetParent())
+	obj["recovery_fallback_group_uuid"] = withUuidToTF(tkh.GetRecoveryFallbackGroup())
 	obj["remove_group_approve_group_uuid"] = withUuidToTF(tkh.GetRemoveGroupApproveGroup())
 
 	objVal, d := types.ObjectValue(attrs, obj)
@@ -2631,18 +2657,23 @@ func tkhToTFObjectRSOrganizationOrganizationalUnitSettings(recurse bool, tkh key
 
 	obj := make(map[string]attr.Value)
 	{
-		val, d := tkhToTFObjectRSGroupGroup(recurse, tkh.GetCreateGroupApproveGroup())
+		val, d := tkhToTFObjectRSGroupGroupPrimer(recurse, tkh.GetCreateGroupApproveGroup())
 		diags.Append(d...)
 		obj["create_group_approve_group"] = val
 	}
 	obj["create_group_placeholder"] = types.StringPointerValue(tkh.GetCreateGroupPlaceholder())
 	{
-		val, d := tkhToTFObjectRSGroupGroup(recurse, tkh.GetEnableTechAdminApproveGroup())
+		val, d := tkhToTFObjectRSGroupGroupPrimer(recurse, tkh.GetEnableTechAdminApproveGroup())
 		diags.Append(d...)
 		obj["enable_tech_admin_approve_group"] = val
 	}
 	{
-		val, d := tkhToTFObjectRSGroupGroup(recurse, tkh.GetRemoveGroupApproveGroup())
+		val, d := tkhToTFObjectRSGroupGroupPrimer(recurse, tkh.GetRecoveryFallbackGroup())
+		diags.Append(d...)
+		obj["recovery_fallback_group"] = val
+	}
+	{
+		val, d := tkhToTFObjectRSGroupGroupPrimer(recurse, tkh.GetRemoveGroupApproveGroup())
 		diags.Append(d...)
 		obj["remove_group_approve_group"] = val
 	}

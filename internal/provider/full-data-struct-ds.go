@@ -443,6 +443,7 @@ type directoryAccountDirectoryDataDS struct {
 	LDAPDirectory                       types.Object `tfsdk:"ldap_directory"`
 	MaintenanceDirectory                types.Object `tfsdk:"maintenance_directory"`
 	OIDCDirectory                       types.Object `tfsdk:"oidc_directory"`
+	PendingAccountsDirectory            types.Object `tfsdk:"pending_accounts_directory"`
 }
 
 var directoryAccountDirectoryLinkableWrapperAttrTypesDS = objectAttrsTypeDSDirectoryAccountDirectoryLinkableWrapper(false)
@@ -554,6 +555,12 @@ type directoryOIDCDirectoryDataDS struct {
 	VendorEscaped       types.String `tfsdk:"vendor_escaped"`
 }
 
+var directoryPendingAccountsDirectoryAttrTypesDS = objectAttrsTypeDSDirectoryPendingAccountsDirectory(false)
+var directoryPendingAccountsDirectoryAttrTypesDSRecurse = objectAttrsTypeDSDirectoryPendingAccountsDirectory(true)
+
+type directoryPendingAccountsDirectoryDataDS struct {
+}
+
 var groupAccountGroupAttrTypesDS = objectAttrsTypeDSGroupAccountGroup(false)
 var groupAccountGroupAttrTypesDSRecurse = objectAttrsTypeDSGroupAccountGroup(true)
 
@@ -639,7 +646,6 @@ type groupGroupDataDS struct {
 	ApplicationAdministration    types.Bool   `tfsdk:"application_administration"`
 	AuditConfig                  types.Object `tfsdk:"audit_config"`
 	AuditRequested               types.Bool   `tfsdk:"audit_requested"`
-	Auditor                      types.Bool   `tfsdk:"auditor"`
 	AuthorizingGroupAuditing     types.Object `tfsdk:"authorizing_group_auditing"`
 	AuthorizingGroupDelegation   types.Object `tfsdk:"authorizing_group_delegation"`
 	AuthorizingGroupMembership   types.Object `tfsdk:"authorizing_group_membership"`
@@ -955,6 +961,7 @@ type organizationOrganizationalUnitDataDS struct {
 	Additional                  types.List   `tfsdk:"additional"`
 	Audit                       types.Object `tfsdk:"audit" tkhao:"audit"`
 	Settings                    types.Object `tfsdk:"settings" tkhao:"settings"`
+	AuditorGroup                types.Object `tfsdk:"auditor_group"`
 	CreateGroupApproveGroup     types.Object `tfsdk:"create_group_approve_group"`
 	CreateGroupPlaceholder      types.String `tfsdk:"create_group_placeholder"`
 	Depth                       types.Int64  `tfsdk:"depth"`
@@ -962,6 +969,7 @@ type organizationOrganizationalUnitDataDS struct {
 	EnableTechAdminApproveGroup types.Object `tfsdk:"enable_tech_admin_approve_group"`
 	Owner                       types.Object `tfsdk:"owner"`
 	Parent                      types.Object `tfsdk:"parent"`
+	RecoveryFallbackGroup       types.Object `tfsdk:"recovery_fallback_group"`
 	RemoveGroupApproveGroup     types.Object `tfsdk:"remove_group_approve_group"`
 }
 
@@ -989,6 +997,7 @@ type organizationOrganizationalUnitSettingsDataDS struct {
 	CreateGroupApproveGroup     types.Object `tfsdk:"create_group_approve_group"`
 	CreateGroupPlaceholder      types.String `tfsdk:"create_group_placeholder"`
 	EnableTechAdminApproveGroup types.Object `tfsdk:"enable_tech_admin_approve_group"`
+	RecoveryFallbackGroup       types.Object `tfsdk:"recovery_fallback_group"`
 	RemoveGroupApproveGroup     types.Object `tfsdk:"remove_group_approve_group"`
 }
 

@@ -1281,6 +1281,14 @@ func tfObjectToTKHDSDirectoryAccountDirectory(ctx context.Context, recurse bool,
 		val.SetTypeEscaped(dtype)
 		tkh = val
 	}
+	if !objAttrs["pending_accounts_directory"].IsNull() {
+		val, d := tfObjectToTKHDSDirectoryPendingAccountsDirectory(ctx, false, objAttrs["pending_accounts_directory"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		dtype := val.GetTypeEscaped()
+		(*val.(*keyhubmodel.DirectoryPendingAccountsDirectory)).DirectoryAccountDirectory = *tkh.(*keyhubmodel.DirectoryAccountDirectory)
+		val.SetTypeEscaped(dtype)
+		tkh = val
+	}
 	if recurse {
 		{
 			val, d := tfObjectToTKHDSDirectoryAccountDirectory_additionalObjects(ctx, false, objVal)
@@ -1565,6 +1573,16 @@ func tfObjectToTKHDSDirectoryOIDCDirectory(ctx context.Context, recurse bool, ob
 	return tkh, diags
 }
 
+func tfObjectToTKHDSDirectoryPendingAccountsDirectory(ctx context.Context, recurse bool, objVal types.Object) (keyhubmodel.DirectoryPendingAccountsDirectoryable, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	if objVal.IsNull() || objVal.IsUnknown() {
+		return nil, diags
+	}
+	var tkh keyhubmodel.DirectoryPendingAccountsDirectoryable
+	tkh = keyhubmodel.NewDirectoryPendingAccountsDirectory()
+	return tkh, diags
+}
+
 func tfObjectToTKHDSGroupAccountGroup(ctx context.Context, recurse bool, objVal types.Object) (keyhubmodel.GroupAccountGroupable, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	if objVal.IsNull() || objVal.IsUnknown() {
@@ -1738,7 +1756,6 @@ func tfObjectToTKHDSGroupGroup(ctx context.Context, recurse bool, objVal types.O
 		tkh.SetAuditConfig(val)
 	}
 	tkh.SetAuditRequested(objAttrs["audit_requested"].(basetypes.BoolValue).ValueBoolPointer())
-	tkh.SetAuditor(objAttrs["auditor"].(basetypes.BoolValue).ValueBoolPointer())
 	{
 		val, d := tfObjectToTKHDSGroupGroupPrimer(ctx, false, objAttrs["authorizing_group_auditing"].(basetypes.ObjectValue))
 		diags.Append(d...)
@@ -2687,7 +2704,12 @@ func tfObjectToTKHDSOrganizationOrganizationalUnit(ctx context.Context, recurse 
 	tkh.SetName(objAttrs["name"].(basetypes.StringValue).ValueStringPointer())
 	tkh.SetUuid(objAttrs["uuid"].(basetypes.StringValue).ValueStringPointer())
 	{
-		val, d := tfObjectToTKHDSGroupGroup(ctx, false, objAttrs["create_group_approve_group"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHDSGroupGroupPrimer(ctx, false, objAttrs["auditor_group"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		tkh.SetAuditorGroup(val)
+	}
+	{
+		val, d := tfObjectToTKHDSGroupGroupPrimer(ctx, false, objAttrs["create_group_approve_group"].(basetypes.ObjectValue))
 		diags.Append(d...)
 		tkh.SetCreateGroupApproveGroup(val)
 	}
@@ -2695,7 +2717,7 @@ func tfObjectToTKHDSOrganizationOrganizationalUnit(ctx context.Context, recurse 
 	tkh.SetDepth(int64PToInt32P(objAttrs["depth"].(basetypes.Int64Value).ValueInt64Pointer()))
 	tkh.SetDescription(objAttrs["description"].(basetypes.StringValue).ValueStringPointer())
 	{
-		val, d := tfObjectToTKHDSGroupGroup(ctx, false, objAttrs["enable_tech_admin_approve_group"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHDSGroupGroupPrimer(ctx, false, objAttrs["enable_tech_admin_approve_group"].(basetypes.ObjectValue))
 		diags.Append(d...)
 		tkh.SetEnableTechAdminApproveGroup(val)
 	}
@@ -2710,7 +2732,12 @@ func tfObjectToTKHDSOrganizationOrganizationalUnit(ctx context.Context, recurse 
 		tkh.SetParent(val)
 	}
 	{
-		val, d := tfObjectToTKHDSGroupGroup(ctx, false, objAttrs["remove_group_approve_group"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHDSGroupGroupPrimer(ctx, false, objAttrs["recovery_fallback_group"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		tkh.SetRecoveryFallbackGroup(val)
+	}
+	{
+		val, d := tfObjectToTKHDSGroupGroupPrimer(ctx, false, objAttrs["remove_group_approve_group"].(basetypes.ObjectValue))
 		diags.Append(d...)
 		tkh.SetRemoveGroupApproveGroup(val)
 	}
@@ -2784,18 +2811,23 @@ func tfObjectToTKHDSOrganizationOrganizationalUnitSettings(ctx context.Context, 
 	var tkh keyhubmodel.OrganizationOrganizationalUnitSettingsable
 	tkh = keyhubmodel.NewOrganizationOrganizationalUnitSettings()
 	{
-		val, d := tfObjectToTKHDSGroupGroup(ctx, recurse, objAttrs["create_group_approve_group"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHDSGroupGroupPrimer(ctx, recurse, objAttrs["create_group_approve_group"].(basetypes.ObjectValue))
 		diags.Append(d...)
 		tkh.SetCreateGroupApproveGroup(val)
 	}
 	tkh.SetCreateGroupPlaceholder(objAttrs["create_group_placeholder"].(basetypes.StringValue).ValueStringPointer())
 	{
-		val, d := tfObjectToTKHDSGroupGroup(ctx, recurse, objAttrs["enable_tech_admin_approve_group"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHDSGroupGroupPrimer(ctx, recurse, objAttrs["enable_tech_admin_approve_group"].(basetypes.ObjectValue))
 		diags.Append(d...)
 		tkh.SetEnableTechAdminApproveGroup(val)
 	}
 	{
-		val, d := tfObjectToTKHDSGroupGroup(ctx, recurse, objAttrs["remove_group_approve_group"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHDSGroupGroupPrimer(ctx, recurse, objAttrs["recovery_fallback_group"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		tkh.SetRecoveryFallbackGroup(val)
+	}
+	{
+		val, d := tfObjectToTKHDSGroupGroupPrimer(ctx, recurse, objAttrs["remove_group_approve_group"].(basetypes.ObjectValue))
 		diags.Append(d...)
 		tkh.SetRemoveGroupApproveGroup(val)
 	}

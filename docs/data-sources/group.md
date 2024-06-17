@@ -41,7 +41,6 @@ data "keyhub_group" "group_from_keyhub" {
 - `audit` (Attributes) (see [below for nested schema](#nestedatt--audit))
 - `audit_config` (Attributes) (see [below for nested schema](#nestedatt--audit_config))
 - `audit_requested` (Boolean)
-- `auditor` (Boolean)
 - `authorized_groups` (Attributes) (see [below for nested schema](#nestedatt--authorized_groups))
 - `authorizing_group_auditing` (Attributes) (see [below for nested schema](#nestedatt--authorizing_group_auditing))
 - `authorizing_group_delegation` (Attributes) (see [below for nested schema](#nestedatt--authorizing_group_delegation))
@@ -1487,7 +1486,6 @@ Read-Only:
 - `application_administration` (Boolean)
 - `audit_config` (Attributes) (see [below for nested schema](#nestedatt--authorized_groups--items--audit_config))
 - `audit_requested` (Boolean)
-- `auditor` (Boolean)
 - `authorizing_group_auditing` (Attributes) (see [below for nested schema](#nestedatt--authorized_groups--items--authorizing_group_auditing))
 - `authorizing_group_delegation` (Attributes) (see [below for nested schema](#nestedatt--authorized_groups--items--authorizing_group_delegation))
 - `authorizing_group_membership` (Attributes) (see [below for nested schema](#nestedatt--authorized_groups--items--authorizing_group_membership))
@@ -4425,6 +4423,7 @@ Read-Only:
 - `maintenance_directory` (Attributes) (see [below for nested schema](#nestedatt--owned_directories--maintenance_directory))
 - `name` (String)
 - `oidc_directory` (Attributes) (see [below for nested schema](#nestedatt--owned_directories--oidc_directory))
+- `pending_accounts_directory` (Attributes) (see [below for nested schema](#nestedatt--owned_directories--pending_accounts_directory))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_directories--permissions))
 - `restrict2fa` (Boolean)
 - `rotating_password` (String)
@@ -4783,6 +4782,10 @@ Read-Only:
 - `vendor_escaped` (String)
 
 
+<a id="nestedatt--owned_directories--pending_accounts_directory"></a>
+### Nested Schema for `owned_directories.pending_accounts_directory`
+
+
 <a id="nestedatt--owned_directories--permissions"></a>
 ### Nested Schema for `owned_directories.permissions`
 
@@ -4913,6 +4916,7 @@ Read-Only:
 
 Read-Only:
 
+- `auditor_group` (Attributes) (see [below for nested schema](#nestedatt--owned_organizational_units--auditor_group))
 - `create_group_approve_group` (Attributes) (see [below for nested schema](#nestedatt--owned_organizational_units--create_group_approve_group))
 - `create_group_placeholder` (String)
 - `depth` (Number)
@@ -4923,8 +4927,77 @@ Read-Only:
 - `owner` (Attributes) (see [below for nested schema](#nestedatt--owned_organizational_units--owner))
 - `parent` (Attributes) (see [below for nested schema](#nestedatt--owned_organizational_units--parent))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--permissions))
+- `recovery_fallback_group` (Attributes) (see [below for nested schema](#nestedatt--owned_organizational_units--recovery_fallback_group))
 - `remove_group_approve_group` (Attributes) (see [below for nested schema](#nestedatt--owned_organizational_units--remove_group_approve_group))
 - `uuid` (String)
+
+<a id="nestedatt--owned_organizational_units--auditor_group"></a>
+### Nested Schema for `owned_organizational_units.auditor_group`
+
+Read-Only:
+
+- `admin` (Boolean)
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--auditor_group--links))
+- `name` (String)
+- `organizational_unit` (Attributes) (see [below for nested schema](#nestedatt--owned_organizational_units--auditor_group--organizational_unit))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--auditor_group--permissions))
+- `uuid` (String)
+
+<a id="nestedatt--owned_organizational_units--auditor_group--links"></a>
+### Nested Schema for `owned_organizational_units.auditor_group.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--owned_organizational_units--auditor_group--organizational_unit"></a>
+### Nested Schema for `owned_organizational_units.auditor_group.organizational_unit`
+
+Read-Only:
+
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--auditor_group--organizational_unit--links))
+- `name` (String)
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--auditor_group--organizational_unit--permissions))
+- `uuid` (String)
+
+<a id="nestedatt--owned_organizational_units--auditor_group--organizational_unit--links"></a>
+### Nested Schema for `owned_organizational_units.auditor_group.organizational_unit.uuid`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--owned_organizational_units--auditor_group--organizational_unit--permissions"></a>
+### Nested Schema for `owned_organizational_units.auditor_group.organizational_unit.uuid`
+
+Read-Only:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
+
+<a id="nestedatt--owned_organizational_units--auditor_group--permissions"></a>
+### Nested Schema for `owned_organizational_units.auditor_group.permissions`
+
+Read-Only:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
 
 <a id="nestedatt--owned_organizational_units--create_group_approve_group"></a>
 ### Nested Schema for `owned_organizational_units.create_group_approve_group`
@@ -4932,369 +5005,11 @@ Read-Only:
 Read-Only:
 
 - `admin` (Boolean)
-- `application_administration` (Boolean)
-- `audit_config` (Attributes) (see [below for nested schema](#nestedatt--owned_organizational_units--create_group_approve_group--audit_config))
-- `audit_requested` (Boolean)
-- `auditor` (Boolean)
-- `authorizing_group_auditing` (Attributes) (see [below for nested schema](#nestedatt--owned_organizational_units--create_group_approve_group--authorizing_group_auditing))
-- `authorizing_group_delegation` (Attributes) (see [below for nested schema](#nestedatt--owned_organizational_units--create_group_approve_group--authorizing_group_delegation))
-- `authorizing_group_membership` (Attributes) (see [below for nested schema](#nestedatt--owned_organizational_units--create_group_approve_group--authorizing_group_membership))
-- `authorizing_group_provisioning` (Attributes) (see [below for nested schema](#nestedatt--owned_organizational_units--create_group_approve_group--authorizing_group_provisioning))
-- `authorizing_group_types` (Set of String)
-- `classification` (Attributes) (see [below for nested schema](#nestedatt--owned_organizational_units--create_group_approve_group--classification))
-- `description` (String)
-- `extended_access` (String)
-- `hide_audit_trail` (Boolean)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--create_group_approve_group--links))
 - `name` (String)
-- `nested_under` (Attributes) (see [below for nested schema](#nestedatt--owned_organizational_units--create_group_approve_group--nested_under))
 - `organizational_unit` (Attributes) (see [below for nested schema](#nestedatt--owned_organizational_units--create_group_approve_group--organizational_unit))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--create_group_approve_group--permissions))
-- `private_group` (Boolean)
-- `profile_administration` (Boolean)
-- `record_trail` (Boolean)
-- `rotating_password_required` (Boolean)
-- `single_managed` (Boolean)
 - `uuid` (String)
-- `vault_recovery` (String)
-- `vault_requires_activation` (Boolean)
-
-<a id="nestedatt--owned_organizational_units--create_group_approve_group--audit_config"></a>
-### Nested Schema for `owned_organizational_units.create_group_approve_group.audit_config`
-
-Read-Only:
-
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--create_group_approve_group--audit_config--links))
-- `months` (Set of String)
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--create_group_approve_group--audit_config--permissions))
-
-<a id="nestedatt--owned_organizational_units--create_group_approve_group--audit_config--links"></a>
-### Nested Schema for `owned_organizational_units.create_group_approve_group.audit_config.permissions`
-
-Read-Only:
-
-- `href` (String)
-- `id` (Number)
-- `rel` (String)
-- `type_escaped` (String)
-
-
-<a id="nestedatt--owned_organizational_units--create_group_approve_group--audit_config--permissions"></a>
-### Nested Schema for `owned_organizational_units.create_group_approve_group.audit_config.permissions`
-
-Read-Only:
-
-- `full` (String)
-- `instances` (List of String)
-- `operations` (Set of String)
-- `type_escaped` (String)
-
-
-
-<a id="nestedatt--owned_organizational_units--create_group_approve_group--authorizing_group_auditing"></a>
-### Nested Schema for `owned_organizational_units.create_group_approve_group.authorizing_group_auditing`
-
-Read-Only:
-
-- `admin` (Boolean)
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--create_group_approve_group--authorizing_group_auditing--links))
-- `name` (String)
-- `organizational_unit` (Attributes) (see [below for nested schema](#nestedatt--owned_organizational_units--create_group_approve_group--authorizing_group_auditing--organizational_unit))
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--create_group_approve_group--authorizing_group_auditing--permissions))
-- `uuid` (String)
-
-<a id="nestedatt--owned_organizational_units--create_group_approve_group--authorizing_group_auditing--links"></a>
-### Nested Schema for `owned_organizational_units.create_group_approve_group.authorizing_group_auditing.uuid`
-
-Read-Only:
-
-- `href` (String)
-- `id` (Number)
-- `rel` (String)
-- `type_escaped` (String)
-
-
-<a id="nestedatt--owned_organizational_units--create_group_approve_group--authorizing_group_auditing--organizational_unit"></a>
-### Nested Schema for `owned_organizational_units.create_group_approve_group.authorizing_group_auditing.uuid`
-
-Read-Only:
-
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--create_group_approve_group--authorizing_group_auditing--uuid--links))
-- `name` (String)
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--create_group_approve_group--authorizing_group_auditing--uuid--permissions))
-- `uuid` (String)
-
-<a id="nestedatt--owned_organizational_units--create_group_approve_group--authorizing_group_auditing--uuid--links"></a>
-### Nested Schema for `owned_organizational_units.create_group_approve_group.authorizing_group_auditing.uuid.links`
-
-Read-Only:
-
-- `href` (String)
-- `id` (Number)
-- `rel` (String)
-- `type_escaped` (String)
-
-
-<a id="nestedatt--owned_organizational_units--create_group_approve_group--authorizing_group_auditing--uuid--permissions"></a>
-### Nested Schema for `owned_organizational_units.create_group_approve_group.authorizing_group_auditing.uuid.permissions`
-
-Read-Only:
-
-- `full` (String)
-- `instances` (List of String)
-- `operations` (Set of String)
-- `type_escaped` (String)
-
-
-
-<a id="nestedatt--owned_organizational_units--create_group_approve_group--authorizing_group_auditing--permissions"></a>
-### Nested Schema for `owned_organizational_units.create_group_approve_group.authorizing_group_auditing.uuid`
-
-Read-Only:
-
-- `full` (String)
-- `instances` (List of String)
-- `operations` (Set of String)
-- `type_escaped` (String)
-
-
-
-<a id="nestedatt--owned_organizational_units--create_group_approve_group--authorizing_group_delegation"></a>
-### Nested Schema for `owned_organizational_units.create_group_approve_group.authorizing_group_delegation`
-
-Read-Only:
-
-- `admin` (Boolean)
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--create_group_approve_group--authorizing_group_delegation--links))
-- `name` (String)
-- `organizational_unit` (Attributes) (see [below for nested schema](#nestedatt--owned_organizational_units--create_group_approve_group--authorizing_group_delegation--organizational_unit))
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--create_group_approve_group--authorizing_group_delegation--permissions))
-- `uuid` (String)
-
-<a id="nestedatt--owned_organizational_units--create_group_approve_group--authorizing_group_delegation--links"></a>
-### Nested Schema for `owned_organizational_units.create_group_approve_group.authorizing_group_delegation.uuid`
-
-Read-Only:
-
-- `href` (String)
-- `id` (Number)
-- `rel` (String)
-- `type_escaped` (String)
-
-
-<a id="nestedatt--owned_organizational_units--create_group_approve_group--authorizing_group_delegation--organizational_unit"></a>
-### Nested Schema for `owned_organizational_units.create_group_approve_group.authorizing_group_delegation.uuid`
-
-Read-Only:
-
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--create_group_approve_group--authorizing_group_delegation--uuid--links))
-- `name` (String)
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--create_group_approve_group--authorizing_group_delegation--uuid--permissions))
-- `uuid` (String)
-
-<a id="nestedatt--owned_organizational_units--create_group_approve_group--authorizing_group_delegation--uuid--links"></a>
-### Nested Schema for `owned_organizational_units.create_group_approve_group.authorizing_group_delegation.uuid.links`
-
-Read-Only:
-
-- `href` (String)
-- `id` (Number)
-- `rel` (String)
-- `type_escaped` (String)
-
-
-<a id="nestedatt--owned_organizational_units--create_group_approve_group--authorizing_group_delegation--uuid--permissions"></a>
-### Nested Schema for `owned_organizational_units.create_group_approve_group.authorizing_group_delegation.uuid.permissions`
-
-Read-Only:
-
-- `full` (String)
-- `instances` (List of String)
-- `operations` (Set of String)
-- `type_escaped` (String)
-
-
-
-<a id="nestedatt--owned_organizational_units--create_group_approve_group--authorizing_group_delegation--permissions"></a>
-### Nested Schema for `owned_organizational_units.create_group_approve_group.authorizing_group_delegation.uuid`
-
-Read-Only:
-
-- `full` (String)
-- `instances` (List of String)
-- `operations` (Set of String)
-- `type_escaped` (String)
-
-
-
-<a id="nestedatt--owned_organizational_units--create_group_approve_group--authorizing_group_membership"></a>
-### Nested Schema for `owned_organizational_units.create_group_approve_group.authorizing_group_membership`
-
-Read-Only:
-
-- `admin` (Boolean)
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--create_group_approve_group--authorizing_group_membership--links))
-- `name` (String)
-- `organizational_unit` (Attributes) (see [below for nested schema](#nestedatt--owned_organizational_units--create_group_approve_group--authorizing_group_membership--organizational_unit))
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--create_group_approve_group--authorizing_group_membership--permissions))
-- `uuid` (String)
-
-<a id="nestedatt--owned_organizational_units--create_group_approve_group--authorizing_group_membership--links"></a>
-### Nested Schema for `owned_organizational_units.create_group_approve_group.authorizing_group_membership.uuid`
-
-Read-Only:
-
-- `href` (String)
-- `id` (Number)
-- `rel` (String)
-- `type_escaped` (String)
-
-
-<a id="nestedatt--owned_organizational_units--create_group_approve_group--authorizing_group_membership--organizational_unit"></a>
-### Nested Schema for `owned_organizational_units.create_group_approve_group.authorizing_group_membership.uuid`
-
-Read-Only:
-
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--create_group_approve_group--authorizing_group_membership--uuid--links))
-- `name` (String)
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--create_group_approve_group--authorizing_group_membership--uuid--permissions))
-- `uuid` (String)
-
-<a id="nestedatt--owned_organizational_units--create_group_approve_group--authorizing_group_membership--uuid--links"></a>
-### Nested Schema for `owned_organizational_units.create_group_approve_group.authorizing_group_membership.uuid.links`
-
-Read-Only:
-
-- `href` (String)
-- `id` (Number)
-- `rel` (String)
-- `type_escaped` (String)
-
-
-<a id="nestedatt--owned_organizational_units--create_group_approve_group--authorizing_group_membership--uuid--permissions"></a>
-### Nested Schema for `owned_organizational_units.create_group_approve_group.authorizing_group_membership.uuid.permissions`
-
-Read-Only:
-
-- `full` (String)
-- `instances` (List of String)
-- `operations` (Set of String)
-- `type_escaped` (String)
-
-
-
-<a id="nestedatt--owned_organizational_units--create_group_approve_group--authorizing_group_membership--permissions"></a>
-### Nested Schema for `owned_organizational_units.create_group_approve_group.authorizing_group_membership.uuid`
-
-Read-Only:
-
-- `full` (String)
-- `instances` (List of String)
-- `operations` (Set of String)
-- `type_escaped` (String)
-
-
-
-<a id="nestedatt--owned_organizational_units--create_group_approve_group--authorizing_group_provisioning"></a>
-### Nested Schema for `owned_organizational_units.create_group_approve_group.authorizing_group_provisioning`
-
-Read-Only:
-
-- `admin` (Boolean)
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--create_group_approve_group--authorizing_group_provisioning--links))
-- `name` (String)
-- `organizational_unit` (Attributes) (see [below for nested schema](#nestedatt--owned_organizational_units--create_group_approve_group--authorizing_group_provisioning--organizational_unit))
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--create_group_approve_group--authorizing_group_provisioning--permissions))
-- `uuid` (String)
-
-<a id="nestedatt--owned_organizational_units--create_group_approve_group--authorizing_group_provisioning--links"></a>
-### Nested Schema for `owned_organizational_units.create_group_approve_group.authorizing_group_provisioning.uuid`
-
-Read-Only:
-
-- `href` (String)
-- `id` (Number)
-- `rel` (String)
-- `type_escaped` (String)
-
-
-<a id="nestedatt--owned_organizational_units--create_group_approve_group--authorizing_group_provisioning--organizational_unit"></a>
-### Nested Schema for `owned_organizational_units.create_group_approve_group.authorizing_group_provisioning.uuid`
-
-Read-Only:
-
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--create_group_approve_group--authorizing_group_provisioning--uuid--links))
-- `name` (String)
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--create_group_approve_group--authorizing_group_provisioning--uuid--permissions))
-- `uuid` (String)
-
-<a id="nestedatt--owned_organizational_units--create_group_approve_group--authorizing_group_provisioning--uuid--links"></a>
-### Nested Schema for `owned_organizational_units.create_group_approve_group.authorizing_group_provisioning.uuid.links`
-
-Read-Only:
-
-- `href` (String)
-- `id` (Number)
-- `rel` (String)
-- `type_escaped` (String)
-
-
-<a id="nestedatt--owned_organizational_units--create_group_approve_group--authorizing_group_provisioning--uuid--permissions"></a>
-### Nested Schema for `owned_organizational_units.create_group_approve_group.authorizing_group_provisioning.uuid.permissions`
-
-Read-Only:
-
-- `full` (String)
-- `instances` (List of String)
-- `operations` (Set of String)
-- `type_escaped` (String)
-
-
-
-<a id="nestedatt--owned_organizational_units--create_group_approve_group--authorizing_group_provisioning--permissions"></a>
-### Nested Schema for `owned_organizational_units.create_group_approve_group.authorizing_group_provisioning.uuid`
-
-Read-Only:
-
-- `full` (String)
-- `instances` (List of String)
-- `operations` (Set of String)
-- `type_escaped` (String)
-
-
-
-<a id="nestedatt--owned_organizational_units--create_group_approve_group--classification"></a>
-### Nested Schema for `owned_organizational_units.create_group_approve_group.classification`
-
-Read-Only:
-
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--create_group_approve_group--classification--links))
-- `name` (String)
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--create_group_approve_group--classification--permissions))
-- `uuid` (String)
-
-<a id="nestedatt--owned_organizational_units--create_group_approve_group--classification--links"></a>
-### Nested Schema for `owned_organizational_units.create_group_approve_group.classification.uuid`
-
-Read-Only:
-
-- `href` (String)
-- `id` (Number)
-- `rel` (String)
-- `type_escaped` (String)
-
-
-<a id="nestedatt--owned_organizational_units--create_group_approve_group--classification--permissions"></a>
-### Nested Schema for `owned_organizational_units.create_group_approve_group.classification.uuid`
-
-Read-Only:
-
-- `full` (String)
-- `instances` (List of String)
-- `operations` (Set of String)
-- `type_escaped` (String)
-
-
 
 <a id="nestedatt--owned_organizational_units--create_group_approve_group--links"></a>
 ### Nested Schema for `owned_organizational_units.create_group_approve_group.links`
@@ -5305,74 +5020,6 @@ Read-Only:
 - `id` (Number)
 - `rel` (String)
 - `type_escaped` (String)
-
-
-<a id="nestedatt--owned_organizational_units--create_group_approve_group--nested_under"></a>
-### Nested Schema for `owned_organizational_units.create_group_approve_group.nested_under`
-
-Read-Only:
-
-- `admin` (Boolean)
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--create_group_approve_group--nested_under--links))
-- `name` (String)
-- `organizational_unit` (Attributes) (see [below for nested schema](#nestedatt--owned_organizational_units--create_group_approve_group--nested_under--organizational_unit))
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--create_group_approve_group--nested_under--permissions))
-- `uuid` (String)
-
-<a id="nestedatt--owned_organizational_units--create_group_approve_group--nested_under--links"></a>
-### Nested Schema for `owned_organizational_units.create_group_approve_group.nested_under.uuid`
-
-Read-Only:
-
-- `href` (String)
-- `id` (Number)
-- `rel` (String)
-- `type_escaped` (String)
-
-
-<a id="nestedatt--owned_organizational_units--create_group_approve_group--nested_under--organizational_unit"></a>
-### Nested Schema for `owned_organizational_units.create_group_approve_group.nested_under.uuid`
-
-Read-Only:
-
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--create_group_approve_group--nested_under--uuid--links))
-- `name` (String)
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--create_group_approve_group--nested_under--uuid--permissions))
-- `uuid` (String)
-
-<a id="nestedatt--owned_organizational_units--create_group_approve_group--nested_under--uuid--links"></a>
-### Nested Schema for `owned_organizational_units.create_group_approve_group.nested_under.uuid.links`
-
-Read-Only:
-
-- `href` (String)
-- `id` (Number)
-- `rel` (String)
-- `type_escaped` (String)
-
-
-<a id="nestedatt--owned_organizational_units--create_group_approve_group--nested_under--uuid--permissions"></a>
-### Nested Schema for `owned_organizational_units.create_group_approve_group.nested_under.uuid.permissions`
-
-Read-Only:
-
-- `full` (String)
-- `instances` (List of String)
-- `operations` (Set of String)
-- `type_escaped` (String)
-
-
-
-<a id="nestedatt--owned_organizational_units--create_group_approve_group--nested_under--permissions"></a>
-### Nested Schema for `owned_organizational_units.create_group_approve_group.nested_under.uuid`
-
-Read-Only:
-
-- `full` (String)
-- `instances` (List of String)
-- `operations` (Set of String)
-- `type_escaped` (String)
-
 
 
 <a id="nestedatt--owned_organizational_units--create_group_approve_group--organizational_unit"></a>
@@ -5426,369 +5073,11 @@ Read-Only:
 Read-Only:
 
 - `admin` (Boolean)
-- `application_administration` (Boolean)
-- `audit_config` (Attributes) (see [below for nested schema](#nestedatt--owned_organizational_units--enable_tech_admin_approve_group--audit_config))
-- `audit_requested` (Boolean)
-- `auditor` (Boolean)
-- `authorizing_group_auditing` (Attributes) (see [below for nested schema](#nestedatt--owned_organizational_units--enable_tech_admin_approve_group--authorizing_group_auditing))
-- `authorizing_group_delegation` (Attributes) (see [below for nested schema](#nestedatt--owned_organizational_units--enable_tech_admin_approve_group--authorizing_group_delegation))
-- `authorizing_group_membership` (Attributes) (see [below for nested schema](#nestedatt--owned_organizational_units--enable_tech_admin_approve_group--authorizing_group_membership))
-- `authorizing_group_provisioning` (Attributes) (see [below for nested schema](#nestedatt--owned_organizational_units--enable_tech_admin_approve_group--authorizing_group_provisioning))
-- `authorizing_group_types` (Set of String)
-- `classification` (Attributes) (see [below for nested schema](#nestedatt--owned_organizational_units--enable_tech_admin_approve_group--classification))
-- `description` (String)
-- `extended_access` (String)
-- `hide_audit_trail` (Boolean)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--enable_tech_admin_approve_group--links))
 - `name` (String)
-- `nested_under` (Attributes) (see [below for nested schema](#nestedatt--owned_organizational_units--enable_tech_admin_approve_group--nested_under))
 - `organizational_unit` (Attributes) (see [below for nested schema](#nestedatt--owned_organizational_units--enable_tech_admin_approve_group--organizational_unit))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--enable_tech_admin_approve_group--permissions))
-- `private_group` (Boolean)
-- `profile_administration` (Boolean)
-- `record_trail` (Boolean)
-- `rotating_password_required` (Boolean)
-- `single_managed` (Boolean)
 - `uuid` (String)
-- `vault_recovery` (String)
-- `vault_requires_activation` (Boolean)
-
-<a id="nestedatt--owned_organizational_units--enable_tech_admin_approve_group--audit_config"></a>
-### Nested Schema for `owned_organizational_units.enable_tech_admin_approve_group.audit_config`
-
-Read-Only:
-
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--enable_tech_admin_approve_group--audit_config--links))
-- `months` (Set of String)
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--enable_tech_admin_approve_group--audit_config--permissions))
-
-<a id="nestedatt--owned_organizational_units--enable_tech_admin_approve_group--audit_config--links"></a>
-### Nested Schema for `owned_organizational_units.enable_tech_admin_approve_group.audit_config.permissions`
-
-Read-Only:
-
-- `href` (String)
-- `id` (Number)
-- `rel` (String)
-- `type_escaped` (String)
-
-
-<a id="nestedatt--owned_organizational_units--enable_tech_admin_approve_group--audit_config--permissions"></a>
-### Nested Schema for `owned_organizational_units.enable_tech_admin_approve_group.audit_config.permissions`
-
-Read-Only:
-
-- `full` (String)
-- `instances` (List of String)
-- `operations` (Set of String)
-- `type_escaped` (String)
-
-
-
-<a id="nestedatt--owned_organizational_units--enable_tech_admin_approve_group--authorizing_group_auditing"></a>
-### Nested Schema for `owned_organizational_units.enable_tech_admin_approve_group.authorizing_group_auditing`
-
-Read-Only:
-
-- `admin` (Boolean)
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--enable_tech_admin_approve_group--authorizing_group_auditing--links))
-- `name` (String)
-- `organizational_unit` (Attributes) (see [below for nested schema](#nestedatt--owned_organizational_units--enable_tech_admin_approve_group--authorizing_group_auditing--organizational_unit))
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--enable_tech_admin_approve_group--authorizing_group_auditing--permissions))
-- `uuid` (String)
-
-<a id="nestedatt--owned_organizational_units--enable_tech_admin_approve_group--authorizing_group_auditing--links"></a>
-### Nested Schema for `owned_organizational_units.enable_tech_admin_approve_group.authorizing_group_auditing.uuid`
-
-Read-Only:
-
-- `href` (String)
-- `id` (Number)
-- `rel` (String)
-- `type_escaped` (String)
-
-
-<a id="nestedatt--owned_organizational_units--enable_tech_admin_approve_group--authorizing_group_auditing--organizational_unit"></a>
-### Nested Schema for `owned_organizational_units.enable_tech_admin_approve_group.authorizing_group_auditing.uuid`
-
-Read-Only:
-
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--enable_tech_admin_approve_group--authorizing_group_auditing--uuid--links))
-- `name` (String)
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--enable_tech_admin_approve_group--authorizing_group_auditing--uuid--permissions))
-- `uuid` (String)
-
-<a id="nestedatt--owned_organizational_units--enable_tech_admin_approve_group--authorizing_group_auditing--uuid--links"></a>
-### Nested Schema for `owned_organizational_units.enable_tech_admin_approve_group.authorizing_group_auditing.uuid.links`
-
-Read-Only:
-
-- `href` (String)
-- `id` (Number)
-- `rel` (String)
-- `type_escaped` (String)
-
-
-<a id="nestedatt--owned_organizational_units--enable_tech_admin_approve_group--authorizing_group_auditing--uuid--permissions"></a>
-### Nested Schema for `owned_organizational_units.enable_tech_admin_approve_group.authorizing_group_auditing.uuid.permissions`
-
-Read-Only:
-
-- `full` (String)
-- `instances` (List of String)
-- `operations` (Set of String)
-- `type_escaped` (String)
-
-
-
-<a id="nestedatt--owned_organizational_units--enable_tech_admin_approve_group--authorizing_group_auditing--permissions"></a>
-### Nested Schema for `owned_organizational_units.enable_tech_admin_approve_group.authorizing_group_auditing.uuid`
-
-Read-Only:
-
-- `full` (String)
-- `instances` (List of String)
-- `operations` (Set of String)
-- `type_escaped` (String)
-
-
-
-<a id="nestedatt--owned_organizational_units--enable_tech_admin_approve_group--authorizing_group_delegation"></a>
-### Nested Schema for `owned_organizational_units.enable_tech_admin_approve_group.authorizing_group_delegation`
-
-Read-Only:
-
-- `admin` (Boolean)
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--enable_tech_admin_approve_group--authorizing_group_delegation--links))
-- `name` (String)
-- `organizational_unit` (Attributes) (see [below for nested schema](#nestedatt--owned_organizational_units--enable_tech_admin_approve_group--authorizing_group_delegation--organizational_unit))
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--enable_tech_admin_approve_group--authorizing_group_delegation--permissions))
-- `uuid` (String)
-
-<a id="nestedatt--owned_organizational_units--enable_tech_admin_approve_group--authorizing_group_delegation--links"></a>
-### Nested Schema for `owned_organizational_units.enable_tech_admin_approve_group.authorizing_group_delegation.uuid`
-
-Read-Only:
-
-- `href` (String)
-- `id` (Number)
-- `rel` (String)
-- `type_escaped` (String)
-
-
-<a id="nestedatt--owned_organizational_units--enable_tech_admin_approve_group--authorizing_group_delegation--organizational_unit"></a>
-### Nested Schema for `owned_organizational_units.enable_tech_admin_approve_group.authorizing_group_delegation.uuid`
-
-Read-Only:
-
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--enable_tech_admin_approve_group--authorizing_group_delegation--uuid--links))
-- `name` (String)
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--enable_tech_admin_approve_group--authorizing_group_delegation--uuid--permissions))
-- `uuid` (String)
-
-<a id="nestedatt--owned_organizational_units--enable_tech_admin_approve_group--authorizing_group_delegation--uuid--links"></a>
-### Nested Schema for `owned_organizational_units.enable_tech_admin_approve_group.authorizing_group_delegation.uuid.links`
-
-Read-Only:
-
-- `href` (String)
-- `id` (Number)
-- `rel` (String)
-- `type_escaped` (String)
-
-
-<a id="nestedatt--owned_organizational_units--enable_tech_admin_approve_group--authorizing_group_delegation--uuid--permissions"></a>
-### Nested Schema for `owned_organizational_units.enable_tech_admin_approve_group.authorizing_group_delegation.uuid.permissions`
-
-Read-Only:
-
-- `full` (String)
-- `instances` (List of String)
-- `operations` (Set of String)
-- `type_escaped` (String)
-
-
-
-<a id="nestedatt--owned_organizational_units--enable_tech_admin_approve_group--authorizing_group_delegation--permissions"></a>
-### Nested Schema for `owned_organizational_units.enable_tech_admin_approve_group.authorizing_group_delegation.uuid`
-
-Read-Only:
-
-- `full` (String)
-- `instances` (List of String)
-- `operations` (Set of String)
-- `type_escaped` (String)
-
-
-
-<a id="nestedatt--owned_organizational_units--enable_tech_admin_approve_group--authorizing_group_membership"></a>
-### Nested Schema for `owned_organizational_units.enable_tech_admin_approve_group.authorizing_group_membership`
-
-Read-Only:
-
-- `admin` (Boolean)
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--enable_tech_admin_approve_group--authorizing_group_membership--links))
-- `name` (String)
-- `organizational_unit` (Attributes) (see [below for nested schema](#nestedatt--owned_organizational_units--enable_tech_admin_approve_group--authorizing_group_membership--organizational_unit))
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--enable_tech_admin_approve_group--authorizing_group_membership--permissions))
-- `uuid` (String)
-
-<a id="nestedatt--owned_organizational_units--enable_tech_admin_approve_group--authorizing_group_membership--links"></a>
-### Nested Schema for `owned_organizational_units.enable_tech_admin_approve_group.authorizing_group_membership.uuid`
-
-Read-Only:
-
-- `href` (String)
-- `id` (Number)
-- `rel` (String)
-- `type_escaped` (String)
-
-
-<a id="nestedatt--owned_organizational_units--enable_tech_admin_approve_group--authorizing_group_membership--organizational_unit"></a>
-### Nested Schema for `owned_organizational_units.enable_tech_admin_approve_group.authorizing_group_membership.uuid`
-
-Read-Only:
-
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--enable_tech_admin_approve_group--authorizing_group_membership--uuid--links))
-- `name` (String)
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--enable_tech_admin_approve_group--authorizing_group_membership--uuid--permissions))
-- `uuid` (String)
-
-<a id="nestedatt--owned_organizational_units--enable_tech_admin_approve_group--authorizing_group_membership--uuid--links"></a>
-### Nested Schema for `owned_organizational_units.enable_tech_admin_approve_group.authorizing_group_membership.uuid.links`
-
-Read-Only:
-
-- `href` (String)
-- `id` (Number)
-- `rel` (String)
-- `type_escaped` (String)
-
-
-<a id="nestedatt--owned_organizational_units--enable_tech_admin_approve_group--authorizing_group_membership--uuid--permissions"></a>
-### Nested Schema for `owned_organizational_units.enable_tech_admin_approve_group.authorizing_group_membership.uuid.permissions`
-
-Read-Only:
-
-- `full` (String)
-- `instances` (List of String)
-- `operations` (Set of String)
-- `type_escaped` (String)
-
-
-
-<a id="nestedatt--owned_organizational_units--enable_tech_admin_approve_group--authorizing_group_membership--permissions"></a>
-### Nested Schema for `owned_organizational_units.enable_tech_admin_approve_group.authorizing_group_membership.uuid`
-
-Read-Only:
-
-- `full` (String)
-- `instances` (List of String)
-- `operations` (Set of String)
-- `type_escaped` (String)
-
-
-
-<a id="nestedatt--owned_organizational_units--enable_tech_admin_approve_group--authorizing_group_provisioning"></a>
-### Nested Schema for `owned_organizational_units.enable_tech_admin_approve_group.authorizing_group_provisioning`
-
-Read-Only:
-
-- `admin` (Boolean)
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--enable_tech_admin_approve_group--authorizing_group_provisioning--links))
-- `name` (String)
-- `organizational_unit` (Attributes) (see [below for nested schema](#nestedatt--owned_organizational_units--enable_tech_admin_approve_group--authorizing_group_provisioning--organizational_unit))
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--enable_tech_admin_approve_group--authorizing_group_provisioning--permissions))
-- `uuid` (String)
-
-<a id="nestedatt--owned_organizational_units--enable_tech_admin_approve_group--authorizing_group_provisioning--links"></a>
-### Nested Schema for `owned_organizational_units.enable_tech_admin_approve_group.authorizing_group_provisioning.uuid`
-
-Read-Only:
-
-- `href` (String)
-- `id` (Number)
-- `rel` (String)
-- `type_escaped` (String)
-
-
-<a id="nestedatt--owned_organizational_units--enable_tech_admin_approve_group--authorizing_group_provisioning--organizational_unit"></a>
-### Nested Schema for `owned_organizational_units.enable_tech_admin_approve_group.authorizing_group_provisioning.uuid`
-
-Read-Only:
-
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--enable_tech_admin_approve_group--authorizing_group_provisioning--uuid--links))
-- `name` (String)
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--enable_tech_admin_approve_group--authorizing_group_provisioning--uuid--permissions))
-- `uuid` (String)
-
-<a id="nestedatt--owned_organizational_units--enable_tech_admin_approve_group--authorizing_group_provisioning--uuid--links"></a>
-### Nested Schema for `owned_organizational_units.enable_tech_admin_approve_group.authorizing_group_provisioning.uuid.links`
-
-Read-Only:
-
-- `href` (String)
-- `id` (Number)
-- `rel` (String)
-- `type_escaped` (String)
-
-
-<a id="nestedatt--owned_organizational_units--enable_tech_admin_approve_group--authorizing_group_provisioning--uuid--permissions"></a>
-### Nested Schema for `owned_organizational_units.enable_tech_admin_approve_group.authorizing_group_provisioning.uuid.permissions`
-
-Read-Only:
-
-- `full` (String)
-- `instances` (List of String)
-- `operations` (Set of String)
-- `type_escaped` (String)
-
-
-
-<a id="nestedatt--owned_organizational_units--enable_tech_admin_approve_group--authorizing_group_provisioning--permissions"></a>
-### Nested Schema for `owned_organizational_units.enable_tech_admin_approve_group.authorizing_group_provisioning.uuid`
-
-Read-Only:
-
-- `full` (String)
-- `instances` (List of String)
-- `operations` (Set of String)
-- `type_escaped` (String)
-
-
-
-<a id="nestedatt--owned_organizational_units--enable_tech_admin_approve_group--classification"></a>
-### Nested Schema for `owned_organizational_units.enable_tech_admin_approve_group.classification`
-
-Read-Only:
-
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--enable_tech_admin_approve_group--classification--links))
-- `name` (String)
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--enable_tech_admin_approve_group--classification--permissions))
-- `uuid` (String)
-
-<a id="nestedatt--owned_organizational_units--enable_tech_admin_approve_group--classification--links"></a>
-### Nested Schema for `owned_organizational_units.enable_tech_admin_approve_group.classification.uuid`
-
-Read-Only:
-
-- `href` (String)
-- `id` (Number)
-- `rel` (String)
-- `type_escaped` (String)
-
-
-<a id="nestedatt--owned_organizational_units--enable_tech_admin_approve_group--classification--permissions"></a>
-### Nested Schema for `owned_organizational_units.enable_tech_admin_approve_group.classification.uuid`
-
-Read-Only:
-
-- `full` (String)
-- `instances` (List of String)
-- `operations` (Set of String)
-- `type_escaped` (String)
-
-
 
 <a id="nestedatt--owned_organizational_units--enable_tech_admin_approve_group--links"></a>
 ### Nested Schema for `owned_organizational_units.enable_tech_admin_approve_group.links`
@@ -5799,74 +5088,6 @@ Read-Only:
 - `id` (Number)
 - `rel` (String)
 - `type_escaped` (String)
-
-
-<a id="nestedatt--owned_organizational_units--enable_tech_admin_approve_group--nested_under"></a>
-### Nested Schema for `owned_organizational_units.enable_tech_admin_approve_group.nested_under`
-
-Read-Only:
-
-- `admin` (Boolean)
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--enable_tech_admin_approve_group--nested_under--links))
-- `name` (String)
-- `organizational_unit` (Attributes) (see [below for nested schema](#nestedatt--owned_organizational_units--enable_tech_admin_approve_group--nested_under--organizational_unit))
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--enable_tech_admin_approve_group--nested_under--permissions))
-- `uuid` (String)
-
-<a id="nestedatt--owned_organizational_units--enable_tech_admin_approve_group--nested_under--links"></a>
-### Nested Schema for `owned_organizational_units.enable_tech_admin_approve_group.nested_under.uuid`
-
-Read-Only:
-
-- `href` (String)
-- `id` (Number)
-- `rel` (String)
-- `type_escaped` (String)
-
-
-<a id="nestedatt--owned_organizational_units--enable_tech_admin_approve_group--nested_under--organizational_unit"></a>
-### Nested Schema for `owned_organizational_units.enable_tech_admin_approve_group.nested_under.uuid`
-
-Read-Only:
-
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--enable_tech_admin_approve_group--nested_under--uuid--links))
-- `name` (String)
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--enable_tech_admin_approve_group--nested_under--uuid--permissions))
-- `uuid` (String)
-
-<a id="nestedatt--owned_organizational_units--enable_tech_admin_approve_group--nested_under--uuid--links"></a>
-### Nested Schema for `owned_organizational_units.enable_tech_admin_approve_group.nested_under.uuid.links`
-
-Read-Only:
-
-- `href` (String)
-- `id` (Number)
-- `rel` (String)
-- `type_escaped` (String)
-
-
-<a id="nestedatt--owned_organizational_units--enable_tech_admin_approve_group--nested_under--uuid--permissions"></a>
-### Nested Schema for `owned_organizational_units.enable_tech_admin_approve_group.nested_under.uuid.permissions`
-
-Read-Only:
-
-- `full` (String)
-- `instances` (List of String)
-- `operations` (Set of String)
-- `type_escaped` (String)
-
-
-
-<a id="nestedatt--owned_organizational_units--enable_tech_admin_approve_group--nested_under--permissions"></a>
-### Nested Schema for `owned_organizational_units.enable_tech_admin_approve_group.nested_under.uuid`
-
-Read-Only:
-
-- `full` (String)
-- `instances` (List of String)
-- `operations` (Set of String)
-- `type_escaped` (String)
-
 
 
 <a id="nestedatt--owned_organizational_units--enable_tech_admin_approve_group--organizational_unit"></a>
@@ -6037,375 +5258,85 @@ Read-Only:
 - `type_escaped` (String)
 
 
+<a id="nestedatt--owned_organizational_units--recovery_fallback_group"></a>
+### Nested Schema for `owned_organizational_units.recovery_fallback_group`
+
+Read-Only:
+
+- `admin` (Boolean)
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--recovery_fallback_group--links))
+- `name` (String)
+- `organizational_unit` (Attributes) (see [below for nested schema](#nestedatt--owned_organizational_units--recovery_fallback_group--organizational_unit))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--recovery_fallback_group--permissions))
+- `uuid` (String)
+
+<a id="nestedatt--owned_organizational_units--recovery_fallback_group--links"></a>
+### Nested Schema for `owned_organizational_units.recovery_fallback_group.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--owned_organizational_units--recovery_fallback_group--organizational_unit"></a>
+### Nested Schema for `owned_organizational_units.recovery_fallback_group.organizational_unit`
+
+Read-Only:
+
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--recovery_fallback_group--organizational_unit--links))
+- `name` (String)
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--recovery_fallback_group--organizational_unit--permissions))
+- `uuid` (String)
+
+<a id="nestedatt--owned_organizational_units--recovery_fallback_group--organizational_unit--links"></a>
+### Nested Schema for `owned_organizational_units.recovery_fallback_group.organizational_unit.uuid`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--owned_organizational_units--recovery_fallback_group--organizational_unit--permissions"></a>
+### Nested Schema for `owned_organizational_units.recovery_fallback_group.organizational_unit.uuid`
+
+Read-Only:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
+
+<a id="nestedatt--owned_organizational_units--recovery_fallback_group--permissions"></a>
+### Nested Schema for `owned_organizational_units.recovery_fallback_group.permissions`
+
+Read-Only:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
+
 <a id="nestedatt--owned_organizational_units--remove_group_approve_group"></a>
 ### Nested Schema for `owned_organizational_units.remove_group_approve_group`
 
 Read-Only:
 
 - `admin` (Boolean)
-- `application_administration` (Boolean)
-- `audit_config` (Attributes) (see [below for nested schema](#nestedatt--owned_organizational_units--remove_group_approve_group--audit_config))
-- `audit_requested` (Boolean)
-- `auditor` (Boolean)
-- `authorizing_group_auditing` (Attributes) (see [below for nested schema](#nestedatt--owned_organizational_units--remove_group_approve_group--authorizing_group_auditing))
-- `authorizing_group_delegation` (Attributes) (see [below for nested schema](#nestedatt--owned_organizational_units--remove_group_approve_group--authorizing_group_delegation))
-- `authorizing_group_membership` (Attributes) (see [below for nested schema](#nestedatt--owned_organizational_units--remove_group_approve_group--authorizing_group_membership))
-- `authorizing_group_provisioning` (Attributes) (see [below for nested schema](#nestedatt--owned_organizational_units--remove_group_approve_group--authorizing_group_provisioning))
-- `authorizing_group_types` (Set of String)
-- `classification` (Attributes) (see [below for nested schema](#nestedatt--owned_organizational_units--remove_group_approve_group--classification))
-- `description` (String)
-- `extended_access` (String)
-- `hide_audit_trail` (Boolean)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--remove_group_approve_group--links))
 - `name` (String)
-- `nested_under` (Attributes) (see [below for nested schema](#nestedatt--owned_organizational_units--remove_group_approve_group--nested_under))
 - `organizational_unit` (Attributes) (see [below for nested schema](#nestedatt--owned_organizational_units--remove_group_approve_group--organizational_unit))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--remove_group_approve_group--permissions))
-- `private_group` (Boolean)
-- `profile_administration` (Boolean)
-- `record_trail` (Boolean)
-- `rotating_password_required` (Boolean)
-- `single_managed` (Boolean)
 - `uuid` (String)
-- `vault_recovery` (String)
-- `vault_requires_activation` (Boolean)
-
-<a id="nestedatt--owned_organizational_units--remove_group_approve_group--audit_config"></a>
-### Nested Schema for `owned_organizational_units.remove_group_approve_group.audit_config`
-
-Read-Only:
-
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--remove_group_approve_group--audit_config--links))
-- `months` (Set of String)
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--remove_group_approve_group--audit_config--permissions))
-
-<a id="nestedatt--owned_organizational_units--remove_group_approve_group--audit_config--links"></a>
-### Nested Schema for `owned_organizational_units.remove_group_approve_group.audit_config.permissions`
-
-Read-Only:
-
-- `href` (String)
-- `id` (Number)
-- `rel` (String)
-- `type_escaped` (String)
-
-
-<a id="nestedatt--owned_organizational_units--remove_group_approve_group--audit_config--permissions"></a>
-### Nested Schema for `owned_organizational_units.remove_group_approve_group.audit_config.permissions`
-
-Read-Only:
-
-- `full` (String)
-- `instances` (List of String)
-- `operations` (Set of String)
-- `type_escaped` (String)
-
-
-
-<a id="nestedatt--owned_organizational_units--remove_group_approve_group--authorizing_group_auditing"></a>
-### Nested Schema for `owned_organizational_units.remove_group_approve_group.authorizing_group_auditing`
-
-Read-Only:
-
-- `admin` (Boolean)
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--remove_group_approve_group--authorizing_group_auditing--links))
-- `name` (String)
-- `organizational_unit` (Attributes) (see [below for nested schema](#nestedatt--owned_organizational_units--remove_group_approve_group--authorizing_group_auditing--organizational_unit))
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--remove_group_approve_group--authorizing_group_auditing--permissions))
-- `uuid` (String)
-
-<a id="nestedatt--owned_organizational_units--remove_group_approve_group--authorizing_group_auditing--links"></a>
-### Nested Schema for `owned_organizational_units.remove_group_approve_group.authorizing_group_auditing.uuid`
-
-Read-Only:
-
-- `href` (String)
-- `id` (Number)
-- `rel` (String)
-- `type_escaped` (String)
-
-
-<a id="nestedatt--owned_organizational_units--remove_group_approve_group--authorizing_group_auditing--organizational_unit"></a>
-### Nested Schema for `owned_organizational_units.remove_group_approve_group.authorizing_group_auditing.uuid`
-
-Read-Only:
-
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--remove_group_approve_group--authorizing_group_auditing--uuid--links))
-- `name` (String)
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--remove_group_approve_group--authorizing_group_auditing--uuid--permissions))
-- `uuid` (String)
-
-<a id="nestedatt--owned_organizational_units--remove_group_approve_group--authorizing_group_auditing--uuid--links"></a>
-### Nested Schema for `owned_organizational_units.remove_group_approve_group.authorizing_group_auditing.uuid.links`
-
-Read-Only:
-
-- `href` (String)
-- `id` (Number)
-- `rel` (String)
-- `type_escaped` (String)
-
-
-<a id="nestedatt--owned_organizational_units--remove_group_approve_group--authorizing_group_auditing--uuid--permissions"></a>
-### Nested Schema for `owned_organizational_units.remove_group_approve_group.authorizing_group_auditing.uuid.permissions`
-
-Read-Only:
-
-- `full` (String)
-- `instances` (List of String)
-- `operations` (Set of String)
-- `type_escaped` (String)
-
-
-
-<a id="nestedatt--owned_organizational_units--remove_group_approve_group--authorizing_group_auditing--permissions"></a>
-### Nested Schema for `owned_organizational_units.remove_group_approve_group.authorizing_group_auditing.uuid`
-
-Read-Only:
-
-- `full` (String)
-- `instances` (List of String)
-- `operations` (Set of String)
-- `type_escaped` (String)
-
-
-
-<a id="nestedatt--owned_organizational_units--remove_group_approve_group--authorizing_group_delegation"></a>
-### Nested Schema for `owned_organizational_units.remove_group_approve_group.authorizing_group_delegation`
-
-Read-Only:
-
-- `admin` (Boolean)
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--remove_group_approve_group--authorizing_group_delegation--links))
-- `name` (String)
-- `organizational_unit` (Attributes) (see [below for nested schema](#nestedatt--owned_organizational_units--remove_group_approve_group--authorizing_group_delegation--organizational_unit))
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--remove_group_approve_group--authorizing_group_delegation--permissions))
-- `uuid` (String)
-
-<a id="nestedatt--owned_organizational_units--remove_group_approve_group--authorizing_group_delegation--links"></a>
-### Nested Schema for `owned_organizational_units.remove_group_approve_group.authorizing_group_delegation.uuid`
-
-Read-Only:
-
-- `href` (String)
-- `id` (Number)
-- `rel` (String)
-- `type_escaped` (String)
-
-
-<a id="nestedatt--owned_organizational_units--remove_group_approve_group--authorizing_group_delegation--organizational_unit"></a>
-### Nested Schema for `owned_organizational_units.remove_group_approve_group.authorizing_group_delegation.uuid`
-
-Read-Only:
-
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--remove_group_approve_group--authorizing_group_delegation--uuid--links))
-- `name` (String)
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--remove_group_approve_group--authorizing_group_delegation--uuid--permissions))
-- `uuid` (String)
-
-<a id="nestedatt--owned_organizational_units--remove_group_approve_group--authorizing_group_delegation--uuid--links"></a>
-### Nested Schema for `owned_organizational_units.remove_group_approve_group.authorizing_group_delegation.uuid.links`
-
-Read-Only:
-
-- `href` (String)
-- `id` (Number)
-- `rel` (String)
-- `type_escaped` (String)
-
-
-<a id="nestedatt--owned_organizational_units--remove_group_approve_group--authorizing_group_delegation--uuid--permissions"></a>
-### Nested Schema for `owned_organizational_units.remove_group_approve_group.authorizing_group_delegation.uuid.permissions`
-
-Read-Only:
-
-- `full` (String)
-- `instances` (List of String)
-- `operations` (Set of String)
-- `type_escaped` (String)
-
-
-
-<a id="nestedatt--owned_organizational_units--remove_group_approve_group--authorizing_group_delegation--permissions"></a>
-### Nested Schema for `owned_organizational_units.remove_group_approve_group.authorizing_group_delegation.uuid`
-
-Read-Only:
-
-- `full` (String)
-- `instances` (List of String)
-- `operations` (Set of String)
-- `type_escaped` (String)
-
-
-
-<a id="nestedatt--owned_organizational_units--remove_group_approve_group--authorizing_group_membership"></a>
-### Nested Schema for `owned_organizational_units.remove_group_approve_group.authorizing_group_membership`
-
-Read-Only:
-
-- `admin` (Boolean)
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--remove_group_approve_group--authorizing_group_membership--links))
-- `name` (String)
-- `organizational_unit` (Attributes) (see [below for nested schema](#nestedatt--owned_organizational_units--remove_group_approve_group--authorizing_group_membership--organizational_unit))
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--remove_group_approve_group--authorizing_group_membership--permissions))
-- `uuid` (String)
-
-<a id="nestedatt--owned_organizational_units--remove_group_approve_group--authorizing_group_membership--links"></a>
-### Nested Schema for `owned_organizational_units.remove_group_approve_group.authorizing_group_membership.uuid`
-
-Read-Only:
-
-- `href` (String)
-- `id` (Number)
-- `rel` (String)
-- `type_escaped` (String)
-
-
-<a id="nestedatt--owned_organizational_units--remove_group_approve_group--authorizing_group_membership--organizational_unit"></a>
-### Nested Schema for `owned_organizational_units.remove_group_approve_group.authorizing_group_membership.uuid`
-
-Read-Only:
-
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--remove_group_approve_group--authorizing_group_membership--uuid--links))
-- `name` (String)
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--remove_group_approve_group--authorizing_group_membership--uuid--permissions))
-- `uuid` (String)
-
-<a id="nestedatt--owned_organizational_units--remove_group_approve_group--authorizing_group_membership--uuid--links"></a>
-### Nested Schema for `owned_organizational_units.remove_group_approve_group.authorizing_group_membership.uuid.links`
-
-Read-Only:
-
-- `href` (String)
-- `id` (Number)
-- `rel` (String)
-- `type_escaped` (String)
-
-
-<a id="nestedatt--owned_organizational_units--remove_group_approve_group--authorizing_group_membership--uuid--permissions"></a>
-### Nested Schema for `owned_organizational_units.remove_group_approve_group.authorizing_group_membership.uuid.permissions`
-
-Read-Only:
-
-- `full` (String)
-- `instances` (List of String)
-- `operations` (Set of String)
-- `type_escaped` (String)
-
-
-
-<a id="nestedatt--owned_organizational_units--remove_group_approve_group--authorizing_group_membership--permissions"></a>
-### Nested Schema for `owned_organizational_units.remove_group_approve_group.authorizing_group_membership.uuid`
-
-Read-Only:
-
-- `full` (String)
-- `instances` (List of String)
-- `operations` (Set of String)
-- `type_escaped` (String)
-
-
-
-<a id="nestedatt--owned_organizational_units--remove_group_approve_group--authorizing_group_provisioning"></a>
-### Nested Schema for `owned_organizational_units.remove_group_approve_group.authorizing_group_provisioning`
-
-Read-Only:
-
-- `admin` (Boolean)
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--remove_group_approve_group--authorizing_group_provisioning--links))
-- `name` (String)
-- `organizational_unit` (Attributes) (see [below for nested schema](#nestedatt--owned_organizational_units--remove_group_approve_group--authorizing_group_provisioning--organizational_unit))
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--remove_group_approve_group--authorizing_group_provisioning--permissions))
-- `uuid` (String)
-
-<a id="nestedatt--owned_organizational_units--remove_group_approve_group--authorizing_group_provisioning--links"></a>
-### Nested Schema for `owned_organizational_units.remove_group_approve_group.authorizing_group_provisioning.uuid`
-
-Read-Only:
-
-- `href` (String)
-- `id` (Number)
-- `rel` (String)
-- `type_escaped` (String)
-
-
-<a id="nestedatt--owned_organizational_units--remove_group_approve_group--authorizing_group_provisioning--organizational_unit"></a>
-### Nested Schema for `owned_organizational_units.remove_group_approve_group.authorizing_group_provisioning.uuid`
-
-Read-Only:
-
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--remove_group_approve_group--authorizing_group_provisioning--uuid--links))
-- `name` (String)
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--remove_group_approve_group--authorizing_group_provisioning--uuid--permissions))
-- `uuid` (String)
-
-<a id="nestedatt--owned_organizational_units--remove_group_approve_group--authorizing_group_provisioning--uuid--links"></a>
-### Nested Schema for `owned_organizational_units.remove_group_approve_group.authorizing_group_provisioning.uuid.links`
-
-Read-Only:
-
-- `href` (String)
-- `id` (Number)
-- `rel` (String)
-- `type_escaped` (String)
-
-
-<a id="nestedatt--owned_organizational_units--remove_group_approve_group--authorizing_group_provisioning--uuid--permissions"></a>
-### Nested Schema for `owned_organizational_units.remove_group_approve_group.authorizing_group_provisioning.uuid.permissions`
-
-Read-Only:
-
-- `full` (String)
-- `instances` (List of String)
-- `operations` (Set of String)
-- `type_escaped` (String)
-
-
-
-<a id="nestedatt--owned_organizational_units--remove_group_approve_group--authorizing_group_provisioning--permissions"></a>
-### Nested Schema for `owned_organizational_units.remove_group_approve_group.authorizing_group_provisioning.uuid`
-
-Read-Only:
-
-- `full` (String)
-- `instances` (List of String)
-- `operations` (Set of String)
-- `type_escaped` (String)
-
-
-
-<a id="nestedatt--owned_organizational_units--remove_group_approve_group--classification"></a>
-### Nested Schema for `owned_organizational_units.remove_group_approve_group.classification`
-
-Read-Only:
-
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--remove_group_approve_group--classification--links))
-- `name` (String)
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--remove_group_approve_group--classification--permissions))
-- `uuid` (String)
-
-<a id="nestedatt--owned_organizational_units--remove_group_approve_group--classification--links"></a>
-### Nested Schema for `owned_organizational_units.remove_group_approve_group.classification.uuid`
-
-Read-Only:
-
-- `href` (String)
-- `id` (Number)
-- `rel` (String)
-- `type_escaped` (String)
-
-
-<a id="nestedatt--owned_organizational_units--remove_group_approve_group--classification--permissions"></a>
-### Nested Schema for `owned_organizational_units.remove_group_approve_group.classification.uuid`
-
-Read-Only:
-
-- `full` (String)
-- `instances` (List of String)
-- `operations` (Set of String)
-- `type_escaped` (String)
-
-
 
 <a id="nestedatt--owned_organizational_units--remove_group_approve_group--links"></a>
 ### Nested Schema for `owned_organizational_units.remove_group_approve_group.links`
@@ -6416,74 +5347,6 @@ Read-Only:
 - `id` (Number)
 - `rel` (String)
 - `type_escaped` (String)
-
-
-<a id="nestedatt--owned_organizational_units--remove_group_approve_group--nested_under"></a>
-### Nested Schema for `owned_organizational_units.remove_group_approve_group.nested_under`
-
-Read-Only:
-
-- `admin` (Boolean)
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--remove_group_approve_group--nested_under--links))
-- `name` (String)
-- `organizational_unit` (Attributes) (see [below for nested schema](#nestedatt--owned_organizational_units--remove_group_approve_group--nested_under--organizational_unit))
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--remove_group_approve_group--nested_under--permissions))
-- `uuid` (String)
-
-<a id="nestedatt--owned_organizational_units--remove_group_approve_group--nested_under--links"></a>
-### Nested Schema for `owned_organizational_units.remove_group_approve_group.nested_under.uuid`
-
-Read-Only:
-
-- `href` (String)
-- `id` (Number)
-- `rel` (String)
-- `type_escaped` (String)
-
-
-<a id="nestedatt--owned_organizational_units--remove_group_approve_group--nested_under--organizational_unit"></a>
-### Nested Schema for `owned_organizational_units.remove_group_approve_group.nested_under.uuid`
-
-Read-Only:
-
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--remove_group_approve_group--nested_under--uuid--links))
-- `name` (String)
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_organizational_units--remove_group_approve_group--nested_under--uuid--permissions))
-- `uuid` (String)
-
-<a id="nestedatt--owned_organizational_units--remove_group_approve_group--nested_under--uuid--links"></a>
-### Nested Schema for `owned_organizational_units.remove_group_approve_group.nested_under.uuid.links`
-
-Read-Only:
-
-- `href` (String)
-- `id` (Number)
-- `rel` (String)
-- `type_escaped` (String)
-
-
-<a id="nestedatt--owned_organizational_units--remove_group_approve_group--nested_under--uuid--permissions"></a>
-### Nested Schema for `owned_organizational_units.remove_group_approve_group.nested_under.uuid.permissions`
-
-Read-Only:
-
-- `full` (String)
-- `instances` (List of String)
-- `operations` (Set of String)
-- `type_escaped` (String)
-
-
-
-<a id="nestedatt--owned_organizational_units--remove_group_approve_group--nested_under--permissions"></a>
-### Nested Schema for `owned_organizational_units.remove_group_approve_group.nested_under.uuid`
-
-Read-Only:
-
-- `full` (String)
-- `instances` (List of String)
-- `operations` (Set of String)
-- `type_escaped` (String)
-
 
 
 <a id="nestedatt--owned_organizational_units--remove_group_approve_group--organizational_unit"></a>
