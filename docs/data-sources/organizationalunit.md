@@ -560,7 +560,7 @@ Read-Only:
 - `uuid` (String)
 
 <a id="nestedatt--settings--create_group_approve_group--organizational_unit--links"></a>
-### Nested Schema for `settings.create_group_approve_group.organizational_unit.uuid`
+### Nested Schema for `settings.create_group_approve_group.organizational_unit.links`
 
 Read-Only:
 
@@ -571,7 +571,7 @@ Read-Only:
 
 
 <a id="nestedatt--settings--create_group_approve_group--organizational_unit--permissions"></a>
-### Nested Schema for `settings.create_group_approve_group.organizational_unit.uuid`
+### Nested Schema for `settings.create_group_approve_group.organizational_unit.permissions`
 
 Read-Only:
 
@@ -628,7 +628,7 @@ Read-Only:
 - `uuid` (String)
 
 <a id="nestedatt--settings--enable_tech_admin_approve_group--organizational_unit--links"></a>
-### Nested Schema for `settings.enable_tech_admin_approve_group.organizational_unit.uuid`
+### Nested Schema for `settings.enable_tech_admin_approve_group.organizational_unit.links`
 
 Read-Only:
 
@@ -639,7 +639,7 @@ Read-Only:
 
 
 <a id="nestedatt--settings--enable_tech_admin_approve_group--organizational_unit--permissions"></a>
-### Nested Schema for `settings.enable_tech_admin_approve_group.organizational_unit.uuid`
+### Nested Schema for `settings.enable_tech_admin_approve_group.organizational_unit.permissions`
 
 Read-Only:
 
@@ -696,7 +696,7 @@ Read-Only:
 - `uuid` (String)
 
 <a id="nestedatt--settings--recovery_fallback_group--organizational_unit--links"></a>
-### Nested Schema for `settings.recovery_fallback_group.organizational_unit.uuid`
+### Nested Schema for `settings.recovery_fallback_group.organizational_unit.links`
 
 Read-Only:
 
@@ -707,7 +707,7 @@ Read-Only:
 
 
 <a id="nestedatt--settings--recovery_fallback_group--organizational_unit--permissions"></a>
-### Nested Schema for `settings.recovery_fallback_group.organizational_unit.uuid`
+### Nested Schema for `settings.recovery_fallback_group.organizational_unit.permissions`
 
 Read-Only:
 
@@ -764,7 +764,7 @@ Read-Only:
 - `uuid` (String)
 
 <a id="nestedatt--settings--remove_group_approve_group--organizational_unit--links"></a>
-### Nested Schema for `settings.remove_group_approve_group.organizational_unit.uuid`
+### Nested Schema for `settings.remove_group_approve_group.organizational_unit.links`
 
 Read-Only:
 
@@ -775,7 +775,7 @@ Read-Only:
 
 
 <a id="nestedatt--settings--remove_group_approve_group--organizational_unit--permissions"></a>
-### Nested Schema for `settings.remove_group_approve_group.organizational_unit.uuid`
+### Nested Schema for `settings.remove_group_approve_group.organizational_unit.permissions`
 
 Read-Only:
 

@@ -140,7 +140,7 @@ Read-Only:
 - `uuid` (String)
 
 <a id="nestedatt--groupclients--group--organizational_unit--links"></a>
-### Nested Schema for `groupclients.group.organizational_unit.uuid`
+### Nested Schema for `groupclients.group.organizational_unit.links`
 
 Read-Only:
 
@@ -151,7 +151,7 @@ Read-Only:
 
 
 <a id="nestedatt--groupclients--group--organizational_unit--permissions"></a>
-### Nested Schema for `groupclients.group.organizational_unit.uuid`
+### Nested Schema for `groupclients.group.organizational_unit.permissions`
 
 Read-Only:
 
@@ -219,7 +219,7 @@ Read-Only:
 - `uuid` (String)
 
 <a id="nestedatt--groupclients--owner--organizational_unit--links"></a>
-### Nested Schema for `groupclients.owner.organizational_unit.uuid`
+### Nested Schema for `groupclients.owner.organizational_unit.links`
 
 Read-Only:
 
@@ -230,7 +230,7 @@ Read-Only:
 
 
 <a id="nestedatt--groupclients--owner--organizational_unit--permissions"></a>
-### Nested Schema for `groupclients.owner.organizational_unit.uuid`
+### Nested Schema for `groupclients.owner.organizational_unit.permissions`
 
 Read-Only:
 
@@ -298,7 +298,7 @@ Read-Only:
 - `uuid` (String)
 
 <a id="nestedatt--groupclients--technical_administrator--organizational_unit--links"></a>
-### Nested Schema for `groupclients.technical_administrator.organizational_unit.uuid`
+### Nested Schema for `groupclients.technical_administrator.organizational_unit.links`
 
 Read-Only:
 
@@ -309,7 +309,7 @@ Read-Only:
 
 
 <a id="nestedatt--groupclients--technical_administrator--organizational_unit--permissions"></a>
-### Nested Schema for `groupclients.technical_administrator.organizational_unit.uuid`
+### Nested Schema for `groupclients.technical_administrator.organizational_unit.permissions`
 
 Read-Only:
 
@@ -431,7 +431,7 @@ Read-Only:
 - `uuid` (String)
 
 <a id="nestedatt--groups--authorizing_group_auditing--organizational_unit--links"></a>
-### Nested Schema for `groups.authorizing_group_auditing.organizational_unit.uuid`
+### Nested Schema for `groups.authorizing_group_auditing.organizational_unit.links`
 
 Read-Only:
 
@@ -442,7 +442,7 @@ Read-Only:
 
 
 <a id="nestedatt--groups--authorizing_group_auditing--organizational_unit--permissions"></a>
-### Nested Schema for `groups.authorizing_group_auditing.organizational_unit.uuid`
+### Nested Schema for `groups.authorizing_group_auditing.organizational_unit.permissions`
 
 Read-Only:
 
@@ -499,7 +499,7 @@ Read-Only:
 - `uuid` (String)
 
 <a id="nestedatt--groups--authorizing_group_delegation--organizational_unit--links"></a>
-### Nested Schema for `groups.authorizing_group_delegation.organizational_unit.uuid`
+### Nested Schema for `groups.authorizing_group_delegation.organizational_unit.links`
 
 Read-Only:
 
@@ -510,7 +510,7 @@ Read-Only:
 
 
 <a id="nestedatt--groups--authorizing_group_delegation--organizational_unit--permissions"></a>
-### Nested Schema for `groups.authorizing_group_delegation.organizational_unit.uuid`
+### Nested Schema for `groups.authorizing_group_delegation.organizational_unit.permissions`
 
 Read-Only:
 
@@ -567,7 +567,7 @@ Read-Only:
 - `uuid` (String)
 
 <a id="nestedatt--groups--authorizing_group_membership--organizational_unit--links"></a>
-### Nested Schema for `groups.authorizing_group_membership.organizational_unit.uuid`
+### Nested Schema for `groups.authorizing_group_membership.organizational_unit.links`
 
 Read-Only:
 
@@ -578,7 +578,7 @@ Read-Only:
 
 
 <a id="nestedatt--groups--authorizing_group_membership--organizational_unit--permissions"></a>
-### Nested Schema for `groups.authorizing_group_membership.organizational_unit.uuid`
+### Nested Schema for `groups.authorizing_group_membership.organizational_unit.permissions`
 
 Read-Only:
 
@@ -635,7 +635,7 @@ Read-Only:
 - `uuid` (String)
 
 <a id="nestedatt--groups--authorizing_group_provisioning--organizational_unit--links"></a>
-### Nested Schema for `groups.authorizing_group_provisioning.organizational_unit.uuid`
+### Nested Schema for `groups.authorizing_group_provisioning.organizational_unit.links`
 
 Read-Only:
 
@@ -646,7 +646,7 @@ Read-Only:
 
 
 <a id="nestedatt--groups--authorizing_group_provisioning--organizational_unit--permissions"></a>
-### Nested Schema for `groups.authorizing_group_provisioning.organizational_unit.uuid`
+### Nested Schema for `groups.authorizing_group_provisioning.organizational_unit.permissions`
 
 Read-Only:
 
@@ -747,7 +747,7 @@ Read-Only:
 - `uuid` (String)
 
 <a id="nestedatt--groups--nested_under--organizational_unit--links"></a>
-### Nested Schema for `groups.nested_under.organizational_unit.uuid`
+### Nested Schema for `groups.nested_under.organizational_unit.links`
 
 Read-Only:
 
@@ -758,7 +758,7 @@ Read-Only:
 
 
 <a id="nestedatt--groups--nested_under--organizational_unit--permissions"></a>
-### Nested Schema for `groups.nested_under.organizational_unit.uuid`
+### Nested Schema for `groups.nested_under.organizational_unit.permissions`
 
 Read-Only:
 

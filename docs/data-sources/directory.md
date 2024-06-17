@@ -199,7 +199,7 @@ Read-Only:
 - `uuid` (String)
 
 <a id="nestedatt--internal_directory--owner--organizational_unit--links"></a>
-### Nested Schema for `internal_directory.owner.organizational_unit.uuid`
+### Nested Schema for `internal_directory.owner.organizational_unit.links`
 
 Read-Only:
 
@@ -210,7 +210,7 @@ Read-Only:
 
 
 <a id="nestedatt--internal_directory--owner--organizational_unit--permissions"></a>
-### Nested Schema for `internal_directory.owner.organizational_unit.uuid`
+### Nested Schema for `internal_directory.owner.organizational_unit.permissions`
 
 Read-Only:
 

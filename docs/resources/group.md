@@ -483,7 +483,7 @@ Read-Only:
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--administered_systems--provisioned_ldap--numbering--permissions))
 
 <a id="nestedatt--administered_systems--provisioned_ldap--numbering--links"></a>
-### Nested Schema for `administered_systems.provisioned_ldap.numbering.permissions`
+### Nested Schema for `administered_systems.provisioned_ldap.numbering.links`
 
 Read-Only:
 
@@ -639,7 +639,7 @@ Read-Only:
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--authorized_groups--items--audit_config--permissions))
 
 <a id="nestedatt--authorized_groups--items--audit_config--links"></a>
-### Nested Schema for `authorized_groups.items.audit_config.permissions`
+### Nested Schema for `authorized_groups.items.audit_config.links`
 
 Read-Only:
 
@@ -884,7 +884,7 @@ Read-Only:
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--content_administered_systems--provisioned_ldap--numbering--permissions))
 
 <a id="nestedatt--content_administered_systems--provisioned_ldap--numbering--links"></a>
-### Nested Schema for `content_administered_systems.provisioned_ldap.numbering.permissions`
+### Nested Schema for `content_administered_systems.provisioned_ldap.numbering.links`
 
 Read-Only:
 
@@ -1649,7 +1649,7 @@ Read-Only:
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_systems--provisioned_ldap--numbering--permissions))
 
 <a id="nestedatt--owned_systems--provisioned_ldap--numbering--links"></a>
-### Nested Schema for `owned_systems.provisioned_ldap.numbering.permissions`
+### Nested Schema for `owned_systems.provisioned_ldap.numbering.links`
 
 Read-Only:
 

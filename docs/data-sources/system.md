@@ -385,7 +385,7 @@ Read-Only:
 - `uuid` (String)
 
 <a id="nestedatt--issued_permissions--client--shared_secret--links"></a>
-### Nested Schema for `issued_permissions.client.shared_secret.uuid`
+### Nested Schema for `issued_permissions.client.shared_secret.links`
 
 Read-Only:
 
@@ -396,7 +396,7 @@ Read-Only:
 
 
 <a id="nestedatt--issued_permissions--client--shared_secret--permissions"></a>
-### Nested Schema for `issued_permissions.client.shared_secret.uuid`
+### Nested Schema for `issued_permissions.client.shared_secret.permissions`
 
 Read-Only:
 
@@ -442,7 +442,7 @@ Read-Only:
 - `uuid` (String)
 
 <a id="nestedatt--issued_permissions--for_group--organizational_unit--links"></a>
-### Nested Schema for `issued_permissions.for_group.organizational_unit.uuid`
+### Nested Schema for `issued_permissions.for_group.organizational_unit.links`
 
 Read-Only:
 
@@ -453,7 +453,7 @@ Read-Only:
 
 
 <a id="nestedatt--issued_permissions--for_group--organizational_unit--permissions"></a>
-### Nested Schema for `issued_permissions.for_group.organizational_unit.uuid`
+### Nested Schema for `issued_permissions.for_group.organizational_unit.permissions`
 
 Read-Only:
 
@@ -511,7 +511,7 @@ Read-Only:
 - `uuid` (String)
 
 <a id="nestedatt--issued_permissions--for_system--organizational_unit--links"></a>
-### Nested Schema for `issued_permissions.for_system.organizational_unit.uuid`
+### Nested Schema for `issued_permissions.for_system.organizational_unit.links`
 
 Read-Only:
 
@@ -522,7 +522,7 @@ Read-Only:
 
 
 <a id="nestedatt--issued_permissions--for_system--organizational_unit--permissions"></a>
-### Nested Schema for `issued_permissions.for_system.organizational_unit.uuid`
+### Nested Schema for `issued_permissions.for_system.organizational_unit.permissions`
 
 Read-Only:
 
@@ -869,7 +869,7 @@ Read-Only:
 - `uuid` (String)
 
 <a id="nestedatt--provisioned_internal_ldap--client--client_certificate--links"></a>
-### Nested Schema for `provisioned_internal_ldap.client.client_certificate.uuid`
+### Nested Schema for `provisioned_internal_ldap.client.client_certificate.links`
 
 Read-Only:
 
@@ -880,7 +880,7 @@ Read-Only:
 
 
 <a id="nestedatt--provisioned_internal_ldap--client--client_certificate--permissions"></a>
-### Nested Schema for `provisioned_internal_ldap.client.client_certificate.uuid`
+### Nested Schema for `provisioned_internal_ldap.client.client_certificate.permissions`
 
 Read-Only:
 
@@ -904,7 +904,7 @@ Read-Only:
 - `uuid` (String)
 
 <a id="nestedatt--provisioned_internal_ldap--client--shared_secret--links"></a>
-### Nested Schema for `provisioned_internal_ldap.client.shared_secret.uuid`
+### Nested Schema for `provisioned_internal_ldap.client.shared_secret.links`
 
 Read-Only:
 
@@ -915,7 +915,7 @@ Read-Only:
 
 
 <a id="nestedatt--provisioned_internal_ldap--client--shared_secret--permissions"></a>
-### Nested Schema for `provisioned_internal_ldap.client.shared_secret.uuid`
+### Nested Schema for `provisioned_internal_ldap.client.shared_secret.permissions`
 
 Read-Only:
 
@@ -1061,7 +1061,7 @@ Read-Only:
 - `uuid` (String)
 
 <a id="nestedatt--provisioned_namespace--base_system--organizational_unit--links"></a>
-### Nested Schema for `provisioned_namespace.base_system.organizational_unit.uuid`
+### Nested Schema for `provisioned_namespace.base_system.organizational_unit.links`
 
 Read-Only:
 
@@ -1072,7 +1072,7 @@ Read-Only:
 
 
 <a id="nestedatt--provisioned_namespace--base_system--organizational_unit--permissions"></a>
-### Nested Schema for `provisioned_namespace.base_system.organizational_unit.uuid`
+### Nested Schema for `provisioned_namespace.base_system.organizational_unit.permissions`
 
 Read-Only:
 
