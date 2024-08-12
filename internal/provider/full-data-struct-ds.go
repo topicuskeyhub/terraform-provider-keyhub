@@ -1009,6 +1009,42 @@ type organizationOrganizationalUnit_additionalObjectsDataDS struct {
 	Settings types.Object `tfsdk:"settings"`
 }
 
+var profileAccessProfilePrimerAttrTypesDS = objectAttrsTypeDSProfileAccessProfilePrimer(false)
+var profileAccessProfilePrimerAttrTypesDSRecurse = objectAttrsTypeDSProfileAccessProfilePrimer(true)
+
+type profileAccessProfilePrimerDataDS struct {
+	Links       types.List   `tfsdk:"links"`
+	Permissions types.List   `tfsdk:"permissions"`
+	Name        types.String `tfsdk:"name"`
+	UUID        types.String `tfsdk:"uuid"`
+}
+
+var profileAccessProfileProvisioningAttrTypesDS = objectAttrsTypeDSProfileAccessProfileProvisioning(false)
+var profileAccessProfileProvisioningAttrTypesDSRecurse = objectAttrsTypeDSProfileAccessProfileProvisioning(true)
+
+type profileAccessProfileProvisioningDataDS struct {
+	Links         types.List   `tfsdk:"links"`
+	Permissions   types.List   `tfsdk:"permissions"`
+	Additional    types.List   `tfsdk:"additional"`
+	AccessProfile types.Object `tfsdk:"access_profile"`
+	Audit         types.Object `tfsdk:"audit" tkhao:"audit"`
+	GroupOnSystem types.Object `tfsdk:"group_on_system"`
+}
+
+var profileAccessProfileProvisioningLinkableWrapperAttrTypesDS = objectAttrsTypeDSProfileAccessProfileProvisioningLinkableWrapper(false)
+var profileAccessProfileProvisioningLinkableWrapperAttrTypesDSRecurse = objectAttrsTypeDSProfileAccessProfileProvisioningLinkableWrapper(true)
+
+type profileAccessProfileProvisioningLinkableWrapperDataDS struct {
+	Items types.List `tfsdk:"items"`
+}
+
+var profileAccessProfileProvisioning_additionalObjectsAttrTypesDS = objectAttrsTypeDSProfileAccessProfileProvisioning_additionalObjects(false)
+var profileAccessProfileProvisioning_additionalObjectsAttrTypesDSRecurse = objectAttrsTypeDSProfileAccessProfileProvisioning_additionalObjects(true)
+
+type profileAccessProfileProvisioning_additionalObjectsDataDS struct {
+	Audit types.Object `tfsdk:"audit"`
+}
+
 var provisioningAbstractProvisionedLDAPAttrTypesDS = objectAttrsTypeDSProvisioningAbstractProvisionedLDAP(false)
 var provisioningAbstractProvisionedLDAPAttrTypesDSRecurse = objectAttrsTypeDSProvisioningAbstractProvisionedLDAP(true)
 
@@ -1052,6 +1088,7 @@ type provisioningGroupOnSystemDataDS struct {
 	ProvisioningGroupOnSystemPrimerType types.String `tfsdk:"type"`
 	ShortNameInSystem                   types.String `tfsdk:"short_name_in_system"`
 	Additional                          types.List   `tfsdk:"additional"`
+	AccessProfileProvisioning           types.List   `tfsdk:"access_profile_provisioning" tkhao:"accessProfileProvisioning"`
 	Audit                               types.Object `tfsdk:"audit" tkhao:"audit"`
 	Provgroups                          types.List   `tfsdk:"provgroups" tkhao:"provgroups"`
 	ServiceAccounts                     types.List   `tfsdk:"service_accounts" tkhao:"serviceAccounts"`
@@ -1088,9 +1125,10 @@ var provisioningGroupOnSystem_additionalObjectsAttrTypesDS = objectAttrsTypeDSPr
 var provisioningGroupOnSystem_additionalObjectsAttrTypesDSRecurse = objectAttrsTypeDSProvisioningGroupOnSystem_additionalObjects(true)
 
 type provisioningGroupOnSystem_additionalObjectsDataDS struct {
-	Audit           types.Object `tfsdk:"audit"`
-	Provgroups      types.List   `tfsdk:"provgroups"`
-	ServiceAccounts types.List   `tfsdk:"service_accounts"`
+	AccessProfileProvisioning types.List   `tfsdk:"access_profile_provisioning"`
+	Audit                     types.Object `tfsdk:"audit"`
+	Provgroups                types.List   `tfsdk:"provgroups"`
+	ServiceAccounts           types.List   `tfsdk:"service_accounts"`
 }
 
 var provisioningOwnedGroupOnSystemsWrapperAttrTypesDS = objectAttrsTypeDSProvisioningOwnedGroupOnSystemsWrapper(false)

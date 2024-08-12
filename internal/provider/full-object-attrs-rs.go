@@ -786,6 +786,7 @@ func objectAttrsTypeRSNestedProvisioningGroupOnSystem(recurse bool) map[string]a
 		objectAttrs["additional"] = types.ListType{ElemType: types.StringType}
 	}
 	if recurse {
+		objectAttrs["access_profile_provisioning"] = objectAttrsTypeRSProfileAccessProfileProvisioningLinkableWrapper(false)["items"]
 		objectAttrs["audit"] = types.ObjectType{AttrTypes: objectAttrsTypeRSAuditInfo(false)}
 		objectAttrs["provgroups"] = objectAttrsTypeRSGroupProvisioningGroupLinkableWrapper(false)["items"]
 		objectAttrs["service_accounts"] = objectAttrsTypeRSServiceaccountServiceAccountPrimerLinkableWrapper(false)["items"]
@@ -867,6 +868,42 @@ func objectAttrsTypeRSOrganizationOrganizationalUnit_additionalObjects(recurse b
 	return objectAttrs
 }
 
+func objectAttrsTypeRSProfileAccessProfilePrimer(recurse bool) map[string]attr.Type {
+	objectAttrs := make(map[string]attr.Type)
+	objectAttrs["links"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeRSRestLink(recurse)}}
+	objectAttrs["permissions"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeRSAuthPermission(recurse)}}
+	objectAttrs["name"] = types.StringType
+	objectAttrs["uuid"] = types.StringType
+	return objectAttrs
+}
+
+func objectAttrsTypeRSProfileAccessProfileProvisioning(recurse bool) map[string]attr.Type {
+	objectAttrs := make(map[string]attr.Type)
+	if recurse {
+		objectAttrs["additional"] = types.ListType{ElemType: types.StringType}
+	}
+	if recurse {
+		objectAttrs["audit"] = types.ObjectType{AttrTypes: objectAttrsTypeRSAuditInfo(false)}
+	}
+	objectAttrs["links"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeRSRestLink(recurse)}}
+	objectAttrs["permissions"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeRSAuthPermission(recurse)}}
+	objectAttrs["access_profile_uuid"] = types.StringType
+	objectAttrs["group_on_system"] = types.ObjectType{AttrTypes: objectAttrsTypeRSProvisioningGroupOnSystem(false)}
+	return objectAttrs
+}
+
+func objectAttrsTypeRSProfileAccessProfileProvisioningLinkableWrapper(recurse bool) map[string]attr.Type {
+	objectAttrs := make(map[string]attr.Type)
+	objectAttrs["items"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeRSProfileAccessProfileProvisioning(recurse)}}
+	return objectAttrs
+}
+
+func objectAttrsTypeRSProfileAccessProfileProvisioning_additionalObjects(recurse bool) map[string]attr.Type {
+	objectAttrs := make(map[string]attr.Type)
+	objectAttrs["audit"] = types.ObjectType{AttrTypes: objectAttrsTypeRSAuditInfo(recurse)}
+	return objectAttrs
+}
+
 func objectAttrsTypeRSProvisioningAbstractProvisionedLDAP(recurse bool) map[string]attr.Type {
 	objectAttrs := make(map[string]attr.Type)
 	objectAttrs["attributes"] = types.MapType{ElemType: types.StringType}
@@ -903,6 +940,7 @@ func objectAttrsTypeRSProvisioningGroupOnSystem(recurse bool) map[string]attr.Ty
 		objectAttrs["additional"] = types.ListType{ElemType: types.StringType}
 	}
 	if recurse {
+		objectAttrs["access_profile_provisioning"] = objectAttrsTypeRSProfileAccessProfileProvisioningLinkableWrapper(false)["items"]
 		objectAttrs["audit"] = types.ObjectType{AttrTypes: objectAttrsTypeRSAuditInfo(false)}
 		objectAttrs["provgroups"] = objectAttrsTypeRSGroupProvisioningGroupLinkableWrapper(false)["items"]
 		objectAttrs["service_accounts"] = objectAttrsTypeRSServiceaccountServiceAccountPrimerLinkableWrapper(false)["items"]
@@ -942,6 +980,7 @@ func objectAttrsTypeRSProvisioningGroupOnSystemTypes(recurse bool) map[string]at
 
 func objectAttrsTypeRSProvisioningGroupOnSystem_additionalObjects(recurse bool) map[string]attr.Type {
 	objectAttrs := make(map[string]attr.Type)
+	objectAttrs["access_profile_provisioning"] = objectAttrsTypeRSProfileAccessProfileProvisioningLinkableWrapper(recurse)["items"]
 	objectAttrs["audit"] = types.ObjectType{AttrTypes: objectAttrsTypeRSAuditInfo(recurse)}
 	objectAttrs["provgroups"] = objectAttrsTypeRSGroupProvisioningGroupLinkableWrapper(recurse)["items"]
 	objectAttrs["service_accounts"] = objectAttrsTypeRSServiceaccountServiceAccountPrimerLinkableWrapper(recurse)["items"]

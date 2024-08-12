@@ -623,6 +623,7 @@ func fillDataStructFromTFObjectRSNestedProvisioningGroupOnSystem(data *nestedPro
 	data.ProvisioningGroupOnSystemPrimerType = obj.Attributes()["type"].(basetypes.StringValue)
 	data.ShortNameInSystem = obj.Attributes()["short_name_in_system"].(basetypes.StringValue)
 	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
+	data.AccessProfileProvisioning = obj.Attributes()["access_profile_provisioning"].(basetypes.ListValue)
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
 	data.Provgroups = obj.Attributes()["provgroups"].(basetypes.ListValue)
 	data.ServiceAccounts = obj.Attributes()["service_accounts"].(basetypes.ListValue)
@@ -679,6 +680,30 @@ func fillDataStructFromTFObjectRSOrganizationOrganizationalUnit_additionalObject
 	data.Settings = obj.Attributes()["settings"].(basetypes.ObjectValue)
 }
 
+func fillDataStructFromTFObjectRSProfileAccessProfilePrimer(data *profileAccessProfilePrimerDataRS, obj types.Object) {
+	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
+	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Name = obj.Attributes()["name"].(basetypes.StringValue)
+	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
+}
+
+func fillDataStructFromTFObjectRSProfileAccessProfileProvisioning(data *profileAccessProfileProvisioningDataRS, obj types.Object) {
+	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
+	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
+	data.AccessProfileUUID = obj.Attributes()["access_profile_uuid"].(basetypes.StringValue)
+	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
+	data.GroupOnSystem = obj.Attributes()["group_on_system"].(basetypes.ObjectValue)
+}
+
+func fillDataStructFromTFObjectRSProfileAccessProfileProvisioningLinkableWrapper(data *profileAccessProfileProvisioningLinkableWrapperDataRS, obj types.Object) {
+	data.Items = obj.Attributes()["items"].(basetypes.ListValue)
+}
+
+func fillDataStructFromTFObjectRSProfileAccessProfileProvisioning_additionalObjects(data *profileAccessProfileProvisioning_additionalObjectsDataRS, obj types.Object) {
+	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
+}
+
 func fillDataStructFromTFObjectRSProvisioningAbstractProvisionedLDAP(data *provisioningAbstractProvisionedLDAPDataRS, obj types.Object) {
 	data.Attributes = obj.Attributes()["attributes"].(basetypes.MapValue)
 	data.BaseDN = obj.Attributes()["base_dn"].(basetypes.StringValue)
@@ -713,6 +738,7 @@ func fillDataStructFromTFObjectRSProvisioningGroupOnSystem(data *provisioningGro
 	data.ProvisioningGroupOnSystemPrimerType = obj.Attributes()["type"].(basetypes.StringValue)
 	data.ShortNameInSystem = obj.Attributes()["short_name_in_system"].(basetypes.StringValue)
 	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
+	data.AccessProfileProvisioning = obj.Attributes()["access_profile_provisioning"].(basetypes.ListValue)
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
 	data.Provgroups = obj.Attributes()["provgroups"].(basetypes.ListValue)
 	data.ServiceAccounts = obj.Attributes()["service_accounts"].(basetypes.ListValue)
@@ -737,6 +763,7 @@ func fillDataStructFromTFObjectRSProvisioningGroupOnSystemTypes(data *provisioni
 }
 
 func fillDataStructFromTFObjectRSProvisioningGroupOnSystem_additionalObjects(data *provisioningGroupOnSystem_additionalObjectsDataRS, obj types.Object) {
+	data.AccessProfileProvisioning = obj.Attributes()["access_profile_provisioning"].(basetypes.ListValue)
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
 	data.Provgroups = obj.Attributes()["provgroups"].(basetypes.ListValue)
 	data.ServiceAccounts = obj.Attributes()["service_accounts"].(basetypes.ListValue)

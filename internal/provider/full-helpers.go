@@ -30,6 +30,7 @@ import (
 	keyhubgroupclassification "github.com/topicuskeyhub/sdk-go/groupclassification"
 	keyhubmodels "github.com/topicuskeyhub/sdk-go/models"
 	keyhuborganizationalunit "github.com/topicuskeyhub/sdk-go/organizationalunit"
+	keyhubprofile "github.com/topicuskeyhub/sdk-go/profile"
 	keyhubserviceaccount "github.com/topicuskeyhub/sdk-go/serviceaccount"
 	keyhubsystem "github.com/topicuskeyhub/sdk-go/system"
 	keyhubvaultrecord "github.com/topicuskeyhub/sdk-go/vaultrecord"
@@ -338,6 +339,28 @@ func findCertificateCertificatePrimerByUUID(ctx context.Context, uuid *string) (
 		return &ret, diag
 	}
 	diag.AddError("Type error", "Result not of type CertificateCertificatePrimer")
+	return nil, diag
+}
+
+func findProfileAccessProfilePrimerByUUID(ctx context.Context, uuid *string) (keyhubmodels.ProfileAccessProfilePrimerable, diag.Diagnostics) {
+	if uuid == nil || *uuid == "" {
+		return nil, diag.Diagnostics{}
+	}
+	client := ctx.Value(keyHubClientKey).(*keyhub.KeyHubClient)
+	wrapper, err := client.Profile().Get(ctx, &keyhubprofile.ProfileRequestBuilderGetRequestConfiguration{
+		QueryParameters: &keyhubprofile.ProfileRequestBuilderGetQueryParameters{
+			Uuid: []string{*uuid},
+		},
+	})
+	ret, diag := findFirst[keyhubmodels.ProfileAccessProfileable](ctx, wrapper, "access profile", uuid, false, err)
+	if ret == nil {
+		return ret, diag
+	}
+	if primer, ok := findSuperStruct(ret, reflect.TypeOf(keyhubmodels.ProfileAccessProfilePrimer{})); ok {
+		ret := primer.(keyhubmodels.ProfileAccessProfilePrimer)
+		return &ret, diag
+	}
+	diag.AddError("Type error", "Result not of type ProfileAccessProfilePrimerable")
 	return nil, diag
 }
 

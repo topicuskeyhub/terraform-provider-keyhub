@@ -1,3 +1,6 @@
+## 2.35.0
+* Upgrade API to Topicus KeyHub version 35
+
 ## 2.34.1
 * Fix some issues in the generated documentation
 

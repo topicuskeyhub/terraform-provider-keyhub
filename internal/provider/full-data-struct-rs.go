@@ -808,6 +808,7 @@ type nestedProvisioningGroupOnSystemDataRS struct {
 	ProvisioningGroupOnSystemPrimerType types.String `tfsdk:"type"`
 	ShortNameInSystem                   types.String `tfsdk:"short_name_in_system"`
 	Additional                          types.List   `tfsdk:"additional"`
+	AccessProfileProvisioning           types.List   `tfsdk:"access_profile_provisioning" tkhao:"accessProfileProvisioning"`
 	Audit                               types.Object `tfsdk:"audit" tkhao:"audit"`
 	Provgroups                          types.List   `tfsdk:"provgroups" tkhao:"provgroups"`
 	ServiceAccounts                     types.List   `tfsdk:"service_accounts" tkhao:"serviceAccounts"`
@@ -882,6 +883,42 @@ type organizationOrganizationalUnit_additionalObjectsDataRS struct {
 	Settings         types.Object `tfsdk:"settings"`
 }
 
+var profileAccessProfilePrimerAttrTypesRS = objectAttrsTypeRSProfileAccessProfilePrimer(false)
+var profileAccessProfilePrimerAttrTypesRSRecurse = objectAttrsTypeRSProfileAccessProfilePrimer(true)
+
+type profileAccessProfilePrimerDataRS struct {
+	Links       types.List   `tfsdk:"links"`
+	Permissions types.List   `tfsdk:"permissions"`
+	Name        types.String `tfsdk:"name"`
+	UUID        types.String `tfsdk:"uuid"`
+}
+
+var profileAccessProfileProvisioningAttrTypesRS = objectAttrsTypeRSProfileAccessProfileProvisioning(false)
+var profileAccessProfileProvisioningAttrTypesRSRecurse = objectAttrsTypeRSProfileAccessProfileProvisioning(true)
+
+type profileAccessProfileProvisioningDataRS struct {
+	Links             types.List   `tfsdk:"links"`
+	Permissions       types.List   `tfsdk:"permissions"`
+	Additional        types.List   `tfsdk:"additional"`
+	AccessProfileUUID types.String `tfsdk:"access_profile_uuid"`
+	Audit             types.Object `tfsdk:"audit" tkhao:"audit"`
+	GroupOnSystem     types.Object `tfsdk:"group_on_system"`
+}
+
+var profileAccessProfileProvisioningLinkableWrapperAttrTypesRS = objectAttrsTypeRSProfileAccessProfileProvisioningLinkableWrapper(false)
+var profileAccessProfileProvisioningLinkableWrapperAttrTypesRSRecurse = objectAttrsTypeRSProfileAccessProfileProvisioningLinkableWrapper(true)
+
+type profileAccessProfileProvisioningLinkableWrapperDataRS struct {
+	Items types.List `tfsdk:"items"`
+}
+
+var profileAccessProfileProvisioning_additionalObjectsAttrTypesRS = objectAttrsTypeRSProfileAccessProfileProvisioning_additionalObjects(false)
+var profileAccessProfileProvisioning_additionalObjectsAttrTypesRSRecurse = objectAttrsTypeRSProfileAccessProfileProvisioning_additionalObjects(true)
+
+type profileAccessProfileProvisioning_additionalObjectsDataRS struct {
+	Audit types.Object `tfsdk:"audit"`
+}
+
 var provisioningAbstractProvisionedLDAPAttrTypesRS = objectAttrsTypeRSProvisioningAbstractProvisionedLDAP(false)
 var provisioningAbstractProvisionedLDAPAttrTypesRSRecurse = objectAttrsTypeRSProvisioningAbstractProvisionedLDAP(true)
 
@@ -925,6 +962,7 @@ type provisioningGroupOnSystemDataRS struct {
 	ProvisioningGroupOnSystemPrimerType types.String `tfsdk:"type"`
 	ShortNameInSystem                   types.String `tfsdk:"short_name_in_system"`
 	Additional                          types.List   `tfsdk:"additional"`
+	AccessProfileProvisioning           types.List   `tfsdk:"access_profile_provisioning" tkhao:"accessProfileProvisioning"`
 	Audit                               types.Object `tfsdk:"audit" tkhao:"audit"`
 	Provgroups                          types.List   `tfsdk:"provgroups" tkhao:"provgroups"`
 	ServiceAccounts                     types.List   `tfsdk:"service_accounts" tkhao:"serviceAccounts"`
@@ -961,9 +999,10 @@ var provisioningGroupOnSystem_additionalObjectsAttrTypesRS = objectAttrsTypeRSPr
 var provisioningGroupOnSystem_additionalObjectsAttrTypesRSRecurse = objectAttrsTypeRSProvisioningGroupOnSystem_additionalObjects(true)
 
 type provisioningGroupOnSystem_additionalObjectsDataRS struct {
-	Audit           types.Object `tfsdk:"audit"`
-	Provgroups      types.List   `tfsdk:"provgroups"`
-	ServiceAccounts types.List   `tfsdk:"service_accounts"`
+	AccessProfileProvisioning types.List   `tfsdk:"access_profile_provisioning"`
+	Audit                     types.Object `tfsdk:"audit"`
+	Provgroups                types.List   `tfsdk:"provgroups"`
+	ServiceAccounts           types.List   `tfsdk:"service_accounts"`
 }
 
 var provisioningOwnedGroupOnSystemsWrapperAttrTypesRS = objectAttrsTypeRSProvisioningOwnedGroupOnSystemsWrapper(false)

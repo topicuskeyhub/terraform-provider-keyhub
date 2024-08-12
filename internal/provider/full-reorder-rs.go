@@ -1212,6 +1212,72 @@ func reorderOrganizationOrganizationalUnit_additionalObjects(state basetypes.Obj
 	return types.ObjectValueMust(attrs, obj)
 }
 
+func reorderProfileAccessProfilePrimer(state basetypes.ObjectValue, priorState basetypes.ObjectValue, recurse bool) basetypes.ObjectValue {
+	if state.IsNull() || state.IsUnknown() || priorState.IsNull() || priorState.IsUnknown() {
+		return state
+	}
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = profileAccessProfilePrimerAttrTypesRSRecurse
+	} else {
+		attrs = profileAccessProfilePrimerAttrTypesRS
+	}
+	obj := filterAttributes(state.Attributes(), attrs)
+
+	return types.ObjectValueMust(attrs, obj)
+}
+
+func reorderProfileAccessProfileProvisioning(state basetypes.ObjectValue, priorState basetypes.ObjectValue, recurse bool) basetypes.ObjectValue {
+	if state.IsNull() || state.IsUnknown() || priorState.IsNull() || priorState.IsUnknown() {
+		return state
+	}
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = profileAccessProfileProvisioningAttrTypesRSRecurse
+	} else {
+		attrs = profileAccessProfileProvisioningAttrTypesRS
+	}
+	obj := filterAttributes(state.Attributes(), attrs)
+	if recurse {
+	}
+	if recurse {
+		maps.Copy(obj, reorderProfileAccessProfileProvisioning_additionalObjects(state, priorState, false).Attributes())
+	}
+
+	return types.ObjectValueMust(attrs, obj)
+}
+
+func reorderProfileAccessProfileProvisioningLinkableWrapper(state basetypes.ObjectValue, priorState basetypes.ObjectValue, recurse bool) basetypes.ObjectValue {
+	if state.IsNull() || state.IsUnknown() || priorState.IsNull() || priorState.IsUnknown() {
+		return state
+	}
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = profileAccessProfileProvisioningLinkableWrapperAttrTypesRSRecurse
+	} else {
+		attrs = profileAccessProfileProvisioningLinkableWrapperAttrTypesRS
+	}
+	obj := filterAttributes(state.Attributes(), attrs)
+	// Reordering not supported for items with type List
+
+	return types.ObjectValueMust(attrs, obj)
+}
+
+func reorderProfileAccessProfileProvisioning_additionalObjects(state basetypes.ObjectValue, priorState basetypes.ObjectValue, recurse bool) basetypes.ObjectValue {
+	if state.IsNull() || state.IsUnknown() || priorState.IsNull() || priorState.IsUnknown() {
+		return state
+	}
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = profileAccessProfileProvisioning_additionalObjectsAttrTypesRSRecurse
+	} else {
+		attrs = profileAccessProfileProvisioning_additionalObjectsAttrTypesRS
+	}
+	obj := filterAttributes(state.Attributes(), attrs)
+
+	return types.ObjectValueMust(attrs, obj)
+}
+
 func reorderProvisioningAbstractProvisionedLDAP(state basetypes.ObjectValue, priorState basetypes.ObjectValue, recurse bool) basetypes.ObjectValue {
 	if state.IsNull() || state.IsUnknown() || priorState.IsNull() || priorState.IsUnknown() {
 		return state
@@ -1320,6 +1386,18 @@ func reorderProvisioningGroupOnSystem_additionalObjects(state basetypes.ObjectVa
 		attrs = provisioningGroupOnSystem_additionalObjectsAttrTypesRS
 	}
 	obj := filterAttributes(state.Attributes(), attrs)
+	{
+		attrState := state.Attributes()["access_profile_provisioning"]
+		attrPriorState := priorState.Attributes()["access_profile_provisioning"]
+		if attrState.IsNull() || attrState.IsUnknown() || attrPriorState.IsNull() || attrPriorState.IsUnknown() {
+			obj["access_profile_provisioning"] = attrState
+		} else {
+			attrStateEl := (attrState.(types.List)).Elements()
+			attrPriorStateEl := (attrPriorState.(types.List)).Elements()
+			newAttrState := reorderList(attrStateEl, attrPriorStateEl, recurse, []string{}, reorderProfileAccessProfileProvisioning)
+			obj["access_profile_provisioning"] = types.ListValueMust(attrs["access_profile_provisioning"].(types.ListType).ElemType, newAttrState)
+		}
+	}
 	{
 		attrState := state.Attributes()["provgroups"]
 		attrPriorState := priorState.Attributes()["provgroups"]

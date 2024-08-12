@@ -24,6 +24,7 @@ description: |-
 
 ### Optional
 
+- `access_profile_provisioning` (Attributes List) (see [below for nested schema](#nestedatt--access_profile_provisioning))
 - `additional` (List of String)
 - `display_name` (String)
 - `provgroups` (Attributes List) (see [below for nested schema](#nestedatt--provgroups))
@@ -35,6 +36,81 @@ description: |-
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--links))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--permissions))
 - `short_name_in_system` (String)
+
+<a id="nestedatt--access_profile_provisioning"></a>
+### Nested Schema for `access_profile_provisioning`
+
+Read-Only:
+
+- `access_profile_uuid` (String)
+- `group_on_system` (Attributes) (see [below for nested schema](#nestedatt--access_profile_provisioning--group_on_system))
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--access_profile_provisioning--links))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--access_profile_provisioning--permissions))
+
+<a id="nestedatt--access_profile_provisioning--group_on_system"></a>
+### Nested Schema for `access_profile_provisioning.group_on_system`
+
+Required:
+
+- `name_in_system` (String)
+- `owner_uuid` (String)
+- `type` (String)
+
+Optional:
+
+- `display_name` (String)
+
+Read-Only:
+
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--access_profile_provisioning--group_on_system--links))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--access_profile_provisioning--group_on_system--permissions))
+- `short_name_in_system` (String)
+
+<a id="nestedatt--access_profile_provisioning--group_on_system--links"></a>
+### Nested Schema for `access_profile_provisioning.group_on_system.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--access_profile_provisioning--group_on_system--permissions"></a>
+### Nested Schema for `access_profile_provisioning.group_on_system.permissions`
+
+Optional:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
+
+<a id="nestedatt--access_profile_provisioning--links"></a>
+### Nested Schema for `access_profile_provisioning.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--access_profile_provisioning--permissions"></a>
+### Nested Schema for `access_profile_provisioning.permissions`
+
+Optional:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
 
 <a id="nestedatt--provgroups"></a>
 ### Nested Schema for `provgroups`

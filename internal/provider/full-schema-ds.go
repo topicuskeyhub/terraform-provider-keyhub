@@ -2721,6 +2721,102 @@ func dataSourceSchemaAttrsOrganizationOrganizationalUnit_additionalObjects(recur
 
 	return schemaAttrs
 }
+func dataSourceSchemaAttrsProfileAccessProfilePrimer(recurse bool) map[string]dsschema.Attribute {
+	schemaAttrs := make(map[string]dsschema.Attribute)
+	schemaAttrs["links"] = dsschema.ListNestedAttribute{
+		NestedObject: dsschema.NestedAttributeObject{
+			Attributes: dataSourceSchemaAttrsRestLink(recurse),
+		},
+		Computed: true,
+	}
+	schemaAttrs["permissions"] = dsschema.ListNestedAttribute{
+		NestedObject: dsschema.NestedAttributeObject{
+			Attributes: dataSourceSchemaAttrsAuthPermission(recurse),
+		},
+		Computed: true,
+	}
+	schemaAttrs["name"] = dsschema.StringAttribute{
+		Computed: true,
+	}
+	schemaAttrs["uuid"] = dsschema.StringAttribute{
+		Required: recurse,
+		Computed: !recurse,
+		Validators: []validator.String{
+			stringvalidator.UTF8LengthBetween(0, 36),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
+		},
+	}
+	return schemaAttrs
+}
+func dataSourceSchemaAttrsProfileAccessProfileProvisioning(recurse bool) map[string]dsschema.Attribute {
+	schemaAttrs := make(map[string]dsschema.Attribute)
+	if recurse {
+		schemaAttrs["additional"] = dsschema.ListAttribute{
+			ElementType: types.StringType,
+			Optional:    true,
+			Validators: []validator.List{
+				listvalidator.ValueStringsAre(stringvalidator.OneOf(
+					"audit",
+				)),
+			},
+		}
+	}
+	if recurse {
+		maps.Copy(schemaAttrs, dataSourceSchemaAttrsProfileAccessProfileProvisioning_additionalObjects(false))
+
+	}
+	schemaAttrs["links"] = dsschema.ListNestedAttribute{
+		NestedObject: dsschema.NestedAttributeObject{
+			Attributes: dataSourceSchemaAttrsRestLink(recurse),
+		},
+		Computed: true,
+	}
+	schemaAttrs["permissions"] = dsschema.ListNestedAttribute{
+		NestedObject: dsschema.NestedAttributeObject{
+			Attributes: dataSourceSchemaAttrsAuthPermission(recurse),
+		},
+		Computed: true,
+	}
+	{
+		attr := dsschema.SingleNestedAttribute{
+			Attributes: dataSourceSchemaAttrsProfileAccessProfilePrimer(false),
+		}
+		attr.Computed = true
+		schemaAttrs["access_profile"] = attr
+	}
+
+	{
+		attr := dsschema.SingleNestedAttribute{
+			Attributes: dataSourceSchemaAttrsProvisioningGroupOnSystem(false),
+		}
+		attr.Computed = true
+		schemaAttrs["group_on_system"] = attr
+	}
+
+	return schemaAttrs
+}
+func dataSourceSchemaAttrsProfileAccessProfileProvisioningLinkableWrapper(recurse bool) map[string]dsschema.Attribute {
+	schemaAttrs := make(map[string]dsschema.Attribute)
+	schemaAttrs["items"] = dsschema.ListNestedAttribute{
+		NestedObject: dsschema.NestedAttributeObject{
+			Attributes: dataSourceSchemaAttrsProfileAccessProfileProvisioning(recurse),
+		},
+		Computed: true,
+	}
+	return schemaAttrs
+}
+func dataSourceSchemaAttrsProfileAccessProfileProvisioning_additionalObjects(recurse bool) map[string]dsschema.Attribute {
+	schemaAttrs := make(map[string]dsschema.Attribute)
+	{
+		attr := dsschema.SingleNestedAttribute{
+			Attributes: dataSourceSchemaAttrsAuditInfo(recurse),
+		}
+		attr.Computed = true
+		schemaAttrs["audit"] = attr
+	}
+
+	return schemaAttrs
+}
 func dataSourceSchemaAttrsProvisioningAbstractProvisionedLDAP(recurse bool) map[string]dsschema.Attribute {
 	schemaAttrs := make(map[string]dsschema.Attribute)
 	schemaAttrs["attributes"] = dsschema.MapAttribute{
@@ -2814,7 +2910,7 @@ func dataSourceSchemaAttrsProvisioningGroupOnSystem(recurse bool) map[string]dss
 			Optional:    true,
 			Validators: []validator.List{
 				listvalidator.ValueStringsAre(stringvalidator.OneOf(
-					"audit", "provgroups", "serviceAccounts",
+					"accessProfileProvisioning", "audit", "provgroups", "serviceAccounts",
 				)),
 			},
 		}
@@ -2905,6 +3001,12 @@ func dataSourceSchemaAttrsProvisioningGroupOnSystemTypes(recurse bool) map[strin
 }
 func dataSourceSchemaAttrsProvisioningGroupOnSystem_additionalObjects(recurse bool) map[string]dsschema.Attribute {
 	schemaAttrs := make(map[string]dsschema.Attribute)
+	{
+		attr := dataSourceSchemaAttrsProfileAccessProfileProvisioningLinkableWrapper(recurse)["items"].(dsschema.ListNestedAttribute)
+		attr.Computed = true
+		schemaAttrs["access_profile_provisioning"] = attr
+	}
+
 	{
 		attr := dsschema.SingleNestedAttribute{
 			Attributes: dataSourceSchemaAttrsAuditInfo(recurse),
