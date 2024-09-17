@@ -73,12 +73,9 @@ Required:
 - `name_in_system` (String)
 - `type` (String)
 
-Optional:
-
-- `display_name` (String)
-
 Read-Only:
 
+- `display_name` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--groups--links))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--groups--permissions))
 - `short_name_in_system` (String)

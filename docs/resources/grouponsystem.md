@@ -26,13 +26,14 @@ description: |-
 
 - `access_profile_provisioning` (Attributes List) (see [below for nested schema](#nestedatt--access_profile_provisioning))
 - `additional` (List of String)
-- `display_name` (String)
 - `provgroups` (Attributes List) (see [below for nested schema](#nestedatt--provgroups))
+- `provisioning_enabled` (Boolean)
 - `service_accounts` (Attributes List) (see [below for nested schema](#nestedatt--service_accounts))
 
 ### Read-Only
 
 - `audit` (Attributes) (see [below for nested schema](#nestedatt--audit))
+- `display_name` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--links))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--permissions))
 - `short_name_in_system` (String)
@@ -58,10 +59,11 @@ Required:
 
 Optional:
 
-- `display_name` (String)
+- `provisioning_enabled` (Boolean)
 
 Read-Only:
 
+- `display_name` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--access_profile_provisioning--group_on_system--links))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--access_profile_provisioning--group_on_system--permissions))
 - `short_name_in_system` (String)
@@ -140,10 +142,11 @@ Required:
 
 Optional:
 
-- `display_name` (String)
+- `provisioning_enabled` (Boolean)
 
 Read-Only:
 
+- `display_name` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--provgroups--group_on_system--links))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--provgroups--group_on_system--permissions))
 - `short_name_in_system` (String)

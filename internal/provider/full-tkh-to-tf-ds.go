@@ -435,6 +435,11 @@ func tkhToTFObjectDSAuthAccount(recurse bool, tkh keyhubmodel.AuthAccountable) (
 	obj["directory_type"] = stringerToTF(tkh.GetDirectoryType())
 	obj["email"] = types.StringPointerValue(tkh.GetEmail())
 	obj["id_in_directory"] = types.StringPointerValue(tkh.GetIdInDirectory())
+	{
+		val, d := tkhToTFObjectDSIdentityIdentity(false, tkh.GetIdentity())
+		diags.Append(d...)
+		obj["identity"] = val
+	}
 	obj["key_hub_password_change_required"] = types.BoolPointerValue(tkh.GetKeyHubPasswordChangeRequired())
 	obj["last_modified_at"] = timePointerToTF(tkh.GetLastModifiedAt())
 	obj["license_role"] = stringerToTF(tkh.GetLicenseRole())
@@ -2034,6 +2039,26 @@ func tkhToTFObjectDSGroupGroup(recurse bool, tkh keyhubmodel.GroupGroupable) (ty
 	return objVal, diags
 }
 
+func tkhToTFObjectDSGroupGroupAccessInfo(recurse bool, tkh keyhubmodel.GroupGroupAccessInfoable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = groupGroupAccessInfoAttrTypesDSRecurse
+	} else {
+		attrs = groupGroupAccessInfoAttrTypesDS
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	obj["business_accounts"] = types.BoolPointerValue(tkh.GetBusinessAccounts())
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
 func tkhToTFObjectDSGroupGroupAccount(recurse bool, tkh keyhubmodel.GroupGroupAccountable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
@@ -2774,6 +2799,11 @@ func tkhToTFObjectDSGroupGroup_additionalObjects(recurse bool, tkh keyhubmodel.G
 		obj["content_administered_systems"] = getItemsAttr(val, attrs["content_administered_systems"])
 	}
 	{
+		val, d := tkhToTFObjectDSGroupGroupAccessInfo(recurse, tkh.GetGroupAccessInfo())
+		diags.Append(d...)
+		obj["group_access_info"] = val
+	}
+	{
 		val, d := tkhToTFObjectDSGroupGroupAuditingInfo(recurse, tkh.GetGroupauditinginfo())
 		diags.Append(d...)
 		obj["groupauditinginfo"] = val
@@ -2972,6 +3002,48 @@ func tkhToTFObjectDSGroupProvisioningGroup_additionalObjects(recurse bool, tkh k
 		diags.Append(d...)
 		obj["audit"] = val
 	}
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
+func tkhToTFObjectDSIdentityIdentity(recurse bool, tkh keyhubmodel.IdentityIdentityable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = identityIdentityAttrTypesDSRecurse
+	} else {
+		attrs = identityIdentityAttrTypesDS
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	{
+		elemType := attrs["links"].(types.ListType).ElemType
+		val, d := sliceToTFList(elemType, tkh.GetLinks(), func(tkh keyhubmodel.RestLinkable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectDSRestLink(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["links"] = val
+	}
+	{
+		elemType := attrs["permissions"].(types.ListType).ElemType
+		val, d := sliceToTFList(elemType, tkh.GetPermissions(), func(tkh keyhubmodel.AuthPermissionable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectDSAuthPermission(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["permissions"] = val
+	}
+	obj["first_name"] = types.StringPointerValue(tkh.GetFirstName())
+	obj["last_name"] = types.StringPointerValue(tkh.GetLastName())
+	obj["telephone"] = types.StringPointerValue(tkh.GetTelephone())
 
 	objVal, d := types.ObjectValue(attrs, obj)
 	diags.Append(d...)
@@ -3585,6 +3657,7 @@ func tkhToTFObjectDSProvisioningGroupOnSystem(recurse bool, tkh keyhubmodel.Prov
 		diags.Append(d...)
 		obj["owner"] = val
 	}
+	obj["provisioning_enabled"] = types.BoolPointerValue(tkh.GetProvisioningEnabled())
 
 	objVal, d := types.ObjectValue(attrs, obj)
 	diags.Append(d...)
@@ -4206,6 +4279,7 @@ func tkhToTFObjectDSProvisioningProvisionedSystem(recurse bool, tkh keyhubmodel.
 		obj["content_administrator"] = val
 	}
 	obj["external_uuid"] = stringerToTF(tkh.GetExternalUuid())
+	obj["group_on_system_provisioning"] = stringerToTF(tkh.GetGroupOnSystemProvisioning())
 	{
 		val, d := tkhToTFObjectDSGroupGroupPrimer(false, tkh.GetOwner())
 		diags.Append(d...)

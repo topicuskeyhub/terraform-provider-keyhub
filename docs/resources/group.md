@@ -71,6 +71,7 @@ resource "keyhub_group" "terra" {
 - `authorizing_group_types` (Set of String)
 - `clients` (Attributes List) (see [below for nested schema](#nestedatt--clients))
 - `content_administered_systems` (Attributes List) (see [below for nested schema](#nestedatt--content_administered_systems))
+- `group_access_info` (Attributes) (see [below for nested schema](#nestedatt--group_access_info))
 - `groupauditinginfo` (Attributes) (see [below for nested schema](#nestedatt--groupauditinginfo))
 - `groupinfo` (Attributes) (see [below for nested schema](#nestedatt--groupinfo))
 - `helpdesk` (Attributes List) (see [below for nested schema](#nestedatt--helpdesk))
@@ -341,6 +342,7 @@ Optional:
 - `abstract_provisioned_ldap` (Attributes) (see [below for nested schema](#nestedatt--administered_systems--abstract_provisioned_ldap))
 - `active` (Boolean)
 - `content_administrator_uuid` (String)
+- `group_on_system_provisioning` (String)
 - `organizational_unit_uuid` (String)
 - `provisioned_a_d` (Attributes) (see [below for nested schema](#nestedatt--administered_systems--provisioned_a_d))
 - `provisioned_azure_oidc_directory` (Attributes) (see [below for nested schema](#nestedatt--administered_systems--provisioned_azure_oidc_directory))
@@ -742,6 +744,7 @@ Optional:
 - `abstract_provisioned_ldap` (Attributes) (see [below for nested schema](#nestedatt--content_administered_systems--abstract_provisioned_ldap))
 - `active` (Boolean)
 - `content_administrator_uuid` (String)
+- `group_on_system_provisioning` (String)
 - `organizational_unit_uuid` (String)
 - `provisioned_a_d` (Attributes) (see [below for nested schema](#nestedatt--content_administered_systems--provisioned_a_d))
 - `provisioned_azure_oidc_directory` (Attributes) (see [below for nested schema](#nestedatt--content_administered_systems--provisioned_azure_oidc_directory))
@@ -965,6 +968,14 @@ Optional:
 - `operations` (Set of String)
 - `type_escaped` (String)
 
+
+
+<a id="nestedatt--group_access_info"></a>
+### Nested Schema for `group_access_info`
+
+Read-Only:
+
+- `business_accounts` (Boolean)
 
 
 <a id="nestedatt--groupauditinginfo"></a>
@@ -1411,10 +1422,11 @@ Required:
 
 Optional:
 
-- `display_name` (String)
+- `provisioning_enabled` (Boolean)
 
 Read-Only:
 
+- `display_name` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_groups_on_system--items--links))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_groups_on_system--items--permissions))
 - `short_name_in_system` (String)
@@ -1507,6 +1519,7 @@ Optional:
 - `abstract_provisioned_ldap` (Attributes) (see [below for nested schema](#nestedatt--owned_systems--abstract_provisioned_ldap))
 - `active` (Boolean)
 - `content_administrator_uuid` (String)
+- `group_on_system_provisioning` (String)
 - `organizational_unit_uuid` (String)
 - `provisioned_a_d` (Attributes) (see [below for nested schema](#nestedatt--owned_systems--provisioned_a_d))
 - `provisioned_azure_oidc_directory` (Attributes) (see [below for nested schema](#nestedatt--owned_systems--provisioned_azure_oidc_directory))
@@ -1951,10 +1964,11 @@ Required:
 
 Optional:
 
-- `display_name` (String)
+- `provisioning_enabled` (Boolean)
 
 Read-Only:
 
+- `display_name` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--systems--group_on_system--links))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--systems--group_on_system--permissions))
 - `short_name_in_system` (String)

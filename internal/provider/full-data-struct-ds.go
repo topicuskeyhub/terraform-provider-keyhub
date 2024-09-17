@@ -147,6 +147,7 @@ type authAccountDataDS struct {
 	DirectoryType                   types.String `tfsdk:"directory_type"`
 	Email                           types.String `tfsdk:"email"`
 	IDInDirectory                   types.String `tfsdk:"id_in_directory"`
+	IDentity                        types.Object `tfsdk:"identity"`
 	KeyHubPasswordChangeRequired    types.Bool   `tfsdk:"key_hub_password_change_required"`
 	LastModifiedAt                  types.String `tfsdk:"last_modified_at"`
 	LicenseRole                     types.String `tfsdk:"license_role"`
@@ -625,6 +626,7 @@ type groupGroupDataDS struct {
 	ClientPermissions            types.List   `tfsdk:"client_permissions" tkhao:"clientPermissions"`
 	Clients                      types.List   `tfsdk:"clients" tkhao:"clients"`
 	ContentAdministeredSystems   types.List   `tfsdk:"content_administered_systems" tkhao:"contentAdministeredSystems"`
+	GroupAccessInfo              types.Object `tfsdk:"group_access_info" tkhao:"groupAccessInfo"`
 	Groupauditinginfo            types.Object `tfsdk:"groupauditinginfo" tkhao:"groupauditinginfo"`
 	Groupinfo                    types.Object `tfsdk:"groupinfo" tkhao:"groupinfo"`
 	Helpdesk                     types.List   `tfsdk:"helpdesk" tkhao:"helpdesk"`
@@ -663,6 +665,13 @@ type groupGroupDataDS struct {
 	SingleManaged                types.Bool   `tfsdk:"single_managed"`
 	VaultRecovery                types.String `tfsdk:"vault_recovery"`
 	VaultRequiresActivation      types.Bool   `tfsdk:"vault_requires_activation"`
+}
+
+var groupGroupAccessInfoAttrTypesDS = objectAttrsTypeDSGroupGroupAccessInfo(false)
+var groupGroupAccessInfoAttrTypesDSRecurse = objectAttrsTypeDSGroupGroupAccessInfo(true)
+
+type groupGroupAccessInfoDataDS struct {
+	BusinessAccounts types.Bool `tfsdk:"business_accounts"`
 }
 
 var groupGroupAccountAttrTypesDS = objectAttrsTypeDSGroupGroupAccount(false)
@@ -874,6 +883,7 @@ type groupGroup_additionalObjectsDataDS struct {
 	ClientPermissions          types.List   `tfsdk:"client_permissions"`
 	Clients                    types.List   `tfsdk:"clients"`
 	ContentAdministeredSystems types.List   `tfsdk:"content_administered_systems"`
+	GroupAccessInfo            types.Object `tfsdk:"group_access_info"`
 	Groupauditinginfo          types.Object `tfsdk:"groupauditinginfo"`
 	Groupinfo                  types.Object `tfsdk:"groupinfo"`
 	Helpdesk                   types.List   `tfsdk:"helpdesk"`
@@ -919,6 +929,17 @@ var groupProvisioningGroup_additionalObjectsAttrTypesDSRecurse = objectAttrsType
 
 type groupProvisioningGroup_additionalObjectsDataDS struct {
 	Audit types.Object `tfsdk:"audit"`
+}
+
+var identityIdentityAttrTypesDS = objectAttrsTypeDSIdentityIdentity(false)
+var identityIdentityAttrTypesDSRecurse = objectAttrsTypeDSIdentityIdentity(true)
+
+type identityIdentityDataDS struct {
+	Links       types.List   `tfsdk:"links"`
+	Permissions types.List   `tfsdk:"permissions"`
+	FirstName   types.String `tfsdk:"first_name"`
+	LastName    types.String `tfsdk:"last_name"`
+	Telephone   types.String `tfsdk:"telephone"`
 }
 
 var launchpadSsoApplicationLaunchpadTileAttrTypesDS = objectAttrsTypeDSLaunchpadSsoApplicationLaunchpadTile(false)
@@ -1093,6 +1114,7 @@ type provisioningGroupOnSystemDataDS struct {
 	Provgroups                          types.List   `tfsdk:"provgroups" tkhao:"provgroups"`
 	ServiceAccounts                     types.List   `tfsdk:"service_accounts" tkhao:"serviceAccounts"`
 	Owner                               types.Object `tfsdk:"owner"`
+	ProvisioningEnabled                 types.Bool   `tfsdk:"provisioning_enabled"`
 }
 
 var provisioningGroupOnSystemLinkableWrapperAttrTypesDS = objectAttrsTypeDSProvisioningGroupOnSystemLinkableWrapper(false)
@@ -1290,6 +1312,7 @@ type provisioningProvisionedSystemDataDS struct {
 	CleanupPeriod                           types.Object `tfsdk:"cleanup_period"`
 	ContentAdministrator                    types.Object `tfsdk:"content_administrator"`
 	ExternalUUID                            types.String `tfsdk:"external_uuid"`
+	GroupOnSystemProvisioning               types.String `tfsdk:"group_on_system_provisioning"`
 	Owner                                   types.Object `tfsdk:"owner"`
 	SelfServiceExistingGroups               types.Bool   `tfsdk:"self_service_existing_groups"`
 	SelfServiceNewGroups                    types.Bool   `tfsdk:"self_service_new_groups"`

@@ -39,6 +39,7 @@ description: |-
 - `email` (String)
 - `groups` (Attributes List) (see [below for nested schema](#nestedatt--groups))
 - `id_in_directory` (String)
+- `identity` (Attributes) (see [below for nested schema](#nestedatt--identity))
 - `key_hub_password_change_required` (Boolean)
 - `last_active` (String)
 - `last_modified_at` (String)
@@ -211,6 +212,40 @@ Read-Only:
 
 <a id="nestedatt--groups--permissions"></a>
 ### Nested Schema for `groups.permissions`
+
+Read-Only:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
+
+<a id="nestedatt--identity"></a>
+### Nested Schema for `identity`
+
+Read-Only:
+
+- `first_name` (String)
+- `last_name` (String)
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--identity--links))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--identity--permissions))
+- `telephone` (String)
+
+<a id="nestedatt--identity--links"></a>
+### Nested Schema for `identity.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--identity--permissions"></a>
+### Nested Schema for `identity.permissions`
 
 Read-Only:
 

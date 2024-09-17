@@ -672,6 +672,21 @@ func reorderGroupGroup(state basetypes.ObjectValue, priorState basetypes.ObjectV
 	return types.ObjectValueMust(attrs, obj)
 }
 
+func reorderGroupGroupAccessInfo(state basetypes.ObjectValue, priorState basetypes.ObjectValue, recurse bool) basetypes.ObjectValue {
+	if state.IsNull() || state.IsUnknown() || priorState.IsNull() || priorState.IsUnknown() {
+		return state
+	}
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = groupGroupAccessInfoAttrTypesRSRecurse
+	} else {
+		attrs = groupGroupAccessInfoAttrTypesRS
+	}
+	obj := filterAttributes(state.Attributes(), attrs)
+
+	return types.ObjectValueMust(attrs, obj)
+}
+
 func reorderGroupGroupAccount(state basetypes.ObjectValue, priorState basetypes.ObjectValue, recurse bool) basetypes.ObjectValue {
 	if state.IsNull() || state.IsUnknown() || priorState.IsNull() || priorState.IsUnknown() {
 		return state

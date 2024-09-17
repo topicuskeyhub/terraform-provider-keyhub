@@ -504,6 +504,7 @@ type groupGroupDataRS struct {
 	ClientPermissions                types.List   `tfsdk:"client_permissions" tkhao:"clientPermissions"`
 	Clients                          types.List   `tfsdk:"clients" tkhao:"clients"`
 	ContentAdministeredSystems       types.List   `tfsdk:"content_administered_systems" tkhao:"contentAdministeredSystems"`
+	GroupAccessInfo                  types.Object `tfsdk:"group_access_info" tkhao:"groupAccessInfo"`
 	Groupauditinginfo                types.Object `tfsdk:"groupauditinginfo" tkhao:"groupauditinginfo"`
 	Groupinfo                        types.Object `tfsdk:"groupinfo" tkhao:"groupinfo"`
 	Helpdesk                         types.List   `tfsdk:"helpdesk" tkhao:"helpdesk"`
@@ -542,6 +543,13 @@ type groupGroupDataRS struct {
 	SingleManaged                    types.Bool   `tfsdk:"single_managed"`
 	VaultRecovery                    types.String `tfsdk:"vault_recovery"`
 	VaultRequiresActivation          types.Bool   `tfsdk:"vault_requires_activation"`
+}
+
+var groupGroupAccessInfoAttrTypesRS = objectAttrsTypeRSGroupGroupAccessInfo(false)
+var groupGroupAccessInfoAttrTypesRSRecurse = objectAttrsTypeRSGroupGroupAccessInfo(true)
+
+type groupGroupAccessInfoDataRS struct {
+	BusinessAccounts types.Bool `tfsdk:"business_accounts"`
 }
 
 var groupGroupAccountAttrTypesRS = objectAttrsTypeRSGroupGroupAccount(false)
@@ -689,6 +697,7 @@ type groupGroup_additionalObjectsDataRS struct {
 	ClientPermissions          types.List   `tfsdk:"client_permissions"`
 	Clients                    types.List   `tfsdk:"clients"`
 	ContentAdministeredSystems types.List   `tfsdk:"content_administered_systems"`
+	GroupAccessInfo            types.Object `tfsdk:"group_access_info"`
 	Groupauditinginfo          types.Object `tfsdk:"groupauditinginfo"`
 	Groupinfo                  types.Object `tfsdk:"groupinfo"`
 	Helpdesk                   types.List   `tfsdk:"helpdesk"`
@@ -813,6 +822,7 @@ type nestedProvisioningGroupOnSystemDataRS struct {
 	Provgroups                          types.List   `tfsdk:"provgroups" tkhao:"provgroups"`
 	ServiceAccounts                     types.List   `tfsdk:"service_accounts" tkhao:"serviceAccounts"`
 	OwnerUUID                           types.String `tfsdk:"owner_uuid"`
+	ProvisioningEnabled                 types.Bool   `tfsdk:"provisioning_enabled"`
 }
 
 var organizationOrganizationalUnitAttrTypesRS = objectAttrsTypeRSOrganizationOrganizationalUnit(false)
@@ -967,6 +977,7 @@ type provisioningGroupOnSystemDataRS struct {
 	Provgroups                          types.List   `tfsdk:"provgroups" tkhao:"provgroups"`
 	ServiceAccounts                     types.List   `tfsdk:"service_accounts" tkhao:"serviceAccounts"`
 	OwnerUUID                           types.String `tfsdk:"owner_uuid"`
+	ProvisioningEnabled                 types.Bool   `tfsdk:"provisioning_enabled"`
 }
 
 var provisioningGroupOnSystemLinkableWrapperAttrTypesRS = objectAttrsTypeRSProvisioningGroupOnSystemLinkableWrapper(false)
@@ -1158,6 +1169,7 @@ type provisioningProvisionedSystemDataRS struct {
 	CleanupPeriod                           types.Object `tfsdk:"cleanup_period"`
 	ContentAdministratorUUID                types.String `tfsdk:"content_administrator_uuid"`
 	ExternalUUID                            types.String `tfsdk:"external_uuid"`
+	GroupOnSystemProvisioning               types.String `tfsdk:"group_on_system_provisioning"`
 	OwnerUUID                               types.String `tfsdk:"owner_uuid"`
 	SelfServiceExistingGroups               types.Bool   `tfsdk:"self_service_existing_groups"`
 	SelfServiceNewGroups                    types.Bool   `tfsdk:"self_service_new_groups"`

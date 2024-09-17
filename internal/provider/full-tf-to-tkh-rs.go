@@ -1485,6 +1485,18 @@ func tfObjectToTKHRSGroupGroup(ctx context.Context, recurse bool, objVal types.O
 	return tkh, diags
 }
 
+func tfObjectToTKHRSGroupGroupAccessInfo(ctx context.Context, recurse bool, objVal types.Object) (keyhubmodel.GroupGroupAccessInfoable, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	if objVal.IsNull() || objVal.IsUnknown() {
+		return nil, diags
+	}
+	objAttrs := objVal.Attributes()
+	var tkh keyhubmodel.GroupGroupAccessInfoable
+	tkh = keyhubmodel.NewGroupGroupAccessInfo()
+	tkh.SetBusinessAccounts(objAttrs["business_accounts"].(basetypes.BoolValue).ValueBoolPointer())
+	return tkh, diags
+}
+
 func tfObjectToTKHRSGroupGroupAccount(ctx context.Context, recurse bool, objVal types.Object) (keyhubmodel.GroupGroupAccountable, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	if objVal.IsNull() || objVal.IsUnknown() {
@@ -1938,6 +1950,11 @@ func tfObjectToTKHRSGroupGroup_additionalObjects(ctx context.Context, recurse bo
 		tkh.SetContentAdministeredSystems(val)
 	}
 	{
+		val, d := tfObjectToTKHRSGroupGroupAccessInfo(ctx, recurse, objAttrs["group_access_info"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		tkh.SetGroupAccessInfo(val)
+	}
+	{
 		val, d := tfObjectToTKHRSGroupGroupAuditingInfo(ctx, recurse, objAttrs["groupauditinginfo"].(basetypes.ObjectValue))
 		diags.Append(d...)
 		tkh.SetGroupauditinginfo(val)
@@ -2318,6 +2335,7 @@ func tfObjectToTKHRSNestedProvisioningGroupOnSystem(ctx context.Context, recurse
 		diags.Append(d...)
 		tkh.SetOwner(val)
 	}
+	tkh.SetProvisioningEnabled(objAttrs["provisioning_enabled"].(basetypes.BoolValue).ValueBoolPointer())
 	if recurse {
 		{
 			val, d := tfObjectToTKHRSProvisioningGroupOnSystem_additionalObjects(ctx, false, objVal)
@@ -2766,6 +2784,7 @@ func tfObjectToTKHRSProvisioningGroupOnSystem(ctx context.Context, recurse bool,
 		diags.Append(d...)
 		tkh.SetOwner(val)
 	}
+	tkh.SetProvisioningEnabled(objAttrs["provisioning_enabled"].(basetypes.BoolValue).ValueBoolPointer())
 	if recurse {
 		{
 			val, d := tfObjectToTKHRSProvisioningGroupOnSystem_additionalObjects(ctx, false, objVal)
@@ -3256,6 +3275,13 @@ func tfObjectToTKHRSProvisioningProvisionedSystem(ctx context.Context, recurse b
 		val, d := parsePointer(objAttrs["external_uuid"].(basetypes.StringValue), uuid.Parse)
 		diags.Append(d...)
 		tkh.SetExternalUuid(val)
+	}
+	{
+		val, d := parseCastPointer(objAttrs["group_on_system_provisioning"].(basetypes.StringValue), keyhubmodel.ParseProvisioningGroupOnSystemProvisioning, func(val any) keyhubmodel.ProvisioningGroupOnSystemProvisioning {
+			return *val.(*keyhubmodel.ProvisioningGroupOnSystemProvisioning)
+		})
+		diags.Append(d...)
+		tkh.SetGroupOnSystemProvisioning(val)
 	}
 	{
 		val, d := findGroupGroupPrimerByUUID(ctx, objAttrs["owner_uuid"].(basetypes.StringValue).ValueStringPointer())

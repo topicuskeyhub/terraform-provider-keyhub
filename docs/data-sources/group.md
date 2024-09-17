@@ -53,6 +53,7 @@ data "keyhub_group" "group_from_keyhub" {
 - `content_administered_systems` (Attributes List) (see [below for nested schema](#nestedatt--content_administered_systems))
 - `description` (String)
 - `extended_access` (String)
+- `group_access_info` (Attributes) (see [below for nested schema](#nestedatt--group_access_info))
 - `groupauditinginfo` (Attributes) (see [below for nested schema](#nestedatt--groupauditinginfo))
 - `groupinfo` (Attributes) (see [below for nested schema](#nestedatt--groupinfo))
 - `helpdesk` (Attributes List) (see [below for nested schema](#nestedatt--helpdesk))
@@ -519,6 +520,7 @@ Read-Only:
 - `cleanup_period` (Attributes) (see [below for nested schema](#nestedatt--administered_systems--cleanup_period))
 - `content_administrator` (Attributes) (see [below for nested schema](#nestedatt--administered_systems--content_administrator))
 - `external_uuid` (String)
+- `group_on_system_provisioning` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--administered_systems--links))
 - `name` (String)
 - `organizational_unit` (Attributes) (see [below for nested schema](#nestedatt--administered_systems--organizational_unit))
@@ -2801,6 +2803,7 @@ Read-Only:
 - `cleanup_period` (Attributes) (see [below for nested schema](#nestedatt--content_administered_systems--cleanup_period))
 - `content_administrator` (Attributes) (see [below for nested schema](#nestedatt--content_administered_systems--content_administrator))
 - `external_uuid` (String)
+- `group_on_system_provisioning` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--content_administered_systems--links))
 - `name` (String)
 - `organizational_unit` (Attributes) (see [below for nested schema](#nestedatt--content_administered_systems--organizational_unit))
@@ -3625,6 +3628,14 @@ Read-Only:
 - `type_escaped` (String)
 
 
+
+
+<a id="nestedatt--group_access_info"></a>
+### Nested Schema for `group_access_info`
+
+Read-Only:
+
+- `business_accounts` (Boolean)
 
 
 <a id="nestedatt--groupauditinginfo"></a>
@@ -4816,6 +4827,7 @@ Read-Only:
 - `name_in_system` (String)
 - `owner` (Attributes) (see [below for nested schema](#nestedatt--owned_groups_on_system--items--owner))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_groups_on_system--items--permissions))
+- `provisioning_enabled` (Boolean)
 - `short_name_in_system` (String)
 - `type` (String)
 
@@ -5406,6 +5418,7 @@ Read-Only:
 - `cleanup_period` (Attributes) (see [below for nested schema](#nestedatt--owned_systems--cleanup_period))
 - `content_administrator` (Attributes) (see [below for nested schema](#nestedatt--owned_systems--content_administrator))
 - `external_uuid` (String)
+- `group_on_system_provisioning` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_systems--links))
 - `name` (String)
 - `organizational_unit` (Attributes) (see [below for nested schema](#nestedatt--owned_systems--organizational_unit))
@@ -6666,6 +6679,7 @@ Read-Only:
 - `name_in_system` (String)
 - `owner` (Attributes) (see [below for nested schema](#nestedatt--systems--group_on_system--owner))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--systems--group_on_system--permissions))
+- `provisioning_enabled` (Boolean)
 - `short_name_in_system` (String)
 - `type` (String)
 

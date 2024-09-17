@@ -1564,6 +1564,26 @@ func tkhToTFObjectRSGroupGroup(recurse bool, tkh keyhubmodel.GroupGroupable) (ty
 	return objVal, diags
 }
 
+func tkhToTFObjectRSGroupGroupAccessInfo(recurse bool, tkh keyhubmodel.GroupGroupAccessInfoable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = groupGroupAccessInfoAttrTypesRSRecurse
+	} else {
+		attrs = groupGroupAccessInfoAttrTypesRS
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	obj["business_accounts"] = types.BoolPointerValue(tkh.GetBusinessAccounts())
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
 func tkhToTFObjectRSGroupGroupAccount(recurse bool, tkh keyhubmodel.GroupGroupAccountable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
@@ -2063,6 +2083,11 @@ func tkhToTFObjectRSGroupGroup_additionalObjects(recurse bool, tkh keyhubmodel.G
 		obj["content_administered_systems"] = getItemsAttr(val, attrs["content_administered_systems"])
 	}
 	{
+		val, d := tkhToTFObjectRSGroupGroupAccessInfo(recurse, tkh.GetGroupAccessInfo())
+		diags.Append(d...)
+		obj["group_access_info"] = val
+	}
+	{
 		val, d := tkhToTFObjectRSGroupGroupAuditingInfo(recurse, tkh.GetGroupauditinginfo())
 		diags.Append(d...)
 		obj["groupauditinginfo"] = val
@@ -2477,6 +2502,7 @@ func tkhToTFObjectRSNestedProvisioningGroupOnSystem(recurse bool, tkh keyhubmode
 	obj["type"] = stringerToTF(tkh.GetProvisioningGroupOnSystemPrimerType())
 	obj["short_name_in_system"] = types.StringPointerValue(tkh.GetShortNameInSystem())
 	obj["owner_uuid"] = withUuidToTF(tkh.GetOwner())
+	obj["provisioning_enabled"] = types.BoolPointerValue(tkh.GetProvisioningEnabled())
 
 	objVal, d := types.ObjectValue(attrs, obj)
 	diags.Append(d...)
@@ -2979,6 +3005,7 @@ func tkhToTFObjectRSProvisioningGroupOnSystem(recurse bool, tkh keyhubmodel.Prov
 	obj["type"] = stringerToTF(tkh.GetProvisioningGroupOnSystemPrimerType())
 	obj["short_name_in_system"] = types.StringPointerValue(tkh.GetShortNameInSystem())
 	obj["owner_uuid"] = withUuidToTF(tkh.GetOwner())
+	obj["provisioning_enabled"] = types.BoolPointerValue(tkh.GetProvisioningEnabled())
 
 	objVal, d := types.ObjectValue(attrs, obj)
 	diags.Append(d...)
@@ -3548,6 +3575,7 @@ func tkhToTFObjectRSProvisioningProvisionedSystem(recurse bool, tkh keyhubmodel.
 	}
 	obj["content_administrator_uuid"] = withUuidToTF(tkh.GetContentAdministrator())
 	obj["external_uuid"] = stringerToTF(tkh.GetExternalUuid())
+	obj["group_on_system_provisioning"] = stringerToTF(tkh.GetGroupOnSystemProvisioning())
 	obj["owner_uuid"] = withUuidToTF(tkh.GetOwner())
 	obj["self_service_existing_groups"] = types.BoolPointerValue(tkh.GetSelfServiceExistingGroups())
 	obj["self_service_new_groups"] = types.BoolPointerValue(tkh.GetSelfServiceNewGroups())

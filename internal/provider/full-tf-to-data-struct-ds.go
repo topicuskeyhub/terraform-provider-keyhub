@@ -115,6 +115,7 @@ func fillDataStructFromTFObjectDSAuthAccount(data *authAccountDataDS, obj types.
 	data.DirectoryType = obj.Attributes()["directory_type"].(basetypes.StringValue)
 	data.Email = obj.Attributes()["email"].(basetypes.StringValue)
 	data.IDInDirectory = obj.Attributes()["id_in_directory"].(basetypes.StringValue)
+	data.IDentity = obj.Attributes()["identity"].(basetypes.ObjectValue)
 	data.KeyHubPasswordChangeRequired = obj.Attributes()["key_hub_password_change_required"].(basetypes.BoolValue)
 	data.LastModifiedAt = obj.Attributes()["last_modified_at"].(basetypes.StringValue)
 	data.LicenseRole = obj.Attributes()["license_role"].(basetypes.StringValue)
@@ -479,6 +480,7 @@ func fillDataStructFromTFObjectDSGroupGroup(data *groupGroupDataDS, obj types.Ob
 	data.ClientPermissions = obj.Attributes()["client_permissions"].(basetypes.ListValue)
 	data.Clients = obj.Attributes()["clients"].(basetypes.ListValue)
 	data.ContentAdministeredSystems = obj.Attributes()["content_administered_systems"].(basetypes.ListValue)
+	data.GroupAccessInfo = obj.Attributes()["group_access_info"].(basetypes.ObjectValue)
 	data.Groupauditinginfo = obj.Attributes()["groupauditinginfo"].(basetypes.ObjectValue)
 	data.Groupinfo = obj.Attributes()["groupinfo"].(basetypes.ObjectValue)
 	data.Helpdesk = obj.Attributes()["helpdesk"].(basetypes.ListValue)
@@ -517,6 +519,10 @@ func fillDataStructFromTFObjectDSGroupGroup(data *groupGroupDataDS, obj types.Ob
 	data.SingleManaged = obj.Attributes()["single_managed"].(basetypes.BoolValue)
 	data.VaultRecovery = obj.Attributes()["vault_recovery"].(basetypes.StringValue)
 	data.VaultRequiresActivation = obj.Attributes()["vault_requires_activation"].(basetypes.BoolValue)
+}
+
+func fillDataStructFromTFObjectDSGroupGroupAccessInfo(data *groupGroupAccessInfoDataDS, obj types.Object) {
+	data.BusinessAccounts = obj.Attributes()["business_accounts"].(basetypes.BoolValue)
 }
 
 func fillDataStructFromTFObjectDSGroupGroupAccount(data *groupGroupAccountDataDS, obj types.Object) {
@@ -671,6 +677,7 @@ func fillDataStructFromTFObjectDSGroupGroup_additionalObjects(data *groupGroup_a
 	data.ClientPermissions = obj.Attributes()["client_permissions"].(basetypes.ListValue)
 	data.Clients = obj.Attributes()["clients"].(basetypes.ListValue)
 	data.ContentAdministeredSystems = obj.Attributes()["content_administered_systems"].(basetypes.ListValue)
+	data.GroupAccessInfo = obj.Attributes()["group_access_info"].(basetypes.ObjectValue)
 	data.Groupauditinginfo = obj.Attributes()["groupauditinginfo"].(basetypes.ObjectValue)
 	data.Groupinfo = obj.Attributes()["groupinfo"].(basetypes.ObjectValue)
 	data.Helpdesk = obj.Attributes()["helpdesk"].(basetypes.ListValue)
@@ -707,6 +714,14 @@ func fillDataStructFromTFObjectDSGroupProvisioningGroupLinkableWrapper(data *gro
 
 func fillDataStructFromTFObjectDSGroupProvisioningGroup_additionalObjects(data *groupProvisioningGroup_additionalObjectsDataDS, obj types.Object) {
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
+}
+
+func fillDataStructFromTFObjectDSIdentityIdentity(data *identityIdentityDataDS, obj types.Object) {
+	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
+	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.FirstName = obj.Attributes()["first_name"].(basetypes.StringValue)
+	data.LastName = obj.Attributes()["last_name"].(basetypes.StringValue)
+	data.Telephone = obj.Attributes()["telephone"].(basetypes.StringValue)
 }
 
 func fillDataStructFromTFObjectDSLaunchpadSsoApplicationLaunchpadTile(data *launchpadSsoApplicationLaunchpadTileDataDS, obj types.Object) {
@@ -833,6 +848,7 @@ func fillDataStructFromTFObjectDSProvisioningGroupOnSystem(data *provisioningGro
 	data.Provgroups = obj.Attributes()["provgroups"].(basetypes.ListValue)
 	data.ServiceAccounts = obj.Attributes()["service_accounts"].(basetypes.ListValue)
 	data.Owner = obj.Attributes()["owner"].(basetypes.ObjectValue)
+	data.ProvisioningEnabled = obj.Attributes()["provisioning_enabled"].(basetypes.BoolValue)
 }
 
 func fillDataStructFromTFObjectDSProvisioningGroupOnSystemLinkableWrapper(data *provisioningGroupOnSystemLinkableWrapperDataDS, obj types.Object) {
@@ -973,6 +989,7 @@ func fillDataStructFromTFObjectDSProvisioningProvisionedSystem(data *provisionin
 	data.CleanupPeriod = obj.Attributes()["cleanup_period"].(basetypes.ObjectValue)
 	data.ContentAdministrator = obj.Attributes()["content_administrator"].(basetypes.ObjectValue)
 	data.ExternalUUID = obj.Attributes()["external_uuid"].(basetypes.StringValue)
+	data.GroupOnSystemProvisioning = obj.Attributes()["group_on_system_provisioning"].(basetypes.StringValue)
 	data.Owner = obj.Attributes()["owner"].(basetypes.ObjectValue)
 	data.SelfServiceExistingGroups = obj.Attributes()["self_service_existing_groups"].(basetypes.BoolValue)
 	data.SelfServiceNewGroups = obj.Attributes()["self_service_new_groups"].(basetypes.BoolValue)

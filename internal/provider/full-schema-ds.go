@@ -337,6 +337,14 @@ func dataSourceSchemaAttrsAuthAccount(recurse bool) map[string]dsschema.Attribut
 	schemaAttrs["id_in_directory"] = dsschema.StringAttribute{
 		Computed: true,
 	}
+	{
+		attr := dsschema.SingleNestedAttribute{
+			Attributes: dataSourceSchemaAttrsIdentityIdentity(false),
+		}
+		attr.Computed = true
+		schemaAttrs["identity"] = attr
+	}
+
 	schemaAttrs["key_hub_password_change_required"] = dsschema.BoolAttribute{
 		Computed: true,
 	}
@@ -1589,7 +1597,7 @@ func dataSourceSchemaAttrsGroupGroup(recurse bool) map[string]dsschema.Attribute
 			Optional:    true,
 			Validators: []validator.List{
 				listvalidator.ValueStringsAre(stringvalidator.OneOf(
-					"accounts", "administeredClients", "administeredSystems", "admins", "audit", "authorizedGroups", "clientPermissions", "clients", "contentAdministeredSystems", "groupauditinginfo", "groupinfo", "helpdesk", "markers", "myaccount", "mydelegatedaccount", "nestedGroups", "ownedClients", "ownedDirectories", "ownedGroupsOnSystem", "ownedOrganizationalUnits", "ownedSystems", "recentAudits", "requeststatus", "serviceAccounts", "systems", "vault", "webhooks",
+					"accounts", "administeredClients", "administeredSystems", "admins", "audit", "authorizedGroups", "clientPermissions", "clients", "contentAdministeredSystems", "groupAccessInfo", "groupauditinginfo", "groupinfo", "helpdesk", "markers", "myaccount", "mydelegatedaccount", "nestedGroups", "ownedClients", "ownedDirectories", "ownedGroupsOnSystem", "ownedOrganizationalUnits", "ownedSystems", "recentAudits", "requeststatus", "serviceAccounts", "systems", "vault", "webhooks",
 				)),
 			},
 		}
@@ -1726,6 +1734,13 @@ func dataSourceSchemaAttrsGroupGroup(recurse bool) map[string]dsschema.Attribute
 		Computed: true,
 	}
 	schemaAttrs["vault_requires_activation"] = dsschema.BoolAttribute{
+		Computed: true,
+	}
+	return schemaAttrs
+}
+func dataSourceSchemaAttrsGroupGroupAccessInfo(recurse bool) map[string]dsschema.Attribute {
+	schemaAttrs := make(map[string]dsschema.Attribute)
+	schemaAttrs["business_accounts"] = dsschema.BoolAttribute{
 		Computed: true,
 	}
 	return schemaAttrs
@@ -2292,6 +2307,14 @@ func dataSourceSchemaAttrsGroupGroup_additionalObjects(recurse bool) map[string]
 
 	{
 		attr := dsschema.SingleNestedAttribute{
+			Attributes: dataSourceSchemaAttrsGroupGroupAccessInfo(recurse),
+		}
+		attr.Computed = true
+		schemaAttrs["group_access_info"] = attr
+	}
+
+	{
+		attr := dsschema.SingleNestedAttribute{
 			Attributes: dataSourceSchemaAttrsGroupGroupAuditingInfo(recurse),
 		}
 		attr.Computed = true
@@ -2481,6 +2504,31 @@ func dataSourceSchemaAttrsGroupProvisioningGroup_additionalObjects(recurse bool)
 		schemaAttrs["audit"] = attr
 	}
 
+	return schemaAttrs
+}
+func dataSourceSchemaAttrsIdentityIdentity(recurse bool) map[string]dsschema.Attribute {
+	schemaAttrs := make(map[string]dsschema.Attribute)
+	schemaAttrs["links"] = dsschema.ListNestedAttribute{
+		NestedObject: dsschema.NestedAttributeObject{
+			Attributes: dataSourceSchemaAttrsRestLink(recurse),
+		},
+		Computed: true,
+	}
+	schemaAttrs["permissions"] = dsschema.ListNestedAttribute{
+		NestedObject: dsschema.NestedAttributeObject{
+			Attributes: dataSourceSchemaAttrsAuthPermission(recurse),
+		},
+		Computed: true,
+	}
+	schemaAttrs["first_name"] = dsschema.StringAttribute{
+		Computed: true,
+	}
+	schemaAttrs["last_name"] = dsschema.StringAttribute{
+		Computed: true,
+	}
+	schemaAttrs["telephone"] = dsschema.StringAttribute{
+		Computed: true,
+	}
 	return schemaAttrs
 }
 func dataSourceSchemaAttrsLaunchpadSsoApplicationLaunchpadTile(recurse bool) map[string]dsschema.Attribute {
@@ -2951,6 +2999,9 @@ func dataSourceSchemaAttrsProvisioningGroupOnSystem(recurse bool) map[string]dss
 		schemaAttrs["owner"] = attr
 	}
 
+	schemaAttrs["provisioning_enabled"] = dsschema.BoolAttribute{
+		Computed: true,
+	}
 	return schemaAttrs
 }
 func dataSourceSchemaAttrsProvisioningGroupOnSystemLinkableWrapper(recurse bool) map[string]dsschema.Attribute {
@@ -3394,6 +3445,9 @@ func dataSourceSchemaAttrsProvisioningProvisionedSystem(recurse bool) map[string
 	}
 
 	schemaAttrs["external_uuid"] = dsschema.StringAttribute{
+		Computed: true,
+	}
+	schemaAttrs["group_on_system_provisioning"] = dsschema.StringAttribute{
 		Computed: true,
 	}
 	{

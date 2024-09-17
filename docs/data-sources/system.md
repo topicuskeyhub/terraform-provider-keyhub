@@ -33,6 +33,7 @@ description: |-
 - `cleanup_period` (Attributes) (see [below for nested schema](#nestedatt--cleanup_period))
 - `content_administrator` (Attributes) (see [below for nested schema](#nestedatt--content_administrator))
 - `external_uuid` (String)
+- `group_on_system_provisioning` (String)
 - `issued_permissions` (Attributes List) (see [below for nested schema](#nestedatt--issued_permissions))
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--links))
 - `login_name` (String)

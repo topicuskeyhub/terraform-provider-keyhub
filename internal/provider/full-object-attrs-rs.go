@@ -486,6 +486,7 @@ func objectAttrsTypeRSGroupGroup(recurse bool) map[string]attr.Type {
 		objectAttrs["client_permissions"] = objectAttrsTypeRSClientOAuth2ClientPermissionWithClientLinkableWrapper(false)["items"]
 		objectAttrs["clients"] = objectAttrsTypeRSGroupGroupClientLinkableWrapper(false)["items"]
 		objectAttrs["content_administered_systems"] = objectAttrsTypeRSProvisioningProvisionedSystemLinkableWrapper(false)["items"]
+		objectAttrs["group_access_info"] = types.ObjectType{AttrTypes: objectAttrsTypeRSGroupGroupAccessInfo(false)}
 		objectAttrs["groupauditinginfo"] = types.ObjectType{AttrTypes: objectAttrsTypeRSGroupGroupAuditingInfo(false)}
 		objectAttrs["groupinfo"] = types.ObjectType{AttrTypes: objectAttrsTypeRSGroupGroupInfo(false)}
 		objectAttrs["helpdesk"] = objectAttrsTypeRSDirectoryAccountDirectorySummaryLinkableWrapper(false)["items"]
@@ -531,6 +532,12 @@ func objectAttrsTypeRSGroupGroup(recurse bool) map[string]attr.Type {
 	objectAttrs["single_managed"] = types.BoolType
 	objectAttrs["vault_recovery"] = types.StringType
 	objectAttrs["vault_requires_activation"] = types.BoolType
+	return objectAttrs
+}
+
+func objectAttrsTypeRSGroupGroupAccessInfo(recurse bool) map[string]attr.Type {
+	objectAttrs := make(map[string]attr.Type)
+	objectAttrs["business_accounts"] = types.BoolType
 	return objectAttrs
 }
 
@@ -672,6 +679,7 @@ func objectAttrsTypeRSGroupGroup_additionalObjects(recurse bool) map[string]attr
 	objectAttrs["client_permissions"] = objectAttrsTypeRSClientOAuth2ClientPermissionWithClientLinkableWrapper(recurse)["items"]
 	objectAttrs["clients"] = objectAttrsTypeRSGroupGroupClientLinkableWrapper(recurse)["items"]
 	objectAttrs["content_administered_systems"] = objectAttrsTypeRSProvisioningProvisionedSystemLinkableWrapper(recurse)["items"]
+	objectAttrs["group_access_info"] = types.ObjectType{AttrTypes: objectAttrsTypeRSGroupGroupAccessInfo(recurse)}
 	objectAttrs["groupauditinginfo"] = types.ObjectType{AttrTypes: objectAttrsTypeRSGroupGroupAuditingInfo(recurse)}
 	objectAttrs["groupinfo"] = types.ObjectType{AttrTypes: objectAttrsTypeRSGroupGroupInfo(recurse)}
 	objectAttrs["helpdesk"] = objectAttrsTypeRSDirectoryAccountDirectorySummaryLinkableWrapper(recurse)["items"]
@@ -799,6 +807,7 @@ func objectAttrsTypeRSNestedProvisioningGroupOnSystem(recurse bool) map[string]a
 	objectAttrs["type"] = types.StringType
 	objectAttrs["short_name_in_system"] = types.StringType
 	objectAttrs["owner_uuid"] = types.StringType
+	objectAttrs["provisioning_enabled"] = types.BoolType
 	return objectAttrs
 }
 
@@ -952,6 +961,7 @@ func objectAttrsTypeRSProvisioningGroupOnSystem(recurse bool) map[string]attr.Ty
 	objectAttrs["type"] = types.StringType
 	objectAttrs["short_name_in_system"] = types.StringType
 	objectAttrs["owner_uuid"] = types.StringType
+	objectAttrs["provisioning_enabled"] = types.BoolType
 	return objectAttrs
 }
 
@@ -1136,6 +1146,7 @@ func objectAttrsTypeRSProvisioningProvisionedSystem(recurse bool) map[string]att
 	objectAttrs["cleanup_period"] = types.ObjectType{AttrTypes: objectAttrsTypeRSProvisioningProvisionedSystem_cleanupPeriod(false)}
 	objectAttrs["content_administrator_uuid"] = types.StringType
 	objectAttrs["external_uuid"] = types.StringType
+	objectAttrs["group_on_system_provisioning"] = types.StringType
 	objectAttrs["owner_uuid"] = types.StringType
 	objectAttrs["self_service_existing_groups"] = types.BoolType
 	objectAttrs["self_service_new_groups"] = types.BoolType

@@ -394,6 +394,11 @@ func tfObjectToTKHDSAuthAccount(ctx context.Context, recurse bool, objVal types.
 	}
 	tkh.SetEmail(objAttrs["email"].(basetypes.StringValue).ValueStringPointer())
 	tkh.SetIdInDirectory(objAttrs["id_in_directory"].(basetypes.StringValue).ValueStringPointer())
+	{
+		val, d := tfObjectToTKHDSIdentityIdentity(ctx, false, objAttrs["identity"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		tkh.SetIdentity(val)
+	}
 	tkh.SetKeyHubPasswordChangeRequired(objAttrs["key_hub_password_change_required"].(basetypes.BoolValue).ValueBoolPointer())
 	{
 		val, d := tfToTimePointer(objAttrs["last_modified_at"].(basetypes.StringValue))
@@ -1829,6 +1834,18 @@ func tfObjectToTKHDSGroupGroup(ctx context.Context, recurse bool, objVal types.O
 	return tkh, diags
 }
 
+func tfObjectToTKHDSGroupGroupAccessInfo(ctx context.Context, recurse bool, objVal types.Object) (keyhubmodel.GroupGroupAccessInfoable, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	if objVal.IsNull() || objVal.IsUnknown() {
+		return nil, diags
+	}
+	objAttrs := objVal.Attributes()
+	var tkh keyhubmodel.GroupGroupAccessInfoable
+	tkh = keyhubmodel.NewGroupGroupAccessInfo()
+	tkh.SetBusinessAccounts(objAttrs["business_accounts"].(basetypes.BoolValue).ValueBoolPointer())
+	return tkh, diags
+}
+
 func tfObjectToTKHDSGroupGroupAccount(ctx context.Context, recurse bool, objVal types.Object) (keyhubmodel.GroupGroupAccountable, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	if objVal.IsNull() || objVal.IsUnknown() {
@@ -2430,6 +2447,11 @@ func tfObjectToTKHDSGroupGroup_additionalObjects(ctx context.Context, recurse bo
 		tkh.SetContentAdministeredSystems(val)
 	}
 	{
+		val, d := tfObjectToTKHDSGroupGroupAccessInfo(ctx, recurse, objAttrs["group_access_info"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		tkh.SetGroupAccessInfo(val)
+	}
+	{
 		val, d := tfObjectToTKHDSGroupGroupAuditingInfo(ctx, recurse, objAttrs["groupauditinginfo"].(basetypes.ObjectValue))
 		diags.Append(d...)
 		tkh.SetGroupauditinginfo(val)
@@ -2602,6 +2624,38 @@ func tfObjectToTKHDSGroupProvisioningGroup_additionalObjects(ctx context.Context
 		diags.Append(d...)
 		tkh.SetAudit(val)
 	}
+	return tkh, diags
+}
+
+func tfObjectToTKHDSIdentityIdentity(ctx context.Context, recurse bool, objVal types.Object) (keyhubmodel.IdentityIdentityable, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	if objVal.IsNull() || objVal.IsUnknown() {
+		return nil, diags
+	}
+	objAttrs := objVal.Attributes()
+	var tkh keyhubmodel.IdentityIdentityable
+	tkh = keyhubmodel.NewIdentityIdentity()
+	{
+		val, d := tfToSliceList(objAttrs["links"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+			tkh, d := tfObjectToTKHDSRestLink(ctx, recurse, val.(basetypes.ObjectValue))
+			diags.Append(d...)
+			return tkh
+		})
+		diags.Append(d...)
+		tkh.SetLinks(val)
+	}
+	{
+		val, d := tfToSliceList(objAttrs["permissions"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+			tkh, d := tfObjectToTKHDSAuthPermission(ctx, recurse, val.(basetypes.ObjectValue))
+			diags.Append(d...)
+			return tkh
+		})
+		diags.Append(d...)
+		tkh.SetPermissions(val)
+	}
+	tkh.SetFirstName(objAttrs["first_name"].(basetypes.StringValue).ValueStringPointer())
+	tkh.SetLastName(objAttrs["last_name"].(basetypes.StringValue).ValueStringPointer())
+	tkh.SetTelephone(objAttrs["telephone"].(basetypes.StringValue).ValueStringPointer())
 	return tkh, diags
 }
 
@@ -3085,6 +3139,7 @@ func tfObjectToTKHDSProvisioningGroupOnSystem(ctx context.Context, recurse bool,
 		diags.Append(d...)
 		tkh.SetOwner(val)
 	}
+	tkh.SetProvisioningEnabled(objAttrs["provisioning_enabled"].(basetypes.BoolValue).ValueBoolPointer())
 	if recurse {
 		{
 			val, d := tfObjectToTKHDSProvisioningGroupOnSystem_additionalObjects(ctx, false, objVal)
@@ -3585,6 +3640,13 @@ func tfObjectToTKHDSProvisioningProvisionedSystem(ctx context.Context, recurse b
 		val, d := parsePointer(objAttrs["external_uuid"].(basetypes.StringValue), uuid.Parse)
 		diags.Append(d...)
 		tkh.SetExternalUuid(val)
+	}
+	{
+		val, d := parseCastPointer(objAttrs["group_on_system_provisioning"].(basetypes.StringValue), keyhubmodel.ParseProvisioningGroupOnSystemProvisioning, func(val any) keyhubmodel.ProvisioningGroupOnSystemProvisioning {
+			return *val.(*keyhubmodel.ProvisioningGroupOnSystemProvisioning)
+		})
+		diags.Append(d...)
+		tkh.SetGroupOnSystemProvisioning(val)
 	}
 	{
 		val, d := tfObjectToTKHDSGroupGroupPrimer(ctx, false, objAttrs["owner"].(basetypes.ObjectValue))
