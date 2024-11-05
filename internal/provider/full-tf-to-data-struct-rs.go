@@ -388,6 +388,7 @@ func fillDataStructFromTFObjectRSGroupGroup(data *groupGroupDataRS, obj types.Ob
 	data.ClientPermissions = obj.Attributes()["client_permissions"].(basetypes.ListValue)
 	data.Clients = obj.Attributes()["clients"].(basetypes.ListValue)
 	data.ContentAdministeredSystems = obj.Attributes()["content_administered_systems"].(basetypes.ListValue)
+	data.GlobalRoles = obj.Attributes()["global_roles"].(basetypes.ObjectValue)
 	data.GroupAccessInfo = obj.Attributes()["group_access_info"].(basetypes.ObjectValue)
 	data.Groupauditinginfo = obj.Attributes()["groupauditinginfo"].(basetypes.ObjectValue)
 	data.Groupinfo = obj.Attributes()["groupinfo"].(basetypes.ObjectValue)
@@ -500,6 +501,13 @@ func fillDataStructFromTFObjectRSGroupGroupClient_additionalObjects(data *groupG
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
 }
 
+func fillDataStructFromTFObjectRSGroupGroupGlobalRoleInfo(data *groupGroupGlobalRoleInfoDataRS, obj types.Object) {
+	data.CreateGroupApproveGroupFor = obj.Attributes()["create_group_approve_group_for"].(basetypes.ListValue)
+	data.EnableTechAdminApproveGroupFor = obj.Attributes()["enable_tech_admin_approve_group_for"].(basetypes.ListValue)
+	data.RecoveryFallbackGroupFor = obj.Attributes()["recovery_fallback_group_for"].(basetypes.ListValue)
+	data.RemoveGroupApproveGroupFor = obj.Attributes()["remove_group_approve_group_for"].(basetypes.ListValue)
+}
+
 func fillDataStructFromTFObjectRSGroupGroupInfo(data *groupGroupInfoDataRS, obj types.Object) {
 	data.NrAccounts = obj.Attributes()["nr_accounts"].(basetypes.Int64Value)
 	data.NrAccountsWithVault = obj.Attributes()["nr_accounts_with_vault"].(basetypes.Int64Value)
@@ -536,6 +544,7 @@ func fillDataStructFromTFObjectRSGroupGroup_additionalObjects(data *groupGroup_a
 	data.ClientPermissions = obj.Attributes()["client_permissions"].(basetypes.ListValue)
 	data.Clients = obj.Attributes()["clients"].(basetypes.ListValue)
 	data.ContentAdministeredSystems = obj.Attributes()["content_administered_systems"].(basetypes.ListValue)
+	data.GlobalRoles = obj.Attributes()["global_roles"].(basetypes.ObjectValue)
 	data.GroupAccessInfo = obj.Attributes()["group_access_info"].(basetypes.ObjectValue)
 	data.Groupauditinginfo = obj.Attributes()["groupauditinginfo"].(basetypes.ObjectValue)
 	data.Groupinfo = obj.Attributes()["groupinfo"].(basetypes.ObjectValue)
@@ -814,6 +823,7 @@ func fillDataStructFromTFObjectRSProvisioningProvisionedAccount_additionalObject
 }
 
 func fillDataStructFromTFObjectRSProvisioningProvisionedAzureOIDCDirectory(data *provisioningProvisionedAzureOIDCDirectoryDataRS, obj types.Object) {
+	data.AccountsWritable = obj.Attributes()["accounts_writable"].(basetypes.BoolValue)
 	data.DirectoryUUID = obj.Attributes()["directory_uuid"].(basetypes.StringValue)
 	data.Tenant = obj.Attributes()["tenant"].(basetypes.StringValue)
 }
@@ -843,8 +853,14 @@ func fillDataStructFromTFObjectRSProvisioningProvisionedLDAP(data *provisioningP
 }
 
 func fillDataStructFromTFObjectRSProvisioningProvisionedLDAPDirectory(data *provisioningProvisionedLDAPDirectoryDataRS, obj types.Object) {
+	data.AccountsWritable = obj.Attributes()["accounts_writable"].(basetypes.BoolValue)
 	data.DirectoryUUID = obj.Attributes()["directory_uuid"].(basetypes.StringValue)
+	data.Gid = obj.Attributes()["gid"].(basetypes.Int64Value)
 	data.GroupDN = obj.Attributes()["group_dn"].(basetypes.StringValue)
+	data.HashingScheme = obj.Attributes()["hashing_scheme"].(basetypes.StringValue)
+	data.Numbering = obj.Attributes()["numbering"].(basetypes.ObjectValue)
+	data.SamAccountNameScheme = obj.Attributes()["sam_account_name_scheme"].(basetypes.StringValue)
+	data.SshPublicKeySupport = obj.Attributes()["ssh_public_key_support"].(basetypes.StringValue)
 }
 
 func fillDataStructFromTFObjectRSProvisioningProvisionedNamespace(data *provisioningProvisionedNamespaceDataRS, obj types.Object) {

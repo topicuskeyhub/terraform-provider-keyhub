@@ -1597,7 +1597,7 @@ func dataSourceSchemaAttrsGroupGroup(recurse bool) map[string]dsschema.Attribute
 			Optional:    true,
 			Validators: []validator.List{
 				listvalidator.ValueStringsAre(stringvalidator.OneOf(
-					"accounts", "administeredClients", "administeredSystems", "admins", "audit", "authorizedGroups", "clientPermissions", "clients", "contentAdministeredSystems", "groupAccessInfo", "groupauditinginfo", "groupinfo", "helpdesk", "markers", "myaccount", "mydelegatedaccount", "nestedGroups", "ownedClients", "ownedDirectories", "ownedGroupsOnSystem", "ownedOrganizationalUnits", "ownedSystems", "recentAudits", "requeststatus", "serviceAccounts", "systems", "vault", "webhooks",
+					"accounts", "administeredClients", "administeredSystems", "admins", "audit", "authorizedGroups", "clientPermissions", "clients", "contentAdministeredSystems", "globalRoles", "groupAccessInfo", "groupauditinginfo", "groupinfo", "helpdesk", "markers", "myaccount", "mydelegatedaccount", "nestedGroups", "ownedClients", "ownedDirectories", "ownedGroupsOnSystem", "ownedOrganizationalUnits", "ownedSystems", "recentAudits", "requeststatus", "serviceAccounts", "systems", "vault", "webhooks",
 				)),
 			},
 		}
@@ -2164,6 +2164,34 @@ func dataSourceSchemaAttrsGroupGroupFolder_additionalObjects(recurse bool) map[s
 
 	return schemaAttrs
 }
+func dataSourceSchemaAttrsGroupGroupGlobalRoleInfo(recurse bool) map[string]dsschema.Attribute {
+	schemaAttrs := make(map[string]dsschema.Attribute)
+	schemaAttrs["create_group_approve_group_for"] = dsschema.ListNestedAttribute{
+		NestedObject: dsschema.NestedAttributeObject{
+			Attributes: dataSourceSchemaAttrsOrganizationOrganizationalUnitPrimer(recurse),
+		},
+		Computed: true,
+	}
+	schemaAttrs["enable_tech_admin_approve_group_for"] = dsschema.ListNestedAttribute{
+		NestedObject: dsschema.NestedAttributeObject{
+			Attributes: dataSourceSchemaAttrsOrganizationOrganizationalUnitPrimer(recurse),
+		},
+		Computed: true,
+	}
+	schemaAttrs["recovery_fallback_group_for"] = dsschema.ListNestedAttribute{
+		NestedObject: dsschema.NestedAttributeObject{
+			Attributes: dataSourceSchemaAttrsOrganizationOrganizationalUnitPrimer(recurse),
+		},
+		Computed: true,
+	}
+	schemaAttrs["remove_group_approve_group_for"] = dsschema.ListNestedAttribute{
+		NestedObject: dsschema.NestedAttributeObject{
+			Attributes: dataSourceSchemaAttrsOrganizationOrganizationalUnitPrimer(recurse),
+		},
+		Computed: true,
+	}
+	return schemaAttrs
+}
 func dataSourceSchemaAttrsGroupGroupInfo(recurse bool) map[string]dsschema.Attribute {
 	schemaAttrs := make(map[string]dsschema.Attribute)
 	schemaAttrs["nr_accounts"] = dsschema.Int64Attribute{
@@ -2303,6 +2331,14 @@ func dataSourceSchemaAttrsGroupGroup_additionalObjects(recurse bool) map[string]
 		attr := dataSourceSchemaAttrsProvisioningProvisionedSystemLinkableWrapper(recurse)["items"].(dsschema.ListNestedAttribute)
 		attr.Computed = true
 		schemaAttrs["content_administered_systems"] = attr
+	}
+
+	{
+		attr := dsschema.SingleNestedAttribute{
+			Attributes: dataSourceSchemaAttrsGroupGroupGlobalRoleInfo(recurse),
+		}
+		attr.Computed = true
+		schemaAttrs["global_roles"] = attr
 	}
 
 	{
@@ -3225,6 +3261,9 @@ func dataSourceSchemaAttrsProvisioningProvisionedAccount_additionalObjects(recur
 }
 func dataSourceSchemaAttrsProvisioningProvisionedAzureOIDCDirectory(recurse bool) map[string]dsschema.Attribute {
 	schemaAttrs := make(map[string]dsschema.Attribute)
+	schemaAttrs["accounts_writable"] = dsschema.BoolAttribute{
+		Computed: true,
+	}
 	{
 		attr := dsschema.SingleNestedAttribute{
 			Attributes: dataSourceSchemaAttrsDirectoryAccountDirectoryPrimer(recurse),
@@ -3309,6 +3348,9 @@ func dataSourceSchemaAttrsProvisioningProvisionedLDAP(recurse bool) map[string]d
 }
 func dataSourceSchemaAttrsProvisioningProvisionedLDAPDirectory(recurse bool) map[string]dsschema.Attribute {
 	schemaAttrs := make(map[string]dsschema.Attribute)
+	schemaAttrs["accounts_writable"] = dsschema.BoolAttribute{
+		Computed: true,
+	}
 	{
 		attr := dsschema.SingleNestedAttribute{
 			Attributes: dataSourceSchemaAttrsDirectoryAccountDirectoryPrimer(recurse),
@@ -3317,7 +3359,27 @@ func dataSourceSchemaAttrsProvisioningProvisionedLDAPDirectory(recurse bool) map
 		schemaAttrs["directory"] = attr
 	}
 
+	schemaAttrs["gid"] = dsschema.Int64Attribute{
+		Computed: true,
+	}
 	schemaAttrs["group_dn"] = dsschema.StringAttribute{
+		Computed: true,
+	}
+	schemaAttrs["hashing_scheme"] = dsschema.StringAttribute{
+		Computed: true,
+	}
+	{
+		attr := dsschema.SingleNestedAttribute{
+			Attributes: dataSourceSchemaAttrsProvisioningProvisionNumberSequence(recurse),
+		}
+		attr.Computed = true
+		schemaAttrs["numbering"] = attr
+	}
+
+	schemaAttrs["sam_account_name_scheme"] = dsschema.StringAttribute{
+		Computed: true,
+	}
+	schemaAttrs["ssh_public_key_support"] = dsschema.StringAttribute{
 		Computed: true,
 	}
 	return schemaAttrs

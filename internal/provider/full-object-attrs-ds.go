@@ -606,6 +606,7 @@ func objectAttrsTypeDSGroupGroup(recurse bool) map[string]attr.Type {
 		objectAttrs["client_permissions"] = objectAttrsTypeDSClientOAuth2ClientPermissionWithClientLinkableWrapper(false)["items"]
 		objectAttrs["clients"] = objectAttrsTypeDSGroupGroupClientLinkableWrapper(false)["items"]
 		objectAttrs["content_administered_systems"] = objectAttrsTypeDSProvisioningProvisionedSystemLinkableWrapper(false)["items"]
+		objectAttrs["global_roles"] = types.ObjectType{AttrTypes: objectAttrsTypeDSGroupGroupGlobalRoleInfo(false)}
 		objectAttrs["group_access_info"] = types.ObjectType{AttrTypes: objectAttrsTypeDSGroupGroupAccessInfo(false)}
 		objectAttrs["groupauditinginfo"] = types.ObjectType{AttrTypes: objectAttrsTypeDSGroupGroupAuditingInfo(false)}
 		objectAttrs["groupinfo"] = types.ObjectType{AttrTypes: objectAttrsTypeDSGroupGroupInfo(false)}
@@ -821,6 +822,15 @@ func objectAttrsTypeDSGroupGroupFolder_additionalObjects(recurse bool) map[strin
 	return objectAttrs
 }
 
+func objectAttrsTypeDSGroupGroupGlobalRoleInfo(recurse bool) map[string]attr.Type {
+	objectAttrs := make(map[string]attr.Type)
+	objectAttrs["create_group_approve_group_for"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSOrganizationOrganizationalUnitPrimer(recurse)}}
+	objectAttrs["enable_tech_admin_approve_group_for"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSOrganizationOrganizationalUnitPrimer(recurse)}}
+	objectAttrs["recovery_fallback_group_for"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSOrganizationOrganizationalUnitPrimer(recurse)}}
+	objectAttrs["remove_group_approve_group_for"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSOrganizationOrganizationalUnitPrimer(recurse)}}
+	return objectAttrs
+}
+
 func objectAttrsTypeDSGroupGroupInfo(recurse bool) map[string]attr.Type {
 	objectAttrs := make(map[string]attr.Type)
 	objectAttrs["nr_accounts"] = types.Int64Type
@@ -866,6 +876,7 @@ func objectAttrsTypeDSGroupGroup_additionalObjects(recurse bool) map[string]attr
 	objectAttrs["client_permissions"] = objectAttrsTypeDSClientOAuth2ClientPermissionWithClientLinkableWrapper(recurse)["items"]
 	objectAttrs["clients"] = objectAttrsTypeDSGroupGroupClientLinkableWrapper(recurse)["items"]
 	objectAttrs["content_administered_systems"] = objectAttrsTypeDSProvisioningProvisionedSystemLinkableWrapper(recurse)["items"]
+	objectAttrs["global_roles"] = types.ObjectType{AttrTypes: objectAttrsTypeDSGroupGroupGlobalRoleInfo(recurse)}
 	objectAttrs["group_access_info"] = types.ObjectType{AttrTypes: objectAttrsTypeDSGroupGroupAccessInfo(recurse)}
 	objectAttrs["groupauditinginfo"] = types.ObjectType{AttrTypes: objectAttrsTypeDSGroupGroupAuditingInfo(recurse)}
 	objectAttrs["groupinfo"] = types.ObjectType{AttrTypes: objectAttrsTypeDSGroupGroupInfo(recurse)}
@@ -1193,6 +1204,7 @@ func objectAttrsTypeDSProvisioningProvisionedAccount_additionalObjects(recurse b
 
 func objectAttrsTypeDSProvisioningProvisionedAzureOIDCDirectory(recurse bool) map[string]attr.Type {
 	objectAttrs := make(map[string]attr.Type)
+	objectAttrs["accounts_writable"] = types.BoolType
 	objectAttrs["directory"] = types.ObjectType{AttrTypes: objectAttrsTypeDSDirectoryAccountDirectoryPrimer(recurse)}
 	objectAttrs["tenant"] = types.StringType
 	return objectAttrs
@@ -1232,8 +1244,14 @@ func objectAttrsTypeDSProvisioningProvisionedLDAP(recurse bool) map[string]attr.
 
 func objectAttrsTypeDSProvisioningProvisionedLDAPDirectory(recurse bool) map[string]attr.Type {
 	objectAttrs := make(map[string]attr.Type)
+	objectAttrs["accounts_writable"] = types.BoolType
 	objectAttrs["directory"] = types.ObjectType{AttrTypes: objectAttrsTypeDSDirectoryAccountDirectoryPrimer(recurse)}
+	objectAttrs["gid"] = types.Int64Type
 	objectAttrs["group_dn"] = types.StringType
+	objectAttrs["hashing_scheme"] = types.StringType
+	objectAttrs["numbering"] = types.ObjectType{AttrTypes: objectAttrsTypeDSProvisioningProvisionNumberSequence(recurse)}
+	objectAttrs["sam_account_name_scheme"] = types.StringType
+	objectAttrs["ssh_public_key_support"] = types.StringType
 	return objectAttrs
 }
 

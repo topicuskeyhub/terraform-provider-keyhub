@@ -486,6 +486,7 @@ func objectAttrsTypeRSGroupGroup(recurse bool) map[string]attr.Type {
 		objectAttrs["client_permissions"] = objectAttrsTypeRSClientOAuth2ClientPermissionWithClientLinkableWrapper(false)["items"]
 		objectAttrs["clients"] = objectAttrsTypeRSGroupGroupClientLinkableWrapper(false)["items"]
 		objectAttrs["content_administered_systems"] = objectAttrsTypeRSProvisioningProvisionedSystemLinkableWrapper(false)["items"]
+		objectAttrs["global_roles"] = types.ObjectType{AttrTypes: objectAttrsTypeRSGroupGroupGlobalRoleInfo(false)}
 		objectAttrs["group_access_info"] = types.ObjectType{AttrTypes: objectAttrsTypeRSGroupGroupAccessInfo(false)}
 		objectAttrs["groupauditinginfo"] = types.ObjectType{AttrTypes: objectAttrsTypeRSGroupGroupAuditingInfo(false)}
 		objectAttrs["groupinfo"] = types.ObjectType{AttrTypes: objectAttrsTypeRSGroupGroupInfo(false)}
@@ -634,6 +635,15 @@ func objectAttrsTypeRSGroupGroupClient_additionalObjects(recurse bool) map[strin
 	return objectAttrs
 }
 
+func objectAttrsTypeRSGroupGroupGlobalRoleInfo(recurse bool) map[string]attr.Type {
+	objectAttrs := make(map[string]attr.Type)
+	objectAttrs["create_group_approve_group_for"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeRSOrganizationOrganizationalUnitPrimer(recurse)}}
+	objectAttrs["enable_tech_admin_approve_group_for"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeRSOrganizationOrganizationalUnitPrimer(recurse)}}
+	objectAttrs["recovery_fallback_group_for"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeRSOrganizationOrganizationalUnitPrimer(recurse)}}
+	objectAttrs["remove_group_approve_group_for"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeRSOrganizationOrganizationalUnitPrimer(recurse)}}
+	return objectAttrs
+}
+
 func objectAttrsTypeRSGroupGroupInfo(recurse bool) map[string]attr.Type {
 	objectAttrs := make(map[string]attr.Type)
 	objectAttrs["nr_accounts"] = types.Int64Type
@@ -679,6 +689,7 @@ func objectAttrsTypeRSGroupGroup_additionalObjects(recurse bool) map[string]attr
 	objectAttrs["client_permissions"] = objectAttrsTypeRSClientOAuth2ClientPermissionWithClientLinkableWrapper(recurse)["items"]
 	objectAttrs["clients"] = objectAttrsTypeRSGroupGroupClientLinkableWrapper(recurse)["items"]
 	objectAttrs["content_administered_systems"] = objectAttrsTypeRSProvisioningProvisionedSystemLinkableWrapper(recurse)["items"]
+	objectAttrs["global_roles"] = types.ObjectType{AttrTypes: objectAttrsTypeRSGroupGroupGlobalRoleInfo(recurse)}
 	objectAttrs["group_access_info"] = types.ObjectType{AttrTypes: objectAttrsTypeRSGroupGroupAccessInfo(recurse)}
 	objectAttrs["groupauditinginfo"] = types.ObjectType{AttrTypes: objectAttrsTypeRSGroupGroupAuditingInfo(recurse)}
 	objectAttrs["groupinfo"] = types.ObjectType{AttrTypes: objectAttrsTypeRSGroupGroupInfo(recurse)}
@@ -1055,6 +1066,7 @@ func objectAttrsTypeRSProvisioningProvisionedAccount_additionalObjects(recurse b
 
 func objectAttrsTypeRSProvisioningProvisionedAzureOIDCDirectory(recurse bool) map[string]attr.Type {
 	objectAttrs := make(map[string]attr.Type)
+	objectAttrs["accounts_writable"] = types.BoolType
 	objectAttrs["directory_uuid"] = types.StringType
 	objectAttrs["tenant"] = types.StringType
 	return objectAttrs
@@ -1094,8 +1106,14 @@ func objectAttrsTypeRSProvisioningProvisionedLDAP(recurse bool) map[string]attr.
 
 func objectAttrsTypeRSProvisioningProvisionedLDAPDirectory(recurse bool) map[string]attr.Type {
 	objectAttrs := make(map[string]attr.Type)
+	objectAttrs["accounts_writable"] = types.BoolType
 	objectAttrs["directory_uuid"] = types.StringType
+	objectAttrs["gid"] = types.Int64Type
 	objectAttrs["group_dn"] = types.StringType
+	objectAttrs["hashing_scheme"] = types.StringType
+	objectAttrs["numbering"] = types.ObjectType{AttrTypes: objectAttrsTypeRSProvisioningProvisionNumberSequence(recurse)}
+	objectAttrs["sam_account_name_scheme"] = types.StringType
+	objectAttrs["ssh_public_key_support"] = types.StringType
 	return objectAttrs
 }
 

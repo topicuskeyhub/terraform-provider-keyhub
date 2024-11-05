@@ -2299,6 +2299,53 @@ func tfObjectToTKHDSGroupGroupFolder_additionalObjects(ctx context.Context, recu
 	return tkh, diags
 }
 
+func tfObjectToTKHDSGroupGroupGlobalRoleInfo(ctx context.Context, recurse bool, objVal types.Object) (keyhubmodel.GroupGroupGlobalRoleInfoable, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	if objVal.IsNull() || objVal.IsUnknown() {
+		return nil, diags
+	}
+	objAttrs := objVal.Attributes()
+	var tkh keyhubmodel.GroupGroupGlobalRoleInfoable
+	tkh = keyhubmodel.NewGroupGroupGlobalRoleInfo()
+	{
+		val, d := tfToSliceList(objAttrs["create_group_approve_group_for"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.OrganizationOrganizationalUnitPrimerable {
+			tkh, d := tfObjectToTKHDSOrganizationOrganizationalUnitPrimer(ctx, recurse, val.(basetypes.ObjectValue))
+			diags.Append(d...)
+			return tkh
+		})
+		diags.Append(d...)
+		tkh.SetCreateGroupApproveGroupFor(val)
+	}
+	{
+		val, d := tfToSliceList(objAttrs["enable_tech_admin_approve_group_for"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.OrganizationOrganizationalUnitPrimerable {
+			tkh, d := tfObjectToTKHDSOrganizationOrganizationalUnitPrimer(ctx, recurse, val.(basetypes.ObjectValue))
+			diags.Append(d...)
+			return tkh
+		})
+		diags.Append(d...)
+		tkh.SetEnableTechAdminApproveGroupFor(val)
+	}
+	{
+		val, d := tfToSliceList(objAttrs["recovery_fallback_group_for"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.OrganizationOrganizationalUnitPrimerable {
+			tkh, d := tfObjectToTKHDSOrganizationOrganizationalUnitPrimer(ctx, recurse, val.(basetypes.ObjectValue))
+			diags.Append(d...)
+			return tkh
+		})
+		diags.Append(d...)
+		tkh.SetRecoveryFallbackGroupFor(val)
+	}
+	{
+		val, d := tfToSliceList(objAttrs["remove_group_approve_group_for"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.OrganizationOrganizationalUnitPrimerable {
+			tkh, d := tfObjectToTKHDSOrganizationOrganizationalUnitPrimer(ctx, recurse, val.(basetypes.ObjectValue))
+			diags.Append(d...)
+			return tkh
+		})
+		diags.Append(d...)
+		tkh.SetRemoveGroupApproveGroupFor(val)
+	}
+	return tkh, diags
+}
+
 func tfObjectToTKHDSGroupGroupInfo(ctx context.Context, recurse bool, objVal types.Object) (keyhubmodel.GroupGroupInfoable, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	if objVal.IsNull() || objVal.IsUnknown() {
@@ -2445,6 +2492,11 @@ func tfObjectToTKHDSGroupGroup_additionalObjects(ctx context.Context, recurse bo
 		val, d := tfObjectToTKHDSProvisioningProvisionedSystemLinkableWrapper(ctx, recurse, toItemsList(ctx, objAttrs["content_administered_systems"]))
 		diags.Append(d...)
 		tkh.SetContentAdministeredSystems(val)
+	}
+	{
+		val, d := tfObjectToTKHDSGroupGroupGlobalRoleInfo(ctx, recurse, objAttrs["global_roles"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		tkh.SetGlobalRoles(val)
 	}
 	{
 		val, d := tfObjectToTKHDSGroupGroupAccessInfo(ctx, recurse, objAttrs["group_access_info"].(basetypes.ObjectValue))
@@ -3435,6 +3487,7 @@ func tfObjectToTKHDSProvisioningProvisionedAzureOIDCDirectory(ctx context.Contex
 	objAttrs := objVal.Attributes()
 	var tkh keyhubmodel.ProvisioningProvisionedAzureOIDCDirectoryable
 	tkh = keyhubmodel.NewProvisioningProvisionedAzureOIDCDirectory()
+	tkh.SetAccountsWritable(objAttrs["accounts_writable"].(basetypes.BoolValue).ValueBoolPointer())
 	{
 		val, d := tfObjectToTKHDSDirectoryAccountDirectoryPrimer(ctx, recurse, objAttrs["directory"].(basetypes.ObjectValue))
 		diags.Append(d...)
@@ -3526,12 +3579,40 @@ func tfObjectToTKHDSProvisioningProvisionedLDAPDirectory(ctx context.Context, re
 	objAttrs := objVal.Attributes()
 	var tkh keyhubmodel.ProvisioningProvisionedLDAPDirectoryable
 	tkh = keyhubmodel.NewProvisioningProvisionedLDAPDirectory()
+	tkh.SetAccountsWritable(objAttrs["accounts_writable"].(basetypes.BoolValue).ValueBoolPointer())
 	{
 		val, d := tfObjectToTKHDSDirectoryAccountDirectoryPrimer(ctx, recurse, objAttrs["directory"].(basetypes.ObjectValue))
 		diags.Append(d...)
 		tkh.SetDirectory(val)
 	}
+	tkh.SetGid(objAttrs["gid"].(basetypes.Int64Value).ValueInt64Pointer())
 	tkh.SetGroupDN(objAttrs["group_dn"].(basetypes.StringValue).ValueStringPointer())
+	{
+		val, d := parseCastPointer(objAttrs["hashing_scheme"].(basetypes.StringValue), keyhubmodel.ParseProvisioningLDAPPasswordHashingScheme, func(val any) keyhubmodel.ProvisioningLDAPPasswordHashingScheme {
+			return *val.(*keyhubmodel.ProvisioningLDAPPasswordHashingScheme)
+		})
+		diags.Append(d...)
+		tkh.SetHashingScheme(val)
+	}
+	{
+		val, d := tfObjectToTKHDSProvisioningProvisionNumberSequence(ctx, recurse, objAttrs["numbering"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		tkh.SetNumbering(val)
+	}
+	{
+		val, d := parseCastPointer(objAttrs["sam_account_name_scheme"].(basetypes.StringValue), keyhubmodel.ParseProvisioningADSamAccountNameScheme, func(val any) keyhubmodel.ProvisioningADSamAccountNameScheme {
+			return *val.(*keyhubmodel.ProvisioningADSamAccountNameScheme)
+		})
+		diags.Append(d...)
+		tkh.SetSamAccountNameScheme(val)
+	}
+	{
+		val, d := parseCastPointer(objAttrs["ssh_public_key_support"].(basetypes.StringValue), keyhubmodel.ParseProvisioningLDAPSshPublicKeySupport, func(val any) keyhubmodel.ProvisioningLDAPSshPublicKeySupport {
+			return *val.(*keyhubmodel.ProvisioningLDAPSshPublicKeySupport)
+		})
+		diags.Append(d...)
+		tkh.SetSshPublicKeySupport(val)
+	}
 	return tkh, diags
 }
 

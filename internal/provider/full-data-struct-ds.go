@@ -626,6 +626,7 @@ type groupGroupDataDS struct {
 	ClientPermissions            types.List   `tfsdk:"client_permissions" tkhao:"clientPermissions"`
 	Clients                      types.List   `tfsdk:"clients" tkhao:"clients"`
 	ContentAdministeredSystems   types.List   `tfsdk:"content_administered_systems" tkhao:"contentAdministeredSystems"`
+	GlobalRoles                  types.Object `tfsdk:"global_roles" tkhao:"globalRoles"`
 	GroupAccessInfo              types.Object `tfsdk:"group_access_info" tkhao:"groupAccessInfo"`
 	Groupauditinginfo            types.Object `tfsdk:"groupauditinginfo" tkhao:"groupauditinginfo"`
 	Groupinfo                    types.Object `tfsdk:"groupinfo" tkhao:"groupinfo"`
@@ -832,6 +833,16 @@ type groupGroupFolder_additionalObjectsDataDS struct {
 	Audit types.Object `tfsdk:"audit"`
 }
 
+var groupGroupGlobalRoleInfoAttrTypesDS = objectAttrsTypeDSGroupGroupGlobalRoleInfo(false)
+var groupGroupGlobalRoleInfoAttrTypesDSRecurse = objectAttrsTypeDSGroupGroupGlobalRoleInfo(true)
+
+type groupGroupGlobalRoleInfoDataDS struct {
+	CreateGroupApproveGroupFor     types.List `tfsdk:"create_group_approve_group_for"`
+	EnableTechAdminApproveGroupFor types.List `tfsdk:"enable_tech_admin_approve_group_for"`
+	RecoveryFallbackGroupFor       types.List `tfsdk:"recovery_fallback_group_for"`
+	RemoveGroupApproveGroupFor     types.List `tfsdk:"remove_group_approve_group_for"`
+}
+
 var groupGroupInfoAttrTypesDS = objectAttrsTypeDSGroupGroupInfo(false)
 var groupGroupInfoAttrTypesDSRecurse = objectAttrsTypeDSGroupGroupInfo(true)
 
@@ -883,6 +894,7 @@ type groupGroup_additionalObjectsDataDS struct {
 	ClientPermissions          types.List   `tfsdk:"client_permissions"`
 	Clients                    types.List   `tfsdk:"clients"`
 	ContentAdministeredSystems types.List   `tfsdk:"content_administered_systems"`
+	GlobalRoles                types.Object `tfsdk:"global_roles"`
 	GroupAccessInfo            types.Object `tfsdk:"group_access_info"`
 	Groupauditinginfo          types.Object `tfsdk:"groupauditinginfo"`
 	Groupinfo                  types.Object `tfsdk:"groupinfo"`
@@ -1217,8 +1229,9 @@ var provisioningProvisionedAzureOIDCDirectoryAttrTypesDS = objectAttrsTypeDSProv
 var provisioningProvisionedAzureOIDCDirectoryAttrTypesDSRecurse = objectAttrsTypeDSProvisioningProvisionedAzureOIDCDirectory(true)
 
 type provisioningProvisionedAzureOIDCDirectoryDataDS struct {
-	Directory types.Object `tfsdk:"directory"`
-	Tenant    types.String `tfsdk:"tenant"`
+	AccountsWritable types.Bool   `tfsdk:"accounts_writable"`
+	Directory        types.Object `tfsdk:"directory"`
+	Tenant           types.String `tfsdk:"tenant"`
 }
 
 var provisioningProvisionedAzureSyncLDAPDirectoryAttrTypesDS = objectAttrsTypeDSProvisioningProvisionedAzureSyncLDAPDirectory(false)
@@ -1261,8 +1274,14 @@ var provisioningProvisionedLDAPDirectoryAttrTypesDS = objectAttrsTypeDSProvision
 var provisioningProvisionedLDAPDirectoryAttrTypesDSRecurse = objectAttrsTypeDSProvisioningProvisionedLDAPDirectory(true)
 
 type provisioningProvisionedLDAPDirectoryDataDS struct {
-	Directory types.Object `tfsdk:"directory"`
-	GroupDN   types.String `tfsdk:"group_dn"`
+	AccountsWritable     types.Bool   `tfsdk:"accounts_writable"`
+	Directory            types.Object `tfsdk:"directory"`
+	Gid                  types.Int64  `tfsdk:"gid"`
+	GroupDN              types.String `tfsdk:"group_dn"`
+	HashingScheme        types.String `tfsdk:"hashing_scheme"`
+	Numbering            types.Object `tfsdk:"numbering"`
+	SamAccountNameScheme types.String `tfsdk:"sam_account_name_scheme"`
+	SshPublicKeySupport  types.String `tfsdk:"ssh_public_key_support"`
 }
 
 var provisioningProvisionedNamespaceAttrTypesDS = objectAttrsTypeDSProvisioningProvisionedNamespace(false)

@@ -834,6 +834,25 @@ func reorderGroupGroupClient_additionalObjects(state basetypes.ObjectValue, prio
 	return types.ObjectValueMust(attrs, obj)
 }
 
+func reorderGroupGroupGlobalRoleInfo(state basetypes.ObjectValue, priorState basetypes.ObjectValue, recurse bool) basetypes.ObjectValue {
+	if state.IsNull() || state.IsUnknown() || priorState.IsNull() || priorState.IsUnknown() {
+		return state
+	}
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = groupGroupGlobalRoleInfoAttrTypesRSRecurse
+	} else {
+		attrs = groupGroupGlobalRoleInfoAttrTypesRS
+	}
+	obj := filterAttributes(state.Attributes(), attrs)
+	// Reordering not supported for create_group_approve_group_for with type List
+	// Reordering not supported for enable_tech_admin_approve_group_for with type List
+	// Reordering not supported for recovery_fallback_group_for with type List
+	// Reordering not supported for remove_group_approve_group_for with type List
+
+	return types.ObjectValueMust(attrs, obj)
+}
+
 func reorderGroupGroupInfo(state basetypes.ObjectValue, priorState basetypes.ObjectValue, recurse bool) basetypes.ObjectValue {
 	if state.IsNull() || state.IsUnknown() || priorState.IsNull() || priorState.IsUnknown() {
 		return state
@@ -1637,6 +1656,7 @@ func reorderProvisioningProvisionedLDAPDirectory(state basetypes.ObjectValue, pr
 		attrs = provisioningProvisionedLDAPDirectoryAttrTypesRS
 	}
 	obj := filterAttributes(state.Attributes(), attrs)
+	obj["numbering"] = reorderProvisioningProvisionNumberSequence(state.Attributes()["numbering"].(types.Object), priorState.Attributes()["numbering"].(types.Object), recurse)
 
 	return types.ObjectValueMust(attrs, obj)
 }

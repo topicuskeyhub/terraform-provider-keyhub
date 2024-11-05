@@ -736,6 +736,7 @@ Read-Only:
 
 Read-Only:
 
+- `accounts_writable` (Boolean)
 - `directory` (Attributes) (see [below for nested schema](#nestedatt--provisioned_azure_oidc_directory--directory))
 - `tenant` (String)
 
@@ -978,8 +979,14 @@ Read-Only:
 
 Read-Only:
 
+- `accounts_writable` (Boolean)
 - `directory` (Attributes) (see [below for nested schema](#nestedatt--provisioned_ldap_directory--directory))
+- `gid` (Number)
 - `group_dn` (String)
+- `hashing_scheme` (String)
+- `numbering` (Attributes) (see [below for nested schema](#nestedatt--provisioned_ldap_directory--numbering))
+- `sam_account_name_scheme` (String)
+- `ssh_public_key_support` (String)
 
 <a id="nestedatt--provisioned_ldap_directory--directory"></a>
 ### Nested Schema for `provisioned_ldap_directory.directory`
@@ -1007,6 +1014,40 @@ Read-Only:
 
 <a id="nestedatt--provisioned_ldap_directory--directory--permissions"></a>
 ### Nested Schema for `provisioned_ldap_directory.directory.permissions`
+
+Read-Only:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
+
+<a id="nestedatt--provisioned_ldap_directory--numbering"></a>
+### Nested Schema for `provisioned_ldap_directory.numbering`
+
+Read-Only:
+
+- `account_count` (Number)
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--provisioned_ldap_directory--numbering--links))
+- `name` (String)
+- `next_uid` (Number)
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--provisioned_ldap_directory--numbering--permissions))
+
+<a id="nestedatt--provisioned_ldap_directory--numbering--links"></a>
+### Nested Schema for `provisioned_ldap_directory.numbering.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--provisioned_ldap_directory--numbering--permissions"></a>
+### Nested Schema for `provisioned_ldap_directory.numbering.permissions`
 
 Read-Only:
 

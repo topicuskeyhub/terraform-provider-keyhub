@@ -2610,6 +2610,65 @@ func tkhToTFObjectDSGroupGroupFolder_additionalObjects(recurse bool, tkh keyhubm
 	return objVal, diags
 }
 
+func tkhToTFObjectDSGroupGroupGlobalRoleInfo(recurse bool, tkh keyhubmodel.GroupGroupGlobalRoleInfoable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = groupGroupGlobalRoleInfoAttrTypesDSRecurse
+	} else {
+		attrs = groupGroupGlobalRoleInfoAttrTypesDS
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	{
+		elemType := attrs["create_group_approve_group_for"].(types.ListType).ElemType
+		val, d := sliceToTFList(elemType, tkh.GetCreateGroupApproveGroupFor(), func(tkh keyhubmodel.OrganizationOrganizationalUnitPrimerable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectDSOrganizationOrganizationalUnitPrimer(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["create_group_approve_group_for"] = val
+	}
+	{
+		elemType := attrs["enable_tech_admin_approve_group_for"].(types.ListType).ElemType
+		val, d := sliceToTFList(elemType, tkh.GetEnableTechAdminApproveGroupFor(), func(tkh keyhubmodel.OrganizationOrganizationalUnitPrimerable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectDSOrganizationOrganizationalUnitPrimer(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["enable_tech_admin_approve_group_for"] = val
+	}
+	{
+		elemType := attrs["recovery_fallback_group_for"].(types.ListType).ElemType
+		val, d := sliceToTFList(elemType, tkh.GetRecoveryFallbackGroupFor(), func(tkh keyhubmodel.OrganizationOrganizationalUnitPrimerable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectDSOrganizationOrganizationalUnitPrimer(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["recovery_fallback_group_for"] = val
+	}
+	{
+		elemType := attrs["remove_group_approve_group_for"].(types.ListType).ElemType
+		val, d := sliceToTFList(elemType, tkh.GetRemoveGroupApproveGroupFor(), func(tkh keyhubmodel.OrganizationOrganizationalUnitPrimerable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectDSOrganizationOrganizationalUnitPrimer(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["remove_group_approve_group_for"] = val
+	}
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
 func tkhToTFObjectDSGroupGroupInfo(recurse bool, tkh keyhubmodel.GroupGroupInfoable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
@@ -2797,6 +2856,11 @@ func tkhToTFObjectDSGroupGroup_additionalObjects(recurse bool, tkh keyhubmodel.G
 		val, d := tkhToTFObjectDSProvisioningProvisionedSystemLinkableWrapper(recurse, tkh.GetContentAdministeredSystems())
 		diags.Append(d...)
 		obj["content_administered_systems"] = getItemsAttr(val, attrs["content_administered_systems"])
+	}
+	{
+		val, d := tkhToTFObjectDSGroupGroupGlobalRoleInfo(recurse, tkh.GetGlobalRoles())
+		diags.Append(d...)
+		obj["global_roles"] = val
 	}
 	{
 		val, d := tkhToTFObjectDSGroupGroupAccessInfo(recurse, tkh.GetGroupAccessInfo())
@@ -4025,6 +4089,7 @@ func tkhToTFObjectDSProvisioningProvisionedAzureOIDCDirectory(recurse bool, tkh 
 	}
 
 	obj := make(map[string]attr.Value)
+	obj["accounts_writable"] = types.BoolPointerValue(tkh.GetAccountsWritable())
 	{
 		val, d := tkhToTFObjectDSDirectoryAccountDirectoryPrimer(recurse, tkh.GetDirectory())
 		diags.Append(d...)
@@ -4150,12 +4215,22 @@ func tkhToTFObjectDSProvisioningProvisionedLDAPDirectory(recurse bool, tkh keyhu
 	}
 
 	obj := make(map[string]attr.Value)
+	obj["accounts_writable"] = types.BoolPointerValue(tkh.GetAccountsWritable())
 	{
 		val, d := tkhToTFObjectDSDirectoryAccountDirectoryPrimer(recurse, tkh.GetDirectory())
 		diags.Append(d...)
 		obj["directory"] = val
 	}
+	obj["gid"] = types.Int64PointerValue(tkh.GetGid())
 	obj["group_dn"] = types.StringPointerValue(tkh.GetGroupDN())
+	obj["hashing_scheme"] = stringerToTF(tkh.GetHashingScheme())
+	{
+		val, d := tkhToTFObjectDSProvisioningProvisionNumberSequence(recurse, tkh.GetNumbering())
+		diags.Append(d...)
+		obj["numbering"] = val
+	}
+	obj["sam_account_name_scheme"] = stringerToTF(tkh.GetSamAccountNameScheme())
+	obj["ssh_public_key_support"] = stringerToTF(tkh.GetSshPublicKeySupport())
 
 	objVal, d := types.ObjectValue(attrs, obj)
 	diags.Append(d...)
