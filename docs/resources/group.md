@@ -2211,6 +2211,7 @@ Required:
 
 - `name` (String)
 - `system_uuid` (String)
+- `technical_administrator_uuid` (String)
 - `username` (String)
 
 Optional:
@@ -2219,7 +2220,6 @@ Optional:
 - `description` (String)
 - `password_rotation` (String)
 - `ssh_public_key` (String)
-- `technical_administrator_uuid` (String)
 
 Read-Only:
 

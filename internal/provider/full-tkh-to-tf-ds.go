@@ -3105,8 +3105,10 @@ func tkhToTFObjectDSIdentityIdentity(recurse bool, tkh keyhubmodel.IdentityIdent
 		diags.Append(d...)
 		obj["permissions"] = val
 	}
-	obj["first_name"] = types.StringPointerValue(tkh.GetFirstName())
-	obj["last_name"] = types.StringPointerValue(tkh.GetLastName())
+	obj["display_name"] = types.StringPointerValue(tkh.GetDisplayName())
+	obj["family_name"] = types.StringPointerValue(tkh.GetFamilyName())
+	obj["given_name"] = types.StringPointerValue(tkh.GetGivenName())
+	obj["middle_name"] = types.StringPointerValue(tkh.GetMiddleName())
 	obj["telephone"] = types.StringPointerValue(tkh.GetTelephone())
 
 	objVal, d := types.ObjectValue(attrs, obj)

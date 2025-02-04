@@ -19,6 +19,7 @@ description: |-
 
 - `name` (String)
 - `system_uuid` (String)
+- `technical_administrator_uuid` (String)
 - `username` (String)
 
 ### Optional
@@ -29,7 +30,6 @@ description: |-
 - `password_rotation` (String)
 - `secret` (Attributes) (see [below for nested schema](#nestedatt--secret))
 - `ssh_public_key` (String)
-- `technical_administrator_uuid` (String)
 
 ### Read-Only
 

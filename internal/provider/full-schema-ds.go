@@ -2556,10 +2556,16 @@ func dataSourceSchemaAttrsIdentityIdentity(recurse bool) map[string]dsschema.Att
 		},
 		Computed: true,
 	}
-	schemaAttrs["first_name"] = dsschema.StringAttribute{
+	schemaAttrs["display_name"] = dsschema.StringAttribute{
 		Computed: true,
 	}
-	schemaAttrs["last_name"] = dsschema.StringAttribute{
+	schemaAttrs["family_name"] = dsschema.StringAttribute{
+		Computed: true,
+	}
+	schemaAttrs["given_name"] = dsschema.StringAttribute{
+		Computed: true,
+	}
+	schemaAttrs["middle_name"] = dsschema.StringAttribute{
 		Computed: true,
 	}
 	schemaAttrs["telephone"] = dsschema.StringAttribute{

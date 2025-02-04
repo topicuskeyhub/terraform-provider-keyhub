@@ -3853,7 +3853,7 @@ func resourceSchemaAttrsServiceaccountServiceAccount(recurse bool) map[string]rs
 		Optional: true,
 	}
 	schemaAttrs["technical_administrator_uuid"] = rsschema.StringAttribute{
-		Optional: true,
+		Required: true,
 		Validators: []validator.String{
 			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
@@ -4030,6 +4030,7 @@ func resourceSchemaAttrsServiceaccountServiceAccount_additionalObjects(recurse b
 			Attributes: resourceSchemaAttrsGeneratedSecret(recurse),
 		}
 		attr.Optional = true
+		attr.Computed = true
 		schemaAttrs["secret"] = attr
 	}
 

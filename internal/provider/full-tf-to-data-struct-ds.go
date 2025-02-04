@@ -728,8 +728,10 @@ func fillDataStructFromTFObjectDSGroupProvisioningGroup_additionalObjects(data *
 func fillDataStructFromTFObjectDSIdentityIdentity(data *identityIdentityDataDS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
-	data.FirstName = obj.Attributes()["first_name"].(basetypes.StringValue)
-	data.LastName = obj.Attributes()["last_name"].(basetypes.StringValue)
+	data.DisplayName = obj.Attributes()["display_name"].(basetypes.StringValue)
+	data.FamilyName = obj.Attributes()["family_name"].(basetypes.StringValue)
+	data.GivenName = obj.Attributes()["given_name"].(basetypes.StringValue)
+	data.MiddleName = obj.Attributes()["middle_name"].(basetypes.StringValue)
 	data.Telephone = obj.Attributes()["telephone"].(basetypes.StringValue)
 }
 

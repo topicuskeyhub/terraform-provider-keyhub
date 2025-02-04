@@ -2705,8 +2705,10 @@ func tfObjectToTKHDSIdentityIdentity(ctx context.Context, recurse bool, objVal t
 		diags.Append(d...)
 		tkh.SetPermissions(val)
 	}
-	tkh.SetFirstName(objAttrs["first_name"].(basetypes.StringValue).ValueStringPointer())
-	tkh.SetLastName(objAttrs["last_name"].(basetypes.StringValue).ValueStringPointer())
+	tkh.SetDisplayName(objAttrs["display_name"].(basetypes.StringValue).ValueStringPointer())
+	tkh.SetFamilyName(objAttrs["family_name"].(basetypes.StringValue).ValueStringPointer())
+	tkh.SetGivenName(objAttrs["given_name"].(basetypes.StringValue).ValueStringPointer())
+	tkh.SetMiddleName(objAttrs["middle_name"].(basetypes.StringValue).ValueStringPointer())
 	tkh.SetTelephone(objAttrs["telephone"].(basetypes.StringValue).ValueStringPointer())
 	return tkh, diags
 }

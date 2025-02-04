@@ -949,8 +949,10 @@ var identityIdentityAttrTypesDSRecurse = objectAttrsTypeDSIdentityIdentity(true)
 type identityIdentityDataDS struct {
 	Links       types.List   `tfsdk:"links"`
 	Permissions types.List   `tfsdk:"permissions"`
-	FirstName   types.String `tfsdk:"first_name"`
-	LastName    types.String `tfsdk:"last_name"`
+	DisplayName types.String `tfsdk:"display_name"`
+	FamilyName  types.String `tfsdk:"family_name"`
+	GivenName   types.String `tfsdk:"given_name"`
+	MiddleName  types.String `tfsdk:"middle_name"`
 	Telephone   types.String `tfsdk:"telephone"`
 }
 

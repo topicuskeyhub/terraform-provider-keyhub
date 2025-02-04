@@ -931,8 +931,10 @@ func objectAttrsTypeDSIdentityIdentity(recurse bool) map[string]attr.Type {
 	objectAttrs := make(map[string]attr.Type)
 	objectAttrs["links"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSRestLink(recurse)}}
 	objectAttrs["permissions"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSAuthPermission(recurse)}}
-	objectAttrs["first_name"] = types.StringType
-	objectAttrs["last_name"] = types.StringType
+	objectAttrs["display_name"] = types.StringType
+	objectAttrs["family_name"] = types.StringType
+	objectAttrs["given_name"] = types.StringType
+	objectAttrs["middle_name"] = types.StringType
 	objectAttrs["telephone"] = types.StringType
 	return objectAttrs
 }

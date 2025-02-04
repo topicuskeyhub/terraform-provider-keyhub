@@ -227,9 +227,11 @@ Read-Only:
 
 Read-Only:
 
-- `first_name` (String)
-- `last_name` (String)
+- `display_name` (String)
+- `family_name` (String)
+- `given_name` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--identity--links))
+- `middle_name` (String)
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--identity--permissions))
 - `telephone` (String)
 
