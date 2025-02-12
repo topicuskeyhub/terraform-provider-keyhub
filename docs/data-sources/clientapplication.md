@@ -34,6 +34,7 @@ description: |-
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--links))
 - `name` (String)
 - `oauth2_client` (Attributes) (see [below for nested schema](#nestedatt--oauth2_client))
+- `organizational_units` (Attributes List) (see [below for nested schema](#nestedatt--organizational_units))
 - `owner` (Attributes) (see [below for nested schema](#nestedatt--owner))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--permissions))
 - `saml2_client` (Attributes) (see [below for nested schema](#nestedatt--saml2_client))
@@ -986,6 +987,39 @@ Read-Only:
 - `operations` (Set of String)
 - `type_escaped` (String)
 
+
+
+
+<a id="nestedatt--organizational_units"></a>
+### Nested Schema for `organizational_units`
+
+Read-Only:
+
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--organizational_units--links))
+- `name` (String)
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--organizational_units--permissions))
+- `uuid` (String)
+
+<a id="nestedatt--organizational_units--links"></a>
+### Nested Schema for `organizational_units.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--organizational_units--permissions"></a>
+### Nested Schema for `organizational_units.permissions`
+
+Read-Only:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
 
 
 

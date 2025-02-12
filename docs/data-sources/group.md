@@ -67,6 +67,7 @@ data "keyhub_group" "group_from_keyhub" {
 - `nested_groups` (Attributes List) (see [below for nested schema](#nestedatt--nested_groups))
 - `nested_under` (Attributes) (see [below for nested schema](#nestedatt--nested_under))
 - `organizational_unit` (Attributes) (see [below for nested schema](#nestedatt--organizational_unit))
+- `owned_access_profiles` (Attributes List) (see [below for nested schema](#nestedatt--owned_access_profiles))
 - `owned_clients` (Attributes List) (see [below for nested schema](#nestedatt--owned_clients))
 - `owned_directories` (Attributes List) (see [below for nested schema](#nestedatt--owned_directories))
 - `owned_groups_on_system` (Attributes) (see [below for nested schema](#nestedatt--owned_groups_on_system))
@@ -3718,10 +3719,44 @@ Read-Only:
 
 Read-Only:
 
+- `auditor_group_for` (Attributes List) (see [below for nested schema](#nestedatt--global_roles--auditor_group_for))
 - `create_group_approve_group_for` (Attributes List) (see [below for nested schema](#nestedatt--global_roles--create_group_approve_group_for))
 - `enable_tech_admin_approve_group_for` (Attributes List) (see [below for nested schema](#nestedatt--global_roles--enable_tech_admin_approve_group_for))
 - `recovery_fallback_group_for` (Attributes List) (see [below for nested schema](#nestedatt--global_roles--recovery_fallback_group_for))
 - `remove_group_approve_group_for` (Attributes List) (see [below for nested schema](#nestedatt--global_roles--remove_group_approve_group_for))
+
+<a id="nestedatt--global_roles--auditor_group_for"></a>
+### Nested Schema for `global_roles.auditor_group_for`
+
+Read-Only:
+
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--global_roles--auditor_group_for--links))
+- `name` (String)
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--global_roles--auditor_group_for--permissions))
+- `uuid` (String)
+
+<a id="nestedatt--global_roles--auditor_group_for--links"></a>
+### Nested Schema for `global_roles.auditor_group_for.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--global_roles--auditor_group_for--permissions"></a>
+### Nested Schema for `global_roles.auditor_group_for.permissions`
+
+Read-Only:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
 
 <a id="nestedatt--global_roles--create_group_approve_group_for"></a>
 ### Nested Schema for `global_roles.create_group_approve_group_for`
@@ -4292,6 +4327,148 @@ Read-Only:
 
 <a id="nestedatt--organizational_unit--permissions"></a>
 ### Nested Schema for `organizational_unit.permissions`
+
+Read-Only:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
+
+<a id="nestedatt--owned_access_profiles"></a>
+### Nested Schema for `owned_access_profiles`
+
+Read-Only:
+
+- `activate_rule_script` (String)
+- `description` (String)
+- `directory` (Attributes) (see [below for nested schema](#nestedatt--owned_access_profiles--directory))
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_access_profiles--links))
+- `match_rule_script` (String)
+- `name` (String)
+- `owner` (Attributes) (see [below for nested schema](#nestedatt--owned_access_profiles--owner))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_access_profiles--permissions))
+- `uuid` (String)
+
+<a id="nestedatt--owned_access_profiles--directory"></a>
+### Nested Schema for `owned_access_profiles.directory`
+
+Read-Only:
+
+- `account_validity_supported` (Boolean)
+- `active` (Boolean)
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_access_profiles--directory--links))
+- `name` (String)
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_access_profiles--directory--permissions))
+- `type` (String)
+- `uuid` (String)
+
+<a id="nestedatt--owned_access_profiles--directory--links"></a>
+### Nested Schema for `owned_access_profiles.directory.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--owned_access_profiles--directory--permissions"></a>
+### Nested Schema for `owned_access_profiles.directory.permissions`
+
+Read-Only:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
+
+<a id="nestedatt--owned_access_profiles--links"></a>
+### Nested Schema for `owned_access_profiles.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--owned_access_profiles--owner"></a>
+### Nested Schema for `owned_access_profiles.owner`
+
+Read-Only:
+
+- `admin` (Boolean)
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_access_profiles--owner--links))
+- `name` (String)
+- `organizational_unit` (Attributes) (see [below for nested schema](#nestedatt--owned_access_profiles--owner--organizational_unit))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_access_profiles--owner--permissions))
+- `uuid` (String)
+
+<a id="nestedatt--owned_access_profiles--owner--links"></a>
+### Nested Schema for `owned_access_profiles.owner.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--owned_access_profiles--owner--organizational_unit"></a>
+### Nested Schema for `owned_access_profiles.owner.organizational_unit`
+
+Read-Only:
+
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_access_profiles--owner--organizational_unit--links))
+- `name` (String)
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_access_profiles--owner--organizational_unit--permissions))
+- `uuid` (String)
+
+<a id="nestedatt--owned_access_profiles--owner--organizational_unit--links"></a>
+### Nested Schema for `owned_access_profiles.owner.organizational_unit.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--owned_access_profiles--owner--organizational_unit--permissions"></a>
+### Nested Schema for `owned_access_profiles.owner.organizational_unit.permissions`
+
+Read-Only:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
+
+<a id="nestedatt--owned_access_profiles--owner--permissions"></a>
+### Nested Schema for `owned_access_profiles.owner.permissions`
+
+Read-Only:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
+
+<a id="nestedatt--owned_access_profiles--permissions"></a>
+### Nested Schema for `owned_access_profiles.permissions`
 
 Read-Only:
 

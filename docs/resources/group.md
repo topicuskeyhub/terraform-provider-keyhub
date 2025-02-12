@@ -81,6 +81,7 @@ resource "keyhub_group" "terra" {
 - `myaccount` (Attributes) (see [below for nested schema](#nestedatt--myaccount))
 - `mydelegatedaccount` (Attributes) (see [below for nested schema](#nestedatt--mydelegatedaccount))
 - `nested_groups` (Attributes List) (see [below for nested schema](#nestedatt--nested_groups))
+- `owned_access_profiles` (Attributes List) (see [below for nested schema](#nestedatt--owned_access_profiles))
 - `owned_clients` (Attributes List) (see [below for nested schema](#nestedatt--owned_clients))
 - `owned_directories` (Attributes List) (see [below for nested schema](#nestedatt--owned_directories))
 - `owned_groups_on_system` (Attributes) (see [below for nested schema](#nestedatt--owned_groups_on_system))
@@ -1082,10 +1083,47 @@ Optional:
 
 Optional:
 
+- `auditor_group_for` (Attributes List) (see [below for nested schema](#nestedatt--global_roles--auditor_group_for))
 - `create_group_approve_group_for` (Attributes List) (see [below for nested schema](#nestedatt--global_roles--create_group_approve_group_for))
 - `enable_tech_admin_approve_group_for` (Attributes List) (see [below for nested schema](#nestedatt--global_roles--enable_tech_admin_approve_group_for))
 - `recovery_fallback_group_for` (Attributes List) (see [below for nested schema](#nestedatt--global_roles--recovery_fallback_group_for))
 - `remove_group_approve_group_for` (Attributes List) (see [below for nested schema](#nestedatt--global_roles--remove_group_approve_group_for))
+
+<a id="nestedatt--global_roles--auditor_group_for"></a>
+### Nested Schema for `global_roles.auditor_group_for`
+
+Required:
+
+- `name` (String)
+
+Read-Only:
+
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--global_roles--auditor_group_for--links))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--global_roles--auditor_group_for--permissions))
+- `uuid` (String)
+
+<a id="nestedatt--global_roles--auditor_group_for--links"></a>
+### Nested Schema for `global_roles.auditor_group_for.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--global_roles--auditor_group_for--permissions"></a>
+### Nested Schema for `global_roles.auditor_group_for.permissions`
+
+Optional:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
 
 <a id="nestedatt--global_roles--create_group_approve_group_for"></a>
 ### Nested Schema for `global_roles.create_group_approve_group_for`
@@ -1424,6 +1462,50 @@ Read-Only:
 
 <a id="nestedatt--nested_groups--permissions"></a>
 ### Nested Schema for `nested_groups.permissions`
+
+Optional:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
+
+<a id="nestedatt--owned_access_profiles"></a>
+### Nested Schema for `owned_access_profiles`
+
+Required:
+
+- `name` (String)
+- `owner_uuid` (String)
+
+Optional:
+
+- `activate_rule_script` (String)
+- `description` (String)
+- `directory_uuid` (String)
+- `match_rule_script` (String)
+
+Read-Only:
+
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_access_profiles--links))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_access_profiles--permissions))
+- `uuid` (String)
+
+<a id="nestedatt--owned_access_profiles--links"></a>
+### Nested Schema for `owned_access_profiles.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--owned_access_profiles--permissions"></a>
+### Nested Schema for `owned_access_profiles.permissions`
 
 Optional:
 

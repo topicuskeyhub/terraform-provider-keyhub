@@ -40,6 +40,7 @@ description: |-
 - `groups` (Attributes List) (see [below for nested schema](#nestedatt--groups))
 - `last_modified_at` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--links))
+- `organizational_units` (Attributes List) (see [below for nested schema](#nestedatt--organizational_units))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--permissions))
 - `sso_application` (Boolean)
 - `type` (String)
@@ -287,6 +288,14 @@ Read-Only:
 - `id` (Number)
 - `rel` (String)
 - `type_escaped` (String)
+
+
+<a id="nestedatt--organizational_units"></a>
+### Nested Schema for `organizational_units`
+
+Required:
+
+- `uuid` (String)
 
 
 <a id="nestedatt--permissions"></a>

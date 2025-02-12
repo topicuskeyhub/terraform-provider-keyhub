@@ -703,6 +703,14 @@ func tfObjectToTKHRSClientClientApplication_additionalObjects(ctx context.Contex
 		tkh.SetGroups(val)
 	}
 	{
+		val, d := tfObjectToTKHRSOrganizationClientApplicationOrganizationalUnitLinkableWrapper(ctx, recurse, toItemsList(ctx, objAttrs["organizational_units"]))
+		diags.Append(d...)
+		tkh.SetOrganizationalUnits(val)
+		if val != nil {
+			val.SetAdditionalData(map[string]any{"$type": "LinkableWrapper"})
+		}
+	}
+	{
 		val, d := tfObjectToTKHRSGeneratedSecret(ctx, recurse, objAttrs["secret"].(basetypes.ObjectValue))
 		diags.Append(d...)
 		tkh.SetSecret(val)
@@ -1793,6 +1801,15 @@ func tfObjectToTKHRSGroupGroupGlobalRoleInfo(ctx context.Context, recurse bool, 
 	var tkh keyhubmodel.GroupGroupGlobalRoleInfoable
 	tkh = keyhubmodel.NewGroupGroupGlobalRoleInfo()
 	{
+		val, d := tfToSliceList(objAttrs["auditor_group_for"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.OrganizationOrganizationalUnitPrimerable {
+			tkh, d := tfObjectToTKHRSOrganizationOrganizationalUnitPrimer(ctx, recurse, val.(basetypes.ObjectValue))
+			diags.Append(d...)
+			return tkh
+		})
+		diags.Append(d...)
+		tkh.SetAuditorGroupFor(val)
+	}
+	{
 		val, d := tfToSliceList(objAttrs["create_group_approve_group_for"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.OrganizationOrganizationalUnitPrimerable {
 			tkh, d := tfObjectToTKHRSOrganizationOrganizationalUnitPrimer(ctx, recurse, val.(basetypes.ObjectValue))
 			diags.Append(d...)
@@ -2048,6 +2065,14 @@ func tfObjectToTKHRSGroupGroup_additionalObjects(ctx context.Context, recurse bo
 		}
 	}
 	{
+		val, d := tfObjectToTKHRSProfileAccessProfileLinkableWrapper(ctx, recurse, toItemsList(ctx, objAttrs["owned_access_profiles"]))
+		diags.Append(d...)
+		tkh.SetOwnedAccessProfiles(val)
+		if val != nil {
+			val.SetAdditionalData(map[string]any{"$type": "LinkableWrapper"})
+		}
+	}
+	{
 		val, d := tfObjectToTKHRSClientClientApplicationLinkableWrapper(ctx, recurse, toItemsList(ctx, objAttrs["owned_clients"]))
 		diags.Append(d...)
 		tkh.SetOwnedClients(val)
@@ -2276,6 +2301,197 @@ func tfObjectToTKHRSGroupVaultVaultRecord(ctx context.Context, recurse bool, obj
 	return tkh, diags
 }
 
+func tfObjectToTKHRSIdentityAccountAttributeDefinition(ctx context.Context, recurse bool, objVal types.Object) (keyhubmodel.IdentityAccountAttributeDefinitionable, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	if objVal.IsNull() || objVal.IsUnknown() {
+		return nil, diags
+	}
+	objAttrs := objVal.Attributes()
+	var tkh keyhubmodel.IdentityAccountAttributeDefinitionable
+	tkh = keyhubmodel.NewIdentityAccountAttributeDefinition()
+	{
+		val, d := tfToSliceList(objAttrs["links"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, val.(basetypes.ObjectValue))
+			diags.Append(d...)
+			return tkh
+		})
+		diags.Append(d...)
+		tkh.SetLinks(val)
+	}
+	{
+		val, d := tfToSliceList(objAttrs["permissions"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, val.(basetypes.ObjectValue))
+			diags.Append(d...)
+			return tkh
+		})
+		diags.Append(d...)
+		tkh.SetPermissions(val)
+	}
+	{
+		val, d := parseCastPointer(objAttrs["format"].(basetypes.StringValue), keyhubmodel.ParseIdentityAccountAttributeFormat, func(val any) keyhubmodel.IdentityAccountAttributeFormat {
+			return *val.(*keyhubmodel.IdentityAccountAttributeFormat)
+		})
+		diags.Append(d...)
+		tkh.SetFormat(val)
+	}
+	tkh.SetName(objAttrs["name"].(basetypes.StringValue).ValueStringPointer())
+	{
+		val, d := parseCastPointer(objAttrs["system_definition"].(basetypes.StringValue), keyhubmodel.ParseIdentityAccountAttributeSystemDefinition, func(val any) keyhubmodel.IdentityAccountAttributeSystemDefinition {
+			return *val.(*keyhubmodel.IdentityAccountAttributeSystemDefinition)
+		})
+		diags.Append(d...)
+		tkh.SetSystemDefinition(val)
+	}
+	if recurse {
+		{
+			val, d := tfObjectToTKHRSIdentityAccountAttributeDefinition_additionalObjects(ctx, false, objVal)
+			diags.Append(d...)
+			tkh.SetAdditionalObjects(val)
+		}
+	}
+	return tkh, diags
+}
+
+func tfObjectToTKHRSIdentityAccountAttributeDefinition_additionalObjects(ctx context.Context, recurse bool, objVal types.Object) (keyhubmodel.IdentityAccountAttributeDefinition_additionalObjectsable, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	if objVal.IsNull() || objVal.IsUnknown() {
+		return nil, diags
+	}
+	objAttrs := objVal.Attributes()
+	var tkh keyhubmodel.IdentityAccountAttributeDefinition_additionalObjectsable
+	tkh = keyhubmodel.NewIdentityAccountAttributeDefinition_additionalObjects()
+	{
+		val, d := tfObjectToTKHRSAuditInfo(ctx, recurse, objAttrs["audit"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		tkh.SetAudit(val)
+	}
+	return tkh, diags
+}
+
+func tfObjectToTKHRSIdentityAccountAttributeRule(ctx context.Context, recurse bool, objVal types.Object) (keyhubmodel.IdentityAccountAttributeRuleable, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	if objVal.IsNull() || objVal.IsUnknown() {
+		return nil, diags
+	}
+	objAttrs := objVal.Attributes()
+	var tkh keyhubmodel.IdentityAccountAttributeRuleable
+	tkh = keyhubmodel.NewIdentityAccountAttributeRule()
+	{
+		val, d := tfToSliceList(objAttrs["links"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, val.(basetypes.ObjectValue))
+			diags.Append(d...)
+			return tkh
+		})
+		diags.Append(d...)
+		tkh.SetLinks(val)
+	}
+	{
+		val, d := tfToSliceList(objAttrs["permissions"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, val.(basetypes.ObjectValue))
+			diags.Append(d...)
+			return tkh
+		})
+		diags.Append(d...)
+		tkh.SetPermissions(val)
+	}
+	tkh.SetAllowOverride(objAttrs["allow_override"].(basetypes.BoolValue).ValueBoolPointer())
+	tkh.SetAllowSelfService(objAttrs["allow_self_service"].(basetypes.BoolValue).ValueBoolPointer())
+	{
+		val, d := tfObjectToTKHRSIdentityAccountAttributeDefinition(ctx, false, objAttrs["attribute"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		tkh.SetAttribute(val)
+	}
+	tkh.SetDefaultValue(objAttrs["default_value"].(basetypes.StringValue).ValueStringPointer())
+	tkh.SetPriorityDirectory(int64PToInt32P(objAttrs["priority_directory"].(basetypes.Int64Value).ValueInt64Pointer()))
+	tkh.SetPriorityExternalSource(int64PToInt32P(objAttrs["priority_external_source"].(basetypes.Int64Value).ValueInt64Pointer()))
+	tkh.SetPriorityFormula(int64PToInt32P(objAttrs["priority_formula"].(basetypes.Int64Value).ValueInt64Pointer()))
+	tkh.SetPrioritySCIM(int64PToInt32P(objAttrs["priority_scim"].(basetypes.Int64Value).ValueInt64Pointer()))
+	tkh.SetScript(objAttrs["script"].(basetypes.StringValue).ValueStringPointer())
+	tkh.SetUpdateAutomatically(objAttrs["update_automatically"].(basetypes.BoolValue).ValueBoolPointer())
+	if recurse {
+		{
+			val, d := tfObjectToTKHRSIdentityAccountAttributeRule_additionalObjects(ctx, false, objVal)
+			diags.Append(d...)
+			tkh.SetAdditionalObjects(val)
+		}
+	}
+	return tkh, diags
+}
+
+func tfObjectToTKHRSIdentityAccountAttributeRuleLinkableWrapper(ctx context.Context, recurse bool, objVal types.Object) (keyhubmodel.IdentityAccountAttributeRuleLinkableWrapperable, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	if objVal.IsNull() || objVal.IsUnknown() {
+		return nil, diags
+	}
+	objAttrs := objVal.Attributes()
+	var tkh keyhubmodel.IdentityAccountAttributeRuleLinkableWrapperable
+	tkh = keyhubmodel.NewIdentityAccountAttributeRuleLinkableWrapper()
+	{
+		val, d := tfToSliceList(objAttrs["items"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.IdentityAccountAttributeRuleable {
+			tkh, d := tfObjectToTKHRSIdentityAccountAttributeRule(ctx, recurse, val.(basetypes.ObjectValue))
+			diags.Append(d...)
+			return tkh
+		})
+		diags.Append(d...)
+		tkh.SetItems(val)
+	}
+	return tkh, diags
+}
+
+func tfObjectToTKHRSIdentityAccountAttributeRule_additionalObjects(ctx context.Context, recurse bool, objVal types.Object) (keyhubmodel.IdentityAccountAttributeRule_additionalObjectsable, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	if objVal.IsNull() || objVal.IsUnknown() {
+		return nil, diags
+	}
+	objAttrs := objVal.Attributes()
+	var tkh keyhubmodel.IdentityAccountAttributeRule_additionalObjectsable
+	tkh = keyhubmodel.NewIdentityAccountAttributeRule_additionalObjects()
+	{
+		val, d := tfObjectToTKHRSAuditInfo(ctx, recurse, objAttrs["audit"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		tkh.SetAudit(val)
+	}
+	return tkh, diags
+}
+
+func tfObjectToTKHRSIdentityAccountAttributeValueSummary(ctx context.Context, recurse bool, objVal types.Object) (keyhubmodel.IdentityAccountAttributeValueSummaryable, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	if objVal.IsNull() || objVal.IsUnknown() {
+		return nil, diags
+	}
+	objAttrs := objVal.Attributes()
+	var tkh keyhubmodel.IdentityAccountAttributeValueSummaryable
+	tkh = keyhubmodel.NewIdentityAccountAttributeValueSummary()
+	{
+		val, d := tfObjectToTKHRSIdentityAccountAttributeDefinition(ctx, recurse, objAttrs["attribute"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		tkh.SetAttribute(val)
+	}
+	tkh.SetContext(objAttrs["context"].(basetypes.StringValue).ValueStringPointer())
+	tkh.SetCurrentValue(objAttrs["current_value"].(basetypes.StringValue).ValueStringPointer())
+	{
+		val, d := tfToTimePointer(objAttrs["date"].(basetypes.StringValue))
+		diags.Append(d...)
+		tkh.SetDate(val)
+	}
+	tkh.SetExpectedValue(objAttrs["expected_value"].(basetypes.StringValue).ValueStringPointer())
+	{
+		val, d := parseCastPointer(objAttrs["source"].(basetypes.StringValue), keyhubmodel.ParseIdentityAccountAttributeSource, func(val any) keyhubmodel.IdentityAccountAttributeSource {
+			return *val.(*keyhubmodel.IdentityAccountAttributeSource)
+		})
+		diags.Append(d...)
+		tkh.SetSource(val)
+	}
+	{
+		val, d := parseCastPointer(objAttrs["status"].(basetypes.StringValue), keyhubmodel.ParseIdentityAccountAttributeValueSelectionStatus, func(val any) keyhubmodel.IdentityAccountAttributeValueSelectionStatus {
+			return *val.(*keyhubmodel.IdentityAccountAttributeValueSelectionStatus)
+		})
+		diags.Append(d...)
+		tkh.SetStatus(val)
+	}
+	return tkh, diags
+}
+
 func tfObjectToTKHRSLaunchpadSsoApplicationLaunchpadTile(ctx context.Context, recurse bool, objVal types.Object) (keyhubmodel.LaunchpadSsoApplicationLaunchpadTileable, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	if objVal.IsNull() || objVal.IsUnknown() {
@@ -2394,6 +2610,46 @@ func tfObjectToTKHRSNestedProvisioningGroupOnSystem(ctx context.Context, recurse
 			diags.Append(d...)
 			tkh.SetAdditionalObjects(val)
 		}
+	}
+	return tkh, diags
+}
+
+func tfObjectToTKHRSOrganizationClientApplicationOrganizationalUnit(ctx context.Context, recurse bool, objVal types.Object) (keyhubmodel.OrganizationClientApplicationOrganizationalUnitable, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	if objVal.IsNull() || objVal.IsUnknown() {
+		return nil, diags
+	}
+	objAttrs := objVal.Attributes()
+	var tkh keyhubmodel.OrganizationClientApplicationOrganizationalUnitable
+	tkh = keyhubmodel.NewOrganizationClientApplicationOrganizationalUnit()
+	{
+		val, d := findOrganizationOrganizationalUnitPrimerByUUID(ctx, objAttrs["uuid"].(basetypes.StringValue).ValueStringPointer())
+		diags.Append(d...)
+		if val != nil {
+			dtype := tkh.GetTypeEscaped()
+			(*tkh.(*keyhubmodel.OrganizationClientApplicationOrganizationalUnit)).OrganizationOrganizationalUnitPrimer = *(val.(*keyhubmodel.OrganizationOrganizationalUnitPrimer))
+			tkh.SetTypeEscaped(dtype)
+		}
+	}
+	return tkh, diags
+}
+
+func tfObjectToTKHRSOrganizationClientApplicationOrganizationalUnitLinkableWrapper(ctx context.Context, recurse bool, objVal types.Object) (keyhubmodel.OrganizationClientApplicationOrganizationalUnitLinkableWrapperable, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	if objVal.IsNull() || objVal.IsUnknown() {
+		return nil, diags
+	}
+	objAttrs := objVal.Attributes()
+	var tkh keyhubmodel.OrganizationClientApplicationOrganizationalUnitLinkableWrapperable
+	tkh = keyhubmodel.NewOrganizationClientApplicationOrganizationalUnitLinkableWrapper()
+	{
+		val, d := tfToSliceList(objAttrs["items"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.OrganizationClientApplicationOrganizationalUnitable {
+			tkh, d := tfObjectToTKHRSOrganizationClientApplicationOrganizationalUnit(ctx, recurse, val.(basetypes.ObjectValue))
+			diags.Append(d...)
+			return tkh
+		})
+		diags.Append(d...)
+		tkh.SetItems(val)
 	}
 	return tkh, diags
 }
@@ -2606,6 +2862,274 @@ func tfObjectToTKHRSOrganizationOrganizationalUnit_additionalObjects(ctx context
 	return tkh, diags
 }
 
+func tfObjectToTKHRSProfileAccessProfile(ctx context.Context, recurse bool, objVal types.Object) (keyhubmodel.ProfileAccessProfileable, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	if objVal.IsNull() || objVal.IsUnknown() {
+		return nil, diags
+	}
+	objAttrs := objVal.Attributes()
+	var tkh keyhubmodel.ProfileAccessProfileable
+	tkh = keyhubmodel.NewProfileAccessProfile()
+	{
+		val, d := tfToSliceList(objAttrs["links"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, val.(basetypes.ObjectValue))
+			diags.Append(d...)
+			return tkh
+		})
+		diags.Append(d...)
+		tkh.SetLinks(val)
+	}
+	{
+		val, d := tfToSliceList(objAttrs["permissions"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, val.(basetypes.ObjectValue))
+			diags.Append(d...)
+			return tkh
+		})
+		diags.Append(d...)
+		tkh.SetPermissions(val)
+	}
+	tkh.SetName(objAttrs["name"].(basetypes.StringValue).ValueStringPointer())
+	tkh.SetUuid(objAttrs["uuid"].(basetypes.StringValue).ValueStringPointer())
+	tkh.SetActivateRuleScript(objAttrs["activate_rule_script"].(basetypes.StringValue).ValueStringPointer())
+	tkh.SetDescription(objAttrs["description"].(basetypes.StringValue).ValueStringPointer())
+	{
+		val, d := findDirectoryAccountDirectoryPrimerByUUID(ctx, objAttrs["directory_uuid"].(basetypes.StringValue).ValueStringPointer())
+		diags.Append(d...)
+		tkh.SetDirectory(val)
+	}
+	tkh.SetMatchRuleScript(objAttrs["match_rule_script"].(basetypes.StringValue).ValueStringPointer())
+	{
+		val, d := findGroupGroupPrimerByUUID(ctx, objAttrs["owner_uuid"].(basetypes.StringValue).ValueStringPointer())
+		diags.Append(d...)
+		tkh.SetOwner(val)
+	}
+	if recurse {
+		{
+			val, d := tfObjectToTKHRSProfileAccessProfile_additionalObjects(ctx, false, objVal)
+			diags.Append(d...)
+			tkh.SetAdditionalObjects(val)
+		}
+	}
+	return tkh, diags
+}
+
+func tfObjectToTKHRSProfileAccessProfileAccount(ctx context.Context, recurse bool, objVal types.Object) (keyhubmodel.ProfileAccessProfileAccountable, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	if objVal.IsNull() || objVal.IsUnknown() {
+		return nil, diags
+	}
+	objAttrs := objVal.Attributes()
+	var tkh keyhubmodel.ProfileAccessProfileAccountable
+	tkh = keyhubmodel.NewProfileAccessProfileAccount()
+	{
+		val, d := findAuthAccountPrimerByUUID(ctx, objAttrs["uuid"].(basetypes.StringValue).ValueStringPointer())
+		diags.Append(d...)
+		if val != nil {
+			dtype := tkh.GetTypeEscaped()
+			(*tkh.(*keyhubmodel.ProfileAccessProfileAccount)).AuthAccountPrimer = *(val.(*keyhubmodel.AuthAccountPrimer))
+			tkh.SetTypeEscaped(dtype)
+		}
+	}
+	{
+		val, d := parseCastPointer(objAttrs["activation"].(basetypes.StringValue), keyhubmodel.ParseProfileAccessProfileAccountActivation, func(val any) keyhubmodel.ProfileAccessProfileAccountActivation {
+			return *val.(*keyhubmodel.ProfileAccessProfileAccountActivation)
+		})
+		diags.Append(d...)
+		tkh.SetActivation(val)
+	}
+	tkh.SetManual(objAttrs["manual"].(basetypes.BoolValue).ValueBoolPointer())
+	if recurse {
+		{
+			val, d := tfObjectToTKHRSProfileAccessProfileAccount_additionalObjects(ctx, false, objVal)
+			diags.Append(d...)
+			tkh.SetAdditionalObjects(val)
+		}
+	}
+	return tkh, diags
+}
+
+func tfObjectToTKHRSProfileAccessProfileAccountWithAttributes(ctx context.Context, recurse bool, objVal types.Object) (keyhubmodel.ProfileAccessProfileAccountWithAttributesable, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	if objVal.IsNull() || objVal.IsUnknown() {
+		return nil, diags
+	}
+	objAttrs := objVal.Attributes()
+	var tkh keyhubmodel.ProfileAccessProfileAccountWithAttributesable
+	tkh = keyhubmodel.NewProfileAccessProfileAccountWithAttributes()
+	{
+		val, d := findAuthAccountPrimerByUUID(ctx, objAttrs["uuid"].(basetypes.StringValue).ValueStringPointer())
+		diags.Append(d...)
+		if val != nil {
+			dtype := tkh.GetTypeEscaped()
+			(*tkh.(*keyhubmodel.ProfileAccessProfileAccountWithAttributes)).AuthAccountPrimer = *(val.(*keyhubmodel.AuthAccountPrimer))
+			tkh.SetTypeEscaped(dtype)
+		}
+	}
+	{
+		val, d := parseCastPointer(objAttrs["activation"].(basetypes.StringValue), keyhubmodel.ParseProfileAccessProfileAccountActivation, func(val any) keyhubmodel.ProfileAccessProfileAccountActivation {
+			return *val.(*keyhubmodel.ProfileAccessProfileAccountActivation)
+		})
+		diags.Append(d...)
+		tkh.SetActivation(val)
+	}
+	tkh.SetManual(objAttrs["manual"].(basetypes.BoolValue).ValueBoolPointer())
+	{
+		val, d := tfToSliceList(objAttrs["attributes"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.IdentityAccountAttributeValueSummaryable {
+			tkh, d := tfObjectToTKHRSIdentityAccountAttributeValueSummary(ctx, false, val.(basetypes.ObjectValue))
+			diags.Append(d...)
+			return tkh
+		})
+		diags.Append(d...)
+		tkh.SetAttributes(val)
+	}
+	if recurse {
+		{
+			val, d := tfObjectToTKHRSProfileAccessProfileAccount_additionalObjects(ctx, false, objVal)
+			diags.Append(d...)
+			tkh.SetAdditionalObjects(val)
+		}
+	}
+	return tkh, diags
+}
+
+func tfObjectToTKHRSProfileAccessProfileAccountWithAttributesLinkableWrapper(ctx context.Context, recurse bool, objVal types.Object) (keyhubmodel.ProfileAccessProfileAccountWithAttributesLinkableWrapperable, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	if objVal.IsNull() || objVal.IsUnknown() {
+		return nil, diags
+	}
+	objAttrs := objVal.Attributes()
+	var tkh keyhubmodel.ProfileAccessProfileAccountWithAttributesLinkableWrapperable
+	tkh = keyhubmodel.NewProfileAccessProfileAccountWithAttributesLinkableWrapper()
+	{
+		val, d := tfToSliceList(objAttrs["items"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.ProfileAccessProfileAccountWithAttributesable {
+			tkh, d := tfObjectToTKHRSProfileAccessProfileAccountWithAttributes(ctx, recurse, val.(basetypes.ObjectValue))
+			diags.Append(d...)
+			return tkh
+		})
+		diags.Append(d...)
+		tkh.SetItems(val)
+	}
+	return tkh, diags
+}
+
+func tfObjectToTKHRSProfileAccessProfileAccount_additionalObjects(ctx context.Context, recurse bool, objVal types.Object) (keyhubmodel.ProfileAccessProfileAccount_additionalObjectsable, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	if objVal.IsNull() || objVal.IsUnknown() {
+		return nil, diags
+	}
+	objAttrs := objVal.Attributes()
+	var tkh keyhubmodel.ProfileAccessProfileAccount_additionalObjectsable
+	tkh = keyhubmodel.NewProfileAccessProfileAccount_additionalObjects()
+	{
+		val, d := tfObjectToTKHRSAuditInfo(ctx, recurse, objAttrs["audit"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		tkh.SetAudit(val)
+	}
+	return tkh, diags
+}
+
+func tfObjectToTKHRSProfileAccessProfileGroup(ctx context.Context, recurse bool, objVal types.Object) (keyhubmodel.ProfileAccessProfileGroupable, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	if objVal.IsNull() || objVal.IsUnknown() {
+		return nil, diags
+	}
+	objAttrs := objVal.Attributes()
+	var tkh keyhubmodel.ProfileAccessProfileGroupable
+	tkh = keyhubmodel.NewProfileAccessProfileGroup()
+	{
+		val, d := tfToSliceList(objAttrs["links"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, val.(basetypes.ObjectValue))
+			diags.Append(d...)
+			return tkh
+		})
+		diags.Append(d...)
+		tkh.SetLinks(val)
+	}
+	{
+		val, d := tfToSliceList(objAttrs["permissions"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, val.(basetypes.ObjectValue))
+			diags.Append(d...)
+			return tkh
+		})
+		diags.Append(d...)
+		tkh.SetPermissions(val)
+	}
+	{
+		val, d := findProfileAccessProfilePrimerByUUID(ctx, objAttrs["access_profile_uuid"].(basetypes.StringValue).ValueStringPointer())
+		diags.Append(d...)
+		tkh.SetAccessProfile(val)
+	}
+	{
+		val, d := findGroupGroupPrimerByUUID(ctx, objAttrs["group_uuid"].(basetypes.StringValue).ValueStringPointer())
+		diags.Append(d...)
+		tkh.SetGroup(val)
+	}
+	if recurse {
+		{
+			val, d := tfObjectToTKHRSProfileAccessProfileGroup_additionalObjects(ctx, false, objVal)
+			diags.Append(d...)
+			tkh.SetAdditionalObjects(val)
+		}
+	}
+	return tkh, diags
+}
+
+func tfObjectToTKHRSProfileAccessProfileGroupLinkableWrapper(ctx context.Context, recurse bool, objVal types.Object) (keyhubmodel.ProfileAccessProfileGroupLinkableWrapperable, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	if objVal.IsNull() || objVal.IsUnknown() {
+		return nil, diags
+	}
+	objAttrs := objVal.Attributes()
+	var tkh keyhubmodel.ProfileAccessProfileGroupLinkableWrapperable
+	tkh = keyhubmodel.NewProfileAccessProfileGroupLinkableWrapper()
+	{
+		val, d := tfToSliceList(objAttrs["items"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.ProfileAccessProfileGroupable {
+			tkh, d := tfObjectToTKHRSProfileAccessProfileGroup(ctx, recurse, val.(basetypes.ObjectValue))
+			diags.Append(d...)
+			return tkh
+		})
+		diags.Append(d...)
+		tkh.SetItems(val)
+	}
+	return tkh, diags
+}
+
+func tfObjectToTKHRSProfileAccessProfileGroup_additionalObjects(ctx context.Context, recurse bool, objVal types.Object) (keyhubmodel.ProfileAccessProfileGroup_additionalObjectsable, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	if objVal.IsNull() || objVal.IsUnknown() {
+		return nil, diags
+	}
+	objAttrs := objVal.Attributes()
+	var tkh keyhubmodel.ProfileAccessProfileGroup_additionalObjectsable
+	tkh = keyhubmodel.NewProfileAccessProfileGroup_additionalObjects()
+	{
+		val, d := tfObjectToTKHRSAuditInfo(ctx, recurse, objAttrs["audit"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		tkh.SetAudit(val)
+	}
+	return tkh, diags
+}
+
+func tfObjectToTKHRSProfileAccessProfileLinkableWrapper(ctx context.Context, recurse bool, objVal types.Object) (keyhubmodel.ProfileAccessProfileLinkableWrapperable, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	if objVal.IsNull() || objVal.IsUnknown() {
+		return nil, diags
+	}
+	objAttrs := objVal.Attributes()
+	var tkh keyhubmodel.ProfileAccessProfileLinkableWrapperable
+	tkh = keyhubmodel.NewProfileAccessProfileLinkableWrapper()
+	{
+		val, d := tfToSliceList(objAttrs["items"].(basetypes.ListValue), func(val attr.Value, diags *diag.Diagnostics) keyhubmodel.ProfileAccessProfileable {
+			tkh, d := tfObjectToTKHRSProfileAccessProfile(ctx, recurse, val.(basetypes.ObjectValue))
+			diags.Append(d...)
+			return tkh
+		})
+		diags.Append(d...)
+		tkh.SetItems(val)
+	}
+	return tkh, diags
+}
+
 func tfObjectToTKHRSProfileAccessProfilePrimer(ctx context.Context, recurse bool, objVal types.Object) (keyhubmodel.ProfileAccessProfilePrimerable, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	if objVal.IsNull() || objVal.IsUnknown() {
@@ -2715,6 +3239,54 @@ func tfObjectToTKHRSProfileAccessProfileProvisioning_additionalObjects(ctx conte
 		val, d := tfObjectToTKHRSAuditInfo(ctx, recurse, objAttrs["audit"].(basetypes.ObjectValue))
 		diags.Append(d...)
 		tkh.SetAudit(val)
+	}
+	return tkh, diags
+}
+
+func tfObjectToTKHRSProfileAccessProfile_additionalObjects(ctx context.Context, recurse bool, objVal types.Object) (keyhubmodel.ProfileAccessProfile_additionalObjectsable, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	if objVal.IsNull() || objVal.IsUnknown() {
+		return nil, diags
+	}
+	objAttrs := objVal.Attributes()
+	var tkh keyhubmodel.ProfileAccessProfile_additionalObjectsable
+	tkh = keyhubmodel.NewProfileAccessProfile_additionalObjects()
+	{
+		val, d := tfObjectToTKHRSProfileAccessProfileAccountWithAttributesLinkableWrapper(ctx, recurse, toItemsList(ctx, objAttrs["accounts_with_attributes"]))
+		diags.Append(d...)
+		tkh.SetAccountsWithAttributes(val)
+		if val != nil {
+			val.SetAdditionalData(map[string]any{"$type": "LinkableWrapper"})
+		}
+	}
+	{
+		val, d := tfObjectToTKHRSIdentityAccountAttributeRuleLinkableWrapper(ctx, recurse, toItemsList(ctx, objAttrs["attribute_rules"]))
+		diags.Append(d...)
+		tkh.SetAttributeRules(val)
+		if val != nil {
+			val.SetAdditionalData(map[string]any{"$type": "LinkableWrapper"})
+		}
+	}
+	{
+		val, d := tfObjectToTKHRSAuditInfo(ctx, recurse, objAttrs["audit"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		tkh.SetAudit(val)
+	}
+	{
+		val, d := tfObjectToTKHRSProfileAccessProfileGroupLinkableWrapper(ctx, recurse, toItemsList(ctx, objAttrs["groups"]))
+		diags.Append(d...)
+		tkh.SetGroups(val)
+		if val != nil {
+			val.SetAdditionalData(map[string]any{"$type": "LinkableWrapper"})
+		}
+	}
+	{
+		val, d := tfObjectToTKHRSProfileAccessProfileProvisioningLinkableWrapper(ctx, recurse, toItemsList(ctx, objAttrs["provisioning"]))
+		diags.Append(d...)
+		tkh.SetProvisioning(val)
+		if val != nil {
+			val.SetAdditionalData(map[string]any{"$type": "LinkableWrapper"})
+		}
 	}
 	return tkh, diags
 }
@@ -3975,16 +4547,6 @@ func tfObjectToTKHRSVaultVaultActivationStatus(ctx context.Context, recurse bool
 	return tkh, diags
 }
 
-func tfObjectToTKHRSVaultVaultHolder(ctx context.Context, recurse bool, objVal types.Object) (keyhubmodel.VaultVaultHolderable, diag.Diagnostics) {
-	var diags diag.Diagnostics
-	if objVal.IsNull() || objVal.IsUnknown() {
-		return nil, diags
-	}
-	var tkh keyhubmodel.VaultVaultHolderable
-	tkh = keyhubmodel.NewVaultVaultHolder()
-	return tkh, diags
-}
-
 func tfObjectToTKHRSVaultVaultRecord(ctx context.Context, recurse bool, objVal types.Object) (keyhubmodel.VaultVaultRecordable, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	if objVal.IsNull() || objVal.IsUnknown() {
@@ -4230,7 +4792,7 @@ func tfObjectToTKHRSVaultVaultRecord_additionalObjects(ctx context.Context, recu
 		tkh.SetTile(val)
 	}
 	{
-		val, d := tfObjectToTKHRSVaultVaultHolder(ctx, recurse, objAttrs["vaultholder"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHRSLinkable(ctx, recurse, objAttrs["vaultholder"].(basetypes.ObjectValue))
 		diags.Append(d...)
 		tkh.SetVaultholder(val)
 	}
