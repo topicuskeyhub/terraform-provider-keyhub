@@ -1,3 +1,12 @@
+## 2.39.0
+* Upgrade API to Topicus KeyHub version 39
+
+## 2.38.0
+* Upgrade API to Topicus KeyHub version 38
+
+## 2.37.0
+* Upgrade API to Topicus KeyHub version 37
+
 ## 2.36.0
 * Upgrade API to Topicus KeyHub version 36
 

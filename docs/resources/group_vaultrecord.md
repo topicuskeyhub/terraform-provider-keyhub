@@ -193,3 +193,29 @@ Optional:
 
 <a id="nestedatt--vaultholder"></a>
 ### Nested Schema for `vaultholder`
+
+Read-Only:
+
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--vaultholder--links))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--vaultholder--permissions))
+
+<a id="nestedatt--vaultholder--links"></a>
+### Nested Schema for `vaultholder.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--vaultholder--permissions"></a>
+### Nested Schema for `vaultholder.permissions`
+
+Optional:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
