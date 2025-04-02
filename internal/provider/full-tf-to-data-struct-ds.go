@@ -227,6 +227,7 @@ func fillDataStructFromTFObjectDSClientClientApplication(data *clientClientAppli
 	data.SsoApplication = obj.Attributes()["sso_application"].(basetypes.BoolValue)
 	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
 	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
+	data.Accessprofileclients = obj.Attributes()["accessprofileclients"].(basetypes.ListValue)
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
 	data.Groupclients = obj.Attributes()["groupclients"].(basetypes.ListValue)
 	data.Groups = obj.Attributes()["groups"].(basetypes.ListValue)
@@ -258,6 +259,7 @@ func fillDataStructFromTFObjectDSClientClientApplicationPrimer(data *clientClien
 }
 
 func fillDataStructFromTFObjectDSClientClientApplication_additionalObjects(data *clientClientApplication_additionalObjectsDataDS, obj types.Object) {
+	data.Accessprofileclients = obj.Attributes()["accessprofileclients"].(basetypes.ListValue)
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
 	data.Groupclients = obj.Attributes()["groupclients"].(basetypes.ListValue)
 	data.Groups = obj.Attributes()["groups"].(basetypes.ListValue)
@@ -280,6 +282,7 @@ func fillDataStructFromTFObjectDSClientOAuth2Client(data *clientOAuth2ClientData
 	data.Attributes = obj.Attributes()["attributes"].(basetypes.MapValue)
 	data.CallbackURI = obj.Attributes()["callback_uri"].(basetypes.StringValue)
 	data.DebugMode = obj.Attributes()["debug_mode"].(basetypes.BoolValue)
+	data.ForIDentitySource = obj.Attributes()["for_identity_source"].(basetypes.BoolValue)
 	data.IDTokenClaims = obj.Attributes()["id_token_claims"].(basetypes.StringValue)
 	data.InitiateLoginURI = obj.Attributes()["initiate_login_uri"].(basetypes.StringValue)
 	data.Profile = obj.Attributes()["profile"].(basetypes.StringValue)
@@ -731,6 +734,11 @@ func fillDataStructFromTFObjectDSGroupProvisioningGroupLinkableWrapper(data *gro
 	data.Items = obj.Attributes()["items"].(basetypes.ListValue)
 }
 
+func fillDataStructFromTFObjectDSGroupProvisioningGroupLinkableWrapperWithCount(data *groupProvisioningGroupLinkableWrapperWithCountDataDS, obj types.Object) {
+	data.Count = obj.Attributes()["count"].(basetypes.Int64Value)
+	data.Items = obj.Attributes()["items"].(basetypes.ListValue)
+}
+
 func fillDataStructFromTFObjectDSGroupProvisioningGroup_additionalObjects(data *groupProvisioningGroup_additionalObjectsDataDS, obj types.Object) {
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
 }
@@ -876,6 +884,7 @@ func fillDataStructFromTFObjectDSProfileAccessProfile(data *profileAccessProfile
 	data.AccountsWithAttributes = obj.Attributes()["accounts_with_attributes"].(basetypes.ListValue)
 	data.AttributeRules = obj.Attributes()["attribute_rules"].(basetypes.ListValue)
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
+	data.Clients = obj.Attributes()["clients"].(basetypes.ListValue)
 	data.Groups = obj.Attributes()["groups"].(basetypes.ListValue)
 	data.Provisioning = obj.Attributes()["provisioning"].(basetypes.ListValue)
 	data.Description = obj.Attributes()["description"].(basetypes.StringValue)
@@ -921,6 +930,23 @@ func fillDataStructFromTFObjectDSProfileAccessProfileAccount_additionalObjects(d
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
 }
 
+func fillDataStructFromTFObjectDSProfileAccessProfileClient(data *profileAccessProfileClientDataDS, obj types.Object) {
+	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
+	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
+	data.AccessProfile = obj.Attributes()["access_profile"].(basetypes.ObjectValue)
+	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
+	data.Client = obj.Attributes()["client"].(basetypes.ObjectValue)
+}
+
+func fillDataStructFromTFObjectDSProfileAccessProfileClientLinkableWrapper(data *profileAccessProfileClientLinkableWrapperDataDS, obj types.Object) {
+	data.Items = obj.Attributes()["items"].(basetypes.ListValue)
+}
+
+func fillDataStructFromTFObjectDSProfileAccessProfileClient_additionalObjects(data *profileAccessProfileClient_additionalObjectsDataDS, obj types.Object) {
+	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
+}
+
 func fillDataStructFromTFObjectDSProfileAccessProfileGroup(data *profileAccessProfileGroupDataDS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
@@ -962,6 +988,11 @@ func fillDataStructFromTFObjectDSProfileAccessProfileProvisioningLinkableWrapper
 	data.Items = obj.Attributes()["items"].(basetypes.ListValue)
 }
 
+func fillDataStructFromTFObjectDSProfileAccessProfileProvisioningLinkableWrapperWithCount(data *profileAccessProfileProvisioningLinkableWrapperWithCountDataDS, obj types.Object) {
+	data.Count = obj.Attributes()["count"].(basetypes.Int64Value)
+	data.Items = obj.Attributes()["items"].(basetypes.ListValue)
+}
+
 func fillDataStructFromTFObjectDSProfileAccessProfileProvisioning_additionalObjects(data *profileAccessProfileProvisioning_additionalObjectsDataDS, obj types.Object) {
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
 }
@@ -970,6 +1001,7 @@ func fillDataStructFromTFObjectDSProfileAccessProfile_additionalObjects(data *pr
 	data.AccountsWithAttributes = obj.Attributes()["accounts_with_attributes"].(basetypes.ListValue)
 	data.AttributeRules = obj.Attributes()["attribute_rules"].(basetypes.ListValue)
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
+	data.Clients = obj.Attributes()["clients"].(basetypes.ListValue)
 	data.Groups = obj.Attributes()["groups"].(basetypes.ListValue)
 	data.Provisioning = obj.Attributes()["provisioning"].(basetypes.ListValue)
 }
@@ -1144,8 +1176,11 @@ func fillDataStructFromTFObjectDSProvisioningProvisionedSystem(data *provisionin
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
 	data.Active = obj.Attributes()["active"].(basetypes.BoolValue)
+	data.AdminPermissions = obj.Attributes()["admin_permissions"].(basetypes.BoolValue)
+	data.ContentAdminPermissions = obj.Attributes()["content_admin_permissions"].(basetypes.BoolValue)
 	data.Name = obj.Attributes()["name"].(basetypes.StringValue)
 	data.OrganizationalUnit = obj.Attributes()["organizational_unit"].(basetypes.ObjectValue)
+	data.OwnerPermissions = obj.Attributes()["owner_permissions"].(basetypes.BoolValue)
 	data.ProvisioningProvisionedSystemPrimerType = obj.Attributes()["type"].(basetypes.StringValue)
 	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
 	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
@@ -1190,8 +1225,11 @@ func fillDataStructFromTFObjectDSProvisioningProvisionedSystemPrimer(data *provi
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
 	data.Active = obj.Attributes()["active"].(basetypes.BoolValue)
+	data.AdminPermissions = obj.Attributes()["admin_permissions"].(basetypes.BoolValue)
+	data.ContentAdminPermissions = obj.Attributes()["content_admin_permissions"].(basetypes.BoolValue)
 	data.Name = obj.Attributes()["name"].(basetypes.StringValue)
 	data.OrganizationalUnit = obj.Attributes()["organizational_unit"].(basetypes.ObjectValue)
+	data.OwnerPermissions = obj.Attributes()["owner_permissions"].(basetypes.BoolValue)
 	data.ProvisioningProvisionedSystemPrimerType = obj.Attributes()["type"].(basetypes.StringValue)
 	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
 }
@@ -1276,7 +1314,8 @@ func fillDataStructFromTFObjectDSServiceaccountServiceAccountPrimer(data *servic
 	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
 }
 
-func fillDataStructFromTFObjectDSServiceaccountServiceAccountPrimerLinkableWrapper(data *serviceaccountServiceAccountPrimerLinkableWrapperDataDS, obj types.Object) {
+func fillDataStructFromTFObjectDSServiceaccountServiceAccountPrimerLinkableWrapperWithCount(data *serviceaccountServiceAccountPrimerLinkableWrapperWithCountDataDS, obj types.Object) {
+	data.Count = obj.Attributes()["count"].(basetypes.Int64Value)
 	data.Items = obj.Attributes()["items"].(basetypes.ListValue)
 }
 

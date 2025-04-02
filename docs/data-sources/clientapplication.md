@@ -25,6 +25,7 @@ description: |-
 
 ### Read-Only
 
+- `accessprofileclients` (Attributes List) (see [below for nested schema](#nestedatt--accessprofileclients))
 - `audit` (Attributes) (see [below for nested schema](#nestedatt--audit))
 - `client_id` (String)
 - `groupclients` (Attributes List) (see [below for nested schema](#nestedatt--groupclients))
@@ -45,6 +46,109 @@ description: |-
 - `tile` (Attributes) (see [below for nested schema](#nestedatt--tile))
 - `type` (String)
 - `vault_record_count` (Number)
+
+<a id="nestedatt--accessprofileclients"></a>
+### Nested Schema for `accessprofileclients`
+
+Read-Only:
+
+- `access_profile` (Attributes) (see [below for nested schema](#nestedatt--accessprofileclients--access_profile))
+- `client` (Attributes) (see [below for nested schema](#nestedatt--accessprofileclients--client))
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--accessprofileclients--links))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--accessprofileclients--permissions))
+
+<a id="nestedatt--accessprofileclients--access_profile"></a>
+### Nested Schema for `accessprofileclients.access_profile`
+
+Read-Only:
+
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--accessprofileclients--access_profile--links))
+- `name` (String)
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--accessprofileclients--access_profile--permissions))
+- `uuid` (String)
+
+<a id="nestedatt--accessprofileclients--access_profile--links"></a>
+### Nested Schema for `accessprofileclients.access_profile.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--accessprofileclients--access_profile--permissions"></a>
+### Nested Schema for `accessprofileclients.access_profile.permissions`
+
+Read-Only:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
+
+<a id="nestedatt--accessprofileclients--client"></a>
+### Nested Schema for `accessprofileclients.client`
+
+Read-Only:
+
+- `client_id` (String)
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--accessprofileclients--client--links))
+- `name` (String)
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--accessprofileclients--client--permissions))
+- `scopes` (List of String)
+- `sso_application` (Boolean)
+- `type` (String)
+- `uuid` (String)
+
+<a id="nestedatt--accessprofileclients--client--links"></a>
+### Nested Schema for `accessprofileclients.client.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--accessprofileclients--client--permissions"></a>
+### Nested Schema for `accessprofileclients.client.permissions`
+
+Read-Only:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
+
+<a id="nestedatt--accessprofileclients--links"></a>
+### Nested Schema for `accessprofileclients.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--accessprofileclients--permissions"></a>
+### Nested Schema for `accessprofileclients.permissions`
+
+Read-Only:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
 
 <a id="nestedatt--audit"></a>
 ### Nested Schema for `audit`
@@ -934,6 +1038,7 @@ Read-Only:
 - `attributes` (Map of String)
 - `callback_uri` (String)
 - `debug_mode` (Boolean)
+- `for_identity_source` (Boolean)
 - `id_token_claims` (String)
 - `initiate_login_uri` (String)
 - `profile` (String)

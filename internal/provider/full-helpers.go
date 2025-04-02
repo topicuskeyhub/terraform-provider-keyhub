@@ -12,6 +12,8 @@ import (
 	"strings"
 	"time"
 
+	"encoding/base64"
+
 	"golang.org/x/exp/slices"
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
@@ -151,6 +153,43 @@ func tfToTimePointer(val basetypes.StringValue) (*time.Time, diag.Diagnostics) {
 	}
 	parsed, diags := tfToTime(val)
 	return &parsed, diags
+}
+
+func tfToInt64Pointer(val attr.Value) *int64 {
+	if val == nil {
+		return nil
+	}
+	return val.(basetypes.Int64Value).ValueInt64Pointer()
+}
+
+func tfToBooleanPointer(val attr.Value) *bool {
+	if val == nil {
+		return nil
+	}
+	return val.(basetypes.BoolValue).ValueBoolPointer()
+}
+
+func tfToStringPointer(val attr.Value) *string {
+	if val == nil {
+		return nil
+	}
+	return val.(basetypes.StringValue).ValueStringPointer()
+}
+
+func byteArrayToTfBase64(val []byte) basetypes.StringValue {
+	if val == nil {
+		return types.StringNull()
+	}
+	return types.StringValue(base64.StdEncoding.EncodeToString(val))
+}
+
+func tfBase64ToByteArray(val basetypes.StringValue) ([]byte, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	ret, err := base64.StdEncoding.DecodeString(val.ValueString())
+	if err != nil {
+		diags.AddError("Conversion error", fmt.Sprintf("Unable to decode tf Base64 string: %s", err))
+	}
+	return ret, diags
 }
 
 func withUuidToTF(val interface{ GetUuid() *string }) attr.Value {

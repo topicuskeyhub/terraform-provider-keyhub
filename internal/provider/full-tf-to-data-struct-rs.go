@@ -160,6 +160,7 @@ func fillDataStructFromTFObjectRSClientClientApplication(data *clientClientAppli
 	data.SsoApplication = obj.Attributes()["sso_application"].(basetypes.BoolValue)
 	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
 	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
+	data.Accessprofileclients = obj.Attributes()["accessprofileclients"].(basetypes.ListValue)
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
 	data.DeleteTile = obj.Attributes()["delete_tile"].(basetypes.BoolValue)
 	data.Groupclients = obj.Attributes()["groupclients"].(basetypes.ListValue)
@@ -192,6 +193,7 @@ func fillDataStructFromTFObjectRSClientClientApplicationPrimer(data *clientClien
 }
 
 func fillDataStructFromTFObjectRSClientClientApplication_additionalObjects(data *clientClientApplication_additionalObjectsDataRS, obj types.Object) {
+	data.Accessprofileclients = obj.Attributes()["accessprofileclients"].(basetypes.ListValue)
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
 	data.DeleteTile = obj.Attributes()["delete_tile"].(basetypes.BoolValue)
 	data.Groupclients = obj.Attributes()["groupclients"].(basetypes.ListValue)
@@ -215,6 +217,7 @@ func fillDataStructFromTFObjectRSClientOAuth2Client(data *clientOAuth2ClientData
 	data.Attributes = obj.Attributes()["attributes"].(basetypes.MapValue)
 	data.CallbackURI = obj.Attributes()["callback_uri"].(basetypes.StringValue)
 	data.DebugMode = obj.Attributes()["debug_mode"].(basetypes.BoolValue)
+	data.ForIDentitySource = obj.Attributes()["for_identity_source"].(basetypes.BoolValue)
 	data.IDTokenClaims = obj.Attributes()["id_token_claims"].(basetypes.StringValue)
 	data.InitiateLoginURI = obj.Attributes()["initiate_login_uri"].(basetypes.StringValue)
 	data.Profile = obj.Attributes()["profile"].(basetypes.StringValue)
@@ -585,6 +588,11 @@ func fillDataStructFromTFObjectRSGroupProvisioningGroupLinkableWrapper(data *gro
 	data.Items = obj.Attributes()["items"].(basetypes.ListValue)
 }
 
+func fillDataStructFromTFObjectRSGroupProvisioningGroupLinkableWrapperWithCount(data *groupProvisioningGroupLinkableWrapperWithCountDataRS, obj types.Object) {
+	data.Count = obj.Attributes()["count"].(basetypes.Int64Value)
+	data.Items = obj.Attributes()["items"].(basetypes.ListValue)
+}
+
 func fillDataStructFromTFObjectRSGroupProvisioningGroup_additionalObjects(data *groupProvisioningGroup_additionalObjectsDataRS, obj types.Object) {
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
 }
@@ -768,6 +776,7 @@ func fillDataStructFromTFObjectRSProfileAccessProfile(data *profileAccessProfile
 	data.AccountsWithAttributes = obj.Attributes()["accounts_with_attributes"].(basetypes.ListValue)
 	data.AttributeRules = obj.Attributes()["attribute_rules"].(basetypes.ListValue)
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
+	data.Clients = obj.Attributes()["clients"].(basetypes.ListValue)
 	data.Groups = obj.Attributes()["groups"].(basetypes.ListValue)
 	data.Provisioning = obj.Attributes()["provisioning"].(basetypes.ListValue)
 	data.Description = obj.Attributes()["description"].(basetypes.StringValue)
@@ -798,6 +807,23 @@ func fillDataStructFromTFObjectRSProfileAccessProfileAccountWithAttributesLinkab
 }
 
 func fillDataStructFromTFObjectRSProfileAccessProfileAccount_additionalObjects(data *profileAccessProfileAccount_additionalObjectsDataRS, obj types.Object) {
+	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
+}
+
+func fillDataStructFromTFObjectRSProfileAccessProfileClient(data *profileAccessProfileClientDataRS, obj types.Object) {
+	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
+	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
+	data.AccessProfileUUID = obj.Attributes()["access_profile_uuid"].(basetypes.StringValue)
+	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
+	data.ClientUUID = obj.Attributes()["client_uuid"].(basetypes.StringValue)
+}
+
+func fillDataStructFromTFObjectRSProfileAccessProfileClientLinkableWrapper(data *profileAccessProfileClientLinkableWrapperDataRS, obj types.Object) {
+	data.Items = obj.Attributes()["items"].(basetypes.ListValue)
+}
+
+func fillDataStructFromTFObjectRSProfileAccessProfileClient_additionalObjects(data *profileAccessProfileClient_additionalObjectsDataRS, obj types.Object) {
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
 }
 
@@ -842,6 +868,11 @@ func fillDataStructFromTFObjectRSProfileAccessProfileProvisioningLinkableWrapper
 	data.Items = obj.Attributes()["items"].(basetypes.ListValue)
 }
 
+func fillDataStructFromTFObjectRSProfileAccessProfileProvisioningLinkableWrapperWithCount(data *profileAccessProfileProvisioningLinkableWrapperWithCountDataRS, obj types.Object) {
+	data.Count = obj.Attributes()["count"].(basetypes.Int64Value)
+	data.Items = obj.Attributes()["items"].(basetypes.ListValue)
+}
+
 func fillDataStructFromTFObjectRSProfileAccessProfileProvisioning_additionalObjects(data *profileAccessProfileProvisioning_additionalObjectsDataRS, obj types.Object) {
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
 }
@@ -850,6 +881,7 @@ func fillDataStructFromTFObjectRSProfileAccessProfile_additionalObjects(data *pr
 	data.AccountsWithAttributes = obj.Attributes()["accounts_with_attributes"].(basetypes.ListValue)
 	data.AttributeRules = obj.Attributes()["attribute_rules"].(basetypes.ListValue)
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
+	data.Clients = obj.Attributes()["clients"].(basetypes.ListValue)
 	data.Groups = obj.Attributes()["groups"].(basetypes.ListValue)
 	data.Provisioning = obj.Attributes()["provisioning"].(basetypes.ListValue)
 }
@@ -1018,8 +1050,11 @@ func fillDataStructFromTFObjectRSProvisioningProvisionedSystem(data *provisionin
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
 	data.Active = obj.Attributes()["active"].(basetypes.BoolValue)
+	data.AdminPermissions = obj.Attributes()["admin_permissions"].(basetypes.BoolValue)
+	data.ContentAdminPermissions = obj.Attributes()["content_admin_permissions"].(basetypes.BoolValue)
 	data.Name = obj.Attributes()["name"].(basetypes.StringValue)
 	data.OrganizationalUnitUUID = obj.Attributes()["organizational_unit_uuid"].(basetypes.StringValue)
+	data.OwnerPermissions = obj.Attributes()["owner_permissions"].(basetypes.BoolValue)
 	data.ProvisioningProvisionedSystemPrimerType = obj.Attributes()["type"].(basetypes.StringValue)
 	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
 	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
@@ -1064,8 +1099,11 @@ func fillDataStructFromTFObjectRSProvisioningProvisionedSystemPrimer(data *provi
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
 	data.Active = obj.Attributes()["active"].(basetypes.BoolValue)
+	data.AdminPermissions = obj.Attributes()["admin_permissions"].(basetypes.BoolValue)
+	data.ContentAdminPermissions = obj.Attributes()["content_admin_permissions"].(basetypes.BoolValue)
 	data.Name = obj.Attributes()["name"].(basetypes.StringValue)
 	data.OrganizationalUnitUUID = obj.Attributes()["organizational_unit_uuid"].(basetypes.StringValue)
+	data.OwnerPermissions = obj.Attributes()["owner_permissions"].(basetypes.BoolValue)
 	data.ProvisioningProvisionedSystemPrimerType = obj.Attributes()["type"].(basetypes.StringValue)
 	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
 }
@@ -1150,7 +1188,8 @@ func fillDataStructFromTFObjectRSServiceaccountServiceAccountPrimer(data *servic
 	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
 }
 
-func fillDataStructFromTFObjectRSServiceaccountServiceAccountPrimerLinkableWrapper(data *serviceaccountServiceAccountPrimerLinkableWrapperDataRS, obj types.Object) {
+func fillDataStructFromTFObjectRSServiceaccountServiceAccountPrimerLinkableWrapperWithCount(data *serviceaccountServiceAccountPrimerLinkableWrapperWithCountDataRS, obj types.Object) {
+	data.Count = obj.Attributes()["count"].(basetypes.Int64Value)
 	data.Items = obj.Attributes()["items"].(basetypes.ListValue)
 }
 

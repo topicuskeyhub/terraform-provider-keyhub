@@ -1,3 +1,8 @@
+## 2.40.0
+* Upgrade API to Topicus KeyHub version 40
+* Added support for LinkableWrapperWithCount
+* Byte-arrays are now handled as base64 encoded string in terraform.
+
 ## 2.39.0
 * Upgrade API to Topicus KeyHub version 39
 

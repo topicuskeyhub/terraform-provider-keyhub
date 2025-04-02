@@ -170,9 +170,12 @@ Required:
 Read-Only:
 
 - `active` (Boolean)
+- `admin_permissions` (Boolean)
+- `content_admin_permissions` (Boolean)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--system--links))
 - `name` (String)
 - `organizational_unit` (Attributes) (see [below for nested schema](#nestedatt--system--organizational_unit))
+- `owner_permissions` (Boolean)
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--system--permissions))
 - `type` (String)
 

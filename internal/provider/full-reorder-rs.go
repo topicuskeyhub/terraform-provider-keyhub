@@ -302,6 +302,20 @@ func reorderClientClientApplication_additionalObjects(state basetypes.ObjectValu
 	}
 	obj := filterAttributes(state.Attributes(), attrs)
 	{
+		attrState := state.Attributes()["accessprofileclients"]
+		attrPriorState := priorState.Attributes()["accessprofileclients"]
+		if attrState.IsNull() || attrState.IsUnknown() || attrPriorState.IsNull() || attrPriorState.IsUnknown() {
+			obj["accessprofileclients"] = attrState
+		} else {
+			attrStateEl := (attrState.(types.List)).Elements()
+			attrPriorStateEl := (attrPriorState.(types.List)).Elements()
+			newAttrState := reorderList(attrStateEl, attrPriorStateEl, recurse, []string{
+				"access_profile_uuid",
+			}, reorderProfileAccessProfileClient)
+			obj["accessprofileclients"] = types.ListValueMust(attrs["accessprofileclients"].(types.ListType).ElemType, newAttrState)
+		}
+	}
+	{
 		attrState := state.Attributes()["groupclients"]
 		attrPriorState := priorState.Attributes()["groupclients"]
 		if attrState.IsNull() || attrState.IsUnknown() || attrPriorState.IsNull() || attrPriorState.IsUnknown() {
@@ -1016,6 +1030,22 @@ func reorderGroupProvisioningGroupLinkableWrapper(state basetypes.ObjectValue, p
 	return types.ObjectValueMust(attrs, obj)
 }
 
+func reorderGroupProvisioningGroupLinkableWrapperWithCount(state basetypes.ObjectValue, priorState basetypes.ObjectValue, recurse bool) basetypes.ObjectValue {
+	if state.IsNull() || state.IsUnknown() || priorState.IsNull() || priorState.IsUnknown() {
+		return state
+	}
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = groupProvisioningGroupLinkableWrapperWithCountAttrTypesRSRecurse
+	} else {
+		attrs = groupProvisioningGroupLinkableWrapperWithCountAttrTypesRS
+	}
+	obj := filterAttributes(state.Attributes(), attrs)
+	// Reordering not supported for items with type List
+
+	return types.ObjectValueMust(attrs, obj)
+}
+
 func reorderGroupProvisioningGroup_additionalObjects(state basetypes.ObjectValue, priorState basetypes.ObjectValue, recurse bool) basetypes.ObjectValue {
 	if state.IsNull() || state.IsUnknown() || priorState.IsNull() || priorState.IsUnknown() {
 		return state
@@ -1472,6 +1502,57 @@ func reorderProfileAccessProfileAccount_additionalObjects(state basetypes.Object
 	return types.ObjectValueMust(attrs, obj)
 }
 
+func reorderProfileAccessProfileClient(state basetypes.ObjectValue, priorState basetypes.ObjectValue, recurse bool) basetypes.ObjectValue {
+	if state.IsNull() || state.IsUnknown() || priorState.IsNull() || priorState.IsUnknown() {
+		return state
+	}
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = profileAccessProfileClientAttrTypesRSRecurse
+	} else {
+		attrs = profileAccessProfileClientAttrTypesRS
+	}
+	obj := filterAttributes(state.Attributes(), attrs)
+	if recurse {
+	}
+	if recurse {
+		maps.Copy(obj, reorderProfileAccessProfileClient_additionalObjects(state, priorState, false).Attributes())
+	}
+
+	return types.ObjectValueMust(attrs, obj)
+}
+
+func reorderProfileAccessProfileClientLinkableWrapper(state basetypes.ObjectValue, priorState basetypes.ObjectValue, recurse bool) basetypes.ObjectValue {
+	if state.IsNull() || state.IsUnknown() || priorState.IsNull() || priorState.IsUnknown() {
+		return state
+	}
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = profileAccessProfileClientLinkableWrapperAttrTypesRSRecurse
+	} else {
+		attrs = profileAccessProfileClientLinkableWrapperAttrTypesRS
+	}
+	obj := filterAttributes(state.Attributes(), attrs)
+	// Reordering not supported for items with type List
+
+	return types.ObjectValueMust(attrs, obj)
+}
+
+func reorderProfileAccessProfileClient_additionalObjects(state basetypes.ObjectValue, priorState basetypes.ObjectValue, recurse bool) basetypes.ObjectValue {
+	if state.IsNull() || state.IsUnknown() || priorState.IsNull() || priorState.IsUnknown() {
+		return state
+	}
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = profileAccessProfileClient_additionalObjectsAttrTypesRSRecurse
+	} else {
+		attrs = profileAccessProfileClient_additionalObjectsAttrTypesRS
+	}
+	obj := filterAttributes(state.Attributes(), attrs)
+
+	return types.ObjectValueMust(attrs, obj)
+}
+
 func reorderProfileAccessProfileGroup(state basetypes.ObjectValue, priorState basetypes.ObjectValue, recurse bool) basetypes.ObjectValue {
 	if state.IsNull() || state.IsUnknown() || priorState.IsNull() || priorState.IsUnknown() {
 		return state
@@ -1583,6 +1664,22 @@ func reorderProfileAccessProfileProvisioningLinkableWrapper(state basetypes.Obje
 		attrs = profileAccessProfileProvisioningLinkableWrapperAttrTypesRSRecurse
 	} else {
 		attrs = profileAccessProfileProvisioningLinkableWrapperAttrTypesRS
+	}
+	obj := filterAttributes(state.Attributes(), attrs)
+	// Reordering not supported for items with type List
+
+	return types.ObjectValueMust(attrs, obj)
+}
+
+func reorderProfileAccessProfileProvisioningLinkableWrapperWithCount(state basetypes.ObjectValue, priorState basetypes.ObjectValue, recurse bool) basetypes.ObjectValue {
+	if state.IsNull() || state.IsUnknown() || priorState.IsNull() || priorState.IsUnknown() {
+		return state
+	}
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = profileAccessProfileProvisioningLinkableWrapperWithCountAttrTypesRSRecurse
+	} else {
+		attrs = profileAccessProfileProvisioningLinkableWrapperWithCountAttrTypesRS
 	}
 	obj := filterAttributes(state.Attributes(), attrs)
 	// Reordering not supported for items with type List
@@ -1764,10 +1861,10 @@ func reorderProvisioningGroupOnSystem_additionalObjects(state basetypes.ObjectVa
 			attrStateEl := (attrState.(types.List)).Elements()
 			attrPriorStateEl := (attrPriorState.(types.List)).Elements()
 			newAttrState := reorderList(attrStateEl, attrPriorStateEl, recurse, []string{
-				"name",
 				"system_uuid",
-				"username",
 				"active",
+				"name",
+				"username",
 			}, reorderServiceaccountServiceAccountPrimer)
 			obj["service_accounts"] = types.ListValueMust(attrs["service_accounts"].(types.ListType).ElemType, newAttrState)
 		}
@@ -2224,15 +2321,15 @@ func reorderServiceaccountServiceAccountPrimer(state basetypes.ObjectValue, prio
 	return types.ObjectValueMust(attrs, obj)
 }
 
-func reorderServiceaccountServiceAccountPrimerLinkableWrapper(state basetypes.ObjectValue, priorState basetypes.ObjectValue, recurse bool) basetypes.ObjectValue {
+func reorderServiceaccountServiceAccountPrimerLinkableWrapperWithCount(state basetypes.ObjectValue, priorState basetypes.ObjectValue, recurse bool) basetypes.ObjectValue {
 	if state.IsNull() || state.IsUnknown() || priorState.IsNull() || priorState.IsUnknown() {
 		return state
 	}
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = serviceaccountServiceAccountPrimerLinkableWrapperAttrTypesRSRecurse
+		attrs = serviceaccountServiceAccountPrimerLinkableWrapperWithCountAttrTypesRSRecurse
 	} else {
-		attrs = serviceaccountServiceAccountPrimerLinkableWrapperAttrTypesRS
+		attrs = serviceaccountServiceAccountPrimerLinkableWrapperWithCountAttrTypesRS
 	}
 	obj := filterAttributes(state.Attributes(), attrs)
 	// Reordering not supported for items with type List

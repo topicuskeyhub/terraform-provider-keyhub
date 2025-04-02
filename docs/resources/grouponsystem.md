@@ -17,7 +17,6 @@ description: |-
 
 ### Required
 
-- `name_in_system` (String)
 - `owner_uuid` (String)
 - `provisioned_system_uuid` (String)
 - `type` (String)
@@ -26,6 +25,7 @@ description: |-
 
 - `access_profile_provisioning` (Attributes List) (see [below for nested schema](#nestedatt--access_profile_provisioning))
 - `additional` (List of String)
+- `name_in_system` (String)
 - `provgroups` (Attributes List) (see [below for nested schema](#nestedatt--provgroups))
 - `provisioning_enabled` (Boolean)
 - `service_accounts` (Attributes List) (see [below for nested schema](#nestedatt--service_accounts))
@@ -53,12 +53,12 @@ Read-Only:
 
 Required:
 
-- `name_in_system` (String)
 - `owner_uuid` (String)
 - `type` (String)
 
 Optional:
 
+- `name_in_system` (String)
 - `provisioning_enabled` (Boolean)
 
 Read-Only:
@@ -136,12 +136,12 @@ Read-Only:
 
 Required:
 
-- `name_in_system` (String)
 - `owner_uuid` (String)
 - `type` (String)
 
 Optional:
 
+- `name_in_system` (String)
 - `provisioning_enabled` (Boolean)
 
 Read-Only:
@@ -202,13 +202,13 @@ Optional:
 
 Required:
 
-- `name` (String)
 - `system_uuid` (String)
-- `username` (String)
 
 Optional:
 
 - `active` (Boolean)
+- `name` (String)
+- `username` (String)
 
 Read-Only:
 

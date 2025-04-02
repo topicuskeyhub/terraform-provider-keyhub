@@ -18,7 +18,6 @@ description: |-
 ### Required
 
 - `client_application_uuid` (String)
-- `name` (String)
 
 ### Optional
 
@@ -27,6 +26,7 @@ description: |-
 - `delete_tile` (Boolean)
 - `end_date` (String)
 - `filename` (String)
+- `name` (String)
 - `secret` (Attributes) (see [below for nested schema](#nestedatt--secret))
 - `tile` (Attributes) (see [below for nested schema](#nestedatt--tile))
 - `url` (String)
@@ -153,13 +153,10 @@ Optional:
 <a id="nestedatt--shares"></a>
 ### Nested Schema for `shares`
 
-Required:
-
-- `name` (String)
-
 Optional:
 
 - `color` (String)
+- `name` (String)
 
 Read-Only:
 

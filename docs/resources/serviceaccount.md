@@ -17,19 +17,19 @@ description: |-
 
 ### Required
 
-- `name` (String)
 - `system_uuid` (String)
 - `technical_administrator_uuid` (String)
-- `username` (String)
 
 ### Optional
 
 - `active` (Boolean)
 - `additional` (List of String)
 - `description` (String)
+- `name` (String)
 - `password_rotation` (String)
 - `secret` (Attributes) (see [below for nested schema](#nestedatt--secret))
 - `ssh_public_key` (String)
+- `username` (String)
 
 ### Read-Only
 
@@ -70,8 +70,11 @@ Read-Only:
 
 Required:
 
-- `name_in_system` (String)
 - `type` (String)
+
+Optional:
+
+- `name_in_system` (String)
 
 Read-Only:
 
