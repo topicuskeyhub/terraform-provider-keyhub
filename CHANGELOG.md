@@ -1,3 +1,6 @@
+## 2.40.1
+* Upgraded the terraform-plugin-docs to v0.21.0
+
 ## 2.40.0
 * Upgrade API to Topicus KeyHub version 40
 * Added support for LinkableWrapperWithCount
