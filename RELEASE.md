@@ -6,7 +6,8 @@
 
 ### 1.1 Dependencies
 
-Use the just-released version of the Topicus KeyHub Terraform Provider Generator
+Use the just-released version of the Topicus KeyHub Terraform Provider Generator.
+This should also then update the go-sdk to the latest version transitively.
 
 > **Note:** Make really sure the tag is pushed for the Terraform Provider Generator because a resolution failure is cached globally for an entire day.
 
