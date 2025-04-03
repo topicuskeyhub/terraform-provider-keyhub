@@ -38,6 +38,8 @@ git push
 go generate ./...
 ```
 
+Also update the CHANGELOG.md for the new version
+
 ### 1.4 Commit the results
 
 ```Shell
