@@ -1108,18 +1108,51 @@ Read-Only:
 Read-Only:
 
 - `gid` (Number)
+- `gid_numbering` (Attributes) (see [below for nested schema](#nestedatt--administered_systems--provisioned_ldap--gid_numbering))
 - `hashing_scheme` (String)
 - `numbering` (Attributes) (see [below for nested schema](#nestedatt--administered_systems--provisioned_ldap--numbering))
+
+<a id="nestedatt--administered_systems--provisioned_ldap--gid_numbering"></a>
+### Nested Schema for `administered_systems.provisioned_ldap.gid_numbering`
+
+Read-Only:
+
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--administered_systems--provisioned_ldap--gid_numbering--links))
+- `name` (String)
+- `next_id` (Number)
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--administered_systems--provisioned_ldap--gid_numbering--permissions))
+
+<a id="nestedatt--administered_systems--provisioned_ldap--gid_numbering--links"></a>
+### Nested Schema for `administered_systems.provisioned_ldap.gid_numbering.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--administered_systems--provisioned_ldap--gid_numbering--permissions"></a>
+### Nested Schema for `administered_systems.provisioned_ldap.gid_numbering.permissions`
+
+Read-Only:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
 
 <a id="nestedatt--administered_systems--provisioned_ldap--numbering"></a>
 ### Nested Schema for `administered_systems.provisioned_ldap.numbering`
 
 Read-Only:
 
-- `account_count` (Number)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--administered_systems--provisioned_ldap--numbering--links))
 - `name` (String)
-- `next_uid` (Number)
+- `next_id` (Number)
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--administered_systems--provisioned_ldap--numbering--permissions))
 
 <a id="nestedatt--administered_systems--provisioned_ldap--numbering--links"></a>
@@ -1154,6 +1187,7 @@ Read-Only:
 - `accounts_writable` (Boolean)
 - `directory` (Attributes) (see [below for nested schema](#nestedatt--administered_systems--provisioned_ldap_directory--directory))
 - `gid` (Number)
+- `gid_numbering` (Attributes) (see [below for nested schema](#nestedatt--administered_systems--provisioned_ldap_directory--gid_numbering))
 - `group_dn` (String)
 - `hashing_scheme` (String)
 - `numbering` (Attributes) (see [below for nested schema](#nestedatt--administered_systems--provisioned_ldap_directory--numbering))
@@ -1196,15 +1230,47 @@ Read-Only:
 
 
 
+<a id="nestedatt--administered_systems--provisioned_ldap_directory--gid_numbering"></a>
+### Nested Schema for `administered_systems.provisioned_ldap_directory.gid_numbering`
+
+Read-Only:
+
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--administered_systems--provisioned_ldap_directory--gid_numbering--links))
+- `name` (String)
+- `next_id` (Number)
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--administered_systems--provisioned_ldap_directory--gid_numbering--permissions))
+
+<a id="nestedatt--administered_systems--provisioned_ldap_directory--gid_numbering--links"></a>
+### Nested Schema for `administered_systems.provisioned_ldap_directory.gid_numbering.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--administered_systems--provisioned_ldap_directory--gid_numbering--permissions"></a>
+### Nested Schema for `administered_systems.provisioned_ldap_directory.gid_numbering.permissions`
+
+Read-Only:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
+
 <a id="nestedatt--administered_systems--provisioned_ldap_directory--numbering"></a>
 ### Nested Schema for `administered_systems.provisioned_ldap_directory.numbering`
 
 Read-Only:
 
-- `account_count` (Number)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--administered_systems--provisioned_ldap_directory--numbering--links))
 - `name` (String)
-- `next_uid` (Number)
+- `next_id` (Number)
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--administered_systems--provisioned_ldap_directory--numbering--permissions))
 
 <a id="nestedatt--administered_systems--provisioned_ldap_directory--numbering--links"></a>
@@ -3442,18 +3508,51 @@ Read-Only:
 Read-Only:
 
 - `gid` (Number)
+- `gid_numbering` (Attributes) (see [below for nested schema](#nestedatt--content_administered_systems--provisioned_ldap--gid_numbering))
 - `hashing_scheme` (String)
 - `numbering` (Attributes) (see [below for nested schema](#nestedatt--content_administered_systems--provisioned_ldap--numbering))
+
+<a id="nestedatt--content_administered_systems--provisioned_ldap--gid_numbering"></a>
+### Nested Schema for `content_administered_systems.provisioned_ldap.gid_numbering`
+
+Read-Only:
+
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--content_administered_systems--provisioned_ldap--gid_numbering--links))
+- `name` (String)
+- `next_id` (Number)
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--content_administered_systems--provisioned_ldap--gid_numbering--permissions))
+
+<a id="nestedatt--content_administered_systems--provisioned_ldap--gid_numbering--links"></a>
+### Nested Schema for `content_administered_systems.provisioned_ldap.gid_numbering.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--content_administered_systems--provisioned_ldap--gid_numbering--permissions"></a>
+### Nested Schema for `content_administered_systems.provisioned_ldap.gid_numbering.permissions`
+
+Read-Only:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
 
 <a id="nestedatt--content_administered_systems--provisioned_ldap--numbering"></a>
 ### Nested Schema for `content_administered_systems.provisioned_ldap.numbering`
 
 Read-Only:
 
-- `account_count` (Number)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--content_administered_systems--provisioned_ldap--numbering--links))
 - `name` (String)
-- `next_uid` (Number)
+- `next_id` (Number)
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--content_administered_systems--provisioned_ldap--numbering--permissions))
 
 <a id="nestedatt--content_administered_systems--provisioned_ldap--numbering--links"></a>
@@ -3488,6 +3587,7 @@ Read-Only:
 - `accounts_writable` (Boolean)
 - `directory` (Attributes) (see [below for nested schema](#nestedatt--content_administered_systems--provisioned_ldap_directory--directory))
 - `gid` (Number)
+- `gid_numbering` (Attributes) (see [below for nested schema](#nestedatt--content_administered_systems--provisioned_ldap_directory--gid_numbering))
 - `group_dn` (String)
 - `hashing_scheme` (String)
 - `numbering` (Attributes) (see [below for nested schema](#nestedatt--content_administered_systems--provisioned_ldap_directory--numbering))
@@ -3530,15 +3630,47 @@ Read-Only:
 
 
 
+<a id="nestedatt--content_administered_systems--provisioned_ldap_directory--gid_numbering"></a>
+### Nested Schema for `content_administered_systems.provisioned_ldap_directory.gid_numbering`
+
+Read-Only:
+
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--content_administered_systems--provisioned_ldap_directory--gid_numbering--links))
+- `name` (String)
+- `next_id` (Number)
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--content_administered_systems--provisioned_ldap_directory--gid_numbering--permissions))
+
+<a id="nestedatt--content_administered_systems--provisioned_ldap_directory--gid_numbering--links"></a>
+### Nested Schema for `content_administered_systems.provisioned_ldap_directory.gid_numbering.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--content_administered_systems--provisioned_ldap_directory--gid_numbering--permissions"></a>
+### Nested Schema for `content_administered_systems.provisioned_ldap_directory.gid_numbering.permissions`
+
+Read-Only:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
+
 <a id="nestedatt--content_administered_systems--provisioned_ldap_directory--numbering"></a>
 ### Nested Schema for `content_administered_systems.provisioned_ldap_directory.numbering`
 
 Read-Only:
 
-- `account_count` (Number)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--content_administered_systems--provisioned_ldap_directory--numbering--links))
 - `name` (String)
-- `next_uid` (Number)
+- `next_id` (Number)
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--content_administered_systems--provisioned_ldap_directory--numbering--permissions))
 
 <a id="nestedatt--content_administered_systems--provisioned_ldap_directory--numbering--links"></a>
@@ -6424,18 +6556,51 @@ Read-Only:
 Read-Only:
 
 - `gid` (Number)
+- `gid_numbering` (Attributes) (see [below for nested schema](#nestedatt--owned_systems--provisioned_ldap--gid_numbering))
 - `hashing_scheme` (String)
 - `numbering` (Attributes) (see [below for nested schema](#nestedatt--owned_systems--provisioned_ldap--numbering))
+
+<a id="nestedatt--owned_systems--provisioned_ldap--gid_numbering"></a>
+### Nested Schema for `owned_systems.provisioned_ldap.gid_numbering`
+
+Read-Only:
+
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_systems--provisioned_ldap--gid_numbering--links))
+- `name` (String)
+- `next_id` (Number)
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_systems--provisioned_ldap--gid_numbering--permissions))
+
+<a id="nestedatt--owned_systems--provisioned_ldap--gid_numbering--links"></a>
+### Nested Schema for `owned_systems.provisioned_ldap.gid_numbering.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--owned_systems--provisioned_ldap--gid_numbering--permissions"></a>
+### Nested Schema for `owned_systems.provisioned_ldap.gid_numbering.permissions`
+
+Read-Only:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
 
 <a id="nestedatt--owned_systems--provisioned_ldap--numbering"></a>
 ### Nested Schema for `owned_systems.provisioned_ldap.numbering`
 
 Read-Only:
 
-- `account_count` (Number)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_systems--provisioned_ldap--numbering--links))
 - `name` (String)
-- `next_uid` (Number)
+- `next_id` (Number)
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_systems--provisioned_ldap--numbering--permissions))
 
 <a id="nestedatt--owned_systems--provisioned_ldap--numbering--links"></a>
@@ -6470,6 +6635,7 @@ Read-Only:
 - `accounts_writable` (Boolean)
 - `directory` (Attributes) (see [below for nested schema](#nestedatt--owned_systems--provisioned_ldap_directory--directory))
 - `gid` (Number)
+- `gid_numbering` (Attributes) (see [below for nested schema](#nestedatt--owned_systems--provisioned_ldap_directory--gid_numbering))
 - `group_dn` (String)
 - `hashing_scheme` (String)
 - `numbering` (Attributes) (see [below for nested schema](#nestedatt--owned_systems--provisioned_ldap_directory--numbering))
@@ -6512,15 +6678,47 @@ Read-Only:
 
 
 
+<a id="nestedatt--owned_systems--provisioned_ldap_directory--gid_numbering"></a>
+### Nested Schema for `owned_systems.provisioned_ldap_directory.gid_numbering`
+
+Read-Only:
+
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_systems--provisioned_ldap_directory--gid_numbering--links))
+- `name` (String)
+- `next_id` (Number)
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_systems--provisioned_ldap_directory--gid_numbering--permissions))
+
+<a id="nestedatt--owned_systems--provisioned_ldap_directory--gid_numbering--links"></a>
+### Nested Schema for `owned_systems.provisioned_ldap_directory.gid_numbering.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--owned_systems--provisioned_ldap_directory--gid_numbering--permissions"></a>
+### Nested Schema for `owned_systems.provisioned_ldap_directory.gid_numbering.permissions`
+
+Read-Only:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
+
 <a id="nestedatt--owned_systems--provisioned_ldap_directory--numbering"></a>
 ### Nested Schema for `owned_systems.provisioned_ldap_directory.numbering`
 
 Read-Only:
 
-- `account_count` (Number)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_systems--provisioned_ldap_directory--numbering--links))
 - `name` (String)
-- `next_uid` (Number)
+- `next_id` (Number)
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_systems--provisioned_ldap_directory--numbering--permissions))
 
 <a id="nestedatt--owned_systems--provisioned_ldap_directory--numbering--links"></a>

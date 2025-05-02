@@ -1275,14 +1275,13 @@ var provisioningProvisionNumberSequenceAttrTypesRS = objectAttrsTypeRSProvisioni
 var provisioningProvisionNumberSequenceAttrTypesRSRecurse = objectAttrsTypeRSProvisioningProvisionNumberSequence(true)
 
 type provisioningProvisionNumberSequenceDataRS struct {
-	Links        types.List   `tfsdk:"links"`
-	Permissions  types.List   `tfsdk:"permissions"`
-	Additional   types.List   `tfsdk:"additional"`
-	AccountCount types.Int64  `tfsdk:"account_count"`
-	Audit        types.Object `tfsdk:"audit" tkhao:"audit"`
-	Systems      types.List   `tfsdk:"systems" tkhao:"systems"`
-	Name         types.String `tfsdk:"name"`
-	NextUID      types.Int64  `tfsdk:"next_uid"`
+	Links       types.List   `tfsdk:"links"`
+	Permissions types.List   `tfsdk:"permissions"`
+	Additional  types.List   `tfsdk:"additional"`
+	Audit       types.Object `tfsdk:"audit" tkhao:"audit"`
+	Systems     types.List   `tfsdk:"systems" tkhao:"systems"`
+	Name        types.String `tfsdk:"name"`
+	NextID      types.Int64  `tfsdk:"next_id"`
 }
 
 var provisioningProvisionNumberSequence_additionalObjectsAttrTypesRS = objectAttrsTypeRSProvisioningProvisionNumberSequence_additionalObjects(false)
@@ -1358,6 +1357,7 @@ var provisioningProvisionedLDAPAttrTypesRSRecurse = objectAttrsTypeRSProvisionin
 
 type provisioningProvisionedLDAPDataRS struct {
 	Gid           types.Int64  `tfsdk:"gid"`
+	GidNumbering  types.Object `tfsdk:"gid_numbering"`
 	HashingScheme types.String `tfsdk:"hashing_scheme"`
 	Numbering     types.Object `tfsdk:"numbering"`
 }
@@ -1369,6 +1369,7 @@ type provisioningProvisionedLDAPDirectoryDataRS struct {
 	AccountsWritable     types.Bool   `tfsdk:"accounts_writable"`
 	DirectoryUUID        types.String `tfsdk:"directory_uuid"`
 	Gid                  types.Int64  `tfsdk:"gid"`
+	GidNumbering         types.Object `tfsdk:"gid_numbering"`
 	GroupDN              types.String `tfsdk:"group_dn"`
 	HashingScheme        types.String `tfsdk:"hashing_scheme"`
 	Numbering            types.Object `tfsdk:"numbering"`
@@ -1692,11 +1693,11 @@ var vaultVaultRecordSecretsAttrTypesRS = objectAttrsTypeRSVaultVaultRecordSecret
 var vaultVaultRecordSecretsAttrTypesRSRecurse = objectAttrsTypeRSVaultVaultRecordSecrets(true)
 
 type vaultVaultRecordSecretsDataRS struct {
-	Comment   types.String `tfsdk:"comment"`
-	File      types.String `tfsdk:"file"`
-	Password  types.String `tfsdk:"password"`
-	Totp      types.String `tfsdk:"totp"`
-	WriteTotp types.Bool   `tfsdk:"write_totp"`
+	Comment  types.String `tfsdk:"comment"`
+	File     types.String `tfsdk:"file"`
+	Password types.String `tfsdk:"password"`
+	Totp     types.String `tfsdk:"totp"`
+	TotpKey  types.String `tfsdk:"totp_key"`
 }
 
 var vaultVaultRecordShareAttrTypesRS = objectAttrsTypeRSVaultVaultRecordShare(false)

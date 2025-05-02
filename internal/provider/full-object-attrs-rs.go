@@ -1266,9 +1266,8 @@ func objectAttrsTypeRSProvisioningProvisionNumberSequence(recurse bool) map[stri
 	}
 	objectAttrs["links"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeRSRestLink(recurse)}}
 	objectAttrs["permissions"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeRSAuthPermission(recurse)}}
-	objectAttrs["account_count"] = types.Int64Type
 	objectAttrs["name"] = types.StringType
-	objectAttrs["next_uid"] = types.Int64Type
+	objectAttrs["next_id"] = types.Int64Type
 	return objectAttrs
 }
 
@@ -1339,6 +1338,7 @@ func objectAttrsTypeRSProvisioningProvisionedInternalLDAP(recurse bool) map[stri
 func objectAttrsTypeRSProvisioningProvisionedLDAP(recurse bool) map[string]attr.Type {
 	objectAttrs := make(map[string]attr.Type)
 	objectAttrs["gid"] = types.Int64Type
+	objectAttrs["gid_numbering"] = types.ObjectType{AttrTypes: objectAttrsTypeRSProvisioningProvisionNumberSequence(recurse)}
 	objectAttrs["hashing_scheme"] = types.StringType
 	objectAttrs["numbering"] = types.ObjectType{AttrTypes: objectAttrsTypeRSProvisioningProvisionNumberSequence(recurse)}
 	return objectAttrs
@@ -1349,6 +1349,7 @@ func objectAttrsTypeRSProvisioningProvisionedLDAPDirectory(recurse bool) map[str
 	objectAttrs["accounts_writable"] = types.BoolType
 	objectAttrs["directory_uuid"] = types.StringType
 	objectAttrs["gid"] = types.Int64Type
+	objectAttrs["gid_numbering"] = types.ObjectType{AttrTypes: objectAttrsTypeRSProvisioningProvisionNumberSequence(recurse)}
 	objectAttrs["group_dn"] = types.StringType
 	objectAttrs["hashing_scheme"] = types.StringType
 	objectAttrs["numbering"] = types.ObjectType{AttrTypes: objectAttrsTypeRSProvisioningProvisionNumberSequence(recurse)}
@@ -1667,7 +1668,7 @@ func objectAttrsTypeRSVaultVaultRecordSecrets(recurse bool) map[string]attr.Type
 	objectAttrs["file"] = types.StringType
 	objectAttrs["password"] = types.StringType
 	objectAttrs["totp"] = types.StringType
-	objectAttrs["write_totp"] = types.BoolType
+	objectAttrs["totp_key"] = types.StringType
 	return objectAttrs
 }
 

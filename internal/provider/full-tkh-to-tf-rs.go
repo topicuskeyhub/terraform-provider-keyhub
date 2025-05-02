@@ -4113,9 +4113,8 @@ func tkhToTFObjectRSProvisioningProvisionNumberSequence(recurse bool, tkh keyhub
 		diags.Append(d...)
 		obj["permissions"] = val
 	}
-	obj["account_count"] = types.Int64PointerValue(int32PToInt64P(tkh.GetAccountCount()))
 	obj["name"] = types.StringPointerValue(tkh.GetName())
-	obj["next_uid"] = types.Int64PointerValue(tkh.GetNextUID())
+	obj["next_id"] = types.Int64PointerValue(tkh.GetNextID())
 
 	objVal, d := types.ObjectValue(attrs, obj)
 	diags.Append(d...)
@@ -4328,6 +4327,11 @@ func tkhToTFObjectRSProvisioningProvisionedLDAP(recurse bool, tkh keyhubmodel.Pr
 
 	obj := make(map[string]attr.Value)
 	obj["gid"] = types.Int64PointerValue(tkh.GetGid())
+	{
+		val, d := tkhToTFObjectRSProvisioningProvisionNumberSequence(recurse, tkh.GetGidNumbering())
+		diags.Append(d...)
+		obj["gid_numbering"] = val
+	}
 	obj["hashing_scheme"] = stringerToTF(tkh.GetHashingScheme())
 	{
 		val, d := tkhToTFObjectRSProvisioningProvisionNumberSequence(recurse, tkh.GetNumbering())
@@ -4356,6 +4360,11 @@ func tkhToTFObjectRSProvisioningProvisionedLDAPDirectory(recurse bool, tkh keyhu
 	obj["accounts_writable"] = types.BoolPointerValue(tkh.GetAccountsWritable())
 	obj["directory_uuid"] = withUuidToTF(tkh.GetDirectory())
 	obj["gid"] = types.Int64PointerValue(tkh.GetGid())
+	{
+		val, d := tkhToTFObjectRSProvisioningProvisionNumberSequence(recurse, tkh.GetGidNumbering())
+		diags.Append(d...)
+		obj["gid_numbering"] = val
+	}
 	obj["group_dn"] = types.StringPointerValue(tkh.GetGroupDN())
 	obj["hashing_scheme"] = stringerToTF(tkh.GetHashingScheme())
 	{
@@ -5339,7 +5348,7 @@ func tkhToTFObjectRSVaultVaultRecordSecrets(recurse bool, tkh keyhubmodel.VaultV
 	obj["file"] = types.StringPointerValue(tkh.GetFile())
 	obj["password"] = types.StringPointerValue(tkh.GetPassword())
 	obj["totp"] = types.StringPointerValue(tkh.GetTotp())
-	obj["write_totp"] = types.BoolPointerValue(tkh.GetWriteTotp())
+	obj["totp_key"] = types.StringPointerValue(tkh.GetTotpKey())
 
 	objVal, d := types.ObjectValue(attrs, obj)
 	diags.Append(d...)

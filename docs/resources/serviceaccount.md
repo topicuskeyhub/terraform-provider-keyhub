@@ -17,19 +17,19 @@ description: |-
 
 ### Required
 
+- `name` (String)
 - `system_uuid` (String)
 - `technical_administrator_uuid` (String)
+- `username` (String)
 
 ### Optional
 
 - `active` (Boolean)
 - `additional` (List of String)
 - `description` (String)
-- `name` (String)
 - `password_rotation` (String)
 - `secret` (Attributes) (see [below for nested schema](#nestedatt--secret))
 - `ssh_public_key` (String)
-- `username` (String)
 
 ### Read-Only
 
@@ -46,8 +46,8 @@ description: |-
 
 Optional:
 
-- `old_secret` (String, Sensitive)
-- `regenerate` (Boolean)
+- `old_secret` (String, Sensitive, [Write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments))
+- `regenerate` (Boolean, [Write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments))
 
 Read-Only:
 
@@ -70,11 +70,8 @@ Read-Only:
 
 Required:
 
-- `type` (String)
-
-Optional:
-
 - `name_in_system` (String)
+- `type` (String)
 
 Read-Only:
 

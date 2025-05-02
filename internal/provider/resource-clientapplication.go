@@ -13,6 +13,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
+	"github.com/sanity-io/litter"
 	keyhubreq "github.com/topicuskeyhub/sdk-go/client"
 	keyhubmodels "github.com/topicuskeyhub/sdk-go/models"
 )
@@ -64,26 +65,48 @@ func (r *clientapplicationResource) Configure(ctx context.Context, req resource.
 }
 
 func (r *clientapplicationResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	var data clientClientApplicationDataRS
-	resp.Diagnostics.Append(req.Plan.Get(ctx, &data)...)
+	var planData clientClientApplicationDataRS
+	resp.Diagnostics.Append(req.Plan.Get(ctx, &planData)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
+
+	litter.Config.HidePrivateFields = false
+
+	tflog.Debug(ctx, "planData: "+litter.Sdump(planData))
+
+	var configData clientClientApplicationDataRS
+	resp.Diagnostics.Append(req.Config.Get(ctx, &configData)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	tflog.Debug(ctx, "configData: "+litter.Sdump(configData))
 
 	ctx = context.WithValue(ctx, keyHubClientKey, r.providerData.Client)
-	plannedState, diags := types.ObjectValueFrom(ctx, clientClientApplicationAttrTypesRSRecurse, data)
+	planValues, diags := types.ObjectValueFrom(ctx, clientClientApplicationAttrTypesRSRecurse, planData)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	newTkh, diags := tfObjectToTKHRSClientClientApplication(ctx, true, plannedState)
+	tflog.Debug(ctx, "planValues: "+litter.Sdump(planValues))
+
+	configValues, diags := types.ObjectValueFrom(ctx, clientClientApplicationAttrTypesRSRecurse, configData)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	additionalBackup := data.Additional
+	tflog.Debug(ctx, "configValues: "+litter.Sdump(configValues))
+
+	newTkh, diags := tfObjectToTKHRSClientClientApplication(ctx, true, planValues, configValues)
+	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	additionalBackup := planData.Additional
 	r.providerData.Mutex.Lock()
 	defer r.providerData.Mutex.Unlock()
 	tflog.Info(ctx, "Creating Topicus KeyHub clientapplication")
@@ -92,7 +115,7 @@ func (r *clientapplicationResource) Create(ctx context.Context, req resource.Cre
 	wrapper, err := r.providerData.Client.Client().Post(
 		ctx, newWrapper, &keyhubreq.ClientRequestBuilderPostRequestConfiguration{
 			QueryParameters: &keyhubreq.ClientRequestBuilderPostQueryParameters{
-				Additional: collectAdditional(ctx, data, data.Additional),
+				Additional: collectAdditional(ctx, planData, planData.Additional),
 			},
 		})
 	tkh, diags := findFirst[keyhubmodels.ClientClientApplicationable](ctx, wrapper, "clientapplication", nil, false, err)
@@ -106,29 +129,29 @@ func (r *clientapplicationResource) Create(ctx context.Context, req resource.Cre
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	postState = reorderClientClientApplication(postState, plannedState, true)
-	fillDataStructFromTFObjectRSClientClientApplication(&data, postState)
-	data.Additional = additionalBackup
+	postState = reorderClientClientApplication(postState, planValues, true)
+	fillDataStructFromTFObjectRSClientClientApplication(&planData, postState)
+	planData.Additional = additionalBackup
 
-	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
+	resp.Diagnostics.Append(resp.State.Set(ctx, &planData)...)
 
 	tflog.Info(ctx, "Created a new Topicus KeyHub clientapplication")
-	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
+	resp.Diagnostics.Append(resp.State.Set(ctx, &planData)...)
 }
 
 func (r *clientapplicationResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
-	var data clientClientApplicationDataRS
-	resp.Diagnostics.Append(req.State.Get(ctx, &data)...)
+	var planData clientClientApplicationDataRS
+	resp.Diagnostics.Append(req.State.Get(ctx, &planData)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	priorState, diags := types.ObjectValueFrom(ctx, clientClientApplicationAttrTypesRSRecurse, data)
+	planValues, diags := types.ObjectValueFrom(ctx, clientClientApplicationAttrTypesRSRecurse, planData)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	additionalBackup := data.Additional
+	additionalBackup := planData.Additional
 	r.providerData.Mutex.RLock()
 	defer r.providerData.Mutex.RUnlock()
 	ctx = context.WithValue(ctx, keyHubClientKey, r.providerData.Client)
@@ -136,8 +159,8 @@ func (r *clientapplicationResource) Read(ctx context.Context, req resource.ReadR
 	wrapper, err := r.providerData.Client.Client().Get(
 		ctx, &keyhubreq.ClientRequestBuilderGetRequestConfiguration{
 			QueryParameters: &keyhubreq.ClientRequestBuilderGetQueryParameters{
-				Additional: collectAdditional(ctx, data, data.Additional),
-				Uuid:       []string{data.UUID.ValueString()},
+				Additional: collectAdditional(ctx, planData, planData.Additional),
+				Uuid:       []string{planData.UUID.ValueString()},
 			},
 		})
 
@@ -145,7 +168,7 @@ func (r *clientapplicationResource) Read(ctx context.Context, req resource.ReadR
 		return
 	}
 
-	tkh, diags := findFirst[keyhubmodels.ClientClientApplicationable](ctx, wrapper, "clientapplication", data.UUID.ValueStringPointer(), true, err)
+	tkh, diags := findFirst[keyhubmodels.ClientClientApplicationable](ctx, wrapper, "clientapplication", planData.UUID.ValueStringPointer(), true, err)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -162,11 +185,11 @@ func (r *clientapplicationResource) Read(ctx context.Context, req resource.ReadR
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	postState = reorderClientClientApplication(postState, priorState, true)
-	fillDataStructFromTFObjectRSClientClientApplication(&data, postState)
-	data.Additional = additionalBackup
+	postState = reorderClientClientApplication(postState, planValues, true)
+	fillDataStructFromTFObjectRSClientClientApplication(&planData, postState)
+	planData.Additional = additionalBackup
 
-	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
+	resp.Diagnostics.Append(resp.State.Set(ctx, &planData)...)
 }
 
 func (r *clientapplicationResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {

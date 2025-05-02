@@ -14,6 +14,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
+	"github.com/sanity-io/litter"
 	keyhubreq "github.com/topicuskeyhub/sdk-go/group"
 	keyhubmodels "github.com/topicuskeyhub/sdk-go/models"
 )
@@ -65,32 +66,54 @@ func (r *groupVaultrecordResource) Configure(ctx context.Context, req resource.C
 }
 
 func (r *groupVaultrecordResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	var data groupVaultVaultRecordDataRS
-	resp.Diagnostics.Append(req.Plan.Get(ctx, &data)...)
+	var planData groupVaultVaultRecordDataRS
+	resp.Diagnostics.Append(req.Plan.Get(ctx, &planData)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
+
+	litter.Config.HidePrivateFields = false
+
+	tflog.Debug(ctx, "planData: "+litter.Sdump(planData))
+
+	var configData groupVaultVaultRecordDataRS
+	resp.Diagnostics.Append(req.Config.Get(ctx, &configData)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	tflog.Debug(ctx, "configData: "+litter.Sdump(configData))
 
 	ctx = context.WithValue(ctx, keyHubClientKey, r.providerData.Client)
-	plannedState, diags := types.ObjectValueFrom(ctx, groupVaultVaultRecordAttrTypesRSRecurse, data)
+	planValues, diags := types.ObjectValueFrom(ctx, groupVaultVaultRecordAttrTypesRSRecurse, planData)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	newTkh, diags := tfObjectToTKHRSGroupVaultVaultRecord(ctx, true, plannedState)
+	tflog.Debug(ctx, "planValues: "+litter.Sdump(planValues))
+
+	configValues, diags := types.ObjectValueFrom(ctx, groupVaultVaultRecordAttrTypesRSRecurse, configData)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	additionalBackup := data.Additional
+	tflog.Debug(ctx, "configValues: "+litter.Sdump(configValues))
+
+	newTkh, diags := tfObjectToTKHRSGroupVaultVaultRecord(ctx, true, planValues, configValues)
+	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	additionalBackup := planData.Additional
 	r.providerData.Mutex.Lock()
 	defer r.providerData.Mutex.Unlock()
 	tflog.Info(ctx, "Creating Topicus KeyHub group_vaultrecord")
 	newWrapper := keyhubmodels.NewVaultVaultRecordLinkableWrapper()
 	newWrapper.SetItems([]keyhubmodels.VaultVaultRecordable{newTkh})
-	tkhParent, diags := findGroupGroupPrimerByUUID(ctx, data.GroupUUID.ValueStringPointer())
+	tkhParent, diags := findGroupGroupPrimerByUUID(ctx, planData.GroupUUID.ValueStringPointer())
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -99,7 +122,7 @@ func (r *groupVaultrecordResource) Create(ctx context.Context, req resource.Crea
 	wrapper, err := r.providerData.Client.Group().ByGroupidInt64(*tkhParent.GetLinks()[0].GetId()).Vault().Record().Post(
 		ctx, newWrapper, &keyhubreq.ItemVaultRecordRequestBuilderPostRequestConfiguration{
 			QueryParameters: &keyhubreq.ItemVaultRecordRequestBuilderPostQueryParameters{
-				Additional: collectAdditional(ctx, data, data.Additional),
+				Additional: collectAdditional(ctx, planData, planData.Additional),
 			},
 		})
 	tkh, diags := findFirst[keyhubmodels.VaultVaultRecordable](ctx, wrapper, "group_vaultrecord", nil, false, err)
@@ -113,35 +136,35 @@ func (r *groupVaultrecordResource) Create(ctx context.Context, req resource.Crea
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	postState = setAttributeValue(ctx, postState, "group_uuid", types.StringValue(data.GroupUUID.ValueString()))
-	postState = reorderGroupVaultVaultRecord(postState, plannedState, true)
-	fillDataStructFromTFObjectRSGroupVaultVaultRecord(&data, postState)
-	data.Additional = additionalBackup
+	postState = setAttributeValue(ctx, postState, "group_uuid", types.StringValue(planData.GroupUUID.ValueString()))
+	postState = reorderGroupVaultVaultRecord(postState, planValues, true)
+	fillDataStructFromTFObjectRSGroupVaultVaultRecord(&planData, postState)
+	planData.Additional = additionalBackup
 
-	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
+	resp.Diagnostics.Append(resp.State.Set(ctx, &planData)...)
 
 	tflog.Info(ctx, "Created a new Topicus KeyHub group_vaultrecord")
-	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
+	resp.Diagnostics.Append(resp.State.Set(ctx, &planData)...)
 }
 
 func (r *groupVaultrecordResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
-	var data groupVaultVaultRecordDataRS
-	resp.Diagnostics.Append(req.State.Get(ctx, &data)...)
+	var planData groupVaultVaultRecordDataRS
+	resp.Diagnostics.Append(req.State.Get(ctx, &planData)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	priorState, diags := types.ObjectValueFrom(ctx, groupVaultVaultRecordAttrTypesRSRecurse, data)
+	planValues, diags := types.ObjectValueFrom(ctx, groupVaultVaultRecordAttrTypesRSRecurse, planData)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	additionalBackup := data.Additional
+	additionalBackup := planData.Additional
 	r.providerData.Mutex.RLock()
 	defer r.providerData.Mutex.RUnlock()
 	ctx = context.WithValue(ctx, keyHubClientKey, r.providerData.Client)
 	tflog.Info(ctx, "Reading group_vaultrecord from Topicus KeyHub")
-	tkhParent, diags := findGroupGroupPrimerByUUIDOrNil(ctx, data.GroupUUID.ValueStringPointer())
+	tkhParent, diags := findGroupGroupPrimerByUUIDOrNil(ctx, planData.GroupUUID.ValueStringPointer())
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -156,8 +179,8 @@ func (r *groupVaultrecordResource) Read(ctx context.Context, req resource.ReadRe
 	wrapper, err := r.providerData.Client.Group().ByGroupidInt64(*tkhParent.GetLinks()[0].GetId()).Vault().Record().Get(
 		ctx, &keyhubreq.ItemVaultRecordRequestBuilderGetRequestConfiguration{
 			QueryParameters: &keyhubreq.ItemVaultRecordRequestBuilderGetQueryParameters{
-				Additional: collectAdditional(ctx, data, data.Additional),
-				Uuid:       []string{data.UUID.ValueString()},
+				Additional: collectAdditional(ctx, planData, planData.Additional),
+				Uuid:       []string{planData.UUID.ValueString()},
 			},
 		})
 
@@ -165,7 +188,7 @@ func (r *groupVaultrecordResource) Read(ctx context.Context, req resource.ReadRe
 		return
 	}
 
-	tkh, diags := findFirst[keyhubmodels.VaultVaultRecordable](ctx, wrapper, "group_vaultrecord", data.UUID.ValueStringPointer(), true, err)
+	tkh, diags := findFirst[keyhubmodels.VaultVaultRecordable](ctx, wrapper, "group_vaultrecord", planData.UUID.ValueStringPointer(), true, err)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -182,48 +205,60 @@ func (r *groupVaultrecordResource) Read(ctx context.Context, req resource.ReadRe
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	postState = setAttributeValue(ctx, postState, "group_uuid", types.StringValue(data.GroupUUID.ValueString()))
-	postState = reorderGroupVaultVaultRecord(postState, priorState, true)
-	fillDataStructFromTFObjectRSGroupVaultVaultRecord(&data, postState)
-	data.Additional = additionalBackup
+	postState = setAttributeValue(ctx, postState, "group_uuid", types.StringValue(planData.GroupUUID.ValueString()))
+	postState = reorderGroupVaultVaultRecord(postState, planValues, true)
+	fillDataStructFromTFObjectRSGroupVaultVaultRecord(&planData, postState)
+	planData.Additional = additionalBackup
 
-	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
+	resp.Diagnostics.Append(resp.State.Set(ctx, &planData)...)
 }
 
 func (r *groupVaultrecordResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
-	var data groupVaultVaultRecordDataRS
-	resp.Diagnostics.Append(req.Plan.Get(ctx, &data)...)
+	var planData groupVaultVaultRecordDataRS
+	resp.Diagnostics.Append(req.Plan.Get(ctx, &planData)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	var configData groupVaultVaultRecordDataRS
+	resp.Diagnostics.Append(req.Plan.Get(ctx, &configData)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
 	ctx = context.WithValue(ctx, keyHubClientKey, r.providerData.Client)
-	priorState, diags := types.ObjectValueFrom(ctx, groupVaultVaultRecordAttrTypesRSRecurse, data)
+	planValues, diags := types.ObjectValueFrom(ctx, groupVaultVaultRecordAttrTypesRSRecurse, planData)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	newTkh, diags := tfObjectToTKHRSGroupVaultVaultRecord(ctx, true, priorState)
+	configValues, diags := types.ObjectValueFrom(ctx, groupVaultVaultRecordAttrTypesRSRecurse, configData)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	additionalBackup := data.Additional
+	newTkh, diags := tfObjectToTKHRSGroupVaultVaultRecord(ctx, true, planValues, configValues)
+	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	additionalBackup := planData.Additional
 	r.providerData.Mutex.Lock()
 	defer r.providerData.Mutex.Unlock()
 	tflog.Info(ctx, "Updating Topicus KeyHub group_vaultrecord")
-	tkhParent, diags := findGroupGroupPrimerByUUID(ctx, data.GroupUUID.ValueStringPointer())
+	tkhParent, diags := findGroupGroupPrimerByUUID(ctx, planData.GroupUUID.ValueStringPointer())
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	tkh, err := r.providerData.Client.Group().ByGroupidInt64(*tkhParent.GetLinks()[0].GetId()).Vault().Record().ByRecordidInt64(getSelfLink(data.Links).ID.ValueInt64()).Put(
+	tkh, err := r.providerData.Client.Group().ByGroupidInt64(*tkhParent.GetLinks()[0].GetId()).Vault().Record().ByRecordidInt64(getSelfLink(planData.Links).ID.ValueInt64()).Put(
 		ctx, newTkh, &keyhubreq.ItemVaultRecordWithRecordItemRequestBuilderPutRequestConfiguration{
 			QueryParameters: &keyhubreq.ItemVaultRecordWithRecordItemRequestBuilderPutQueryParameters{
-				Additional: collectAdditional(ctx, data, data.Additional),
+				Additional: collectAdditional(ctx, planData, planData.Additional),
 			},
 		})
 
@@ -236,18 +271,18 @@ func (r *groupVaultrecordResource) Update(ctx context.Context, req resource.Upda
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	postState = setAttributeValue(ctx, postState, "group_uuid", types.StringValue(data.GroupUUID.ValueString()))
-	postState = reorderGroupVaultVaultRecord(postState, priorState, true)
-	fillDataStructFromTFObjectRSGroupVaultVaultRecord(&data, postState)
-	data.Additional = additionalBackup
+	postState = setAttributeValue(ctx, postState, "group_uuid", types.StringValue(planData.GroupUUID.ValueString()))
+	postState = reorderGroupVaultVaultRecord(postState, planValues, true)
+	fillDataStructFromTFObjectRSGroupVaultVaultRecord(&planData, postState)
+	planData.Additional = additionalBackup
 
 	tflog.Info(ctx, "Updated a Topicus KeyHub group_vaultrecord")
-	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
+	resp.Diagnostics.Append(resp.State.Set(ctx, &planData)...)
 }
 
 func (r *groupVaultrecordResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
-	var data groupVaultVaultRecordDataRS
-	resp.Diagnostics.Append(req.State.Get(ctx, &data)...)
+	var planData groupVaultVaultRecordDataRS
+	resp.Diagnostics.Append(req.State.Get(ctx, &planData)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
@@ -256,7 +291,7 @@ func (r *groupVaultrecordResource) Delete(ctx context.Context, req resource.Dele
 	defer r.providerData.Mutex.Unlock()
 	ctx = context.WithValue(ctx, keyHubClientKey, r.providerData.Client)
 	tflog.Info(ctx, "Deleting group_vaultrecord from Topicus KeyHub")
-	err := r.providerData.Client.Group().ByGroupidInt64(-1).Vault().Record().ByRecordidInt64(-1).WithUrl(getSelfLink(data.Links).Href.ValueString()).Delete(ctx, nil)
+	err := r.providerData.Client.Group().ByGroupidInt64(-1).Vault().Record().ByRecordidInt64(-1).WithUrl(getSelfLink(planData.Links).Href.ValueString()).Delete(ctx, nil)
 	if !isHttpStatusCodeOk(ctx, 404, err, &resp.Diagnostics) {
 		return
 	}

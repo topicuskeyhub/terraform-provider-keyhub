@@ -1026,6 +1026,8 @@ func objectAttrsTypeDSIdentityIdentity(recurse bool) map[string]attr.Type {
 	objectAttrs["family_name"] = types.StringType
 	objectAttrs["given_name"] = types.StringType
 	objectAttrs["middle_name"] = types.StringType
+	objectAttrs["private_email"] = types.StringType
+	objectAttrs["private_telephone"] = types.StringType
 	objectAttrs["telephone"] = types.StringType
 	return objectAttrs
 }
@@ -1422,9 +1424,8 @@ func objectAttrsTypeDSProvisioningProvisionNumberSequence(recurse bool) map[stri
 	}
 	objectAttrs["links"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSRestLink(recurse)}}
 	objectAttrs["permissions"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSAuthPermission(recurse)}}
-	objectAttrs["account_count"] = types.Int64Type
 	objectAttrs["name"] = types.StringType
-	objectAttrs["next_uid"] = types.Int64Type
+	objectAttrs["next_id"] = types.Int64Type
 	return objectAttrs
 }
 
@@ -1501,6 +1502,7 @@ func objectAttrsTypeDSProvisioningProvisionedInternalLDAP(recurse bool) map[stri
 func objectAttrsTypeDSProvisioningProvisionedLDAP(recurse bool) map[string]attr.Type {
 	objectAttrs := make(map[string]attr.Type)
 	objectAttrs["gid"] = types.Int64Type
+	objectAttrs["gid_numbering"] = types.ObjectType{AttrTypes: objectAttrsTypeDSProvisioningProvisionNumberSequence(recurse)}
 	objectAttrs["hashing_scheme"] = types.StringType
 	objectAttrs["numbering"] = types.ObjectType{AttrTypes: objectAttrsTypeDSProvisioningProvisionNumberSequence(recurse)}
 	return objectAttrs
@@ -1511,6 +1513,7 @@ func objectAttrsTypeDSProvisioningProvisionedLDAPDirectory(recurse bool) map[str
 	objectAttrs["accounts_writable"] = types.BoolType
 	objectAttrs["directory"] = types.ObjectType{AttrTypes: objectAttrsTypeDSDirectoryAccountDirectoryPrimer(recurse)}
 	objectAttrs["gid"] = types.Int64Type
+	objectAttrs["gid_numbering"] = types.ObjectType{AttrTypes: objectAttrsTypeDSProvisioningProvisionNumberSequence(recurse)}
 	objectAttrs["group_dn"] = types.StringType
 	objectAttrs["hashing_scheme"] = types.StringType
 	objectAttrs["numbering"] = types.ObjectType{AttrTypes: objectAttrsTypeDSProvisioningProvisionNumberSequence(recurse)}

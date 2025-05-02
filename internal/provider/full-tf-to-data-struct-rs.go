@@ -961,11 +961,10 @@ func fillDataStructFromTFObjectRSProvisioningProvisionNumberSequence(data *provi
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
 	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
-	data.AccountCount = obj.Attributes()["account_count"].(basetypes.Int64Value)
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
 	data.Systems = obj.Attributes()["systems"].(basetypes.ListValue)
 	data.Name = obj.Attributes()["name"].(basetypes.StringValue)
-	data.NextUID = obj.Attributes()["next_uid"].(basetypes.Int64Value)
+	data.NextID = obj.Attributes()["next_id"].(basetypes.Int64Value)
 }
 
 func fillDataStructFromTFObjectRSProvisioningProvisionNumberSequence_additionalObjects(data *provisioningProvisionNumberSequence_additionalObjectsDataRS, obj types.Object) {
@@ -1014,6 +1013,7 @@ func fillDataStructFromTFObjectRSProvisioningProvisionedInternalLDAP(data *provi
 
 func fillDataStructFromTFObjectRSProvisioningProvisionedLDAP(data *provisioningProvisionedLDAPDataRS, obj types.Object) {
 	data.Gid = obj.Attributes()["gid"].(basetypes.Int64Value)
+	data.GidNumbering = obj.Attributes()["gid_numbering"].(basetypes.ObjectValue)
 	data.HashingScheme = obj.Attributes()["hashing_scheme"].(basetypes.StringValue)
 	data.Numbering = obj.Attributes()["numbering"].(basetypes.ObjectValue)
 }
@@ -1022,6 +1022,7 @@ func fillDataStructFromTFObjectRSProvisioningProvisionedLDAPDirectory(data *prov
 	data.AccountsWritable = obj.Attributes()["accounts_writable"].(basetypes.BoolValue)
 	data.DirectoryUUID = obj.Attributes()["directory_uuid"].(basetypes.StringValue)
 	data.Gid = obj.Attributes()["gid"].(basetypes.Int64Value)
+	data.GidNumbering = obj.Attributes()["gid_numbering"].(basetypes.ObjectValue)
 	data.GroupDN = obj.Attributes()["group_dn"].(basetypes.StringValue)
 	data.HashingScheme = obj.Attributes()["hashing_scheme"].(basetypes.StringValue)
 	data.Numbering = obj.Attributes()["numbering"].(basetypes.ObjectValue)
@@ -1274,7 +1275,7 @@ func fillDataStructFromTFObjectRSVaultVaultRecordSecrets(data *vaultVaultRecordS
 	data.File = obj.Attributes()["file"].(basetypes.StringValue)
 	data.Password = obj.Attributes()["password"].(basetypes.StringValue)
 	data.Totp = obj.Attributes()["totp"].(basetypes.StringValue)
-	data.WriteTotp = obj.Attributes()["write_totp"].(basetypes.BoolValue)
+	data.TotpKey = obj.Attributes()["totp_key"].(basetypes.StringValue)
 }
 
 func fillDataStructFromTFObjectRSVaultVaultRecordShare(data *vaultVaultRecordShareDataRS, obj types.Object) {

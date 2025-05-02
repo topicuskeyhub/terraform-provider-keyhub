@@ -18,15 +18,17 @@ description: |-
 ### Required
 
 - `client_application_uuid` (String)
+- `name` (String)
 
 ### Optional
 
+> **NOTE**: [Write-only arguments](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments) are supported in Terraform 1.11 and later.
+
 - `additional` (List of String)
 - `color` (String)
-- `delete_tile` (Boolean)
+- `delete_tile` (Boolean, [Write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments))
 - `end_date` (String)
 - `filename` (String)
-- `name` (String)
 - `secret` (Attributes) (see [below for nested schema](#nestedatt--secret))
 - `tile` (Attributes) (see [below for nested schema](#nestedatt--tile))
 - `url` (String)
@@ -57,8 +59,11 @@ Optional:
 - `comment` (String, Sensitive)
 - `file` (String, Sensitive)
 - `password` (String, Sensitive)
+- `totp_key` (String, Sensitive, [Write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments))
+
+Read-Only:
+
 - `totp` (String, Sensitive)
-- `write_totp` (Boolean)
 
 
 <a id="nestedatt--tile"></a>
@@ -153,10 +158,13 @@ Optional:
 <a id="nestedatt--shares"></a>
 ### Nested Schema for `shares`
 
+Required:
+
+- `name` (String)
+
 Optional:
 
 - `color` (String)
-- `name` (String)
 
 Read-Only:
 

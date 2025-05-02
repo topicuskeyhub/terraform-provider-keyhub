@@ -3417,6 +3417,8 @@ func tkhToTFObjectDSIdentityIdentity(recurse bool, tkh keyhubmodel.IdentityIdent
 	obj["family_name"] = types.StringPointerValue(tkh.GetFamilyName())
 	obj["given_name"] = types.StringPointerValue(tkh.GetGivenName())
 	obj["middle_name"] = types.StringPointerValue(tkh.GetMiddleName())
+	obj["private_email"] = types.StringPointerValue(tkh.GetPrivateEmail())
+	obj["private_telephone"] = types.StringPointerValue(tkh.GetPrivateTelephone())
 	obj["telephone"] = types.StringPointerValue(tkh.GetTelephone())
 
 	objVal, d := types.ObjectValue(attrs, obj)
@@ -4890,9 +4892,8 @@ func tkhToTFObjectDSProvisioningProvisionNumberSequence(recurse bool, tkh keyhub
 		diags.Append(d...)
 		obj["permissions"] = val
 	}
-	obj["account_count"] = types.Int64PointerValue(int32PToInt64P(tkh.GetAccountCount()))
 	obj["name"] = types.StringPointerValue(tkh.GetName())
-	obj["next_uid"] = types.Int64PointerValue(tkh.GetNextUID())
+	obj["next_id"] = types.Int64PointerValue(tkh.GetNextID())
 
 	objVal, d := types.ObjectValue(attrs, obj)
 	diags.Append(d...)
@@ -5141,6 +5142,11 @@ func tkhToTFObjectDSProvisioningProvisionedLDAP(recurse bool, tkh keyhubmodel.Pr
 
 	obj := make(map[string]attr.Value)
 	obj["gid"] = types.Int64PointerValue(tkh.GetGid())
+	{
+		val, d := tkhToTFObjectDSProvisioningProvisionNumberSequence(recurse, tkh.GetGidNumbering())
+		diags.Append(d...)
+		obj["gid_numbering"] = val
+	}
 	obj["hashing_scheme"] = stringerToTF(tkh.GetHashingScheme())
 	{
 		val, d := tkhToTFObjectDSProvisioningProvisionNumberSequence(recurse, tkh.GetNumbering())
@@ -5173,6 +5179,11 @@ func tkhToTFObjectDSProvisioningProvisionedLDAPDirectory(recurse bool, tkh keyhu
 		obj["directory"] = val
 	}
 	obj["gid"] = types.Int64PointerValue(tkh.GetGid())
+	{
+		val, d := tkhToTFObjectDSProvisioningProvisionNumberSequence(recurse, tkh.GetGidNumbering())
+		diags.Append(d...)
+		obj["gid_numbering"] = val
+	}
 	obj["group_dn"] = types.StringPointerValue(tkh.GetGroupDN())
 	obj["hashing_scheme"] = stringerToTF(tkh.GetHashingScheme())
 	{

@@ -52,11 +52,13 @@ func resourceSchemaAttrsGeneratedSecret(recurse bool) map[string]rsschema.Attrib
 		Sensitive: true,
 	}
 	schemaAttrs["old_secret"] = rsschema.StringAttribute{
+		WriteOnly: true,
 		Optional:  true,
 		Sensitive: true,
 	}
 	schemaAttrs["regenerate"] = rsschema.BoolAttribute{
-		Optional: true,
+		WriteOnly: true,
+		Optional:  true,
 	}
 	return schemaAttrs
 }
@@ -458,7 +460,7 @@ func resourceSchemaAttrsClientApplicationVaultVaultRecord(recurse bool) map[stri
 		},
 	}
 	schemaAttrs["name"] = rsschema.StringAttribute{
-		Optional: true,
+		Required: true,
 		Validators: []validator.String{
 			stringvalidator.UTF8LengthBetween(0, 255),
 		},
@@ -550,7 +552,7 @@ func resourceSchemaAttrsClientClientApplication(recurse bool) map[string]rsschem
 		},
 	}
 	schemaAttrs["name"] = rsschema.StringAttribute{
-		Optional: true,
+		Required: true,
 		Validators: []validator.String{
 			stringvalidator.UTF8LengthBetween(0, 255),
 		},
@@ -649,7 +651,7 @@ func resourceSchemaAttrsClientClientApplicationPrimer(recurse bool) map[string]r
 		},
 	}
 	schemaAttrs["name"] = rsschema.StringAttribute{
-		Optional: true,
+		Required: true,
 		Validators: []validator.String{
 			stringvalidator.UTF8LengthBetween(0, 255),
 		},
@@ -686,7 +688,8 @@ func resourceSchemaAttrsClientClientApplication_additionalObjects(recurse bool) 
 	}
 
 	schemaAttrs["delete_tile"] = rsschema.BoolAttribute{
-		Optional: true,
+		WriteOnly: true,
+		Optional:  true,
 	}
 	{
 		attr := resetListNestedAttributeFlags(resourceSchemaAttrsGroupGroupClientLinkableWrapper(recurse)["items"].(rsschema.ListNestedAttribute))
@@ -711,7 +714,6 @@ func resourceSchemaAttrsClientClientApplication_additionalObjects(recurse bool) 
 			Attributes: resourceSchemaAttrsGeneratedSecret(recurse),
 		}
 		attr.Optional = true
-		attr.Computed = true
 		schemaAttrs["secret"] = attr
 	}
 
@@ -1029,7 +1031,7 @@ func resourceSchemaAttrsDirectoryAccountDirectory(recurse bool) map[string]rssch
 		PlanModifiers: []planmodifier.String{stringplanmodifier.UseStateForUnknown()},
 	}
 	schemaAttrs["name"] = rsschema.StringAttribute{
-		Optional: true,
+		Required: true,
 		Validators: []validator.String{
 			stringvalidator.UTF8LengthBetween(0, 255),
 		},
@@ -1155,7 +1157,7 @@ func resourceSchemaAttrsDirectoryAccountDirectoryPrimer(recurse bool) map[string
 		PlanModifiers: []planmodifier.String{stringplanmodifier.UseStateForUnknown()},
 	}
 	schemaAttrs["name"] = rsschema.StringAttribute{
-		Optional: true,
+		Required: true,
 		Validators: []validator.String{
 			stringvalidator.UTF8LengthBetween(0, 255),
 		},
@@ -1284,7 +1286,7 @@ func resourceSchemaAttrsDirectoryLDAPDirectory(recurse bool) map[string]rsschema
 		},
 	}
 	schemaAttrs["base_dn"] = rsschema.StringAttribute{
-		Optional: true,
+		Required: true,
 		Validators: []validator.String{
 			stringvalidator.UTF8LengthBetween(0, 255),
 		},
@@ -1315,7 +1317,7 @@ func resourceSchemaAttrsDirectoryLDAPDirectory(recurse bool) map[string]rsschema
 		},
 	}
 	schemaAttrs["host"] = rsschema.StringAttribute{
-		Optional: true,
+		Required: true,
 		Validators: []validator.String{
 			stringvalidator.UTF8LengthBetween(0, 255),
 		},
@@ -1387,13 +1389,13 @@ func resourceSchemaAttrsDirectoryOIDCDirectory(recurse bool) map[string]rsschema
 		},
 	}
 	schemaAttrs["client_id"] = rsschema.StringAttribute{
-		Optional: true,
+		Required: true,
 		Validators: []validator.String{
 			stringvalidator.UTF8LengthBetween(0, 255),
 		},
 	}
 	schemaAttrs["client_secret"] = rsschema.StringAttribute{
-		Optional:  true,
+		Required:  true,
 		Sensitive: true,
 	}
 	schemaAttrs["domain_restriction"] = rsschema.StringAttribute{
@@ -1411,7 +1413,7 @@ func resourceSchemaAttrsDirectoryOIDCDirectory(recurse bool) map[string]rsschema
 		Computed: true,
 	}
 	schemaAttrs["issuer"] = rsschema.StringAttribute{
-		Optional: true,
+		Required: true,
 		Validators: []validator.String{
 			stringvalidator.UTF8LengthBetween(0, 512),
 		},
@@ -1490,7 +1492,7 @@ func resourceSchemaAttrsGroupGroup(recurse bool) map[string]rsschema.Attribute {
 		PlanModifiers: []planmodifier.Bool{boolplanmodifier.UseStateForUnknown()},
 	}
 	schemaAttrs["name"] = rsschema.StringAttribute{
-		Optional: true,
+		Required: true,
 		Validators: []validator.String{
 			stringvalidator.UTF8LengthBetween(0, 255),
 		},
@@ -1785,7 +1787,7 @@ func resourceSchemaAttrsGroupGroupClassificationPrimer(recurse bool) map[string]
 		PlanModifiers: []planmodifier.List{listplanmodifier.UseStateForUnknown()},
 	}
 	schemaAttrs["name"] = rsschema.StringAttribute{
-		Optional: true,
+		Required: true,
 		Validators: []validator.String{
 			stringvalidator.UTF8LengthBetween(0, 255),
 		},
@@ -1967,7 +1969,7 @@ func resourceSchemaAttrsGroupGroupPrimer(recurse bool) map[string]rsschema.Attri
 		PlanModifiers: []planmodifier.Bool{boolplanmodifier.UseStateForUnknown()},
 	}
 	schemaAttrs["name"] = rsschema.StringAttribute{
-		Optional: true,
+		Required: true,
 		Validators: []validator.String{
 			stringvalidator.UTF8LengthBetween(0, 255),
 		},
@@ -2336,7 +2338,7 @@ func resourceSchemaAttrsGroupVaultVaultRecord(recurse bool) map[string]rsschema.
 		},
 	}
 	schemaAttrs["name"] = rsschema.StringAttribute{
-		Optional: true,
+		Required: true,
 		Validators: []validator.String{
 			stringvalidator.UTF8LengthBetween(0, 255),
 		},
@@ -2425,7 +2427,7 @@ func resourceSchemaAttrsIdentityAccountAttributeDefinition(recurse bool) map[str
 		},
 	}
 	schemaAttrs["name"] = rsschema.StringAttribute{
-		Optional: true,
+		Required: true,
 	}
 	schemaAttrs["system_definition"] = rsschema.StringAttribute{
 		Computed: true,
@@ -2664,8 +2666,7 @@ func resourceSchemaAttrsNestedProvisioningGroupOnSystem(recurse bool) map[string
 		Computed: true,
 	}
 	schemaAttrs["name_in_system"] = rsschema.StringAttribute{
-		Computed: true,
-		Optional: true,
+		Required: true,
 		Validators: []validator.String{
 			stringvalidator.UTF8LengthBetween(0, 255),
 		},
@@ -2746,7 +2747,7 @@ func resourceSchemaAttrsOrganizationOrganizationalUnit(recurse bool) map[string]
 		PlanModifiers: []planmodifier.List{listplanmodifier.UseStateForUnknown()},
 	}
 	schemaAttrs["name"] = rsschema.StringAttribute{
-		Optional: true,
+		Required: true,
 		Validators: []validator.String{
 			stringvalidator.UTF8LengthBetween(0, 255),
 		},
@@ -2832,7 +2833,7 @@ func resourceSchemaAttrsOrganizationOrganizationalUnitPrimer(recurse bool) map[s
 		PlanModifiers: []planmodifier.List{listplanmodifier.UseStateForUnknown()},
 	}
 	schemaAttrs["name"] = rsschema.StringAttribute{
-		Optional: true,
+		Required: true,
 		Validators: []validator.String{
 			stringvalidator.UTF8LengthBetween(0, 255),
 		},
@@ -2904,7 +2905,7 @@ func resourceSchemaAttrsOrganizationOrganizationalUnit_additionalObjects(recurse
 
 	{
 		attr := resetListNestedAttributeFlags(resourceSchemaAttrsOrganizationOrganizationalUnitPrimerLinkableWrapper(recurse)["items"].(rsschema.ListNestedAttribute))
-		attr.Optional = true
+		attr.WriteOnly = true
 		schemaAttrs["create_as_parent_of"] = attr
 	}
 
@@ -2950,7 +2951,7 @@ func resourceSchemaAttrsProfileAccessProfile(recurse bool) map[string]rsschema.A
 		PlanModifiers: []planmodifier.List{listplanmodifier.UseStateForUnknown()},
 	}
 	schemaAttrs["name"] = rsschema.StringAttribute{
-		Optional: true,
+		Required: true,
 		Validators: []validator.String{
 			stringvalidator.UTF8LengthBetween(0, 255),
 		},
@@ -3245,7 +3246,7 @@ func resourceSchemaAttrsProfileAccessProfilePrimer(recurse bool) map[string]rssc
 		PlanModifiers: []planmodifier.List{listplanmodifier.UseStateForUnknown()},
 	}
 	schemaAttrs["name"] = rsschema.StringAttribute{
-		Optional: true,
+		Required: true,
 		Validators: []validator.String{
 			stringvalidator.UTF8LengthBetween(0, 255),
 		},
@@ -3389,7 +3390,7 @@ func resourceSchemaAttrsProvisioningAbstractProvisionedLDAP(recurse bool) map[st
 	}
 
 	schemaAttrs["base_dn"] = rsschema.StringAttribute{
-		Optional: true,
+		Required: true,
 		Validators: []validator.String{
 			stringvalidator.UTF8LengthBetween(0, 255),
 		},
@@ -3429,7 +3430,7 @@ func resourceSchemaAttrsProvisioningAbstractProvisionedLDAP(recurse bool) map[st
 		},
 	}
 	schemaAttrs["host"] = rsschema.StringAttribute{
-		Optional: true,
+		Required: true,
 		Validators: []validator.String{
 			stringvalidator.UTF8LengthBetween(0, 255),
 		},
@@ -3534,8 +3535,7 @@ func resourceSchemaAttrsProvisioningGroupOnSystem(recurse bool) map[string]rssch
 		Computed: true,
 	}
 	schemaAttrs["name_in_system"] = rsschema.StringAttribute{
-		Computed: true,
-		Optional: true,
+		Required: true,
 		Validators: []validator.String{
 			stringvalidator.UTF8LengthBetween(0, 255),
 		},
@@ -3594,8 +3594,7 @@ func resourceSchemaAttrsProvisioningGroupOnSystemPrimer(recurse bool) map[string
 		Computed: true,
 	}
 	schemaAttrs["name_in_system"] = rsschema.StringAttribute{
-		Computed: true,
-		Optional: true,
+		Required: true,
 		Validators: []validator.String{
 			stringvalidator.UTF8LengthBetween(0, 255),
 		},
@@ -3702,19 +3701,16 @@ func resourceSchemaAttrsProvisioningProvisionNumberSequence(recurse bool) map[st
 		Computed:      true,
 		PlanModifiers: []planmodifier.List{listplanmodifier.UseStateForUnknown()},
 	}
-	schemaAttrs["account_count"] = rsschema.Int64Attribute{
-		Computed: true,
-	}
 	schemaAttrs["name"] = rsschema.StringAttribute{
-		Optional: true,
+		Required: true,
 		Validators: []validator.String{
 			stringvalidator.UTF8LengthBetween(0, 255),
 		},
 	}
-	schemaAttrs["next_uid"] = rsschema.Int64Attribute{
+	schemaAttrs["next_id"] = rsschema.Int64Attribute{
 		Computed: true,
 		Optional: true,
-		Default:  int64default.StaticInt64(2000),
+		Default:  int64default.StaticInt64(2001),
 		Validators: []validator.Int64{
 			int64validator.Between(2000, 60000),
 		},
@@ -3806,20 +3802,20 @@ func resourceSchemaAttrsProvisioningProvisionedAzureOIDCDirectory(recurse bool) 
 		},
 	}
 	schemaAttrs["tenant"] = rsschema.StringAttribute{
-		Optional: true,
+		Required: true,
 	}
 	return schemaAttrs
 }
 func resourceSchemaAttrsProvisioningProvisionedAzureSyncLDAPDirectory(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	schemaAttrs["client_id"] = rsschema.StringAttribute{
-		Optional: true,
+		Required: true,
 		Validators: []validator.String{
 			stringvalidator.UTF8LengthBetween(0, 255),
 		},
 	}
 	schemaAttrs["client_secret"] = rsschema.StringAttribute{
-		Optional:  true,
+		Required:  true,
 		Sensitive: true,
 	}
 	schemaAttrs["directory_uuid"] = rsschema.StringAttribute{
@@ -3829,27 +3825,27 @@ func resourceSchemaAttrsProvisioningProvisionedAzureSyncLDAPDirectory(recurse bo
 		},
 	}
 	schemaAttrs["tenant"] = rsschema.StringAttribute{
-		Optional: true,
+		Required: true,
 	}
 	return schemaAttrs
 }
 func resourceSchemaAttrsProvisioningProvisionedAzureTenant(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	schemaAttrs["client_id"] = rsschema.StringAttribute{
-		Optional: true,
+		Required: true,
 		Validators: []validator.String{
 			stringvalidator.UTF8LengthBetween(0, 255),
 		},
 	}
 	schemaAttrs["client_secret"] = rsschema.StringAttribute{
-		Optional:  true,
+		Required:  true,
 		Sensitive: true,
 	}
 	schemaAttrs["idp_domain"] = rsschema.StringAttribute{
 		Optional: true,
 	}
 	schemaAttrs["tenant"] = rsschema.StringAttribute{
-		Optional: true,
+		Required: true,
 		Validators: []validator.String{
 			stringvalidator.UTF8LengthBetween(0, 255),
 		},
@@ -3873,6 +3869,14 @@ func resourceSchemaAttrsProvisioningProvisionedLDAP(recurse bool) map[string]rss
 		Optional: true,
 		Default:  int64default.StaticInt64(2000),
 	}
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsProvisioningProvisionNumberSequence(recurse),
+		}
+		attr.Required = true
+		schemaAttrs["gid_numbering"] = attr
+	}
+
 	schemaAttrs["hashing_scheme"] = rsschema.StringAttribute{
 		Required: true,
 		Validators: []validator.String{
@@ -3909,8 +3913,16 @@ func resourceSchemaAttrsProvisioningProvisionedLDAPDirectory(recurse bool) map[s
 		Optional: true,
 		Default:  int64default.StaticInt64(2000),
 	}
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsProvisioningProvisionNumberSequence(recurse),
+		}
+		attr.Optional = true
+		schemaAttrs["gid_numbering"] = attr
+	}
+
 	schemaAttrs["group_dn"] = rsschema.StringAttribute{
-		Optional: true,
+		Required: true,
 		Validators: []validator.String{
 			stringvalidator.UTF8LengthBetween(0, 255),
 		},
@@ -4023,7 +4035,7 @@ func resourceSchemaAttrsProvisioningProvisionedSCIM(recurse bool) map[string]rss
 		Sensitive: true,
 	}
 	schemaAttrs["url"] = rsschema.StringAttribute{
-		Optional: true,
+		Required: true,
 		Validators: []validator.String{
 			stringvalidator.UTF8LengthBetween(0, 512),
 		},
@@ -4083,7 +4095,7 @@ func resourceSchemaAttrsProvisioningProvisionedSystem(recurse bool) map[string]r
 		Computed: true,
 	}
 	schemaAttrs["name"] = rsschema.StringAttribute{
-		Optional: true,
+		Required: true,
 		Validators: []validator.String{
 			stringvalidator.UTF8LengthBetween(0, 255),
 		},
@@ -4300,7 +4312,7 @@ func resourceSchemaAttrsProvisioningProvisionedSystemPrimer(recurse bool) map[st
 		Computed: true,
 	}
 	schemaAttrs["name"] = rsschema.StringAttribute{
-		Optional: true,
+		Required: true,
 		Validators: []validator.String{
 			stringvalidator.UTF8LengthBetween(0, 255),
 		},
@@ -4459,7 +4471,7 @@ func resourceSchemaAttrsServiceaccountServiceAccount(recurse bool) map[string]rs
 		Default:  booldefault.StaticBool(false),
 	}
 	schemaAttrs["name"] = rsschema.StringAttribute{
-		Optional: true,
+		Required: true,
 		Validators: []validator.String{
 			stringvalidator.UTF8LengthBetween(0, 255),
 		},
@@ -4471,7 +4483,7 @@ func resourceSchemaAttrsServiceaccountServiceAccount(recurse bool) map[string]rs
 		},
 	}
 	schemaAttrs["username"] = rsschema.StringAttribute{
-		Optional: true,
+		Required: true,
 		Validators: []validator.String{
 			stringvalidator.UTF8LengthBetween(0, 255),
 		},
@@ -4542,8 +4554,7 @@ func resourceSchemaAttrsServiceaccountServiceAccountGroup(recurse bool) map[stri
 		Computed: true,
 	}
 	schemaAttrs["name_in_system"] = rsschema.StringAttribute{
-		Computed: true,
-		Optional: true,
+		Required: true,
 		Validators: []validator.String{
 			stringvalidator.UTF8LengthBetween(0, 255),
 		},
@@ -4615,7 +4626,7 @@ func resourceSchemaAttrsServiceaccountServiceAccountPrimer(recurse bool) map[str
 		Default:  booldefault.StaticBool(false),
 	}
 	schemaAttrs["name"] = rsschema.StringAttribute{
-		Optional: true,
+		Required: true,
 		Validators: []validator.String{
 			stringvalidator.UTF8LengthBetween(0, 255),
 		},
@@ -4627,7 +4638,7 @@ func resourceSchemaAttrsServiceaccountServiceAccountPrimer(recurse bool) map[str
 		},
 	}
 	schemaAttrs["username"] = rsschema.StringAttribute{
-		Optional: true,
+		Required: true,
 		Validators: []validator.String{
 			stringvalidator.UTF8LengthBetween(0, 255),
 		},
@@ -4681,7 +4692,6 @@ func resourceSchemaAttrsServiceaccountServiceAccount_additionalObjects(recurse b
 			Attributes: resourceSchemaAttrsGeneratedSecret(recurse),
 		}
 		attr.Optional = true
-		attr.Computed = true
 		schemaAttrs["secret"] = attr
 	}
 
@@ -4817,7 +4827,7 @@ func resourceSchemaAttrsVaultVaultRecord(recurse bool) map[string]rsschema.Attri
 		},
 	}
 	schemaAttrs["name"] = rsschema.StringAttribute{
-		Optional: true,
+		Required: true,
 		Validators: []validator.String{
 			stringvalidator.UTF8LengthBetween(0, 255),
 		},
@@ -4893,7 +4903,7 @@ func resourceSchemaAttrsVaultVaultRecordPrimer(recurse bool) map[string]rsschema
 		},
 	}
 	schemaAttrs["name"] = rsschema.StringAttribute{
-		Optional: true,
+		Required: true,
 		Validators: []validator.String{
 			stringvalidator.UTF8LengthBetween(0, 255),
 		},
@@ -4933,13 +4943,13 @@ func resourceSchemaAttrsVaultVaultRecordSecrets(recurse bool) map[string]rsschem
 		Sensitive: true,
 	}
 	schemaAttrs["totp"] = rsschema.StringAttribute{
-		Optional:  true,
+		Computed:  true,
 		Sensitive: true,
 	}
-	schemaAttrs["write_totp"] = rsschema.BoolAttribute{
-		Computed: true,
-		Optional: true,
-		Default:  booldefault.StaticBool(false),
+	schemaAttrs["totp_key"] = rsschema.StringAttribute{
+		WriteOnly: true,
+		Optional:  true,
+		Sensitive: true,
 	}
 	return schemaAttrs
 }
@@ -4995,7 +5005,8 @@ func resourceSchemaAttrsVaultVaultRecord_additionalObjects(recurse bool) map[str
 	}
 
 	schemaAttrs["delete_tile"] = rsschema.BoolAttribute{
-		Optional: true,
+		WriteOnly: true,
+		Optional:  true,
 	}
 	schemaAttrs["parent_uuid"] = rsschema.StringAttribute{
 		Computed: true,
@@ -5202,7 +5213,7 @@ func resourceSchemaAttrsWebhookWebhook(recurse bool) map[string]rsschema.Attribu
 		},
 	}
 	schemaAttrs["url"] = rsschema.StringAttribute{
-		Optional: true,
+		Required: true,
 		Validators: []validator.String{
 			stringvalidator.UTF8LengthBetween(0, 512),
 		},
