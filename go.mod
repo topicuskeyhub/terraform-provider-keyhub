@@ -11,6 +11,7 @@ require (
 	github.com/hashicorp/terraform-plugin-framework-validators v0.17.0
 	github.com/hashicorp/terraform-plugin-log v0.9.0
 	github.com/microsoft/kiota-abstractions-go v1.9.2
+	github.com/sanity-io/litter v1.5.8
 	github.com/topicuskeyhub/sdk-go v0.40.0
 	github.com/topicuskeyhub/terraform-provider-keyhub-generator v1.0.26
 	golang.org/x/exp v0.0.0-20250305212735-054e65f0b394
@@ -73,7 +74,6 @@ require (
 	github.com/perimeterx/marshmallow v1.1.5 // indirect
 	github.com/posener/complete v1.2.3 // indirect
 	github.com/rivo/uniseg v0.4.7 // indirect
-	github.com/sanity-io/litter v1.5.8 // indirect
 	github.com/shopspring/decimal v1.3.1 // indirect
 	github.com/spf13/cast v1.7.1 // indirect
 	github.com/std-uritemplate/std-uritemplate/go/v2 v2.0.3 // indirect
