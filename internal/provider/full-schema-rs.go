@@ -52,13 +52,11 @@ func resourceSchemaAttrsGeneratedSecret(recurse bool) map[string]rsschema.Attrib
 		Sensitive: true,
 	}
 	schemaAttrs["old_secret"] = rsschema.StringAttribute{
-		WriteOnly: true,
 		Optional:  true,
 		Sensitive: true,
 	}
 	schemaAttrs["regenerate"] = rsschema.BoolAttribute{
-		WriteOnly: true,
-		Optional:  true,
+		Optional: true,
 	}
 	return schemaAttrs
 }
@@ -714,6 +712,7 @@ func resourceSchemaAttrsClientClientApplication_additionalObjects(recurse bool) 
 			Attributes: resourceSchemaAttrsGeneratedSecret(recurse),
 		}
 		attr.Optional = true
+		attr.Computed = true
 		schemaAttrs["secret"] = attr
 	}
 
@@ -4692,6 +4691,7 @@ func resourceSchemaAttrsServiceaccountServiceAccount_additionalObjects(recurse b
 			Attributes: resourceSchemaAttrsGeneratedSecret(recurse),
 		}
 		attr.Optional = true
+		attr.Computed = true
 		schemaAttrs["secret"] = attr
 	}
 

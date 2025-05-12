@@ -150,6 +150,8 @@ Read-Only:
 Read-Only:
 
 - `generated_secret` (String, Sensitive)
+- `old_secret` (String, Sensitive)
+- `regenerate` (Boolean)
 
 
 <a id="nestedatt--supported_features"></a>

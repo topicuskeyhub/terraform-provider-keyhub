@@ -24,6 +24,8 @@ var generatedSecretAttrTypesDSRecurse = objectAttrsTypeDSGeneratedSecret(true)
 
 type generatedSecretDataDS struct {
 	GeneratedSecret types.String `tfsdk:"generated_secret"`
+	OldSecret       types.String `tfsdk:"old_secret"`
+	Regenerate      types.Bool   `tfsdk:"regenerate"`
 }
 
 var linkableAttrTypesDS = objectAttrsTypeDSLinkable(false)

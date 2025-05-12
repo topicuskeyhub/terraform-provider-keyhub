@@ -22,6 +22,8 @@ func objectAttrsTypeDSAuditInfo(recurse bool) map[string]attr.Type {
 func objectAttrsTypeDSGeneratedSecret(recurse bool) map[string]attr.Type {
 	objectAttrs := make(map[string]attr.Type)
 	objectAttrs["generated_secret"] = types.StringType
+	objectAttrs["old_secret"] = types.StringType
+	objectAttrs["regenerate"] = types.BoolType
 	return objectAttrs
 }
 

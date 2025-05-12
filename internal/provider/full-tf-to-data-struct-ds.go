@@ -19,6 +19,8 @@ func fillDataStructFromTFObjectDSAuditInfo(data *auditInfoDataDS, obj types.Obje
 
 func fillDataStructFromTFObjectDSGeneratedSecret(data *generatedSecretDataDS, obj types.Object) {
 	data.GeneratedSecret = obj.Attributes()["generated_secret"].(basetypes.StringValue)
+	data.OldSecret = obj.Attributes()["old_secret"].(basetypes.StringValue)
+	data.Regenerate = obj.Attributes()["regenerate"].(basetypes.BoolValue)
 }
 
 func fillDataStructFromTFObjectDSLinkable(data *linkableDataDS, obj types.Object) {

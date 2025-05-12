@@ -51,6 +51,8 @@ func tkhToTFObjectDSGeneratedSecret(recurse bool, tkh keyhubmodel.GeneratedSecre
 
 	obj := make(map[string]attr.Value)
 	obj["generated_secret"] = types.StringPointerValue(tkh.GetGeneratedSecret())
+	obj["old_secret"] = types.StringPointerValue(tkh.GetOldSecret())
+	obj["regenerate"] = types.BoolPointerValue(tkh.GetRegenerate())
 
 	objVal, d := types.ObjectValue(attrs, obj)
 	diags.Append(d...)

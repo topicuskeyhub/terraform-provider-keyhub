@@ -196,8 +196,8 @@ Optional:
 
 Optional:
 
-- `old_secret` (String, Sensitive, [Write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments))
-- `regenerate` (Boolean, [Write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments))
+- `old_secret` (String, Sensitive)
+- `regenerate` (Boolean)
 
 Read-Only:
 

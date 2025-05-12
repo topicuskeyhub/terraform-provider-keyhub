@@ -38,6 +38,13 @@ func dataSourceSchemaAttrsGeneratedSecret(recurse bool) map[string]dsschema.Attr
 		Computed:  true,
 		Sensitive: true,
 	}
+	schemaAttrs["old_secret"] = dsschema.StringAttribute{
+		Computed:  true,
+		Sensitive: true,
+	}
+	schemaAttrs["regenerate"] = dsschema.BoolAttribute{
+		Computed: true,
+	}
 	return schemaAttrs
 }
 func dataSourceSchemaAttrsLinkable(recurse bool) map[string]dsschema.Attribute {
