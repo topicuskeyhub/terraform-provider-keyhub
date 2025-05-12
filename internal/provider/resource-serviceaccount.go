@@ -35,7 +35,7 @@ type serviceaccountResource struct {
 
 func (r *serviceaccountResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
 	resp.TypeName = ProviderName + "_serviceaccount"
-	tflog.Info(ctx, "Registred resource "+resp.TypeName)
+	tflog.Info(ctx, "Registered resource "+resp.TypeName)
 }
 
 func (r *serviceaccountResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
@@ -73,7 +73,7 @@ func (r *serviceaccountResource) Create(ctx context.Context, req resource.Create
 
 	litter.Config.HidePrivateFields = false
 
-	tflog.Debug(ctx, "planData: "+litter.Sdump(planData))
+	tflog.Trace(ctx, "planData: "+litter.Sdump(planData))
 
 	var configData serviceaccountServiceAccountDataRS
 	resp.Diagnostics.Append(req.Config.Get(ctx, &configData)...)
@@ -81,7 +81,7 @@ func (r *serviceaccountResource) Create(ctx context.Context, req resource.Create
 		return
 	}
 
-	tflog.Debug(ctx, "configData: "+litter.Sdump(configData))
+	tflog.Trace(ctx, "configData: "+litter.Sdump(configData))
 
 	ctx = context.WithValue(ctx, keyHubClientKey, r.providerData.Client)
 	planValues, diags := types.ObjectValueFrom(ctx, serviceaccountServiceAccountAttrTypesRSRecurse, planData)
@@ -90,15 +90,11 @@ func (r *serviceaccountResource) Create(ctx context.Context, req resource.Create
 		return
 	}
 
-	tflog.Debug(ctx, "planValues: "+litter.Sdump(planValues))
-
 	configValues, diags := types.ObjectValueFrom(ctx, serviceaccountServiceAccountAttrTypesRSRecurse, configData)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
-
-	tflog.Debug(ctx, "configValues: "+litter.Sdump(configValues))
 
 	newTkh, diags := tfObjectToTKHRSServiceaccountServiceAccount(ctx, true, planValues, configValues)
 	resp.Diagnostics.Append(diags...)
@@ -200,7 +196,7 @@ func (r *serviceaccountResource) Update(ctx context.Context, req resource.Update
 	}
 
 	var configData serviceaccountServiceAccountDataRS
-	resp.Diagnostics.Append(req.Plan.Get(ctx, &configData)...)
+	resp.Diagnostics.Append(req.Config.Get(ctx, &configData)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}

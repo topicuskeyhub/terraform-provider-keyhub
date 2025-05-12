@@ -20,16 +20,25 @@ import (
 
 func tfObjectToTKHRSAuditInfo(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.AuditInfoable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.AuditInfoable
 	tkh = keyhubmodel.NewAuditInfo()
 	{
@@ -53,44 +62,62 @@ func tfObjectToTKHRSAuditInfo(ctx context.Context, recurse bool, planValues type
 
 func tfObjectToTKHRSGeneratedSecret(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.GeneratedSecretable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.GeneratedSecretable
 	tkh = keyhubmodel.NewGeneratedSecret()
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToStringPointer(planAttrValues["generated_secret"]))+" using SetGeneratedSecret")
 	tkh.SetGeneratedSecret(tfToStringPointer(planAttrValues["generated_secret"]))
-	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToStringPointer(configAttrValues["old_secret"]))+" using SetOldSecret")
-	tkh.SetOldSecret(tfToStringPointer(configAttrValues["old_secret"]))
-	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToBooleanPointer(configAttrValues["regenerate"]))+" using SetRegenerate")
-	tkh.SetRegenerate(tfToBooleanPointer(configAttrValues["regenerate"]))
+	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToStringPointer(planAttrValues["old_secret"]))+" using SetOldSecret")
+	tkh.SetOldSecret(tfToStringPointer(planAttrValues["old_secret"]))
+	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToBooleanPointer(planAttrValues["regenerate"]))+" using SetRegenerate")
+	tkh.SetRegenerate(tfToBooleanPointer(planAttrValues["regenerate"]))
 	return tkh, diags
 }
 
 func tfObjectToTKHRSLinkable(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.Linkableable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.Linkableable
 	tkh = keyhubmodel.NewLinkable()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["links"].(basetypes.ListValue), configAttrValues["links"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
-			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["links"]), toListValue(configAttrValues["links"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -99,8 +126,8 @@ func tfObjectToTKHRSLinkable(ctx context.Context, recurse bool, planValues types
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceListBinary(planAttrValues["permissions"].(basetypes.ListValue), configAttrValues["permissions"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
-			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["permissions"]), toListValue(configAttrValues["permissions"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -113,7 +140,9 @@ func tfObjectToTKHRSLinkable(ctx context.Context, recurse bool, planValues types
 
 func tfObjectToTKHRSNonLinkable(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.NonLinkableable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
 	var tkh keyhubmodel.NonLinkableable
@@ -123,16 +152,25 @@ func tfObjectToTKHRSNonLinkable(ctx context.Context, recurse bool, planValues ty
 
 func tfObjectToTKHRSRestLink(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.RestLinkable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.RestLinkable
 	tkh = keyhubmodel.NewRestLink()
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToStringPointer(planAttrValues["href"]))+" using SetHref")
@@ -148,21 +186,30 @@ func tfObjectToTKHRSRestLink(ctx context.Context, recurse bool, planValues types
 
 func tfObjectToTKHRSAuditGroupAudit(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.AuditGroupAuditable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.AuditGroupAuditable
 	tkh = keyhubmodel.NewAuditGroupAudit()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["links"].(basetypes.ListValue), configAttrValues["links"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
-			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["links"]), toListValue(configAttrValues["links"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -171,8 +218,8 @@ func tfObjectToTKHRSAuditGroupAudit(ctx context.Context, recurse bool, planValue
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceListBinary(planAttrValues["permissions"].(basetypes.ListValue), configAttrValues["permissions"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
-			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["permissions"]), toListValue(configAttrValues["permissions"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -181,8 +228,8 @@ func tfObjectToTKHRSAuditGroupAudit(ctx context.Context, recurse bool, planValue
 		tkh.SetPermissions(val)
 	}
 	{
-		val, d := tfToSliceListBinary(planAttrValues["accounts"].(basetypes.ListValue), configAttrValues["accounts"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuditGroupAuditAccountable {
-			tkh, d := tfObjectToTKHRSAuditGroupAuditAccount(ctx, false, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["accounts"]), toListValue(configAttrValues["accounts"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuditGroupAuditAccountable {
+			tkh, d := tfObjectToTKHRSAuditGroupAuditAccount(ctx, false, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -205,8 +252,8 @@ func tfObjectToTKHRSAuditGroupAudit(ctx context.Context, recurse bool, planValue
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToStringPointer(planAttrValues["name_on_audit"]))+" using SetNameOnAudit")
 	tkh.SetNameOnAudit(tfToStringPointer(planAttrValues["name_on_audit"]))
 	{
-		val, d := tfToSliceListBinary(planAttrValues["nested_groups"].(basetypes.ListValue), configAttrValues["nested_groups"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuditNestedGroupAuditable {
-			tkh, d := tfObjectToTKHRSAuditNestedGroupAudit(ctx, false, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["nested_groups"]), toListValue(configAttrValues["nested_groups"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuditNestedGroupAuditable {
+			tkh, d := tfObjectToTKHRSAuditNestedGroupAudit(ctx, false, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -249,21 +296,30 @@ func tfObjectToTKHRSAuditGroupAudit(ctx context.Context, recurse bool, planValue
 
 func tfObjectToTKHRSAuditGroupAuditAccount(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.AuditGroupAuditAccountable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.AuditGroupAuditAccountable
 	tkh = keyhubmodel.NewAuditGroupAuditAccount()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["links"].(basetypes.ListValue), configAttrValues["links"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
-			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["links"]), toListValue(configAttrValues["links"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -272,8 +328,8 @@ func tfObjectToTKHRSAuditGroupAuditAccount(ctx context.Context, recurse bool, pl
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceListBinary(planAttrValues["permissions"].(basetypes.ListValue), configAttrValues["permissions"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
-			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["permissions"]), toListValue(configAttrValues["permissions"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -330,21 +386,30 @@ func tfObjectToTKHRSAuditGroupAuditAccount(ctx context.Context, recurse bool, pl
 
 func tfObjectToTKHRSAuditGroupAuditLinkableWrapper(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.AuditGroupAuditLinkableWrapperable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.AuditGroupAuditLinkableWrapperable
 	tkh = keyhubmodel.NewAuditGroupAuditLinkableWrapper()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["items"].(basetypes.ListValue), configAttrValues["items"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuditGroupAuditable {
-			tkh, d := tfObjectToTKHRSAuditGroupAudit(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["items"]), toListValue(configAttrValues["items"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuditGroupAuditable {
+			tkh, d := tfObjectToTKHRSAuditGroupAudit(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -357,20 +422,29 @@ func tfObjectToTKHRSAuditGroupAuditLinkableWrapper(ctx context.Context, recurse 
 
 func tfObjectToTKHRSAuditGroupAudit_additionalObjects(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.AuditGroupAudit_additionalObjectsable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.AuditGroupAudit_additionalObjectsable
 	tkh = keyhubmodel.NewAuditGroupAudit_additionalObjects()
 	{
-		val, d := tfObjectToTKHRSAuditInfo(ctx, recurse, planAttrValues["audit"].(basetypes.ObjectValue), configAttrValues["audit"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHRSAuditInfo(ctx, recurse, toObjectValue(planAttrValues["audit"]), toObjectValue(configAttrValues["audit"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetAudit")
 		tkh.SetAudit(val)
@@ -380,21 +454,30 @@ func tfObjectToTKHRSAuditGroupAudit_additionalObjects(ctx context.Context, recur
 
 func tfObjectToTKHRSAuditNestedGroupAudit(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.AuditNestedGroupAuditable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.AuditNestedGroupAuditable
 	tkh = keyhubmodel.NewAuditNestedGroupAudit()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["links"].(basetypes.ListValue), configAttrValues["links"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
-			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["links"]), toListValue(configAttrValues["links"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -403,8 +486,8 @@ func tfObjectToTKHRSAuditNestedGroupAudit(ctx context.Context, recurse bool, pla
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceListBinary(planAttrValues["permissions"].(basetypes.ListValue), configAttrValues["permissions"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
-			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["permissions"]), toListValue(configAttrValues["permissions"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -431,21 +514,30 @@ func tfObjectToTKHRSAuditNestedGroupAudit(ctx context.Context, recurse bool, pla
 
 func tfObjectToTKHRSAuthAccountPrimer(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.AuthAccountPrimerable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.AuthAccountPrimerable
 	tkh = keyhubmodel.NewAuthAccountPrimer()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["links"].(basetypes.ListValue), configAttrValues["links"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
-			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["links"]), toListValue(configAttrValues["links"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -454,8 +546,8 @@ func tfObjectToTKHRSAuthAccountPrimer(ctx context.Context, recurse bool, planVal
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceListBinary(planAttrValues["permissions"].(basetypes.ListValue), configAttrValues["permissions"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
-			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["permissions"]), toListValue(configAttrValues["permissions"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -486,22 +578,31 @@ func tfObjectToTKHRSAuthAccountPrimer(ctx context.Context, recurse bool, planVal
 
 func tfObjectToTKHRSAuthPermission(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.AuthPermissionable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.AuthPermissionable
 	tkh = keyhubmodel.NewAuthPermission()
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToStringPointer(planAttrValues["full"]))+" using SetFull")
 	tkh.SetFull(tfToStringPointer(planAttrValues["full"]))
 	{
-		val, d := tfToSliceListBinary(planAttrValues["instances"].(basetypes.ListValue), configAttrValues["instances"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) string {
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["instances"]), toListValue(configAttrValues["instances"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) string {
 			return planValue.(basetypes.StringValue).ValueString()
 		})
 		diags.Append(d...)
@@ -509,7 +610,7 @@ func tfObjectToTKHRSAuthPermission(ctx context.Context, recurse bool, planValues
 		tkh.SetInstances(val)
 	}
 	{
-		val, d := tfToSliceSet(planAttrValues["operations"].(basetypes.SetValue), configAttrValues["operations"].(basetypes.SetValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermittedOperation {
+		val, d := tfToSliceSet(toSetValue(planAttrValues["operations"]), toSetValue(configAttrValues["operations"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermittedOperation {
 			tkh, d := parseCast(planValue.(basetypes.StringValue), keyhubmodel.ParseAuthPermittedOperation, func(val any) keyhubmodel.AuthPermittedOperation { return *val.(*keyhubmodel.AuthPermittedOperation) })
 			diags.Append(d...)
 			return tkh
@@ -525,21 +626,30 @@ func tfObjectToTKHRSAuthPermission(ctx context.Context, recurse bool, planValues
 
 func tfObjectToTKHRSCertificateCertificatePrimer(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.CertificateCertificatePrimerable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.CertificateCertificatePrimerable
 	tkh = keyhubmodel.NewCertificateCertificatePrimer()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["links"].(basetypes.ListValue), configAttrValues["links"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
-			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["links"]), toListValue(configAttrValues["links"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -548,8 +658,8 @@ func tfObjectToTKHRSCertificateCertificatePrimer(ctx context.Context, recurse bo
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceListBinary(planAttrValues["permissions"].(basetypes.ListValue), configAttrValues["permissions"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
-			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["permissions"]), toListValue(configAttrValues["permissions"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -594,21 +704,30 @@ func tfObjectToTKHRSCertificateCertificatePrimer(ctx context.Context, recurse bo
 
 func tfObjectToTKHRSClientApplicationVaultVaultRecord(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.VaultVaultRecordable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.VaultVaultRecordable
 	tkh = keyhubmodel.NewVaultVaultRecord()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["links"].(basetypes.ListValue), configAttrValues["links"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
-			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["links"]), toListValue(configAttrValues["links"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -617,8 +736,8 @@ func tfObjectToTKHRSClientApplicationVaultVaultRecord(ctx context.Context, recur
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceListBinary(planAttrValues["permissions"].(basetypes.ListValue), configAttrValues["permissions"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
-			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["permissions"]), toListValue(configAttrValues["permissions"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -653,7 +772,7 @@ func tfObjectToTKHRSClientApplicationVaultVaultRecord(ctx context.Context, recur
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToStringPointer(planAttrValues["filename"]))+" using SetFilename")
 	tkh.SetFilename(tfToStringPointer(planAttrValues["filename"]))
 	{
-		val, d := tfToSliceSet(planAttrValues["types"].(basetypes.SetValue), configAttrValues["types"].(basetypes.SetValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.VaultVaultSecretType {
+		val, d := tfToSliceSet(toSetValue(planAttrValues["types"]), toSetValue(configAttrValues["types"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.VaultVaultSecretType {
 			tkh, d := parseCast(planValue.(basetypes.StringValue), keyhubmodel.ParseVaultVaultSecretType, func(val any) keyhubmodel.VaultVaultSecretType { return *val.(*keyhubmodel.VaultVaultSecretType) })
 			diags.Append(d...)
 			return tkh
@@ -687,21 +806,30 @@ func tfObjectToTKHRSClientApplicationVaultVaultRecord(ctx context.Context, recur
 
 func tfObjectToTKHRSClientClientApplication(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.ClientClientApplicationable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.ClientClientApplicationable
 	tkh = keyhubmodel.NewClientClientApplication()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["links"].(basetypes.ListValue), configAttrValues["links"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
-			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["links"]), toListValue(configAttrValues["links"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -710,8 +838,8 @@ func tfObjectToTKHRSClientClientApplication(ctx context.Context, recurse bool, p
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceListBinary(planAttrValues["permissions"].(basetypes.ListValue), configAttrValues["permissions"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
-			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["permissions"]), toListValue(configAttrValues["permissions"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -732,7 +860,7 @@ func tfObjectToTKHRSClientClientApplication(ctx context.Context, recurse bool, p
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToStringPointer(planAttrValues["name"]))+" using SetName")
 	tkh.SetName(tfToStringPointer(planAttrValues["name"]))
 	{
-		val, d := tfToSliceListBinary(planAttrValues["scopes"].(basetypes.ListValue), configAttrValues["scopes"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) string {
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["scopes"]), toListValue(configAttrValues["scopes"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) string {
 			return planValue.(basetypes.StringValue).ValueString()
 		})
 		diags.Append(d...)
@@ -798,21 +926,30 @@ func tfObjectToTKHRSClientClientApplication(ctx context.Context, recurse bool, p
 
 func tfObjectToTKHRSClientClientApplicationLinkableWrapper(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.ClientClientApplicationLinkableWrapperable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.ClientClientApplicationLinkableWrapperable
 	tkh = keyhubmodel.NewClientClientApplicationLinkableWrapper()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["items"].(basetypes.ListValue), configAttrValues["items"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.ClientClientApplicationable {
-			tkh, d := tfObjectToTKHRSClientClientApplication(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["items"]), toListValue(configAttrValues["items"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.ClientClientApplicationable {
+			tkh, d := tfObjectToTKHRSClientClientApplication(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -825,21 +962,30 @@ func tfObjectToTKHRSClientClientApplicationLinkableWrapper(ctx context.Context, 
 
 func tfObjectToTKHRSClientClientApplicationPrimer(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.ClientClientApplicationPrimerable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.ClientClientApplicationPrimerable
 	tkh = keyhubmodel.NewClientClientApplicationPrimer()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["links"].(basetypes.ListValue), configAttrValues["links"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
-			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["links"]), toListValue(configAttrValues["links"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -848,8 +994,8 @@ func tfObjectToTKHRSClientClientApplicationPrimer(ctx context.Context, recurse b
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceListBinary(planAttrValues["permissions"].(basetypes.ListValue), configAttrValues["permissions"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
-			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["permissions"]), toListValue(configAttrValues["permissions"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -870,7 +1016,7 @@ func tfObjectToTKHRSClientClientApplicationPrimer(ctx context.Context, recurse b
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToStringPointer(planAttrValues["name"]))+" using SetName")
 	tkh.SetName(tfToStringPointer(planAttrValues["name"]))
 	{
-		val, d := tfToSliceListBinary(planAttrValues["scopes"].(basetypes.ListValue), configAttrValues["scopes"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) string {
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["scopes"]), toListValue(configAttrValues["scopes"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) string {
 			return planValue.(basetypes.StringValue).ValueString()
 		})
 		diags.Append(d...)
@@ -886,16 +1032,25 @@ func tfObjectToTKHRSClientClientApplicationPrimer(ctx context.Context, recurse b
 
 func tfObjectToTKHRSClientClientApplication_additionalObjects(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.ClientClientApplication_additionalObjectsable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.ClientClientApplication_additionalObjectsable
 	tkh = keyhubmodel.NewClientClientApplication_additionalObjects()
 	{
@@ -908,7 +1063,7 @@ func tfObjectToTKHRSClientClientApplication_additionalObjects(ctx context.Contex
 		}
 	}
 	{
-		val, d := tfObjectToTKHRSAuditInfo(ctx, recurse, planAttrValues["audit"].(basetypes.ObjectValue), configAttrValues["audit"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHRSAuditInfo(ctx, recurse, toObjectValue(planAttrValues["audit"]), toObjectValue(configAttrValues["audit"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetAudit")
 		tkh.SetAudit(val)
@@ -940,13 +1095,13 @@ func tfObjectToTKHRSClientClientApplication_additionalObjects(ctx context.Contex
 		}
 	}
 	{
-		val, d := tfObjectToTKHRSGeneratedSecret(ctx, recurse, planAttrValues["secret"].(basetypes.ObjectValue), configAttrValues["secret"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHRSGeneratedSecret(ctx, recurse, toObjectValue(planAttrValues["secret"]), toObjectValue(configAttrValues["secret"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetSecret")
 		tkh.SetSecret(val)
 	}
 	{
-		val, d := tfObjectToTKHRSLaunchpadSsoApplicationLaunchpadTile(ctx, recurse, planAttrValues["tile"].(basetypes.ObjectValue), configAttrValues["tile"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHRSLaunchpadSsoApplicationLaunchpadTile(ctx, recurse, toObjectValue(planAttrValues["tile"]), toObjectValue(configAttrValues["tile"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetTile")
 		tkh.SetTile(val)
@@ -958,16 +1113,25 @@ func tfObjectToTKHRSClientClientApplication_additionalObjects(ctx context.Contex
 
 func tfObjectToTKHRSClientLdapClient(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.ClientLdapClientable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.ClientLdapClientable
 	tkh = keyhubmodel.NewClientLdapClient()
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToStringPointer(planAttrValues["bind_dn"]))+" using SetBindDn")
@@ -993,21 +1157,30 @@ func tfObjectToTKHRSClientLdapClient(ctx context.Context, recurse bool, planValu
 
 func tfObjectToTKHRSClientOAuth2Client(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.ClientOAuth2Clientable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.ClientOAuth2Clientable
 	tkh = keyhubmodel.NewClientOAuth2Client()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["account_permissions"].(basetypes.ListValue), configAttrValues["account_permissions"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
-			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["account_permissions"]), toListValue(configAttrValues["account_permissions"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -1016,7 +1189,7 @@ func tfObjectToTKHRSClientOAuth2Client(ctx context.Context, recurse bool, planVa
 		tkh.SetAccountPermissions(val)
 	}
 	{
-		val, d := tfToMap(planAttrValues["attributes"].(basetypes.MapValue), configAttrValues["attributes"].(basetypes.MapValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) any {
+		val, d := tfToMap(toMapValue(planAttrValues["attributes"]), toMapValue(configAttrValues["attributes"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) any {
 			return planValue.(basetypes.StringValue).ValueString()
 		}, keyhubmodel.NewClientOAuth2Client_attributes())
 		diags.Append(d...)
@@ -1060,21 +1233,30 @@ func tfObjectToTKHRSClientOAuth2Client(ctx context.Context, recurse bool, planVa
 
 func tfObjectToTKHRSClientOAuth2ClientPermission(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.ClientOAuth2ClientPermissionable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.ClientOAuth2ClientPermissionable
 	tkh = keyhubmodel.NewClientOAuth2ClientPermission()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["links"].(basetypes.ListValue), configAttrValues["links"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
-			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["links"]), toListValue(configAttrValues["links"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -1083,8 +1265,8 @@ func tfObjectToTKHRSClientOAuth2ClientPermission(ctx context.Context, recurse bo
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceListBinary(planAttrValues["permissions"].(basetypes.ListValue), configAttrValues["permissions"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
-			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["permissions"]), toListValue(configAttrValues["permissions"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -1125,21 +1307,30 @@ func tfObjectToTKHRSClientOAuth2ClientPermission(ctx context.Context, recurse bo
 
 func tfObjectToTKHRSClientOAuth2ClientPermissionWithClient(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.ClientOAuth2ClientPermissionWithClientable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.ClientOAuth2ClientPermissionWithClientable
 	tkh = keyhubmodel.NewClientOAuth2ClientPermissionWithClient()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["links"].(basetypes.ListValue), configAttrValues["links"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
-			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["links"]), toListValue(configAttrValues["links"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -1148,8 +1339,8 @@ func tfObjectToTKHRSClientOAuth2ClientPermissionWithClient(ctx context.Context, 
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceListBinary(planAttrValues["permissions"].(basetypes.ListValue), configAttrValues["permissions"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
-			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["permissions"]), toListValue(configAttrValues["permissions"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -1196,21 +1387,30 @@ func tfObjectToTKHRSClientOAuth2ClientPermissionWithClient(ctx context.Context, 
 
 func tfObjectToTKHRSClientOAuth2ClientPermissionWithClientLinkableWrapper(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.ClientOAuth2ClientPermissionWithClientLinkableWrapperable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.ClientOAuth2ClientPermissionWithClientLinkableWrapperable
 	tkh = keyhubmodel.NewClientOAuth2ClientPermissionWithClientLinkableWrapper()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["items"].(basetypes.ListValue), configAttrValues["items"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.ClientOAuth2ClientPermissionWithClientable {
-			tkh, d := tfObjectToTKHRSClientOAuth2ClientPermissionWithClient(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["items"]), toListValue(configAttrValues["items"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.ClientOAuth2ClientPermissionWithClientable {
+			tkh, d := tfObjectToTKHRSClientOAuth2ClientPermissionWithClient(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -1223,20 +1423,29 @@ func tfObjectToTKHRSClientOAuth2ClientPermissionWithClientLinkableWrapper(ctx co
 
 func tfObjectToTKHRSClientOAuth2ClientPermission_additionalObjects(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.ClientOAuth2ClientPermission_additionalObjectsable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.ClientOAuth2ClientPermission_additionalObjectsable
 	tkh = keyhubmodel.NewClientOAuth2ClientPermission_additionalObjects()
 	{
-		val, d := tfObjectToTKHRSAuditInfo(ctx, recurse, planAttrValues["audit"].(basetypes.ObjectValue), configAttrValues["audit"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHRSAuditInfo(ctx, recurse, toObjectValue(planAttrValues["audit"]), toObjectValue(configAttrValues["audit"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetAudit")
 		tkh.SetAudit(val)
@@ -1246,20 +1455,29 @@ func tfObjectToTKHRSClientOAuth2ClientPermission_additionalObjects(ctx context.C
 
 func tfObjectToTKHRSClientSaml2Client(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.ClientSaml2Clientable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.ClientSaml2Clientable
 	tkh = keyhubmodel.NewClientSaml2Client()
 	{
-		val, d := tfToMap(planAttrValues["attributes"].(basetypes.MapValue), configAttrValues["attributes"].(basetypes.MapValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) any {
+		val, d := tfToMap(toMapValue(planAttrValues["attributes"]), toMapValue(configAttrValues["attributes"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) any {
 			return planValue.(basetypes.StringValue).ValueString()
 		}, keyhubmodel.NewClientSaml2Client_attributes())
 		diags.Append(d...)
@@ -1281,21 +1499,30 @@ func tfObjectToTKHRSClientSaml2Client(ctx context.Context, recurse bool, planVal
 
 func tfObjectToTKHRSDirectoryAccountDirectory(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.DirectoryAccountDirectoryable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.DirectoryAccountDirectoryable
 	tkh = keyhubmodel.NewDirectoryAccountDirectory()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["links"].(basetypes.ListValue), configAttrValues["links"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
-			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["links"]), toListValue(configAttrValues["links"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -1304,8 +1531,8 @@ func tfObjectToTKHRSDirectoryAccountDirectory(ctx context.Context, recurse bool,
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceListBinary(planAttrValues["permissions"].(basetypes.ListValue), configAttrValues["permissions"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
-			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["permissions"]), toListValue(configAttrValues["permissions"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -1408,21 +1635,30 @@ func tfObjectToTKHRSDirectoryAccountDirectory(ctx context.Context, recurse bool,
 
 func tfObjectToTKHRSDirectoryAccountDirectoryLinkableWrapper(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.DirectoryAccountDirectoryLinkableWrapperable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.DirectoryAccountDirectoryLinkableWrapperable
 	tkh = keyhubmodel.NewDirectoryAccountDirectoryLinkableWrapper()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["items"].(basetypes.ListValue), configAttrValues["items"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.DirectoryAccountDirectoryable {
-			tkh, d := tfObjectToTKHRSDirectoryAccountDirectory(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["items"]), toListValue(configAttrValues["items"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.DirectoryAccountDirectoryable {
+			tkh, d := tfObjectToTKHRSDirectoryAccountDirectory(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -1435,21 +1671,30 @@ func tfObjectToTKHRSDirectoryAccountDirectoryLinkableWrapper(ctx context.Context
 
 func tfObjectToTKHRSDirectoryAccountDirectoryPrimer(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.DirectoryAccountDirectoryPrimerable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.DirectoryAccountDirectoryPrimerable
 	tkh = keyhubmodel.NewDirectoryAccountDirectoryPrimer()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["links"].(basetypes.ListValue), configAttrValues["links"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
-			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["links"]), toListValue(configAttrValues["links"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -1458,8 +1703,8 @@ func tfObjectToTKHRSDirectoryAccountDirectoryPrimer(ctx context.Context, recurse
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceListBinary(planAttrValues["permissions"].(basetypes.ListValue), configAttrValues["permissions"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
-			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["permissions"]), toListValue(configAttrValues["permissions"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -1488,16 +1733,25 @@ func tfObjectToTKHRSDirectoryAccountDirectoryPrimer(ctx context.Context, recurse
 
 func tfObjectToTKHRSDirectoryAccountDirectoryStatusReport(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.DirectoryAccountDirectoryStatusReportable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.DirectoryAccountDirectoryStatusReportable
 	tkh = keyhubmodel.NewDirectoryAccountDirectoryStatusReport()
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToInt64Pointer(planAttrValues["accounts"]))+" using SetAccounts")
@@ -1517,21 +1771,30 @@ func tfObjectToTKHRSDirectoryAccountDirectoryStatusReport(ctx context.Context, r
 
 func tfObjectToTKHRSDirectoryAccountDirectorySummary(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.DirectoryAccountDirectorySummaryable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.DirectoryAccountDirectorySummaryable
 	tkh = keyhubmodel.NewDirectoryAccountDirectorySummary()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["links"].(basetypes.ListValue), configAttrValues["links"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
-			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["links"]), toListValue(configAttrValues["links"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -1540,8 +1803,8 @@ func tfObjectToTKHRSDirectoryAccountDirectorySummary(ctx context.Context, recurs
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceListBinary(planAttrValues["permissions"].(basetypes.ListValue), configAttrValues["permissions"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
-			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["permissions"]), toListValue(configAttrValues["permissions"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -1564,7 +1827,7 @@ func tfObjectToTKHRSDirectoryAccountDirectorySummary(ctx context.Context, recurs
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToStringPointer(planAttrValues["name"]))+" using SetName")
 	tkh.SetName(tfToStringPointer(planAttrValues["name"]))
 	{
-		val, d := tfObjectToTKHRSDirectoryAccountDirectoryStatusReport(ctx, recurse, planAttrValues["status"].(basetypes.ObjectValue), configAttrValues["status"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHRSDirectoryAccountDirectoryStatusReport(ctx, recurse, toObjectValue(planAttrValues["status"]), toObjectValue(configAttrValues["status"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetStatus")
 		tkh.SetStatus(val)
@@ -1576,21 +1839,30 @@ func tfObjectToTKHRSDirectoryAccountDirectorySummary(ctx context.Context, recurs
 
 func tfObjectToTKHRSDirectoryAccountDirectorySummaryLinkableWrapper(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.DirectoryAccountDirectorySummaryLinkableWrapperable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.DirectoryAccountDirectorySummaryLinkableWrapperable
 	tkh = keyhubmodel.NewDirectoryAccountDirectorySummaryLinkableWrapper()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["items"].(basetypes.ListValue), configAttrValues["items"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.DirectoryAccountDirectorySummaryable {
-			tkh, d := tfObjectToTKHRSDirectoryAccountDirectorySummary(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["items"]), toListValue(configAttrValues["items"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.DirectoryAccountDirectorySummaryable {
+			tkh, d := tfObjectToTKHRSDirectoryAccountDirectorySummary(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -1603,32 +1875,41 @@ func tfObjectToTKHRSDirectoryAccountDirectorySummaryLinkableWrapper(ctx context.
 
 func tfObjectToTKHRSDirectoryAccountDirectory_additionalObjects(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.DirectoryAccountDirectory_additionalObjectsable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.DirectoryAccountDirectory_additionalObjectsable
 	tkh = keyhubmodel.NewDirectoryAccountDirectory_additionalObjects()
 	{
-		val, d := tfObjectToTKHRSAuditInfo(ctx, recurse, planAttrValues["audit"].(basetypes.ObjectValue), configAttrValues["audit"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHRSAuditInfo(ctx, recurse, toObjectValue(planAttrValues["audit"]), toObjectValue(configAttrValues["audit"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetAudit")
 		tkh.SetAudit(val)
 	}
 	{
-		val, d := tfObjectToTKHRSMarkItemMarkers(ctx, recurse, planAttrValues["markers"].(basetypes.ObjectValue), configAttrValues["markers"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHRSMarkItemMarkers(ctx, recurse, toObjectValue(planAttrValues["markers"]), toObjectValue(configAttrValues["markers"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetMarkers")
 		tkh.SetMarkers(val)
 	}
 	{
-		val, d := tfObjectToTKHRSDirectoryAccountDirectoryStatusReport(ctx, recurse, planAttrValues["status"].(basetypes.ObjectValue), configAttrValues["status"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHRSDirectoryAccountDirectoryStatusReport(ctx, recurse, toObjectValue(planAttrValues["status"]), toObjectValue(configAttrValues["status"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetStatus")
 		tkh.SetStatus(val)
@@ -1638,16 +1919,25 @@ func tfObjectToTKHRSDirectoryAccountDirectory_additionalObjects(ctx context.Cont
 
 func tfObjectToTKHRSDirectoryInternalDirectory(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.DirectoryInternalDirectoryable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.DirectoryInternalDirectoryable
 	tkh = keyhubmodel.NewDirectoryInternalDirectory()
 	{
@@ -1661,16 +1951,25 @@ func tfObjectToTKHRSDirectoryInternalDirectory(ctx context.Context, recurse bool
 
 func tfObjectToTKHRSDirectoryLDAPDirectory(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.DirectoryLDAPDirectoryable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.DirectoryLDAPDirectoryable
 	tkh = keyhubmodel.NewDirectoryLDAPDirectory()
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToStringPointer(planAttrValues["attributes_to_store"]))+" using SetAttributesToStore")
@@ -1732,7 +2031,9 @@ func tfObjectToTKHRSDirectoryLDAPDirectory(ctx context.Context, recurse bool, pl
 
 func tfObjectToTKHRSDirectoryMaintenanceDirectory(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.DirectoryMaintenanceDirectoryable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
 	var tkh keyhubmodel.DirectoryMaintenanceDirectoryable
@@ -1742,16 +2043,25 @@ func tfObjectToTKHRSDirectoryMaintenanceDirectory(ctx context.Context, recurse b
 
 func tfObjectToTKHRSDirectoryOIDCDirectory(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.DirectoryOIDCDirectoryable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.DirectoryOIDCDirectoryable
 	tkh = keyhubmodel.NewDirectoryOIDCDirectory()
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToStringPointer(planAttrValues["acr_values"]))+" using SetAcrValues")
@@ -1785,7 +2095,9 @@ func tfObjectToTKHRSDirectoryOIDCDirectory(ctx context.Context, recurse bool, pl
 
 func tfObjectToTKHRSDirectoryPendingAccountsDirectory(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.DirectoryPendingAccountsDirectoryable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
 	var tkh keyhubmodel.DirectoryPendingAccountsDirectoryable
@@ -1795,21 +2107,30 @@ func tfObjectToTKHRSDirectoryPendingAccountsDirectory(ctx context.Context, recur
 
 func tfObjectToTKHRSGroupAuthorizedGroupsWrapper(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.GroupAuthorizedGroupsWrapperable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.GroupAuthorizedGroupsWrapperable
 	tkh = keyhubmodel.NewGroupAuthorizedGroupsWrapper()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["items"].(basetypes.ListValue), configAttrValues["items"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.GroupGroupable {
-			tkh, d := tfObjectToTKHRSGroupGroup(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["items"]), toListValue(configAttrValues["items"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.GroupGroupable {
+			tkh, d := tfObjectToTKHRSGroupGroup(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -1824,21 +2145,30 @@ func tfObjectToTKHRSGroupAuthorizedGroupsWrapper(ctx context.Context, recurse bo
 
 func tfObjectToTKHRSGroupGroup(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.GroupGroupable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.GroupGroupable
 	tkh = keyhubmodel.NewGroupGroup()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["links"].(basetypes.ListValue), configAttrValues["links"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
-			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["links"]), toListValue(configAttrValues["links"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -1847,8 +2177,8 @@ func tfObjectToTKHRSGroupGroup(ctx context.Context, recurse bool, planValues typ
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceListBinary(planAttrValues["permissions"].(basetypes.ListValue), configAttrValues["permissions"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
-			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["permissions"]), toListValue(configAttrValues["permissions"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -1871,7 +2201,7 @@ func tfObjectToTKHRSGroupGroup(ctx context.Context, recurse bool, planValues typ
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToBooleanPointer(planAttrValues["application_administration"]))+" using SetApplicationAdministration")
 	tkh.SetApplicationAdministration(tfToBooleanPointer(planAttrValues["application_administration"]))
 	{
-		val, d := tfObjectToTKHRSGroupGroupAuditConfig(ctx, false, planAttrValues["audit_config"].(basetypes.ObjectValue), configAttrValues["audit_config"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHRSGroupGroupAuditConfig(ctx, false, toObjectValue(planAttrValues["audit_config"]), toObjectValue(configAttrValues["audit_config"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetAuditConfig")
 		tkh.SetAuditConfig(val)
@@ -1903,7 +2233,7 @@ func tfObjectToTKHRSGroupGroup(ctx context.Context, recurse bool, planValues typ
 		tkh.SetAuthorizingGroupProvisioning(val)
 	}
 	{
-		val, d := tfToSliceSet(planAttrValues["authorizing_group_types"].(basetypes.SetValue), configAttrValues["authorizing_group_types"].(basetypes.SetValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RequestAuthorizingGroupType {
+		val, d := tfToSliceSet(toSetValue(planAttrValues["authorizing_group_types"]), toSetValue(configAttrValues["authorizing_group_types"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RequestAuthorizingGroupType {
 			tkh, d := parseCast(planValue.(basetypes.StringValue), keyhubmodel.ParseRequestAuthorizingGroupType, func(val any) keyhubmodel.RequestAuthorizingGroupType {
 				return *val.(*keyhubmodel.RequestAuthorizingGroupType)
 			})
@@ -1971,16 +2301,25 @@ func tfObjectToTKHRSGroupGroup(ctx context.Context, recurse bool, planValues typ
 
 func tfObjectToTKHRSGroupGroupAccessInfo(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.GroupGroupAccessInfoable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.GroupGroupAccessInfoable
 	tkh = keyhubmodel.NewGroupGroupAccessInfo()
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToBooleanPointer(planAttrValues["business_accounts"]))+" using SetBusinessAccounts")
@@ -1990,16 +2329,25 @@ func tfObjectToTKHRSGroupGroupAccessInfo(ctx context.Context, recurse bool, plan
 
 func tfObjectToTKHRSGroupGroupAccount(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.GroupGroupAccountable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.GroupGroupAccountable
 	tkh = keyhubmodel.NewGroupGroupAccount()
 	{
@@ -2068,21 +2416,30 @@ func tfObjectToTKHRSGroupGroupAccount(ctx context.Context, recurse bool, planVal
 
 func tfObjectToTKHRSGroupGroupAccountLinkableWrapper(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.GroupGroupAccountLinkableWrapperable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.GroupGroupAccountLinkableWrapperable
 	tkh = keyhubmodel.NewGroupGroupAccountLinkableWrapper()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["items"].(basetypes.ListValue), configAttrValues["items"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.GroupGroupAccountable {
-			tkh, d := tfObjectToTKHRSGroupGroupAccount(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["items"]), toListValue(configAttrValues["items"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.GroupGroupAccountable {
+			tkh, d := tfObjectToTKHRSGroupGroupAccount(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -2095,20 +2452,29 @@ func tfObjectToTKHRSGroupGroupAccountLinkableWrapper(ctx context.Context, recurs
 
 func tfObjectToTKHRSGroupGroupAccount_additionalObjects(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.GroupGroupAccount_additionalObjectsable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.GroupGroupAccount_additionalObjectsable
 	tkh = keyhubmodel.NewGroupGroupAccount_additionalObjects()
 	{
-		val, d := tfObjectToTKHRSAuditInfo(ctx, recurse, planAttrValues["audit"].(basetypes.ObjectValue), configAttrValues["audit"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHRSAuditInfo(ctx, recurse, toObjectValue(planAttrValues["audit"]), toObjectValue(configAttrValues["audit"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetAudit")
 		tkh.SetAudit(val)
@@ -2118,21 +2484,30 @@ func tfObjectToTKHRSGroupGroupAccount_additionalObjects(ctx context.Context, rec
 
 func tfObjectToTKHRSGroupGroupAuditConfig(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.GroupGroupAuditConfigable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.GroupGroupAuditConfigable
 	tkh = keyhubmodel.NewGroupGroupAuditConfig()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["links"].(basetypes.ListValue), configAttrValues["links"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
-			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["links"]), toListValue(configAttrValues["links"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -2141,8 +2516,8 @@ func tfObjectToTKHRSGroupGroupAuditConfig(ctx context.Context, recurse bool, pla
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceListBinary(planAttrValues["permissions"].(basetypes.ListValue), configAttrValues["permissions"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
-			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["permissions"]), toListValue(configAttrValues["permissions"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -2151,7 +2526,7 @@ func tfObjectToTKHRSGroupGroupAuditConfig(ctx context.Context, recurse bool, pla
 		tkh.SetPermissions(val)
 	}
 	{
-		val, d := tfToSliceSet(planAttrValues["months"].(basetypes.SetValue), configAttrValues["months"].(basetypes.SetValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.Month {
+		val, d := tfToSliceSet(toSetValue(planAttrValues["months"]), toSetValue(configAttrValues["months"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.Month {
 			tkh, d := parseCast(planValue.(basetypes.StringValue), keyhubmodel.ParseMonth, func(val any) keyhubmodel.Month { return *val.(*keyhubmodel.Month) })
 			diags.Append(d...)
 			return tkh
@@ -2165,16 +2540,25 @@ func tfObjectToTKHRSGroupGroupAuditConfig(ctx context.Context, recurse bool, pla
 
 func tfObjectToTKHRSGroupGroupAuditingInfo(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.GroupGroupAuditingInfoable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.GroupGroupAuditingInfoable
 	tkh = keyhubmodel.NewGroupGroupAuditingInfo()
 	{
@@ -2206,21 +2590,30 @@ func tfObjectToTKHRSGroupGroupAuditingInfo(ctx context.Context, recurse bool, pl
 
 func tfObjectToTKHRSGroupGroupClassificationPrimer(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.GroupGroupClassificationPrimerable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.GroupGroupClassificationPrimerable
 	tkh = keyhubmodel.NewGroupGroupClassificationPrimer()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["links"].(basetypes.ListValue), configAttrValues["links"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
-			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["links"]), toListValue(configAttrValues["links"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -2229,8 +2622,8 @@ func tfObjectToTKHRSGroupGroupClassificationPrimer(ctx context.Context, recurse 
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceListBinary(planAttrValues["permissions"].(basetypes.ListValue), configAttrValues["permissions"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
-			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["permissions"]), toListValue(configAttrValues["permissions"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -2247,21 +2640,30 @@ func tfObjectToTKHRSGroupGroupClassificationPrimer(ctx context.Context, recurse 
 
 func tfObjectToTKHRSGroupGroupClient(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.GroupGroupClientable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.GroupGroupClientable
 	tkh = keyhubmodel.NewGroupGroupClient()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["links"].(basetypes.ListValue), configAttrValues["links"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
-			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["links"]), toListValue(configAttrValues["links"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -2270,8 +2672,8 @@ func tfObjectToTKHRSGroupGroupClient(ctx context.Context, recurse bool, planValu
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceListBinary(planAttrValues["permissions"].(basetypes.ListValue), configAttrValues["permissions"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
-			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["permissions"]), toListValue(configAttrValues["permissions"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -2318,21 +2720,30 @@ func tfObjectToTKHRSGroupGroupClient(ctx context.Context, recurse bool, planValu
 
 func tfObjectToTKHRSGroupGroupClientLinkableWrapper(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.GroupGroupClientLinkableWrapperable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.GroupGroupClientLinkableWrapperable
 	tkh = keyhubmodel.NewGroupGroupClientLinkableWrapper()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["items"].(basetypes.ListValue), configAttrValues["items"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.GroupGroupClientable {
-			tkh, d := tfObjectToTKHRSGroupGroupClient(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["items"]), toListValue(configAttrValues["items"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.GroupGroupClientable {
+			tkh, d := tfObjectToTKHRSGroupGroupClient(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -2345,20 +2756,29 @@ func tfObjectToTKHRSGroupGroupClientLinkableWrapper(ctx context.Context, recurse
 
 func tfObjectToTKHRSGroupGroupClient_additionalObjects(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.GroupGroupClient_additionalObjectsable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.GroupGroupClient_additionalObjectsable
 	tkh = keyhubmodel.NewGroupGroupClient_additionalObjects()
 	{
-		val, d := tfObjectToTKHRSAuditInfo(ctx, recurse, planAttrValues["audit"].(basetypes.ObjectValue), configAttrValues["audit"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHRSAuditInfo(ctx, recurse, toObjectValue(planAttrValues["audit"]), toObjectValue(configAttrValues["audit"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetAudit")
 		tkh.SetAudit(val)
@@ -2368,21 +2788,30 @@ func tfObjectToTKHRSGroupGroupClient_additionalObjects(ctx context.Context, recu
 
 func tfObjectToTKHRSGroupGroupGlobalRoleInfo(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.GroupGroupGlobalRoleInfoable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.GroupGroupGlobalRoleInfoable
 	tkh = keyhubmodel.NewGroupGroupGlobalRoleInfo()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["auditor_group_for"].(basetypes.ListValue), configAttrValues["auditor_group_for"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.OrganizationOrganizationalUnitPrimerable {
-			tkh, d := tfObjectToTKHRSOrganizationOrganizationalUnitPrimer(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["auditor_group_for"]), toListValue(configAttrValues["auditor_group_for"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.OrganizationOrganizationalUnitPrimerable {
+			tkh, d := tfObjectToTKHRSOrganizationOrganizationalUnitPrimer(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -2391,8 +2820,8 @@ func tfObjectToTKHRSGroupGroupGlobalRoleInfo(ctx context.Context, recurse bool, 
 		tkh.SetAuditorGroupFor(val)
 	}
 	{
-		val, d := tfToSliceListBinary(planAttrValues["create_group_approve_group_for"].(basetypes.ListValue), configAttrValues["create_group_approve_group_for"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.OrganizationOrganizationalUnitPrimerable {
-			tkh, d := tfObjectToTKHRSOrganizationOrganizationalUnitPrimer(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["create_group_approve_group_for"]), toListValue(configAttrValues["create_group_approve_group_for"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.OrganizationOrganizationalUnitPrimerable {
+			tkh, d := tfObjectToTKHRSOrganizationOrganizationalUnitPrimer(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -2401,8 +2830,8 @@ func tfObjectToTKHRSGroupGroupGlobalRoleInfo(ctx context.Context, recurse bool, 
 		tkh.SetCreateGroupApproveGroupFor(val)
 	}
 	{
-		val, d := tfToSliceListBinary(planAttrValues["enable_tech_admin_approve_group_for"].(basetypes.ListValue), configAttrValues["enable_tech_admin_approve_group_for"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.OrganizationOrganizationalUnitPrimerable {
-			tkh, d := tfObjectToTKHRSOrganizationOrganizationalUnitPrimer(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["enable_tech_admin_approve_group_for"]), toListValue(configAttrValues["enable_tech_admin_approve_group_for"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.OrganizationOrganizationalUnitPrimerable {
+			tkh, d := tfObjectToTKHRSOrganizationOrganizationalUnitPrimer(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -2411,8 +2840,8 @@ func tfObjectToTKHRSGroupGroupGlobalRoleInfo(ctx context.Context, recurse bool, 
 		tkh.SetEnableTechAdminApproveGroupFor(val)
 	}
 	{
-		val, d := tfToSliceListBinary(planAttrValues["recovery_fallback_group_for"].(basetypes.ListValue), configAttrValues["recovery_fallback_group_for"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.OrganizationOrganizationalUnitPrimerable {
-			tkh, d := tfObjectToTKHRSOrganizationOrganizationalUnitPrimer(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["recovery_fallback_group_for"]), toListValue(configAttrValues["recovery_fallback_group_for"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.OrganizationOrganizationalUnitPrimerable {
+			tkh, d := tfObjectToTKHRSOrganizationOrganizationalUnitPrimer(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -2421,8 +2850,8 @@ func tfObjectToTKHRSGroupGroupGlobalRoleInfo(ctx context.Context, recurse bool, 
 		tkh.SetRecoveryFallbackGroupFor(val)
 	}
 	{
-		val, d := tfToSliceListBinary(planAttrValues["remove_group_approve_group_for"].(basetypes.ListValue), configAttrValues["remove_group_approve_group_for"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.OrganizationOrganizationalUnitPrimerable {
-			tkh, d := tfObjectToTKHRSOrganizationOrganizationalUnitPrimer(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["remove_group_approve_group_for"]), toListValue(configAttrValues["remove_group_approve_group_for"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.OrganizationOrganizationalUnitPrimerable {
+			tkh, d := tfObjectToTKHRSOrganizationOrganizationalUnitPrimer(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -2435,16 +2864,25 @@ func tfObjectToTKHRSGroupGroupGlobalRoleInfo(ctx context.Context, recurse bool, 
 
 func tfObjectToTKHRSGroupGroupInfo(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.GroupGroupInfoable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.GroupGroupInfoable
 	tkh = keyhubmodel.NewGroupGroupInfo()
 	tflog.Debug(ctx, "Setting "+litter.Sdump(int64PToInt32P(tfToInt64Pointer(planAttrValues["nr_accounts"])))+" using SetNrAccounts")
@@ -2464,21 +2902,30 @@ func tfObjectToTKHRSGroupGroupInfo(ctx context.Context, recurse bool, planValues
 
 func tfObjectToTKHRSGroupGroupLinkableWrapper(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.GroupGroupLinkableWrapperable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.GroupGroupLinkableWrapperable
 	tkh = keyhubmodel.NewGroupGroupLinkableWrapper()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["items"].(basetypes.ListValue), configAttrValues["items"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.GroupGroupable {
-			tkh, d := tfObjectToTKHRSGroupGroup(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["items"]), toListValue(configAttrValues["items"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.GroupGroupable {
+			tkh, d := tfObjectToTKHRSGroupGroup(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -2491,21 +2938,30 @@ func tfObjectToTKHRSGroupGroupLinkableWrapper(ctx context.Context, recurse bool,
 
 func tfObjectToTKHRSGroupGroupPrimer(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.GroupGroupPrimerable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.GroupGroupPrimerable
 	tkh = keyhubmodel.NewGroupGroupPrimer()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["links"].(basetypes.ListValue), configAttrValues["links"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
-			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["links"]), toListValue(configAttrValues["links"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -2514,8 +2970,8 @@ func tfObjectToTKHRSGroupGroupPrimer(ctx context.Context, recurse bool, planValu
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceListBinary(planAttrValues["permissions"].(basetypes.ListValue), configAttrValues["permissions"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
-			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["permissions"]), toListValue(configAttrValues["permissions"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -2540,21 +2996,30 @@ func tfObjectToTKHRSGroupGroupPrimer(ctx context.Context, recurse bool, planValu
 
 func tfObjectToTKHRSGroupGroupPrimerLinkableWrapper(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.GroupGroupPrimerLinkableWrapperable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.GroupGroupPrimerLinkableWrapperable
 	tkh = keyhubmodel.NewGroupGroupPrimerLinkableWrapper()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["items"].(basetypes.ListValue), configAttrValues["items"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.GroupGroupPrimerable {
-			tkh, d := tfObjectToTKHRSGroupGroupPrimer(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["items"]), toListValue(configAttrValues["items"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.GroupGroupPrimerable {
+			tkh, d := tfObjectToTKHRSGroupGroupPrimer(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -2567,16 +3032,25 @@ func tfObjectToTKHRSGroupGroupPrimerLinkableWrapper(ctx context.Context, recurse
 
 func tfObjectToTKHRSGroupGroup_additionalObjects(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.GroupGroup_additionalObjectsable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.GroupGroup_additionalObjectsable
 	tkh = keyhubmodel.NewGroupGroup_additionalObjects()
 	{
@@ -2613,13 +3087,13 @@ func tfObjectToTKHRSGroupGroup_additionalObjects(ctx context.Context, recurse bo
 		}
 	}
 	{
-		val, d := tfObjectToTKHRSAuditInfo(ctx, recurse, planAttrValues["audit"].(basetypes.ObjectValue), configAttrValues["audit"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHRSAuditInfo(ctx, recurse, toObjectValue(planAttrValues["audit"]), toObjectValue(configAttrValues["audit"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetAudit")
 		tkh.SetAudit(val)
 	}
 	{
-		val, d := tfObjectToTKHRSGroupAuthorizedGroupsWrapper(ctx, recurse, planAttrValues["authorized_groups"].(basetypes.ObjectValue), configAttrValues["authorized_groups"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHRSGroupAuthorizedGroupsWrapper(ctx, recurse, toObjectValue(planAttrValues["authorized_groups"]), toObjectValue(configAttrValues["authorized_groups"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetAuthorizedGroups")
 		tkh.SetAuthorizedGroups(val)
@@ -2652,25 +3126,25 @@ func tfObjectToTKHRSGroupGroup_additionalObjects(ctx context.Context, recurse bo
 		tkh.SetContentAdministeredSystems(val)
 	}
 	{
-		val, d := tfObjectToTKHRSGroupGroupGlobalRoleInfo(ctx, recurse, planAttrValues["global_roles"].(basetypes.ObjectValue), configAttrValues["global_roles"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHRSGroupGroupGlobalRoleInfo(ctx, recurse, toObjectValue(planAttrValues["global_roles"]), toObjectValue(configAttrValues["global_roles"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetGlobalRoles")
 		tkh.SetGlobalRoles(val)
 	}
 	{
-		val, d := tfObjectToTKHRSGroupGroupAccessInfo(ctx, recurse, planAttrValues["group_access_info"].(basetypes.ObjectValue), configAttrValues["group_access_info"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHRSGroupGroupAccessInfo(ctx, recurse, toObjectValue(planAttrValues["group_access_info"]), toObjectValue(configAttrValues["group_access_info"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetGroupAccessInfo")
 		tkh.SetGroupAccessInfo(val)
 	}
 	{
-		val, d := tfObjectToTKHRSGroupGroupAuditingInfo(ctx, recurse, planAttrValues["groupauditinginfo"].(basetypes.ObjectValue), configAttrValues["groupauditinginfo"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHRSGroupGroupAuditingInfo(ctx, recurse, toObjectValue(planAttrValues["groupauditinginfo"]), toObjectValue(configAttrValues["groupauditinginfo"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetGroupauditinginfo")
 		tkh.SetGroupauditinginfo(val)
 	}
 	{
-		val, d := tfObjectToTKHRSGroupGroupInfo(ctx, recurse, planAttrValues["groupinfo"].(basetypes.ObjectValue), configAttrValues["groupinfo"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHRSGroupGroupInfo(ctx, recurse, toObjectValue(planAttrValues["groupinfo"]), toObjectValue(configAttrValues["groupinfo"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetGroupinfo")
 		tkh.SetGroupinfo(val)
@@ -2685,19 +3159,19 @@ func tfObjectToTKHRSGroupGroup_additionalObjects(ctx context.Context, recurse bo
 		}
 	}
 	{
-		val, d := tfObjectToTKHRSMarkItemMarkers(ctx, recurse, planAttrValues["markers"].(basetypes.ObjectValue), configAttrValues["markers"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHRSMarkItemMarkers(ctx, recurse, toObjectValue(planAttrValues["markers"]), toObjectValue(configAttrValues["markers"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetMarkers")
 		tkh.SetMarkers(val)
 	}
 	{
-		val, d := tfObjectToTKHRSGroupGroupAccount(ctx, recurse, planAttrValues["myaccount"].(basetypes.ObjectValue), configAttrValues["myaccount"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHRSGroupGroupAccount(ctx, recurse, toObjectValue(planAttrValues["myaccount"]), toObjectValue(configAttrValues["myaccount"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetMyaccount")
 		tkh.SetMyaccount(val)
 	}
 	{
-		val, d := tfObjectToTKHRSGroupGroupAccount(ctx, recurse, planAttrValues["mydelegatedaccount"].(basetypes.ObjectValue), configAttrValues["mydelegatedaccount"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHRSGroupGroupAccount(ctx, recurse, toObjectValue(planAttrValues["mydelegatedaccount"]), toObjectValue(configAttrValues["mydelegatedaccount"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetMydelegatedaccount")
 		tkh.SetMydelegatedaccount(val)
@@ -2739,7 +3213,7 @@ func tfObjectToTKHRSGroupGroup_additionalObjects(ctx context.Context, recurse bo
 		}
 	}
 	{
-		val, d := tfObjectToTKHRSProvisioningOwnedGroupOnSystemsWrapper(ctx, recurse, planAttrValues["owned_groups_on_system"].(basetypes.ObjectValue), configAttrValues["owned_groups_on_system"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHRSProvisioningOwnedGroupOnSystemsWrapper(ctx, recurse, toObjectValue(planAttrValues["owned_groups_on_system"]), toObjectValue(configAttrValues["owned_groups_on_system"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetOwnedGroupsOnSystem")
 		tkh.SetOwnedGroupsOnSystem(val)
@@ -2790,7 +3264,7 @@ func tfObjectToTKHRSGroupGroup_additionalObjects(ctx context.Context, recurse bo
 		}
 	}
 	{
-		val, d := tfObjectToTKHRSVaultVault(ctx, recurse, planAttrValues["vault"].(basetypes.ObjectValue), configAttrValues["vault"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHRSVaultVault(ctx, recurse, toObjectValue(planAttrValues["vault"]), toObjectValue(configAttrValues["vault"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetVault")
 		tkh.SetVault(val)
@@ -2806,21 +3280,30 @@ func tfObjectToTKHRSGroupGroup_additionalObjects(ctx context.Context, recurse bo
 
 func tfObjectToTKHRSGroupProvisioningGroup(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.GroupProvisioningGroupable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.GroupProvisioningGroupable
 	tkh = keyhubmodel.NewGroupProvisioningGroup()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["links"].(basetypes.ListValue), configAttrValues["links"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
-			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["links"]), toListValue(configAttrValues["links"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -2829,8 +3312,8 @@ func tfObjectToTKHRSGroupProvisioningGroup(ctx context.Context, recurse bool, pl
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceListBinary(planAttrValues["permissions"].(basetypes.ListValue), configAttrValues["permissions"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
-			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["permissions"]), toListValue(configAttrValues["permissions"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -2847,7 +3330,7 @@ func tfObjectToTKHRSGroupProvisioningGroup(ctx context.Context, recurse bool, pl
 		tkh.SetGroup(val)
 	}
 	{
-		val, d := tfObjectToTKHRSProvisioningGroupOnSystem(ctx, false, planAttrValues["group_on_system"].(basetypes.ObjectValue), configAttrValues["group_on_system"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHRSProvisioningGroupOnSystem(ctx, false, toObjectValue(planAttrValues["group_on_system"]), toObjectValue(configAttrValues["group_on_system"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetGroupOnSystem")
 		tkh.SetGroupOnSystem(val)
@@ -2865,21 +3348,30 @@ func tfObjectToTKHRSGroupProvisioningGroup(ctx context.Context, recurse bool, pl
 
 func tfObjectToTKHRSGroupProvisioningGroupLinkableWrapper(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.GroupProvisioningGroupLinkableWrapperable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.GroupProvisioningGroupLinkableWrapperable
 	tkh = keyhubmodel.NewGroupProvisioningGroupLinkableWrapper()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["items"].(basetypes.ListValue), configAttrValues["items"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.GroupProvisioningGroupable {
-			tkh, d := tfObjectToTKHRSGroupProvisioningGroup(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["items"]), toListValue(configAttrValues["items"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.GroupProvisioningGroupable {
+			tkh, d := tfObjectToTKHRSGroupProvisioningGroup(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -2892,23 +3384,32 @@ func tfObjectToTKHRSGroupProvisioningGroupLinkableWrapper(ctx context.Context, r
 
 func tfObjectToTKHRSGroupProvisioningGroupLinkableWrapperWithCount(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.GroupProvisioningGroupLinkableWrapperWithCountable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.GroupProvisioningGroupLinkableWrapperWithCountable
 	tkh = keyhubmodel.NewGroupProvisioningGroupLinkableWrapperWithCount()
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToInt64Pointer(planAttrValues["count"]))+" using SetCount")
 	tkh.SetCount(tfToInt64Pointer(planAttrValues["count"]))
 	{
-		val, d := tfToSliceListBinary(planAttrValues["items"].(basetypes.ListValue), configAttrValues["items"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.GroupProvisioningGroupable {
-			tkh, d := tfObjectToTKHRSGroupProvisioningGroup(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["items"]), toListValue(configAttrValues["items"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.GroupProvisioningGroupable {
+			tkh, d := tfObjectToTKHRSGroupProvisioningGroup(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -2921,20 +3422,29 @@ func tfObjectToTKHRSGroupProvisioningGroupLinkableWrapperWithCount(ctx context.C
 
 func tfObjectToTKHRSGroupProvisioningGroup_additionalObjects(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.GroupProvisioningGroup_additionalObjectsable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.GroupProvisioningGroup_additionalObjectsable
 	tkh = keyhubmodel.NewGroupProvisioningGroup_additionalObjects()
 	{
-		val, d := tfObjectToTKHRSAuditInfo(ctx, recurse, planAttrValues["audit"].(basetypes.ObjectValue), configAttrValues["audit"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHRSAuditInfo(ctx, recurse, toObjectValue(planAttrValues["audit"]), toObjectValue(configAttrValues["audit"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetAudit")
 		tkh.SetAudit(val)
@@ -2944,21 +3454,30 @@ func tfObjectToTKHRSGroupProvisioningGroup_additionalObjects(ctx context.Context
 
 func tfObjectToTKHRSGroupVaultVaultRecord(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.VaultVaultRecordable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.VaultVaultRecordable
 	tkh = keyhubmodel.NewVaultVaultRecord()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["links"].(basetypes.ListValue), configAttrValues["links"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
-			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["links"]), toListValue(configAttrValues["links"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -2967,8 +3486,8 @@ func tfObjectToTKHRSGroupVaultVaultRecord(ctx context.Context, recurse bool, pla
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceListBinary(planAttrValues["permissions"].(basetypes.ListValue), configAttrValues["permissions"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
-			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["permissions"]), toListValue(configAttrValues["permissions"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -3003,7 +3522,7 @@ func tfObjectToTKHRSGroupVaultVaultRecord(ctx context.Context, recurse bool, pla
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToStringPointer(planAttrValues["filename"]))+" using SetFilename")
 	tkh.SetFilename(tfToStringPointer(planAttrValues["filename"]))
 	{
-		val, d := tfToSliceSet(planAttrValues["types"].(basetypes.SetValue), configAttrValues["types"].(basetypes.SetValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.VaultVaultSecretType {
+		val, d := tfToSliceSet(toSetValue(planAttrValues["types"]), toSetValue(configAttrValues["types"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.VaultVaultSecretType {
 			tkh, d := parseCast(planValue.(basetypes.StringValue), keyhubmodel.ParseVaultVaultSecretType, func(val any) keyhubmodel.VaultVaultSecretType { return *val.(*keyhubmodel.VaultVaultSecretType) })
 			diags.Append(d...)
 			return tkh
@@ -3037,21 +3556,30 @@ func tfObjectToTKHRSGroupVaultVaultRecord(ctx context.Context, recurse bool, pla
 
 func tfObjectToTKHRSIdentityAccountAttributeDefinition(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.IdentityAccountAttributeDefinitionable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.IdentityAccountAttributeDefinitionable
 	tkh = keyhubmodel.NewIdentityAccountAttributeDefinition()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["links"].(basetypes.ListValue), configAttrValues["links"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
-			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["links"]), toListValue(configAttrValues["links"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -3060,8 +3588,8 @@ func tfObjectToTKHRSIdentityAccountAttributeDefinition(ctx context.Context, recu
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceListBinary(planAttrValues["permissions"].(basetypes.ListValue), configAttrValues["permissions"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
-			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["permissions"]), toListValue(configAttrValues["permissions"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -3100,20 +3628,29 @@ func tfObjectToTKHRSIdentityAccountAttributeDefinition(ctx context.Context, recu
 
 func tfObjectToTKHRSIdentityAccountAttributeDefinition_additionalObjects(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.IdentityAccountAttributeDefinition_additionalObjectsable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.IdentityAccountAttributeDefinition_additionalObjectsable
 	tkh = keyhubmodel.NewIdentityAccountAttributeDefinition_additionalObjects()
 	{
-		val, d := tfObjectToTKHRSAuditInfo(ctx, recurse, planAttrValues["audit"].(basetypes.ObjectValue), configAttrValues["audit"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHRSAuditInfo(ctx, recurse, toObjectValue(planAttrValues["audit"]), toObjectValue(configAttrValues["audit"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetAudit")
 		tkh.SetAudit(val)
@@ -3123,21 +3660,30 @@ func tfObjectToTKHRSIdentityAccountAttributeDefinition_additionalObjects(ctx con
 
 func tfObjectToTKHRSIdentityAccountAttributeRule(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.IdentityAccountAttributeRuleable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.IdentityAccountAttributeRuleable
 	tkh = keyhubmodel.NewIdentityAccountAttributeRule()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["links"].(basetypes.ListValue), configAttrValues["links"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
-			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["links"]), toListValue(configAttrValues["links"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -3146,8 +3692,8 @@ func tfObjectToTKHRSIdentityAccountAttributeRule(ctx context.Context, recurse bo
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceListBinary(planAttrValues["permissions"].(basetypes.ListValue), configAttrValues["permissions"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
-			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["permissions"]), toListValue(configAttrValues["permissions"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -3160,7 +3706,7 @@ func tfObjectToTKHRSIdentityAccountAttributeRule(ctx context.Context, recurse bo
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToBooleanPointer(planAttrValues["allow_self_service"]))+" using SetAllowSelfService")
 	tkh.SetAllowSelfService(tfToBooleanPointer(planAttrValues["allow_self_service"]))
 	{
-		val, d := tfObjectToTKHRSIdentityAccountAttributeDefinition(ctx, false, planAttrValues["attribute"].(basetypes.ObjectValue), configAttrValues["attribute"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHRSIdentityAccountAttributeDefinition(ctx, false, toObjectValue(planAttrValues["attribute"]), toObjectValue(configAttrValues["attribute"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetAttribute")
 		tkh.SetAttribute(val)
@@ -3192,21 +3738,30 @@ func tfObjectToTKHRSIdentityAccountAttributeRule(ctx context.Context, recurse bo
 
 func tfObjectToTKHRSIdentityAccountAttributeRuleLinkableWrapper(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.IdentityAccountAttributeRuleLinkableWrapperable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.IdentityAccountAttributeRuleLinkableWrapperable
 	tkh = keyhubmodel.NewIdentityAccountAttributeRuleLinkableWrapper()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["items"].(basetypes.ListValue), configAttrValues["items"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.IdentityAccountAttributeRuleable {
-			tkh, d := tfObjectToTKHRSIdentityAccountAttributeRule(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["items"]), toListValue(configAttrValues["items"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.IdentityAccountAttributeRuleable {
+			tkh, d := tfObjectToTKHRSIdentityAccountAttributeRule(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -3219,20 +3774,29 @@ func tfObjectToTKHRSIdentityAccountAttributeRuleLinkableWrapper(ctx context.Cont
 
 func tfObjectToTKHRSIdentityAccountAttributeRule_additionalObjects(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.IdentityAccountAttributeRule_additionalObjectsable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.IdentityAccountAttributeRule_additionalObjectsable
 	tkh = keyhubmodel.NewIdentityAccountAttributeRule_additionalObjects()
 	{
-		val, d := tfObjectToTKHRSAuditInfo(ctx, recurse, planAttrValues["audit"].(basetypes.ObjectValue), configAttrValues["audit"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHRSAuditInfo(ctx, recurse, toObjectValue(planAttrValues["audit"]), toObjectValue(configAttrValues["audit"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetAudit")
 		tkh.SetAudit(val)
@@ -3242,20 +3806,29 @@ func tfObjectToTKHRSIdentityAccountAttributeRule_additionalObjects(ctx context.C
 
 func tfObjectToTKHRSIdentityAccountAttributeValueSummary(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.IdentityAccountAttributeValueSummaryable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.IdentityAccountAttributeValueSummaryable
 	tkh = keyhubmodel.NewIdentityAccountAttributeValueSummary()
 	{
-		val, d := tfObjectToTKHRSIdentityAccountAttributeDefinition(ctx, recurse, planAttrValues["attribute"].(basetypes.ObjectValue), configAttrValues["attribute"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHRSIdentityAccountAttributeDefinition(ctx, recurse, toObjectValue(planAttrValues["attribute"]), toObjectValue(configAttrValues["attribute"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetAttribute")
 		tkh.SetAttribute(val)
@@ -3293,16 +3866,25 @@ func tfObjectToTKHRSIdentityAccountAttributeValueSummary(ctx context.Context, re
 
 func tfObjectToTKHRSLaunchpadSsoApplicationLaunchpadTile(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.LaunchpadSsoApplicationLaunchpadTileable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.LaunchpadSsoApplicationLaunchpadTileable
 	tkh = keyhubmodel.NewLaunchpadSsoApplicationLaunchpadTile()
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToStringPointer(planAttrValues["uri"]))+" using SetUri")
@@ -3312,7 +3894,9 @@ func tfObjectToTKHRSLaunchpadSsoApplicationLaunchpadTile(ctx context.Context, re
 
 func tfObjectToTKHRSLaunchpadVaultRecordLaunchpadTile(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.LaunchpadVaultRecordLaunchpadTileable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
 	var tkh keyhubmodel.LaunchpadVaultRecordLaunchpadTileable
@@ -3322,16 +3906,25 @@ func tfObjectToTKHRSLaunchpadVaultRecordLaunchpadTile(ctx context.Context, recur
 
 func tfObjectToTKHRSMarkItemMarker(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.MarkItemMarkerable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.MarkItemMarkerable
 	tkh = keyhubmodel.NewMarkItemMarker()
 	{
@@ -3347,7 +3940,7 @@ func tfObjectToTKHRSMarkItemMarker(ctx context.Context, recurse bool, planValues
 		tkh.SetMarkItemMarkerType(val)
 	}
 	{
-		val, d := tfToMap(planAttrValues["parameters"].(basetypes.MapValue), configAttrValues["parameters"].(basetypes.MapValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) any {
+		val, d := tfToMap(toMapValue(planAttrValues["parameters"]), toMapValue(configAttrValues["parameters"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) any {
 			return planValue.(basetypes.StringValue).ValueString()
 		}, keyhubmodel.NewMarkItemMarker_parameters())
 		diags.Append(d...)
@@ -3359,21 +3952,30 @@ func tfObjectToTKHRSMarkItemMarker(ctx context.Context, recurse bool, planValues
 
 func tfObjectToTKHRSMarkItemMarkers(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.MarkItemMarkersable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.MarkItemMarkersable
 	tkh = keyhubmodel.NewMarkItemMarkers()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["markers"].(basetypes.ListValue), configAttrValues["markers"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.MarkItemMarkerable {
-			tkh, d := tfObjectToTKHRSMarkItemMarker(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["markers"]), toListValue(configAttrValues["markers"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.MarkItemMarkerable {
+			tkh, d := tfObjectToTKHRSMarkItemMarker(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -3386,21 +3988,30 @@ func tfObjectToTKHRSMarkItemMarkers(ctx context.Context, recurse bool, planValue
 
 func tfObjectToTKHRSNestedProvisioningGroupOnSystem(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.ProvisioningGroupOnSystemable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.ProvisioningGroupOnSystemable
 	tkh = keyhubmodel.NewProvisioningGroupOnSystem()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["links"].(basetypes.ListValue), configAttrValues["links"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
-			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["links"]), toListValue(configAttrValues["links"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -3409,8 +4020,8 @@ func tfObjectToTKHRSNestedProvisioningGroupOnSystem(ctx context.Context, recurse
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceListBinary(planAttrValues["permissions"].(basetypes.ListValue), configAttrValues["permissions"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
-			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["permissions"]), toListValue(configAttrValues["permissions"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -3453,16 +4064,25 @@ func tfObjectToTKHRSNestedProvisioningGroupOnSystem(ctx context.Context, recurse
 
 func tfObjectToTKHRSOrganizationClientApplicationOrganizationalUnit(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.OrganizationClientApplicationOrganizationalUnitable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.OrganizationClientApplicationOrganizationalUnitable
 	tkh = keyhubmodel.NewOrganizationClientApplicationOrganizationalUnit()
 	{
@@ -3479,21 +4099,30 @@ func tfObjectToTKHRSOrganizationClientApplicationOrganizationalUnit(ctx context.
 
 func tfObjectToTKHRSOrganizationClientApplicationOrganizationalUnitLinkableWrapper(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.OrganizationClientApplicationOrganizationalUnitLinkableWrapperable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.OrganizationClientApplicationOrganizationalUnitLinkableWrapperable
 	tkh = keyhubmodel.NewOrganizationClientApplicationOrganizationalUnitLinkableWrapper()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["items"].(basetypes.ListValue), configAttrValues["items"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.OrganizationClientApplicationOrganizationalUnitable {
-			tkh, d := tfObjectToTKHRSOrganizationClientApplicationOrganizationalUnit(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["items"]), toListValue(configAttrValues["items"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.OrganizationClientApplicationOrganizationalUnitable {
+			tkh, d := tfObjectToTKHRSOrganizationClientApplicationOrganizationalUnit(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -3506,21 +4135,30 @@ func tfObjectToTKHRSOrganizationClientApplicationOrganizationalUnitLinkableWrapp
 
 func tfObjectToTKHRSOrganizationOrganizationalUnit(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.OrganizationOrganizationalUnitable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.OrganizationOrganizationalUnitable
 	tkh = keyhubmodel.NewOrganizationOrganizationalUnit()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["links"].(basetypes.ListValue), configAttrValues["links"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
-			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["links"]), toListValue(configAttrValues["links"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -3529,8 +4167,8 @@ func tfObjectToTKHRSOrganizationOrganizationalUnit(ctx context.Context, recurse 
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceListBinary(planAttrValues["permissions"].(basetypes.ListValue), configAttrValues["permissions"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
-			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["permissions"]), toListValue(configAttrValues["permissions"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -3603,21 +4241,30 @@ func tfObjectToTKHRSOrganizationOrganizationalUnit(ctx context.Context, recurse 
 
 func tfObjectToTKHRSOrganizationOrganizationalUnitLinkableWrapper(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.OrganizationOrganizationalUnitLinkableWrapperable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.OrganizationOrganizationalUnitLinkableWrapperable
 	tkh = keyhubmodel.NewOrganizationOrganizationalUnitLinkableWrapper()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["items"].(basetypes.ListValue), configAttrValues["items"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.OrganizationOrganizationalUnitable {
-			tkh, d := tfObjectToTKHRSOrganizationOrganizationalUnit(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["items"]), toListValue(configAttrValues["items"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.OrganizationOrganizationalUnitable {
+			tkh, d := tfObjectToTKHRSOrganizationOrganizationalUnit(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -3630,21 +4277,30 @@ func tfObjectToTKHRSOrganizationOrganizationalUnitLinkableWrapper(ctx context.Co
 
 func tfObjectToTKHRSOrganizationOrganizationalUnitPrimer(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.OrganizationOrganizationalUnitPrimerable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.OrganizationOrganizationalUnitPrimerable
 	tkh = keyhubmodel.NewOrganizationOrganizationalUnitPrimer()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["links"].(basetypes.ListValue), configAttrValues["links"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
-			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["links"]), toListValue(configAttrValues["links"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -3653,8 +4309,8 @@ func tfObjectToTKHRSOrganizationOrganizationalUnitPrimer(ctx context.Context, re
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceListBinary(planAttrValues["permissions"].(basetypes.ListValue), configAttrValues["permissions"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
-			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["permissions"]), toListValue(configAttrValues["permissions"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -3671,21 +4327,30 @@ func tfObjectToTKHRSOrganizationOrganizationalUnitPrimer(ctx context.Context, re
 
 func tfObjectToTKHRSOrganizationOrganizationalUnitPrimerLinkableWrapper(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.OrganizationOrganizationalUnitPrimerLinkableWrapperable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.OrganizationOrganizationalUnitPrimerLinkableWrapperable
 	tkh = keyhubmodel.NewOrganizationOrganizationalUnitPrimerLinkableWrapper()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["items"].(basetypes.ListValue), configAttrValues["items"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.OrganizationOrganizationalUnitPrimerable {
-			tkh, d := tfObjectToTKHRSOrganizationOrganizationalUnitPrimer(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["items"]), toListValue(configAttrValues["items"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.OrganizationOrganizationalUnitPrimerable {
+			tkh, d := tfObjectToTKHRSOrganizationOrganizationalUnitPrimer(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -3698,20 +4363,29 @@ func tfObjectToTKHRSOrganizationOrganizationalUnitPrimerLinkableWrapper(ctx cont
 
 func tfObjectToTKHRSOrganizationOrganizationalUnitSettings(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.OrganizationOrganizationalUnitSettingsable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.OrganizationOrganizationalUnitSettingsable
 	tkh = keyhubmodel.NewOrganizationOrganizationalUnitSettings()
 	{
-		val, d := tfObjectToTKHRSGroupGroupPrimer(ctx, recurse, planAttrValues["create_group_approve_group"].(basetypes.ObjectValue), configAttrValues["create_group_approve_group"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHRSGroupGroupPrimer(ctx, recurse, toObjectValue(planAttrValues["create_group_approve_group"]), toObjectValue(configAttrValues["create_group_approve_group"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetCreateGroupApproveGroup")
 		tkh.SetCreateGroupApproveGroup(val)
@@ -3719,19 +4393,19 @@ func tfObjectToTKHRSOrganizationOrganizationalUnitSettings(ctx context.Context, 
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToStringPointer(planAttrValues["create_group_placeholder"]))+" using SetCreateGroupPlaceholder")
 	tkh.SetCreateGroupPlaceholder(tfToStringPointer(planAttrValues["create_group_placeholder"]))
 	{
-		val, d := tfObjectToTKHRSGroupGroupPrimer(ctx, recurse, planAttrValues["enable_tech_admin_approve_group"].(basetypes.ObjectValue), configAttrValues["enable_tech_admin_approve_group"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHRSGroupGroupPrimer(ctx, recurse, toObjectValue(planAttrValues["enable_tech_admin_approve_group"]), toObjectValue(configAttrValues["enable_tech_admin_approve_group"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetEnableTechAdminApproveGroup")
 		tkh.SetEnableTechAdminApproveGroup(val)
 	}
 	{
-		val, d := tfObjectToTKHRSGroupGroupPrimer(ctx, recurse, planAttrValues["recovery_fallback_group"].(basetypes.ObjectValue), configAttrValues["recovery_fallback_group"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHRSGroupGroupPrimer(ctx, recurse, toObjectValue(planAttrValues["recovery_fallback_group"]), toObjectValue(configAttrValues["recovery_fallback_group"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetRecoveryFallbackGroup")
 		tkh.SetRecoveryFallbackGroup(val)
 	}
 	{
-		val, d := tfObjectToTKHRSGroupGroupPrimer(ctx, recurse, planAttrValues["remove_group_approve_group"].(basetypes.ObjectValue), configAttrValues["remove_group_approve_group"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHRSGroupGroupPrimer(ctx, recurse, toObjectValue(planAttrValues["remove_group_approve_group"]), toObjectValue(configAttrValues["remove_group_approve_group"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetRemoveGroupApproveGroup")
 		tkh.SetRemoveGroupApproveGroup(val)
@@ -3741,20 +4415,29 @@ func tfObjectToTKHRSOrganizationOrganizationalUnitSettings(ctx context.Context, 
 
 func tfObjectToTKHRSOrganizationOrganizationalUnit_additionalObjects(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.OrganizationOrganizationalUnit_additionalObjectsable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.OrganizationOrganizationalUnit_additionalObjectsable
 	tkh = keyhubmodel.NewOrganizationOrganizationalUnit_additionalObjects()
 	{
-		val, d := tfObjectToTKHRSAuditInfo(ctx, recurse, planAttrValues["audit"].(basetypes.ObjectValue), configAttrValues["audit"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHRSAuditInfo(ctx, recurse, toObjectValue(planAttrValues["audit"]), toObjectValue(configAttrValues["audit"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetAudit")
 		tkh.SetAudit(val)
@@ -3769,7 +4452,7 @@ func tfObjectToTKHRSOrganizationOrganizationalUnit_additionalObjects(ctx context
 		}
 	}
 	{
-		val, d := tfObjectToTKHRSOrganizationOrganizationalUnitSettings(ctx, recurse, planAttrValues["settings"].(basetypes.ObjectValue), configAttrValues["settings"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHRSOrganizationOrganizationalUnitSettings(ctx, recurse, toObjectValue(planAttrValues["settings"]), toObjectValue(configAttrValues["settings"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetSettings")
 		tkh.SetSettings(val)
@@ -3779,21 +4462,30 @@ func tfObjectToTKHRSOrganizationOrganizationalUnit_additionalObjects(ctx context
 
 func tfObjectToTKHRSProfileAccessProfile(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.ProfileAccessProfileable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.ProfileAccessProfileable
 	tkh = keyhubmodel.NewProfileAccessProfile()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["links"].(basetypes.ListValue), configAttrValues["links"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
-			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["links"]), toListValue(configAttrValues["links"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -3802,8 +4494,8 @@ func tfObjectToTKHRSProfileAccessProfile(ctx context.Context, recurse bool, plan
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceListBinary(planAttrValues["permissions"].(basetypes.ListValue), configAttrValues["permissions"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
-			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["permissions"]), toListValue(configAttrValues["permissions"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -3846,16 +4538,25 @@ func tfObjectToTKHRSProfileAccessProfile(ctx context.Context, recurse bool, plan
 
 func tfObjectToTKHRSProfileAccessProfileAccount(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.ProfileAccessProfileAccountable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.ProfileAccessProfileAccountable
 	tkh = keyhubmodel.NewProfileAccessProfileAccount()
 	{
@@ -3890,16 +4591,25 @@ func tfObjectToTKHRSProfileAccessProfileAccount(ctx context.Context, recurse boo
 
 func tfObjectToTKHRSProfileAccessProfileAccountWithAttributes(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.ProfileAccessProfileAccountWithAttributesable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.ProfileAccessProfileAccountWithAttributesable
 	tkh = keyhubmodel.NewProfileAccessProfileAccountWithAttributes()
 	{
@@ -3922,8 +4632,8 @@ func tfObjectToTKHRSProfileAccessProfileAccountWithAttributes(ctx context.Contex
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToBooleanPointer(planAttrValues["manual"]))+" using SetManual")
 	tkh.SetManual(tfToBooleanPointer(planAttrValues["manual"]))
 	{
-		val, d := tfToSliceListBinary(planAttrValues["attributes"].(basetypes.ListValue), configAttrValues["attributes"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.IdentityAccountAttributeValueSummaryable {
-			tkh, d := tfObjectToTKHRSIdentityAccountAttributeValueSummary(ctx, false, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["attributes"]), toListValue(configAttrValues["attributes"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.IdentityAccountAttributeValueSummaryable {
+			tkh, d := tfObjectToTKHRSIdentityAccountAttributeValueSummary(ctx, false, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -3944,21 +4654,30 @@ func tfObjectToTKHRSProfileAccessProfileAccountWithAttributes(ctx context.Contex
 
 func tfObjectToTKHRSProfileAccessProfileAccountWithAttributesLinkableWrapper(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.ProfileAccessProfileAccountWithAttributesLinkableWrapperable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.ProfileAccessProfileAccountWithAttributesLinkableWrapperable
 	tkh = keyhubmodel.NewProfileAccessProfileAccountWithAttributesLinkableWrapper()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["items"].(basetypes.ListValue), configAttrValues["items"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.ProfileAccessProfileAccountWithAttributesable {
-			tkh, d := tfObjectToTKHRSProfileAccessProfileAccountWithAttributes(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["items"]), toListValue(configAttrValues["items"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.ProfileAccessProfileAccountWithAttributesable {
+			tkh, d := tfObjectToTKHRSProfileAccessProfileAccountWithAttributes(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -3971,20 +4690,29 @@ func tfObjectToTKHRSProfileAccessProfileAccountWithAttributesLinkableWrapper(ctx
 
 func tfObjectToTKHRSProfileAccessProfileAccount_additionalObjects(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.ProfileAccessProfileAccount_additionalObjectsable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.ProfileAccessProfileAccount_additionalObjectsable
 	tkh = keyhubmodel.NewProfileAccessProfileAccount_additionalObjects()
 	{
-		val, d := tfObjectToTKHRSAuditInfo(ctx, recurse, planAttrValues["audit"].(basetypes.ObjectValue), configAttrValues["audit"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHRSAuditInfo(ctx, recurse, toObjectValue(planAttrValues["audit"]), toObjectValue(configAttrValues["audit"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetAudit")
 		tkh.SetAudit(val)
@@ -3994,21 +4722,30 @@ func tfObjectToTKHRSProfileAccessProfileAccount_additionalObjects(ctx context.Co
 
 func tfObjectToTKHRSProfileAccessProfileClient(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.ProfileAccessProfileClientable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.ProfileAccessProfileClientable
 	tkh = keyhubmodel.NewProfileAccessProfileClient()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["links"].(basetypes.ListValue), configAttrValues["links"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
-			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["links"]), toListValue(configAttrValues["links"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -4017,8 +4754,8 @@ func tfObjectToTKHRSProfileAccessProfileClient(ctx context.Context, recurse bool
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceListBinary(planAttrValues["permissions"].(basetypes.ListValue), configAttrValues["permissions"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
-			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["permissions"]), toListValue(configAttrValues["permissions"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -4051,21 +4788,30 @@ func tfObjectToTKHRSProfileAccessProfileClient(ctx context.Context, recurse bool
 
 func tfObjectToTKHRSProfileAccessProfileClientLinkableWrapper(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.ProfileAccessProfileClientLinkableWrapperable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.ProfileAccessProfileClientLinkableWrapperable
 	tkh = keyhubmodel.NewProfileAccessProfileClientLinkableWrapper()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["items"].(basetypes.ListValue), configAttrValues["items"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.ProfileAccessProfileClientable {
-			tkh, d := tfObjectToTKHRSProfileAccessProfileClient(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["items"]), toListValue(configAttrValues["items"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.ProfileAccessProfileClientable {
+			tkh, d := tfObjectToTKHRSProfileAccessProfileClient(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -4078,20 +4824,29 @@ func tfObjectToTKHRSProfileAccessProfileClientLinkableWrapper(ctx context.Contex
 
 func tfObjectToTKHRSProfileAccessProfileClient_additionalObjects(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.ProfileAccessProfileClient_additionalObjectsable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.ProfileAccessProfileClient_additionalObjectsable
 	tkh = keyhubmodel.NewProfileAccessProfileClient_additionalObjects()
 	{
-		val, d := tfObjectToTKHRSAuditInfo(ctx, recurse, planAttrValues["audit"].(basetypes.ObjectValue), configAttrValues["audit"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHRSAuditInfo(ctx, recurse, toObjectValue(planAttrValues["audit"]), toObjectValue(configAttrValues["audit"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetAudit")
 		tkh.SetAudit(val)
@@ -4101,21 +4856,30 @@ func tfObjectToTKHRSProfileAccessProfileClient_additionalObjects(ctx context.Con
 
 func tfObjectToTKHRSProfileAccessProfileGroup(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.ProfileAccessProfileGroupable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.ProfileAccessProfileGroupable
 	tkh = keyhubmodel.NewProfileAccessProfileGroup()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["links"].(basetypes.ListValue), configAttrValues["links"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
-			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["links"]), toListValue(configAttrValues["links"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -4124,8 +4888,8 @@ func tfObjectToTKHRSProfileAccessProfileGroup(ctx context.Context, recurse bool,
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceListBinary(planAttrValues["permissions"].(basetypes.ListValue), configAttrValues["permissions"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
-			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["permissions"]), toListValue(configAttrValues["permissions"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -4158,21 +4922,30 @@ func tfObjectToTKHRSProfileAccessProfileGroup(ctx context.Context, recurse bool,
 
 func tfObjectToTKHRSProfileAccessProfileGroupLinkableWrapper(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.ProfileAccessProfileGroupLinkableWrapperable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.ProfileAccessProfileGroupLinkableWrapperable
 	tkh = keyhubmodel.NewProfileAccessProfileGroupLinkableWrapper()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["items"].(basetypes.ListValue), configAttrValues["items"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.ProfileAccessProfileGroupable {
-			tkh, d := tfObjectToTKHRSProfileAccessProfileGroup(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["items"]), toListValue(configAttrValues["items"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.ProfileAccessProfileGroupable {
+			tkh, d := tfObjectToTKHRSProfileAccessProfileGroup(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -4185,20 +4958,29 @@ func tfObjectToTKHRSProfileAccessProfileGroupLinkableWrapper(ctx context.Context
 
 func tfObjectToTKHRSProfileAccessProfileGroup_additionalObjects(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.ProfileAccessProfileGroup_additionalObjectsable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.ProfileAccessProfileGroup_additionalObjectsable
 	tkh = keyhubmodel.NewProfileAccessProfileGroup_additionalObjects()
 	{
-		val, d := tfObjectToTKHRSAuditInfo(ctx, recurse, planAttrValues["audit"].(basetypes.ObjectValue), configAttrValues["audit"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHRSAuditInfo(ctx, recurse, toObjectValue(planAttrValues["audit"]), toObjectValue(configAttrValues["audit"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetAudit")
 		tkh.SetAudit(val)
@@ -4208,21 +4990,30 @@ func tfObjectToTKHRSProfileAccessProfileGroup_additionalObjects(ctx context.Cont
 
 func tfObjectToTKHRSProfileAccessProfileLinkableWrapper(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.ProfileAccessProfileLinkableWrapperable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.ProfileAccessProfileLinkableWrapperable
 	tkh = keyhubmodel.NewProfileAccessProfileLinkableWrapper()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["items"].(basetypes.ListValue), configAttrValues["items"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.ProfileAccessProfileable {
-			tkh, d := tfObjectToTKHRSProfileAccessProfile(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["items"]), toListValue(configAttrValues["items"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.ProfileAccessProfileable {
+			tkh, d := tfObjectToTKHRSProfileAccessProfile(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -4235,21 +5026,30 @@ func tfObjectToTKHRSProfileAccessProfileLinkableWrapper(ctx context.Context, rec
 
 func tfObjectToTKHRSProfileAccessProfilePrimer(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.ProfileAccessProfilePrimerable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.ProfileAccessProfilePrimerable
 	tkh = keyhubmodel.NewProfileAccessProfilePrimer()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["links"].(basetypes.ListValue), configAttrValues["links"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
-			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["links"]), toListValue(configAttrValues["links"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -4258,8 +5058,8 @@ func tfObjectToTKHRSProfileAccessProfilePrimer(ctx context.Context, recurse bool
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceListBinary(planAttrValues["permissions"].(basetypes.ListValue), configAttrValues["permissions"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
-			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["permissions"]), toListValue(configAttrValues["permissions"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -4276,21 +5076,30 @@ func tfObjectToTKHRSProfileAccessProfilePrimer(ctx context.Context, recurse bool
 
 func tfObjectToTKHRSProfileAccessProfileProvisioning(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.ProfileAccessProfileProvisioningable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.ProfileAccessProfileProvisioningable
 	tkh = keyhubmodel.NewProfileAccessProfileProvisioning()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["links"].(basetypes.ListValue), configAttrValues["links"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
-			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["links"]), toListValue(configAttrValues["links"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -4299,8 +5108,8 @@ func tfObjectToTKHRSProfileAccessProfileProvisioning(ctx context.Context, recurs
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceListBinary(planAttrValues["permissions"].(basetypes.ListValue), configAttrValues["permissions"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
-			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["permissions"]), toListValue(configAttrValues["permissions"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -4315,7 +5124,7 @@ func tfObjectToTKHRSProfileAccessProfileProvisioning(ctx context.Context, recurs
 		tkh.SetAccessProfile(val)
 	}
 	{
-		val, d := tfObjectToTKHRSProvisioningGroupOnSystem(ctx, false, planAttrValues["group_on_system"].(basetypes.ObjectValue), configAttrValues["group_on_system"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHRSProvisioningGroupOnSystem(ctx, false, toObjectValue(planAttrValues["group_on_system"]), toObjectValue(configAttrValues["group_on_system"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetGroupOnSystem")
 		tkh.SetGroupOnSystem(val)
@@ -4333,21 +5142,30 @@ func tfObjectToTKHRSProfileAccessProfileProvisioning(ctx context.Context, recurs
 
 func tfObjectToTKHRSProfileAccessProfileProvisioningLinkableWrapper(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.ProfileAccessProfileProvisioningLinkableWrapperable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.ProfileAccessProfileProvisioningLinkableWrapperable
 	tkh = keyhubmodel.NewProfileAccessProfileProvisioningLinkableWrapper()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["items"].(basetypes.ListValue), configAttrValues["items"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.ProfileAccessProfileProvisioningable {
-			tkh, d := tfObjectToTKHRSProfileAccessProfileProvisioning(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["items"]), toListValue(configAttrValues["items"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.ProfileAccessProfileProvisioningable {
+			tkh, d := tfObjectToTKHRSProfileAccessProfileProvisioning(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -4360,23 +5178,32 @@ func tfObjectToTKHRSProfileAccessProfileProvisioningLinkableWrapper(ctx context.
 
 func tfObjectToTKHRSProfileAccessProfileProvisioningLinkableWrapperWithCount(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.ProfileAccessProfileProvisioningLinkableWrapperWithCountable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.ProfileAccessProfileProvisioningLinkableWrapperWithCountable
 	tkh = keyhubmodel.NewProfileAccessProfileProvisioningLinkableWrapperWithCount()
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToInt64Pointer(planAttrValues["count"]))+" using SetCount")
 	tkh.SetCount(tfToInt64Pointer(planAttrValues["count"]))
 	{
-		val, d := tfToSliceListBinary(planAttrValues["items"].(basetypes.ListValue), configAttrValues["items"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.ProfileAccessProfileProvisioningable {
-			tkh, d := tfObjectToTKHRSProfileAccessProfileProvisioning(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["items"]), toListValue(configAttrValues["items"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.ProfileAccessProfileProvisioningable {
+			tkh, d := tfObjectToTKHRSProfileAccessProfileProvisioning(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -4389,20 +5216,29 @@ func tfObjectToTKHRSProfileAccessProfileProvisioningLinkableWrapperWithCount(ctx
 
 func tfObjectToTKHRSProfileAccessProfileProvisioning_additionalObjects(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.ProfileAccessProfileProvisioning_additionalObjectsable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.ProfileAccessProfileProvisioning_additionalObjectsable
 	tkh = keyhubmodel.NewProfileAccessProfileProvisioning_additionalObjects()
 	{
-		val, d := tfObjectToTKHRSAuditInfo(ctx, recurse, planAttrValues["audit"].(basetypes.ObjectValue), configAttrValues["audit"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHRSAuditInfo(ctx, recurse, toObjectValue(planAttrValues["audit"]), toObjectValue(configAttrValues["audit"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetAudit")
 		tkh.SetAudit(val)
@@ -4412,16 +5248,25 @@ func tfObjectToTKHRSProfileAccessProfileProvisioning_additionalObjects(ctx conte
 
 func tfObjectToTKHRSProfileAccessProfile_additionalObjects(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.ProfileAccessProfile_additionalObjectsable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.ProfileAccessProfile_additionalObjectsable
 	tkh = keyhubmodel.NewProfileAccessProfile_additionalObjects()
 	{
@@ -4443,7 +5288,7 @@ func tfObjectToTKHRSProfileAccessProfile_additionalObjects(ctx context.Context, 
 		}
 	}
 	{
-		val, d := tfObjectToTKHRSAuditInfo(ctx, recurse, planAttrValues["audit"].(basetypes.ObjectValue), configAttrValues["audit"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHRSAuditInfo(ctx, recurse, toObjectValue(planAttrValues["audit"]), toObjectValue(configAttrValues["audit"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetAudit")
 		tkh.SetAudit(val)
@@ -4480,20 +5325,29 @@ func tfObjectToTKHRSProfileAccessProfile_additionalObjects(ctx context.Context, 
 
 func tfObjectToTKHRSProvisioningAbstractProvisionedLDAP(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.ProvisioningAbstractProvisionedLDAPable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.ProvisioningAbstractProvisionedLDAPable
 	tkh = keyhubmodel.NewProvisioningAbstractProvisionedLDAP()
 	{
-		val, d := tfToMap(planAttrValues["attributes"].(basetypes.MapValue), configAttrValues["attributes"].(basetypes.MapValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) any {
+		val, d := tfToMap(toMapValue(planAttrValues["attributes"]), toMapValue(configAttrValues["attributes"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) any {
 			return planValue.(basetypes.StringValue).ValueString()
 		}, keyhubmodel.NewProvisioningAbstractProvisionedLDAP_attributes())
 		diags.Append(d...)
@@ -4557,16 +5411,25 @@ func tfObjectToTKHRSProvisioningAbstractProvisionedLDAP(ctx context.Context, rec
 
 func tfObjectToTKHRSProvisioningCircuitBreakerStatistics(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.ProvisioningCircuitBreakerStatisticsable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.ProvisioningCircuitBreakerStatisticsable
 	tkh = keyhubmodel.NewProvisioningCircuitBreakerStatistics()
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToInt64Pointer(planAttrValues["number_of_failed_calls"]))+" using SetNumberOfFailedCalls")
@@ -4588,21 +5451,30 @@ func tfObjectToTKHRSProvisioningCircuitBreakerStatistics(ctx context.Context, re
 
 func tfObjectToTKHRSProvisioningGroupOnSystem(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.ProvisioningGroupOnSystemable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.ProvisioningGroupOnSystemable
 	tkh = keyhubmodel.NewProvisioningGroupOnSystem()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["links"].(basetypes.ListValue), configAttrValues["links"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
-			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["links"]), toListValue(configAttrValues["links"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -4611,8 +5483,8 @@ func tfObjectToTKHRSProvisioningGroupOnSystem(ctx context.Context, recurse bool,
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceListBinary(planAttrValues["permissions"].(basetypes.ListValue), configAttrValues["permissions"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
-			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["permissions"]), toListValue(configAttrValues["permissions"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -4655,21 +5527,30 @@ func tfObjectToTKHRSProvisioningGroupOnSystem(ctx context.Context, recurse bool,
 
 func tfObjectToTKHRSProvisioningGroupOnSystemLinkableWrapper(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.ProvisioningGroupOnSystemLinkableWrapperable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.ProvisioningGroupOnSystemLinkableWrapperable
 	tkh = keyhubmodel.NewProvisioningGroupOnSystemLinkableWrapper()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["items"].(basetypes.ListValue), configAttrValues["items"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.ProvisioningGroupOnSystemable {
-			tkh, d := tfObjectToTKHRSProvisioningGroupOnSystem(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["items"]), toListValue(configAttrValues["items"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.ProvisioningGroupOnSystemable {
+			tkh, d := tfObjectToTKHRSProvisioningGroupOnSystem(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -4682,21 +5563,30 @@ func tfObjectToTKHRSProvisioningGroupOnSystemLinkableWrapper(ctx context.Context
 
 func tfObjectToTKHRSProvisioningGroupOnSystemPrimer(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.ProvisioningGroupOnSystemPrimerable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.ProvisioningGroupOnSystemPrimerable
 	tkh = keyhubmodel.NewProvisioningGroupOnSystemPrimer()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["links"].(basetypes.ListValue), configAttrValues["links"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
-			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["links"]), toListValue(configAttrValues["links"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -4705,8 +5595,8 @@ func tfObjectToTKHRSProvisioningGroupOnSystemPrimer(ctx context.Context, recurse
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceListBinary(planAttrValues["permissions"].(basetypes.ListValue), configAttrValues["permissions"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
-			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["permissions"]), toListValue(configAttrValues["permissions"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -4733,20 +5623,29 @@ func tfObjectToTKHRSProvisioningGroupOnSystemPrimer(ctx context.Context, recurse
 
 func tfObjectToTKHRSProvisioningGroupOnSystemTypes(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.ProvisioningGroupOnSystemTypesable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.ProvisioningGroupOnSystemTypesable
 	tkh = keyhubmodel.NewProvisioningGroupOnSystemTypes()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["types"].(basetypes.ListValue), configAttrValues["types"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.ProvisioningGroupOnSystemType {
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["types"]), toListValue(configAttrValues["types"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.ProvisioningGroupOnSystemType {
 			tkh, d := parseCast(planValue.(basetypes.StringValue), keyhubmodel.ParseProvisioningGroupOnSystemType, func(val any) keyhubmodel.ProvisioningGroupOnSystemType {
 				return *val.(*keyhubmodel.ProvisioningGroupOnSystemType)
 			})
@@ -4762,16 +5661,25 @@ func tfObjectToTKHRSProvisioningGroupOnSystemTypes(ctx context.Context, recurse 
 
 func tfObjectToTKHRSProvisioningGroupOnSystem_additionalObjects(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.ProvisioningGroupOnSystem_additionalObjectsable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.ProvisioningGroupOnSystem_additionalObjectsable
 	tkh = keyhubmodel.NewProvisioningGroupOnSystem_additionalObjects()
 	{
@@ -4784,7 +5692,7 @@ func tfObjectToTKHRSProvisioningGroupOnSystem_additionalObjects(ctx context.Cont
 		}
 	}
 	{
-		val, d := tfObjectToTKHRSAuditInfo(ctx, recurse, planAttrValues["audit"].(basetypes.ObjectValue), configAttrValues["audit"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHRSAuditInfo(ctx, recurse, toObjectValue(planAttrValues["audit"]), toObjectValue(configAttrValues["audit"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetAudit")
 		tkh.SetAudit(val)
@@ -4812,21 +5720,30 @@ func tfObjectToTKHRSProvisioningGroupOnSystem_additionalObjects(ctx context.Cont
 
 func tfObjectToTKHRSProvisioningOwnedGroupOnSystemsWrapper(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.ProvisioningOwnedGroupOnSystemsWrapperable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.ProvisioningOwnedGroupOnSystemsWrapperable
 	tkh = keyhubmodel.NewProvisioningOwnedGroupOnSystemsWrapper()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["items"].(basetypes.ListValue), configAttrValues["items"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.ProvisioningGroupOnSystemable {
-			tkh, d := tfObjectToTKHRSProvisioningGroupOnSystem(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["items"]), toListValue(configAttrValues["items"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.ProvisioningGroupOnSystemable {
+			tkh, d := tfObjectToTKHRSProvisioningGroupOnSystem(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -4841,21 +5758,30 @@ func tfObjectToTKHRSProvisioningOwnedGroupOnSystemsWrapper(ctx context.Context, 
 
 func tfObjectToTKHRSProvisioningProvisionNumberSequence(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.ProvisioningProvisionNumberSequenceable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.ProvisioningProvisionNumberSequenceable
 	tkh = keyhubmodel.NewProvisioningProvisionNumberSequence()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["links"].(basetypes.ListValue), configAttrValues["links"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
-			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["links"]), toListValue(configAttrValues["links"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -4864,8 +5790,8 @@ func tfObjectToTKHRSProvisioningProvisionNumberSequence(ctx context.Context, rec
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceListBinary(planAttrValues["permissions"].(basetypes.ListValue), configAttrValues["permissions"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
-			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["permissions"]), toListValue(configAttrValues["permissions"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -4890,20 +5816,29 @@ func tfObjectToTKHRSProvisioningProvisionNumberSequence(ctx context.Context, rec
 
 func tfObjectToTKHRSProvisioningProvisionNumberSequence_additionalObjects(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.ProvisioningProvisionNumberSequence_additionalObjectsable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.ProvisioningProvisionNumberSequence_additionalObjectsable
 	tkh = keyhubmodel.NewProvisioningProvisionNumberSequence_additionalObjects()
 	{
-		val, d := tfObjectToTKHRSAuditInfo(ctx, recurse, planAttrValues["audit"].(basetypes.ObjectValue), configAttrValues["audit"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHRSAuditInfo(ctx, recurse, toObjectValue(planAttrValues["audit"]), toObjectValue(configAttrValues["audit"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetAudit")
 		tkh.SetAudit(val)
@@ -4922,16 +5857,25 @@ func tfObjectToTKHRSProvisioningProvisionNumberSequence_additionalObjects(ctx co
 
 func tfObjectToTKHRSProvisioningProvisionedAD(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.ProvisioningProvisionedADable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.ProvisioningProvisionedADable
 	tkh = keyhubmodel.NewProvisioningProvisionedAD()
 	{
@@ -4947,16 +5891,25 @@ func tfObjectToTKHRSProvisioningProvisionedAD(ctx context.Context, recurse bool,
 
 func tfObjectToTKHRSProvisioningProvisionedAccount(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.ProvisioningProvisionedAccountable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.ProvisioningProvisionedAccountable
 	tkh = keyhubmodel.NewProvisioningProvisionedAccount()
 	{
@@ -4983,20 +5936,29 @@ func tfObjectToTKHRSProvisioningProvisionedAccount(ctx context.Context, recurse 
 
 func tfObjectToTKHRSProvisioningProvisionedAccount_additionalObjects(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.ProvisioningProvisionedAccount_additionalObjectsable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.ProvisioningProvisionedAccount_additionalObjectsable
 	tkh = keyhubmodel.NewProvisioningProvisionedAccount_additionalObjects()
 	{
-		val, d := tfObjectToTKHRSAuditInfo(ctx, recurse, planAttrValues["audit"].(basetypes.ObjectValue), configAttrValues["audit"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHRSAuditInfo(ctx, recurse, toObjectValue(planAttrValues["audit"]), toObjectValue(configAttrValues["audit"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetAudit")
 		tkh.SetAudit(val)
@@ -5006,16 +5968,25 @@ func tfObjectToTKHRSProvisioningProvisionedAccount_additionalObjects(ctx context
 
 func tfObjectToTKHRSProvisioningProvisionedAzureOIDCDirectory(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.ProvisioningProvisionedAzureOIDCDirectoryable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.ProvisioningProvisionedAzureOIDCDirectoryable
 	tkh = keyhubmodel.NewProvisioningProvisionedAzureOIDCDirectory()
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToBooleanPointer(planAttrValues["accounts_writable"]))+" using SetAccountsWritable")
@@ -5033,16 +6004,25 @@ func tfObjectToTKHRSProvisioningProvisionedAzureOIDCDirectory(ctx context.Contex
 
 func tfObjectToTKHRSProvisioningProvisionedAzureSyncLDAPDirectory(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.ProvisioningProvisionedAzureSyncLDAPDirectoryable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.ProvisioningProvisionedAzureSyncLDAPDirectoryable
 	tkh = keyhubmodel.NewProvisioningProvisionedAzureSyncLDAPDirectory()
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToStringPointer(planAttrValues["client_id"]))+" using SetClientId")
@@ -5062,16 +6042,25 @@ func tfObjectToTKHRSProvisioningProvisionedAzureSyncLDAPDirectory(ctx context.Co
 
 func tfObjectToTKHRSProvisioningProvisionedAzureTenant(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.ProvisioningProvisionedAzureTenantable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.ProvisioningProvisionedAzureTenantable
 	tkh = keyhubmodel.NewProvisioningProvisionedAzureTenant()
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToStringPointer(planAttrValues["client_id"]))+" using SetClientId")
@@ -5087,16 +6076,25 @@ func tfObjectToTKHRSProvisioningProvisionedAzureTenant(ctx context.Context, recu
 
 func tfObjectToTKHRSProvisioningProvisionedInternalLDAP(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.ProvisioningProvisionedInternalLDAPable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.ProvisioningProvisionedInternalLDAPable
 	tkh = keyhubmodel.NewProvisioningProvisionedInternalLDAP()
 	{
@@ -5110,22 +6108,31 @@ func tfObjectToTKHRSProvisioningProvisionedInternalLDAP(ctx context.Context, rec
 
 func tfObjectToTKHRSProvisioningProvisionedLDAP(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.ProvisioningProvisionedLDAPable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.ProvisioningProvisionedLDAPable
 	tkh = keyhubmodel.NewProvisioningProvisionedLDAP()
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToInt64Pointer(planAttrValues["gid"]))+" using SetGid")
 	tkh.SetGid(tfToInt64Pointer(planAttrValues["gid"]))
 	{
-		val, d := tfObjectToTKHRSProvisioningProvisionNumberSequence(ctx, recurse, planAttrValues["gid_numbering"].(basetypes.ObjectValue), configAttrValues["gid_numbering"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHRSProvisioningProvisionNumberSequence(ctx, recurse, toObjectValue(planAttrValues["gid_numbering"]), toObjectValue(configAttrValues["gid_numbering"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetGidNumbering")
 		tkh.SetGidNumbering(val)
@@ -5139,7 +6146,7 @@ func tfObjectToTKHRSProvisioningProvisionedLDAP(ctx context.Context, recurse boo
 		tkh.SetHashingScheme(val)
 	}
 	{
-		val, d := tfObjectToTKHRSProvisioningProvisionNumberSequence(ctx, recurse, planAttrValues["numbering"].(basetypes.ObjectValue), configAttrValues["numbering"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHRSProvisioningProvisionNumberSequence(ctx, recurse, toObjectValue(planAttrValues["numbering"]), toObjectValue(configAttrValues["numbering"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetNumbering")
 		tkh.SetNumbering(val)
@@ -5149,16 +6156,25 @@ func tfObjectToTKHRSProvisioningProvisionedLDAP(ctx context.Context, recurse boo
 
 func tfObjectToTKHRSProvisioningProvisionedLDAPDirectory(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.ProvisioningProvisionedLDAPDirectoryable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.ProvisioningProvisionedLDAPDirectoryable
 	tkh = keyhubmodel.NewProvisioningProvisionedLDAPDirectory()
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToBooleanPointer(planAttrValues["accounts_writable"]))+" using SetAccountsWritable")
@@ -5172,7 +6188,7 @@ func tfObjectToTKHRSProvisioningProvisionedLDAPDirectory(ctx context.Context, re
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToInt64Pointer(planAttrValues["gid"]))+" using SetGid")
 	tkh.SetGid(tfToInt64Pointer(planAttrValues["gid"]))
 	{
-		val, d := tfObjectToTKHRSProvisioningProvisionNumberSequence(ctx, recurse, planAttrValues["gid_numbering"].(basetypes.ObjectValue), configAttrValues["gid_numbering"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHRSProvisioningProvisionNumberSequence(ctx, recurse, toObjectValue(planAttrValues["gid_numbering"]), toObjectValue(configAttrValues["gid_numbering"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetGidNumbering")
 		tkh.SetGidNumbering(val)
@@ -5188,7 +6204,7 @@ func tfObjectToTKHRSProvisioningProvisionedLDAPDirectory(ctx context.Context, re
 		tkh.SetHashingScheme(val)
 	}
 	{
-		val, d := tfObjectToTKHRSProvisioningProvisionNumberSequence(ctx, recurse, planAttrValues["numbering"].(basetypes.ObjectValue), configAttrValues["numbering"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHRSProvisioningProvisionNumberSequence(ctx, recurse, toObjectValue(planAttrValues["numbering"]), toObjectValue(configAttrValues["numbering"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetNumbering")
 		tkh.SetNumbering(val)
@@ -5214,16 +6230,25 @@ func tfObjectToTKHRSProvisioningProvisionedLDAPDirectory(ctx context.Context, re
 
 func tfObjectToTKHRSProvisioningProvisionedNamespace(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.ProvisioningProvisionedNamespaceable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.ProvisioningProvisionedNamespaceable
 	tkh = keyhubmodel.NewProvisioningProvisionedNamespace()
 	{
@@ -5241,16 +6266,25 @@ func tfObjectToTKHRSProvisioningProvisionedNamespace(ctx context.Context, recurs
 
 func tfObjectToTKHRSProvisioningProvisionedSCIM(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.ProvisioningProvisionedSCIMable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.ProvisioningProvisionedSCIMable
 	tkh = keyhubmodel.NewProvisioningProvisionedSCIM()
 	{
@@ -5286,21 +6320,30 @@ func tfObjectToTKHRSProvisioningProvisionedSCIM(ctx context.Context, recurse boo
 
 func tfObjectToTKHRSProvisioningProvisionedSystem(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.ProvisioningProvisionedSystemable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.ProvisioningProvisionedSystemable
 	tkh = keyhubmodel.NewProvisioningProvisionedSystem()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["links"].(basetypes.ListValue), configAttrValues["links"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
-			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["links"]), toListValue(configAttrValues["links"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -5309,8 +6352,8 @@ func tfObjectToTKHRSProvisioningProvisionedSystem(ctx context.Context, recurse b
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceListBinary(planAttrValues["permissions"].(basetypes.ListValue), configAttrValues["permissions"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
-			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["permissions"]), toListValue(configAttrValues["permissions"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -5347,7 +6390,7 @@ func tfObjectToTKHRSProvisioningProvisionedSystem(ctx context.Context, recurse b
 	tflog.Debug(ctx, "Setting "+litter.Sdump(int64PToInt32P(tfToInt64Pointer(planAttrValues["account_count"])))+" using SetAccountCount")
 	tkh.SetAccountCount(int64PToInt32P(tfToInt64Pointer(planAttrValues["account_count"])))
 	{
-		val, d := tfObjectToTKHRSProvisioningProvisionedSystem_cleanupPeriod(ctx, false, planAttrValues["cleanup_period"].(basetypes.ObjectValue), configAttrValues["cleanup_period"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHRSProvisioningProvisionedSystem_cleanupPeriod(ctx, false, toObjectValue(planAttrValues["cleanup_period"]), toObjectValue(configAttrValues["cleanup_period"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetCleanupPeriod")
 		tkh.SetCleanupPeriod(val)
@@ -5489,21 +6532,30 @@ func tfObjectToTKHRSProvisioningProvisionedSystem(ctx context.Context, recurse b
 
 func tfObjectToTKHRSProvisioningProvisionedSystemLinkableWrapper(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.ProvisioningProvisionedSystemLinkableWrapperable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.ProvisioningProvisionedSystemLinkableWrapperable
 	tkh = keyhubmodel.NewProvisioningProvisionedSystemLinkableWrapper()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["items"].(basetypes.ListValue), configAttrValues["items"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.ProvisioningProvisionedSystemable {
-			tkh, d := tfObjectToTKHRSProvisioningProvisionedSystem(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["items"]), toListValue(configAttrValues["items"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.ProvisioningProvisionedSystemable {
+			tkh, d := tfObjectToTKHRSProvisioningProvisionedSystem(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -5516,21 +6568,30 @@ func tfObjectToTKHRSProvisioningProvisionedSystemLinkableWrapper(ctx context.Con
 
 func tfObjectToTKHRSProvisioningProvisionedSystemPrimer(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.ProvisioningProvisionedSystemPrimerable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.ProvisioningProvisionedSystemPrimerable
 	tkh = keyhubmodel.NewProvisioningProvisionedSystemPrimer()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["links"].(basetypes.ListValue), configAttrValues["links"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
-			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["links"]), toListValue(configAttrValues["links"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -5539,8 +6600,8 @@ func tfObjectToTKHRSProvisioningProvisionedSystemPrimer(ctx context.Context, rec
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceListBinary(planAttrValues["permissions"].(basetypes.ListValue), configAttrValues["permissions"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
-			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["permissions"]), toListValue(configAttrValues["permissions"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -5579,21 +6640,30 @@ func tfObjectToTKHRSProvisioningProvisionedSystemPrimer(ctx context.Context, rec
 
 func tfObjectToTKHRSProvisioningProvisionedSystemPrimerLinkableWrapper(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.ProvisioningProvisionedSystemPrimerLinkableWrapperable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.ProvisioningProvisionedSystemPrimerLinkableWrapperable
 	tkh = keyhubmodel.NewProvisioningProvisionedSystemPrimerLinkableWrapper()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["items"].(basetypes.ListValue), configAttrValues["items"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.ProvisioningProvisionedSystemPrimerable {
-			tkh, d := tfObjectToTKHRSProvisioningProvisionedSystemPrimer(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["items"]), toListValue(configAttrValues["items"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.ProvisioningProvisionedSystemPrimerable {
+			tkh, d := tfObjectToTKHRSProvisioningProvisionedSystemPrimer(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -5606,26 +6676,35 @@ func tfObjectToTKHRSProvisioningProvisionedSystemPrimerLinkableWrapper(ctx conte
 
 func tfObjectToTKHRSProvisioningProvisionedSystem_additionalObjects(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.ProvisioningProvisionedSystem_additionalObjectsable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.ProvisioningProvisionedSystem_additionalObjectsable
 	tkh = keyhubmodel.NewProvisioningProvisionedSystem_additionalObjects()
 	{
-		val, d := tfObjectToTKHRSProvisioningProvisionedAccount(ctx, recurse, planAttrValues["account"].(basetypes.ObjectValue), configAttrValues["account"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHRSProvisioningProvisionedAccount(ctx, recurse, toObjectValue(planAttrValues["account"]), toObjectValue(configAttrValues["account"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetAccount")
 		tkh.SetAccount(val)
 	}
 	{
-		val, d := tfObjectToTKHRSAuditInfo(ctx, recurse, planAttrValues["audit"].(basetypes.ObjectValue), configAttrValues["audit"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHRSAuditInfo(ctx, recurse, toObjectValue(planAttrValues["audit"]), toObjectValue(configAttrValues["audit"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetAudit")
 		tkh.SetAudit(val)
@@ -5642,25 +6721,25 @@ func tfObjectToTKHRSProvisioningProvisionedSystem_additionalObjects(ctx context.
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToStringPointer(planAttrValues["login_name"]))+" using SetLoginName")
 	tkh.SetLoginName(tfToStringPointer(planAttrValues["login_name"]))
 	{
-		val, d := tfObjectToTKHRSProvisioningProvisioningManagementPermissions(ctx, recurse, planAttrValues["management_permissions"].(basetypes.ObjectValue), configAttrValues["management_permissions"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHRSProvisioningProvisioningManagementPermissions(ctx, recurse, toObjectValue(planAttrValues["management_permissions"]), toObjectValue(configAttrValues["management_permissions"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetManagementPermissions")
 		tkh.SetManagementPermissions(val)
 	}
 	{
-		val, d := tfObjectToTKHRSMarkItemMarkers(ctx, recurse, planAttrValues["markers"].(basetypes.ObjectValue), configAttrValues["markers"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHRSMarkItemMarkers(ctx, recurse, toObjectValue(planAttrValues["markers"]), toObjectValue(configAttrValues["markers"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetMarkers")
 		tkh.SetMarkers(val)
 	}
 	{
-		val, d := tfObjectToTKHRSProvisioningCircuitBreakerStatistics(ctx, recurse, planAttrValues["statistics"].(basetypes.ObjectValue), configAttrValues["statistics"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHRSProvisioningCircuitBreakerStatistics(ctx, recurse, toObjectValue(planAttrValues["statistics"]), toObjectValue(configAttrValues["statistics"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetStatistics")
 		tkh.SetStatistics(val)
 	}
 	{
-		val, d := tfObjectToTKHRSProvisioningGroupOnSystemTypes(ctx, recurse, planAttrValues["supported_group_types"].(basetypes.ObjectValue), configAttrValues["supported_group_types"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHRSProvisioningGroupOnSystemTypes(ctx, recurse, toObjectValue(planAttrValues["supported_group_types"]), toObjectValue(configAttrValues["supported_group_types"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetSupportedGroupTypes")
 		tkh.SetSupportedGroupTypes(val)
@@ -5670,16 +6749,25 @@ func tfObjectToTKHRSProvisioningProvisionedSystem_additionalObjects(ctx context.
 
 func tfObjectToTKHRSProvisioningProvisionedSystem_cleanupPeriod(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.ProvisioningProvisionedSystem_cleanupPeriodable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.ProvisioningProvisionedSystem_cleanupPeriodable
 	tkh = keyhubmodel.NewProvisioningProvisionedSystem_cleanupPeriod()
 	tflog.Debug(ctx, "Setting "+litter.Sdump(int64PToInt32P(tfToInt64Pointer(planAttrValues["days"])))+" using SetDays")
@@ -5693,16 +6781,25 @@ func tfObjectToTKHRSProvisioningProvisionedSystem_cleanupPeriod(ctx context.Cont
 
 func tfObjectToTKHRSProvisioningProvisioningManagementPermissions(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.ProvisioningProvisioningManagementPermissionsable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.ProvisioningProvisioningManagementPermissionsable
 	tkh = keyhubmodel.NewProvisioningProvisioningManagementPermissions()
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToBooleanPointer(planAttrValues["create_new_groups_allowed"]))+" using SetCreateNewGroupsAllowed")
@@ -5716,21 +6813,30 @@ func tfObjectToTKHRSProvisioningProvisioningManagementPermissions(ctx context.Co
 
 func tfObjectToTKHRSServiceaccountServiceAccount(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.ServiceaccountServiceAccountable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.ServiceaccountServiceAccountable
 	tkh = keyhubmodel.NewServiceaccountServiceAccount()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["links"].(basetypes.ListValue), configAttrValues["links"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
-			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["links"]), toListValue(configAttrValues["links"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -5739,8 +6845,8 @@ func tfObjectToTKHRSServiceaccountServiceAccount(ctx context.Context, recurse bo
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceListBinary(planAttrValues["permissions"].(basetypes.ListValue), configAttrValues["permissions"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
-			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["permissions"]), toListValue(configAttrValues["permissions"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -5799,21 +6905,30 @@ func tfObjectToTKHRSServiceaccountServiceAccount(ctx context.Context, recurse bo
 
 func tfObjectToTKHRSServiceaccountServiceAccountGroup(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.ServiceaccountServiceAccountGroupable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.ServiceaccountServiceAccountGroupable
 	tkh = keyhubmodel.NewServiceaccountServiceAccountGroup()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["links"].(basetypes.ListValue), configAttrValues["links"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
-			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["links"]), toListValue(configAttrValues["links"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -5822,8 +6937,8 @@ func tfObjectToTKHRSServiceaccountServiceAccountGroup(ctx context.Context, recur
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceListBinary(planAttrValues["permissions"].(basetypes.ListValue), configAttrValues["permissions"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
-			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["permissions"]), toListValue(configAttrValues["permissions"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -5858,21 +6973,30 @@ func tfObjectToTKHRSServiceaccountServiceAccountGroup(ctx context.Context, recur
 
 func tfObjectToTKHRSServiceaccountServiceAccountGroupLinkableWrapper(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.ServiceaccountServiceAccountGroupLinkableWrapperable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.ServiceaccountServiceAccountGroupLinkableWrapperable
 	tkh = keyhubmodel.NewServiceaccountServiceAccountGroupLinkableWrapper()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["items"].(basetypes.ListValue), configAttrValues["items"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.ServiceaccountServiceAccountGroupable {
-			tkh, d := tfObjectToTKHRSServiceaccountServiceAccountGroup(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["items"]), toListValue(configAttrValues["items"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.ServiceaccountServiceAccountGroupable {
+			tkh, d := tfObjectToTKHRSServiceaccountServiceAccountGroup(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -5885,20 +7009,29 @@ func tfObjectToTKHRSServiceaccountServiceAccountGroupLinkableWrapper(ctx context
 
 func tfObjectToTKHRSServiceaccountServiceAccountGroup_additionalObjects(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.ServiceaccountServiceAccountGroup_additionalObjectsable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.ServiceaccountServiceAccountGroup_additionalObjectsable
 	tkh = keyhubmodel.NewServiceaccountServiceAccountGroup_additionalObjects()
 	{
-		val, d := tfObjectToTKHRSAuditInfo(ctx, recurse, planAttrValues["audit"].(basetypes.ObjectValue), configAttrValues["audit"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHRSAuditInfo(ctx, recurse, toObjectValue(planAttrValues["audit"]), toObjectValue(configAttrValues["audit"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetAudit")
 		tkh.SetAudit(val)
@@ -5908,21 +7041,30 @@ func tfObjectToTKHRSServiceaccountServiceAccountGroup_additionalObjects(ctx cont
 
 func tfObjectToTKHRSServiceaccountServiceAccountLinkableWrapper(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.ServiceaccountServiceAccountLinkableWrapperable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.ServiceaccountServiceAccountLinkableWrapperable
 	tkh = keyhubmodel.NewServiceaccountServiceAccountLinkableWrapper()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["items"].(basetypes.ListValue), configAttrValues["items"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.ServiceaccountServiceAccountable {
-			tkh, d := tfObjectToTKHRSServiceaccountServiceAccount(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["items"]), toListValue(configAttrValues["items"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.ServiceaccountServiceAccountable {
+			tkh, d := tfObjectToTKHRSServiceaccountServiceAccount(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -5935,21 +7077,30 @@ func tfObjectToTKHRSServiceaccountServiceAccountLinkableWrapper(ctx context.Cont
 
 func tfObjectToTKHRSServiceaccountServiceAccountPrimer(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.ServiceaccountServiceAccountPrimerable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.ServiceaccountServiceAccountPrimerable
 	tkh = keyhubmodel.NewServiceaccountServiceAccountPrimer()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["links"].(basetypes.ListValue), configAttrValues["links"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
-			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["links"]), toListValue(configAttrValues["links"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -5958,8 +7109,8 @@ func tfObjectToTKHRSServiceaccountServiceAccountPrimer(ctx context.Context, recu
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceListBinary(planAttrValues["permissions"].(basetypes.ListValue), configAttrValues["permissions"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
-			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["permissions"]), toListValue(configAttrValues["permissions"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -5986,23 +7137,32 @@ func tfObjectToTKHRSServiceaccountServiceAccountPrimer(ctx context.Context, recu
 
 func tfObjectToTKHRSServiceaccountServiceAccountPrimerLinkableWrapperWithCount(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.ServiceaccountServiceAccountPrimerLinkableWrapperWithCountable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.ServiceaccountServiceAccountPrimerLinkableWrapperWithCountable
 	tkh = keyhubmodel.NewServiceaccountServiceAccountPrimerLinkableWrapperWithCount()
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToInt64Pointer(planAttrValues["count"]))+" using SetCount")
 	tkh.SetCount(tfToInt64Pointer(planAttrValues["count"]))
 	{
-		val, d := tfToSliceListBinary(planAttrValues["items"].(basetypes.ListValue), configAttrValues["items"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.ServiceaccountServiceAccountPrimerable {
-			tkh, d := tfObjectToTKHRSServiceaccountServiceAccountPrimer(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["items"]), toListValue(configAttrValues["items"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.ServiceaccountServiceAccountPrimerable {
+			tkh, d := tfObjectToTKHRSServiceaccountServiceAccountPrimer(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -6015,16 +7175,25 @@ func tfObjectToTKHRSServiceaccountServiceAccountPrimerLinkableWrapperWithCount(c
 
 func tfObjectToTKHRSServiceaccountServiceAccountSupportedFeatures(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.ServiceaccountServiceAccountSupportedFeaturesable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.ServiceaccountServiceAccountSupportedFeaturesable
 	tkh = keyhubmodel.NewServiceaccountServiceAccountSupportedFeatures()
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToBooleanPointer(planAttrValues["ssh_public_key"]))+" using SetSshPublicKey")
@@ -6034,20 +7203,29 @@ func tfObjectToTKHRSServiceaccountServiceAccountSupportedFeatures(ctx context.Co
 
 func tfObjectToTKHRSServiceaccountServiceAccount_additionalObjects(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.ServiceaccountServiceAccount_additionalObjectsable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.ServiceaccountServiceAccount_additionalObjectsable
 	tkh = keyhubmodel.NewServiceaccountServiceAccount_additionalObjects()
 	{
-		val, d := tfObjectToTKHRSAuditInfo(ctx, recurse, planAttrValues["audit"].(basetypes.ObjectValue), configAttrValues["audit"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHRSAuditInfo(ctx, recurse, toObjectValue(planAttrValues["audit"]), toObjectValue(configAttrValues["audit"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetAudit")
 		tkh.SetAudit(val)
@@ -6062,13 +7240,13 @@ func tfObjectToTKHRSServiceaccountServiceAccount_additionalObjects(ctx context.C
 		}
 	}
 	{
-		val, d := tfObjectToTKHRSGeneratedSecret(ctx, recurse, planAttrValues["secret"].(basetypes.ObjectValue), configAttrValues["secret"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHRSGeneratedSecret(ctx, recurse, toObjectValue(planAttrValues["secret"]), toObjectValue(configAttrValues["secret"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetSecret")
 		tkh.SetSecret(val)
 	}
 	{
-		val, d := tfObjectToTKHRSServiceaccountServiceAccountSupportedFeatures(ctx, recurse, planAttrValues["supported_features"].(basetypes.ObjectValue), configAttrValues["supported_features"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHRSServiceaccountServiceAccountSupportedFeatures(ctx, recurse, toObjectValue(planAttrValues["supported_features"]), toObjectValue(configAttrValues["supported_features"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetSupportedFeatures")
 		tkh.SetSupportedFeatures(val)
@@ -6078,16 +7256,25 @@ func tfObjectToTKHRSServiceaccountServiceAccount_additionalObjects(ctx context.C
 
 func tfObjectToTKHRSVaultPasswordMetadata(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.VaultPasswordMetadataable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.VaultPasswordMetadataable
 	tkh = keyhubmodel.NewVaultPasswordMetadata()
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToBooleanPointer(planAttrValues["dictionary"]))+" using SetDictionary")
@@ -6113,21 +7300,30 @@ func tfObjectToTKHRSVaultPasswordMetadata(ctx context.Context, recurse bool, pla
 
 func tfObjectToTKHRSVaultVault(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.VaultVaultable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.VaultVaultable
 	tkh = keyhubmodel.NewVaultVault()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["links"].(basetypes.ListValue), configAttrValues["links"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
-			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["links"]), toListValue(configAttrValues["links"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -6136,8 +7332,8 @@ func tfObjectToTKHRSVaultVault(ctx context.Context, recurse bool, planValues typ
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceListBinary(planAttrValues["permissions"].(basetypes.ListValue), configAttrValues["permissions"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
-			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["permissions"]), toListValue(configAttrValues["permissions"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -6150,7 +7346,7 @@ func tfObjectToTKHRSVaultVault(ctx context.Context, recurse bool, planValues typ
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToStringPointer(planAttrValues["name"]))+" using SetName")
 	tkh.SetName(tfToStringPointer(planAttrValues["name"]))
 	{
-		val, d := tfToSliceListBinary(planAttrValues["records"].(basetypes.ListValue), configAttrValues["records"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.VaultVaultRecordable {
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["records"]), toListValue(configAttrValues["records"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.VaultVaultRecordable {
 			tkh, d := findVaultVaultRecordByUUID(ctx, planValue.(basetypes.StringValue).ValueStringPointer())
 			diags.Append(d...)
 			return tkh
@@ -6164,16 +7360,25 @@ func tfObjectToTKHRSVaultVault(ctx context.Context, recurse bool, planValues typ
 
 func tfObjectToTKHRSVaultVaultActivationStatus(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.VaultVaultActivationStatusable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.VaultVaultActivationStatusable
 	tkh = keyhubmodel.NewVaultVaultActivationStatus()
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToBooleanPointer(planAttrValues["activated"]))+" using SetActivated")
@@ -6185,21 +7390,30 @@ func tfObjectToTKHRSVaultVaultActivationStatus(ctx context.Context, recurse bool
 
 func tfObjectToTKHRSVaultVaultRecord(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.VaultVaultRecordable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.VaultVaultRecordable
 	tkh = keyhubmodel.NewVaultVaultRecord()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["links"].(basetypes.ListValue), configAttrValues["links"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
-			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["links"]), toListValue(configAttrValues["links"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -6208,8 +7422,8 @@ func tfObjectToTKHRSVaultVaultRecord(ctx context.Context, recurse bool, planValu
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceListBinary(planAttrValues["permissions"].(basetypes.ListValue), configAttrValues["permissions"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
-			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["permissions"]), toListValue(configAttrValues["permissions"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -6244,7 +7458,7 @@ func tfObjectToTKHRSVaultVaultRecord(ctx context.Context, recurse bool, planValu
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToStringPointer(planAttrValues["filename"]))+" using SetFilename")
 	tkh.SetFilename(tfToStringPointer(planAttrValues["filename"]))
 	{
-		val, d := tfToSliceSet(planAttrValues["types"].(basetypes.SetValue), configAttrValues["types"].(basetypes.SetValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.VaultVaultSecretType {
+		val, d := tfToSliceSet(toSetValue(planAttrValues["types"]), toSetValue(configAttrValues["types"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.VaultVaultSecretType {
 			tkh, d := parseCast(planValue.(basetypes.StringValue), keyhubmodel.ParseVaultVaultSecretType, func(val any) keyhubmodel.VaultVaultSecretType { return *val.(*keyhubmodel.VaultVaultSecretType) })
 			diags.Append(d...)
 			return tkh
@@ -6278,21 +7492,30 @@ func tfObjectToTKHRSVaultVaultRecord(ctx context.Context, recurse bool, planValu
 
 func tfObjectToTKHRSVaultVaultRecordPrimer(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.VaultVaultRecordPrimerable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.VaultVaultRecordPrimerable
 	tkh = keyhubmodel.NewVaultVaultRecordPrimer()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["links"].(basetypes.ListValue), configAttrValues["links"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
-			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["links"]), toListValue(configAttrValues["links"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -6301,8 +7524,8 @@ func tfObjectToTKHRSVaultVaultRecordPrimer(ctx context.Context, recurse bool, pl
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceListBinary(planAttrValues["permissions"].(basetypes.ListValue), configAttrValues["permissions"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
-			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["permissions"]), toListValue(configAttrValues["permissions"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -6331,21 +7554,30 @@ func tfObjectToTKHRSVaultVaultRecordPrimer(ctx context.Context, recurse bool, pl
 
 func tfObjectToTKHRSVaultVaultRecordPrimerLinkableWrapper(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.VaultVaultRecordPrimerLinkableWrapperable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.VaultVaultRecordPrimerLinkableWrapperable
 	tkh = keyhubmodel.NewVaultVaultRecordPrimerLinkableWrapper()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["items"].(basetypes.ListValue), configAttrValues["items"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.VaultVaultRecordPrimerable {
-			tkh, d := tfObjectToTKHRSVaultVaultRecordPrimer(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["items"]), toListValue(configAttrValues["items"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.VaultVaultRecordPrimerable {
+			tkh, d := tfObjectToTKHRSVaultVaultRecordPrimer(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -6358,16 +7590,25 @@ func tfObjectToTKHRSVaultVaultRecordPrimerLinkableWrapper(ctx context.Context, r
 
 func tfObjectToTKHRSVaultVaultRecordSecrets(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.VaultVaultRecordSecretsable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.VaultVaultRecordSecretsable
 	tkh = keyhubmodel.NewVaultVaultRecordSecrets()
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToStringPointer(planAttrValues["comment"]))+" using SetComment")
@@ -6385,16 +7626,25 @@ func tfObjectToTKHRSVaultVaultRecordSecrets(ctx context.Context, recurse bool, p
 
 func tfObjectToTKHRSVaultVaultRecordShare(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.VaultVaultRecordShareable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.VaultVaultRecordShareable
 	tkh = keyhubmodel.NewVaultVaultRecordShare()
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToStringPointer(planAttrValues["name"]))+" using SetName")
@@ -6410,21 +7660,30 @@ func tfObjectToTKHRSVaultVaultRecordShare(ctx context.Context, recurse bool, pla
 
 func tfObjectToTKHRSVaultVaultRecordShareSummary(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.VaultVaultRecordShareSummaryable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.VaultVaultRecordShareSummaryable
 	tkh = keyhubmodel.NewVaultVaultRecordShareSummary()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["children"].(basetypes.ListValue), configAttrValues["children"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.VaultVaultRecordShareable {
-			tkh, d := tfObjectToTKHRSVaultVaultRecordShare(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["children"]), toListValue(configAttrValues["children"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.VaultVaultRecordShareable {
+			tkh, d := tfObjectToTKHRSVaultVaultRecordShare(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -6433,7 +7692,7 @@ func tfObjectToTKHRSVaultVaultRecordShareSummary(ctx context.Context, recurse bo
 		tkh.SetChildren(val)
 	}
 	{
-		val, d := tfObjectToTKHRSVaultVaultRecordShare(ctx, recurse, planAttrValues["parent"].(basetypes.ObjectValue), configAttrValues["parent"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHRSVaultVaultRecordShare(ctx, recurse, toObjectValue(planAttrValues["parent"]), toObjectValue(configAttrValues["parent"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetParent")
 		tkh.SetParent(val)
@@ -6443,26 +7702,35 @@ func tfObjectToTKHRSVaultVaultRecordShareSummary(ctx context.Context, recurse bo
 
 func tfObjectToTKHRSVaultVaultRecord_additionalObjects(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.VaultVaultRecord_additionalObjectsable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.VaultVaultRecord_additionalObjectsable
 	tkh = keyhubmodel.NewVaultVaultRecord_additionalObjects()
 	{
-		val, d := tfObjectToTKHRSVaultVaultActivationStatus(ctx, recurse, planAttrValues["activation_status"].(basetypes.ObjectValue), configAttrValues["activation_status"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHRSVaultVaultActivationStatus(ctx, recurse, toObjectValue(planAttrValues["activation_status"]), toObjectValue(configAttrValues["activation_status"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetActivationStatus")
 		tkh.SetActivationStatus(val)
 	}
 	{
-		val, d := tfObjectToTKHRSAuditInfo(ctx, recurse, planAttrValues["audit"].(basetypes.ObjectValue), configAttrValues["audit"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHRSAuditInfo(ctx, recurse, toObjectValue(planAttrValues["audit"]), toObjectValue(configAttrValues["audit"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetAudit")
 		tkh.SetAudit(val)
@@ -6476,19 +7744,19 @@ func tfObjectToTKHRSVaultVaultRecord_additionalObjects(ctx context.Context, recu
 		tkh.SetParent(val)
 	}
 	{
-		val, d := tfObjectToTKHRSVaultPasswordMetadata(ctx, recurse, planAttrValues["password_metadata"].(basetypes.ObjectValue), configAttrValues["password_metadata"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHRSVaultPasswordMetadata(ctx, recurse, toObjectValue(planAttrValues["password_metadata"]), toObjectValue(configAttrValues["password_metadata"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetPasswordMetadata")
 		tkh.SetPasswordMetadata(val)
 	}
 	{
-		val, d := tfObjectToTKHRSVaultVaultRecordSecrets(ctx, recurse, planAttrValues["secret"].(basetypes.ObjectValue), configAttrValues["secret"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHRSVaultVaultRecordSecrets(ctx, recurse, toObjectValue(planAttrValues["secret"]), toObjectValue(configAttrValues["secret"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetSecret")
 		tkh.SetSecret(val)
 	}
 	{
-		val, d := tfObjectToTKHRSVaultVaultRecordShareSummary(ctx, recurse, planAttrValues["share_summary"].(basetypes.ObjectValue), configAttrValues["share_summary"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHRSVaultVaultRecordShareSummary(ctx, recurse, toObjectValue(planAttrValues["share_summary"]), toObjectValue(configAttrValues["share_summary"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetShareSummary")
 		tkh.SetShareSummary(val)
@@ -6503,13 +7771,13 @@ func tfObjectToTKHRSVaultVaultRecord_additionalObjects(ctx context.Context, recu
 		}
 	}
 	{
-		val, d := tfObjectToTKHRSLaunchpadVaultRecordLaunchpadTile(ctx, recurse, planAttrValues["tile"].(basetypes.ObjectValue), configAttrValues["tile"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHRSLaunchpadVaultRecordLaunchpadTile(ctx, recurse, toObjectValue(planAttrValues["tile"]), toObjectValue(configAttrValues["tile"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetTile")
 		tkh.SetTile(val)
 	}
 	{
-		val, d := tfObjectToTKHRSLinkable(ctx, recurse, planAttrValues["vaultholder"].(basetypes.ObjectValue), configAttrValues["vaultholder"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHRSLinkable(ctx, recurse, toObjectValue(planAttrValues["vaultholder"]), toObjectValue(configAttrValues["vaultholder"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetVaultholder")
 		tkh.SetVaultholder(val)
@@ -6519,21 +7787,30 @@ func tfObjectToTKHRSVaultVaultRecord_additionalObjects(ctx context.Context, recu
 
 func tfObjectToTKHRSWebhookWebhook(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.WebhookWebhookable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.WebhookWebhookable
 	tkh = keyhubmodel.NewWebhookWebhook()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["links"].(basetypes.ListValue), configAttrValues["links"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
-			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["links"]), toListValue(configAttrValues["links"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+			tkh, d := tfObjectToTKHRSRestLink(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -6542,8 +7819,8 @@ func tfObjectToTKHRSWebhookWebhook(ctx context.Context, recurse bool, planValues
 		tkh.SetLinks(val)
 	}
 	{
-		val, d := tfToSliceListBinary(planAttrValues["permissions"].(basetypes.ListValue), configAttrValues["permissions"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
-			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["permissions"]), toListValue(configAttrValues["permissions"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+			tkh, d := tfObjectToTKHRSAuthPermission(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -6624,7 +7901,7 @@ func tfObjectToTKHRSWebhookWebhook(ctx context.Context, recurse bool, planValues
 		tkh.SetTrustedCertificate(val)
 	}
 	{
-		val, d := tfToSliceListBinary(planAttrValues["types"].(basetypes.ListValue), configAttrValues["types"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuditAuditRecordType {
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["types"]), toListValue(configAttrValues["types"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuditAuditRecordType {
 			tkh, d := parseCast(planValue.(basetypes.StringValue), keyhubmodel.ParseAuditAuditRecordType, func(val any) keyhubmodel.AuditAuditRecordType { return *val.(*keyhubmodel.AuditAuditRecordType) })
 			diags.Append(d...)
 			return tkh
@@ -6652,21 +7929,30 @@ func tfObjectToTKHRSWebhookWebhook(ctx context.Context, recurse bool, planValues
 
 func tfObjectToTKHRSWebhookWebhookLinkableWrapper(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.WebhookWebhookLinkableWrapperable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.WebhookWebhookLinkableWrapperable
 	tkh = keyhubmodel.NewWebhookWebhookLinkableWrapper()
 	{
-		val, d := tfToSliceListBinary(planAttrValues["items"].(basetypes.ListValue), configAttrValues["items"].(basetypes.ListValue), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.WebhookWebhookable {
-			tkh, d := tfObjectToTKHRSWebhookWebhook(ctx, recurse, planValue.(basetypes.ObjectValue), configValue.(basetypes.ObjectValue))
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["items"]), toListValue(configAttrValues["items"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.WebhookWebhookable {
+			tkh, d := tfObjectToTKHRSWebhookWebhook(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
 			diags.Append(d...)
 			return tkh
 		})
@@ -6679,20 +7965,29 @@ func tfObjectToTKHRSWebhookWebhookLinkableWrapper(ctx context.Context, recurse b
 
 func tfObjectToTKHRSWebhookWebhook_additionalObjects(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.WebhookWebhook_additionalObjectsable, diag.Diagnostics) {
 	var diags diag.Diagnostics
-	if planValues.IsNull() || planValues.IsUnknown() || configValues.IsNull() || configValues.IsUnknown() {
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
-	planAttrValues := planValues.Attributes()
-	configAttrValues := configValues.Attributes()
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
 	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
 	_, _ = planAttrValues, configAttrValues
 	litter.Config.HidePrivateFields = false
-	tflog.Debug(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Debug(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.WebhookWebhook_additionalObjectsable
 	tkh = keyhubmodel.NewWebhookWebhook_additionalObjects()
 	{
-		val, d := tfObjectToTKHRSAuditInfo(ctx, recurse, planAttrValues["audit"].(basetypes.ObjectValue), configAttrValues["audit"].(basetypes.ObjectValue))
+		val, d := tfObjectToTKHRSAuditInfo(ctx, recurse, toObjectValue(planAttrValues["audit"]), toObjectValue(configAttrValues["audit"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetAudit")
 		tkh.SetAudit(val)

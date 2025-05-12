@@ -67,9 +67,23 @@ func tfToSliceListBinary[T any](planValue basetypes.ListValue, configValue baset
 	var diags diag.Diagnostics
 	planVals := planValue.Elements()
 	configVals := configValue.Elements()
-	ret := make([]T, 0, len(planVals))
-	for idx, curPlanVal := range planVals {
-		ret = append(ret, toValue(curPlanVal, configVals[idx], &diags))
+	planValsLen := len(planVals)
+	configValsLen := len(configVals)
+	maxLen := intMax(planValsLen, configValsLen)
+	ret := make([]T, 0, maxLen)
+	for i := 0; i < maxLen; i++ {
+		var curPlanVal = (attr.Value)(nil)
+		var curConfigVal = (attr.Value)(nil)
+
+		if i < planValsLen {
+			curPlanVal = planVals[i]
+		}
+
+		if i < configValsLen {
+			curConfigVal = configVals[i]
+		}
+
+		ret = append(ret, toValue(curPlanVal, curConfigVal, &diags))
 	}
 	return ret, diags
 }
@@ -87,9 +101,23 @@ func tfToSliceSet[T any](planValue basetypes.SetValue, configValue basetypes.Set
 	var diags diag.Diagnostics
 	planVals := planValue.Elements()
 	configVals := configValue.Elements()
-	ret := make([]T, 0, len(planVals))
-	for idx, curPlanVal := range planVals {
-		ret = append(ret, toValue(curPlanVal, configVals[idx], &diags))
+	planValsLen := len(planVals)
+	configValsLen := len(configVals)
+	maxLen := intMax(planValsLen, configValsLen)
+	ret := make([]T, 0, maxLen)
+	for i := 0; i < maxLen; i++ {
+		var curPlanVal = (attr.Value)(nil)
+		var curConfigVal = (attr.Value)(nil)
+
+		if i < planValsLen {
+			curPlanVal = planVals[i]
+		}
+
+		if i < configValsLen {
+			curConfigVal = configVals[i]
+		}
+
+		ret = append(ret, toValue(curPlanVal, curConfigVal, &diags))
 	}
 	return ret, diags
 }
@@ -781,4 +809,40 @@ func filterAttributes(attributes map[string]attr.Value, types map[string]attr.Ty
 		ret[k] = attributes[k]
 	}
 	return ret
+}
+
+func intMax(a int, b int) int {
+	if a < b {
+		return b
+	}
+
+	return a
+}
+
+func toObjectValue(val attr.Value) basetypes.ObjectValue {
+	if val == nil {
+		return types.ObjectNull(make(map[string]attr.Type))
+	}
+	return val.(basetypes.ObjectValue)
+}
+
+func toListValue(val attr.Value) basetypes.ListValue {
+	if val == nil {
+		return types.ListNull(nil)
+	}
+	return val.(basetypes.ListValue)
+}
+
+func toSetValue(val attr.Value) basetypes.SetValue {
+	if val == nil {
+		return types.SetNull(nil)
+	}
+	return val.(basetypes.SetValue)
+}
+
+func toMapValue(val attr.Value) basetypes.MapValue {
+	if val == nil {
+		return types.MapNull(nil)
+	}
+	return val.(basetypes.MapValue)
 }

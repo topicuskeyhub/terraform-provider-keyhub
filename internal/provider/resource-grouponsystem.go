@@ -36,7 +36,7 @@ type grouponsystemResource struct {
 
 func (r *grouponsystemResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
 	resp.TypeName = ProviderName + "_grouponsystem"
-	tflog.Info(ctx, "Registred resource "+resp.TypeName)
+	tflog.Info(ctx, "Registered resource "+resp.TypeName)
 }
 
 func (r *grouponsystemResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
@@ -74,7 +74,7 @@ func (r *grouponsystemResource) Create(ctx context.Context, req resource.CreateR
 
 	litter.Config.HidePrivateFields = false
 
-	tflog.Debug(ctx, "planData: "+litter.Sdump(planData))
+	tflog.Trace(ctx, "planData: "+litter.Sdump(planData))
 
 	var configData nestedProvisioningGroupOnSystemDataRS
 	resp.Diagnostics.Append(req.Config.Get(ctx, &configData)...)
@@ -82,7 +82,7 @@ func (r *grouponsystemResource) Create(ctx context.Context, req resource.CreateR
 		return
 	}
 
-	tflog.Debug(ctx, "configData: "+litter.Sdump(configData))
+	tflog.Trace(ctx, "configData: "+litter.Sdump(configData))
 
 	ctx = context.WithValue(ctx, keyHubClientKey, r.providerData.Client)
 	planValues, diags := types.ObjectValueFrom(ctx, nestedProvisioningGroupOnSystemAttrTypesRSRecurse, planData)
@@ -91,15 +91,11 @@ func (r *grouponsystemResource) Create(ctx context.Context, req resource.CreateR
 		return
 	}
 
-	tflog.Debug(ctx, "planValues: "+litter.Sdump(planValues))
-
 	configValues, diags := types.ObjectValueFrom(ctx, nestedProvisioningGroupOnSystemAttrTypesRSRecurse, configData)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
-
-	tflog.Debug(ctx, "configValues: "+litter.Sdump(configValues))
 
 	newTkh, diags := tfObjectToTKHRSNestedProvisioningGroupOnSystem(ctx, true, planValues, configValues)
 	resp.Diagnostics.Append(diags...)

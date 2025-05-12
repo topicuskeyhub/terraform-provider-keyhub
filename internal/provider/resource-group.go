@@ -35,7 +35,7 @@ type groupResource struct {
 
 func (r *groupResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
 	resp.TypeName = ProviderName + "_group"
-	tflog.Info(ctx, "Registred resource "+resp.TypeName)
+	tflog.Info(ctx, "Registered resource "+resp.TypeName)
 }
 
 func (r *groupResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
@@ -73,7 +73,7 @@ func (r *groupResource) Create(ctx context.Context, req resource.CreateRequest, 
 
 	litter.Config.HidePrivateFields = false
 
-	tflog.Debug(ctx, "planData: "+litter.Sdump(planData))
+	tflog.Trace(ctx, "planData: "+litter.Sdump(planData))
 
 	var configData groupGroupDataRS
 	resp.Diagnostics.Append(req.Config.Get(ctx, &configData)...)
@@ -81,7 +81,7 @@ func (r *groupResource) Create(ctx context.Context, req resource.CreateRequest, 
 		return
 	}
 
-	tflog.Debug(ctx, "configData: "+litter.Sdump(configData))
+	tflog.Trace(ctx, "configData: "+litter.Sdump(configData))
 
 	ctx = context.WithValue(ctx, keyHubClientKey, r.providerData.Client)
 	planValues, diags := types.ObjectValueFrom(ctx, groupGroupAttrTypesRSRecurse, planData)
@@ -90,15 +90,11 @@ func (r *groupResource) Create(ctx context.Context, req resource.CreateRequest, 
 		return
 	}
 
-	tflog.Debug(ctx, "planValues: "+litter.Sdump(planValues))
-
 	configValues, diags := types.ObjectValueFrom(ctx, groupGroupAttrTypesRSRecurse, configData)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
-
-	tflog.Debug(ctx, "configValues: "+litter.Sdump(configValues))
 
 	newTkh, diags := tfObjectToTKHRSGroupGroup(ctx, true, planValues, configValues)
 	resp.Diagnostics.Append(diags...)

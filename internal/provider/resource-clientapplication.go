@@ -35,7 +35,7 @@ type clientapplicationResource struct {
 
 func (r *clientapplicationResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
 	resp.TypeName = ProviderName + "_clientapplication"
-	tflog.Info(ctx, "Registred resource "+resp.TypeName)
+	tflog.Info(ctx, "Registered resource "+resp.TypeName)
 }
 
 func (r *clientapplicationResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
@@ -73,7 +73,7 @@ func (r *clientapplicationResource) Create(ctx context.Context, req resource.Cre
 
 	litter.Config.HidePrivateFields = false
 
-	tflog.Debug(ctx, "planData: "+litter.Sdump(planData))
+	tflog.Trace(ctx, "planData: "+litter.Sdump(planData))
 
 	var configData clientClientApplicationDataRS
 	resp.Diagnostics.Append(req.Config.Get(ctx, &configData)...)
@@ -81,7 +81,7 @@ func (r *clientapplicationResource) Create(ctx context.Context, req resource.Cre
 		return
 	}
 
-	tflog.Debug(ctx, "configData: "+litter.Sdump(configData))
+	tflog.Trace(ctx, "configData: "+litter.Sdump(configData))
 
 	ctx = context.WithValue(ctx, keyHubClientKey, r.providerData.Client)
 	planValues, diags := types.ObjectValueFrom(ctx, clientClientApplicationAttrTypesRSRecurse, planData)
@@ -90,15 +90,11 @@ func (r *clientapplicationResource) Create(ctx context.Context, req resource.Cre
 		return
 	}
 
-	tflog.Debug(ctx, "planValues: "+litter.Sdump(planValues))
-
 	configValues, diags := types.ObjectValueFrom(ctx, clientClientApplicationAttrTypesRSRecurse, configData)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
-
-	tflog.Debug(ctx, "configValues: "+litter.Sdump(configValues))
 
 	newTkh, diags := tfObjectToTKHRSClientClientApplication(ctx, true, planValues, configValues)
 	resp.Diagnostics.Append(diags...)
