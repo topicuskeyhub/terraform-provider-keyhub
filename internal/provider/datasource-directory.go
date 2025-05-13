@@ -73,7 +73,7 @@ func (d *directoryDataSource) Read(ctx context.Context, req datasource.ReadReque
 
 	tflog.Debug(ctx, "Reading directory from Topicus KeyHub by UUID")
 	additionalBackup := data.Additional
-	additional, _ := tfToSliceList(data.Additional, func(val attr.Value, diags *diag.Diagnostics) string {
+	additional, _ := tfToSliceListUnary(data.Additional, func(val attr.Value, diags *diag.Diagnostics) string {
 		return val.(basetypes.StringValue).ValueString()
 	})
 	uuid := data.UUID.ValueString()

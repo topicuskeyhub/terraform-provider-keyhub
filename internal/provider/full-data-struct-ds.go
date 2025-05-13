@@ -24,6 +24,8 @@ var generatedSecretAttrTypesDSRecurse = objectAttrsTypeDSGeneratedSecret(true)
 
 type generatedSecretDataDS struct {
 	GeneratedSecret types.String `tfsdk:"generated_secret"`
+	OldSecret       types.String `tfsdk:"old_secret"`
+	Regenerate      types.Bool   `tfsdk:"regenerate"`
 }
 
 var linkableAttrTypesDS = objectAttrsTypeDSLinkable(false)
@@ -1038,13 +1040,15 @@ var identityIdentityAttrTypesDS = objectAttrsTypeDSIdentityIdentity(false)
 var identityIdentityAttrTypesDSRecurse = objectAttrsTypeDSIdentityIdentity(true)
 
 type identityIdentityDataDS struct {
-	Links       types.List   `tfsdk:"links"`
-	Permissions types.List   `tfsdk:"permissions"`
-	DisplayName types.String `tfsdk:"display_name"`
-	FamilyName  types.String `tfsdk:"family_name"`
-	GivenName   types.String `tfsdk:"given_name"`
-	MiddleName  types.String `tfsdk:"middle_name"`
-	Telephone   types.String `tfsdk:"telephone"`
+	Links            types.List   `tfsdk:"links"`
+	Permissions      types.List   `tfsdk:"permissions"`
+	DisplayName      types.String `tfsdk:"display_name"`
+	FamilyName       types.String `tfsdk:"family_name"`
+	GivenName        types.String `tfsdk:"given_name"`
+	MiddleName       types.String `tfsdk:"middle_name"`
+	PrivateEmail     types.String `tfsdk:"private_email"`
+	PrivateTelephone types.String `tfsdk:"private_telephone"`
+	Telephone        types.String `tfsdk:"telephone"`
 }
 
 var launchpadSsoApplicationLaunchpadTileAttrTypesDS = objectAttrsTypeDSLaunchpadSsoApplicationLaunchpadTile(false)
@@ -1437,14 +1441,13 @@ var provisioningProvisionNumberSequenceAttrTypesDS = objectAttrsTypeDSProvisioni
 var provisioningProvisionNumberSequenceAttrTypesDSRecurse = objectAttrsTypeDSProvisioningProvisionNumberSequence(true)
 
 type provisioningProvisionNumberSequenceDataDS struct {
-	Links        types.List   `tfsdk:"links"`
-	Permissions  types.List   `tfsdk:"permissions"`
-	Additional   types.List   `tfsdk:"additional"`
-	AccountCount types.Int64  `tfsdk:"account_count"`
-	Audit        types.Object `tfsdk:"audit" tkhao:"audit"`
-	Systems      types.List   `tfsdk:"systems" tkhao:"systems"`
-	Name         types.String `tfsdk:"name"`
-	NextUID      types.Int64  `tfsdk:"next_uid"`
+	Links       types.List   `tfsdk:"links"`
+	Permissions types.List   `tfsdk:"permissions"`
+	Additional  types.List   `tfsdk:"additional"`
+	Audit       types.Object `tfsdk:"audit" tkhao:"audit"`
+	Systems     types.List   `tfsdk:"systems" tkhao:"systems"`
+	Name        types.String `tfsdk:"name"`
+	NextID      types.Int64  `tfsdk:"next_id"`
 }
 
 var provisioningProvisionNumberSequence_additionalObjectsAttrTypesDS = objectAttrsTypeDSProvisioningProvisionNumberSequence_additionalObjects(false)
@@ -1526,6 +1529,7 @@ var provisioningProvisionedLDAPAttrTypesDSRecurse = objectAttrsTypeDSProvisionin
 
 type provisioningProvisionedLDAPDataDS struct {
 	Gid           types.Int64  `tfsdk:"gid"`
+	GidNumbering  types.Object `tfsdk:"gid_numbering"`
 	HashingScheme types.String `tfsdk:"hashing_scheme"`
 	Numbering     types.Object `tfsdk:"numbering"`
 }
@@ -1537,6 +1541,7 @@ type provisioningProvisionedLDAPDirectoryDataDS struct {
 	AccountsWritable     types.Bool   `tfsdk:"accounts_writable"`
 	Directory            types.Object `tfsdk:"directory"`
 	Gid                  types.Int64  `tfsdk:"gid"`
+	GidNumbering         types.Object `tfsdk:"gid_numbering"`
 	GroupDN              types.String `tfsdk:"group_dn"`
 	HashingScheme        types.String `tfsdk:"hashing_scheme"`
 	Numbering            types.Object `tfsdk:"numbering"`

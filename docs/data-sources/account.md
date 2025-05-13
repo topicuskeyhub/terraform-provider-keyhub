@@ -242,6 +242,8 @@ Read-Only:
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--identity--links))
 - `middle_name` (String)
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--identity--permissions))
+- `private_email` (String)
+- `private_telephone` (String)
 - `telephone` (String)
 
 <a id="nestedatt--identity--links"></a>

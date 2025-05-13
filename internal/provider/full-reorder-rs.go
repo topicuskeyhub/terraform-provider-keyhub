@@ -1861,10 +1861,10 @@ func reorderProvisioningGroupOnSystem_additionalObjects(state basetypes.ObjectVa
 			attrStateEl := (attrState.(types.List)).Elements()
 			attrPriorStateEl := (attrPriorState.(types.List)).Elements()
 			newAttrState := reorderList(attrStateEl, attrPriorStateEl, recurse, []string{
-				"system_uuid",
-				"active",
 				"name",
+				"system_uuid",
 				"username",
+				"active",
 			}, reorderServiceaccountServiceAccountPrimer)
 			obj["service_accounts"] = types.ListValueMust(attrs["service_accounts"].(types.ListType).ElemType, newAttrState)
 		}
@@ -2045,6 +2045,7 @@ func reorderProvisioningProvisionedLDAP(state basetypes.ObjectValue, priorState 
 		attrs = provisioningProvisionedLDAPAttrTypesRS
 	}
 	obj := filterAttributes(state.Attributes(), attrs)
+	obj["gid_numbering"] = reorderProvisioningProvisionNumberSequence(state.Attributes()["gid_numbering"].(types.Object), priorState.Attributes()["gid_numbering"].(types.Object), recurse)
 	obj["numbering"] = reorderProvisioningProvisionNumberSequence(state.Attributes()["numbering"].(types.Object), priorState.Attributes()["numbering"].(types.Object), recurse)
 
 	return types.ObjectValueMust(attrs, obj)
@@ -2061,6 +2062,7 @@ func reorderProvisioningProvisionedLDAPDirectory(state basetypes.ObjectValue, pr
 		attrs = provisioningProvisionedLDAPDirectoryAttrTypesRS
 	}
 	obj := filterAttributes(state.Attributes(), attrs)
+	obj["gid_numbering"] = reorderProvisioningProvisionNumberSequence(state.Attributes()["gid_numbering"].(types.Object), priorState.Attributes()["gid_numbering"].(types.Object), recurse)
 	obj["numbering"] = reorderProvisioningProvisionNumberSequence(state.Attributes()["numbering"].(types.Object), priorState.Attributes()["numbering"].(types.Object), recurse)
 
 	return types.ObjectValueMust(attrs, obj)

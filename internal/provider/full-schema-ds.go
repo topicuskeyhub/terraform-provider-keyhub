@@ -38,6 +38,13 @@ func dataSourceSchemaAttrsGeneratedSecret(recurse bool) map[string]dsschema.Attr
 		Computed:  true,
 		Sensitive: true,
 	}
+	schemaAttrs["old_secret"] = dsschema.StringAttribute{
+		Computed:  true,
+		Sensitive: true,
+	}
+	schemaAttrs["regenerate"] = dsschema.BoolAttribute{
+		Computed: true,
+	}
 	return schemaAttrs
 }
 func dataSourceSchemaAttrsLinkable(recurse bool) map[string]dsschema.Attribute {
@@ -2793,6 +2800,12 @@ func dataSourceSchemaAttrsIdentityIdentity(recurse bool) map[string]dsschema.Att
 	schemaAttrs["middle_name"] = dsschema.StringAttribute{
 		Computed: true,
 	}
+	schemaAttrs["private_email"] = dsschema.StringAttribute{
+		Computed: true,
+	}
+	schemaAttrs["private_telephone"] = dsschema.StringAttribute{
+		Computed: true,
+	}
 	schemaAttrs["telephone"] = dsschema.StringAttribute{
 		Computed: true,
 	}
@@ -3836,13 +3849,10 @@ func dataSourceSchemaAttrsProvisioningProvisionNumberSequence(recurse bool) map[
 		},
 		Computed: true,
 	}
-	schemaAttrs["account_count"] = dsschema.Int64Attribute{
-		Computed: true,
-	}
 	schemaAttrs["name"] = dsschema.StringAttribute{
 		Computed: true,
 	}
-	schemaAttrs["next_uid"] = dsschema.Int64Attribute{
+	schemaAttrs["next_id"] = dsschema.Int64Attribute{
 		Computed: true,
 	}
 	return schemaAttrs
@@ -4011,6 +4021,14 @@ func dataSourceSchemaAttrsProvisioningProvisionedLDAP(recurse bool) map[string]d
 	schemaAttrs["gid"] = dsschema.Int64Attribute{
 		Computed: true,
 	}
+	{
+		attr := dsschema.SingleNestedAttribute{
+			Attributes: dataSourceSchemaAttrsProvisioningProvisionNumberSequence(recurse),
+		}
+		attr.Computed = true
+		schemaAttrs["gid_numbering"] = attr
+	}
+
 	schemaAttrs["hashing_scheme"] = dsschema.StringAttribute{
 		Computed: true,
 	}
@@ -4040,6 +4058,14 @@ func dataSourceSchemaAttrsProvisioningProvisionedLDAPDirectory(recurse bool) map
 	schemaAttrs["gid"] = dsschema.Int64Attribute{
 		Computed: true,
 	}
+	{
+		attr := dsschema.SingleNestedAttribute{
+			Attributes: dataSourceSchemaAttrsProvisioningProvisionNumberSequence(recurse),
+		}
+		attr.Computed = true
+		schemaAttrs["gid_numbering"] = attr
+	}
+
 	schemaAttrs["group_dn"] = dsschema.StringAttribute{
 		Computed: true,
 	}
