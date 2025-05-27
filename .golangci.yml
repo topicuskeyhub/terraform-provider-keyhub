@@ -25,6 +25,7 @@ linters:
     - unparam
     - unused
     - govet
+    
 
 formatters:
   enable:
