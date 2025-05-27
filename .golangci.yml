@@ -20,13 +20,11 @@ linters:
     - nilerr
     - predeclared
     - staticcheck
-    - tenv
     - unconvert
     - unparam
     - unused
     - govet
     
-
 formatters:
   enable:
     - gofmt
