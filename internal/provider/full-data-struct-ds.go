@@ -695,24 +695,25 @@ var groupGroupAccountAttrTypesDS = objectAttrsTypeDSGroupGroupAccount(false)
 var groupGroupAccountAttrTypesDSRecurse = objectAttrsTypeDSGroupGroupAccount(true)
 
 type groupGroupAccountDataDS struct {
-	Links                  types.List   `tfsdk:"links"`
-	Permissions            types.List   `tfsdk:"permissions"`
-	DisplayName            types.String `tfsdk:"display_name"`
-	LastActive             types.String `tfsdk:"last_active"`
-	Username               types.String `tfsdk:"username"`
-	UUID                   types.String `tfsdk:"uuid"`
-	Validity               types.String `tfsdk:"validity"`
-	Additional             types.List   `tfsdk:"additional"`
-	Audit                  types.Object `tfsdk:"audit" tkhao:"audit"`
-	Directory              types.Object `tfsdk:"directory"`
-	DisconnectedNested     types.Bool   `tfsdk:"disconnected_nested"`
-	EndDate                types.String `tfsdk:"end_date"`
-	LastUsed               types.String `tfsdk:"last_used"`
-	Nested                 types.Bool   `tfsdk:"nested"`
-	ProvisioningEndTime    types.String `tfsdk:"provisioning_end_time"`
-	Rights                 types.String `tfsdk:"rights"`
-	TwoFactorStatus        types.String `tfsdk:"two_factor_status"`
-	VisibleForProvisioning types.Bool   `tfsdk:"visible_for_provisioning"`
+	Links                         types.List   `tfsdk:"links"`
+	Permissions                   types.List   `tfsdk:"permissions"`
+	DisplayName                   types.String `tfsdk:"display_name"`
+	LastActive                    types.String `tfsdk:"last_active"`
+	Username                      types.String `tfsdk:"username"`
+	UUID                          types.String `tfsdk:"uuid"`
+	Validity                      types.String `tfsdk:"validity"`
+	Additional                    types.List   `tfsdk:"additional"`
+	Audit                         types.Object `tfsdk:"audit" tkhao:"audit"`
+	Directory                     types.Object `tfsdk:"directory"`
+	DisconnectedNested            types.Bool   `tfsdk:"disconnected_nested"`
+	EndDate                       types.String `tfsdk:"end_date"`
+	LastUsed                      types.String `tfsdk:"last_used"`
+	Nested                        types.Bool   `tfsdk:"nested"`
+	ProvisioningEndTime           types.String `tfsdk:"provisioning_end_time"`
+	ProvisioningPermissionEndTime types.String `tfsdk:"provisioning_permission_end_time"`
+	Rights                        types.String `tfsdk:"rights"`
+	TwoFactorStatus               types.String `tfsdk:"two_factor_status"`
+	VisibleForProvisioning        types.Bool   `tfsdk:"visible_for_provisioning"`
 }
 
 var groupGroupAccountLinkableWrapperAttrTypesDS = objectAttrsTypeDSGroupGroupAccountLinkableWrapper(false)

@@ -450,6 +450,7 @@ func fillDataStructFromTFObjectRSGroupGroupAccount(data *groupGroupAccountDataRS
 	data.LastUsed = obj.Attributes()["last_used"].(basetypes.StringValue)
 	data.Nested = obj.Attributes()["nested"].(basetypes.BoolValue)
 	data.ProvisioningEndTime = obj.Attributes()["provisioning_end_time"].(basetypes.StringValue)
+	data.ProvisioningPermissionEndTime = obj.Attributes()["provisioning_permission_end_time"].(basetypes.StringValue)
 	data.Rights = obj.Attributes()["rights"].(basetypes.StringValue)
 	data.TwoFactorStatus = obj.Attributes()["two_factor_status"].(basetypes.StringValue)
 	data.VisibleForProvisioning = obj.Attributes()["visible_for_provisioning"].(basetypes.BoolValue)

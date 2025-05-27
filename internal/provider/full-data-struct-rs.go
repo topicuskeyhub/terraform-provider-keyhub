@@ -563,18 +563,19 @@ var groupGroupAccountAttrTypesRS = objectAttrsTypeRSGroupGroupAccount(false)
 var groupGroupAccountAttrTypesRSRecurse = objectAttrsTypeRSGroupGroupAccount(true)
 
 type groupGroupAccountDataRS struct {
-	UUID                   types.String `tfsdk:"uuid"`
-	Additional             types.List   `tfsdk:"additional"`
-	Audit                  types.Object `tfsdk:"audit" tkhao:"audit"`
-	DirectoryUUID          types.String `tfsdk:"directory_uuid"`
-	DisconnectedNested     types.Bool   `tfsdk:"disconnected_nested"`
-	EndDate                types.String `tfsdk:"end_date"`
-	LastUsed               types.String `tfsdk:"last_used"`
-	Nested                 types.Bool   `tfsdk:"nested"`
-	ProvisioningEndTime    types.String `tfsdk:"provisioning_end_time"`
-	Rights                 types.String `tfsdk:"rights"`
-	TwoFactorStatus        types.String `tfsdk:"two_factor_status"`
-	VisibleForProvisioning types.Bool   `tfsdk:"visible_for_provisioning"`
+	UUID                          types.String `tfsdk:"uuid"`
+	Additional                    types.List   `tfsdk:"additional"`
+	Audit                         types.Object `tfsdk:"audit" tkhao:"audit"`
+	DirectoryUUID                 types.String `tfsdk:"directory_uuid"`
+	DisconnectedNested            types.Bool   `tfsdk:"disconnected_nested"`
+	EndDate                       types.String `tfsdk:"end_date"`
+	LastUsed                      types.String `tfsdk:"last_used"`
+	Nested                        types.Bool   `tfsdk:"nested"`
+	ProvisioningEndTime           types.String `tfsdk:"provisioning_end_time"`
+	ProvisioningPermissionEndTime types.String `tfsdk:"provisioning_permission_end_time"`
+	Rights                        types.String `tfsdk:"rights"`
+	TwoFactorStatus               types.String `tfsdk:"two_factor_status"`
+	VisibleForProvisioning        types.Bool   `tfsdk:"visible_for_provisioning"`
 }
 
 var groupGroupAccountLinkableWrapperAttrTypesRS = objectAttrsTypeRSGroupGroupAccountLinkableWrapper(false)

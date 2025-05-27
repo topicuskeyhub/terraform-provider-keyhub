@@ -13,7 +13,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
-	"github.com/sanity-io/litter"
 	keyhubmodels "github.com/topicuskeyhub/sdk-go/models"
 	keyhubreq "github.com/topicuskeyhub/sdk-go/serviceaccount"
 )
@@ -35,7 +34,7 @@ type serviceaccountResource struct {
 
 func (r *serviceaccountResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
 	resp.TypeName = ProviderName + "_serviceaccount"
-	tflog.Info(ctx, "Registered resource "+resp.TypeName)
+	tflog.Info(ctx, "Registred resource "+resp.TypeName)
 }
 
 func (r *serviceaccountResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
@@ -65,44 +64,26 @@ func (r *serviceaccountResource) Configure(ctx context.Context, req resource.Con
 }
 
 func (r *serviceaccountResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	var planData serviceaccountServiceAccountDataRS
-	resp.Diagnostics.Append(req.Plan.Get(ctx, &planData)...)
+	var data serviceaccountServiceAccountDataRS
+	resp.Diagnostics.Append(req.Plan.Get(ctx, &data)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
-
-	litter.Config.HidePrivateFields = false
-
-	tflog.Trace(ctx, "planData: "+litter.Sdump(planData))
-
-	var configData serviceaccountServiceAccountDataRS
-	resp.Diagnostics.Append(req.Config.Get(ctx, &configData)...)
-	if resp.Diagnostics.HasError() {
-		return
-	}
-
-	tflog.Trace(ctx, "configData: "+litter.Sdump(configData))
 
 	ctx = context.WithValue(ctx, keyHubClientKey, r.providerData.Client)
-	planValues, diags := types.ObjectValueFrom(ctx, serviceaccountServiceAccountAttrTypesRSRecurse, planData)
+	plannedState, diags := types.ObjectValueFrom(ctx, serviceaccountServiceAccountAttrTypesRSRecurse, data)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	configValues, diags := types.ObjectValueFrom(ctx, serviceaccountServiceAccountAttrTypesRSRecurse, configData)
+	newTkh, diags := tfObjectToTKHRSServiceaccountServiceAccount(ctx, true, plannedState)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	newTkh, diags := tfObjectToTKHRSServiceaccountServiceAccount(ctx, true, planValues, configValues)
-	resp.Diagnostics.Append(diags...)
-	if resp.Diagnostics.HasError() {
-		return
-	}
-
-	additionalBackup := planData.Additional
+	additionalBackup := data.Additional
 	r.providerData.Mutex.Lock()
 	defer r.providerData.Mutex.Unlock()
 	tflog.Info(ctx, "Creating Topicus KeyHub serviceaccount")
@@ -111,7 +92,7 @@ func (r *serviceaccountResource) Create(ctx context.Context, req resource.Create
 	wrapper, err := r.providerData.Client.Serviceaccount().Post(
 		ctx, newWrapper, &keyhubreq.ServiceaccountRequestBuilderPostRequestConfiguration{
 			QueryParameters: &keyhubreq.ServiceaccountRequestBuilderPostQueryParameters{
-				Additional: collectAdditional(ctx, planData, planData.Additional),
+				Additional: collectAdditional(ctx, data, data.Additional),
 			},
 		})
 	tkh, diags := findFirst[keyhubmodels.ServiceaccountServiceAccountable](ctx, wrapper, "serviceaccount", nil, false, err)
@@ -125,29 +106,29 @@ func (r *serviceaccountResource) Create(ctx context.Context, req resource.Create
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	postState = reorderServiceaccountServiceAccount(postState, planValues, true)
-	fillDataStructFromTFObjectRSServiceaccountServiceAccount(&planData, postState)
-	planData.Additional = additionalBackup
+	postState = reorderServiceaccountServiceAccount(postState, plannedState, true)
+	fillDataStructFromTFObjectRSServiceaccountServiceAccount(&data, postState)
+	data.Additional = additionalBackup
 
-	resp.Diagnostics.Append(resp.State.Set(ctx, &planData)...)
+	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 
 	tflog.Info(ctx, "Created a new Topicus KeyHub serviceaccount")
-	resp.Diagnostics.Append(resp.State.Set(ctx, &planData)...)
+	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
 func (r *serviceaccountResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
-	var planData serviceaccountServiceAccountDataRS
-	resp.Diagnostics.Append(req.State.Get(ctx, &planData)...)
+	var data serviceaccountServiceAccountDataRS
+	resp.Diagnostics.Append(req.State.Get(ctx, &data)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	planValues, diags := types.ObjectValueFrom(ctx, serviceaccountServiceAccountAttrTypesRSRecurse, planData)
+	priorState, diags := types.ObjectValueFrom(ctx, serviceaccountServiceAccountAttrTypesRSRecurse, data)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	additionalBackup := planData.Additional
+	additionalBackup := data.Additional
 	r.providerData.Mutex.RLock()
 	defer r.providerData.Mutex.RUnlock()
 	ctx = context.WithValue(ctx, keyHubClientKey, r.providerData.Client)
@@ -155,8 +136,8 @@ func (r *serviceaccountResource) Read(ctx context.Context, req resource.ReadRequ
 	wrapper, err := r.providerData.Client.Serviceaccount().Get(
 		ctx, &keyhubreq.ServiceaccountRequestBuilderGetRequestConfiguration{
 			QueryParameters: &keyhubreq.ServiceaccountRequestBuilderGetQueryParameters{
-				Additional: collectAdditional(ctx, planData, planData.Additional),
-				Uuid:       []string{planData.UUID.ValueString()},
+				Additional: collectAdditional(ctx, data, data.Additional),
+				Uuid:       []string{data.UUID.ValueString()},
 			},
 		})
 
@@ -164,7 +145,7 @@ func (r *serviceaccountResource) Read(ctx context.Context, req resource.ReadRequ
 		return
 	}
 
-	tkh, diags := findFirst[keyhubmodels.ServiceaccountServiceAccountable](ctx, wrapper, "serviceaccount", planData.UUID.ValueStringPointer(), true, err)
+	tkh, diags := findFirst[keyhubmodels.ServiceaccountServiceAccountable](ctx, wrapper, "serviceaccount", data.UUID.ValueStringPointer(), true, err)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -181,53 +162,41 @@ func (r *serviceaccountResource) Read(ctx context.Context, req resource.ReadRequ
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	postState = reorderServiceaccountServiceAccount(postState, planValues, true)
-	fillDataStructFromTFObjectRSServiceaccountServiceAccount(&planData, postState)
-	planData.Additional = additionalBackup
+	postState = reorderServiceaccountServiceAccount(postState, priorState, true)
+	fillDataStructFromTFObjectRSServiceaccountServiceAccount(&data, postState)
+	data.Additional = additionalBackup
 
-	resp.Diagnostics.Append(resp.State.Set(ctx, &planData)...)
+	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
 func (r *serviceaccountResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
-	var planData serviceaccountServiceAccountDataRS
-	resp.Diagnostics.Append(req.Plan.Get(ctx, &planData)...)
-	if resp.Diagnostics.HasError() {
-		return
-	}
-
-	var configData serviceaccountServiceAccountDataRS
-	resp.Diagnostics.Append(req.Config.Get(ctx, &configData)...)
+	var data serviceaccountServiceAccountDataRS
+	resp.Diagnostics.Append(req.Plan.Get(ctx, &data)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
 	ctx = context.WithValue(ctx, keyHubClientKey, r.providerData.Client)
-	planValues, diags := types.ObjectValueFrom(ctx, serviceaccountServiceAccountAttrTypesRSRecurse, planData)
+	priorState, diags := types.ObjectValueFrom(ctx, serviceaccountServiceAccountAttrTypesRSRecurse, data)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	configValues, diags := types.ObjectValueFrom(ctx, serviceaccountServiceAccountAttrTypesRSRecurse, configData)
+	newTkh, diags := tfObjectToTKHRSServiceaccountServiceAccount(ctx, true, priorState)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	newTkh, diags := tfObjectToTKHRSServiceaccountServiceAccount(ctx, true, planValues, configValues)
-	resp.Diagnostics.Append(diags...)
-	if resp.Diagnostics.HasError() {
-		return
-	}
-
-	additionalBackup := planData.Additional
+	additionalBackup := data.Additional
 	r.providerData.Mutex.Lock()
 	defer r.providerData.Mutex.Unlock()
 	tflog.Info(ctx, "Updating Topicus KeyHub serviceaccount")
-	tkh, err := r.providerData.Client.Serviceaccount().ByServiceaccountidInt64(getSelfLink(planData.Links).ID.ValueInt64()).Put(
+	tkh, err := r.providerData.Client.Serviceaccount().ByServiceaccountidInt64(getSelfLink(data.Links).ID.ValueInt64()).Put(
 		ctx, newTkh, &keyhubreq.WithServiceaccountItemRequestBuilderPutRequestConfiguration{
 			QueryParameters: &keyhubreq.WithServiceaccountItemRequestBuilderPutQueryParameters{
-				Additional: collectAdditional(ctx, planData, planData.Additional),
+				Additional: collectAdditional(ctx, data, data.Additional),
 			},
 		})
 
@@ -240,12 +209,12 @@ func (r *serviceaccountResource) Update(ctx context.Context, req resource.Update
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	postState = reorderServiceaccountServiceAccount(postState, planValues, true)
-	fillDataStructFromTFObjectRSServiceaccountServiceAccount(&planData, postState)
-	planData.Additional = additionalBackup
+	postState = reorderServiceaccountServiceAccount(postState, priorState, true)
+	fillDataStructFromTFObjectRSServiceaccountServiceAccount(&data, postState)
+	data.Additional = additionalBackup
 
 	tflog.Info(ctx, "Updated a Topicus KeyHub serviceaccount")
-	resp.Diagnostics.Append(resp.State.Set(ctx, &planData)...)
+	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
 func (r *serviceaccountResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {

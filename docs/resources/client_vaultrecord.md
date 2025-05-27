@@ -22,11 +22,9 @@ description: |-
 
 ### Optional
 
-> **NOTE**: [Write-only arguments](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments) are supported in Terraform 1.11 and later.
-
 - `additional` (List of String)
 - `color` (String)
-- `delete_tile` (Boolean, [Write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments))
+- `delete_tile` (Boolean)
 - `end_date` (String)
 - `filename` (String)
 - `secret` (Attributes) (see [below for nested schema](#nestedatt--secret))
@@ -59,7 +57,7 @@ Optional:
 - `comment` (String, Sensitive)
 - `file` (String, Sensitive)
 - `password` (String, Sensitive)
-- `totp_key` (String, Sensitive, [Write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments))
+- `totp_key` (String, Sensitive)
 
 Read-Only:
 

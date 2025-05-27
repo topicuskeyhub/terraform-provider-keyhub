@@ -115,6 +115,7 @@ Read-Only:
 - `last_used` (String)
 - `nested` (Boolean)
 - `provisioning_end_time` (String)
+- `provisioning_permission_end_time` (String)
 - `two_factor_status` (String)
 - `visible_for_provisioning` (Boolean)
 
@@ -138,6 +139,7 @@ Read-Only:
 - `last_used` (String)
 - `nested` (Boolean)
 - `provisioning_end_time` (String)
+- `provisioning_permission_end_time` (String)
 - `two_factor_status` (String)
 - `visible_for_provisioning` (Boolean)
 
@@ -1567,6 +1569,7 @@ Read-Only:
 - `last_used` (String)
 - `nested` (Boolean)
 - `provisioning_end_time` (String)
+- `provisioning_permission_end_time` (String)
 - `two_factor_status` (String)
 - `visible_for_provisioning` (Boolean)
 
@@ -1590,6 +1593,7 @@ Read-Only:
 - `last_used` (String)
 - `nested` (Boolean)
 - `provisioning_end_time` (String)
+- `provisioning_permission_end_time` (String)
 - `two_factor_status` (String)
 - `visible_for_provisioning` (Boolean)
 

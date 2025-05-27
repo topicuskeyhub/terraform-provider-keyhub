@@ -73,7 +73,7 @@ func (d *organizationalunitDataSource) Read(ctx context.Context, req datasource.
 
 	tflog.Debug(ctx, "Reading organizationalunit from Topicus KeyHub by UUID")
 	additionalBackup := data.Additional
-	additional, _ := tfToSliceListUnary(data.Additional, func(val attr.Value, diags *diag.Diagnostics) string {
+	additional, _ := tfToSliceList(data.Additional, func(val attr.Value, diags *diag.Diagnostics) string {
 		return val.(basetypes.StringValue).ValueString()
 	})
 	uuid := data.UUID.ValueString()

@@ -698,6 +698,7 @@ func objectAttrsTypeDSGroupGroupAccount(recurse bool) map[string]attr.Type {
 	objectAttrs["last_used"] = types.StringType
 	objectAttrs["nested"] = types.BoolType
 	objectAttrs["provisioning_end_time"] = types.StringType
+	objectAttrs["provisioning_permission_end_time"] = types.StringType
 	objectAttrs["rights"] = types.StringType
 	objectAttrs["two_factor_status"] = types.StringType
 	objectAttrs["visible_for_provisioning"] = types.BoolType

@@ -2160,6 +2160,7 @@ func tkhToTFObjectDSGroupGroupAccount(recurse bool, tkh keyhubmodel.GroupGroupAc
 	obj["last_used"] = stringerToTF(tkh.GetLastUsed())
 	obj["nested"] = types.BoolPointerValue(tkh.GetNested())
 	obj["provisioning_end_time"] = timePointerToTF(tkh.GetProvisioningEndTime())
+	obj["provisioning_permission_end_time"] = timePointerToTF(tkh.GetProvisioningPermissionEndTime())
 	obj["rights"] = stringerToTF(tkh.GetRights())
 	obj["two_factor_status"] = stringerToTF(tkh.GetTwoFactorStatus())
 	obj["visible_for_provisioning"] = types.BoolPointerValue(tkh.GetVisibleForProvisioning())

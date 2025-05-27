@@ -1853,6 +1853,9 @@ func dataSourceSchemaAttrsGroupGroupAccount(recurse bool) map[string]dsschema.At
 	schemaAttrs["provisioning_end_time"] = dsschema.StringAttribute{
 		Computed: true,
 	}
+	schemaAttrs["provisioning_permission_end_time"] = dsschema.StringAttribute{
+		Computed: true,
+	}
 	schemaAttrs["rights"] = dsschema.StringAttribute{
 		Computed: true,
 	}

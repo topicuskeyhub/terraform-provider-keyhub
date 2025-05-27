@@ -73,7 +73,7 @@ func (d *vaultrecordDataSource) Read(ctx context.Context, req datasource.ReadReq
 
 	tflog.Debug(ctx, "Reading vaultrecord from Topicus KeyHub by UUID")
 	additionalBackup := data.Additional
-	additional, _ := tfToSliceListUnary(data.Additional, func(val attr.Value, diags *diag.Diagnostics) string {
+	additional, _ := tfToSliceList(data.Additional, func(val attr.Value, diags *diag.Diagnostics) string {
 		return val.(basetypes.StringValue).ValueString()
 	})
 	uuid := data.UUID.ValueString()

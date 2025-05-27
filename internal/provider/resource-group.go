@@ -13,7 +13,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
-	"github.com/sanity-io/litter"
 	keyhubreq "github.com/topicuskeyhub/sdk-go/group"
 	keyhubmodels "github.com/topicuskeyhub/sdk-go/models"
 )
@@ -35,7 +34,7 @@ type groupResource struct {
 
 func (r *groupResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
 	resp.TypeName = ProviderName + "_group"
-	tflog.Info(ctx, "Registered resource "+resp.TypeName)
+	tflog.Info(ctx, "Registred resource "+resp.TypeName)
 }
 
 func (r *groupResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
@@ -65,44 +64,26 @@ func (r *groupResource) Configure(ctx context.Context, req resource.ConfigureReq
 }
 
 func (r *groupResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	var planData groupGroupDataRS
-	resp.Diagnostics.Append(req.Plan.Get(ctx, &planData)...)
+	var data groupGroupDataRS
+	resp.Diagnostics.Append(req.Plan.Get(ctx, &data)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
-
-	litter.Config.HidePrivateFields = false
-
-	tflog.Trace(ctx, "planData: "+litter.Sdump(planData))
-
-	var configData groupGroupDataRS
-	resp.Diagnostics.Append(req.Config.Get(ctx, &configData)...)
-	if resp.Diagnostics.HasError() {
-		return
-	}
-
-	tflog.Trace(ctx, "configData: "+litter.Sdump(configData))
 
 	ctx = context.WithValue(ctx, keyHubClientKey, r.providerData.Client)
-	planValues, diags := types.ObjectValueFrom(ctx, groupGroupAttrTypesRSRecurse, planData)
+	plannedState, diags := types.ObjectValueFrom(ctx, groupGroupAttrTypesRSRecurse, data)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	configValues, diags := types.ObjectValueFrom(ctx, groupGroupAttrTypesRSRecurse, configData)
+	newTkh, diags := tfObjectToTKHRSGroupGroup(ctx, true, plannedState)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	newTkh, diags := tfObjectToTKHRSGroupGroup(ctx, true, planValues, configValues)
-	resp.Diagnostics.Append(diags...)
-	if resp.Diagnostics.HasError() {
-		return
-	}
-
-	additionalBackup := planData.Additional
+	additionalBackup := data.Additional
 	r.providerData.Mutex.Lock()
 	defer r.providerData.Mutex.Unlock()
 	tflog.Info(ctx, "Creating Topicus KeyHub group")
@@ -111,7 +92,7 @@ func (r *groupResource) Create(ctx context.Context, req resource.CreateRequest, 
 	wrapper, err := r.providerData.Client.Group().Post(
 		ctx, newWrapper, &keyhubreq.GroupRequestBuilderPostRequestConfiguration{
 			QueryParameters: &keyhubreq.GroupRequestBuilderPostQueryParameters{
-				Additional: collectAdditional(ctx, planData, planData.Additional),
+				Additional: collectAdditional(ctx, data, data.Additional),
 			},
 		})
 	tkh, diags := findFirst[keyhubmodels.GroupGroupable](ctx, wrapper, "group", nil, false, err)
@@ -125,29 +106,29 @@ func (r *groupResource) Create(ctx context.Context, req resource.CreateRequest, 
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	postState = reorderGroupGroup(postState, planValues, true)
-	fillDataStructFromTFObjectRSGroupGroup(&planData, postState)
-	planData.Additional = additionalBackup
+	postState = reorderGroupGroup(postState, plannedState, true)
+	fillDataStructFromTFObjectRSGroupGroup(&data, postState)
+	data.Additional = additionalBackup
 
-	resp.Diagnostics.Append(resp.State.Set(ctx, &planData)...)
+	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 
 	tflog.Info(ctx, "Created a new Topicus KeyHub group")
-	resp.Diagnostics.Append(resp.State.Set(ctx, &planData)...)
+	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
 func (r *groupResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
-	var planData groupGroupDataRS
-	resp.Diagnostics.Append(req.State.Get(ctx, &planData)...)
+	var data groupGroupDataRS
+	resp.Diagnostics.Append(req.State.Get(ctx, &data)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	planValues, diags := types.ObjectValueFrom(ctx, groupGroupAttrTypesRSRecurse, planData)
+	priorState, diags := types.ObjectValueFrom(ctx, groupGroupAttrTypesRSRecurse, data)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	additionalBackup := planData.Additional
+	additionalBackup := data.Additional
 	r.providerData.Mutex.RLock()
 	defer r.providerData.Mutex.RUnlock()
 	ctx = context.WithValue(ctx, keyHubClientKey, r.providerData.Client)
@@ -155,8 +136,8 @@ func (r *groupResource) Read(ctx context.Context, req resource.ReadRequest, resp
 	wrapper, err := r.providerData.Client.Group().Get(
 		ctx, &keyhubreq.GroupRequestBuilderGetRequestConfiguration{
 			QueryParameters: &keyhubreq.GroupRequestBuilderGetQueryParameters{
-				Additional: collectAdditional(ctx, planData, planData.Additional),
-				Uuid:       []string{planData.UUID.ValueString()},
+				Additional: collectAdditional(ctx, data, data.Additional),
+				Uuid:       []string{data.UUID.ValueString()},
 			},
 		})
 
@@ -164,7 +145,7 @@ func (r *groupResource) Read(ctx context.Context, req resource.ReadRequest, resp
 		return
 	}
 
-	tkh, diags := findFirst[keyhubmodels.GroupGroupable](ctx, wrapper, "group", planData.UUID.ValueStringPointer(), true, err)
+	tkh, diags := findFirst[keyhubmodels.GroupGroupable](ctx, wrapper, "group", data.UUID.ValueStringPointer(), true, err)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -181,11 +162,11 @@ func (r *groupResource) Read(ctx context.Context, req resource.ReadRequest, resp
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	postState = reorderGroupGroup(postState, planValues, true)
-	fillDataStructFromTFObjectRSGroupGroup(&planData, postState)
-	planData.Additional = additionalBackup
+	postState = reorderGroupGroup(postState, priorState, true)
+	fillDataStructFromTFObjectRSGroupGroup(&data, postState)
+	data.Additional = additionalBackup
 
-	resp.Diagnostics.Append(resp.State.Set(ctx, &planData)...)
+	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
 func (r *groupResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
