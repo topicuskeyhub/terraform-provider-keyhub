@@ -23,6 +23,7 @@ linters:
     - unconvert
     - unparam
     - unused
+    - usetesting
     - govet
     
 formatters:
