@@ -9,11 +9,12 @@ issues:
 linters:
   default: none
   enable:
+    - copyloopvar
     - durationcheck
     - errcheck
-    - copyloopvar
     - forcetypeassert
     - godot
+    - govet
     - ineffassign
     - makezero
     - misspell
@@ -24,7 +25,6 @@ linters:
     - unparam
     - unused
     - usetesting
-    - govet
     
 formatters:
   enable:
