@@ -22,6 +22,12 @@ go get -u
 go mod tidy
 ```
 
+Check to see if sanity-io/litter has disappeared from the dependencies in go.mod, if so run the following to add it back in
+
+```Shell
+go get github.com/sanity-io/litter
+```
+
 ### 1.2 Commit the results
 
 ```Shell
