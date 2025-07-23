@@ -1,4 +1,7 @@
 ## 2.41.0
+* Upgrade API to Topicus KeyHub version 42
+
+## 2.41.0
 * Upgrade API to Topicus KeyHub version 41
 * Added support for write-only fields, specifically for totp keys in vault records.
 

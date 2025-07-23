@@ -371,11 +371,6 @@ func fillDataStructFromTFObjectRSDirectoryOIDCDirectory(data *directoryOIDCDirec
 func fillDataStructFromTFObjectRSDirectoryPendingAccountsDirectory(data *directoryPendingAccountsDirectoryDataRS, obj types.Object) {
 }
 
-func fillDataStructFromTFObjectRSGroupAuthorizedGroupsWrapper(data *groupAuthorizedGroupsWrapperDataRS, obj types.Object) {
-	data.Items = obj.Attributes()["items"].(basetypes.ListValue)
-	data.GroupCount = obj.Attributes()["group_count"].(basetypes.Int64Value)
-}
-
 func fillDataStructFromTFObjectRSGroupGroup(data *groupGroupDataRS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
@@ -389,7 +384,7 @@ func fillDataStructFromTFObjectRSGroupGroup(data *groupGroupDataRS, obj types.Ob
 	data.AdministeredSystems = obj.Attributes()["administered_systems"].(basetypes.ListValue)
 	data.Admins = obj.Attributes()["admins"].(basetypes.ListValue)
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
-	data.AuthorizedGroups = obj.Attributes()["authorized_groups"].(basetypes.ObjectValue)
+	data.AuthorizedGroups = obj.Attributes()["authorized_groups"].(basetypes.ListValue)
 	data.ClientPermissions = obj.Attributes()["client_permissions"].(basetypes.ListValue)
 	data.Clients = obj.Attributes()["clients"].(basetypes.ListValue)
 	data.ContentAdministeredSystems = obj.Attributes()["content_administered_systems"].(basetypes.ListValue)
@@ -504,6 +499,11 @@ func fillDataStructFromTFObjectRSGroupGroupClientLinkableWrapper(data *groupGrou
 	data.Items = obj.Attributes()["items"].(basetypes.ListValue)
 }
 
+func fillDataStructFromTFObjectRSGroupGroupClientLinkableWrapperWithCount(data *groupGroupClientLinkableWrapperWithCountDataRS, obj types.Object) {
+	data.Count = obj.Attributes()["count"].(basetypes.Int64Value)
+	data.Items = obj.Attributes()["items"].(basetypes.ListValue)
+}
+
 func fillDataStructFromTFObjectRSGroupGroupClient_additionalObjects(data *groupGroupClient_additionalObjectsDataRS, obj types.Object) {
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
 }
@@ -529,6 +529,11 @@ func fillDataStructFromTFObjectRSGroupGroupLinkableWrapper(data *groupGroupLinka
 	data.Items = obj.Attributes()["items"].(basetypes.ListValue)
 }
 
+func fillDataStructFromTFObjectRSGroupGroupLinkableWrapperWithCount(data *groupGroupLinkableWrapperWithCountDataRS, obj types.Object) {
+	data.Count = obj.Attributes()["count"].(basetypes.Int64Value)
+	data.Items = obj.Attributes()["items"].(basetypes.ListValue)
+}
+
 func fillDataStructFromTFObjectRSGroupGroupPrimer(data *groupGroupPrimerDataRS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
@@ -548,7 +553,7 @@ func fillDataStructFromTFObjectRSGroupGroup_additionalObjects(data *groupGroup_a
 	data.AdministeredSystems = obj.Attributes()["administered_systems"].(basetypes.ListValue)
 	data.Admins = obj.Attributes()["admins"].(basetypes.ListValue)
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
-	data.AuthorizedGroups = obj.Attributes()["authorized_groups"].(basetypes.ObjectValue)
+	data.AuthorizedGroups = obj.Attributes()["authorized_groups"].(basetypes.ListValue)
 	data.ClientPermissions = obj.Attributes()["client_permissions"].(basetypes.ListValue)
 	data.Clients = obj.Attributes()["clients"].(basetypes.ListValue)
 	data.ContentAdministeredSystems = obj.Attributes()["content_administered_systems"].(basetypes.ListValue)
@@ -632,8 +637,11 @@ func fillDataStructFromTFObjectRSIdentityAccountAttributeDefinition(data *identi
 	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
 	data.Format = obj.Attributes()["format"].(basetypes.StringValue)
+	data.List = obj.Attributes()["list"].(basetypes.BoolValue)
 	data.Name = obj.Attributes()["name"].(basetypes.StringValue)
+	data.Required = obj.Attributes()["required"].(basetypes.BoolValue)
 	data.SystemDefinition = obj.Attributes()["system_definition"].(basetypes.StringValue)
+	data.Unique = obj.Attributes()["unique"].(basetypes.BoolValue)
 }
 
 func fillDataStructFromTFObjectRSIdentityAccountAttributeDefinition_additionalObjects(data *identityAccountAttributeDefinition_additionalObjectsDataRS, obj types.Object) {
@@ -690,6 +698,12 @@ func fillDataStructFromTFObjectRSMarkItemMarker(data *markItemMarkerDataRS, obj 
 
 func fillDataStructFromTFObjectRSMarkItemMarkers(data *markItemMarkersDataRS, obj types.Object) {
 	data.Markers = obj.Attributes()["markers"].(basetypes.ListValue)
+}
+
+func fillDataStructFromTFObjectRSMiscAttributeCustomization(data *miscAttributeCustomizationDataRS, obj types.Object) {
+	data.AttributeDefinition = obj.Attributes()["attribute_definition"].(basetypes.ObjectValue)
+	data.Name = obj.Attributes()["name"].(basetypes.StringValue)
+	data.Script = obj.Attributes()["script"].(basetypes.StringValue)
 }
 
 func fillDataStructFromTFObjectRSNestedProvisioningGroupOnSystem(data *nestedProvisioningGroupOnSystemDataRS, obj types.Object) {
@@ -824,6 +838,11 @@ func fillDataStructFromTFObjectRSProfileAccessProfileClientLinkableWrapper(data 
 	data.Items = obj.Attributes()["items"].(basetypes.ListValue)
 }
 
+func fillDataStructFromTFObjectRSProfileAccessProfileClientLinkableWrapperWithCount(data *profileAccessProfileClientLinkableWrapperWithCountDataRS, obj types.Object) {
+	data.Count = obj.Attributes()["count"].(basetypes.Int64Value)
+	data.Items = obj.Attributes()["items"].(basetypes.ListValue)
+}
+
 func fillDataStructFromTFObjectRSProfileAccessProfileClient_additionalObjects(data *profileAccessProfileClient_additionalObjectsDataRS, obj types.Object) {
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
 }
@@ -888,7 +907,7 @@ func fillDataStructFromTFObjectRSProfileAccessProfile_additionalObjects(data *pr
 }
 
 func fillDataStructFromTFObjectRSProvisioningAbstractProvisionedLDAP(data *provisioningAbstractProvisionedLDAPDataRS, obj types.Object) {
-	data.Attributes = obj.Attributes()["attributes"].(basetypes.MapValue)
+	data.Attributes = obj.Attributes()["attributes"].(basetypes.ListValue)
 	data.BaseDN = obj.Attributes()["base_dn"].(basetypes.StringValue)
 	data.BindDN = obj.Attributes()["bind_dn"].(basetypes.StringValue)
 	data.BindPassword = obj.Attributes()["bind_password"].(basetypes.StringValue)
@@ -1021,12 +1040,14 @@ func fillDataStructFromTFObjectRSProvisioningProvisionedLDAP(data *provisioningP
 
 func fillDataStructFromTFObjectRSProvisioningProvisionedLDAPDirectory(data *provisioningProvisionedLDAPDirectoryDataRS, obj types.Object) {
 	data.AccountsWritable = obj.Attributes()["accounts_writable"].(basetypes.BoolValue)
+	data.Attributes = obj.Attributes()["attributes"].(basetypes.ListValue)
 	data.DirectoryUUID = obj.Attributes()["directory_uuid"].(basetypes.StringValue)
 	data.Gid = obj.Attributes()["gid"].(basetypes.Int64Value)
 	data.GidNumbering = obj.Attributes()["gid_numbering"].(basetypes.ObjectValue)
 	data.GroupDN = obj.Attributes()["group_dn"].(basetypes.StringValue)
 	data.HashingScheme = obj.Attributes()["hashing_scheme"].(basetypes.StringValue)
 	data.Numbering = obj.Attributes()["numbering"].(basetypes.ObjectValue)
+	data.ObjectClasses = obj.Attributes()["object_classes"].(basetypes.StringValue)
 	data.SamAccountNameScheme = obj.Attributes()["sam_account_name_scheme"].(basetypes.StringValue)
 	data.SshPublicKeySupport = obj.Attributes()["ssh_public_key_support"].(basetypes.StringValue)
 }
@@ -1038,6 +1059,7 @@ func fillDataStructFromTFObjectRSProvisioningProvisionedNamespace(data *provisio
 }
 
 func fillDataStructFromTFObjectRSProvisioningProvisionedSCIM(data *provisioningProvisionedSCIMDataRS, obj types.Object) {
+	data.Attributes = obj.Attributes()["attributes"].(basetypes.ListValue)
 	data.AuthenticationScheme = obj.Attributes()["authentication_scheme"].(basetypes.StringValue)
 	data.BasicAuthPassword = obj.Attributes()["basic_auth_password"].(basetypes.StringValue)
 	data.BasicAuthUsername = obj.Attributes()["basic_auth_username"].(basetypes.StringValue)

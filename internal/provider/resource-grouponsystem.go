@@ -14,6 +14,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
+	"github.com/sanity-io/litter"
 	keyhubmodels "github.com/topicuskeyhub/sdk-go/models"
 	keyhubreq "github.com/topicuskeyhub/sdk-go/system"
 )
@@ -35,7 +36,7 @@ type grouponsystemResource struct {
 
 func (r *grouponsystemResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
 	resp.TypeName = ProviderName + "_grouponsystem"
-	tflog.Info(ctx, "Registred resource "+resp.TypeName)
+	tflog.Info(ctx, "Registered resource "+resp.TypeName)
 }
 
 func (r *grouponsystemResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
@@ -65,32 +66,50 @@ func (r *grouponsystemResource) Configure(ctx context.Context, req resource.Conf
 }
 
 func (r *grouponsystemResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	var data nestedProvisioningGroupOnSystemDataRS
-	resp.Diagnostics.Append(req.Plan.Get(ctx, &data)...)
+	var planData nestedProvisioningGroupOnSystemDataRS
+	resp.Diagnostics.Append(req.Plan.Get(ctx, &planData)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
+
+	litter.Config.HidePrivateFields = false
+
+	tflog.Trace(ctx, "planData: "+litter.Sdump(planData))
+
+	var configData nestedProvisioningGroupOnSystemDataRS
+	resp.Diagnostics.Append(req.Config.Get(ctx, &configData)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	tflog.Trace(ctx, "configData: "+litter.Sdump(configData))
 
 	ctx = context.WithValue(ctx, keyHubClientKey, r.providerData.Client)
-	plannedState, diags := types.ObjectValueFrom(ctx, nestedProvisioningGroupOnSystemAttrTypesRSRecurse, data)
+	planValues, diags := types.ObjectValueFrom(ctx, nestedProvisioningGroupOnSystemAttrTypesRSRecurse, planData)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	newTkh, diags := tfObjectToTKHRSNestedProvisioningGroupOnSystem(ctx, true, plannedState)
+	configValues, diags := types.ObjectValueFrom(ctx, nestedProvisioningGroupOnSystemAttrTypesRSRecurse, configData)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	additionalBackup := data.Additional
+	newTkh, diags := tfObjectToTKHRSNestedProvisioningGroupOnSystem(ctx, true, planValues, configValues)
+	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	additionalBackup := planData.Additional
 	r.providerData.Mutex.Lock()
 	defer r.providerData.Mutex.Unlock()
 	tflog.Info(ctx, "Creating Topicus KeyHub grouponsystem")
 	newWrapper := keyhubmodels.NewProvisioningGroupOnSystemLinkableWrapper()
 	newWrapper.SetItems([]keyhubmodels.ProvisioningGroupOnSystemable{newTkh})
-	tkhParent, diags := findProvisioningProvisionedSystemPrimerByUUID(ctx, data.ProvisionedSystemUUID.ValueStringPointer())
+	tkhParent, diags := findProvisioningProvisionedSystemPrimerByUUID(ctx, planData.ProvisionedSystemUUID.ValueStringPointer())
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -99,7 +118,7 @@ func (r *grouponsystemResource) Create(ctx context.Context, req resource.CreateR
 	wrapper, err := r.providerData.Client.System().BySystemidInt64(*tkhParent.GetLinks()[0].GetId()).Group().Post(
 		ctx, newWrapper, &keyhubreq.ItemGroupRequestBuilderPostRequestConfiguration{
 			QueryParameters: &keyhubreq.ItemGroupRequestBuilderPostQueryParameters{
-				Additional: collectAdditional(ctx, data, data.Additional),
+				Additional: collectAdditional(ctx, planData, planData.Additional),
 			},
 		})
 	tkh, diags := findFirst[keyhubmodels.ProvisioningGroupOnSystemable](ctx, wrapper, "grouponsystem", nil, false, err)
@@ -113,35 +132,35 @@ func (r *grouponsystemResource) Create(ctx context.Context, req resource.CreateR
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	postState = setAttributeValue(ctx, postState, "provisioned_system_uuid", types.StringValue(data.ProvisionedSystemUUID.ValueString()))
-	postState = reorderNestedProvisioningGroupOnSystem(postState, plannedState, true)
-	fillDataStructFromTFObjectRSNestedProvisioningGroupOnSystem(&data, postState)
-	data.Additional = additionalBackup
+	postState = setAttributeValue(ctx, postState, "provisioned_system_uuid", types.StringValue(planData.ProvisionedSystemUUID.ValueString()))
+	postState = reorderNestedProvisioningGroupOnSystem(postState, planValues, true)
+	fillDataStructFromTFObjectRSNestedProvisioningGroupOnSystem(&planData, postState)
+	planData.Additional = additionalBackup
 
-	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
+	resp.Diagnostics.Append(resp.State.Set(ctx, &planData)...)
 
 	tflog.Info(ctx, "Created a new Topicus KeyHub grouponsystem")
-	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
+	resp.Diagnostics.Append(resp.State.Set(ctx, &planData)...)
 }
 
 func (r *grouponsystemResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
-	var data nestedProvisioningGroupOnSystemDataRS
-	resp.Diagnostics.Append(req.State.Get(ctx, &data)...)
+	var planData nestedProvisioningGroupOnSystemDataRS
+	resp.Diagnostics.Append(req.State.Get(ctx, &planData)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	priorState, diags := types.ObjectValueFrom(ctx, nestedProvisioningGroupOnSystemAttrTypesRSRecurse, data)
+	planValues, diags := types.ObjectValueFrom(ctx, nestedProvisioningGroupOnSystemAttrTypesRSRecurse, planData)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	additionalBackup := data.Additional
+	additionalBackup := planData.Additional
 	r.providerData.Mutex.RLock()
 	defer r.providerData.Mutex.RUnlock()
 	ctx = context.WithValue(ctx, keyHubClientKey, r.providerData.Client)
 	tflog.Info(ctx, "Reading grouponsystem from Topicus KeyHub")
-	tkhParent, diags := findProvisioningProvisionedSystemPrimerByUUIDOrNil(ctx, data.ProvisionedSystemUUID.ValueStringPointer())
+	tkhParent, diags := findProvisioningProvisionedSystemPrimerByUUIDOrNil(ctx, planData.ProvisionedSystemUUID.ValueStringPointer())
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -156,8 +175,8 @@ func (r *grouponsystemResource) Read(ctx context.Context, req resource.ReadReque
 	wrapper, err := r.providerData.Client.System().BySystemidInt64(*tkhParent.GetLinks()[0].GetId()).Group().Get(
 		ctx, &keyhubreq.ItemGroupRequestBuilderGetRequestConfiguration{
 			QueryParameters: &keyhubreq.ItemGroupRequestBuilderGetQueryParameters{
-				Additional:   collectAdditional(ctx, data, data.Additional),
-				NameInSystem: []string{data.NameInSystem.ValueString()},
+				Additional:   collectAdditional(ctx, planData, planData.Additional),
+				NameInSystem: []string{planData.NameInSystem.ValueString()},
 			},
 		})
 
@@ -165,7 +184,7 @@ func (r *grouponsystemResource) Read(ctx context.Context, req resource.ReadReque
 		return
 	}
 
-	tkh, diags := findFirst[keyhubmodels.ProvisioningGroupOnSystemable](ctx, wrapper, "grouponsystem", data.NameInSystem.ValueStringPointer(), true, err)
+	tkh, diags := findFirst[keyhubmodels.ProvisioningGroupOnSystemable](ctx, wrapper, "grouponsystem", planData.NameInSystem.ValueStringPointer(), true, err)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -182,12 +201,12 @@ func (r *grouponsystemResource) Read(ctx context.Context, req resource.ReadReque
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	postState = setAttributeValue(ctx, postState, "provisioned_system_uuid", types.StringValue(data.ProvisionedSystemUUID.ValueString()))
-	postState = reorderNestedProvisioningGroupOnSystem(postState, priorState, true)
-	fillDataStructFromTFObjectRSNestedProvisioningGroupOnSystem(&data, postState)
-	data.Additional = additionalBackup
+	postState = setAttributeValue(ctx, postState, "provisioned_system_uuid", types.StringValue(planData.ProvisionedSystemUUID.ValueString()))
+	postState = reorderNestedProvisioningGroupOnSystem(postState, planValues, true)
+	fillDataStructFromTFObjectRSNestedProvisioningGroupOnSystem(&planData, postState)
+	planData.Additional = additionalBackup
 
-	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
+	resp.Diagnostics.Append(resp.State.Set(ctx, &planData)...)
 }
 
 func (r *grouponsystemResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {

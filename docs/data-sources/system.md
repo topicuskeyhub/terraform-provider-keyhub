@@ -71,7 +71,7 @@ description: |-
 
 Read-Only:
 
-- `attributes` (Map of String)
+- `attributes` (Attributes List) (see [below for nested schema](#nestedatt--abstract_provisioned_ldap--attributes))
 - `base_dn` (String)
 - `bind_dn` (String)
 - `bind_password` (String, Sensitive)
@@ -87,6 +87,53 @@ Read-Only:
 - `tls` (String)
 - `trusted_certificate` (Attributes) (see [below for nested schema](#nestedatt--abstract_provisioned_ldap--trusted_certificate))
 - `user_dn` (String)
+
+<a id="nestedatt--abstract_provisioned_ldap--attributes"></a>
+### Nested Schema for `abstract_provisioned_ldap.attributes`
+
+Read-Only:
+
+- `attribute_definition` (Attributes) (see [below for nested schema](#nestedatt--abstract_provisioned_ldap--attributes--attribute_definition))
+- `name` (String)
+- `script` (String)
+
+<a id="nestedatt--abstract_provisioned_ldap--attributes--attribute_definition"></a>
+### Nested Schema for `abstract_provisioned_ldap.attributes.attribute_definition`
+
+Read-Only:
+
+- `format` (String)
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--abstract_provisioned_ldap--attributes--attribute_definition--links))
+- `list` (Boolean)
+- `name` (String)
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--abstract_provisioned_ldap--attributes--attribute_definition--permissions))
+- `required` (Boolean)
+- `system_definition` (String)
+- `unique` (Boolean)
+
+<a id="nestedatt--abstract_provisioned_ldap--attributes--attribute_definition--links"></a>
+### Nested Schema for `abstract_provisioned_ldap.attributes.attribute_definition.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--abstract_provisioned_ldap--attributes--attribute_definition--permissions"></a>
+### Nested Schema for `abstract_provisioned_ldap.attributes.attribute_definition.permissions`
+
+Read-Only:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
+
 
 <a id="nestedatt--abstract_provisioned_ldap--client_certificate"></a>
 ### Nested Schema for `abstract_provisioned_ldap.client_certificate`
@@ -1020,14 +1067,63 @@ Read-Only:
 Read-Only:
 
 - `accounts_writable` (Boolean)
+- `attributes` (Attributes List) (see [below for nested schema](#nestedatt--provisioned_ldap_directory--attributes))
 - `directory` (Attributes) (see [below for nested schema](#nestedatt--provisioned_ldap_directory--directory))
 - `gid` (Number)
 - `gid_numbering` (Attributes) (see [below for nested schema](#nestedatt--provisioned_ldap_directory--gid_numbering))
 - `group_dn` (String)
 - `hashing_scheme` (String)
 - `numbering` (Attributes) (see [below for nested schema](#nestedatt--provisioned_ldap_directory--numbering))
+- `object_classes` (String)
 - `sam_account_name_scheme` (String)
 - `ssh_public_key_support` (String)
+
+<a id="nestedatt--provisioned_ldap_directory--attributes"></a>
+### Nested Schema for `provisioned_ldap_directory.attributes`
+
+Read-Only:
+
+- `attribute_definition` (Attributes) (see [below for nested schema](#nestedatt--provisioned_ldap_directory--attributes--attribute_definition))
+- `name` (String)
+- `script` (String)
+
+<a id="nestedatt--provisioned_ldap_directory--attributes--attribute_definition"></a>
+### Nested Schema for `provisioned_ldap_directory.attributes.attribute_definition`
+
+Read-Only:
+
+- `format` (String)
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--provisioned_ldap_directory--attributes--attribute_definition--links))
+- `list` (Boolean)
+- `name` (String)
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--provisioned_ldap_directory--attributes--attribute_definition--permissions))
+- `required` (Boolean)
+- `system_definition` (String)
+- `unique` (Boolean)
+
+<a id="nestedatt--provisioned_ldap_directory--attributes--attribute_definition--links"></a>
+### Nested Schema for `provisioned_ldap_directory.attributes.attribute_definition.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--provisioned_ldap_directory--attributes--attribute_definition--permissions"></a>
+### Nested Schema for `provisioned_ldap_directory.attributes.attribute_definition.permissions`
+
+Read-Only:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
+
 
 <a id="nestedatt--provisioned_ldap_directory--directory"></a>
 ### Nested Schema for `provisioned_ldap_directory.directory`
@@ -1219,6 +1315,7 @@ Read-Only:
 
 Read-Only:
 
+- `attributes` (Attributes List) (see [below for nested schema](#nestedatt--provisioned_scim--attributes))
 - `authentication_scheme` (String)
 - `basic_auth_password` (String, Sensitive)
 - `basic_auth_username` (String)
@@ -1227,6 +1324,53 @@ Read-Only:
 - `custom_header_value` (String, Sensitive)
 - `url` (String)
 - `vendor_escaped` (String)
+
+<a id="nestedatt--provisioned_scim--attributes"></a>
+### Nested Schema for `provisioned_scim.attributes`
+
+Read-Only:
+
+- `attribute_definition` (Attributes) (see [below for nested schema](#nestedatt--provisioned_scim--attributes--attribute_definition))
+- `name` (String)
+- `script` (String)
+
+<a id="nestedatt--provisioned_scim--attributes--attribute_definition"></a>
+### Nested Schema for `provisioned_scim.attributes.attribute_definition`
+
+Read-Only:
+
+- `format` (String)
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--provisioned_scim--attributes--attribute_definition--links))
+- `list` (Boolean)
+- `name` (String)
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--provisioned_scim--attributes--attribute_definition--permissions))
+- `required` (Boolean)
+- `system_definition` (String)
+- `unique` (Boolean)
+
+<a id="nestedatt--provisioned_scim--attributes--attribute_definition--links"></a>
+### Nested Schema for `provisioned_scim.attributes.attribute_definition.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--provisioned_scim--attributes--attribute_definition--permissions"></a>
+### Nested Schema for `provisioned_scim.attributes.attribute_definition.permissions`
+
+Read-Only:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
+
 
 
 <a id="nestedatt--statistics"></a>

@@ -481,14 +481,6 @@ var directoryPendingAccountsDirectoryAttrTypesRSRecurse = objectAttrsTypeRSDirec
 type directoryPendingAccountsDirectoryDataRS struct {
 }
 
-var groupAuthorizedGroupsWrapperAttrTypesRS = objectAttrsTypeRSGroupAuthorizedGroupsWrapper(false)
-var groupAuthorizedGroupsWrapperAttrTypesRSRecurse = objectAttrsTypeRSGroupAuthorizedGroupsWrapper(true)
-
-type groupAuthorizedGroupsWrapperDataRS struct {
-	Items      types.List  `tfsdk:"items"`
-	GroupCount types.Int64 `tfsdk:"group_count"`
-}
-
 var groupGroupAttrTypesRS = objectAttrsTypeRSGroupGroup(false)
 var groupGroupAttrTypesRSRecurse = objectAttrsTypeRSGroupGroup(true)
 
@@ -505,7 +497,7 @@ type groupGroupDataRS struct {
 	AdministeredSystems              types.List   `tfsdk:"administered_systems" tkhao:"administeredSystems"`
 	Admins                           types.List   `tfsdk:"admins" tkhao:"admins"`
 	Audit                            types.Object `tfsdk:"audit" tkhao:"audit"`
-	AuthorizedGroups                 types.Object `tfsdk:"authorized_groups" tkhao:"authorizedGroups"`
+	AuthorizedGroups                 types.List   `tfsdk:"authorized_groups" tkhao:"authorizedGroups"`
 	ClientPermissions                types.List   `tfsdk:"client_permissions" tkhao:"clientPermissions"`
 	Clients                          types.List   `tfsdk:"clients" tkhao:"clients"`
 	ContentAdministeredSystems       types.List   `tfsdk:"content_administered_systems" tkhao:"contentAdministeredSystems"`
@@ -647,6 +639,14 @@ type groupGroupClientLinkableWrapperDataRS struct {
 	Items types.List `tfsdk:"items"`
 }
 
+var groupGroupClientLinkableWrapperWithCountAttrTypesRS = objectAttrsTypeRSGroupGroupClientLinkableWrapperWithCount(false)
+var groupGroupClientLinkableWrapperWithCountAttrTypesRSRecurse = objectAttrsTypeRSGroupGroupClientLinkableWrapperWithCount(true)
+
+type groupGroupClientLinkableWrapperWithCountDataRS struct {
+	Count types.Int64 `tfsdk:"count"`
+	Items types.List  `tfsdk:"items"`
+}
+
 var groupGroupClient_additionalObjectsAttrTypesRS = objectAttrsTypeRSGroupGroupClient_additionalObjects(false)
 var groupGroupClient_additionalObjectsAttrTypesRSRecurse = objectAttrsTypeRSGroupGroupClient_additionalObjects(true)
 
@@ -684,6 +684,14 @@ type groupGroupLinkableWrapperDataRS struct {
 	Items types.List `tfsdk:"items"`
 }
 
+var groupGroupLinkableWrapperWithCountAttrTypesRS = objectAttrsTypeRSGroupGroupLinkableWrapperWithCount(false)
+var groupGroupLinkableWrapperWithCountAttrTypesRSRecurse = objectAttrsTypeRSGroupGroupLinkableWrapperWithCount(true)
+
+type groupGroupLinkableWrapperWithCountDataRS struct {
+	Count types.Int64 `tfsdk:"count"`
+	Items types.List  `tfsdk:"items"`
+}
+
 var groupGroupPrimerAttrTypesRS = objectAttrsTypeRSGroupGroupPrimer(false)
 var groupGroupPrimerAttrTypesRSRecurse = objectAttrsTypeRSGroupGroupPrimer(true)
 
@@ -712,7 +720,7 @@ type groupGroup_additionalObjectsDataRS struct {
 	AdministeredSystems        types.List   `tfsdk:"administered_systems"`
 	Admins                     types.List   `tfsdk:"admins"`
 	Audit                      types.Object `tfsdk:"audit"`
-	AuthorizedGroups           types.Object `tfsdk:"authorized_groups"`
+	AuthorizedGroups           types.List   `tfsdk:"authorized_groups"`
 	ClientPermissions          types.List   `tfsdk:"client_permissions"`
 	Clients                    types.List   `tfsdk:"clients"`
 	ContentAdministeredSystems types.List   `tfsdk:"content_administered_systems"`
@@ -814,8 +822,11 @@ type identityAccountAttributeDefinitionDataRS struct {
 	Additional       types.List   `tfsdk:"additional"`
 	Audit            types.Object `tfsdk:"audit" tkhao:"audit"`
 	Format           types.String `tfsdk:"format"`
+	List             types.Bool   `tfsdk:"list"`
 	Name             types.String `tfsdk:"name"`
+	Required         types.Bool   `tfsdk:"required"`
 	SystemDefinition types.String `tfsdk:"system_definition"`
+	Unique           types.Bool   `tfsdk:"unique"`
 }
 
 var identityAccountAttributeDefinition_additionalObjectsAttrTypesRS = objectAttrsTypeRSIdentityAccountAttributeDefinition_additionalObjects(false)
@@ -899,6 +910,15 @@ var markItemMarkersAttrTypesRSRecurse = objectAttrsTypeRSMarkItemMarkers(true)
 
 type markItemMarkersDataRS struct {
 	Markers types.List `tfsdk:"markers"`
+}
+
+var miscAttributeCustomizationAttrTypesRS = objectAttrsTypeRSMiscAttributeCustomization(false)
+var miscAttributeCustomizationAttrTypesRSRecurse = objectAttrsTypeRSMiscAttributeCustomization(true)
+
+type miscAttributeCustomizationDataRS struct {
+	AttributeDefinition types.Object `tfsdk:"attribute_definition"`
+	Name                types.String `tfsdk:"name"`
+	Script              types.String `tfsdk:"script"`
 }
 
 var nestedProvisioningGroupOnSystemAttrTypesRS = objectAttrsTypeRSNestedProvisioningGroupOnSystem(false)
@@ -1081,6 +1101,14 @@ type profileAccessProfileClientLinkableWrapperDataRS struct {
 	Items types.List `tfsdk:"items"`
 }
 
+var profileAccessProfileClientLinkableWrapperWithCountAttrTypesRS = objectAttrsTypeRSProfileAccessProfileClientLinkableWrapperWithCount(false)
+var profileAccessProfileClientLinkableWrapperWithCountAttrTypesRSRecurse = objectAttrsTypeRSProfileAccessProfileClientLinkableWrapperWithCount(true)
+
+type profileAccessProfileClientLinkableWrapperWithCountDataRS struct {
+	Count types.Int64 `tfsdk:"count"`
+	Items types.List  `tfsdk:"items"`
+}
+
 var profileAccessProfileClient_additionalObjectsAttrTypesRS = objectAttrsTypeRSProfileAccessProfileClient_additionalObjects(false)
 var profileAccessProfileClient_additionalObjectsAttrTypesRSRecurse = objectAttrsTypeRSProfileAccessProfileClient_additionalObjects(true)
 
@@ -1181,7 +1209,7 @@ var provisioningAbstractProvisionedLDAPAttrTypesRS = objectAttrsTypeRSProvisioni
 var provisioningAbstractProvisionedLDAPAttrTypesRSRecurse = objectAttrsTypeRSProvisioningAbstractProvisionedLDAP(true)
 
 type provisioningAbstractProvisionedLDAPDataRS struct {
-	Attributes                     types.Map    `tfsdk:"attributes"`
+	Attributes                     types.List   `tfsdk:"attributes"`
 	BaseDN                         types.String `tfsdk:"base_dn"`
 	BindDN                         types.String `tfsdk:"bind_dn"`
 	BindPassword                   types.String `tfsdk:"bind_password"`
@@ -1368,12 +1396,14 @@ var provisioningProvisionedLDAPDirectoryAttrTypesRSRecurse = objectAttrsTypeRSPr
 
 type provisioningProvisionedLDAPDirectoryDataRS struct {
 	AccountsWritable     types.Bool   `tfsdk:"accounts_writable"`
+	Attributes           types.List   `tfsdk:"attributes"`
 	DirectoryUUID        types.String `tfsdk:"directory_uuid"`
 	Gid                  types.Int64  `tfsdk:"gid"`
 	GidNumbering         types.Object `tfsdk:"gid_numbering"`
 	GroupDN              types.String `tfsdk:"group_dn"`
 	HashingScheme        types.String `tfsdk:"hashing_scheme"`
 	Numbering            types.Object `tfsdk:"numbering"`
+	ObjectClasses        types.String `tfsdk:"object_classes"`
 	SamAccountNameScheme types.String `tfsdk:"sam_account_name_scheme"`
 	SshPublicKeySupport  types.String `tfsdk:"ssh_public_key_support"`
 }
@@ -1391,6 +1421,7 @@ var provisioningProvisionedSCIMAttrTypesRS = objectAttrsTypeRSProvisioningProvis
 var provisioningProvisionedSCIMAttrTypesRSRecurse = objectAttrsTypeRSProvisioningProvisionedSCIM(true)
 
 type provisioningProvisionedSCIMDataRS struct {
+	Attributes           types.List   `tfsdk:"attributes"`
 	AuthenticationScheme types.String `tfsdk:"authentication_scheme"`
 	BasicAuthPassword    types.String `tfsdk:"basic_auth_password"`
 	BasicAuthUsername    types.String `tfsdk:"basic_auth_username"`

@@ -123,7 +123,7 @@ func objectAttrsTypeDSAuthAccount(recurse bool) map[string]attr.Type {
 	if recurse {
 		objectAttrs["active_login"] = types.BoolType
 		objectAttrs["audit"] = types.ObjectType{AttrTypes: objectAttrsTypeDSAuditInfo(false)}
-		objectAttrs["groups"] = types.ObjectType{AttrTypes: objectAttrsTypeDSGroupAccountGroupsWrapper(false)}
+		objectAttrs["groups"] = objectAttrsTypeDSGroupAccountGroupLinkableWrapperWithCount(false)["items"]
 		objectAttrs["pending_recovery_requests"] = types.ObjectType{AttrTypes: objectAttrsTypeDSAuthAccountRecoveryStatus(false)}
 		objectAttrs["settings"] = types.ObjectType{AttrTypes: objectAttrsTypeDSAuthAccountSettings(false)}
 		objectAttrs["stored_attributes"] = types.ObjectType{AttrTypes: objectAttrsTypeDSAuthStoredAccountAttributes(false)}
@@ -198,7 +198,7 @@ func objectAttrsTypeDSAuthAccount_additionalObjects(recurse bool) map[string]att
 	objectAttrs := make(map[string]attr.Type)
 	objectAttrs["active_login"] = types.BoolType
 	objectAttrs["audit"] = types.ObjectType{AttrTypes: objectAttrsTypeDSAuditInfo(recurse)}
-	objectAttrs["groups"] = types.ObjectType{AttrTypes: objectAttrsTypeDSGroupAccountGroupsWrapper(recurse)}
+	objectAttrs["groups"] = objectAttrsTypeDSGroupAccountGroupLinkableWrapperWithCount(recurse)["items"]
 	objectAttrs["pending_recovery_requests"] = types.ObjectType{AttrTypes: objectAttrsTypeDSAuthAccountRecoveryStatus(recurse)}
 	objectAttrs["settings"] = types.ObjectType{AttrTypes: objectAttrsTypeDSAuthAccountSettings(recurse)}
 	objectAttrs["stored_attributes"] = types.ObjectType{AttrTypes: objectAttrsTypeDSAuthStoredAccountAttributes(recurse)}
@@ -279,9 +279,9 @@ func objectAttrsTypeDSClientClientApplication(recurse bool) map[string]attr.Type
 		objectAttrs["additional"] = types.ListType{ElemType: types.StringType}
 	}
 	if recurse {
-		objectAttrs["accessprofileclients"] = objectAttrsTypeDSProfileAccessProfileClientLinkableWrapper(false)["items"]
+		objectAttrs["accessprofileclients"] = objectAttrsTypeDSProfileAccessProfileClientLinkableWrapperWithCount(false)["items"]
 		objectAttrs["audit"] = types.ObjectType{AttrTypes: objectAttrsTypeDSAuditInfo(false)}
-		objectAttrs["groupclients"] = objectAttrsTypeDSGroupGroupClientLinkableWrapper(false)["items"]
+		objectAttrs["groupclients"] = objectAttrsTypeDSGroupGroupClientLinkableWrapperWithCount(false)["items"]
 		objectAttrs["groups"] = objectAttrsTypeDSGroupGroupLinkableWrapper(false)["items"]
 		objectAttrs["organizational_units"] = objectAttrsTypeDSOrganizationClientApplicationOrganizationalUnitLinkableWrapper(false)["items"]
 		objectAttrs["secret"] = types.ObjectType{AttrTypes: objectAttrsTypeDSGeneratedSecret(false)}
@@ -326,9 +326,9 @@ func objectAttrsTypeDSClientClientApplicationPrimer(recurse bool) map[string]att
 
 func objectAttrsTypeDSClientClientApplication_additionalObjects(recurse bool) map[string]attr.Type {
 	objectAttrs := make(map[string]attr.Type)
-	objectAttrs["accessprofileclients"] = objectAttrsTypeDSProfileAccessProfileClientLinkableWrapper(recurse)["items"]
+	objectAttrs["accessprofileclients"] = objectAttrsTypeDSProfileAccessProfileClientLinkableWrapperWithCount(recurse)["items"]
 	objectAttrs["audit"] = types.ObjectType{AttrTypes: objectAttrsTypeDSAuditInfo(recurse)}
-	objectAttrs["groupclients"] = objectAttrsTypeDSGroupGroupClientLinkableWrapper(recurse)["items"]
+	objectAttrs["groupclients"] = objectAttrsTypeDSGroupGroupClientLinkableWrapperWithCount(recurse)["items"]
 	objectAttrs["groups"] = objectAttrsTypeDSGroupGroupLinkableWrapper(recurse)["items"]
 	objectAttrs["organizational_units"] = objectAttrsTypeDSOrganizationClientApplicationOrganizationalUnitLinkableWrapper(recurse)["items"]
 	objectAttrs["secret"] = types.ObjectType{AttrTypes: objectAttrsTypeDSGeneratedSecret(recurse)}
@@ -578,8 +578,9 @@ func objectAttrsTypeDSGroupAccountGroup(recurse bool) map[string]attr.Type {
 	return objectAttrs
 }
 
-func objectAttrsTypeDSGroupAccountGroupLinkableWrapper(recurse bool) map[string]attr.Type {
+func objectAttrsTypeDSGroupAccountGroupLinkableWrapperWithCount(recurse bool) map[string]attr.Type {
 	objectAttrs := make(map[string]attr.Type)
+	objectAttrs["count"] = types.Int64Type
 	objectAttrs["items"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSGroupAccountGroup(recurse)}}
 	return objectAttrs
 }
@@ -588,20 +589,6 @@ func objectAttrsTypeDSGroupAccountGroup_additionalObjects(recurse bool) map[stri
 	objectAttrs := make(map[string]attr.Type)
 	objectAttrs["audit"] = types.ObjectType{AttrTypes: objectAttrsTypeDSAuditInfo(recurse)}
 	objectAttrs["vault"] = types.ObjectType{AttrTypes: objectAttrsTypeDSVaultVault(recurse)}
-	return objectAttrs
-}
-
-func objectAttrsTypeDSGroupAccountGroupsWrapper(recurse bool) map[string]attr.Type {
-	objectAttrs := make(map[string]attr.Type)
-	objectAttrs["items"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSGroupAccountGroup(recurse)}}
-	objectAttrs["total_account_group_count"] = types.Int64Type
-	return objectAttrs
-}
-
-func objectAttrsTypeDSGroupAuthorizedGroupsWrapper(recurse bool) map[string]attr.Type {
-	objectAttrs := make(map[string]attr.Type)
-	objectAttrs["items"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSGroupGroup(recurse)}}
-	objectAttrs["group_count"] = types.Int64Type
 	return objectAttrs
 }
 
@@ -616,7 +603,7 @@ func objectAttrsTypeDSGroupGroup(recurse bool) map[string]attr.Type {
 		objectAttrs["administered_systems"] = objectAttrsTypeDSProvisioningProvisionedSystemLinkableWrapper(false)["items"]
 		objectAttrs["admins"] = objectAttrsTypeDSGroupGroupAccountLinkableWrapper(false)["items"]
 		objectAttrs["audit"] = types.ObjectType{AttrTypes: objectAttrsTypeDSAuditInfo(false)}
-		objectAttrs["authorized_groups"] = types.ObjectType{AttrTypes: objectAttrsTypeDSGroupAuthorizedGroupsWrapper(false)}
+		objectAttrs["authorized_groups"] = objectAttrsTypeDSGroupGroupLinkableWrapperWithCount(false)["items"]
 		objectAttrs["client_permissions"] = objectAttrsTypeDSClientOAuth2ClientPermissionWithClientLinkableWrapper(false)["items"]
 		objectAttrs["clients"] = objectAttrsTypeDSGroupGroupClientLinkableWrapper(false)["items"]
 		objectAttrs["content_administered_systems"] = objectAttrsTypeDSProvisioningProvisionedSystemLinkableWrapper(false)["items"]
@@ -812,6 +799,13 @@ func objectAttrsTypeDSGroupGroupClientLinkableWrapper(recurse bool) map[string]a
 	return objectAttrs
 }
 
+func objectAttrsTypeDSGroupGroupClientLinkableWrapperWithCount(recurse bool) map[string]attr.Type {
+	objectAttrs := make(map[string]attr.Type)
+	objectAttrs["count"] = types.Int64Type
+	objectAttrs["items"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSGroupGroupClient(recurse)}}
+	return objectAttrs
+}
+
 func objectAttrsTypeDSGroupGroupClient_additionalObjects(recurse bool) map[string]attr.Type {
 	objectAttrs := make(map[string]attr.Type)
 	objectAttrs["audit"] = types.ObjectType{AttrTypes: objectAttrsTypeDSAuditInfo(recurse)}
@@ -865,6 +859,13 @@ func objectAttrsTypeDSGroupGroupLinkableWrapper(recurse bool) map[string]attr.Ty
 	return objectAttrs
 }
 
+func objectAttrsTypeDSGroupGroupLinkableWrapperWithCount(recurse bool) map[string]attr.Type {
+	objectAttrs := make(map[string]attr.Type)
+	objectAttrs["count"] = types.Int64Type
+	objectAttrs["items"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSGroupGroup(recurse)}}
+	return objectAttrs
+}
+
 func objectAttrsTypeDSGroupGroupPrimer(recurse bool) map[string]attr.Type {
 	objectAttrs := make(map[string]attr.Type)
 	objectAttrs["links"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSRestLink(recurse)}}
@@ -889,7 +890,7 @@ func objectAttrsTypeDSGroupGroup_additionalObjects(recurse bool) map[string]attr
 	objectAttrs["administered_systems"] = objectAttrsTypeDSProvisioningProvisionedSystemLinkableWrapper(recurse)["items"]
 	objectAttrs["admins"] = objectAttrsTypeDSGroupGroupAccountLinkableWrapper(recurse)["items"]
 	objectAttrs["audit"] = types.ObjectType{AttrTypes: objectAttrsTypeDSAuditInfo(recurse)}
-	objectAttrs["authorized_groups"] = types.ObjectType{AttrTypes: objectAttrsTypeDSGroupAuthorizedGroupsWrapper(recurse)}
+	objectAttrs["authorized_groups"] = objectAttrsTypeDSGroupGroupLinkableWrapperWithCount(recurse)["items"]
 	objectAttrs["client_permissions"] = objectAttrsTypeDSClientOAuth2ClientPermissionWithClientLinkableWrapper(recurse)["items"]
 	objectAttrs["clients"] = objectAttrsTypeDSGroupGroupClientLinkableWrapper(recurse)["items"]
 	objectAttrs["content_administered_systems"] = objectAttrsTypeDSProvisioningProvisionedSystemLinkableWrapper(recurse)["items"]
@@ -963,8 +964,11 @@ func objectAttrsTypeDSIdentityAccountAttributeDefinition(recurse bool) map[strin
 	objectAttrs["links"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSRestLink(recurse)}}
 	objectAttrs["permissions"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSAuthPermission(recurse)}}
 	objectAttrs["format"] = types.StringType
+	objectAttrs["list"] = types.BoolType
 	objectAttrs["name"] = types.StringType
+	objectAttrs["required"] = types.BoolType
 	objectAttrs["system_definition"] = types.StringType
+	objectAttrs["unique"] = types.BoolType
 	return objectAttrs
 }
 
@@ -1057,6 +1061,14 @@ func objectAttrsTypeDSMarkItemMarker(recurse bool) map[string]attr.Type {
 func objectAttrsTypeDSMarkItemMarkers(recurse bool) map[string]attr.Type {
 	objectAttrs := make(map[string]attr.Type)
 	objectAttrs["markers"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSMarkItemMarker(recurse)}}
+	return objectAttrs
+}
+
+func objectAttrsTypeDSMiscAttributeCustomization(recurse bool) map[string]attr.Type {
+	objectAttrs := make(map[string]attr.Type)
+	objectAttrs["attribute_definition"] = types.ObjectType{AttrTypes: objectAttrsTypeDSIdentityAccountAttributeDefinition(recurse)}
+	objectAttrs["name"] = types.StringType
+	objectAttrs["script"] = types.StringType
 	return objectAttrs
 }
 
@@ -1232,6 +1244,13 @@ func objectAttrsTypeDSProfileAccessProfileClientLinkableWrapper(recurse bool) ma
 	return objectAttrs
 }
 
+func objectAttrsTypeDSProfileAccessProfileClientLinkableWrapperWithCount(recurse bool) map[string]attr.Type {
+	objectAttrs := make(map[string]attr.Type)
+	objectAttrs["count"] = types.Int64Type
+	objectAttrs["items"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSProfileAccessProfileClient(recurse)}}
+	return objectAttrs
+}
+
 func objectAttrsTypeDSProfileAccessProfileClient_additionalObjects(recurse bool) map[string]attr.Type {
 	objectAttrs := make(map[string]attr.Type)
 	objectAttrs["audit"] = types.ObjectType{AttrTypes: objectAttrsTypeDSAuditInfo(recurse)}
@@ -1327,7 +1346,7 @@ func objectAttrsTypeDSProfileAccessProfile_additionalObjects(recurse bool) map[s
 
 func objectAttrsTypeDSProvisioningAbstractProvisionedLDAP(recurse bool) map[string]attr.Type {
 	objectAttrs := make(map[string]attr.Type)
-	objectAttrs["attributes"] = types.MapType{ElemType: types.StringType}
+	objectAttrs["attributes"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSMiscAttributeCustomization(recurse)}}
 	objectAttrs["base_dn"] = types.StringType
 	objectAttrs["bind_dn"] = types.StringType
 	objectAttrs["bind_password"] = types.StringType
@@ -1514,12 +1533,14 @@ func objectAttrsTypeDSProvisioningProvisionedLDAP(recurse bool) map[string]attr.
 func objectAttrsTypeDSProvisioningProvisionedLDAPDirectory(recurse bool) map[string]attr.Type {
 	objectAttrs := make(map[string]attr.Type)
 	objectAttrs["accounts_writable"] = types.BoolType
+	objectAttrs["attributes"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSMiscAttributeCustomization(recurse)}}
 	objectAttrs["directory"] = types.ObjectType{AttrTypes: objectAttrsTypeDSDirectoryAccountDirectoryPrimer(recurse)}
 	objectAttrs["gid"] = types.Int64Type
 	objectAttrs["gid_numbering"] = types.ObjectType{AttrTypes: objectAttrsTypeDSProvisioningProvisionNumberSequence(recurse)}
 	objectAttrs["group_dn"] = types.StringType
 	objectAttrs["hashing_scheme"] = types.StringType
 	objectAttrs["numbering"] = types.ObjectType{AttrTypes: objectAttrsTypeDSProvisioningProvisionNumberSequence(recurse)}
+	objectAttrs["object_classes"] = types.StringType
 	objectAttrs["sam_account_name_scheme"] = types.StringType
 	objectAttrs["ssh_public_key_support"] = types.StringType
 	return objectAttrs
@@ -1535,6 +1556,7 @@ func objectAttrsTypeDSProvisioningProvisionedNamespace(recurse bool) map[string]
 
 func objectAttrsTypeDSProvisioningProvisionedSCIM(recurse bool) map[string]attr.Type {
 	objectAttrs := make(map[string]attr.Type)
+	objectAttrs["attributes"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSMiscAttributeCustomization(recurse)}}
 	objectAttrs["authentication_scheme"] = types.StringType
 	objectAttrs["basic_auth_password"] = types.StringType
 	objectAttrs["basic_auth_username"] = types.StringType
