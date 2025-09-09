@@ -173,6 +173,7 @@ Read-Only:
 
 - `active` (Boolean)
 - `admin_permissions` (Boolean)
+- `can_write_accounts` (Boolean)
 - `content_admin_permissions` (Boolean)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--system--links))
 - `name` (String)

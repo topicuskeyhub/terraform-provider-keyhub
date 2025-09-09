@@ -4231,6 +4231,9 @@ func dataSourceSchemaAttrsProvisioningProvisionedSystem(recurse bool) map[string
 	schemaAttrs["admin_permissions"] = dsschema.BoolAttribute{
 		Computed: true,
 	}
+	schemaAttrs["can_write_accounts"] = dsschema.BoolAttribute{
+		Computed: true,
+	}
 	schemaAttrs["content_admin_permissions"] = dsschema.BoolAttribute{
 		Computed: true,
 	}
@@ -4428,6 +4431,9 @@ func dataSourceSchemaAttrsProvisioningProvisionedSystemPrimer(recurse bool) map[
 		Computed: true,
 	}
 	schemaAttrs["admin_permissions"] = dsschema.BoolAttribute{
+		Computed: true,
+	}
+	schemaAttrs["can_write_accounts"] = dsschema.BoolAttribute{
 		Computed: true,
 	}
 	schemaAttrs["content_admin_permissions"] = dsschema.BoolAttribute{

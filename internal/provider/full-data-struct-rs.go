@@ -1440,6 +1440,7 @@ type provisioningProvisionedSystemDataRS struct {
 	Permissions                             types.List   `tfsdk:"permissions"`
 	Active                                  types.Bool   `tfsdk:"active"`
 	AdminPermissions                        types.Bool   `tfsdk:"admin_permissions"`
+	CanWriteAccounts                        types.Bool   `tfsdk:"can_write_accounts"`
 	ContentAdminPermissions                 types.Bool   `tfsdk:"content_admin_permissions"`
 	Name                                    types.String `tfsdk:"name"`
 	OrganizationalUnitUUID                  types.String `tfsdk:"organizational_unit_uuid"`
@@ -1495,6 +1496,7 @@ type provisioningProvisionedSystemPrimerDataRS struct {
 	Permissions                             types.List   `tfsdk:"permissions"`
 	Active                                  types.Bool   `tfsdk:"active"`
 	AdminPermissions                        types.Bool   `tfsdk:"admin_permissions"`
+	CanWriteAccounts                        types.Bool   `tfsdk:"can_write_accounts"`
 	ContentAdminPermissions                 types.Bool   `tfsdk:"content_admin_permissions"`
 	Name                                    types.String `tfsdk:"name"`
 	OrganizationalUnitUUID                  types.String `tfsdk:"organizational_unit_uuid"`

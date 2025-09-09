@@ -522,6 +522,7 @@ Read-Only:
 - `account_count` (Number)
 - `active` (Boolean)
 - `admin_permissions` (Boolean)
+- `can_write_accounts` (Boolean)
 - `cleanup_period` (Attributes) (see [below for nested schema](#nestedatt--administered_systems--cleanup_period))
 - `content_admin_permissions` (Boolean)
 - `content_administrator` (Attributes) (see [below for nested schema](#nestedatt--administered_systems--content_administrator))
@@ -1410,6 +1411,7 @@ Read-Only:
 
 - `active` (Boolean)
 - `admin_permissions` (Boolean)
+- `can_write_accounts` (Boolean)
 - `content_admin_permissions` (Boolean)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--administered_systems--provisioned_namespace--base_system--links))
 - `name` (String)
@@ -2684,6 +2686,7 @@ Read-Only:
 
 - `active` (Boolean)
 - `admin_permissions` (Boolean)
+- `can_write_accounts` (Boolean)
 - `content_admin_permissions` (Boolean)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--client_permissions--for_system--links))
 - `name` (String)
@@ -3058,6 +3061,7 @@ Read-Only:
 - `account_count` (Number)
 - `active` (Boolean)
 - `admin_permissions` (Boolean)
+- `can_write_accounts` (Boolean)
 - `cleanup_period` (Attributes) (see [below for nested schema](#nestedatt--content_administered_systems--cleanup_period))
 - `content_admin_permissions` (Boolean)
 - `content_administrator` (Attributes) (see [below for nested schema](#nestedatt--content_administered_systems--content_administrator))
@@ -3946,6 +3950,7 @@ Read-Only:
 
 - `active` (Boolean)
 - `admin_permissions` (Boolean)
+- `can_write_accounts` (Boolean)
 - `content_admin_permissions` (Boolean)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--content_administered_systems--provisioned_namespace--base_system--links))
 - `name` (String)
@@ -6252,6 +6257,7 @@ Read-Only:
 - `account_count` (Number)
 - `active` (Boolean)
 - `admin_permissions` (Boolean)
+- `can_write_accounts` (Boolean)
 - `cleanup_period` (Attributes) (see [below for nested schema](#nestedatt--owned_systems--cleanup_period))
 - `content_admin_permissions` (Boolean)
 - `content_administrator` (Attributes) (see [below for nested schema](#nestedatt--owned_systems--content_administrator))
@@ -7140,6 +7146,7 @@ Read-Only:
 
 - `active` (Boolean)
 - `admin_permissions` (Boolean)
+- `can_write_accounts` (Boolean)
 - `content_admin_permissions` (Boolean)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_systems--provisioned_namespace--base_system--links))
 - `name` (String)
@@ -7552,6 +7559,7 @@ Read-Only:
 
 - `active` (Boolean)
 - `admin_permissions` (Boolean)
+- `can_write_accounts` (Boolean)
 - `content_admin_permissions` (Boolean)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--service_accounts--system--links))
 - `name` (String)
@@ -8244,6 +8252,7 @@ Read-Only:
 
 - `active` (Boolean)
 - `admin_permissions` (Boolean)
+- `can_write_accounts` (Boolean)
 - `content_admin_permissions` (Boolean)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--webhooks--system--links))
 - `name` (String)

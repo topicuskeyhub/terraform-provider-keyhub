@@ -208,7 +208,7 @@ func resourceSchemaAttrsAuditGroupAuditAccount(recurse bool) map[string]rsschema
 		Optional: true,
 		Validators: []validator.String{
 			stringvalidator.OneOf(
-				"APPROVE", "CHANGE_TO_MANAGER", "CHANGE_TO_NORMAL", "REMOVE", "CONNECT_NESTED",
+				"APPROVE", "ADD_AS_MANAGER", "ADD_AS_NORMAL", "CHANGE_TO_MANAGER", "CHANGE_TO_NORMAL", "REMOVE", "CONNECT_NESTED",
 			),
 		},
 	}
@@ -4161,6 +4161,9 @@ func resourceSchemaAttrsProvisioningProvisionedSystem(recurse bool) map[string]r
 	schemaAttrs["admin_permissions"] = rsschema.BoolAttribute{
 		Computed: true,
 	}
+	schemaAttrs["can_write_accounts"] = rsschema.BoolAttribute{
+		Computed: true,
+	}
 	schemaAttrs["content_admin_permissions"] = rsschema.BoolAttribute{
 		Computed: true,
 	}
@@ -4376,6 +4379,9 @@ func resourceSchemaAttrsProvisioningProvisionedSystemPrimer(recurse bool) map[st
 		Default:  booldefault.StaticBool(false),
 	}
 	schemaAttrs["admin_permissions"] = rsschema.BoolAttribute{
+		Computed: true,
+	}
+	schemaAttrs["can_write_accounts"] = rsschema.BoolAttribute{
 		Computed: true,
 	}
 	schemaAttrs["content_admin_permissions"] = rsschema.BoolAttribute{

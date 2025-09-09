@@ -1587,6 +1587,7 @@ func objectAttrsTypeDSProvisioningProvisionedSystem(recurse bool) map[string]att
 	objectAttrs["permissions"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSAuthPermission(recurse)}}
 	objectAttrs["active"] = types.BoolType
 	objectAttrs["admin_permissions"] = types.BoolType
+	objectAttrs["can_write_accounts"] = types.BoolType
 	objectAttrs["content_admin_permissions"] = types.BoolType
 	objectAttrs["name"] = types.StringType
 	objectAttrs["organizational_unit"] = types.ObjectType{AttrTypes: objectAttrsTypeDSOrganizationOrganizationalUnitPrimer(recurse)}
@@ -1631,6 +1632,7 @@ func objectAttrsTypeDSProvisioningProvisionedSystemPrimer(recurse bool) map[stri
 	objectAttrs["permissions"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSAuthPermission(recurse)}}
 	objectAttrs["active"] = types.BoolType
 	objectAttrs["admin_permissions"] = types.BoolType
+	objectAttrs["can_write_accounts"] = types.BoolType
 	objectAttrs["content_admin_permissions"] = types.BoolType
 	objectAttrs["name"] = types.StringType
 	objectAttrs["organizational_unit"] = types.ObjectType{AttrTypes: objectAttrsTypeDSOrganizationOrganizationalUnitPrimer(recurse)}
