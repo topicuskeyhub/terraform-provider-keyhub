@@ -6234,6 +6234,9 @@ func resourceSchemaAttrsProvisioningProvisionedSystemPrimerRO(recurse bool) map[
 	schemaAttrs["admin_permissions"] = rsschema.BoolAttribute{
 		Computed: true,
 	}
+	schemaAttrs["can_write_accounts"] = rsschema.BoolAttribute{
+		Computed: true,
+	}
 	schemaAttrs["content_admin_permissions"] = rsschema.BoolAttribute{
 		Computed: true,
 	}

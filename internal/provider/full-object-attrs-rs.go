@@ -2024,6 +2024,7 @@ func objectAttrsTypeRSROProvisioningProvisionedSystemPrimerRO(recurse bool) map[
 	objectAttrs["permissions"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeRSROAuthPermissionRO(recurse)}}
 	objectAttrs["active"] = types.BoolType
 	objectAttrs["admin_permissions"] = types.BoolType
+	objectAttrs["can_write_accounts"] = types.BoolType
 	objectAttrs["content_admin_permissions"] = types.BoolType
 	objectAttrs["name"] = types.StringType
 	objectAttrs["organizational_unit"] = types.ObjectType{AttrTypes: objectAttrsTypeRSROOrganizationOrganizationalUnitPrimerRO(recurse)}

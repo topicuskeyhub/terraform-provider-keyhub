@@ -1553,6 +1553,7 @@ func fillDataStructFromTFObjectRSROProvisioningProvisionedSystemPrimerRO(data *p
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
 	data.Active = obj.Attributes()["active"].(basetypes.BoolValue)
 	data.AdminPermissions = obj.Attributes()["admin_permissions"].(basetypes.BoolValue)
+	data.CanWriteAccounts = obj.Attributes()["can_write_accounts"].(basetypes.BoolValue)
 	data.ContentAdminPermissions = obj.Attributes()["content_admin_permissions"].(basetypes.BoolValue)
 	data.Name = obj.Attributes()["name"].(basetypes.StringValue)
 	data.OrganizationalUnit = obj.Attributes()["organizational_unit"].(basetypes.ObjectValue)

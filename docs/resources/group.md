@@ -1779,6 +1779,7 @@ Optional:
 Read-Only:
 
 - `admin_permissions` (Boolean)
+- `can_write_accounts` (Boolean)
 - `content_admin_permissions` (Boolean)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--administered_systems--provisioned_namespace--base_system--links))
 - `owner_permissions` (Boolean)
@@ -3908,6 +3909,7 @@ Optional:
 Read-Only:
 
 - `admin_permissions` (Boolean)
+- `can_write_accounts` (Boolean)
 - `content_admin_permissions` (Boolean)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--content_administered_systems--provisioned_namespace--base_system--links))
 - `owner_permissions` (Boolean)
@@ -7342,6 +7344,7 @@ Optional:
 Read-Only:
 
 - `admin_permissions` (Boolean)
+- `can_write_accounts` (Boolean)
 - `content_admin_permissions` (Boolean)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_systems--provisioned_namespace--base_system--links))
 - `owner_permissions` (Boolean)
@@ -7690,6 +7693,7 @@ Optional:
 Read-Only:
 
 - `admin_permissions` (Boolean)
+- `can_write_accounts` (Boolean)
 - `content_admin_permissions` (Boolean)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--service_accounts--system--links))
 - `owner_permissions` (Boolean)
@@ -8510,6 +8514,7 @@ Optional:
 Read-Only:
 
 - `admin_permissions` (Boolean)
+- `can_write_accounts` (Boolean)
 - `content_admin_permissions` (Boolean)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--webhooks--system--links))
 - `owner_permissions` (Boolean)

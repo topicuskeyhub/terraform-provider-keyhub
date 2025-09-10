@@ -9275,6 +9275,8 @@ func tfObjectToTKHRSROProvisioningProvisionedSystemPrimerRO(ctx context.Context,
 	tkh.SetActive(tfToBooleanPointer(planAttrValues["active"]))
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToBooleanPointer(planAttrValues["admin_permissions"]))+" using SetAdminPermissions")
 	tkh.SetAdminPermissions(tfToBooleanPointer(planAttrValues["admin_permissions"]))
+	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToBooleanPointer(planAttrValues["can_write_accounts"]))+" using SetCanWriteAccounts")
+	tkh.SetCanWriteAccounts(tfToBooleanPointer(planAttrValues["can_write_accounts"]))
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToBooleanPointer(planAttrValues["content_admin_permissions"]))+" using SetContentAdminPermissions")
 	tkh.SetContentAdminPermissions(tfToBooleanPointer(planAttrValues["content_admin_permissions"]))
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToStringPointer(planAttrValues["name"]))+" using SetName")
