@@ -7933,6 +7933,7 @@ func tkhToTFObjectDSProvisioningProvisionedSystem(recurse bool, tkh keyhubmodel.
 	}
 	obj["active"] = types.BoolPointerValue(tkh.GetActive())
 	obj["admin_permissions"] = types.BoolPointerValue(tkh.GetAdminPermissions())
+	obj["can_write_accounts"] = types.BoolPointerValue(tkh.GetCanWriteAccounts())
 	obj["content_admin_permissions"] = types.BoolPointerValue(tkh.GetContentAdminPermissions())
 	obj["name"] = types.StringPointerValue(tkh.GetName())
 	{
@@ -8252,6 +8253,7 @@ func tkhToTFObjectDSProvisioningProvisionedSystemPrimer(recurse bool, tkh keyhub
 	}
 	obj["active"] = types.BoolPointerValue(tkh.GetActive())
 	obj["admin_permissions"] = types.BoolPointerValue(tkh.GetAdminPermissions())
+	obj["can_write_accounts"] = types.BoolPointerValue(tkh.GetCanWriteAccounts())
 	obj["content_admin_permissions"] = types.BoolPointerValue(tkh.GetContentAdminPermissions())
 	obj["name"] = types.StringPointerValue(tkh.GetName())
 	{

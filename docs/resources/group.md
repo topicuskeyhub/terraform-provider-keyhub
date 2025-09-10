@@ -732,6 +732,7 @@ Read-Only:
 
 - `account_count` (Number)
 - `admin_permissions` (Boolean)
+- `can_write_accounts` (Boolean)
 - `content_admin_permissions` (Boolean)
 - `external_uuid` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--administered_systems--links))
@@ -2860,6 +2861,7 @@ Read-Only:
 
 - `account_count` (Number)
 - `admin_permissions` (Boolean)
+- `can_write_accounts` (Boolean)
 - `content_admin_permissions` (Boolean)
 - `external_uuid` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--content_administered_systems--links))
@@ -6293,6 +6295,7 @@ Read-Only:
 
 - `account_count` (Number)
 - `admin_permissions` (Boolean)
+- `can_write_accounts` (Boolean)
 - `content_admin_permissions` (Boolean)
 - `external_uuid` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_systems--links))

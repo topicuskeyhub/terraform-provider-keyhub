@@ -1,4 +1,7 @@
-## 2.41.0
+## 2.43.0
+* Upgrade API to Topicus KeyHub version 43
+
+## 2.42.0
 * Upgrade API to Topicus KeyHub version 42
 
 ## 2.41.0

@@ -31,6 +31,7 @@ description: |-
 - `active` (Boolean)
 - `admin_permissions` (Boolean)
 - `audit` (Attributes) (see [below for nested schema](#nestedatt--audit))
+- `can_write_accounts` (Boolean)
 - `cleanup_period` (Attributes) (see [below for nested schema](#nestedatt--cleanup_period))
 - `content_admin_permissions` (Boolean)
 - `content_administrator` (Attributes) (see [below for nested schema](#nestedatt--content_administrator))
@@ -535,6 +536,7 @@ Read-Only:
 
 - `active` (Boolean)
 - `admin_permissions` (Boolean)
+- `can_write_accounts` (Boolean)
 - `content_admin_permissions` (Boolean)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--issued_permissions--for_system--links))
 - `name` (String)
@@ -1244,6 +1246,7 @@ Read-Only:
 
 - `active` (Boolean)
 - `admin_permissions` (Boolean)
+- `can_write_accounts` (Boolean)
 - `content_admin_permissions` (Boolean)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--provisioned_namespace--base_system--links))
 - `name` (String)
