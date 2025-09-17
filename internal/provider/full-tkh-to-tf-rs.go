@@ -14,13 +14,13 @@ import (
 	keyhubmodel "github.com/topicuskeyhub/sdk-go/models"
 )
 
-func tkhToTFObjectRSAuditInfo(recurse bool, tkh keyhubmodel.AuditInfoable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROAuditInfoRO(recurse bool, tkh keyhubmodel.AuditInfoable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = auditInfoAttrTypesRSRecurse
+		attrs = auditInfoAttrTypesRSRORecurse
 	} else {
-		attrs = auditInfoAttrTypesRS
+		attrs = auditInfoAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -44,6 +44,28 @@ func tkhToTFObjectRSGeneratedSecret(recurse bool, tkh keyhubmodel.GeneratedSecre
 		attrs = generatedSecretAttrTypesRSRecurse
 	} else {
 		attrs = generatedSecretAttrTypesRS
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	obj["generated_secret"] = types.StringPointerValue(tkh.GetGeneratedSecret())
+	obj["old_secret"] = types.StringPointerValue(tkh.GetOldSecret())
+	obj["regenerate"] = types.BoolPointerValue(tkh.GetRegenerate())
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
+func tkhToTFObjectRSROGeneratedSecretRO(recurse bool, tkh keyhubmodel.GeneratedSecretable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = generatedSecretAttrTypesRSRORecurse
+	} else {
+		attrs = generatedSecretAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -98,6 +120,45 @@ func tkhToTFObjectRSLinkable(recurse bool, tkh keyhubmodel.Linkableable) (types.
 	return objVal, diags
 }
 
+func tkhToTFObjectRSROLinkableRO(recurse bool, tkh keyhubmodel.Linkableable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = linkableAttrTypesRSRORecurse
+	} else {
+		attrs = linkableAttrTypesRSRO
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	{
+		elemType := attrs["links"].(types.ListType).ElemType
+		val, d := sliceToTFList(elemType, tkh.GetLinks(), func(tkh keyhubmodel.RestLinkable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectRSRORestLinkRO(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["links"] = val
+	}
+	{
+		elemType := attrs["permissions"].(types.ListType).ElemType
+		val, d := sliceToTFList(elemType, tkh.GetPermissions(), func(tkh keyhubmodel.AuthPermissionable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectRSROAuthPermissionRO(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["permissions"] = val
+	}
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
 func tkhToTFObjectRSNonLinkable(recurse bool, tkh keyhubmodel.NonLinkableable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
@@ -105,6 +166,25 @@ func tkhToTFObjectRSNonLinkable(recurse bool, tkh keyhubmodel.NonLinkableable) (
 		attrs = nonLinkableAttrTypesRSRecurse
 	} else {
 		attrs = nonLinkableAttrTypesRS
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
+func tkhToTFObjectRSRONonLinkableRO(recurse bool, tkh keyhubmodel.NonLinkableable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = nonLinkableAttrTypesRSRORecurse
+	} else {
+		attrs = nonLinkableAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -140,13 +220,36 @@ func tkhToTFObjectRSRestLink(recurse bool, tkh keyhubmodel.RestLinkable) (types.
 	return objVal, diags
 }
 
-func tkhToTFObjectRSAuditGroupAudit(recurse bool, tkh keyhubmodel.AuditGroupAuditable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSRORestLinkRO(recurse bool, tkh keyhubmodel.RestLinkable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = auditGroupAuditAttrTypesRSRecurse
+		attrs = restLinkAttrTypesRSRORecurse
 	} else {
-		attrs = auditGroupAuditAttrTypesRS
+		attrs = restLinkAttrTypesRSRO
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	obj["href"] = types.StringPointerValue(tkh.GetHref())
+	obj["id"] = types.Int64PointerValue(tkh.GetId())
+	obj["rel"] = types.StringPointerValue(tkh.GetRel())
+	obj["type_escaped"] = types.StringPointerValue(tkh.GetTypeEscaped())
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
+func tkhToTFObjectRSROAuditGroupAuditRO(recurse bool, tkh keyhubmodel.AuditGroupAuditable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = auditGroupAuditAttrTypesRSRORecurse
+	} else {
+		attrs = auditGroupAuditAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -158,7 +261,7 @@ func tkhToTFObjectRSAuditGroupAudit(recurse bool, tkh keyhubmodel.AuditGroupAudi
 	}
 	if recurse {
 		{
-			val, d := tkhToTFObjectRSAuditGroupAudit_additionalObjects(false, tkh.GetAdditionalObjects())
+			val, d := tkhToTFObjectRSROAuditGroupAudit_additionalObjectsRO(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
 			maps.Copy(obj, val.Attributes())
 		}
@@ -166,7 +269,7 @@ func tkhToTFObjectRSAuditGroupAudit(recurse bool, tkh keyhubmodel.AuditGroupAudi
 	{
 		elemType := attrs["links"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetLinks(), func(tkh keyhubmodel.RestLinkable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSRestLink(recurse, tkh)
+			val, d := tkhToTFObjectRSRORestLinkRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -176,7 +279,7 @@ func tkhToTFObjectRSAuditGroupAudit(recurse bool, tkh keyhubmodel.AuditGroupAudi
 	{
 		elemType := attrs["permissions"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetPermissions(), func(tkh keyhubmodel.AuthPermissionable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSAuthPermission(recurse, tkh)
+			val, d := tkhToTFObjectRSROAuthPermissionRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -186,7 +289,7 @@ func tkhToTFObjectRSAuditGroupAudit(recurse bool, tkh keyhubmodel.AuditGroupAudi
 	{
 		elemType := attrs["accounts"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetAccounts(), func(tkh keyhubmodel.AuditGroupAuditAccountable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSAuditGroupAuditAccount(false, tkh)
+			val, d := tkhToTFObjectRSROAuditGroupAuditAccountRO(false, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -201,7 +304,7 @@ func tkhToTFObjectRSAuditGroupAudit(recurse bool, tkh keyhubmodel.AuditGroupAudi
 	{
 		elemType := attrs["nested_groups"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetNestedGroups(), func(tkh keyhubmodel.AuditNestedGroupAuditable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSAuditNestedGroupAudit(false, tkh)
+			val, d := tkhToTFObjectRSROAuditNestedGroupAuditRO(false, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -219,13 +322,13 @@ func tkhToTFObjectRSAuditGroupAudit(recurse bool, tkh keyhubmodel.AuditGroupAudi
 	return objVal, diags
 }
 
-func tkhToTFObjectRSAuditGroupAuditAccount(recurse bool, tkh keyhubmodel.AuditGroupAuditAccountable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROAuditGroupAuditAccountRO(recurse bool, tkh keyhubmodel.AuditGroupAuditAccountable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = auditGroupAuditAccountAttrTypesRSRecurse
+		attrs = auditGroupAuditAccountAttrTypesRSRORecurse
 	} else {
-		attrs = auditGroupAuditAccountAttrTypesRS
+		attrs = auditGroupAuditAccountAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -235,7 +338,7 @@ func tkhToTFObjectRSAuditGroupAuditAccount(recurse bool, tkh keyhubmodel.AuditGr
 	{
 		elemType := attrs["links"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetLinks(), func(tkh keyhubmodel.RestLinkable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSRestLink(recurse, tkh)
+			val, d := tkhToTFObjectRSRORestLinkRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -245,7 +348,7 @@ func tkhToTFObjectRSAuditGroupAuditAccount(recurse bool, tkh keyhubmodel.AuditGr
 	{
 		elemType := attrs["permissions"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetPermissions(), func(tkh keyhubmodel.AuthPermissionable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSAuthPermission(recurse, tkh)
+			val, d := tkhToTFObjectRSROAuthPermissionRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -270,13 +373,13 @@ func tkhToTFObjectRSAuditGroupAuditAccount(recurse bool, tkh keyhubmodel.AuditGr
 	return objVal, diags
 }
 
-func tkhToTFObjectRSAuditGroupAuditLinkableWrapper(recurse bool, tkh keyhubmodel.AuditGroupAuditLinkableWrapperable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROAuditGroupAuditLinkableWrapperRO(recurse bool, tkh keyhubmodel.AuditGroupAuditLinkableWrapperable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = auditGroupAuditLinkableWrapperAttrTypesRSRecurse
+		attrs = auditGroupAuditLinkableWrapperAttrTypesRSRORecurse
 	} else {
-		attrs = auditGroupAuditLinkableWrapperAttrTypesRS
+		attrs = auditGroupAuditLinkableWrapperAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -286,7 +389,7 @@ func tkhToTFObjectRSAuditGroupAuditLinkableWrapper(recurse bool, tkh keyhubmodel
 	{
 		elemType := attrs["items"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetItems(), func(tkh keyhubmodel.AuditGroupAuditable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSAuditGroupAudit(recurse, tkh)
+			val, d := tkhToTFObjectRSROAuditGroupAuditRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -299,13 +402,13 @@ func tkhToTFObjectRSAuditGroupAuditLinkableWrapper(recurse bool, tkh keyhubmodel
 	return objVal, diags
 }
 
-func tkhToTFObjectRSAuditGroupAudit_additionalObjects(recurse bool, tkh keyhubmodel.AuditGroupAudit_additionalObjectsable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROAuditGroupAudit_additionalObjectsRO(recurse bool, tkh keyhubmodel.AuditGroupAudit_additionalObjectsable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = auditGroupAudit_additionalObjectsAttrTypesRSRecurse
+		attrs = auditGroupAudit_additionalObjectsAttrTypesRSRORecurse
 	} else {
-		attrs = auditGroupAudit_additionalObjectsAttrTypesRS
+		attrs = auditGroupAudit_additionalObjectsAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -313,7 +416,7 @@ func tkhToTFObjectRSAuditGroupAudit_additionalObjects(recurse bool, tkh keyhubmo
 
 	obj := make(map[string]attr.Value)
 	{
-		val, d := tkhToTFObjectRSAuditInfo(recurse, tkh.GetAudit())
+		val, d := tkhToTFObjectRSROAuditInfoRO(recurse, tkh.GetAudit())
 		diags.Append(d...)
 		obj["audit"] = val
 	}
@@ -323,13 +426,13 @@ func tkhToTFObjectRSAuditGroupAudit_additionalObjects(recurse bool, tkh keyhubmo
 	return objVal, diags
 }
 
-func tkhToTFObjectRSAuditNestedGroupAudit(recurse bool, tkh keyhubmodel.AuditNestedGroupAuditable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROAuditNestedGroupAuditRO(recurse bool, tkh keyhubmodel.AuditNestedGroupAuditable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = auditNestedGroupAuditAttrTypesRSRecurse
+		attrs = auditNestedGroupAuditAttrTypesRSRORecurse
 	} else {
-		attrs = auditNestedGroupAuditAttrTypesRS
+		attrs = auditNestedGroupAuditAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -339,7 +442,7 @@ func tkhToTFObjectRSAuditNestedGroupAudit(recurse bool, tkh keyhubmodel.AuditNes
 	{
 		elemType := attrs["links"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetLinks(), func(tkh keyhubmodel.RestLinkable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSRestLink(recurse, tkh)
+			val, d := tkhToTFObjectRSRORestLinkRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -349,7 +452,7 @@ func tkhToTFObjectRSAuditNestedGroupAudit(recurse bool, tkh keyhubmodel.AuditNes
 	{
 		elemType := attrs["permissions"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetPermissions(), func(tkh keyhubmodel.AuthPermissionable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSAuthPermission(recurse, tkh)
+			val, d := tkhToTFObjectRSROAuthPermissionRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -410,6 +513,50 @@ func tkhToTFObjectRSAuthAccountPrimer(recurse bool, tkh keyhubmodel.AuthAccountP
 	return objVal, diags
 }
 
+func tkhToTFObjectRSROAuthAccountPrimerRO(recurse bool, tkh keyhubmodel.AuthAccountPrimerable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = authAccountPrimerAttrTypesRSRORecurse
+	} else {
+		attrs = authAccountPrimerAttrTypesRSRO
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	{
+		elemType := attrs["links"].(types.ListType).ElemType
+		val, d := sliceToTFList(elemType, tkh.GetLinks(), func(tkh keyhubmodel.RestLinkable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectRSRORestLinkRO(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["links"] = val
+	}
+	{
+		elemType := attrs["permissions"].(types.ListType).ElemType
+		val, d := sliceToTFList(elemType, tkh.GetPermissions(), func(tkh keyhubmodel.AuthPermissionable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectRSROAuthPermissionRO(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["permissions"] = val
+	}
+	obj["display_name"] = types.StringPointerValue(tkh.GetDisplayName())
+	obj["last_active"] = timePointerToTF(tkh.GetLastActive())
+	obj["username"] = types.StringPointerValue(tkh.GetUsername())
+	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
+	obj["validity"] = stringerToTF(tkh.GetValidity())
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
 func tkhToTFObjectRSAuthPermission(recurse bool, tkh keyhubmodel.AuthPermissionable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
@@ -417,6 +564,43 @@ func tkhToTFObjectRSAuthPermission(recurse bool, tkh keyhubmodel.AuthPermissiona
 		attrs = authPermissionAttrTypesRSRecurse
 	} else {
 		attrs = authPermissionAttrTypesRS
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	obj["full"] = types.StringPointerValue(tkh.GetFull())
+	{
+		elemType := attrs["instances"].(types.ListType).ElemType
+		val, d := sliceToTFList(elemType, tkh.GetInstances(), func(tkh string, diags *diag.Diagnostics) attr.Value {
+			return types.StringValue(tkh)
+		})
+		diags.Append(d...)
+		obj["instances"] = val
+	}
+	{
+		elemType := attrs["operations"].(types.SetType).ElemType
+		val, d := sliceToTFSet(elemType, tkh.GetOperations(), func(tkh keyhubmodel.AuthPermittedOperation, diags *diag.Diagnostics) attr.Value {
+			return types.StringValue(tkh.String())
+		})
+		diags.Append(d...)
+		obj["operations"] = val
+	}
+	obj["type_escaped"] = types.StringPointerValue(tkh.GetTypeEscaped())
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
+func tkhToTFObjectRSROAuthPermissionRO(recurse bool, tkh keyhubmodel.AuthPermissionable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = authPermissionAttrTypesRSRORecurse
+	} else {
+		attrs = authPermissionAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -474,6 +658,54 @@ func tkhToTFObjectRSCertificateCertificatePrimer(recurse bool, tkh keyhubmodel.C
 		elemType := attrs["permissions"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetPermissions(), func(tkh keyhubmodel.AuthPermissionable, diags *diag.Diagnostics) attr.Value {
 			val, d := tkhToTFObjectRSAuthPermission(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["permissions"] = val
+	}
+	obj["alias"] = types.StringPointerValue(tkh.GetAlias())
+	obj["type"] = stringerToTF(tkh.GetCertificateCertificatePrimerType())
+	obj["certificate_data"] = byteArrayToTfBase64(tkh.GetCertificateData())
+	obj["expiration"] = timePointerToTF(tkh.GetExpiration())
+	obj["fingerprint_sha1"] = types.StringPointerValue(tkh.GetFingerprintSha1())
+	obj["fingerprint_sha256"] = types.StringPointerValue(tkh.GetFingerprintSha256())
+	obj["global"] = types.BoolPointerValue(tkh.GetGlobal())
+	obj["subject_dn"] = types.StringPointerValue(tkh.GetSubjectDN())
+	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
+func tkhToTFObjectRSROCertificateCertificatePrimerRO(recurse bool, tkh keyhubmodel.CertificateCertificatePrimerable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = certificateCertificatePrimerAttrTypesRSRORecurse
+	} else {
+		attrs = certificateCertificatePrimerAttrTypesRSRO
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	{
+		elemType := attrs["links"].(types.ListType).ElemType
+		val, d := sliceToTFList(elemType, tkh.GetLinks(), func(tkh keyhubmodel.RestLinkable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectRSRORestLinkRO(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["links"] = val
+	}
+	{
+		elemType := attrs["permissions"].(types.ListType).ElemType
+		val, d := sliceToTFList(elemType, tkh.GetPermissions(), func(tkh keyhubmodel.AuthPermissionable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectRSROAuthPermissionRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -646,13 +878,104 @@ func tkhToTFObjectRSClientClientApplication(recurse bool, tkh keyhubmodel.Client
 	return objVal, diags
 }
 
-func tkhToTFObjectRSClientClientApplicationLinkableWrapper(recurse bool, tkh keyhubmodel.ClientClientApplicationLinkableWrapperable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROClientClientApplicationRO(recurse bool, tkh keyhubmodel.ClientClientApplicationable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = clientClientApplicationLinkableWrapperAttrTypesRSRecurse
+		attrs = clientClientApplicationAttrTypesRSRORecurse
 	} else {
-		attrs = clientClientApplicationLinkableWrapperAttrTypesRS
+		attrs = clientClientApplicationAttrTypesRSRO
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	if recurse {
+		obj["additional"] = types.ListNull(types.StringType)
+	}
+	if recurse {
+		{
+			val, d := tkhToTFObjectRSROClientClientApplication_additionalObjectsRO(false, tkh.GetAdditionalObjects())
+			diags.Append(d...)
+			maps.Copy(obj, val.Attributes())
+		}
+	}
+	{
+		elemType := attrs["links"].(types.ListType).ElemType
+		val, d := sliceToTFList(elemType, tkh.GetLinks(), func(tkh keyhubmodel.RestLinkable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectRSRORestLinkRO(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["links"] = val
+	}
+	{
+		elemType := attrs["permissions"].(types.ListType).ElemType
+		val, d := sliceToTFList(elemType, tkh.GetPermissions(), func(tkh keyhubmodel.AuthPermissionable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectRSROAuthPermissionRO(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["permissions"] = val
+	}
+	obj["type"] = stringerToTF(tkh.GetClientClientApplicationPrimerType())
+	obj["client_id"] = types.StringPointerValue(tkh.GetClientId())
+	obj["name"] = types.StringPointerValue(tkh.GetName())
+	{
+		elemType := attrs["scopes"].(types.ListType).ElemType
+		val, d := sliceToTFList(elemType, tkh.GetScopes(), func(tkh string, diags *diag.Diagnostics) attr.Value {
+			return types.StringValue(tkh)
+		})
+		diags.Append(d...)
+		obj["scopes"] = val
+	}
+	obj["sso_application"] = types.BoolPointerValue(tkh.GetSsoApplication())
+	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
+	obj["last_modified_at"] = timePointerToTF(tkh.GetLastModifiedAt())
+	{
+		val, d := tkhToTFObjectRSROGroupGroupPrimerRO(false, tkh.GetOwner())
+		diags.Append(d...)
+		obj["owner"] = val
+	}
+	{
+		val, d := tkhToTFObjectRSROGroupGroupPrimerRO(false, tkh.GetTechnicalAdministrator())
+		diags.Append(d...)
+		obj["technical_administrator"] = val
+	}
+	{
+		tkhCast, _ := tkh.(keyhubmodel.ClientLdapClientable)
+		val, d := tkhToTFObjectRSROClientLdapClientRO(false, tkhCast)
+		diags.Append(d...)
+		obj["ldap_client"] = val
+	}
+	{
+		tkhCast, _ := tkh.(keyhubmodel.ClientOAuth2Clientable)
+		val, d := tkhToTFObjectRSROClientOAuth2ClientRO(false, tkhCast)
+		diags.Append(d...)
+		obj["oauth2_client"] = val
+	}
+	{
+		tkhCast, _ := tkh.(keyhubmodel.ClientSaml2Clientable)
+		val, d := tkhToTFObjectRSROClientSaml2ClientRO(false, tkhCast)
+		diags.Append(d...)
+		obj["saml2_client"] = val
+	}
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
+func tkhToTFObjectRSROClientClientApplicationLinkableWrapperRO(recurse bool, tkh keyhubmodel.ClientClientApplicationLinkableWrapperable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = clientClientApplicationLinkableWrapperAttrTypesRSRORecurse
+	} else {
+		attrs = clientClientApplicationLinkableWrapperAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -662,7 +985,7 @@ func tkhToTFObjectRSClientClientApplicationLinkableWrapper(recurse bool, tkh key
 	{
 		elemType := attrs["items"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetItems(), func(tkh keyhubmodel.ClientClientApplicationable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSClientClientApplication(recurse, tkh)
+			val, d := tkhToTFObjectRSROClientClientApplicationRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -727,6 +1050,58 @@ func tkhToTFObjectRSClientClientApplicationPrimer(recurse bool, tkh keyhubmodel.
 	return objVal, diags
 }
 
+func tkhToTFObjectRSROClientClientApplicationPrimerRO(recurse bool, tkh keyhubmodel.ClientClientApplicationPrimerable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = clientClientApplicationPrimerAttrTypesRSRORecurse
+	} else {
+		attrs = clientClientApplicationPrimerAttrTypesRSRO
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	{
+		elemType := attrs["links"].(types.ListType).ElemType
+		val, d := sliceToTFList(elemType, tkh.GetLinks(), func(tkh keyhubmodel.RestLinkable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectRSRORestLinkRO(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["links"] = val
+	}
+	{
+		elemType := attrs["permissions"].(types.ListType).ElemType
+		val, d := sliceToTFList(elemType, tkh.GetPermissions(), func(tkh keyhubmodel.AuthPermissionable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectRSROAuthPermissionRO(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["permissions"] = val
+	}
+	obj["type"] = stringerToTF(tkh.GetClientClientApplicationPrimerType())
+	obj["client_id"] = types.StringPointerValue(tkh.GetClientId())
+	obj["name"] = types.StringPointerValue(tkh.GetName())
+	{
+		elemType := attrs["scopes"].(types.ListType).ElemType
+		val, d := sliceToTFList(elemType, tkh.GetScopes(), func(tkh string, diags *diag.Diagnostics) attr.Value {
+			return types.StringValue(tkh)
+		})
+		diags.Append(d...)
+		obj["scopes"] = val
+	}
+	obj["sso_application"] = types.BoolPointerValue(tkh.GetSsoApplication())
+	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
 func tkhToTFObjectRSClientClientApplication_additionalObjects(recurse bool, tkh keyhubmodel.ClientClientApplication_additionalObjectsable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
@@ -746,7 +1121,7 @@ func tkhToTFObjectRSClientClientApplication_additionalObjects(recurse bool, tkh 
 		obj["accessprofileclients"] = getItemsAttr(val, attrs["accessprofileclients"])
 	}
 	{
-		val, d := tkhToTFObjectRSAuditInfo(recurse, tkh.GetAudit())
+		val, d := tkhToTFObjectRSROAuditInfoRO(recurse, tkh.GetAudit())
 		diags.Append(d...)
 		obj["audit"] = val
 	}
@@ -757,12 +1132,12 @@ func tkhToTFObjectRSClientClientApplication_additionalObjects(recurse bool, tkh 
 		obj["groupclients"] = getItemsAttr(val, attrs["groupclients"])
 	}
 	{
-		val, d := tkhToTFObjectRSGroupGroupLinkableWrapper(recurse, tkh.GetGroups())
+		val, d := tkhToTFObjectRSROGroupGroupLinkableWrapperRO(recurse, tkh.GetGroups())
 		diags.Append(d...)
 		obj["groups"] = getItemsAttr(val, attrs["groups"])
 	}
 	{
-		val, d := tkhToTFObjectRSOrganizationClientApplicationOrganizationalUnitLinkableWrapper(recurse, tkh.GetOrganizationalUnits())
+		val, d := tkhToTFObjectRSROOrganizationClientApplicationOrganizationalUnitLinkableWrapperRO(recurse, tkh.GetOrganizationalUnits())
 		diags.Append(d...)
 		obj["organizational_units"] = getItemsAttr(val, attrs["organizational_units"])
 	}
@@ -773,6 +1148,62 @@ func tkhToTFObjectRSClientClientApplication_additionalObjects(recurse bool, tkh 
 	}
 	{
 		val, d := tkhToTFObjectRSLaunchpadSsoApplicationLaunchpadTile(recurse, tkh.GetTile())
+		diags.Append(d...)
+		obj["tile"] = val
+	}
+	obj["vault_record_count"] = types.Int64PointerValue(int32PToInt64P(tkh.GetVaultRecordCount()))
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
+func tkhToTFObjectRSROClientClientApplication_additionalObjectsRO(recurse bool, tkh keyhubmodel.ClientClientApplication_additionalObjectsable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = clientClientApplication_additionalObjectsAttrTypesRSRORecurse
+	} else {
+		attrs = clientClientApplication_additionalObjectsAttrTypesRSRO
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	{
+		val, d := tkhToTFObjectRSROProfileAccessProfileClientLinkableWrapperWithCountRO(recurse, tkh.GetAccessprofileclients())
+		diags.Append(d...)
+		obj["accessprofileclients"] = getItemsAttr(val, attrs["accessprofileclients"])
+	}
+	{
+		val, d := tkhToTFObjectRSROAuditInfoRO(recurse, tkh.GetAudit())
+		diags.Append(d...)
+		obj["audit"] = val
+	}
+	obj["delete_tile"] = types.BoolPointerValue(tkh.GetDeleteTile())
+	{
+		val, d := tkhToTFObjectRSROGroupGroupClientLinkableWrapperWithCountRO(recurse, tkh.GetGroupclients())
+		diags.Append(d...)
+		obj["groupclients"] = getItemsAttr(val, attrs["groupclients"])
+	}
+	{
+		val, d := tkhToTFObjectRSROGroupGroupLinkableWrapperRO(recurse, tkh.GetGroups())
+		diags.Append(d...)
+		obj["groups"] = getItemsAttr(val, attrs["groups"])
+	}
+	{
+		val, d := tkhToTFObjectRSROOrganizationClientApplicationOrganizationalUnitLinkableWrapperRO(recurse, tkh.GetOrganizationalUnits())
+		diags.Append(d...)
+		obj["organizational_units"] = getItemsAttr(val, attrs["organizational_units"])
+	}
+	{
+		val, d := tkhToTFObjectRSROGeneratedSecretRO(recurse, tkh.GetSecret())
+		diags.Append(d...)
+		obj["secret"] = val
+	}
+	{
+		val, d := tkhToTFObjectRSROLaunchpadSsoApplicationLaunchpadTileRO(recurse, tkh.GetTile())
 		diags.Append(d...)
 		obj["tile"] = val
 	}
@@ -799,7 +1230,43 @@ func tkhToTFObjectRSClientLdapClient(recurse bool, tkh keyhubmodel.ClientLdapCli
 	obj["bind_dn"] = types.StringPointerValue(tkh.GetBindDn())
 	obj["client_certificate_uuid"] = withUuidToTF(tkh.GetClientCertificate())
 	obj["share_secret_in_vault"] = types.BoolPointerValue(tkh.GetShareSecretInVault())
-	obj["shared_secret_uuid"] = withUuidToTF(tkh.GetSharedSecret())
+	{
+		val, d := tkhToTFObjectRSROVaultVaultRecordPrimerRO(recurse, tkh.GetSharedSecret())
+		diags.Append(d...)
+		obj["shared_secret"] = val
+	}
+	obj["used_for_provisioning"] = types.BoolPointerValue(tkh.GetUsedForProvisioning())
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
+func tkhToTFObjectRSROClientLdapClientRO(recurse bool, tkh keyhubmodel.ClientLdapClientable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = clientLdapClientAttrTypesRSRORecurse
+	} else {
+		attrs = clientLdapClientAttrTypesRSRO
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	obj["bind_dn"] = types.StringPointerValue(tkh.GetBindDn())
+	{
+		val, d := tkhToTFObjectRSROCertificateCertificatePrimerRO(recurse, tkh.GetClientCertificate())
+		diags.Append(d...)
+		obj["client_certificate"] = val
+	}
+	obj["share_secret_in_vault"] = types.BoolPointerValue(tkh.GetShareSecretInVault())
+	{
+		val, d := tkhToTFObjectRSROVaultVaultRecordPrimerRO(recurse, tkh.GetSharedSecret())
+		diags.Append(d...)
+		obj["shared_secret"] = val
+	}
 	obj["used_for_provisioning"] = types.BoolPointerValue(tkh.GetUsedForProvisioning())
 
 	objVal, d := types.ObjectValue(attrs, obj)
@@ -823,7 +1290,7 @@ func tkhToTFObjectRSClientOAuth2Client(recurse bool, tkh keyhubmodel.ClientOAuth
 	{
 		elemType := attrs["account_permissions"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetAccountPermissions(), func(tkh keyhubmodel.AuthPermissionable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSAuthPermission(recurse, tkh)
+			val, d := tkhToTFObjectRSROAuthPermissionRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -846,7 +1313,63 @@ func tkhToTFObjectRSClientOAuth2Client(recurse bool, tkh keyhubmodel.ClientOAuth
 	obj["profile"] = stringerToTF(tkh.GetProfile())
 	obj["resource_uris"] = types.StringPointerValue(tkh.GetResourceURIs())
 	obj["share_secret_in_vault"] = types.BoolPointerValue(tkh.GetShareSecretInVault())
-	obj["shared_secret_uuid"] = withUuidToTF(tkh.GetSharedSecret())
+	{
+		val, d := tkhToTFObjectRSROVaultVaultRecordPrimerRO(recurse, tkh.GetSharedSecret())
+		diags.Append(d...)
+		obj["shared_secret"] = val
+	}
+	obj["show_landing_page"] = types.BoolPointerValue(tkh.GetShowLandingPage())
+	obj["use_client_credentials"] = types.BoolPointerValue(tkh.GetUseClientCredentials())
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
+func tkhToTFObjectRSROClientOAuth2ClientRO(recurse bool, tkh keyhubmodel.ClientOAuth2Clientable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = clientOAuth2ClientAttrTypesRSRORecurse
+	} else {
+		attrs = clientOAuth2ClientAttrTypesRSRO
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	{
+		elemType := attrs["account_permissions"].(types.ListType).ElemType
+		val, d := sliceToTFList(elemType, tkh.GetAccountPermissions(), func(tkh keyhubmodel.AuthPermissionable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectRSROAuthPermissionRO(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["account_permissions"] = val
+	}
+	{
+		elemType := attrs["attributes"].(types.MapType).ElemType
+		val, d := mapToTF(elemType, tkh.GetAttributes().GetAdditionalData(), func(tkh any, diags *diag.Diagnostics) attr.Value {
+			return types.StringPointerValue(tkh.(*string))
+		})
+		diags.Append(d...)
+		obj["attributes"] = val
+	}
+	obj["callback_uri"] = types.StringPointerValue(tkh.GetCallbackURI())
+	obj["debug_mode"] = types.BoolPointerValue(tkh.GetDebugMode())
+	obj["for_identity_source"] = types.BoolPointerValue(tkh.GetForIdentitySource())
+	obj["id_token_claims"] = types.StringPointerValue(tkh.GetIdTokenClaims())
+	obj["initiate_login_uri"] = types.StringPointerValue(tkh.GetInitiateLoginURI())
+	obj["profile"] = stringerToTF(tkh.GetProfile())
+	obj["resource_uris"] = types.StringPointerValue(tkh.GetResourceURIs())
+	obj["share_secret_in_vault"] = types.BoolPointerValue(tkh.GetShareSecretInVault())
+	{
+		val, d := tkhToTFObjectRSROVaultVaultRecordPrimerRO(recurse, tkh.GetSharedSecret())
+		diags.Append(d...)
+		obj["shared_secret"] = val
+	}
 	obj["show_landing_page"] = types.BoolPointerValue(tkh.GetShowLandingPage())
 	obj["use_client_credentials"] = types.BoolPointerValue(tkh.GetUseClientCredentials())
 
@@ -907,6 +1430,66 @@ func tkhToTFObjectRSClientOAuth2ClientPermission(recurse bool, tkh keyhubmodel.C
 	return objVal, diags
 }
 
+func tkhToTFObjectRSROClientOAuth2ClientPermissionRO(recurse bool, tkh keyhubmodel.ClientOAuth2ClientPermissionable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = clientOAuth2ClientPermissionAttrTypesRSRORecurse
+	} else {
+		attrs = clientOAuth2ClientPermissionAttrTypesRSRO
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	if recurse {
+		obj["additional"] = types.ListNull(types.StringType)
+	}
+	if recurse {
+		{
+			val, d := tkhToTFObjectRSROClientOAuth2ClientPermission_additionalObjectsRO(false, tkh.GetAdditionalObjects())
+			diags.Append(d...)
+			maps.Copy(obj, val.Attributes())
+		}
+	}
+	{
+		elemType := attrs["links"].(types.ListType).ElemType
+		val, d := sliceToTFList(elemType, tkh.GetLinks(), func(tkh keyhubmodel.RestLinkable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectRSRORestLinkRO(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["links"] = val
+	}
+	{
+		elemType := attrs["permissions"].(types.ListType).ElemType
+		val, d := sliceToTFList(elemType, tkh.GetPermissions(), func(tkh keyhubmodel.AuthPermissionable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectRSROAuthPermissionRO(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["permissions"] = val
+	}
+	{
+		val, d := tkhToTFObjectRSROGroupGroupPrimerRO(false, tkh.GetForGroup())
+		diags.Append(d...)
+		obj["for_group"] = val
+	}
+	{
+		val, d := tkhToTFObjectRSROProvisioningProvisionedSystemPrimerRO(false, tkh.GetForSystem())
+		diags.Append(d...)
+		obj["for_system"] = val
+	}
+	obj["value"] = stringerToTF(tkh.GetValue())
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
 func tkhToTFObjectRSClientOAuth2ClientPermissionWithClient(recurse bool, tkh keyhubmodel.ClientOAuth2ClientPermissionWithClientable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
@@ -960,6 +1543,71 @@ func tkhToTFObjectRSClientOAuth2ClientPermissionWithClient(recurse bool, tkh key
 	return objVal, diags
 }
 
+func tkhToTFObjectRSROClientOAuth2ClientPermissionWithClientRO(recurse bool, tkh keyhubmodel.ClientOAuth2ClientPermissionWithClientable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = clientOAuth2ClientPermissionWithClientAttrTypesRSRORecurse
+	} else {
+		attrs = clientOAuth2ClientPermissionWithClientAttrTypesRSRO
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	if recurse {
+		obj["additional"] = types.ListNull(types.StringType)
+	}
+	if recurse {
+		{
+			val, d := tkhToTFObjectRSROClientOAuth2ClientPermission_additionalObjectsRO(false, tkh.GetAdditionalObjects())
+			diags.Append(d...)
+			maps.Copy(obj, val.Attributes())
+		}
+	}
+	{
+		elemType := attrs["links"].(types.ListType).ElemType
+		val, d := sliceToTFList(elemType, tkh.GetLinks(), func(tkh keyhubmodel.RestLinkable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectRSRORestLinkRO(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["links"] = val
+	}
+	{
+		elemType := attrs["permissions"].(types.ListType).ElemType
+		val, d := sliceToTFList(elemType, tkh.GetPermissions(), func(tkh keyhubmodel.AuthPermissionable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectRSROAuthPermissionRO(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["permissions"] = val
+	}
+	{
+		val, d := tkhToTFObjectRSROGroupGroupPrimerRO(false, tkh.GetForGroup())
+		diags.Append(d...)
+		obj["for_group"] = val
+	}
+	{
+		val, d := tkhToTFObjectRSROProvisioningProvisionedSystemPrimerRO(false, tkh.GetForSystem())
+		diags.Append(d...)
+		obj["for_system"] = val
+	}
+	obj["value"] = stringerToTF(tkh.GetValue())
+	{
+		val, d := tkhToTFObjectRSROClientOAuth2ClientRO(false, tkh.GetClient())
+		diags.Append(d...)
+		obj["client"] = val
+	}
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
 func tkhToTFObjectRSClientOAuth2ClientPermissionWithClientLinkableWrapper(recurse bool, tkh keyhubmodel.ClientOAuth2ClientPermissionWithClientLinkableWrapperable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
@@ -989,6 +1637,35 @@ func tkhToTFObjectRSClientOAuth2ClientPermissionWithClientLinkableWrapper(recurs
 	return objVal, diags
 }
 
+func tkhToTFObjectRSROClientOAuth2ClientPermissionWithClientLinkableWrapperRO(recurse bool, tkh keyhubmodel.ClientOAuth2ClientPermissionWithClientLinkableWrapperable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = clientOAuth2ClientPermissionWithClientLinkableWrapperAttrTypesRSRORecurse
+	} else {
+		attrs = clientOAuth2ClientPermissionWithClientLinkableWrapperAttrTypesRSRO
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	{
+		elemType := attrs["items"].(types.ListType).ElemType
+		val, d := sliceToTFList(elemType, tkh.GetItems(), func(tkh keyhubmodel.ClientOAuth2ClientPermissionWithClientable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectRSROClientOAuth2ClientPermissionWithClientRO(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["items"] = val
+	}
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
 func tkhToTFObjectRSClientOAuth2ClientPermission_additionalObjects(recurse bool, tkh keyhubmodel.ClientOAuth2ClientPermission_additionalObjectsable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
@@ -1003,7 +1680,31 @@ func tkhToTFObjectRSClientOAuth2ClientPermission_additionalObjects(recurse bool,
 
 	obj := make(map[string]attr.Value)
 	{
-		val, d := tkhToTFObjectRSAuditInfo(recurse, tkh.GetAudit())
+		val, d := tkhToTFObjectRSROAuditInfoRO(recurse, tkh.GetAudit())
+		diags.Append(d...)
+		obj["audit"] = val
+	}
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
+func tkhToTFObjectRSROClientOAuth2ClientPermission_additionalObjectsRO(recurse bool, tkh keyhubmodel.ClientOAuth2ClientPermission_additionalObjectsable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = clientOAuth2ClientPermission_additionalObjectsAttrTypesRSRORecurse
+	} else {
+		attrs = clientOAuth2ClientPermission_additionalObjectsAttrTypesRSRO
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	{
+		val, d := tkhToTFObjectRSROAuditInfoRO(recurse, tkh.GetAudit())
 		diags.Append(d...)
 		obj["audit"] = val
 	}
@@ -1043,13 +1744,43 @@ func tkhToTFObjectRSClientSaml2Client(recurse bool, tkh keyhubmodel.ClientSaml2C
 	return objVal, diags
 }
 
-func tkhToTFObjectRSDirectoryAccountDirectory(recurse bool, tkh keyhubmodel.DirectoryAccountDirectoryable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROClientSaml2ClientRO(recurse bool, tkh keyhubmodel.ClientSaml2Clientable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = directoryAccountDirectoryAttrTypesRSRecurse
+		attrs = clientSaml2ClientAttrTypesRSRORecurse
 	} else {
-		attrs = directoryAccountDirectoryAttrTypesRS
+		attrs = clientSaml2ClientAttrTypesRSRO
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	{
+		elemType := attrs["attributes"].(types.MapType).ElemType
+		val, d := mapToTF(elemType, tkh.GetAttributes().GetAdditionalData(), func(tkh any, diags *diag.Diagnostics) attr.Value {
+			return types.StringPointerValue(tkh.(*string))
+		})
+		diags.Append(d...)
+		obj["attributes"] = val
+	}
+	obj["metadata"] = types.StringPointerValue(tkh.GetMetadata())
+	obj["metadata_url"] = types.StringPointerValue(tkh.GetMetadataUrl())
+	obj["subject_format"] = stringerToTF(tkh.GetSubjectFormat())
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
+func tkhToTFObjectRSRODirectoryAccountDirectoryRO(recurse bool, tkh keyhubmodel.DirectoryAccountDirectoryable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = directoryAccountDirectoryAttrTypesRSRORecurse
+	} else {
+		attrs = directoryAccountDirectoryAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -1061,7 +1792,7 @@ func tkhToTFObjectRSDirectoryAccountDirectory(recurse bool, tkh keyhubmodel.Dire
 	}
 	if recurse {
 		{
-			val, d := tkhToTFObjectRSDirectoryAccountDirectory_additionalObjects(false, tkh.GetAdditionalObjects())
+			val, d := tkhToTFObjectRSRODirectoryAccountDirectory_additionalObjectsRO(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
 			maps.Copy(obj, val.Attributes())
 		}
@@ -1069,7 +1800,7 @@ func tkhToTFObjectRSDirectoryAccountDirectory(recurse bool, tkh keyhubmodel.Dire
 	{
 		elemType := attrs["links"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetLinks(), func(tkh keyhubmodel.RestLinkable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSRestLink(recurse, tkh)
+			val, d := tkhToTFObjectRSRORestLinkRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -1079,7 +1810,7 @@ func tkhToTFObjectRSDirectoryAccountDirectory(recurse bool, tkh keyhubmodel.Dire
 	{
 		elemType := attrs["permissions"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetPermissions(), func(tkh keyhubmodel.AuthPermissionable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSAuthPermission(recurse, tkh)
+			val, d := tkhToTFObjectRSROAuthPermissionRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -1091,39 +1822,47 @@ func tkhToTFObjectRSDirectoryAccountDirectory(recurse bool, tkh keyhubmodel.Dire
 	obj["type"] = stringerToTF(tkh.GetDirectoryAccountDirectoryPrimerType())
 	obj["name"] = types.StringPointerValue(tkh.GetName())
 	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
-	obj["base_organizational_unit_uuid"] = withUuidToTF(tkh.GetBaseOrganizationalUnit())
+	{
+		val, d := tkhToTFObjectRSROOrganizationOrganizationalUnitPrimerRO(false, tkh.GetBaseOrganizationalUnit())
+		diags.Append(d...)
+		obj["base_organizational_unit"] = val
+	}
 	obj["default_directory"] = types.BoolPointerValue(tkh.GetDefaultDirectory())
-	obj["helpdesk_group_uuid"] = withUuidToTF(tkh.GetHelpdeskGroup())
+	{
+		val, d := tkhToTFObjectRSROGroupGroupPrimerRO(false, tkh.GetHelpdeskGroup())
+		diags.Append(d...)
+		obj["helpdesk_group"] = val
+	}
 	obj["restrict2fa"] = types.BoolPointerValue(tkh.GetRestrict2fa())
 	obj["rotating_password"] = stringerToTF(tkh.GetRotatingPassword())
 	obj["username_customizable"] = types.BoolPointerValue(tkh.GetUsernameCustomizable())
 	{
 		tkhCast, _ := tkh.(keyhubmodel.DirectoryInternalDirectoryable)
-		val, d := tkhToTFObjectRSDirectoryInternalDirectory(false, tkhCast)
+		val, d := tkhToTFObjectRSRODirectoryInternalDirectoryRO(false, tkhCast)
 		diags.Append(d...)
 		obj["internal_directory"] = val
 	}
 	{
 		tkhCast, _ := tkh.(keyhubmodel.DirectoryLDAPDirectoryable)
-		val, d := tkhToTFObjectRSDirectoryLDAPDirectory(false, tkhCast)
+		val, d := tkhToTFObjectRSRODirectoryLDAPDirectoryRO(false, tkhCast)
 		diags.Append(d...)
 		obj["ldap_directory"] = val
 	}
 	{
 		tkhCast, _ := tkh.(keyhubmodel.DirectoryMaintenanceDirectoryable)
-		val, d := tkhToTFObjectRSDirectoryMaintenanceDirectory(false, tkhCast)
+		val, d := tkhToTFObjectRSRODirectoryMaintenanceDirectoryRO(false, tkhCast)
 		diags.Append(d...)
 		obj["maintenance_directory"] = val
 	}
 	{
 		tkhCast, _ := tkh.(keyhubmodel.DirectoryOIDCDirectoryable)
-		val, d := tkhToTFObjectRSDirectoryOIDCDirectory(false, tkhCast)
+		val, d := tkhToTFObjectRSRODirectoryOIDCDirectoryRO(false, tkhCast)
 		diags.Append(d...)
 		obj["oidc_directory"] = val
 	}
 	{
 		tkhCast, _ := tkh.(keyhubmodel.DirectoryPendingAccountsDirectoryable)
-		val, d := tkhToTFObjectRSDirectoryPendingAccountsDirectory(false, tkhCast)
+		val, d := tkhToTFObjectRSRODirectoryPendingAccountsDirectoryRO(false, tkhCast)
 		diags.Append(d...)
 		obj["pending_accounts_directory"] = val
 	}
@@ -1133,13 +1872,13 @@ func tkhToTFObjectRSDirectoryAccountDirectory(recurse bool, tkh keyhubmodel.Dire
 	return objVal, diags
 }
 
-func tkhToTFObjectRSDirectoryAccountDirectoryLinkableWrapper(recurse bool, tkh keyhubmodel.DirectoryAccountDirectoryLinkableWrapperable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSRODirectoryAccountDirectoryLinkableWrapperRO(recurse bool, tkh keyhubmodel.DirectoryAccountDirectoryLinkableWrapperable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = directoryAccountDirectoryLinkableWrapperAttrTypesRSRecurse
+		attrs = directoryAccountDirectoryLinkableWrapperAttrTypesRSRORecurse
 	} else {
-		attrs = directoryAccountDirectoryLinkableWrapperAttrTypesRS
+		attrs = directoryAccountDirectoryLinkableWrapperAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -1149,7 +1888,7 @@ func tkhToTFObjectRSDirectoryAccountDirectoryLinkableWrapper(recurse bool, tkh k
 	{
 		elemType := attrs["items"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetItems(), func(tkh keyhubmodel.DirectoryAccountDirectoryable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSDirectoryAccountDirectory(recurse, tkh)
+			val, d := tkhToTFObjectRSRODirectoryAccountDirectoryRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -1162,13 +1901,13 @@ func tkhToTFObjectRSDirectoryAccountDirectoryLinkableWrapper(recurse bool, tkh k
 	return objVal, diags
 }
 
-func tkhToTFObjectRSDirectoryAccountDirectoryPrimer(recurse bool, tkh keyhubmodel.DirectoryAccountDirectoryPrimerable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSRODirectoryAccountDirectoryPrimerRO(recurse bool, tkh keyhubmodel.DirectoryAccountDirectoryPrimerable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = directoryAccountDirectoryPrimerAttrTypesRSRecurse
+		attrs = directoryAccountDirectoryPrimerAttrTypesRSRORecurse
 	} else {
-		attrs = directoryAccountDirectoryPrimerAttrTypesRS
+		attrs = directoryAccountDirectoryPrimerAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -1178,7 +1917,7 @@ func tkhToTFObjectRSDirectoryAccountDirectoryPrimer(recurse bool, tkh keyhubmode
 	{
 		elemType := attrs["links"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetLinks(), func(tkh keyhubmodel.RestLinkable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSRestLink(recurse, tkh)
+			val, d := tkhToTFObjectRSRORestLinkRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -1188,7 +1927,7 @@ func tkhToTFObjectRSDirectoryAccountDirectoryPrimer(recurse bool, tkh keyhubmode
 	{
 		elemType := attrs["permissions"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetPermissions(), func(tkh keyhubmodel.AuthPermissionable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSAuthPermission(recurse, tkh)
+			val, d := tkhToTFObjectRSROAuthPermissionRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -1206,13 +1945,13 @@ func tkhToTFObjectRSDirectoryAccountDirectoryPrimer(recurse bool, tkh keyhubmode
 	return objVal, diags
 }
 
-func tkhToTFObjectRSDirectoryAccountDirectoryStatusReport(recurse bool, tkh keyhubmodel.DirectoryAccountDirectoryStatusReportable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSRODirectoryAccountDirectoryStatusReportRO(recurse bool, tkh keyhubmodel.DirectoryAccountDirectoryStatusReportable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = directoryAccountDirectoryStatusReportAttrTypesRSRecurse
+		attrs = directoryAccountDirectoryStatusReportAttrTypesRSRORecurse
 	} else {
-		attrs = directoryAccountDirectoryStatusReportAttrTypesRS
+		attrs = directoryAccountDirectoryStatusReportAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -1228,13 +1967,13 @@ func tkhToTFObjectRSDirectoryAccountDirectoryStatusReport(recurse bool, tkh keyh
 	return objVal, diags
 }
 
-func tkhToTFObjectRSDirectoryAccountDirectorySummary(recurse bool, tkh keyhubmodel.DirectoryAccountDirectorySummaryable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSRODirectoryAccountDirectorySummaryRO(recurse bool, tkh keyhubmodel.DirectoryAccountDirectorySummaryable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = directoryAccountDirectorySummaryAttrTypesRSRecurse
+		attrs = directoryAccountDirectorySummaryAttrTypesRSRORecurse
 	} else {
-		attrs = directoryAccountDirectorySummaryAttrTypesRS
+		attrs = directoryAccountDirectorySummaryAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -1244,7 +1983,7 @@ func tkhToTFObjectRSDirectoryAccountDirectorySummary(recurse bool, tkh keyhubmod
 	{
 		elemType := attrs["links"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetLinks(), func(tkh keyhubmodel.RestLinkable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSRestLink(recurse, tkh)
+			val, d := tkhToTFObjectRSRORestLinkRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -1254,7 +1993,7 @@ func tkhToTFObjectRSDirectoryAccountDirectorySummary(recurse bool, tkh keyhubmod
 	{
 		elemType := attrs["permissions"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetPermissions(), func(tkh keyhubmodel.AuthPermissionable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSAuthPermission(recurse, tkh)
+			val, d := tkhToTFObjectRSROAuthPermissionRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -1266,7 +2005,7 @@ func tkhToTFObjectRSDirectoryAccountDirectorySummary(recurse bool, tkh keyhubmod
 	obj["fully_resolved_issuer"] = types.StringPointerValue(tkh.GetFullyResolvedIssuer())
 	obj["name"] = types.StringPointerValue(tkh.GetName())
 	{
-		val, d := tkhToTFObjectRSDirectoryAccountDirectoryStatusReport(recurse, tkh.GetStatus())
+		val, d := tkhToTFObjectRSRODirectoryAccountDirectoryStatusReportRO(recurse, tkh.GetStatus())
 		diags.Append(d...)
 		obj["status"] = val
 	}
@@ -1277,13 +2016,13 @@ func tkhToTFObjectRSDirectoryAccountDirectorySummary(recurse bool, tkh keyhubmod
 	return objVal, diags
 }
 
-func tkhToTFObjectRSDirectoryAccountDirectorySummaryLinkableWrapper(recurse bool, tkh keyhubmodel.DirectoryAccountDirectorySummaryLinkableWrapperable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSRODirectoryAccountDirectorySummaryLinkableWrapperRO(recurse bool, tkh keyhubmodel.DirectoryAccountDirectorySummaryLinkableWrapperable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = directoryAccountDirectorySummaryLinkableWrapperAttrTypesRSRecurse
+		attrs = directoryAccountDirectorySummaryLinkableWrapperAttrTypesRSRORecurse
 	} else {
-		attrs = directoryAccountDirectorySummaryLinkableWrapperAttrTypesRS
+		attrs = directoryAccountDirectorySummaryLinkableWrapperAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -1293,7 +2032,7 @@ func tkhToTFObjectRSDirectoryAccountDirectorySummaryLinkableWrapper(recurse bool
 	{
 		elemType := attrs["items"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetItems(), func(tkh keyhubmodel.DirectoryAccountDirectorySummaryable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSDirectoryAccountDirectorySummary(recurse, tkh)
+			val, d := tkhToTFObjectRSRODirectoryAccountDirectorySummaryRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -1306,13 +2045,13 @@ func tkhToTFObjectRSDirectoryAccountDirectorySummaryLinkableWrapper(recurse bool
 	return objVal, diags
 }
 
-func tkhToTFObjectRSDirectoryAccountDirectory_additionalObjects(recurse bool, tkh keyhubmodel.DirectoryAccountDirectory_additionalObjectsable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSRODirectoryAccountDirectory_additionalObjectsRO(recurse bool, tkh keyhubmodel.DirectoryAccountDirectory_additionalObjectsable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = directoryAccountDirectory_additionalObjectsAttrTypesRSRecurse
+		attrs = directoryAccountDirectory_additionalObjectsAttrTypesRSRORecurse
 	} else {
-		attrs = directoryAccountDirectory_additionalObjectsAttrTypesRS
+		attrs = directoryAccountDirectory_additionalObjectsAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -1320,17 +2059,17 @@ func tkhToTFObjectRSDirectoryAccountDirectory_additionalObjects(recurse bool, tk
 
 	obj := make(map[string]attr.Value)
 	{
-		val, d := tkhToTFObjectRSAuditInfo(recurse, tkh.GetAudit())
+		val, d := tkhToTFObjectRSROAuditInfoRO(recurse, tkh.GetAudit())
 		diags.Append(d...)
 		obj["audit"] = val
 	}
 	{
-		val, d := tkhToTFObjectRSMarkItemMarkers(recurse, tkh.GetMarkers())
+		val, d := tkhToTFObjectRSROMarkItemMarkersRO(recurse, tkh.GetMarkers())
 		diags.Append(d...)
 		obj["markers"] = val
 	}
 	{
-		val, d := tkhToTFObjectRSDirectoryAccountDirectoryStatusReport(recurse, tkh.GetStatus())
+		val, d := tkhToTFObjectRSRODirectoryAccountDirectoryStatusReportRO(recurse, tkh.GetStatus())
 		diags.Append(d...)
 		obj["status"] = val
 	}
@@ -1340,33 +2079,37 @@ func tkhToTFObjectRSDirectoryAccountDirectory_additionalObjects(recurse bool, tk
 	return objVal, diags
 }
 
-func tkhToTFObjectRSDirectoryInternalDirectory(recurse bool, tkh keyhubmodel.DirectoryInternalDirectoryable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSRODirectoryInternalDirectoryRO(recurse bool, tkh keyhubmodel.DirectoryInternalDirectoryable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = directoryInternalDirectoryAttrTypesRSRecurse
+		attrs = directoryInternalDirectoryAttrTypesRSRORecurse
 	} else {
-		attrs = directoryInternalDirectoryAttrTypesRS
+		attrs = directoryInternalDirectoryAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
 	}
 
 	obj := make(map[string]attr.Value)
-	obj["owner_uuid"] = withUuidToTF(tkh.GetOwner())
+	{
+		val, d := tkhToTFObjectRSROGroupGroupPrimerRO(recurse, tkh.GetOwner())
+		diags.Append(d...)
+		obj["owner"] = val
+	}
 
 	objVal, d := types.ObjectValue(attrs, obj)
 	diags.Append(d...)
 	return objVal, diags
 }
 
-func tkhToTFObjectRSDirectoryLDAPDirectory(recurse bool, tkh keyhubmodel.DirectoryLDAPDirectoryable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSRODirectoryLDAPDirectoryRO(recurse bool, tkh keyhubmodel.DirectoryLDAPDirectoryable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = directoryLDAPDirectoryAttrTypesRSRecurse
+		attrs = directoryLDAPDirectoryAttrTypesRSRORecurse
 	} else {
-		attrs = directoryLDAPDirectoryAttrTypesRS
+		attrs = directoryLDAPDirectoryAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -1375,10 +2118,18 @@ func tkhToTFObjectRSDirectoryLDAPDirectory(recurse bool, tkh keyhubmodel.Directo
 	obj := make(map[string]attr.Value)
 	obj["attributes_to_store"] = types.StringPointerValue(tkh.GetAttributesToStore())
 	obj["base_dn"] = types.StringPointerValue(tkh.GetBaseDN())
-	obj["client_certificate_uuid"] = withUuidToTF(tkh.GetClientCertificate())
+	{
+		val, d := tkhToTFObjectRSROCertificateCertificatePrimerRO(recurse, tkh.GetClientCertificate())
+		diags.Append(d...)
+		obj["client_certificate"] = val
+	}
 	obj["dialect"] = stringerToTF(tkh.GetDialect())
 	obj["failover_host"] = types.StringPointerValue(tkh.GetFailoverHost())
-	obj["failover_trusted_certificate_uuid"] = withUuidToTF(tkh.GetFailoverTrustedCertificate())
+	{
+		val, d := tkhToTFObjectRSROCertificateCertificatePrimerRO(recurse, tkh.GetFailoverTrustedCertificate())
+		diags.Append(d...)
+		obj["failover_trusted_certificate"] = val
+	}
 	obj["host"] = types.StringPointerValue(tkh.GetHost())
 	obj["password_recovery"] = stringerToTF(tkh.GetPasswordRecovery())
 	obj["port"] = types.Int64PointerValue(int32PToInt64P(tkh.GetPort()))
@@ -1386,20 +2137,24 @@ func tkhToTFObjectRSDirectoryLDAPDirectory(recurse bool, tkh keyhubmodel.Directo
 	obj["search_bind_password"] = types.StringPointerValue(tkh.GetSearchBindPassword())
 	obj["search_filter"] = types.StringPointerValue(tkh.GetSearchFilter())
 	obj["tls"] = stringerToTF(tkh.GetTls())
-	obj["trusted_certificate_uuid"] = withUuidToTF(tkh.GetTrustedCertificate())
+	{
+		val, d := tkhToTFObjectRSROCertificateCertificatePrimerRO(recurse, tkh.GetTrustedCertificate())
+		diags.Append(d...)
+		obj["trusted_certificate"] = val
+	}
 
 	objVal, d := types.ObjectValue(attrs, obj)
 	diags.Append(d...)
 	return objVal, diags
 }
 
-func tkhToTFObjectRSDirectoryMaintenanceDirectory(recurse bool, tkh keyhubmodel.DirectoryMaintenanceDirectoryable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSRODirectoryMaintenanceDirectoryRO(recurse bool, tkh keyhubmodel.DirectoryMaintenanceDirectoryable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = directoryMaintenanceDirectoryAttrTypesRSRecurse
+		attrs = directoryMaintenanceDirectoryAttrTypesRSRORecurse
 	} else {
-		attrs = directoryMaintenanceDirectoryAttrTypesRS
+		attrs = directoryMaintenanceDirectoryAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -1412,13 +2167,13 @@ func tkhToTFObjectRSDirectoryMaintenanceDirectory(recurse bool, tkh keyhubmodel.
 	return objVal, diags
 }
 
-func tkhToTFObjectRSDirectoryOIDCDirectory(recurse bool, tkh keyhubmodel.DirectoryOIDCDirectoryable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSRODirectoryOIDCDirectoryRO(recurse bool, tkh keyhubmodel.DirectoryOIDCDirectoryable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = directoryOIDCDirectoryAttrTypesRSRecurse
+		attrs = directoryOIDCDirectoryAttrTypesRSRORecurse
 	} else {
-		attrs = directoryOIDCDirectoryAttrTypesRS
+		attrs = directoryOIDCDirectoryAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -1442,13 +2197,13 @@ func tkhToTFObjectRSDirectoryOIDCDirectory(recurse bool, tkh keyhubmodel.Directo
 	return objVal, diags
 }
 
-func tkhToTFObjectRSDirectoryPendingAccountsDirectory(recurse bool, tkh keyhubmodel.DirectoryPendingAccountsDirectoryable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSRODirectoryPendingAccountsDirectoryRO(recurse bool, tkh keyhubmodel.DirectoryPendingAccountsDirectoryable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = directoryPendingAccountsDirectoryAttrTypesRSRecurse
+		attrs = directoryPendingAccountsDirectoryAttrTypesRSRORecurse
 	} else {
-		attrs = directoryPendingAccountsDirectoryAttrTypesRS
+		attrs = directoryPendingAccountsDirectoryAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -1545,13 +2300,125 @@ func tkhToTFObjectRSGroupGroup(recurse bool, tkh keyhubmodel.GroupGroupable) (ty
 	return objVal, diags
 }
 
-func tkhToTFObjectRSGroupGroupAccessInfo(recurse bool, tkh keyhubmodel.GroupGroupAccessInfoable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROGroupGroupRO(recurse bool, tkh keyhubmodel.GroupGroupable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = groupGroupAccessInfoAttrTypesRSRecurse
+		attrs = groupGroupAttrTypesRSRORecurse
 	} else {
-		attrs = groupGroupAccessInfoAttrTypesRS
+		attrs = groupGroupAttrTypesRSRO
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	if recurse {
+		obj["additional"] = types.ListNull(types.StringType)
+	}
+	if recurse {
+		{
+			val, d := tkhToTFObjectRSROGroupGroup_additionalObjectsRO(false, tkh.GetAdditionalObjects())
+			diags.Append(d...)
+			maps.Copy(obj, val.Attributes())
+		}
+	}
+	{
+		elemType := attrs["links"].(types.ListType).ElemType
+		val, d := sliceToTFList(elemType, tkh.GetLinks(), func(tkh keyhubmodel.RestLinkable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectRSRORestLinkRO(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["links"] = val
+	}
+	{
+		elemType := attrs["permissions"].(types.ListType).ElemType
+		val, d := sliceToTFList(elemType, tkh.GetPermissions(), func(tkh keyhubmodel.AuthPermissionable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectRSROAuthPermissionRO(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["permissions"] = val
+	}
+	obj["admin"] = types.BoolPointerValue(tkh.GetAdmin())
+	obj["name"] = types.StringPointerValue(tkh.GetName())
+	{
+		val, d := tkhToTFObjectRSROOrganizationOrganizationalUnitPrimerRO(recurse, tkh.GetOrganizationalUnit())
+		diags.Append(d...)
+		obj["organizational_unit"] = val
+	}
+	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
+	obj["application_administration"] = types.BoolPointerValue(tkh.GetApplicationAdministration())
+	{
+		val, d := tkhToTFObjectRSROGroupGroupAuditConfigRO(false, tkh.GetAuditConfig())
+		diags.Append(d...)
+		obj["audit_config"] = val
+	}
+	obj["audit_requested"] = types.BoolPointerValue(tkh.GetAuditRequested())
+	{
+		val, d := tkhToTFObjectRSROGroupGroupPrimerRO(false, tkh.GetAuthorizingGroupAuditing())
+		diags.Append(d...)
+		obj["authorizing_group_auditing"] = val
+	}
+	{
+		val, d := tkhToTFObjectRSROGroupGroupPrimerRO(false, tkh.GetAuthorizingGroupDelegation())
+		diags.Append(d...)
+		obj["authorizing_group_delegation"] = val
+	}
+	{
+		val, d := tkhToTFObjectRSROGroupGroupPrimerRO(false, tkh.GetAuthorizingGroupMembership())
+		diags.Append(d...)
+		obj["authorizing_group_membership"] = val
+	}
+	{
+		val, d := tkhToTFObjectRSROGroupGroupPrimerRO(false, tkh.GetAuthorizingGroupProvisioning())
+		diags.Append(d...)
+		obj["authorizing_group_provisioning"] = val
+	}
+	{
+		elemType := attrs["authorizing_group_types"].(types.SetType).ElemType
+		val, d := sliceToTFSet(elemType, tkh.GetAuthorizingGroupTypes(), func(tkh keyhubmodel.RequestAuthorizingGroupType, diags *diag.Diagnostics) attr.Value {
+			return types.StringValue(tkh.String())
+		})
+		diags.Append(d...)
+		obj["authorizing_group_types"] = val
+	}
+	{
+		val, d := tkhToTFObjectRSROGroupGroupClassificationPrimerRO(false, tkh.GetClassification())
+		diags.Append(d...)
+		obj["classification"] = val
+	}
+	obj["description"] = types.StringPointerValue(tkh.GetDescription())
+	obj["extended_access"] = stringerToTF(tkh.GetExtendedAccess())
+	obj["hide_audit_trail"] = types.BoolPointerValue(tkh.GetHideAuditTrail())
+	{
+		val, d := tkhToTFObjectRSROGroupGroupPrimerRO(false, tkh.GetNestedUnder())
+		diags.Append(d...)
+		obj["nested_under"] = val
+	}
+	obj["private_group"] = types.BoolPointerValue(tkh.GetPrivateGroup())
+	obj["profile_administration"] = types.BoolPointerValue(tkh.GetProfileAdministration())
+	obj["record_trail"] = types.BoolPointerValue(tkh.GetRecordTrail())
+	obj["rotating_password_required"] = types.BoolPointerValue(tkh.GetRotatingPasswordRequired())
+	obj["single_managed"] = types.BoolPointerValue(tkh.GetSingleManaged())
+	obj["vault_recovery"] = stringerToTF(tkh.GetVaultRecovery())
+	obj["vault_requires_activation"] = types.BoolPointerValue(tkh.GetVaultRequiresActivation())
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
+func tkhToTFObjectRSROGroupGroupAccessInfoRO(recurse bool, tkh keyhubmodel.GroupGroupAccessInfoable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = groupGroupAccessInfoAttrTypesRSRORecurse
+	} else {
+		attrs = groupGroupAccessInfoAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -1589,7 +2456,55 @@ func tkhToTFObjectRSGroupGroupAccount(recurse bool, tkh keyhubmodel.GroupGroupAc
 		}
 	}
 	obj["uuid"] = withUuidToTF(tkh)
-	obj["directory_uuid"] = withUuidToTF(tkh.GetDirectory())
+	{
+		val, d := tkhToTFObjectRSRODirectoryAccountDirectoryPrimerRO(false, tkh.GetDirectory())
+		diags.Append(d...)
+		obj["directory"] = val
+	}
+	obj["disconnected_nested"] = types.BoolPointerValue(tkh.GetDisconnectedNested())
+	obj["end_date"] = stringerToTF(tkh.GetEndDate())
+	obj["last_used"] = stringerToTF(tkh.GetLastUsed())
+	obj["nested"] = types.BoolPointerValue(tkh.GetNested())
+	obj["provisioning_end_time"] = timePointerToTF(tkh.GetProvisioningEndTime())
+	obj["provisioning_permission_end_time"] = timePointerToTF(tkh.GetProvisioningPermissionEndTime())
+	obj["rights"] = stringerToTF(tkh.GetRights())
+	obj["two_factor_status"] = stringerToTF(tkh.GetTwoFactorStatus())
+	obj["visible_for_provisioning"] = types.BoolPointerValue(tkh.GetVisibleForProvisioning())
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
+func tkhToTFObjectRSROGroupGroupAccountRO(recurse bool, tkh keyhubmodel.GroupGroupAccountable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = groupGroupAccountAttrTypesRSRORecurse
+	} else {
+		attrs = groupGroupAccountAttrTypesRSRO
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	if recurse {
+		obj["additional"] = types.ListNull(types.StringType)
+	}
+	if recurse {
+		{
+			val, d := tkhToTFObjectRSROGroupGroupAccount_additionalObjectsRO(false, tkh.GetAdditionalObjects())
+			diags.Append(d...)
+			maps.Copy(obj, val.Attributes())
+		}
+	}
+	obj["uuid"] = withUuidToTF(tkh)
+	{
+		val, d := tkhToTFObjectRSRODirectoryAccountDirectoryPrimerRO(false, tkh.GetDirectory())
+		diags.Append(d...)
+		obj["directory"] = val
+	}
 	obj["disconnected_nested"] = types.BoolPointerValue(tkh.GetDisconnectedNested())
 	obj["end_date"] = stringerToTF(tkh.GetEndDate())
 	obj["last_used"] = stringerToTF(tkh.GetLastUsed())
@@ -1634,6 +2549,35 @@ func tkhToTFObjectRSGroupGroupAccountLinkableWrapper(recurse bool, tkh keyhubmod
 	return objVal, diags
 }
 
+func tkhToTFObjectRSROGroupGroupAccountLinkableWrapperRO(recurse bool, tkh keyhubmodel.GroupGroupAccountLinkableWrapperable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = groupGroupAccountLinkableWrapperAttrTypesRSRORecurse
+	} else {
+		attrs = groupGroupAccountLinkableWrapperAttrTypesRSRO
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	{
+		elemType := attrs["items"].(types.ListType).ElemType
+		val, d := sliceToTFList(elemType, tkh.GetItems(), func(tkh keyhubmodel.GroupGroupAccountable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectRSROGroupGroupAccountRO(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["items"] = val
+	}
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
 func tkhToTFObjectRSGroupGroupAccount_additionalObjects(recurse bool, tkh keyhubmodel.GroupGroupAccount_additionalObjectsable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
@@ -1648,7 +2592,31 @@ func tkhToTFObjectRSGroupGroupAccount_additionalObjects(recurse bool, tkh keyhub
 
 	obj := make(map[string]attr.Value)
 	{
-		val, d := tkhToTFObjectRSAuditInfo(recurse, tkh.GetAudit())
+		val, d := tkhToTFObjectRSROAuditInfoRO(recurse, tkh.GetAudit())
+		diags.Append(d...)
+		obj["audit"] = val
+	}
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
+func tkhToTFObjectRSROGroupGroupAccount_additionalObjectsRO(recurse bool, tkh keyhubmodel.GroupGroupAccount_additionalObjectsable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = groupGroupAccount_additionalObjectsAttrTypesRSRORecurse
+	} else {
+		attrs = groupGroupAccount_additionalObjectsAttrTypesRSRO
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	{
+		val, d := tkhToTFObjectRSROAuditInfoRO(recurse, tkh.GetAudit())
 		diags.Append(d...)
 		obj["audit"] = val
 	}
@@ -1705,13 +2673,60 @@ func tkhToTFObjectRSGroupGroupAuditConfig(recurse bool, tkh keyhubmodel.GroupGro
 	return objVal, diags
 }
 
-func tkhToTFObjectRSGroupGroupAuditingInfo(recurse bool, tkh keyhubmodel.GroupGroupAuditingInfoable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROGroupGroupAuditConfigRO(recurse bool, tkh keyhubmodel.GroupGroupAuditConfigable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = groupGroupAuditingInfoAttrTypesRSRecurse
+		attrs = groupGroupAuditConfigAttrTypesRSRORecurse
 	} else {
-		attrs = groupGroupAuditingInfoAttrTypesRS
+		attrs = groupGroupAuditConfigAttrTypesRSRO
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	{
+		elemType := attrs["links"].(types.ListType).ElemType
+		val, d := sliceToTFList(elemType, tkh.GetLinks(), func(tkh keyhubmodel.RestLinkable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectRSRORestLinkRO(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["links"] = val
+	}
+	{
+		elemType := attrs["permissions"].(types.ListType).ElemType
+		val, d := sliceToTFList(elemType, tkh.GetPermissions(), func(tkh keyhubmodel.AuthPermissionable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectRSROAuthPermissionRO(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["permissions"] = val
+	}
+	{
+		elemType := attrs["months"].(types.SetType).ElemType
+		val, d := sliceToTFSet(elemType, tkh.GetMonths(), func(tkh keyhubmodel.Month, diags *diag.Diagnostics) attr.Value {
+			return types.StringValue(tkh.String())
+		})
+		diags.Append(d...)
+		obj["months"] = val
+	}
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
+func tkhToTFObjectRSROGroupGroupAuditingInfoRO(recurse bool, tkh keyhubmodel.GroupGroupAuditingInfoable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = groupGroupAuditingInfoAttrTypesRSRORecurse
+	} else {
+		attrs = groupGroupAuditingInfoAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -1773,6 +2788,47 @@ func tkhToTFObjectRSGroupGroupClassificationPrimer(recurse bool, tkh keyhubmodel
 	return objVal, diags
 }
 
+func tkhToTFObjectRSROGroupGroupClassificationPrimerRO(recurse bool, tkh keyhubmodel.GroupGroupClassificationPrimerable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = groupGroupClassificationPrimerAttrTypesRSRORecurse
+	} else {
+		attrs = groupGroupClassificationPrimerAttrTypesRSRO
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	{
+		elemType := attrs["links"].(types.ListType).ElemType
+		val, d := sliceToTFList(elemType, tkh.GetLinks(), func(tkh keyhubmodel.RestLinkable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectRSRORestLinkRO(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["links"] = val
+	}
+	{
+		elemType := attrs["permissions"].(types.ListType).ElemType
+		val, d := sliceToTFList(elemType, tkh.GetPermissions(), func(tkh keyhubmodel.AuthPermissionable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectRSROAuthPermissionRO(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["permissions"] = val
+	}
+	obj["name"] = types.StringPointerValue(tkh.GetName())
+	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
 func tkhToTFObjectRSGroupGroupClient(recurse bool, tkh keyhubmodel.GroupGroupClientable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
@@ -1817,7 +2873,11 @@ func tkhToTFObjectRSGroupGroupClient(recurse bool, tkh keyhubmodel.GroupGroupCli
 		obj["permissions"] = val
 	}
 	obj["activation_required"] = types.BoolPointerValue(tkh.GetActivationRequired())
-	obj["client_uuid"] = withUuidToTF(tkh.GetClient())
+	{
+		val, d := tkhToTFObjectRSROClientClientApplicationPrimerRO(false, tkh.GetClient())
+		diags.Append(d...)
+		obj["client"] = val
+	}
 	obj["group_uuid"] = withUuidToTF(tkh.GetGroup())
 	obj["owner_uuid"] = withUuidToTF(tkh.GetOwner())
 	obj["technical_administrator_uuid"] = withUuidToTF(tkh.GetTechnicalAdministrator())
@@ -1827,13 +2887,83 @@ func tkhToTFObjectRSGroupGroupClient(recurse bool, tkh keyhubmodel.GroupGroupCli
 	return objVal, diags
 }
 
-func tkhToTFObjectRSGroupGroupClientLinkableWrapper(recurse bool, tkh keyhubmodel.GroupGroupClientLinkableWrapperable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROGroupGroupClientRO(recurse bool, tkh keyhubmodel.GroupGroupClientable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = groupGroupClientLinkableWrapperAttrTypesRSRecurse
+		attrs = groupGroupClientAttrTypesRSRORecurse
 	} else {
-		attrs = groupGroupClientLinkableWrapperAttrTypesRS
+		attrs = groupGroupClientAttrTypesRSRO
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	if recurse {
+		obj["additional"] = types.ListNull(types.StringType)
+	}
+	if recurse {
+		{
+			val, d := tkhToTFObjectRSROGroupGroupClient_additionalObjectsRO(false, tkh.GetAdditionalObjects())
+			diags.Append(d...)
+			maps.Copy(obj, val.Attributes())
+		}
+	}
+	{
+		elemType := attrs["links"].(types.ListType).ElemType
+		val, d := sliceToTFList(elemType, tkh.GetLinks(), func(tkh keyhubmodel.RestLinkable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectRSRORestLinkRO(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["links"] = val
+	}
+	{
+		elemType := attrs["permissions"].(types.ListType).ElemType
+		val, d := sliceToTFList(elemType, tkh.GetPermissions(), func(tkh keyhubmodel.AuthPermissionable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectRSROAuthPermissionRO(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["permissions"] = val
+	}
+	obj["activation_required"] = types.BoolPointerValue(tkh.GetActivationRequired())
+	{
+		val, d := tkhToTFObjectRSROClientClientApplicationPrimerRO(false, tkh.GetClient())
+		diags.Append(d...)
+		obj["client"] = val
+	}
+	{
+		val, d := tkhToTFObjectRSROGroupGroupPrimerRO(false, tkh.GetGroup())
+		diags.Append(d...)
+		obj["group"] = val
+	}
+	{
+		val, d := tkhToTFObjectRSROGroupGroupPrimerRO(false, tkh.GetOwner())
+		diags.Append(d...)
+		obj["owner"] = val
+	}
+	{
+		val, d := tkhToTFObjectRSROGroupGroupPrimerRO(false, tkh.GetTechnicalAdministrator())
+		diags.Append(d...)
+		obj["technical_administrator"] = val
+	}
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
+func tkhToTFObjectRSROGroupGroupClientLinkableWrapperRO(recurse bool, tkh keyhubmodel.GroupGroupClientLinkableWrapperable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = groupGroupClientLinkableWrapperAttrTypesRSRORecurse
+	} else {
+		attrs = groupGroupClientLinkableWrapperAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -1843,7 +2973,7 @@ func tkhToTFObjectRSGroupGroupClientLinkableWrapper(recurse bool, tkh keyhubmode
 	{
 		elemType := attrs["items"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetItems(), func(tkh keyhubmodel.GroupGroupClientable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSGroupGroupClient(recurse, tkh)
+			val, d := tkhToTFObjectRSROGroupGroupClientRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -1886,6 +3016,36 @@ func tkhToTFObjectRSGroupGroupClientLinkableWrapperWithCount(recurse bool, tkh k
 	return objVal, diags
 }
 
+func tkhToTFObjectRSROGroupGroupClientLinkableWrapperWithCountRO(recurse bool, tkh keyhubmodel.GroupGroupClientLinkableWrapperWithCountable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = groupGroupClientLinkableWrapperWithCountAttrTypesRSRORecurse
+	} else {
+		attrs = groupGroupClientLinkableWrapperWithCountAttrTypesRSRO
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	obj["count"] = types.Int64PointerValue(tkh.GetCount())
+	{
+		elemType := attrs["items"].(types.ListType).ElemType
+		val, d := sliceToTFList(elemType, tkh.GetItems(), func(tkh keyhubmodel.GroupGroupClientable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectRSROGroupGroupClientRO(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["items"] = val
+	}
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
 func tkhToTFObjectRSGroupGroupClient_additionalObjects(recurse bool, tkh keyhubmodel.GroupGroupClient_additionalObjectsable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
@@ -1900,7 +3060,7 @@ func tkhToTFObjectRSGroupGroupClient_additionalObjects(recurse bool, tkh keyhubm
 
 	obj := make(map[string]attr.Value)
 	{
-		val, d := tkhToTFObjectRSAuditInfo(recurse, tkh.GetAudit())
+		val, d := tkhToTFObjectRSROAuditInfoRO(recurse, tkh.GetAudit())
 		diags.Append(d...)
 		obj["audit"] = val
 	}
@@ -1910,13 +3070,37 @@ func tkhToTFObjectRSGroupGroupClient_additionalObjects(recurse bool, tkh keyhubm
 	return objVal, diags
 }
 
-func tkhToTFObjectRSGroupGroupGlobalRoleInfo(recurse bool, tkh keyhubmodel.GroupGroupGlobalRoleInfoable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROGroupGroupClient_additionalObjectsRO(recurse bool, tkh keyhubmodel.GroupGroupClient_additionalObjectsable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = groupGroupGlobalRoleInfoAttrTypesRSRecurse
+		attrs = groupGroupClient_additionalObjectsAttrTypesRSRORecurse
 	} else {
-		attrs = groupGroupGlobalRoleInfoAttrTypesRS
+		attrs = groupGroupClient_additionalObjectsAttrTypesRSRO
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	{
+		val, d := tkhToTFObjectRSROAuditInfoRO(recurse, tkh.GetAudit())
+		diags.Append(d...)
+		obj["audit"] = val
+	}
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
+func tkhToTFObjectRSROGroupGroupGlobalRoleInfoRO(recurse bool, tkh keyhubmodel.GroupGroupGlobalRoleInfoable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = groupGroupGlobalRoleInfoAttrTypesRSRORecurse
+	} else {
+		attrs = groupGroupGlobalRoleInfoAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -1926,7 +3110,7 @@ func tkhToTFObjectRSGroupGroupGlobalRoleInfo(recurse bool, tkh keyhubmodel.Group
 	{
 		elemType := attrs["auditor_group_for"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetAuditorGroupFor(), func(tkh keyhubmodel.OrganizationOrganizationalUnitPrimerable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSOrganizationOrganizationalUnitPrimer(recurse, tkh)
+			val, d := tkhToTFObjectRSROOrganizationOrganizationalUnitPrimerRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -1936,7 +3120,7 @@ func tkhToTFObjectRSGroupGroupGlobalRoleInfo(recurse bool, tkh keyhubmodel.Group
 	{
 		elemType := attrs["create_group_approve_group_for"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetCreateGroupApproveGroupFor(), func(tkh keyhubmodel.OrganizationOrganizationalUnitPrimerable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSOrganizationOrganizationalUnitPrimer(recurse, tkh)
+			val, d := tkhToTFObjectRSROOrganizationOrganizationalUnitPrimerRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -1946,7 +3130,7 @@ func tkhToTFObjectRSGroupGroupGlobalRoleInfo(recurse bool, tkh keyhubmodel.Group
 	{
 		elemType := attrs["enable_tech_admin_approve_group_for"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetEnableTechAdminApproveGroupFor(), func(tkh keyhubmodel.OrganizationOrganizationalUnitPrimerable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSOrganizationOrganizationalUnitPrimer(recurse, tkh)
+			val, d := tkhToTFObjectRSROOrganizationOrganizationalUnitPrimerRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -1956,7 +3140,7 @@ func tkhToTFObjectRSGroupGroupGlobalRoleInfo(recurse bool, tkh keyhubmodel.Group
 	{
 		elemType := attrs["recovery_fallback_group_for"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetRecoveryFallbackGroupFor(), func(tkh keyhubmodel.OrganizationOrganizationalUnitPrimerable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSOrganizationOrganizationalUnitPrimer(recurse, tkh)
+			val, d := tkhToTFObjectRSROOrganizationOrganizationalUnitPrimerRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -1966,7 +3150,7 @@ func tkhToTFObjectRSGroupGroupGlobalRoleInfo(recurse bool, tkh keyhubmodel.Group
 	{
 		elemType := attrs["remove_group_approve_group_for"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetRemoveGroupApproveGroupFor(), func(tkh keyhubmodel.OrganizationOrganizationalUnitPrimerable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSOrganizationOrganizationalUnitPrimer(recurse, tkh)
+			val, d := tkhToTFObjectRSROOrganizationOrganizationalUnitPrimerRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -1979,13 +3163,13 @@ func tkhToTFObjectRSGroupGroupGlobalRoleInfo(recurse bool, tkh keyhubmodel.Group
 	return objVal, diags
 }
 
-func tkhToTFObjectRSGroupGroupInfo(recurse bool, tkh keyhubmodel.GroupGroupInfoable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROGroupGroupInfoRO(recurse bool, tkh keyhubmodel.GroupGroupInfoable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = groupGroupInfoAttrTypesRSRecurse
+		attrs = groupGroupInfoAttrTypesRSRORecurse
 	} else {
-		attrs = groupGroupInfoAttrTypesRS
+		attrs = groupGroupInfoAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -2004,13 +3188,13 @@ func tkhToTFObjectRSGroupGroupInfo(recurse bool, tkh keyhubmodel.GroupGroupInfoa
 	return objVal, diags
 }
 
-func tkhToTFObjectRSGroupGroupLinkableWrapper(recurse bool, tkh keyhubmodel.GroupGroupLinkableWrapperable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROGroupGroupLinkableWrapperRO(recurse bool, tkh keyhubmodel.GroupGroupLinkableWrapperable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = groupGroupLinkableWrapperAttrTypesRSRecurse
+		attrs = groupGroupLinkableWrapperAttrTypesRSRORecurse
 	} else {
-		attrs = groupGroupLinkableWrapperAttrTypesRS
+		attrs = groupGroupLinkableWrapperAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -2020,7 +3204,7 @@ func tkhToTFObjectRSGroupGroupLinkableWrapper(recurse bool, tkh keyhubmodel.Grou
 	{
 		elemType := attrs["items"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetItems(), func(tkh keyhubmodel.GroupGroupable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSGroupGroup(recurse, tkh)
+			val, d := tkhToTFObjectRSROGroupGroupRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -2033,13 +3217,13 @@ func tkhToTFObjectRSGroupGroupLinkableWrapper(recurse bool, tkh keyhubmodel.Grou
 	return objVal, diags
 }
 
-func tkhToTFObjectRSGroupGroupLinkableWrapperWithCount(recurse bool, tkh keyhubmodel.GroupGroupLinkableWrapperWithCountable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROGroupGroupLinkableWrapperWithCountRO(recurse bool, tkh keyhubmodel.GroupGroupLinkableWrapperWithCountable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = groupGroupLinkableWrapperWithCountAttrTypesRSRecurse
+		attrs = groupGroupLinkableWrapperWithCountAttrTypesRSRORecurse
 	} else {
-		attrs = groupGroupLinkableWrapperWithCountAttrTypesRS
+		attrs = groupGroupLinkableWrapperWithCountAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -2050,7 +3234,7 @@ func tkhToTFObjectRSGroupGroupLinkableWrapperWithCount(recurse bool, tkh keyhubm
 	{
 		elemType := attrs["items"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetItems(), func(tkh keyhubmodel.GroupGroupable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSGroupGroup(recurse, tkh)
+			val, d := tkhToTFObjectRSROGroupGroupRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -2106,13 +3290,60 @@ func tkhToTFObjectRSGroupGroupPrimer(recurse bool, tkh keyhubmodel.GroupGroupPri
 	return objVal, diags
 }
 
-func tkhToTFObjectRSGroupGroupPrimerLinkableWrapper(recurse bool, tkh keyhubmodel.GroupGroupPrimerLinkableWrapperable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROGroupGroupPrimerRO(recurse bool, tkh keyhubmodel.GroupGroupPrimerable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = groupGroupPrimerLinkableWrapperAttrTypesRSRecurse
+		attrs = groupGroupPrimerAttrTypesRSRORecurse
 	} else {
-		attrs = groupGroupPrimerLinkableWrapperAttrTypesRS
+		attrs = groupGroupPrimerAttrTypesRSRO
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	{
+		elemType := attrs["links"].(types.ListType).ElemType
+		val, d := sliceToTFList(elemType, tkh.GetLinks(), func(tkh keyhubmodel.RestLinkable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectRSRORestLinkRO(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["links"] = val
+	}
+	{
+		elemType := attrs["permissions"].(types.ListType).ElemType
+		val, d := sliceToTFList(elemType, tkh.GetPermissions(), func(tkh keyhubmodel.AuthPermissionable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectRSROAuthPermissionRO(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["permissions"] = val
+	}
+	obj["admin"] = types.BoolPointerValue(tkh.GetAdmin())
+	obj["name"] = types.StringPointerValue(tkh.GetName())
+	{
+		val, d := tkhToTFObjectRSROOrganizationOrganizationalUnitPrimerRO(recurse, tkh.GetOrganizationalUnit())
+		diags.Append(d...)
+		obj["organizational_unit"] = val
+	}
+	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
+func tkhToTFObjectRSROGroupGroupPrimerLinkableWrapperRO(recurse bool, tkh keyhubmodel.GroupGroupPrimerLinkableWrapperable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = groupGroupPrimerLinkableWrapperAttrTypesRSRORecurse
+	} else {
+		attrs = groupGroupPrimerLinkableWrapperAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -2122,7 +3353,7 @@ func tkhToTFObjectRSGroupGroupPrimerLinkableWrapper(recurse bool, tkh keyhubmode
 	{
 		elemType := attrs["items"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetItems(), func(tkh keyhubmodel.GroupGroupPrimerable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSGroupGroupPrimer(recurse, tkh)
+			val, d := tkhToTFObjectRSROGroupGroupPrimerRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -2154,12 +3385,12 @@ func tkhToTFObjectRSGroupGroup_additionalObjects(recurse bool, tkh keyhubmodel.G
 		obj["accounts"] = getItemsAttr(val, attrs["accounts"])
 	}
 	{
-		val, d := tkhToTFObjectRSClientClientApplicationLinkableWrapper(recurse, tkh.GetAdministeredClients())
+		val, d := tkhToTFObjectRSROClientClientApplicationLinkableWrapperRO(recurse, tkh.GetAdministeredClients())
 		diags.Append(d...)
 		obj["administered_clients"] = getItemsAttr(val, attrs["administered_clients"])
 	}
 	{
-		val, d := tkhToTFObjectRSProvisioningProvisionedSystemLinkableWrapper(recurse, tkh.GetAdministeredSystems())
+		val, d := tkhToTFObjectRSROProvisioningProvisionedSystemLinkableWrapperRO(recurse, tkh.GetAdministeredSystems())
 		diags.Append(d...)
 		obj["administered_systems"] = getItemsAttr(val, attrs["administered_systems"])
 	}
@@ -2169,12 +3400,12 @@ func tkhToTFObjectRSGroupGroup_additionalObjects(recurse bool, tkh keyhubmodel.G
 		obj["admins"] = getItemsAttr(val, attrs["admins"])
 	}
 	{
-		val, d := tkhToTFObjectRSAuditInfo(recurse, tkh.GetAudit())
+		val, d := tkhToTFObjectRSROAuditInfoRO(recurse, tkh.GetAudit())
 		diags.Append(d...)
 		obj["audit"] = val
 	}
 	{
-		val, d := tkhToTFObjectRSGroupGroupLinkableWrapperWithCount(recurse, tkh.GetAuthorizedGroups())
+		val, d := tkhToTFObjectRSROGroupGroupLinkableWrapperWithCountRO(recurse, tkh.GetAuthorizedGroups())
 		diags.Append(d...)
 		obj["authorized_groups"] = getItemsAttr(val, attrs["authorized_groups"])
 	}
@@ -2184,113 +3415,278 @@ func tkhToTFObjectRSGroupGroup_additionalObjects(recurse bool, tkh keyhubmodel.G
 		obj["client_permissions"] = getItemsAttr(val, attrs["client_permissions"])
 	}
 	{
-		val, d := tkhToTFObjectRSGroupGroupClientLinkableWrapper(recurse, tkh.GetClients())
+		val, d := tkhToTFObjectRSROGroupGroupClientLinkableWrapperRO(recurse, tkh.GetClients())
 		diags.Append(d...)
 		obj["clients"] = getItemsAttr(val, attrs["clients"])
 	}
 	{
-		val, d := tkhToTFObjectRSProvisioningProvisionedSystemLinkableWrapper(recurse, tkh.GetContentAdministeredSystems())
+		val, d := tkhToTFObjectRSROProvisioningProvisionedSystemLinkableWrapperRO(recurse, tkh.GetContentAdministeredSystems())
 		diags.Append(d...)
 		obj["content_administered_systems"] = getItemsAttr(val, attrs["content_administered_systems"])
 	}
 	{
-		val, d := tkhToTFObjectRSGroupGroupGlobalRoleInfo(recurse, tkh.GetGlobalRoles())
+		val, d := tkhToTFObjectRSROGroupGroupGlobalRoleInfoRO(recurse, tkh.GetGlobalRoles())
 		diags.Append(d...)
 		obj["global_roles"] = val
 	}
 	{
-		val, d := tkhToTFObjectRSGroupGroupAccessInfo(recurse, tkh.GetGroupAccessInfo())
+		val, d := tkhToTFObjectRSROGroupGroupAccessInfoRO(recurse, tkh.GetGroupAccessInfo())
 		diags.Append(d...)
 		obj["group_access_info"] = val
 	}
 	{
-		val, d := tkhToTFObjectRSGroupGroupAuditingInfo(recurse, tkh.GetGroupauditinginfo())
+		val, d := tkhToTFObjectRSROGroupGroupAuditingInfoRO(recurse, tkh.GetGroupauditinginfo())
 		diags.Append(d...)
 		obj["groupauditinginfo"] = val
 	}
 	{
-		val, d := tkhToTFObjectRSGroupGroupInfo(recurse, tkh.GetGroupinfo())
+		val, d := tkhToTFObjectRSROGroupGroupInfoRO(recurse, tkh.GetGroupinfo())
 		diags.Append(d...)
 		obj["groupinfo"] = val
 	}
 	{
-		val, d := tkhToTFObjectRSDirectoryAccountDirectorySummaryLinkableWrapper(recurse, tkh.GetHelpdesk())
+		val, d := tkhToTFObjectRSRODirectoryAccountDirectorySummaryLinkableWrapperRO(recurse, tkh.GetHelpdesk())
 		diags.Append(d...)
 		obj["helpdesk"] = getItemsAttr(val, attrs["helpdesk"])
 	}
 	{
-		val, d := tkhToTFObjectRSMarkItemMarkers(recurse, tkh.GetMarkers())
+		val, d := tkhToTFObjectRSROMarkItemMarkersRO(recurse, tkh.GetMarkers())
 		diags.Append(d...)
 		obj["markers"] = val
 	}
 	{
-		val, d := tkhToTFObjectRSGroupGroupAccount(recurse, tkh.GetMyaccount())
+		val, d := tkhToTFObjectRSROGroupGroupAccountRO(recurse, tkh.GetMyaccount())
 		diags.Append(d...)
 		obj["myaccount"] = val
 	}
 	{
-		val, d := tkhToTFObjectRSGroupGroupAccount(recurse, tkh.GetMydelegatedaccount())
+		val, d := tkhToTFObjectRSROGroupGroupAccountRO(recurse, tkh.GetMydelegatedaccount())
 		diags.Append(d...)
 		obj["mydelegatedaccount"] = val
 	}
 	{
-		val, d := tkhToTFObjectRSGroupGroupPrimerLinkableWrapper(recurse, tkh.GetNestedGroups())
+		val, d := tkhToTFObjectRSROGroupGroupPrimerLinkableWrapperRO(recurse, tkh.GetNestedGroups())
 		diags.Append(d...)
 		obj["nested_groups"] = getItemsAttr(val, attrs["nested_groups"])
 	}
 	{
-		val, d := tkhToTFObjectRSProfileAccessProfileLinkableWrapper(recurse, tkh.GetOwnedAccessProfiles())
+		val, d := tkhToTFObjectRSROProfileAccessProfileLinkableWrapperRO(recurse, tkh.GetOwnedAccessProfiles())
 		diags.Append(d...)
 		obj["owned_access_profiles"] = getItemsAttr(val, attrs["owned_access_profiles"])
 	}
 	{
-		val, d := tkhToTFObjectRSClientClientApplicationLinkableWrapper(recurse, tkh.GetOwnedClients())
+		val, d := tkhToTFObjectRSROClientClientApplicationLinkableWrapperRO(recurse, tkh.GetOwnedClients())
 		diags.Append(d...)
 		obj["owned_clients"] = getItemsAttr(val, attrs["owned_clients"])
 	}
 	{
-		val, d := tkhToTFObjectRSDirectoryAccountDirectoryLinkableWrapper(recurse, tkh.GetOwnedDirectories())
+		val, d := tkhToTFObjectRSRODirectoryAccountDirectoryLinkableWrapperRO(recurse, tkh.GetOwnedDirectories())
 		diags.Append(d...)
 		obj["owned_directories"] = getItemsAttr(val, attrs["owned_directories"])
 	}
 	{
-		val, d := tkhToTFObjectRSProvisioningOwnedGroupOnSystemsWrapper(recurse, tkh.GetOwnedGroupsOnSystem())
+		val, d := tkhToTFObjectRSROProvisioningOwnedGroupOnSystemsWrapperRO(recurse, tkh.GetOwnedGroupsOnSystem())
 		diags.Append(d...)
 		obj["owned_groups_on_system"] = val
 	}
 	{
-		val, d := tkhToTFObjectRSOrganizationOrganizationalUnitLinkableWrapper(recurse, tkh.GetOwnedOrganizationalUnits())
+		val, d := tkhToTFObjectRSROOrganizationOrganizationalUnitLinkableWrapperRO(recurse, tkh.GetOwnedOrganizationalUnits())
 		diags.Append(d...)
 		obj["owned_organizational_units"] = getItemsAttr(val, attrs["owned_organizational_units"])
 	}
 	{
-		val, d := tkhToTFObjectRSProvisioningProvisionedSystemLinkableWrapper(recurse, tkh.GetOwnedSystems())
+		val, d := tkhToTFObjectRSROProvisioningProvisionedSystemLinkableWrapperRO(recurse, tkh.GetOwnedSystems())
 		diags.Append(d...)
 		obj["owned_systems"] = getItemsAttr(val, attrs["owned_systems"])
 	}
 	{
-		val, d := tkhToTFObjectRSAuditGroupAuditLinkableWrapper(recurse, tkh.GetRecentAudits())
+		val, d := tkhToTFObjectRSROAuditGroupAuditLinkableWrapperRO(recurse, tkh.GetRecentAudits())
 		diags.Append(d...)
 		obj["recent_audits"] = getItemsAttr(val, attrs["recent_audits"])
 	}
 	obj["requeststatus"] = stringerToTF(tkh.GetRequeststatus())
 	{
-		val, d := tkhToTFObjectRSServiceaccountServiceAccountLinkableWrapper(recurse, tkh.GetServiceAccounts())
+		val, d := tkhToTFObjectRSROServiceaccountServiceAccountLinkableWrapperRO(recurse, tkh.GetServiceAccounts())
 		diags.Append(d...)
 		obj["service_accounts"] = getItemsAttr(val, attrs["service_accounts"])
 	}
 	{
-		val, d := tkhToTFObjectRSGroupProvisioningGroupLinkableWrapper(recurse, tkh.GetSystems())
+		val, d := tkhToTFObjectRSROGroupProvisioningGroupLinkableWrapperRO(recurse, tkh.GetSystems())
 		diags.Append(d...)
 		obj["systems"] = getItemsAttr(val, attrs["systems"])
 	}
 	{
-		val, d := tkhToTFObjectRSVaultVault(recurse, tkh.GetVault())
+		val, d := tkhToTFObjectRSROVaultVaultRO(recurse, tkh.GetVault())
 		diags.Append(d...)
 		obj["vault"] = val
 	}
 	{
-		val, d := tkhToTFObjectRSWebhookWebhookLinkableWrapper(recurse, tkh.GetWebhooks())
+		val, d := tkhToTFObjectRSROWebhookWebhookLinkableWrapperRO(recurse, tkh.GetWebhooks())
+		diags.Append(d...)
+		obj["webhooks"] = getItemsAttr(val, attrs["webhooks"])
+	}
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
+func tkhToTFObjectRSROGroupGroup_additionalObjectsRO(recurse bool, tkh keyhubmodel.GroupGroup_additionalObjectsable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = groupGroup_additionalObjectsAttrTypesRSRORecurse
+	} else {
+		attrs = groupGroup_additionalObjectsAttrTypesRSRO
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	{
+		val, d := tkhToTFObjectRSROGroupGroupAccountLinkableWrapperRO(recurse, tkh.GetAccounts())
+		diags.Append(d...)
+		obj["accounts"] = getItemsAttr(val, attrs["accounts"])
+	}
+	{
+		val, d := tkhToTFObjectRSROClientClientApplicationLinkableWrapperRO(recurse, tkh.GetAdministeredClients())
+		diags.Append(d...)
+		obj["administered_clients"] = getItemsAttr(val, attrs["administered_clients"])
+	}
+	{
+		val, d := tkhToTFObjectRSROProvisioningProvisionedSystemLinkableWrapperRO(recurse, tkh.GetAdministeredSystems())
+		diags.Append(d...)
+		obj["administered_systems"] = getItemsAttr(val, attrs["administered_systems"])
+	}
+	{
+		val, d := tkhToTFObjectRSROGroupGroupAccountLinkableWrapperRO(recurse, tkh.GetAdmins())
+		diags.Append(d...)
+		obj["admins"] = getItemsAttr(val, attrs["admins"])
+	}
+	{
+		val, d := tkhToTFObjectRSROAuditInfoRO(recurse, tkh.GetAudit())
+		diags.Append(d...)
+		obj["audit"] = val
+	}
+	{
+		val, d := tkhToTFObjectRSROGroupGroupLinkableWrapperWithCountRO(recurse, tkh.GetAuthorizedGroups())
+		diags.Append(d...)
+		obj["authorized_groups"] = getItemsAttr(val, attrs["authorized_groups"])
+	}
+	{
+		val, d := tkhToTFObjectRSROClientOAuth2ClientPermissionWithClientLinkableWrapperRO(recurse, tkh.GetClientPermissions())
+		diags.Append(d...)
+		obj["client_permissions"] = getItemsAttr(val, attrs["client_permissions"])
+	}
+	{
+		val, d := tkhToTFObjectRSROGroupGroupClientLinkableWrapperRO(recurse, tkh.GetClients())
+		diags.Append(d...)
+		obj["clients"] = getItemsAttr(val, attrs["clients"])
+	}
+	{
+		val, d := tkhToTFObjectRSROProvisioningProvisionedSystemLinkableWrapperRO(recurse, tkh.GetContentAdministeredSystems())
+		diags.Append(d...)
+		obj["content_administered_systems"] = getItemsAttr(val, attrs["content_administered_systems"])
+	}
+	{
+		val, d := tkhToTFObjectRSROGroupGroupGlobalRoleInfoRO(recurse, tkh.GetGlobalRoles())
+		diags.Append(d...)
+		obj["global_roles"] = val
+	}
+	{
+		val, d := tkhToTFObjectRSROGroupGroupAccessInfoRO(recurse, tkh.GetGroupAccessInfo())
+		diags.Append(d...)
+		obj["group_access_info"] = val
+	}
+	{
+		val, d := tkhToTFObjectRSROGroupGroupAuditingInfoRO(recurse, tkh.GetGroupauditinginfo())
+		diags.Append(d...)
+		obj["groupauditinginfo"] = val
+	}
+	{
+		val, d := tkhToTFObjectRSROGroupGroupInfoRO(recurse, tkh.GetGroupinfo())
+		diags.Append(d...)
+		obj["groupinfo"] = val
+	}
+	{
+		val, d := tkhToTFObjectRSRODirectoryAccountDirectorySummaryLinkableWrapperRO(recurse, tkh.GetHelpdesk())
+		diags.Append(d...)
+		obj["helpdesk"] = getItemsAttr(val, attrs["helpdesk"])
+	}
+	{
+		val, d := tkhToTFObjectRSROMarkItemMarkersRO(recurse, tkh.GetMarkers())
+		diags.Append(d...)
+		obj["markers"] = val
+	}
+	{
+		val, d := tkhToTFObjectRSROGroupGroupAccountRO(recurse, tkh.GetMyaccount())
+		diags.Append(d...)
+		obj["myaccount"] = val
+	}
+	{
+		val, d := tkhToTFObjectRSROGroupGroupAccountRO(recurse, tkh.GetMydelegatedaccount())
+		diags.Append(d...)
+		obj["mydelegatedaccount"] = val
+	}
+	{
+		val, d := tkhToTFObjectRSROGroupGroupPrimerLinkableWrapperRO(recurse, tkh.GetNestedGroups())
+		diags.Append(d...)
+		obj["nested_groups"] = getItemsAttr(val, attrs["nested_groups"])
+	}
+	{
+		val, d := tkhToTFObjectRSROProfileAccessProfileLinkableWrapperRO(recurse, tkh.GetOwnedAccessProfiles())
+		diags.Append(d...)
+		obj["owned_access_profiles"] = getItemsAttr(val, attrs["owned_access_profiles"])
+	}
+	{
+		val, d := tkhToTFObjectRSROClientClientApplicationLinkableWrapperRO(recurse, tkh.GetOwnedClients())
+		diags.Append(d...)
+		obj["owned_clients"] = getItemsAttr(val, attrs["owned_clients"])
+	}
+	{
+		val, d := tkhToTFObjectRSRODirectoryAccountDirectoryLinkableWrapperRO(recurse, tkh.GetOwnedDirectories())
+		diags.Append(d...)
+		obj["owned_directories"] = getItemsAttr(val, attrs["owned_directories"])
+	}
+	{
+		val, d := tkhToTFObjectRSROProvisioningOwnedGroupOnSystemsWrapperRO(recurse, tkh.GetOwnedGroupsOnSystem())
+		diags.Append(d...)
+		obj["owned_groups_on_system"] = val
+	}
+	{
+		val, d := tkhToTFObjectRSROOrganizationOrganizationalUnitLinkableWrapperRO(recurse, tkh.GetOwnedOrganizationalUnits())
+		diags.Append(d...)
+		obj["owned_organizational_units"] = getItemsAttr(val, attrs["owned_organizational_units"])
+	}
+	{
+		val, d := tkhToTFObjectRSROProvisioningProvisionedSystemLinkableWrapperRO(recurse, tkh.GetOwnedSystems())
+		diags.Append(d...)
+		obj["owned_systems"] = getItemsAttr(val, attrs["owned_systems"])
+	}
+	{
+		val, d := tkhToTFObjectRSROAuditGroupAuditLinkableWrapperRO(recurse, tkh.GetRecentAudits())
+		diags.Append(d...)
+		obj["recent_audits"] = getItemsAttr(val, attrs["recent_audits"])
+	}
+	obj["requeststatus"] = stringerToTF(tkh.GetRequeststatus())
+	{
+		val, d := tkhToTFObjectRSROServiceaccountServiceAccountLinkableWrapperRO(recurse, tkh.GetServiceAccounts())
+		diags.Append(d...)
+		obj["service_accounts"] = getItemsAttr(val, attrs["service_accounts"])
+	}
+	{
+		val, d := tkhToTFObjectRSROGroupProvisioningGroupLinkableWrapperRO(recurse, tkh.GetSystems())
+		diags.Append(d...)
+		obj["systems"] = getItemsAttr(val, attrs["systems"])
+	}
+	{
+		val, d := tkhToTFObjectRSROVaultVaultRO(recurse, tkh.GetVault())
+		diags.Append(d...)
+		obj["vault"] = val
+	}
+	{
+		val, d := tkhToTFObjectRSROWebhookWebhookLinkableWrapperRO(recurse, tkh.GetWebhooks())
 		diags.Append(d...)
 		obj["webhooks"] = getItemsAttr(val, attrs["webhooks"])
 	}
@@ -2346,7 +3742,7 @@ func tkhToTFObjectRSGroupProvisioningGroup(recurse bool, tkh keyhubmodel.GroupPr
 	obj["activation_required"] = types.BoolPointerValue(tkh.GetActivationRequired())
 	obj["group_uuid"] = withUuidToTF(tkh.GetGroup())
 	{
-		val, d := tkhToTFObjectRSProvisioningGroupOnSystem(false, tkh.GetGroupOnSystem())
+		val, d := tkhToTFObjectRSROProvisioningGroupOnSystemRO(false, tkh.GetGroupOnSystem())
 		diags.Append(d...)
 		obj["group_on_system"] = val
 	}
@@ -2356,13 +3752,73 @@ func tkhToTFObjectRSGroupProvisioningGroup(recurse bool, tkh keyhubmodel.GroupPr
 	return objVal, diags
 }
 
-func tkhToTFObjectRSGroupProvisioningGroupLinkableWrapper(recurse bool, tkh keyhubmodel.GroupProvisioningGroupLinkableWrapperable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROGroupProvisioningGroupRO(recurse bool, tkh keyhubmodel.GroupProvisioningGroupable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = groupProvisioningGroupLinkableWrapperAttrTypesRSRecurse
+		attrs = groupProvisioningGroupAttrTypesRSRORecurse
 	} else {
-		attrs = groupProvisioningGroupLinkableWrapperAttrTypesRS
+		attrs = groupProvisioningGroupAttrTypesRSRO
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	if recurse {
+		obj["additional"] = types.ListNull(types.StringType)
+	}
+	if recurse {
+		{
+			val, d := tkhToTFObjectRSROGroupProvisioningGroup_additionalObjectsRO(false, tkh.GetAdditionalObjects())
+			diags.Append(d...)
+			maps.Copy(obj, val.Attributes())
+		}
+	}
+	{
+		elemType := attrs["links"].(types.ListType).ElemType
+		val, d := sliceToTFList(elemType, tkh.GetLinks(), func(tkh keyhubmodel.RestLinkable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectRSRORestLinkRO(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["links"] = val
+	}
+	{
+		elemType := attrs["permissions"].(types.ListType).ElemType
+		val, d := sliceToTFList(elemType, tkh.GetPermissions(), func(tkh keyhubmodel.AuthPermissionable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectRSROAuthPermissionRO(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["permissions"] = val
+	}
+	obj["activation_required"] = types.BoolPointerValue(tkh.GetActivationRequired())
+	{
+		val, d := tkhToTFObjectRSROGroupGroupPrimerRO(false, tkh.GetGroup())
+		diags.Append(d...)
+		obj["group"] = val
+	}
+	{
+		val, d := tkhToTFObjectRSROProvisioningGroupOnSystemRO(false, tkh.GetGroupOnSystem())
+		diags.Append(d...)
+		obj["group_on_system"] = val
+	}
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
+func tkhToTFObjectRSROGroupProvisioningGroupLinkableWrapperRO(recurse bool, tkh keyhubmodel.GroupProvisioningGroupLinkableWrapperable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = groupProvisioningGroupLinkableWrapperAttrTypesRSRORecurse
+	} else {
+		attrs = groupProvisioningGroupLinkableWrapperAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -2372,7 +3828,7 @@ func tkhToTFObjectRSGroupProvisioningGroupLinkableWrapper(recurse bool, tkh keyh
 	{
 		elemType := attrs["items"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetItems(), func(tkh keyhubmodel.GroupProvisioningGroupable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSGroupProvisioningGroup(recurse, tkh)
+			val, d := tkhToTFObjectRSROGroupProvisioningGroupRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -2415,6 +3871,36 @@ func tkhToTFObjectRSGroupProvisioningGroupLinkableWrapperWithCount(recurse bool,
 	return objVal, diags
 }
 
+func tkhToTFObjectRSROGroupProvisioningGroupLinkableWrapperWithCountRO(recurse bool, tkh keyhubmodel.GroupProvisioningGroupLinkableWrapperWithCountable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = groupProvisioningGroupLinkableWrapperWithCountAttrTypesRSRORecurse
+	} else {
+		attrs = groupProvisioningGroupLinkableWrapperWithCountAttrTypesRSRO
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	obj["count"] = types.Int64PointerValue(tkh.GetCount())
+	{
+		elemType := attrs["items"].(types.ListType).ElemType
+		val, d := sliceToTFList(elemType, tkh.GetItems(), func(tkh keyhubmodel.GroupProvisioningGroupable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectRSROGroupProvisioningGroupRO(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["items"] = val
+	}
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
 func tkhToTFObjectRSGroupProvisioningGroup_additionalObjects(recurse bool, tkh keyhubmodel.GroupProvisioningGroup_additionalObjectsable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
@@ -2429,7 +3915,31 @@ func tkhToTFObjectRSGroupProvisioningGroup_additionalObjects(recurse bool, tkh k
 
 	obj := make(map[string]attr.Value)
 	{
-		val, d := tkhToTFObjectRSAuditInfo(recurse, tkh.GetAudit())
+		val, d := tkhToTFObjectRSROAuditInfoRO(recurse, tkh.GetAudit())
+		diags.Append(d...)
+		obj["audit"] = val
+	}
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
+func tkhToTFObjectRSROGroupProvisioningGroup_additionalObjectsRO(recurse bool, tkh keyhubmodel.GroupProvisioningGroup_additionalObjectsable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = groupProvisioningGroup_additionalObjectsAttrTypesRSRORecurse
+	} else {
+		attrs = groupProvisioningGroup_additionalObjectsAttrTypesRSRO
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	{
+		val, d := tkhToTFObjectRSROAuditInfoRO(recurse, tkh.GetAudit())
 		diags.Append(d...)
 		obj["audit"] = val
 	}
@@ -2507,13 +4017,13 @@ func tkhToTFObjectRSGroupVaultVaultRecord(recurse bool, tkh keyhubmodel.VaultVau
 	return objVal, diags
 }
 
-func tkhToTFObjectRSIdentityAccountAttributeDefinition(recurse bool, tkh keyhubmodel.IdentityAccountAttributeDefinitionable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROIdentityAccountAttributeDefinitionRO(recurse bool, tkh keyhubmodel.IdentityAccountAttributeDefinitionable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = identityAccountAttributeDefinitionAttrTypesRSRecurse
+		attrs = identityAccountAttributeDefinitionAttrTypesRSRORecurse
 	} else {
-		attrs = identityAccountAttributeDefinitionAttrTypesRS
+		attrs = identityAccountAttributeDefinitionAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -2525,7 +4035,7 @@ func tkhToTFObjectRSIdentityAccountAttributeDefinition(recurse bool, tkh keyhubm
 	}
 	if recurse {
 		{
-			val, d := tkhToTFObjectRSIdentityAccountAttributeDefinition_additionalObjects(false, tkh.GetAdditionalObjects())
+			val, d := tkhToTFObjectRSROIdentityAccountAttributeDefinition_additionalObjectsRO(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
 			maps.Copy(obj, val.Attributes())
 		}
@@ -2533,7 +4043,7 @@ func tkhToTFObjectRSIdentityAccountAttributeDefinition(recurse bool, tkh keyhubm
 	{
 		elemType := attrs["links"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetLinks(), func(tkh keyhubmodel.RestLinkable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSRestLink(recurse, tkh)
+			val, d := tkhToTFObjectRSRORestLinkRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -2543,7 +4053,7 @@ func tkhToTFObjectRSIdentityAccountAttributeDefinition(recurse bool, tkh keyhubm
 	{
 		elemType := attrs["permissions"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetPermissions(), func(tkh keyhubmodel.AuthPermissionable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSAuthPermission(recurse, tkh)
+			val, d := tkhToTFObjectRSROAuthPermissionRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -2562,13 +4072,13 @@ func tkhToTFObjectRSIdentityAccountAttributeDefinition(recurse bool, tkh keyhubm
 	return objVal, diags
 }
 
-func tkhToTFObjectRSIdentityAccountAttributeDefinition_additionalObjects(recurse bool, tkh keyhubmodel.IdentityAccountAttributeDefinition_additionalObjectsable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROIdentityAccountAttributeDefinition_additionalObjectsRO(recurse bool, tkh keyhubmodel.IdentityAccountAttributeDefinition_additionalObjectsable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = identityAccountAttributeDefinition_additionalObjectsAttrTypesRSRecurse
+		attrs = identityAccountAttributeDefinition_additionalObjectsAttrTypesRSRORecurse
 	} else {
-		attrs = identityAccountAttributeDefinition_additionalObjectsAttrTypesRS
+		attrs = identityAccountAttributeDefinition_additionalObjectsAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -2576,7 +4086,7 @@ func tkhToTFObjectRSIdentityAccountAttributeDefinition_additionalObjects(recurse
 
 	obj := make(map[string]attr.Value)
 	{
-		val, d := tkhToTFObjectRSAuditInfo(recurse, tkh.GetAudit())
+		val, d := tkhToTFObjectRSROAuditInfoRO(recurse, tkh.GetAudit())
 		diags.Append(d...)
 		obj["audit"] = val
 	}
@@ -2586,13 +4096,13 @@ func tkhToTFObjectRSIdentityAccountAttributeDefinition_additionalObjects(recurse
 	return objVal, diags
 }
 
-func tkhToTFObjectRSIdentityAccountAttributeRule(recurse bool, tkh keyhubmodel.IdentityAccountAttributeRuleable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROIdentityAccountAttributeRuleRO(recurse bool, tkh keyhubmodel.IdentityAccountAttributeRuleable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = identityAccountAttributeRuleAttrTypesRSRecurse
+		attrs = identityAccountAttributeRuleAttrTypesRSRORecurse
 	} else {
-		attrs = identityAccountAttributeRuleAttrTypesRS
+		attrs = identityAccountAttributeRuleAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -2604,7 +4114,7 @@ func tkhToTFObjectRSIdentityAccountAttributeRule(recurse bool, tkh keyhubmodel.I
 	}
 	if recurse {
 		{
-			val, d := tkhToTFObjectRSIdentityAccountAttributeRule_additionalObjects(false, tkh.GetAdditionalObjects())
+			val, d := tkhToTFObjectRSROIdentityAccountAttributeRule_additionalObjectsRO(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
 			maps.Copy(obj, val.Attributes())
 		}
@@ -2612,7 +4122,7 @@ func tkhToTFObjectRSIdentityAccountAttributeRule(recurse bool, tkh keyhubmodel.I
 	{
 		elemType := attrs["links"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetLinks(), func(tkh keyhubmodel.RestLinkable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSRestLink(recurse, tkh)
+			val, d := tkhToTFObjectRSRORestLinkRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -2622,7 +4132,7 @@ func tkhToTFObjectRSIdentityAccountAttributeRule(recurse bool, tkh keyhubmodel.I
 	{
 		elemType := attrs["permissions"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetPermissions(), func(tkh keyhubmodel.AuthPermissionable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSAuthPermission(recurse, tkh)
+			val, d := tkhToTFObjectRSROAuthPermissionRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -2632,7 +4142,7 @@ func tkhToTFObjectRSIdentityAccountAttributeRule(recurse bool, tkh keyhubmodel.I
 	obj["allow_override"] = types.BoolPointerValue(tkh.GetAllowOverride())
 	obj["allow_self_service"] = types.BoolPointerValue(tkh.GetAllowSelfService())
 	{
-		val, d := tkhToTFObjectRSIdentityAccountAttributeDefinition(false, tkh.GetAttribute())
+		val, d := tkhToTFObjectRSROIdentityAccountAttributeDefinitionRO(false, tkh.GetAttribute())
 		diags.Append(d...)
 		obj["attribute"] = val
 	}
@@ -2649,13 +4159,13 @@ func tkhToTFObjectRSIdentityAccountAttributeRule(recurse bool, tkh keyhubmodel.I
 	return objVal, diags
 }
 
-func tkhToTFObjectRSIdentityAccountAttributeRuleLinkableWrapper(recurse bool, tkh keyhubmodel.IdentityAccountAttributeRuleLinkableWrapperable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROIdentityAccountAttributeRuleLinkableWrapperRO(recurse bool, tkh keyhubmodel.IdentityAccountAttributeRuleLinkableWrapperable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = identityAccountAttributeRuleLinkableWrapperAttrTypesRSRecurse
+		attrs = identityAccountAttributeRuleLinkableWrapperAttrTypesRSRORecurse
 	} else {
-		attrs = identityAccountAttributeRuleLinkableWrapperAttrTypesRS
+		attrs = identityAccountAttributeRuleLinkableWrapperAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -2665,7 +4175,7 @@ func tkhToTFObjectRSIdentityAccountAttributeRuleLinkableWrapper(recurse bool, tk
 	{
 		elemType := attrs["items"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetItems(), func(tkh keyhubmodel.IdentityAccountAttributeRuleable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSIdentityAccountAttributeRule(recurse, tkh)
+			val, d := tkhToTFObjectRSROIdentityAccountAttributeRuleRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -2678,13 +4188,13 @@ func tkhToTFObjectRSIdentityAccountAttributeRuleLinkableWrapper(recurse bool, tk
 	return objVal, diags
 }
 
-func tkhToTFObjectRSIdentityAccountAttributeRule_additionalObjects(recurse bool, tkh keyhubmodel.IdentityAccountAttributeRule_additionalObjectsable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROIdentityAccountAttributeRule_additionalObjectsRO(recurse bool, tkh keyhubmodel.IdentityAccountAttributeRule_additionalObjectsable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = identityAccountAttributeRule_additionalObjectsAttrTypesRSRecurse
+		attrs = identityAccountAttributeRule_additionalObjectsAttrTypesRSRORecurse
 	} else {
-		attrs = identityAccountAttributeRule_additionalObjectsAttrTypesRS
+		attrs = identityAccountAttributeRule_additionalObjectsAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -2692,7 +4202,7 @@ func tkhToTFObjectRSIdentityAccountAttributeRule_additionalObjects(recurse bool,
 
 	obj := make(map[string]attr.Value)
 	{
-		val, d := tkhToTFObjectRSAuditInfo(recurse, tkh.GetAudit())
+		val, d := tkhToTFObjectRSROAuditInfoRO(recurse, tkh.GetAudit())
 		diags.Append(d...)
 		obj["audit"] = val
 	}
@@ -2702,13 +4212,13 @@ func tkhToTFObjectRSIdentityAccountAttributeRule_additionalObjects(recurse bool,
 	return objVal, diags
 }
 
-func tkhToTFObjectRSIdentityAccountAttributeValueSummary(recurse bool, tkh keyhubmodel.IdentityAccountAttributeValueSummaryable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROIdentityAccountAttributeValueSummaryRO(recurse bool, tkh keyhubmodel.IdentityAccountAttributeValueSummaryable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = identityAccountAttributeValueSummaryAttrTypesRSRecurse
+		attrs = identityAccountAttributeValueSummaryAttrTypesRSRORecurse
 	} else {
-		attrs = identityAccountAttributeValueSummaryAttrTypesRS
+		attrs = identityAccountAttributeValueSummaryAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -2716,7 +4226,7 @@ func tkhToTFObjectRSIdentityAccountAttributeValueSummary(recurse bool, tkh keyhu
 
 	obj := make(map[string]attr.Value)
 	{
-		val, d := tkhToTFObjectRSIdentityAccountAttributeDefinition(recurse, tkh.GetAttribute())
+		val, d := tkhToTFObjectRSROIdentityAccountAttributeDefinitionRO(recurse, tkh.GetAttribute())
 		diags.Append(d...)
 		obj["attribute"] = val
 	}
@@ -2752,6 +4262,26 @@ func tkhToTFObjectRSLaunchpadSsoApplicationLaunchpadTile(recurse bool, tkh keyhu
 	return objVal, diags
 }
 
+func tkhToTFObjectRSROLaunchpadSsoApplicationLaunchpadTileRO(recurse bool, tkh keyhubmodel.LaunchpadSsoApplicationLaunchpadTileable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = launchpadSsoApplicationLaunchpadTileAttrTypesRSRORecurse
+	} else {
+		attrs = launchpadSsoApplicationLaunchpadTileAttrTypesRSRO
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	obj["uri"] = types.StringPointerValue(tkh.GetUri())
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
 func tkhToTFObjectRSLaunchpadVaultRecordLaunchpadTile(recurse bool, tkh keyhubmodel.LaunchpadVaultRecordLaunchpadTileable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
@@ -2771,13 +4301,32 @@ func tkhToTFObjectRSLaunchpadVaultRecordLaunchpadTile(recurse bool, tkh keyhubmo
 	return objVal, diags
 }
 
-func tkhToTFObjectRSMarkItemMarker(recurse bool, tkh keyhubmodel.MarkItemMarkerable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROLaunchpadVaultRecordLaunchpadTileRO(recurse bool, tkh keyhubmodel.LaunchpadVaultRecordLaunchpadTileable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = markItemMarkerAttrTypesRSRecurse
+		attrs = launchpadVaultRecordLaunchpadTileAttrTypesRSRORecurse
 	} else {
-		attrs = markItemMarkerAttrTypesRS
+		attrs = launchpadVaultRecordLaunchpadTileAttrTypesRSRO
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
+func tkhToTFObjectRSROMarkItemMarkerRO(recurse bool, tkh keyhubmodel.MarkItemMarkerable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = markItemMarkerAttrTypesRSRORecurse
+	} else {
+		attrs = markItemMarkerAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -2800,13 +4349,13 @@ func tkhToTFObjectRSMarkItemMarker(recurse bool, tkh keyhubmodel.MarkItemMarkera
 	return objVal, diags
 }
 
-func tkhToTFObjectRSMarkItemMarkers(recurse bool, tkh keyhubmodel.MarkItemMarkersable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROMarkItemMarkersRO(recurse bool, tkh keyhubmodel.MarkItemMarkersable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = markItemMarkersAttrTypesRSRecurse
+		attrs = markItemMarkersAttrTypesRSRORecurse
 	} else {
-		attrs = markItemMarkersAttrTypesRS
+		attrs = markItemMarkersAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -2816,7 +4365,7 @@ func tkhToTFObjectRSMarkItemMarkers(recurse bool, tkh keyhubmodel.MarkItemMarker
 	{
 		elemType := attrs["markers"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetMarkers(), func(tkh keyhubmodel.MarkItemMarkerable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSMarkItemMarker(recurse, tkh)
+			val, d := tkhToTFObjectRSROMarkItemMarkerRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -2829,13 +4378,13 @@ func tkhToTFObjectRSMarkItemMarkers(recurse bool, tkh keyhubmodel.MarkItemMarker
 	return objVal, diags
 }
 
-func tkhToTFObjectRSMiscAttributeCustomization(recurse bool, tkh keyhubmodel.MiscAttributeCustomizationable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROMiscAttributeCustomizationRO(recurse bool, tkh keyhubmodel.MiscAttributeCustomizationable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = miscAttributeCustomizationAttrTypesRSRecurse
+		attrs = miscAttributeCustomizationAttrTypesRSRORecurse
 	} else {
-		attrs = miscAttributeCustomizationAttrTypesRS
+		attrs = miscAttributeCustomizationAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -2843,7 +4392,7 @@ func tkhToTFObjectRSMiscAttributeCustomization(recurse bool, tkh keyhubmodel.Mis
 
 	obj := make(map[string]attr.Value)
 	{
-		val, d := tkhToTFObjectRSIdentityAccountAttributeDefinition(recurse, tkh.GetAttributeDefinition())
+		val, d := tkhToTFObjectRSROIdentityAccountAttributeDefinitionRO(recurse, tkh.GetAttributeDefinition())
 		diags.Append(d...)
 		obj["attribute_definition"] = val
 	}
@@ -2911,13 +4460,13 @@ func tkhToTFObjectRSNestedProvisioningGroupOnSystem(recurse bool, tkh keyhubmode
 	return objVal, diags
 }
 
-func tkhToTFObjectRSOrganizationClientApplicationOrganizationalUnit(recurse bool, tkh keyhubmodel.OrganizationClientApplicationOrganizationalUnitable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROOrganizationClientApplicationOrganizationalUnitRO(recurse bool, tkh keyhubmodel.OrganizationClientApplicationOrganizationalUnitable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = organizationClientApplicationOrganizationalUnitAttrTypesRSRecurse
+		attrs = organizationClientApplicationOrganizationalUnitAttrTypesRSRORecurse
 	} else {
-		attrs = organizationClientApplicationOrganizationalUnitAttrTypesRS
+		attrs = organizationClientApplicationOrganizationalUnitAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -2931,13 +4480,13 @@ func tkhToTFObjectRSOrganizationClientApplicationOrganizationalUnit(recurse bool
 	return objVal, diags
 }
 
-func tkhToTFObjectRSOrganizationClientApplicationOrganizationalUnitLinkableWrapper(recurse bool, tkh keyhubmodel.OrganizationClientApplicationOrganizationalUnitLinkableWrapperable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROOrganizationClientApplicationOrganizationalUnitLinkableWrapperRO(recurse bool, tkh keyhubmodel.OrganizationClientApplicationOrganizationalUnitLinkableWrapperable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = organizationClientApplicationOrganizationalUnitLinkableWrapperAttrTypesRSRecurse
+		attrs = organizationClientApplicationOrganizationalUnitLinkableWrapperAttrTypesRSRORecurse
 	} else {
-		attrs = organizationClientApplicationOrganizationalUnitLinkableWrapperAttrTypesRS
+		attrs = organizationClientApplicationOrganizationalUnitLinkableWrapperAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -2947,7 +4496,7 @@ func tkhToTFObjectRSOrganizationClientApplicationOrganizationalUnitLinkableWrapp
 	{
 		elemType := attrs["items"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetItems(), func(tkh keyhubmodel.OrganizationClientApplicationOrganizationalUnitable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSOrganizationClientApplicationOrganizationalUnit(recurse, tkh)
+			val, d := tkhToTFObjectRSROOrganizationClientApplicationOrganizationalUnitRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -2960,13 +4509,13 @@ func tkhToTFObjectRSOrganizationClientApplicationOrganizationalUnitLinkableWrapp
 	return objVal, diags
 }
 
-func tkhToTFObjectRSOrganizationOrganizationalUnit(recurse bool, tkh keyhubmodel.OrganizationOrganizationalUnitable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROOrganizationOrganizationalUnitRO(recurse bool, tkh keyhubmodel.OrganizationOrganizationalUnitable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = organizationOrganizationalUnitAttrTypesRSRecurse
+		attrs = organizationOrganizationalUnitAttrTypesRSRORecurse
 	} else {
-		attrs = organizationOrganizationalUnitAttrTypesRS
+		attrs = organizationOrganizationalUnitAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -2978,7 +4527,7 @@ func tkhToTFObjectRSOrganizationOrganizationalUnit(recurse bool, tkh keyhubmodel
 	}
 	if recurse {
 		{
-			val, d := tkhToTFObjectRSOrganizationOrganizationalUnit_additionalObjects(false, tkh.GetAdditionalObjects())
+			val, d := tkhToTFObjectRSROOrganizationOrganizationalUnit_additionalObjectsRO(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
 			maps.Copy(obj, val.Attributes())
 		}
@@ -2986,7 +4535,7 @@ func tkhToTFObjectRSOrganizationOrganizationalUnit(recurse bool, tkh keyhubmodel
 	{
 		elemType := attrs["links"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetLinks(), func(tkh keyhubmodel.RestLinkable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSRestLink(recurse, tkh)
+			val, d := tkhToTFObjectRSRORestLinkRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -2996,7 +4545,7 @@ func tkhToTFObjectRSOrganizationOrganizationalUnit(recurse bool, tkh keyhubmodel
 	{
 		elemType := attrs["permissions"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetPermissions(), func(tkh keyhubmodel.AuthPermissionable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSAuthPermission(recurse, tkh)
+			val, d := tkhToTFObjectRSROAuthPermissionRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -3005,29 +4554,57 @@ func tkhToTFObjectRSOrganizationOrganizationalUnit(recurse bool, tkh keyhubmodel
 	}
 	obj["name"] = types.StringPointerValue(tkh.GetName())
 	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
-	obj["auditor_group_uuid"] = withUuidToTF(tkh.GetAuditorGroup())
-	obj["create_group_approve_group_uuid"] = withUuidToTF(tkh.GetCreateGroupApproveGroup())
+	{
+		val, d := tkhToTFObjectRSROGroupGroupPrimerRO(false, tkh.GetAuditorGroup())
+		diags.Append(d...)
+		obj["auditor_group"] = val
+	}
+	{
+		val, d := tkhToTFObjectRSROGroupGroupPrimerRO(false, tkh.GetCreateGroupApproveGroup())
+		diags.Append(d...)
+		obj["create_group_approve_group"] = val
+	}
 	obj["create_group_placeholder"] = types.StringPointerValue(tkh.GetCreateGroupPlaceholder())
 	obj["depth"] = types.Int64PointerValue(int32PToInt64P(tkh.GetDepth()))
 	obj["description"] = types.StringPointerValue(tkh.GetDescription())
-	obj["enable_tech_admin_approve_group_uuid"] = withUuidToTF(tkh.GetEnableTechAdminApproveGroup())
-	obj["owner_uuid"] = withUuidToTF(tkh.GetOwner())
-	obj["parent_uuid"] = withUuidToTF(tkh.GetParent())
-	obj["recovery_fallback_group_uuid"] = withUuidToTF(tkh.GetRecoveryFallbackGroup())
-	obj["remove_group_approve_group_uuid"] = withUuidToTF(tkh.GetRemoveGroupApproveGroup())
+	{
+		val, d := tkhToTFObjectRSROGroupGroupPrimerRO(false, tkh.GetEnableTechAdminApproveGroup())
+		diags.Append(d...)
+		obj["enable_tech_admin_approve_group"] = val
+	}
+	{
+		val, d := tkhToTFObjectRSROGroupGroupPrimerRO(false, tkh.GetOwner())
+		diags.Append(d...)
+		obj["owner"] = val
+	}
+	{
+		val, d := tkhToTFObjectRSROOrganizationOrganizationalUnitPrimerRO(false, tkh.GetParent())
+		diags.Append(d...)
+		obj["parent"] = val
+	}
+	{
+		val, d := tkhToTFObjectRSROGroupGroupPrimerRO(false, tkh.GetRecoveryFallbackGroup())
+		diags.Append(d...)
+		obj["recovery_fallback_group"] = val
+	}
+	{
+		val, d := tkhToTFObjectRSROGroupGroupPrimerRO(false, tkh.GetRemoveGroupApproveGroup())
+		diags.Append(d...)
+		obj["remove_group_approve_group"] = val
+	}
 
 	objVal, d := types.ObjectValue(attrs, obj)
 	diags.Append(d...)
 	return objVal, diags
 }
 
-func tkhToTFObjectRSOrganizationOrganizationalUnitLinkableWrapper(recurse bool, tkh keyhubmodel.OrganizationOrganizationalUnitLinkableWrapperable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROOrganizationOrganizationalUnitLinkableWrapperRO(recurse bool, tkh keyhubmodel.OrganizationOrganizationalUnitLinkableWrapperable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = organizationOrganizationalUnitLinkableWrapperAttrTypesRSRecurse
+		attrs = organizationOrganizationalUnitLinkableWrapperAttrTypesRSRORecurse
 	} else {
-		attrs = organizationOrganizationalUnitLinkableWrapperAttrTypesRS
+		attrs = organizationOrganizationalUnitLinkableWrapperAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -3037,7 +4614,7 @@ func tkhToTFObjectRSOrganizationOrganizationalUnitLinkableWrapper(recurse bool, 
 	{
 		elemType := attrs["items"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetItems(), func(tkh keyhubmodel.OrganizationOrganizationalUnitable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSOrganizationOrganizationalUnit(recurse, tkh)
+			val, d := tkhToTFObjectRSROOrganizationOrganizationalUnitRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -3091,13 +4668,54 @@ func tkhToTFObjectRSOrganizationOrganizationalUnitPrimer(recurse bool, tkh keyhu
 	return objVal, diags
 }
 
-func tkhToTFObjectRSOrganizationOrganizationalUnitPrimerLinkableWrapper(recurse bool, tkh keyhubmodel.OrganizationOrganizationalUnitPrimerLinkableWrapperable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROOrganizationOrganizationalUnitPrimerRO(recurse bool, tkh keyhubmodel.OrganizationOrganizationalUnitPrimerable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = organizationOrganizationalUnitPrimerLinkableWrapperAttrTypesRSRecurse
+		attrs = organizationOrganizationalUnitPrimerAttrTypesRSRORecurse
 	} else {
-		attrs = organizationOrganizationalUnitPrimerLinkableWrapperAttrTypesRS
+		attrs = organizationOrganizationalUnitPrimerAttrTypesRSRO
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	{
+		elemType := attrs["links"].(types.ListType).ElemType
+		val, d := sliceToTFList(elemType, tkh.GetLinks(), func(tkh keyhubmodel.RestLinkable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectRSRORestLinkRO(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["links"] = val
+	}
+	{
+		elemType := attrs["permissions"].(types.ListType).ElemType
+		val, d := sliceToTFList(elemType, tkh.GetPermissions(), func(tkh keyhubmodel.AuthPermissionable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectRSROAuthPermissionRO(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["permissions"] = val
+	}
+	obj["name"] = types.StringPointerValue(tkh.GetName())
+	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
+func tkhToTFObjectRSROOrganizationOrganizationalUnitPrimerLinkableWrapperRO(recurse bool, tkh keyhubmodel.OrganizationOrganizationalUnitPrimerLinkableWrapperable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = organizationOrganizationalUnitPrimerLinkableWrapperAttrTypesRSRORecurse
+	} else {
+		attrs = organizationOrganizationalUnitPrimerLinkableWrapperAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -3107,7 +4725,7 @@ func tkhToTFObjectRSOrganizationOrganizationalUnitPrimerLinkableWrapper(recurse 
 	{
 		elemType := attrs["items"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetItems(), func(tkh keyhubmodel.OrganizationOrganizationalUnitPrimerable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSOrganizationOrganizationalUnitPrimer(recurse, tkh)
+			val, d := tkhToTFObjectRSROOrganizationOrganizationalUnitPrimerRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -3120,13 +4738,13 @@ func tkhToTFObjectRSOrganizationOrganizationalUnitPrimerLinkableWrapper(recurse 
 	return objVal, diags
 }
 
-func tkhToTFObjectRSOrganizationOrganizationalUnitSettings(recurse bool, tkh keyhubmodel.OrganizationOrganizationalUnitSettingsable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROOrganizationOrganizationalUnitSettingsRO(recurse bool, tkh keyhubmodel.OrganizationOrganizationalUnitSettingsable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = organizationOrganizationalUnitSettingsAttrTypesRSRecurse
+		attrs = organizationOrganizationalUnitSettingsAttrTypesRSRORecurse
 	} else {
-		attrs = organizationOrganizationalUnitSettingsAttrTypesRS
+		attrs = organizationOrganizationalUnitSettingsAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -3134,23 +4752,23 @@ func tkhToTFObjectRSOrganizationOrganizationalUnitSettings(recurse bool, tkh key
 
 	obj := make(map[string]attr.Value)
 	{
-		val, d := tkhToTFObjectRSGroupGroupPrimer(recurse, tkh.GetCreateGroupApproveGroup())
+		val, d := tkhToTFObjectRSROGroupGroupPrimerRO(recurse, tkh.GetCreateGroupApproveGroup())
 		diags.Append(d...)
 		obj["create_group_approve_group"] = val
 	}
 	obj["create_group_placeholder"] = types.StringPointerValue(tkh.GetCreateGroupPlaceholder())
 	{
-		val, d := tkhToTFObjectRSGroupGroupPrimer(recurse, tkh.GetEnableTechAdminApproveGroup())
+		val, d := tkhToTFObjectRSROGroupGroupPrimerRO(recurse, tkh.GetEnableTechAdminApproveGroup())
 		diags.Append(d...)
 		obj["enable_tech_admin_approve_group"] = val
 	}
 	{
-		val, d := tkhToTFObjectRSGroupGroupPrimer(recurse, tkh.GetRecoveryFallbackGroup())
+		val, d := tkhToTFObjectRSROGroupGroupPrimerRO(recurse, tkh.GetRecoveryFallbackGroup())
 		diags.Append(d...)
 		obj["recovery_fallback_group"] = val
 	}
 	{
-		val, d := tkhToTFObjectRSGroupGroupPrimer(recurse, tkh.GetRemoveGroupApproveGroup())
+		val, d := tkhToTFObjectRSROGroupGroupPrimerRO(recurse, tkh.GetRemoveGroupApproveGroup())
 		diags.Append(d...)
 		obj["remove_group_approve_group"] = val
 	}
@@ -3160,13 +4778,13 @@ func tkhToTFObjectRSOrganizationOrganizationalUnitSettings(recurse bool, tkh key
 	return objVal, diags
 }
 
-func tkhToTFObjectRSOrganizationOrganizationalUnit_additionalObjects(recurse bool, tkh keyhubmodel.OrganizationOrganizationalUnit_additionalObjectsable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROOrganizationOrganizationalUnit_additionalObjectsRO(recurse bool, tkh keyhubmodel.OrganizationOrganizationalUnit_additionalObjectsable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = organizationOrganizationalUnit_additionalObjectsAttrTypesRSRecurse
+		attrs = organizationOrganizationalUnit_additionalObjectsAttrTypesRSRORecurse
 	} else {
-		attrs = organizationOrganizationalUnit_additionalObjectsAttrTypesRS
+		attrs = organizationOrganizationalUnit_additionalObjectsAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -3174,17 +4792,17 @@ func tkhToTFObjectRSOrganizationOrganizationalUnit_additionalObjects(recurse boo
 
 	obj := make(map[string]attr.Value)
 	{
-		val, d := tkhToTFObjectRSAuditInfo(recurse, tkh.GetAudit())
+		val, d := tkhToTFObjectRSROAuditInfoRO(recurse, tkh.GetAudit())
 		diags.Append(d...)
 		obj["audit"] = val
 	}
 	{
-		val, d := tkhToTFObjectRSOrganizationOrganizationalUnitPrimerLinkableWrapper(recurse, tkh.GetCreateAsParentOf())
+		val, d := tkhToTFObjectRSROOrganizationOrganizationalUnitPrimerLinkableWrapperRO(recurse, tkh.GetCreateAsParentOf())
 		diags.Append(d...)
 		obj["create_as_parent_of"] = getItemsAttr(val, attrs["create_as_parent_of"])
 	}
 	{
-		val, d := tkhToTFObjectRSOrganizationOrganizationalUnitSettings(recurse, tkh.GetSettings())
+		val, d := tkhToTFObjectRSROOrganizationOrganizationalUnitSettingsRO(recurse, tkh.GetSettings())
 		diags.Append(d...)
 		obj["settings"] = val
 	}
@@ -3194,13 +4812,13 @@ func tkhToTFObjectRSOrganizationOrganizationalUnit_additionalObjects(recurse boo
 	return objVal, diags
 }
 
-func tkhToTFObjectRSProfileAccessProfile(recurse bool, tkh keyhubmodel.ProfileAccessProfileable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROProfileAccessProfileRO(recurse bool, tkh keyhubmodel.ProfileAccessProfileable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = profileAccessProfileAttrTypesRSRecurse
+		attrs = profileAccessProfileAttrTypesRSRORecurse
 	} else {
-		attrs = profileAccessProfileAttrTypesRS
+		attrs = profileAccessProfileAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -3212,7 +4830,7 @@ func tkhToTFObjectRSProfileAccessProfile(recurse bool, tkh keyhubmodel.ProfileAc
 	}
 	if recurse {
 		{
-			val, d := tkhToTFObjectRSProfileAccessProfile_additionalObjects(false, tkh.GetAdditionalObjects())
+			val, d := tkhToTFObjectRSROProfileAccessProfile_additionalObjectsRO(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
 			maps.Copy(obj, val.Attributes())
 		}
@@ -3220,7 +4838,7 @@ func tkhToTFObjectRSProfileAccessProfile(recurse bool, tkh keyhubmodel.ProfileAc
 	{
 		elemType := attrs["links"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetLinks(), func(tkh keyhubmodel.RestLinkable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSRestLink(recurse, tkh)
+			val, d := tkhToTFObjectRSRORestLinkRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -3230,7 +4848,7 @@ func tkhToTFObjectRSProfileAccessProfile(recurse bool, tkh keyhubmodel.ProfileAc
 	{
 		elemType := attrs["permissions"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetPermissions(), func(tkh keyhubmodel.AuthPermissionable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSAuthPermission(recurse, tkh)
+			val, d := tkhToTFObjectRSROAuthPermissionRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -3241,22 +4859,30 @@ func tkhToTFObjectRSProfileAccessProfile(recurse bool, tkh keyhubmodel.ProfileAc
 	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
 	obj["activate_rule_script"] = types.StringPointerValue(tkh.GetActivateRuleScript())
 	obj["description"] = types.StringPointerValue(tkh.GetDescription())
-	obj["directory_uuid"] = withUuidToTF(tkh.GetDirectory())
+	{
+		val, d := tkhToTFObjectRSRODirectoryAccountDirectoryPrimerRO(false, tkh.GetDirectory())
+		diags.Append(d...)
+		obj["directory"] = val
+	}
 	obj["match_rule_script"] = types.StringPointerValue(tkh.GetMatchRuleScript())
-	obj["owner_uuid"] = withUuidToTF(tkh.GetOwner())
+	{
+		val, d := tkhToTFObjectRSROGroupGroupPrimerRO(false, tkh.GetOwner())
+		diags.Append(d...)
+		obj["owner"] = val
+	}
 
 	objVal, d := types.ObjectValue(attrs, obj)
 	diags.Append(d...)
 	return objVal, diags
 }
 
-func tkhToTFObjectRSProfileAccessProfileAccount(recurse bool, tkh keyhubmodel.ProfileAccessProfileAccountable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROProfileAccessProfileAccountRO(recurse bool, tkh keyhubmodel.ProfileAccessProfileAccountable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = profileAccessProfileAccountAttrTypesRSRecurse
+		attrs = profileAccessProfileAccountAttrTypesRSRORecurse
 	} else {
-		attrs = profileAccessProfileAccountAttrTypesRS
+		attrs = profileAccessProfileAccountAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -3268,7 +4894,7 @@ func tkhToTFObjectRSProfileAccessProfileAccount(recurse bool, tkh keyhubmodel.Pr
 	}
 	if recurse {
 		{
-			val, d := tkhToTFObjectRSProfileAccessProfileAccount_additionalObjects(false, tkh.GetAdditionalObjects())
+			val, d := tkhToTFObjectRSROProfileAccessProfileAccount_additionalObjectsRO(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
 			maps.Copy(obj, val.Attributes())
 		}
@@ -3282,13 +4908,13 @@ func tkhToTFObjectRSProfileAccessProfileAccount(recurse bool, tkh keyhubmodel.Pr
 	return objVal, diags
 }
 
-func tkhToTFObjectRSProfileAccessProfileAccountWithAttributes(recurse bool, tkh keyhubmodel.ProfileAccessProfileAccountWithAttributesable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROProfileAccessProfileAccountWithAttributesRO(recurse bool, tkh keyhubmodel.ProfileAccessProfileAccountWithAttributesable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = profileAccessProfileAccountWithAttributesAttrTypesRSRecurse
+		attrs = profileAccessProfileAccountWithAttributesAttrTypesRSRORecurse
 	} else {
-		attrs = profileAccessProfileAccountWithAttributesAttrTypesRS
+		attrs = profileAccessProfileAccountWithAttributesAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -3300,7 +4926,7 @@ func tkhToTFObjectRSProfileAccessProfileAccountWithAttributes(recurse bool, tkh 
 	}
 	if recurse {
 		{
-			val, d := tkhToTFObjectRSProfileAccessProfileAccount_additionalObjects(false, tkh.GetAdditionalObjects())
+			val, d := tkhToTFObjectRSROProfileAccessProfileAccount_additionalObjectsRO(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
 			maps.Copy(obj, val.Attributes())
 		}
@@ -3311,7 +4937,7 @@ func tkhToTFObjectRSProfileAccessProfileAccountWithAttributes(recurse bool, tkh 
 	{
 		elemType := attrs["attributes"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetAttributes(), func(tkh keyhubmodel.IdentityAccountAttributeValueSummaryable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSIdentityAccountAttributeValueSummary(false, tkh)
+			val, d := tkhToTFObjectRSROIdentityAccountAttributeValueSummaryRO(false, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -3324,13 +4950,13 @@ func tkhToTFObjectRSProfileAccessProfileAccountWithAttributes(recurse bool, tkh 
 	return objVal, diags
 }
 
-func tkhToTFObjectRSProfileAccessProfileAccountWithAttributesLinkableWrapper(recurse bool, tkh keyhubmodel.ProfileAccessProfileAccountWithAttributesLinkableWrapperable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROProfileAccessProfileAccountWithAttributesLinkableWrapperRO(recurse bool, tkh keyhubmodel.ProfileAccessProfileAccountWithAttributesLinkableWrapperable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = profileAccessProfileAccountWithAttributesLinkableWrapperAttrTypesRSRecurse
+		attrs = profileAccessProfileAccountWithAttributesLinkableWrapperAttrTypesRSRORecurse
 	} else {
-		attrs = profileAccessProfileAccountWithAttributesLinkableWrapperAttrTypesRS
+		attrs = profileAccessProfileAccountWithAttributesLinkableWrapperAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -3340,7 +4966,7 @@ func tkhToTFObjectRSProfileAccessProfileAccountWithAttributesLinkableWrapper(rec
 	{
 		elemType := attrs["items"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetItems(), func(tkh keyhubmodel.ProfileAccessProfileAccountWithAttributesable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSProfileAccessProfileAccountWithAttributes(recurse, tkh)
+			val, d := tkhToTFObjectRSROProfileAccessProfileAccountWithAttributesRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -3353,13 +4979,13 @@ func tkhToTFObjectRSProfileAccessProfileAccountWithAttributesLinkableWrapper(rec
 	return objVal, diags
 }
 
-func tkhToTFObjectRSProfileAccessProfileAccount_additionalObjects(recurse bool, tkh keyhubmodel.ProfileAccessProfileAccount_additionalObjectsable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROProfileAccessProfileAccount_additionalObjectsRO(recurse bool, tkh keyhubmodel.ProfileAccessProfileAccount_additionalObjectsable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = profileAccessProfileAccount_additionalObjectsAttrTypesRSRecurse
+		attrs = profileAccessProfileAccount_additionalObjectsAttrTypesRSRORecurse
 	} else {
-		attrs = profileAccessProfileAccount_additionalObjectsAttrTypesRS
+		attrs = profileAccessProfileAccount_additionalObjectsAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -3367,7 +4993,7 @@ func tkhToTFObjectRSProfileAccessProfileAccount_additionalObjects(recurse bool, 
 
 	obj := make(map[string]attr.Value)
 	{
-		val, d := tkhToTFObjectRSAuditInfo(recurse, tkh.GetAudit())
+		val, d := tkhToTFObjectRSROAuditInfoRO(recurse, tkh.GetAudit())
 		diags.Append(d...)
 		obj["audit"] = val
 	}
@@ -3421,20 +5047,83 @@ func tkhToTFObjectRSProfileAccessProfileClient(recurse bool, tkh keyhubmodel.Pro
 		obj["permissions"] = val
 	}
 	obj["access_profile_uuid"] = withUuidToTF(tkh.GetAccessProfile())
-	obj["client_uuid"] = withUuidToTF(tkh.GetClient())
+	{
+		val, d := tkhToTFObjectRSROClientClientApplicationPrimerRO(false, tkh.GetClient())
+		diags.Append(d...)
+		obj["client"] = val
+	}
 
 	objVal, d := types.ObjectValue(attrs, obj)
 	diags.Append(d...)
 	return objVal, diags
 }
 
-func tkhToTFObjectRSProfileAccessProfileClientLinkableWrapper(recurse bool, tkh keyhubmodel.ProfileAccessProfileClientLinkableWrapperable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROProfileAccessProfileClientRO(recurse bool, tkh keyhubmodel.ProfileAccessProfileClientable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = profileAccessProfileClientLinkableWrapperAttrTypesRSRecurse
+		attrs = profileAccessProfileClientAttrTypesRSRORecurse
 	} else {
-		attrs = profileAccessProfileClientLinkableWrapperAttrTypesRS
+		attrs = profileAccessProfileClientAttrTypesRSRO
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	if recurse {
+		obj["additional"] = types.ListNull(types.StringType)
+	}
+	if recurse {
+		{
+			val, d := tkhToTFObjectRSROProfileAccessProfileClient_additionalObjectsRO(false, tkh.GetAdditionalObjects())
+			diags.Append(d...)
+			maps.Copy(obj, val.Attributes())
+		}
+	}
+	{
+		elemType := attrs["links"].(types.ListType).ElemType
+		val, d := sliceToTFList(elemType, tkh.GetLinks(), func(tkh keyhubmodel.RestLinkable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectRSRORestLinkRO(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["links"] = val
+	}
+	{
+		elemType := attrs["permissions"].(types.ListType).ElemType
+		val, d := sliceToTFList(elemType, tkh.GetPermissions(), func(tkh keyhubmodel.AuthPermissionable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectRSROAuthPermissionRO(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["permissions"] = val
+	}
+	{
+		val, d := tkhToTFObjectRSROProfileAccessProfilePrimerRO(false, tkh.GetAccessProfile())
+		diags.Append(d...)
+		obj["access_profile"] = val
+	}
+	{
+		val, d := tkhToTFObjectRSROClientClientApplicationPrimerRO(false, tkh.GetClient())
+		diags.Append(d...)
+		obj["client"] = val
+	}
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
+func tkhToTFObjectRSROProfileAccessProfileClientLinkableWrapperRO(recurse bool, tkh keyhubmodel.ProfileAccessProfileClientLinkableWrapperable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = profileAccessProfileClientLinkableWrapperAttrTypesRSRORecurse
+	} else {
+		attrs = profileAccessProfileClientLinkableWrapperAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -3444,7 +5133,7 @@ func tkhToTFObjectRSProfileAccessProfileClientLinkableWrapper(recurse bool, tkh 
 	{
 		elemType := attrs["items"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetItems(), func(tkh keyhubmodel.ProfileAccessProfileClientable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSProfileAccessProfileClient(recurse, tkh)
+			val, d := tkhToTFObjectRSROProfileAccessProfileClientRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -3487,6 +5176,36 @@ func tkhToTFObjectRSProfileAccessProfileClientLinkableWrapperWithCount(recurse b
 	return objVal, diags
 }
 
+func tkhToTFObjectRSROProfileAccessProfileClientLinkableWrapperWithCountRO(recurse bool, tkh keyhubmodel.ProfileAccessProfileClientLinkableWrapperWithCountable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = profileAccessProfileClientLinkableWrapperWithCountAttrTypesRSRORecurse
+	} else {
+		attrs = profileAccessProfileClientLinkableWrapperWithCountAttrTypesRSRO
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	obj["count"] = types.Int64PointerValue(tkh.GetCount())
+	{
+		elemType := attrs["items"].(types.ListType).ElemType
+		val, d := sliceToTFList(elemType, tkh.GetItems(), func(tkh keyhubmodel.ProfileAccessProfileClientable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectRSROProfileAccessProfileClientRO(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["items"] = val
+	}
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
 func tkhToTFObjectRSProfileAccessProfileClient_additionalObjects(recurse bool, tkh keyhubmodel.ProfileAccessProfileClient_additionalObjectsable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
@@ -3501,7 +5220,7 @@ func tkhToTFObjectRSProfileAccessProfileClient_additionalObjects(recurse bool, t
 
 	obj := make(map[string]attr.Value)
 	{
-		val, d := tkhToTFObjectRSAuditInfo(recurse, tkh.GetAudit())
+		val, d := tkhToTFObjectRSROAuditInfoRO(recurse, tkh.GetAudit())
 		diags.Append(d...)
 		obj["audit"] = val
 	}
@@ -3511,13 +5230,37 @@ func tkhToTFObjectRSProfileAccessProfileClient_additionalObjects(recurse bool, t
 	return objVal, diags
 }
 
-func tkhToTFObjectRSProfileAccessProfileGroup(recurse bool, tkh keyhubmodel.ProfileAccessProfileGroupable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROProfileAccessProfileClient_additionalObjectsRO(recurse bool, tkh keyhubmodel.ProfileAccessProfileClient_additionalObjectsable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = profileAccessProfileGroupAttrTypesRSRecurse
+		attrs = profileAccessProfileClient_additionalObjectsAttrTypesRSRORecurse
 	} else {
-		attrs = profileAccessProfileGroupAttrTypesRS
+		attrs = profileAccessProfileClient_additionalObjectsAttrTypesRSRO
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	{
+		val, d := tkhToTFObjectRSROAuditInfoRO(recurse, tkh.GetAudit())
+		diags.Append(d...)
+		obj["audit"] = val
+	}
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
+func tkhToTFObjectRSROProfileAccessProfileGroupRO(recurse bool, tkh keyhubmodel.ProfileAccessProfileGroupable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = profileAccessProfileGroupAttrTypesRSRORecurse
+	} else {
+		attrs = profileAccessProfileGroupAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -3529,7 +5272,7 @@ func tkhToTFObjectRSProfileAccessProfileGroup(recurse bool, tkh keyhubmodel.Prof
 	}
 	if recurse {
 		{
-			val, d := tkhToTFObjectRSProfileAccessProfileGroup_additionalObjects(false, tkh.GetAdditionalObjects())
+			val, d := tkhToTFObjectRSROProfileAccessProfileGroup_additionalObjectsRO(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
 			maps.Copy(obj, val.Attributes())
 		}
@@ -3537,7 +5280,7 @@ func tkhToTFObjectRSProfileAccessProfileGroup(recurse bool, tkh keyhubmodel.Prof
 	{
 		elemType := attrs["links"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetLinks(), func(tkh keyhubmodel.RestLinkable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSRestLink(recurse, tkh)
+			val, d := tkhToTFObjectRSRORestLinkRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -3547,28 +5290,36 @@ func tkhToTFObjectRSProfileAccessProfileGroup(recurse bool, tkh keyhubmodel.Prof
 	{
 		elemType := attrs["permissions"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetPermissions(), func(tkh keyhubmodel.AuthPermissionable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSAuthPermission(recurse, tkh)
+			val, d := tkhToTFObjectRSROAuthPermissionRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
 		diags.Append(d...)
 		obj["permissions"] = val
 	}
-	obj["access_profile_uuid"] = withUuidToTF(tkh.GetAccessProfile())
-	obj["group_uuid"] = withUuidToTF(tkh.GetGroup())
+	{
+		val, d := tkhToTFObjectRSROProfileAccessProfilePrimerRO(false, tkh.GetAccessProfile())
+		diags.Append(d...)
+		obj["access_profile"] = val
+	}
+	{
+		val, d := tkhToTFObjectRSROGroupGroupPrimerRO(false, tkh.GetGroup())
+		diags.Append(d...)
+		obj["group"] = val
+	}
 
 	objVal, d := types.ObjectValue(attrs, obj)
 	diags.Append(d...)
 	return objVal, diags
 }
 
-func tkhToTFObjectRSProfileAccessProfileGroupLinkableWrapper(recurse bool, tkh keyhubmodel.ProfileAccessProfileGroupLinkableWrapperable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROProfileAccessProfileGroupLinkableWrapperRO(recurse bool, tkh keyhubmodel.ProfileAccessProfileGroupLinkableWrapperable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = profileAccessProfileGroupLinkableWrapperAttrTypesRSRecurse
+		attrs = profileAccessProfileGroupLinkableWrapperAttrTypesRSRORecurse
 	} else {
-		attrs = profileAccessProfileGroupLinkableWrapperAttrTypesRS
+		attrs = profileAccessProfileGroupLinkableWrapperAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -3578,7 +5329,7 @@ func tkhToTFObjectRSProfileAccessProfileGroupLinkableWrapper(recurse bool, tkh k
 	{
 		elemType := attrs["items"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetItems(), func(tkh keyhubmodel.ProfileAccessProfileGroupable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSProfileAccessProfileGroup(recurse, tkh)
+			val, d := tkhToTFObjectRSROProfileAccessProfileGroupRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -3591,13 +5342,13 @@ func tkhToTFObjectRSProfileAccessProfileGroupLinkableWrapper(recurse bool, tkh k
 	return objVal, diags
 }
 
-func tkhToTFObjectRSProfileAccessProfileGroup_additionalObjects(recurse bool, tkh keyhubmodel.ProfileAccessProfileGroup_additionalObjectsable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROProfileAccessProfileGroup_additionalObjectsRO(recurse bool, tkh keyhubmodel.ProfileAccessProfileGroup_additionalObjectsable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = profileAccessProfileGroup_additionalObjectsAttrTypesRSRecurse
+		attrs = profileAccessProfileGroup_additionalObjectsAttrTypesRSRORecurse
 	} else {
-		attrs = profileAccessProfileGroup_additionalObjectsAttrTypesRS
+		attrs = profileAccessProfileGroup_additionalObjectsAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -3605,7 +5356,7 @@ func tkhToTFObjectRSProfileAccessProfileGroup_additionalObjects(recurse bool, tk
 
 	obj := make(map[string]attr.Value)
 	{
-		val, d := tkhToTFObjectRSAuditInfo(recurse, tkh.GetAudit())
+		val, d := tkhToTFObjectRSROAuditInfoRO(recurse, tkh.GetAudit())
 		diags.Append(d...)
 		obj["audit"] = val
 	}
@@ -3615,13 +5366,13 @@ func tkhToTFObjectRSProfileAccessProfileGroup_additionalObjects(recurse bool, tk
 	return objVal, diags
 }
 
-func tkhToTFObjectRSProfileAccessProfileLinkableWrapper(recurse bool, tkh keyhubmodel.ProfileAccessProfileLinkableWrapperable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROProfileAccessProfileLinkableWrapperRO(recurse bool, tkh keyhubmodel.ProfileAccessProfileLinkableWrapperable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = profileAccessProfileLinkableWrapperAttrTypesRSRecurse
+		attrs = profileAccessProfileLinkableWrapperAttrTypesRSRORecurse
 	} else {
-		attrs = profileAccessProfileLinkableWrapperAttrTypesRS
+		attrs = profileAccessProfileLinkableWrapperAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -3631,7 +5382,7 @@ func tkhToTFObjectRSProfileAccessProfileLinkableWrapper(recurse bool, tkh keyhub
 	{
 		elemType := attrs["items"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetItems(), func(tkh keyhubmodel.ProfileAccessProfileable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSProfileAccessProfile(recurse, tkh)
+			val, d := tkhToTFObjectRSROProfileAccessProfileRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -3671,6 +5422,47 @@ func tkhToTFObjectRSProfileAccessProfilePrimer(recurse bool, tkh keyhubmodel.Pro
 		elemType := attrs["permissions"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetPermissions(), func(tkh keyhubmodel.AuthPermissionable, diags *diag.Diagnostics) attr.Value {
 			val, d := tkhToTFObjectRSAuthPermission(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["permissions"] = val
+	}
+	obj["name"] = types.StringPointerValue(tkh.GetName())
+	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
+func tkhToTFObjectRSROProfileAccessProfilePrimerRO(recurse bool, tkh keyhubmodel.ProfileAccessProfilePrimerable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = profileAccessProfilePrimerAttrTypesRSRORecurse
+	} else {
+		attrs = profileAccessProfilePrimerAttrTypesRSRO
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	{
+		elemType := attrs["links"].(types.ListType).ElemType
+		val, d := sliceToTFList(elemType, tkh.GetLinks(), func(tkh keyhubmodel.RestLinkable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectRSRORestLinkRO(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["links"] = val
+	}
+	{
+		elemType := attrs["permissions"].(types.ListType).ElemType
+		val, d := sliceToTFList(elemType, tkh.GetPermissions(), func(tkh keyhubmodel.AuthPermissionable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectRSROAuthPermissionRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -3728,9 +5520,13 @@ func tkhToTFObjectRSProfileAccessProfileProvisioning(recurse bool, tkh keyhubmod
 		diags.Append(d...)
 		obj["permissions"] = val
 	}
-	obj["access_profile_uuid"] = withUuidToTF(tkh.GetAccessProfile())
 	{
-		val, d := tkhToTFObjectRSProvisioningGroupOnSystem(false, tkh.GetGroupOnSystem())
+		val, d := tkhToTFObjectRSROProfileAccessProfilePrimerRO(false, tkh.GetAccessProfile())
+		diags.Append(d...)
+		obj["access_profile"] = val
+	}
+	{
+		val, d := tkhToTFObjectRSROProvisioningGroupOnSystemRO(false, tkh.GetGroupOnSystem())
 		diags.Append(d...)
 		obj["group_on_system"] = val
 	}
@@ -3740,13 +5536,72 @@ func tkhToTFObjectRSProfileAccessProfileProvisioning(recurse bool, tkh keyhubmod
 	return objVal, diags
 }
 
-func tkhToTFObjectRSProfileAccessProfileProvisioningLinkableWrapper(recurse bool, tkh keyhubmodel.ProfileAccessProfileProvisioningLinkableWrapperable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROProfileAccessProfileProvisioningRO(recurse bool, tkh keyhubmodel.ProfileAccessProfileProvisioningable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = profileAccessProfileProvisioningLinkableWrapperAttrTypesRSRecurse
+		attrs = profileAccessProfileProvisioningAttrTypesRSRORecurse
 	} else {
-		attrs = profileAccessProfileProvisioningLinkableWrapperAttrTypesRS
+		attrs = profileAccessProfileProvisioningAttrTypesRSRO
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	if recurse {
+		obj["additional"] = types.ListNull(types.StringType)
+	}
+	if recurse {
+		{
+			val, d := tkhToTFObjectRSROProfileAccessProfileProvisioning_additionalObjectsRO(false, tkh.GetAdditionalObjects())
+			diags.Append(d...)
+			maps.Copy(obj, val.Attributes())
+		}
+	}
+	{
+		elemType := attrs["links"].(types.ListType).ElemType
+		val, d := sliceToTFList(elemType, tkh.GetLinks(), func(tkh keyhubmodel.RestLinkable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectRSRORestLinkRO(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["links"] = val
+	}
+	{
+		elemType := attrs["permissions"].(types.ListType).ElemType
+		val, d := sliceToTFList(elemType, tkh.GetPermissions(), func(tkh keyhubmodel.AuthPermissionable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectRSROAuthPermissionRO(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["permissions"] = val
+	}
+	{
+		val, d := tkhToTFObjectRSROProfileAccessProfilePrimerRO(false, tkh.GetAccessProfile())
+		diags.Append(d...)
+		obj["access_profile"] = val
+	}
+	{
+		val, d := tkhToTFObjectRSROProvisioningGroupOnSystemRO(false, tkh.GetGroupOnSystem())
+		diags.Append(d...)
+		obj["group_on_system"] = val
+	}
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
+func tkhToTFObjectRSROProfileAccessProfileProvisioningLinkableWrapperRO(recurse bool, tkh keyhubmodel.ProfileAccessProfileProvisioningLinkableWrapperable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = profileAccessProfileProvisioningLinkableWrapperAttrTypesRSRORecurse
+	} else {
+		attrs = profileAccessProfileProvisioningLinkableWrapperAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -3756,7 +5611,7 @@ func tkhToTFObjectRSProfileAccessProfileProvisioningLinkableWrapper(recurse bool
 	{
 		elemType := attrs["items"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetItems(), func(tkh keyhubmodel.ProfileAccessProfileProvisioningable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSProfileAccessProfileProvisioning(recurse, tkh)
+			val, d := tkhToTFObjectRSROProfileAccessProfileProvisioningRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -3799,6 +5654,36 @@ func tkhToTFObjectRSProfileAccessProfileProvisioningLinkableWrapperWithCount(rec
 	return objVal, diags
 }
 
+func tkhToTFObjectRSROProfileAccessProfileProvisioningLinkableWrapperWithCountRO(recurse bool, tkh keyhubmodel.ProfileAccessProfileProvisioningLinkableWrapperWithCountable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = profileAccessProfileProvisioningLinkableWrapperWithCountAttrTypesRSRORecurse
+	} else {
+		attrs = profileAccessProfileProvisioningLinkableWrapperWithCountAttrTypesRSRO
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	obj["count"] = types.Int64PointerValue(tkh.GetCount())
+	{
+		elemType := attrs["items"].(types.ListType).ElemType
+		val, d := sliceToTFList(elemType, tkh.GetItems(), func(tkh keyhubmodel.ProfileAccessProfileProvisioningable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectRSROProfileAccessProfileProvisioningRO(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["items"] = val
+	}
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
 func tkhToTFObjectRSProfileAccessProfileProvisioning_additionalObjects(recurse bool, tkh keyhubmodel.ProfileAccessProfileProvisioning_additionalObjectsable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
@@ -3813,7 +5698,7 @@ func tkhToTFObjectRSProfileAccessProfileProvisioning_additionalObjects(recurse b
 
 	obj := make(map[string]attr.Value)
 	{
-		val, d := tkhToTFObjectRSAuditInfo(recurse, tkh.GetAudit())
+		val, d := tkhToTFObjectRSROAuditInfoRO(recurse, tkh.GetAudit())
 		diags.Append(d...)
 		obj["audit"] = val
 	}
@@ -3823,13 +5708,13 @@ func tkhToTFObjectRSProfileAccessProfileProvisioning_additionalObjects(recurse b
 	return objVal, diags
 }
 
-func tkhToTFObjectRSProfileAccessProfile_additionalObjects(recurse bool, tkh keyhubmodel.ProfileAccessProfile_additionalObjectsable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROProfileAccessProfileProvisioning_additionalObjectsRO(recurse bool, tkh keyhubmodel.ProfileAccessProfileProvisioning_additionalObjectsable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = profileAccessProfile_additionalObjectsAttrTypesRSRecurse
+		attrs = profileAccessProfileProvisioning_additionalObjectsAttrTypesRSRORecurse
 	} else {
-		attrs = profileAccessProfile_additionalObjectsAttrTypesRS
+		attrs = profileAccessProfileProvisioning_additionalObjectsAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -3837,32 +5722,56 @@ func tkhToTFObjectRSProfileAccessProfile_additionalObjects(recurse bool, tkh key
 
 	obj := make(map[string]attr.Value)
 	{
-		val, d := tkhToTFObjectRSProfileAccessProfileAccountWithAttributesLinkableWrapper(recurse, tkh.GetAccountsWithAttributes())
+		val, d := tkhToTFObjectRSROAuditInfoRO(recurse, tkh.GetAudit())
+		diags.Append(d...)
+		obj["audit"] = val
+	}
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
+func tkhToTFObjectRSROProfileAccessProfile_additionalObjectsRO(recurse bool, tkh keyhubmodel.ProfileAccessProfile_additionalObjectsable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = profileAccessProfile_additionalObjectsAttrTypesRSRORecurse
+	} else {
+		attrs = profileAccessProfile_additionalObjectsAttrTypesRSRO
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	{
+		val, d := tkhToTFObjectRSROProfileAccessProfileAccountWithAttributesLinkableWrapperRO(recurse, tkh.GetAccountsWithAttributes())
 		diags.Append(d...)
 		obj["accounts_with_attributes"] = getItemsAttr(val, attrs["accounts_with_attributes"])
 	}
 	{
-		val, d := tkhToTFObjectRSIdentityAccountAttributeRuleLinkableWrapper(recurse, tkh.GetAttributeRules())
+		val, d := tkhToTFObjectRSROIdentityAccountAttributeRuleLinkableWrapperRO(recurse, tkh.GetAttributeRules())
 		diags.Append(d...)
 		obj["attribute_rules"] = getItemsAttr(val, attrs["attribute_rules"])
 	}
 	{
-		val, d := tkhToTFObjectRSAuditInfo(recurse, tkh.GetAudit())
+		val, d := tkhToTFObjectRSROAuditInfoRO(recurse, tkh.GetAudit())
 		diags.Append(d...)
 		obj["audit"] = val
 	}
 	{
-		val, d := tkhToTFObjectRSProfileAccessProfileClientLinkableWrapper(recurse, tkh.GetClients())
+		val, d := tkhToTFObjectRSROProfileAccessProfileClientLinkableWrapperRO(recurse, tkh.GetClients())
 		diags.Append(d...)
 		obj["clients"] = getItemsAttr(val, attrs["clients"])
 	}
 	{
-		val, d := tkhToTFObjectRSProfileAccessProfileGroupLinkableWrapper(recurse, tkh.GetGroups())
+		val, d := tkhToTFObjectRSROProfileAccessProfileGroupLinkableWrapperRO(recurse, tkh.GetGroups())
 		diags.Append(d...)
 		obj["groups"] = getItemsAttr(val, attrs["groups"])
 	}
 	{
-		val, d := tkhToTFObjectRSProfileAccessProfileProvisioningLinkableWrapper(recurse, tkh.GetProvisioning())
+		val, d := tkhToTFObjectRSROProfileAccessProfileProvisioningLinkableWrapperRO(recurse, tkh.GetProvisioning())
 		diags.Append(d...)
 		obj["provisioning"] = getItemsAttr(val, attrs["provisioning"])
 	}
@@ -3872,13 +5781,13 @@ func tkhToTFObjectRSProfileAccessProfile_additionalObjects(recurse bool, tkh key
 	return objVal, diags
 }
 
-func tkhToTFObjectRSProvisioningAbstractProvisionedLDAP(recurse bool, tkh keyhubmodel.ProvisioningAbstractProvisionedLDAPable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROProvisioningAbstractProvisionedLDAPRO(recurse bool, tkh keyhubmodel.ProvisioningAbstractProvisionedLDAPable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = provisioningAbstractProvisionedLDAPAttrTypesRSRecurse
+		attrs = provisioningAbstractProvisionedLDAPAttrTypesRSRORecurse
 	} else {
-		attrs = provisioningAbstractProvisionedLDAPAttrTypesRS
+		attrs = provisioningAbstractProvisionedLDAPAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -3888,7 +5797,7 @@ func tkhToTFObjectRSProvisioningAbstractProvisionedLDAP(recurse bool, tkh keyhub
 	{
 		elemType := attrs["attributes"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetAttributes(), func(tkh keyhubmodel.MiscAttributeCustomizationable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSMiscAttributeCustomization(recurse, tkh)
+			val, d := tkhToTFObjectRSROMiscAttributeCustomizationRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -3898,9 +5807,17 @@ func tkhToTFObjectRSProvisioningAbstractProvisionedLDAP(recurse bool, tkh keyhub
 	obj["base_dn"] = types.StringPointerValue(tkh.GetBaseDN())
 	obj["bind_dn"] = types.StringPointerValue(tkh.GetBindDN())
 	obj["bind_password"] = types.StringPointerValue(tkh.GetBindPassword())
-	obj["client_certificate_uuid"] = withUuidToTF(tkh.GetClientCertificate())
+	{
+		val, d := tkhToTFObjectRSROCertificateCertificatePrimerRO(recurse, tkh.GetClientCertificate())
+		diags.Append(d...)
+		obj["client_certificate"] = val
+	}
 	obj["failover_host"] = types.StringPointerValue(tkh.GetFailoverHost())
-	obj["failover_trusted_certificate_uuid"] = withUuidToTF(tkh.GetFailoverTrustedCertificate())
+	{
+		val, d := tkhToTFObjectRSROCertificateCertificatePrimerRO(recurse, tkh.GetFailoverTrustedCertificate())
+		diags.Append(d...)
+		obj["failover_trusted_certificate"] = val
+	}
 	obj["group_dn"] = types.StringPointerValue(tkh.GetGroupDN())
 	obj["host"] = types.StringPointerValue(tkh.GetHost())
 	obj["object_classes"] = types.StringPointerValue(tkh.GetObjectClasses())
@@ -3908,7 +5825,11 @@ func tkhToTFObjectRSProvisioningAbstractProvisionedLDAP(recurse bool, tkh keyhub
 	obj["service_account_dn"] = types.StringPointerValue(tkh.GetServiceAccountDN())
 	obj["ssh_public_key_support"] = stringerToTF(tkh.GetSshPublicKeySupport())
 	obj["tls"] = stringerToTF(tkh.GetTls())
-	obj["trusted_certificate_uuid"] = withUuidToTF(tkh.GetTrustedCertificate())
+	{
+		val, d := tkhToTFObjectRSROCertificateCertificatePrimerRO(recurse, tkh.GetTrustedCertificate())
+		diags.Append(d...)
+		obj["trusted_certificate"] = val
+	}
 	obj["user_dn"] = types.StringPointerValue(tkh.GetUserDN())
 
 	objVal, d := types.ObjectValue(attrs, obj)
@@ -3916,13 +5837,13 @@ func tkhToTFObjectRSProvisioningAbstractProvisionedLDAP(recurse bool, tkh keyhub
 	return objVal, diags
 }
 
-func tkhToTFObjectRSProvisioningCircuitBreakerStatistics(recurse bool, tkh keyhubmodel.ProvisioningCircuitBreakerStatisticsable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROProvisioningCircuitBreakerStatisticsRO(recurse bool, tkh keyhubmodel.ProvisioningCircuitBreakerStatisticsable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = provisioningCircuitBreakerStatisticsAttrTypesRSRecurse
+		attrs = provisioningCircuitBreakerStatisticsAttrTypesRSRORecurse
 	} else {
-		attrs = provisioningCircuitBreakerStatisticsAttrTypesRS
+		attrs = provisioningCircuitBreakerStatisticsAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -3939,13 +5860,13 @@ func tkhToTFObjectRSProvisioningCircuitBreakerStatistics(recurse bool, tkh keyhu
 	return objVal, diags
 }
 
-func tkhToTFObjectRSProvisioningGroupOnSystem(recurse bool, tkh keyhubmodel.ProvisioningGroupOnSystemable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROProvisioningGroupOnSystemRO(recurse bool, tkh keyhubmodel.ProvisioningGroupOnSystemable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = provisioningGroupOnSystemAttrTypesRSRecurse
+		attrs = provisioningGroupOnSystemAttrTypesRSRORecurse
 	} else {
-		attrs = provisioningGroupOnSystemAttrTypesRS
+		attrs = provisioningGroupOnSystemAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -3957,7 +5878,7 @@ func tkhToTFObjectRSProvisioningGroupOnSystem(recurse bool, tkh keyhubmodel.Prov
 	}
 	if recurse {
 		{
-			val, d := tkhToTFObjectRSProvisioningGroupOnSystem_additionalObjects(false, tkh.GetAdditionalObjects())
+			val, d := tkhToTFObjectRSROProvisioningGroupOnSystem_additionalObjectsRO(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
 			maps.Copy(obj, val.Attributes())
 		}
@@ -3965,7 +5886,7 @@ func tkhToTFObjectRSProvisioningGroupOnSystem(recurse bool, tkh keyhubmodel.Prov
 	{
 		elemType := attrs["links"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetLinks(), func(tkh keyhubmodel.RestLinkable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSRestLink(recurse, tkh)
+			val, d := tkhToTFObjectRSRORestLinkRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -3975,7 +5896,7 @@ func tkhToTFObjectRSProvisioningGroupOnSystem(recurse bool, tkh keyhubmodel.Prov
 	{
 		elemType := attrs["permissions"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetPermissions(), func(tkh keyhubmodel.AuthPermissionable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSAuthPermission(recurse, tkh)
+			val, d := tkhToTFObjectRSROAuthPermissionRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -3986,7 +5907,11 @@ func tkhToTFObjectRSProvisioningGroupOnSystem(recurse bool, tkh keyhubmodel.Prov
 	obj["name_in_system"] = types.StringPointerValue(tkh.GetNameInSystem())
 	obj["type"] = stringerToTF(tkh.GetProvisioningGroupOnSystemPrimerType())
 	obj["short_name_in_system"] = types.StringPointerValue(tkh.GetShortNameInSystem())
-	obj["owner_uuid"] = withUuidToTF(tkh.GetOwner())
+	{
+		val, d := tkhToTFObjectRSROGroupGroupPrimerRO(false, tkh.GetOwner())
+		diags.Append(d...)
+		obj["owner"] = val
+	}
 	obj["provisioning_enabled"] = types.BoolPointerValue(tkh.GetProvisioningEnabled())
 
 	objVal, d := types.ObjectValue(attrs, obj)
@@ -3994,13 +5919,13 @@ func tkhToTFObjectRSProvisioningGroupOnSystem(recurse bool, tkh keyhubmodel.Prov
 	return objVal, diags
 }
 
-func tkhToTFObjectRSProvisioningGroupOnSystemLinkableWrapper(recurse bool, tkh keyhubmodel.ProvisioningGroupOnSystemLinkableWrapperable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROProvisioningGroupOnSystemLinkableWrapperRO(recurse bool, tkh keyhubmodel.ProvisioningGroupOnSystemLinkableWrapperable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = provisioningGroupOnSystemLinkableWrapperAttrTypesRSRecurse
+		attrs = provisioningGroupOnSystemLinkableWrapperAttrTypesRSRORecurse
 	} else {
-		attrs = provisioningGroupOnSystemLinkableWrapperAttrTypesRS
+		attrs = provisioningGroupOnSystemLinkableWrapperAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -4010,7 +5935,7 @@ func tkhToTFObjectRSProvisioningGroupOnSystemLinkableWrapper(recurse bool, tkh k
 	{
 		elemType := attrs["items"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetItems(), func(tkh keyhubmodel.ProvisioningGroupOnSystemable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSProvisioningGroupOnSystem(recurse, tkh)
+			val, d := tkhToTFObjectRSROProvisioningGroupOnSystemRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -4066,13 +5991,56 @@ func tkhToTFObjectRSProvisioningGroupOnSystemPrimer(recurse bool, tkh keyhubmode
 	return objVal, diags
 }
 
-func tkhToTFObjectRSProvisioningGroupOnSystemTypes(recurse bool, tkh keyhubmodel.ProvisioningGroupOnSystemTypesable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROProvisioningGroupOnSystemPrimerRO(recurse bool, tkh keyhubmodel.ProvisioningGroupOnSystemPrimerable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = provisioningGroupOnSystemTypesAttrTypesRSRecurse
+		attrs = provisioningGroupOnSystemPrimerAttrTypesRSRORecurse
 	} else {
-		attrs = provisioningGroupOnSystemTypesAttrTypesRS
+		attrs = provisioningGroupOnSystemPrimerAttrTypesRSRO
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	{
+		elemType := attrs["links"].(types.ListType).ElemType
+		val, d := sliceToTFList(elemType, tkh.GetLinks(), func(tkh keyhubmodel.RestLinkable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectRSRORestLinkRO(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["links"] = val
+	}
+	{
+		elemType := attrs["permissions"].(types.ListType).ElemType
+		val, d := sliceToTFList(elemType, tkh.GetPermissions(), func(tkh keyhubmodel.AuthPermissionable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectRSROAuthPermissionRO(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["permissions"] = val
+	}
+	obj["display_name"] = types.StringPointerValue(tkh.GetDisplayName())
+	obj["name_in_system"] = types.StringPointerValue(tkh.GetNameInSystem())
+	obj["type"] = stringerToTF(tkh.GetProvisioningGroupOnSystemPrimerType())
+	obj["short_name_in_system"] = types.StringPointerValue(tkh.GetShortNameInSystem())
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
+func tkhToTFObjectRSROProvisioningGroupOnSystemTypesRO(recurse bool, tkh keyhubmodel.ProvisioningGroupOnSystemTypesable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = provisioningGroupOnSystemTypesAttrTypesRSRORecurse
+	} else {
+		attrs = provisioningGroupOnSystemTypesAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -4112,7 +6080,7 @@ func tkhToTFObjectRSProvisioningGroupOnSystem_additionalObjects(recurse bool, tk
 		obj["access_profile_provisioning"] = getItemsAttr(val, attrs["access_profile_provisioning"])
 	}
 	{
-		val, d := tkhToTFObjectRSAuditInfo(recurse, tkh.GetAudit())
+		val, d := tkhToTFObjectRSROAuditInfoRO(recurse, tkh.GetAudit())
 		diags.Append(d...)
 		obj["audit"] = val
 	}
@@ -4124,6 +6092,45 @@ func tkhToTFObjectRSProvisioningGroupOnSystem_additionalObjects(recurse bool, tk
 	{
 		val, d := tkhToTFObjectRSServiceaccountServiceAccountPrimerLinkableWrapperWithCount(recurse, tkh.GetServiceAccounts())
 		diags.Append(d...)
+		obj["service_accounts_uuid"] = getItemsAttr(val, attrs["service_accounts_uuid"])
+	}
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
+func tkhToTFObjectRSROProvisioningGroupOnSystem_additionalObjectsRO(recurse bool, tkh keyhubmodel.ProvisioningGroupOnSystem_additionalObjectsable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = provisioningGroupOnSystem_additionalObjectsAttrTypesRSRORecurse
+	} else {
+		attrs = provisioningGroupOnSystem_additionalObjectsAttrTypesRSRO
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	{
+		val, d := tkhToTFObjectRSROProfileAccessProfileProvisioningLinkableWrapperWithCountRO(recurse, tkh.GetAccessProfileProvisioning())
+		diags.Append(d...)
+		obj["access_profile_provisioning"] = getItemsAttr(val, attrs["access_profile_provisioning"])
+	}
+	{
+		val, d := tkhToTFObjectRSROAuditInfoRO(recurse, tkh.GetAudit())
+		diags.Append(d...)
+		obj["audit"] = val
+	}
+	{
+		val, d := tkhToTFObjectRSROGroupProvisioningGroupLinkableWrapperWithCountRO(recurse, tkh.GetProvgroups())
+		diags.Append(d...)
+		obj["provgroups"] = getItemsAttr(val, attrs["provgroups"])
+	}
+	{
+		val, d := tkhToTFObjectRSROServiceaccountServiceAccountPrimerLinkableWrapperWithCountRO(recurse, tkh.GetServiceAccounts())
+		diags.Append(d...)
 		obj["service_accounts"] = getItemsAttr(val, attrs["service_accounts"])
 	}
 
@@ -4132,13 +6139,13 @@ func tkhToTFObjectRSProvisioningGroupOnSystem_additionalObjects(recurse bool, tk
 	return objVal, diags
 }
 
-func tkhToTFObjectRSProvisioningOwnedGroupOnSystemsWrapper(recurse bool, tkh keyhubmodel.ProvisioningOwnedGroupOnSystemsWrapperable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROProvisioningOwnedGroupOnSystemsWrapperRO(recurse bool, tkh keyhubmodel.ProvisioningOwnedGroupOnSystemsWrapperable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = provisioningOwnedGroupOnSystemsWrapperAttrTypesRSRecurse
+		attrs = provisioningOwnedGroupOnSystemsWrapperAttrTypesRSRORecurse
 	} else {
-		attrs = provisioningOwnedGroupOnSystemsWrapperAttrTypesRS
+		attrs = provisioningOwnedGroupOnSystemsWrapperAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -4148,7 +6155,7 @@ func tkhToTFObjectRSProvisioningOwnedGroupOnSystemsWrapper(recurse bool, tkh key
 	{
 		elemType := attrs["items"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetItems(), func(tkh keyhubmodel.ProvisioningGroupOnSystemable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSProvisioningGroupOnSystem(recurse, tkh)
+			val, d := tkhToTFObjectRSROProvisioningGroupOnSystemRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -4162,13 +6169,13 @@ func tkhToTFObjectRSProvisioningOwnedGroupOnSystemsWrapper(recurse bool, tkh key
 	return objVal, diags
 }
 
-func tkhToTFObjectRSProvisioningProvisionNumberSequence(recurse bool, tkh keyhubmodel.ProvisioningProvisionNumberSequenceable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROProvisioningProvisionNumberSequenceRO(recurse bool, tkh keyhubmodel.ProvisioningProvisionNumberSequenceable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = provisioningProvisionNumberSequenceAttrTypesRSRecurse
+		attrs = provisioningProvisionNumberSequenceAttrTypesRSRORecurse
 	} else {
-		attrs = provisioningProvisionNumberSequenceAttrTypesRS
+		attrs = provisioningProvisionNumberSequenceAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -4180,7 +6187,7 @@ func tkhToTFObjectRSProvisioningProvisionNumberSequence(recurse bool, tkh keyhub
 	}
 	if recurse {
 		{
-			val, d := tkhToTFObjectRSProvisioningProvisionNumberSequence_additionalObjects(false, tkh.GetAdditionalObjects())
+			val, d := tkhToTFObjectRSROProvisioningProvisionNumberSequence_additionalObjectsRO(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
 			maps.Copy(obj, val.Attributes())
 		}
@@ -4188,7 +6195,7 @@ func tkhToTFObjectRSProvisioningProvisionNumberSequence(recurse bool, tkh keyhub
 	{
 		elemType := attrs["links"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetLinks(), func(tkh keyhubmodel.RestLinkable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSRestLink(recurse, tkh)
+			val, d := tkhToTFObjectRSRORestLinkRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -4198,7 +6205,7 @@ func tkhToTFObjectRSProvisioningProvisionNumberSequence(recurse bool, tkh keyhub
 	{
 		elemType := attrs["permissions"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetPermissions(), func(tkh keyhubmodel.AuthPermissionable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSAuthPermission(recurse, tkh)
+			val, d := tkhToTFObjectRSROAuthPermissionRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -4213,13 +6220,13 @@ func tkhToTFObjectRSProvisioningProvisionNumberSequence(recurse bool, tkh keyhub
 	return objVal, diags
 }
 
-func tkhToTFObjectRSProvisioningProvisionNumberSequence_additionalObjects(recurse bool, tkh keyhubmodel.ProvisioningProvisionNumberSequence_additionalObjectsable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROProvisioningProvisionNumberSequence_additionalObjectsRO(recurse bool, tkh keyhubmodel.ProvisioningProvisionNumberSequence_additionalObjectsable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = provisioningProvisionNumberSequence_additionalObjectsAttrTypesRSRecurse
+		attrs = provisioningProvisionNumberSequence_additionalObjectsAttrTypesRSRORecurse
 	} else {
-		attrs = provisioningProvisionNumberSequence_additionalObjectsAttrTypesRS
+		attrs = provisioningProvisionNumberSequence_additionalObjectsAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -4227,12 +6234,12 @@ func tkhToTFObjectRSProvisioningProvisionNumberSequence_additionalObjects(recurs
 
 	obj := make(map[string]attr.Value)
 	{
-		val, d := tkhToTFObjectRSAuditInfo(recurse, tkh.GetAudit())
+		val, d := tkhToTFObjectRSROAuditInfoRO(recurse, tkh.GetAudit())
 		diags.Append(d...)
 		obj["audit"] = val
 	}
 	{
-		val, d := tkhToTFObjectRSProvisioningProvisionedSystemPrimerLinkableWrapper(recurse, tkh.GetSystems())
+		val, d := tkhToTFObjectRSROProvisioningProvisionedSystemPrimerLinkableWrapperRO(recurse, tkh.GetSystems())
 		diags.Append(d...)
 		obj["systems"] = getItemsAttr(val, attrs["systems"])
 	}
@@ -4242,13 +6249,13 @@ func tkhToTFObjectRSProvisioningProvisionNumberSequence_additionalObjects(recurs
 	return objVal, diags
 }
 
-func tkhToTFObjectRSProvisioningProvisionedAD(recurse bool, tkh keyhubmodel.ProvisioningProvisionedADable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROProvisioningProvisionedADRO(recurse bool, tkh keyhubmodel.ProvisioningProvisionedADable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = provisioningProvisionedADAttrTypesRSRecurse
+		attrs = provisioningProvisionedADAttrTypesRSRORecurse
 	} else {
-		attrs = provisioningProvisionedADAttrTypesRS
+		attrs = provisioningProvisionedADAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -4262,13 +6269,13 @@ func tkhToTFObjectRSProvisioningProvisionedAD(recurse bool, tkh keyhubmodel.Prov
 	return objVal, diags
 }
 
-func tkhToTFObjectRSProvisioningProvisionedAccount(recurse bool, tkh keyhubmodel.ProvisioningProvisionedAccountable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROProvisioningProvisionedAccountRO(recurse bool, tkh keyhubmodel.ProvisioningProvisionedAccountable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = provisioningProvisionedAccountAttrTypesRSRecurse
+		attrs = provisioningProvisionedAccountAttrTypesRSRORecurse
 	} else {
-		attrs = provisioningProvisionedAccountAttrTypesRS
+		attrs = provisioningProvisionedAccountAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -4280,7 +6287,7 @@ func tkhToTFObjectRSProvisioningProvisionedAccount(recurse bool, tkh keyhubmodel
 	}
 	if recurse {
 		{
-			val, d := tkhToTFObjectRSProvisioningProvisionedAccount_additionalObjects(false, tkh.GetAdditionalObjects())
+			val, d := tkhToTFObjectRSROProvisioningProvisionedAccount_additionalObjectsRO(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
 			maps.Copy(obj, val.Attributes())
 		}
@@ -4293,13 +6300,13 @@ func tkhToTFObjectRSProvisioningProvisionedAccount(recurse bool, tkh keyhubmodel
 	return objVal, diags
 }
 
-func tkhToTFObjectRSProvisioningProvisionedAccount_additionalObjects(recurse bool, tkh keyhubmodel.ProvisioningProvisionedAccount_additionalObjectsable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROProvisioningProvisionedAccount_additionalObjectsRO(recurse bool, tkh keyhubmodel.ProvisioningProvisionedAccount_additionalObjectsable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = provisioningProvisionedAccount_additionalObjectsAttrTypesRSRecurse
+		attrs = provisioningProvisionedAccount_additionalObjectsAttrTypesRSRORecurse
 	} else {
-		attrs = provisioningProvisionedAccount_additionalObjectsAttrTypesRS
+		attrs = provisioningProvisionedAccount_additionalObjectsAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -4307,7 +6314,7 @@ func tkhToTFObjectRSProvisioningProvisionedAccount_additionalObjects(recurse boo
 
 	obj := make(map[string]attr.Value)
 	{
-		val, d := tkhToTFObjectRSAuditInfo(recurse, tkh.GetAudit())
+		val, d := tkhToTFObjectRSROAuditInfoRO(recurse, tkh.GetAudit())
 		diags.Append(d...)
 		obj["audit"] = val
 	}
@@ -4317,13 +6324,13 @@ func tkhToTFObjectRSProvisioningProvisionedAccount_additionalObjects(recurse boo
 	return objVal, diags
 }
 
-func tkhToTFObjectRSProvisioningProvisionedAzureOIDCDirectory(recurse bool, tkh keyhubmodel.ProvisioningProvisionedAzureOIDCDirectoryable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROProvisioningProvisionedAzureOIDCDirectoryRO(recurse bool, tkh keyhubmodel.ProvisioningProvisionedAzureOIDCDirectoryable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = provisioningProvisionedAzureOIDCDirectoryAttrTypesRSRecurse
+		attrs = provisioningProvisionedAzureOIDCDirectoryAttrTypesRSRORecurse
 	} else {
-		attrs = provisioningProvisionedAzureOIDCDirectoryAttrTypesRS
+		attrs = provisioningProvisionedAzureOIDCDirectoryAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -4331,7 +6338,11 @@ func tkhToTFObjectRSProvisioningProvisionedAzureOIDCDirectory(recurse bool, tkh 
 
 	obj := make(map[string]attr.Value)
 	obj["accounts_writable"] = types.BoolPointerValue(tkh.GetAccountsWritable())
-	obj["directory_uuid"] = withUuidToTF(tkh.GetDirectory())
+	{
+		val, d := tkhToTFObjectRSRODirectoryAccountDirectoryPrimerRO(recurse, tkh.GetDirectory())
+		diags.Append(d...)
+		obj["directory"] = val
+	}
 	obj["tenant"] = types.StringPointerValue(tkh.GetTenant())
 
 	objVal, d := types.ObjectValue(attrs, obj)
@@ -4339,13 +6350,13 @@ func tkhToTFObjectRSProvisioningProvisionedAzureOIDCDirectory(recurse bool, tkh 
 	return objVal, diags
 }
 
-func tkhToTFObjectRSProvisioningProvisionedAzureSyncLDAPDirectory(recurse bool, tkh keyhubmodel.ProvisioningProvisionedAzureSyncLDAPDirectoryable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROProvisioningProvisionedAzureSyncLDAPDirectoryRO(recurse bool, tkh keyhubmodel.ProvisioningProvisionedAzureSyncLDAPDirectoryable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = provisioningProvisionedAzureSyncLDAPDirectoryAttrTypesRSRecurse
+		attrs = provisioningProvisionedAzureSyncLDAPDirectoryAttrTypesRSRORecurse
 	} else {
-		attrs = provisioningProvisionedAzureSyncLDAPDirectoryAttrTypesRS
+		attrs = provisioningProvisionedAzureSyncLDAPDirectoryAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -4354,7 +6365,11 @@ func tkhToTFObjectRSProvisioningProvisionedAzureSyncLDAPDirectory(recurse bool, 
 	obj := make(map[string]attr.Value)
 	obj["client_id"] = types.StringPointerValue(tkh.GetClientId())
 	obj["client_secret"] = types.StringPointerValue(tkh.GetClientSecret())
-	obj["directory_uuid"] = withUuidToTF(tkh.GetDirectory())
+	{
+		val, d := tkhToTFObjectRSRODirectoryAccountDirectoryPrimerRO(recurse, tkh.GetDirectory())
+		diags.Append(d...)
+		obj["directory"] = val
+	}
 	obj["tenant"] = types.StringPointerValue(tkh.GetTenant())
 
 	objVal, d := types.ObjectValue(attrs, obj)
@@ -4362,13 +6377,13 @@ func tkhToTFObjectRSProvisioningProvisionedAzureSyncLDAPDirectory(recurse bool, 
 	return objVal, diags
 }
 
-func tkhToTFObjectRSProvisioningProvisionedAzureTenant(recurse bool, tkh keyhubmodel.ProvisioningProvisionedAzureTenantable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROProvisioningProvisionedAzureTenantRO(recurse bool, tkh keyhubmodel.ProvisioningProvisionedAzureTenantable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = provisioningProvisionedAzureTenantAttrTypesRSRecurse
+		attrs = provisioningProvisionedAzureTenantAttrTypesRSRORecurse
 	} else {
-		attrs = provisioningProvisionedAzureTenantAttrTypesRS
+		attrs = provisioningProvisionedAzureTenantAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -4385,33 +6400,37 @@ func tkhToTFObjectRSProvisioningProvisionedAzureTenant(recurse bool, tkh keyhubm
 	return objVal, diags
 }
 
-func tkhToTFObjectRSProvisioningProvisionedInternalLDAP(recurse bool, tkh keyhubmodel.ProvisioningProvisionedInternalLDAPable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROProvisioningProvisionedInternalLDAPRO(recurse bool, tkh keyhubmodel.ProvisioningProvisionedInternalLDAPable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = provisioningProvisionedInternalLDAPAttrTypesRSRecurse
+		attrs = provisioningProvisionedInternalLDAPAttrTypesRSRORecurse
 	} else {
-		attrs = provisioningProvisionedInternalLDAPAttrTypesRS
+		attrs = provisioningProvisionedInternalLDAPAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
 	}
 
 	obj := make(map[string]attr.Value)
-	obj["client_uuid"] = withUuidToTF(tkh.GetClient())
+	{
+		val, d := tkhToTFObjectRSROClientLdapClientRO(recurse, tkh.GetClient())
+		diags.Append(d...)
+		obj["client"] = val
+	}
 
 	objVal, d := types.ObjectValue(attrs, obj)
 	diags.Append(d...)
 	return objVal, diags
 }
 
-func tkhToTFObjectRSProvisioningProvisionedLDAP(recurse bool, tkh keyhubmodel.ProvisioningProvisionedLDAPable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROProvisioningProvisionedLDAPRO(recurse bool, tkh keyhubmodel.ProvisioningProvisionedLDAPable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = provisioningProvisionedLDAPAttrTypesRSRecurse
+		attrs = provisioningProvisionedLDAPAttrTypesRSRORecurse
 	} else {
-		attrs = provisioningProvisionedLDAPAttrTypesRS
+		attrs = provisioningProvisionedLDAPAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -4420,13 +6439,13 @@ func tkhToTFObjectRSProvisioningProvisionedLDAP(recurse bool, tkh keyhubmodel.Pr
 	obj := make(map[string]attr.Value)
 	obj["gid"] = types.Int64PointerValue(tkh.GetGid())
 	{
-		val, d := tkhToTFObjectRSProvisioningProvisionNumberSequence(recurse, tkh.GetGidNumbering())
+		val, d := tkhToTFObjectRSROProvisioningProvisionNumberSequenceRO(recurse, tkh.GetGidNumbering())
 		diags.Append(d...)
 		obj["gid_numbering"] = val
 	}
 	obj["hashing_scheme"] = stringerToTF(tkh.GetHashingScheme())
 	{
-		val, d := tkhToTFObjectRSProvisioningProvisionNumberSequence(recurse, tkh.GetNumbering())
+		val, d := tkhToTFObjectRSROProvisioningProvisionNumberSequenceRO(recurse, tkh.GetNumbering())
 		diags.Append(d...)
 		obj["numbering"] = val
 	}
@@ -4436,13 +6455,13 @@ func tkhToTFObjectRSProvisioningProvisionedLDAP(recurse bool, tkh keyhubmodel.Pr
 	return objVal, diags
 }
 
-func tkhToTFObjectRSProvisioningProvisionedLDAPDirectory(recurse bool, tkh keyhubmodel.ProvisioningProvisionedLDAPDirectoryable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROProvisioningProvisionedLDAPDirectoryRO(recurse bool, tkh keyhubmodel.ProvisioningProvisionedLDAPDirectoryable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = provisioningProvisionedLDAPDirectoryAttrTypesRSRecurse
+		attrs = provisioningProvisionedLDAPDirectoryAttrTypesRSRORecurse
 	} else {
-		attrs = provisioningProvisionedLDAPDirectoryAttrTypesRS
+		attrs = provisioningProvisionedLDAPDirectoryAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -4453,24 +6472,28 @@ func tkhToTFObjectRSProvisioningProvisionedLDAPDirectory(recurse bool, tkh keyhu
 	{
 		elemType := attrs["attributes"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetAttributes(), func(tkh keyhubmodel.MiscAttributeCustomizationable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSMiscAttributeCustomization(recurse, tkh)
+			val, d := tkhToTFObjectRSROMiscAttributeCustomizationRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
 		diags.Append(d...)
 		obj["attributes"] = val
 	}
-	obj["directory_uuid"] = withUuidToTF(tkh.GetDirectory())
+	{
+		val, d := tkhToTFObjectRSRODirectoryAccountDirectoryPrimerRO(recurse, tkh.GetDirectory())
+		diags.Append(d...)
+		obj["directory"] = val
+	}
 	obj["gid"] = types.Int64PointerValue(tkh.GetGid())
 	{
-		val, d := tkhToTFObjectRSProvisioningProvisionNumberSequence(recurse, tkh.GetGidNumbering())
+		val, d := tkhToTFObjectRSROProvisioningProvisionNumberSequenceRO(recurse, tkh.GetGidNumbering())
 		diags.Append(d...)
 		obj["gid_numbering"] = val
 	}
 	obj["group_dn"] = types.StringPointerValue(tkh.GetGroupDN())
 	obj["hashing_scheme"] = stringerToTF(tkh.GetHashingScheme())
 	{
-		val, d := tkhToTFObjectRSProvisioningProvisionNumberSequence(recurse, tkh.GetNumbering())
+		val, d := tkhToTFObjectRSROProvisioningProvisionNumberSequenceRO(recurse, tkh.GetNumbering())
 		diags.Append(d...)
 		obj["numbering"] = val
 	}
@@ -4483,20 +6506,24 @@ func tkhToTFObjectRSProvisioningProvisionedLDAPDirectory(recurse bool, tkh keyhu
 	return objVal, diags
 }
 
-func tkhToTFObjectRSProvisioningProvisionedNamespace(recurse bool, tkh keyhubmodel.ProvisioningProvisionedNamespaceable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROProvisioningProvisionedNamespaceRO(recurse bool, tkh keyhubmodel.ProvisioningProvisionedNamespaceable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = provisioningProvisionedNamespaceAttrTypesRSRecurse
+		attrs = provisioningProvisionedNamespaceAttrTypesRSRORecurse
 	} else {
-		attrs = provisioningProvisionedNamespaceAttrTypesRS
+		attrs = provisioningProvisionedNamespaceAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
 	}
 
 	obj := make(map[string]attr.Value)
-	obj["base_system_uuid"] = withUuidToTF(tkh.GetBaseSystem())
+	{
+		val, d := tkhToTFObjectRSROProvisioningProvisionedSystemPrimerRO(recurse, tkh.GetBaseSystem())
+		diags.Append(d...)
+		obj["base_system"] = val
+	}
 	obj["group_dn"] = types.StringPointerValue(tkh.GetGroupDN())
 	obj["service_account_dn"] = types.StringPointerValue(tkh.GetServiceAccountDN())
 
@@ -4505,13 +6532,13 @@ func tkhToTFObjectRSProvisioningProvisionedNamespace(recurse bool, tkh keyhubmod
 	return objVal, diags
 }
 
-func tkhToTFObjectRSProvisioningProvisionedSCIM(recurse bool, tkh keyhubmodel.ProvisioningProvisionedSCIMable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROProvisioningProvisionedSCIMRO(recurse bool, tkh keyhubmodel.ProvisioningProvisionedSCIMable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = provisioningProvisionedSCIMAttrTypesRSRecurse
+		attrs = provisioningProvisionedSCIMAttrTypesRSRORecurse
 	} else {
-		attrs = provisioningProvisionedSCIMAttrTypesRS
+		attrs = provisioningProvisionedSCIMAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -4521,7 +6548,7 @@ func tkhToTFObjectRSProvisioningProvisionedSCIM(recurse bool, tkh keyhubmodel.Pr
 	{
 		elemType := attrs["attributes"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetAttributes(), func(tkh keyhubmodel.MiscAttributeCustomizationable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSMiscAttributeCustomization(recurse, tkh)
+			val, d := tkhToTFObjectRSROMiscAttributeCustomizationRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -4542,13 +6569,13 @@ func tkhToTFObjectRSProvisioningProvisionedSCIM(recurse bool, tkh keyhubmodel.Pr
 	return objVal, diags
 }
 
-func tkhToTFObjectRSProvisioningProvisionedSystem(recurse bool, tkh keyhubmodel.ProvisioningProvisionedSystemable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROProvisioningProvisionedSystemRO(recurse bool, tkh keyhubmodel.ProvisioningProvisionedSystemable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = provisioningProvisionedSystemAttrTypesRSRecurse
+		attrs = provisioningProvisionedSystemAttrTypesRSRORecurse
 	} else {
-		attrs = provisioningProvisionedSystemAttrTypesRS
+		attrs = provisioningProvisionedSystemAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -4560,7 +6587,7 @@ func tkhToTFObjectRSProvisioningProvisionedSystem(recurse bool, tkh keyhubmodel.
 	}
 	if recurse {
 		{
-			val, d := tkhToTFObjectRSProvisioningProvisionedSystem_additionalObjects(false, tkh.GetAdditionalObjects())
+			val, d := tkhToTFObjectRSROProvisioningProvisionedSystem_additionalObjectsRO(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
 			maps.Copy(obj, val.Attributes())
 		}
@@ -4568,7 +6595,7 @@ func tkhToTFObjectRSProvisioningProvisionedSystem(recurse bool, tkh keyhubmodel.
 	{
 		elemType := attrs["links"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetLinks(), func(tkh keyhubmodel.RestLinkable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSRestLink(recurse, tkh)
+			val, d := tkhToTFObjectRSRORestLinkRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -4578,7 +6605,7 @@ func tkhToTFObjectRSProvisioningProvisionedSystem(recurse bool, tkh keyhubmodel.
 	{
 		elemType := attrs["permissions"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetPermissions(), func(tkh keyhubmodel.AuthPermissionable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSAuthPermission(recurse, tkh)
+			val, d := tkhToTFObjectRSROAuthPermissionRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -4590,84 +6617,100 @@ func tkhToTFObjectRSProvisioningProvisionedSystem(recurse bool, tkh keyhubmodel.
 	obj["can_write_accounts"] = types.BoolPointerValue(tkh.GetCanWriteAccounts())
 	obj["content_admin_permissions"] = types.BoolPointerValue(tkh.GetContentAdminPermissions())
 	obj["name"] = types.StringPointerValue(tkh.GetName())
-	obj["organizational_unit_uuid"] = withUuidToTF(tkh.GetOrganizationalUnit())
+	{
+		val, d := tkhToTFObjectRSROOrganizationOrganizationalUnitPrimerRO(recurse, tkh.GetOrganizationalUnit())
+		diags.Append(d...)
+		obj["organizational_unit"] = val
+	}
 	obj["owner_permissions"] = types.BoolPointerValue(tkh.GetOwnerPermissions())
 	obj["type"] = stringerToTF(tkh.GetProvisioningProvisionedSystemPrimerType())
 	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
 	obj["account_count"] = types.Int64PointerValue(int32PToInt64P(tkh.GetAccountCount()))
 	{
-		val, d := tkhToTFObjectRSProvisioningProvisionedSystem_cleanupPeriod(false, tkh.GetCleanupPeriod())
+		val, d := tkhToTFObjectRSROProvisioningProvisionedSystem_cleanupPeriodRO(false, tkh.GetCleanupPeriod())
 		diags.Append(d...)
 		obj["cleanup_period"] = val
 	}
-	obj["content_administrator_uuid"] = withUuidToTF(tkh.GetContentAdministrator())
+	{
+		val, d := tkhToTFObjectRSROGroupGroupPrimerRO(false, tkh.GetContentAdministrator())
+		diags.Append(d...)
+		obj["content_administrator"] = val
+	}
 	obj["external_uuid"] = stringerToTF(tkh.GetExternalUuid())
 	obj["group_on_system_provisioning"] = stringerToTF(tkh.GetGroupOnSystemProvisioning())
-	obj["owner_uuid"] = withUuidToTF(tkh.GetOwner())
+	{
+		val, d := tkhToTFObjectRSROGroupGroupPrimerRO(false, tkh.GetOwner())
+		diags.Append(d...)
+		obj["owner"] = val
+	}
 	obj["self_service_existing_groups"] = types.BoolPointerValue(tkh.GetSelfServiceExistingGroups())
 	obj["self_service_new_groups"] = types.BoolPointerValue(tkh.GetSelfServiceNewGroups())
 	obj["self_service_new_namespaces"] = types.BoolPointerValue(tkh.GetSelfServiceNewNamespaces())
 	obj["self_service_service_accounts"] = types.BoolPointerValue(tkh.GetSelfServiceServiceAccounts())
 	obj["should_destroy_unknown_accounts"] = types.BoolPointerValue(tkh.GetShouldDestroyUnknownAccounts())
-	obj["technical_administrator_uuid"] = withUuidToTF(tkh.GetTechnicalAdministrator())
+	{
+		val, d := tkhToTFObjectRSROGroupGroupPrimerRO(false, tkh.GetTechnicalAdministrator())
+		diags.Append(d...)
+		obj["technical_administrator"] = val
+	}
 	obj["username_prefix"] = types.StringPointerValue(tkh.GetUsernamePrefix())
 	{
 		tkhCast, _ := tkh.(keyhubmodel.ProvisioningAbstractProvisionedLDAPable)
-		val, d := tkhToTFObjectRSProvisioningAbstractProvisionedLDAP(false, tkhCast)
+		val, d := tkhToTFObjectRSROProvisioningAbstractProvisionedLDAPRO(false, tkhCast)
 		diags.Append(d...)
 		obj["abstract_provisioned_ldap"] = val
 	}
 	{
 		tkhCast, _ := tkh.(keyhubmodel.ProvisioningProvisionedADable)
-		val, d := tkhToTFObjectRSProvisioningProvisionedAD(false, tkhCast)
+		val, d := tkhToTFObjectRSROProvisioningProvisionedADRO(false, tkhCast)
 		diags.Append(d...)
 		obj["provisioned_a_d"] = val
 	}
 	{
 		tkhCast, _ := tkh.(keyhubmodel.ProvisioningProvisionedAzureOIDCDirectoryable)
-		val, d := tkhToTFObjectRSProvisioningProvisionedAzureOIDCDirectory(false, tkhCast)
+		val, d := tkhToTFObjectRSROProvisioningProvisionedAzureOIDCDirectoryRO(false, tkhCast)
 		diags.Append(d...)
 		obj["provisioned_azure_oidc_directory"] = val
 	}
 	{
 		tkhCast, _ := tkh.(keyhubmodel.ProvisioningProvisionedAzureSyncLDAPDirectoryable)
-		val, d := tkhToTFObjectRSProvisioningProvisionedAzureSyncLDAPDirectory(false, tkhCast)
+		val, d := tkhToTFObjectRSROProvisioningProvisionedAzureSyncLDAPDirectoryRO(false, tkhCast)
 		diags.Append(d...)
 		obj["provisioned_azure_sync_ldap_directory"] = val
 	}
 	{
 		tkhCast, _ := tkh.(keyhubmodel.ProvisioningProvisionedAzureTenantable)
-		val, d := tkhToTFObjectRSProvisioningProvisionedAzureTenant(false, tkhCast)
+		val, d := tkhToTFObjectRSROProvisioningProvisionedAzureTenantRO(false, tkhCast)
 		diags.Append(d...)
 		obj["provisioned_azure_tenant"] = val
 	}
 	{
 		tkhCast, _ := tkh.(keyhubmodel.ProvisioningProvisionedInternalLDAPable)
-		val, d := tkhToTFObjectRSProvisioningProvisionedInternalLDAP(false, tkhCast)
+		val, d := tkhToTFObjectRSROProvisioningProvisionedInternalLDAPRO(false, tkhCast)
 		diags.Append(d...)
 		obj["provisioned_internal_ldap"] = val
 	}
 	{
 		tkhCast, _ := tkh.(keyhubmodel.ProvisioningProvisionedLDAPable)
-		val, d := tkhToTFObjectRSProvisioningProvisionedLDAP(false, tkhCast)
+		val, d := tkhToTFObjectRSROProvisioningProvisionedLDAPRO(false, tkhCast)
 		diags.Append(d...)
 		obj["provisioned_ldap"] = val
 	}
 	{
 		tkhCast, _ := tkh.(keyhubmodel.ProvisioningProvisionedLDAPDirectoryable)
-		val, d := tkhToTFObjectRSProvisioningProvisionedLDAPDirectory(false, tkhCast)
+		val, d := tkhToTFObjectRSROProvisioningProvisionedLDAPDirectoryRO(false, tkhCast)
 		diags.Append(d...)
 		obj["provisioned_ldap_directory"] = val
 	}
 	{
 		tkhCast, _ := tkh.(keyhubmodel.ProvisioningProvisionedNamespaceable)
-		val, d := tkhToTFObjectRSProvisioningProvisionedNamespace(false, tkhCast)
+		val, d := tkhToTFObjectRSROProvisioningProvisionedNamespaceRO(false, tkhCast)
 		diags.Append(d...)
 		obj["provisioned_namespace"] = val
 	}
 	{
 		tkhCast, _ := tkh.(keyhubmodel.ProvisioningProvisionedSCIMable)
-		val, d := tkhToTFObjectRSProvisioningProvisionedSCIM(false, tkhCast)
+		val, d := tkhToTFObjectRSROProvisioningProvisionedSCIMRO(false, tkhCast)
 		diags.Append(d...)
 		obj["provisioned_scim"] = val
 	}
@@ -4677,13 +6720,13 @@ func tkhToTFObjectRSProvisioningProvisionedSystem(recurse bool, tkh keyhubmodel.
 	return objVal, diags
 }
 
-func tkhToTFObjectRSProvisioningProvisionedSystemLinkableWrapper(recurse bool, tkh keyhubmodel.ProvisioningProvisionedSystemLinkableWrapperable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROProvisioningProvisionedSystemLinkableWrapperRO(recurse bool, tkh keyhubmodel.ProvisioningProvisionedSystemLinkableWrapperable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = provisioningProvisionedSystemLinkableWrapperAttrTypesRSRecurse
+		attrs = provisioningProvisionedSystemLinkableWrapperAttrTypesRSRORecurse
 	} else {
-		attrs = provisioningProvisionedSystemLinkableWrapperAttrTypesRS
+		attrs = provisioningProvisionedSystemLinkableWrapperAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -4693,7 +6736,7 @@ func tkhToTFObjectRSProvisioningProvisionedSystemLinkableWrapper(recurse bool, t
 	{
 		elemType := attrs["items"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetItems(), func(tkh keyhubmodel.ProvisioningProvisionedSystemable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSProvisioningProvisionedSystem(recurse, tkh)
+			val, d := tkhToTFObjectRSROProvisioningProvisionedSystemRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -4754,13 +6797,65 @@ func tkhToTFObjectRSProvisioningProvisionedSystemPrimer(recurse bool, tkh keyhub
 	return objVal, diags
 }
 
-func tkhToTFObjectRSProvisioningProvisionedSystemPrimerLinkableWrapper(recurse bool, tkh keyhubmodel.ProvisioningProvisionedSystemPrimerLinkableWrapperable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROProvisioningProvisionedSystemPrimerRO(recurse bool, tkh keyhubmodel.ProvisioningProvisionedSystemPrimerable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = provisioningProvisionedSystemPrimerLinkableWrapperAttrTypesRSRecurse
+		attrs = provisioningProvisionedSystemPrimerAttrTypesRSRORecurse
 	} else {
-		attrs = provisioningProvisionedSystemPrimerLinkableWrapperAttrTypesRS
+		attrs = provisioningProvisionedSystemPrimerAttrTypesRSRO
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	{
+		elemType := attrs["links"].(types.ListType).ElemType
+		val, d := sliceToTFList(elemType, tkh.GetLinks(), func(tkh keyhubmodel.RestLinkable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectRSRORestLinkRO(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["links"] = val
+	}
+	{
+		elemType := attrs["permissions"].(types.ListType).ElemType
+		val, d := sliceToTFList(elemType, tkh.GetPermissions(), func(tkh keyhubmodel.AuthPermissionable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectRSROAuthPermissionRO(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["permissions"] = val
+	}
+	obj["active"] = types.BoolPointerValue(tkh.GetActive())
+	obj["admin_permissions"] = types.BoolPointerValue(tkh.GetAdminPermissions())
+	obj["can_write_accounts"] = types.BoolPointerValue(tkh.GetCanWriteAccounts())
+	obj["content_admin_permissions"] = types.BoolPointerValue(tkh.GetContentAdminPermissions())
+	obj["name"] = types.StringPointerValue(tkh.GetName())
+	{
+		val, d := tkhToTFObjectRSROOrganizationOrganizationalUnitPrimerRO(recurse, tkh.GetOrganizationalUnit())
+		diags.Append(d...)
+		obj["organizational_unit"] = val
+	}
+	obj["owner_permissions"] = types.BoolPointerValue(tkh.GetOwnerPermissions())
+	obj["type"] = stringerToTF(tkh.GetProvisioningProvisionedSystemPrimerType())
+	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
+func tkhToTFObjectRSROProvisioningProvisionedSystemPrimerLinkableWrapperRO(recurse bool, tkh keyhubmodel.ProvisioningProvisionedSystemPrimerLinkableWrapperable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = provisioningProvisionedSystemPrimerLinkableWrapperAttrTypesRSRORecurse
+	} else {
+		attrs = provisioningProvisionedSystemPrimerLinkableWrapperAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -4770,7 +6865,7 @@ func tkhToTFObjectRSProvisioningProvisionedSystemPrimerLinkableWrapper(recurse b
 	{
 		elemType := attrs["items"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetItems(), func(tkh keyhubmodel.ProvisioningProvisionedSystemPrimerable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSProvisioningProvisionedSystemPrimer(recurse, tkh)
+			val, d := tkhToTFObjectRSROProvisioningProvisionedSystemPrimerRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -4783,13 +6878,13 @@ func tkhToTFObjectRSProvisioningProvisionedSystemPrimerLinkableWrapper(recurse b
 	return objVal, diags
 }
 
-func tkhToTFObjectRSProvisioningProvisionedSystem_additionalObjects(recurse bool, tkh keyhubmodel.ProvisioningProvisionedSystem_additionalObjectsable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROProvisioningProvisionedSystem_additionalObjectsRO(recurse bool, tkh keyhubmodel.ProvisioningProvisionedSystem_additionalObjectsable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = provisioningProvisionedSystem_additionalObjectsAttrTypesRSRecurse
+		attrs = provisioningProvisionedSystem_additionalObjectsAttrTypesRSRORecurse
 	} else {
-		attrs = provisioningProvisionedSystem_additionalObjectsAttrTypesRS
+		attrs = provisioningProvisionedSystem_additionalObjectsAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -4797,38 +6892,38 @@ func tkhToTFObjectRSProvisioningProvisionedSystem_additionalObjects(recurse bool
 
 	obj := make(map[string]attr.Value)
 	{
-		val, d := tkhToTFObjectRSProvisioningProvisionedAccount(recurse, tkh.GetAccount())
+		val, d := tkhToTFObjectRSROProvisioningProvisionedAccountRO(recurse, tkh.GetAccount())
 		diags.Append(d...)
 		obj["account"] = val
 	}
 	{
-		val, d := tkhToTFObjectRSAuditInfo(recurse, tkh.GetAudit())
+		val, d := tkhToTFObjectRSROAuditInfoRO(recurse, tkh.GetAudit())
 		diags.Append(d...)
 		obj["audit"] = val
 	}
 	{
-		val, d := tkhToTFObjectRSClientOAuth2ClientPermissionWithClientLinkableWrapper(recurse, tkh.GetIssuedPermissions())
+		val, d := tkhToTFObjectRSROClientOAuth2ClientPermissionWithClientLinkableWrapperRO(recurse, tkh.GetIssuedPermissions())
 		diags.Append(d...)
 		obj["issued_permissions"] = getItemsAttr(val, attrs["issued_permissions"])
 	}
 	obj["login_name"] = types.StringPointerValue(tkh.GetLoginName())
 	{
-		val, d := tkhToTFObjectRSProvisioningProvisioningManagementPermissions(recurse, tkh.GetManagementPermissions())
+		val, d := tkhToTFObjectRSROProvisioningProvisioningManagementPermissionsRO(recurse, tkh.GetManagementPermissions())
 		diags.Append(d...)
 		obj["management_permissions"] = val
 	}
 	{
-		val, d := tkhToTFObjectRSMarkItemMarkers(recurse, tkh.GetMarkers())
+		val, d := tkhToTFObjectRSROMarkItemMarkersRO(recurse, tkh.GetMarkers())
 		diags.Append(d...)
 		obj["markers"] = val
 	}
 	{
-		val, d := tkhToTFObjectRSProvisioningCircuitBreakerStatistics(recurse, tkh.GetStatistics())
+		val, d := tkhToTFObjectRSROProvisioningCircuitBreakerStatisticsRO(recurse, tkh.GetStatistics())
 		diags.Append(d...)
 		obj["statistics"] = val
 	}
 	{
-		val, d := tkhToTFObjectRSProvisioningGroupOnSystemTypes(recurse, tkh.GetSupportedGroupTypes())
+		val, d := tkhToTFObjectRSROProvisioningGroupOnSystemTypesRO(recurse, tkh.GetSupportedGroupTypes())
 		diags.Append(d...)
 		obj["supported_group_types"] = val
 	}
@@ -4838,13 +6933,13 @@ func tkhToTFObjectRSProvisioningProvisionedSystem_additionalObjects(recurse bool
 	return objVal, diags
 }
 
-func tkhToTFObjectRSProvisioningProvisionedSystem_cleanupPeriod(recurse bool, tkh keyhubmodel.ProvisioningProvisionedSystem_cleanupPeriodable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROProvisioningProvisionedSystem_cleanupPeriodRO(recurse bool, tkh keyhubmodel.ProvisioningProvisionedSystem_cleanupPeriodable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = provisioningProvisionedSystem_cleanupPeriodAttrTypesRSRecurse
+		attrs = provisioningProvisionedSystem_cleanupPeriodAttrTypesRSRORecurse
 	} else {
-		attrs = provisioningProvisionedSystem_cleanupPeriodAttrTypesRS
+		attrs = provisioningProvisionedSystem_cleanupPeriodAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -4860,13 +6955,13 @@ func tkhToTFObjectRSProvisioningProvisionedSystem_cleanupPeriod(recurse bool, tk
 	return objVal, diags
 }
 
-func tkhToTFObjectRSProvisioningProvisioningManagementPermissions(recurse bool, tkh keyhubmodel.ProvisioningProvisioningManagementPermissionsable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROProvisioningProvisioningManagementPermissionsRO(recurse bool, tkh keyhubmodel.ProvisioningProvisioningManagementPermissionsable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = provisioningProvisioningManagementPermissionsAttrTypesRSRecurse
+		attrs = provisioningProvisioningManagementPermissionsAttrTypesRSRORecurse
 	} else {
-		attrs = provisioningProvisioningManagementPermissionsAttrTypesRS
+		attrs = provisioningProvisioningManagementPermissionsAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -4931,7 +7026,11 @@ func tkhToTFObjectRSServiceaccountServiceAccount(recurse bool, tkh keyhubmodel.S
 	obj["username"] = types.StringPointerValue(tkh.GetUsername())
 	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
 	obj["description"] = types.StringPointerValue(tkh.GetDescription())
-	obj["password_uuid"] = withUuidToTF(tkh.GetPassword())
+	{
+		val, d := tkhToTFObjectRSROVaultVaultRecordPrimerRO(false, tkh.GetPassword())
+		diags.Append(d...)
+		obj["password"] = val
+	}
 	obj["password_rotation"] = stringerToTF(tkh.GetPasswordRotation())
 	obj["ssh_public_key"] = types.StringPointerValue(tkh.GetSshPublicKey())
 	obj["technical_administrator_uuid"] = withUuidToTF(tkh.GetTechnicalAdministrator())
@@ -4941,13 +7040,13 @@ func tkhToTFObjectRSServiceaccountServiceAccount(recurse bool, tkh keyhubmodel.S
 	return objVal, diags
 }
 
-func tkhToTFObjectRSServiceaccountServiceAccountGroup(recurse bool, tkh keyhubmodel.ServiceaccountServiceAccountGroupable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROServiceaccountServiceAccountRO(recurse bool, tkh keyhubmodel.ServiceaccountServiceAccountable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = serviceaccountServiceAccountGroupAttrTypesRSRecurse
+		attrs = serviceaccountServiceAccountAttrTypesRSRORecurse
 	} else {
-		attrs = serviceaccountServiceAccountGroupAttrTypesRS
+		attrs = serviceaccountServiceAccountAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -4959,7 +7058,7 @@ func tkhToTFObjectRSServiceaccountServiceAccountGroup(recurse bool, tkh keyhubmo
 	}
 	if recurse {
 		{
-			val, d := tkhToTFObjectRSServiceaccountServiceAccountGroup_additionalObjects(false, tkh.GetAdditionalObjects())
+			val, d := tkhToTFObjectRSROServiceaccountServiceAccount_additionalObjectsRO(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
 			maps.Copy(obj, val.Attributes())
 		}
@@ -4967,7 +7066,7 @@ func tkhToTFObjectRSServiceaccountServiceAccountGroup(recurse bool, tkh keyhubmo
 	{
 		elemType := attrs["links"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetLinks(), func(tkh keyhubmodel.RestLinkable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSRestLink(recurse, tkh)
+			val, d := tkhToTFObjectRSRORestLinkRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -4977,7 +7076,78 @@ func tkhToTFObjectRSServiceaccountServiceAccountGroup(recurse bool, tkh keyhubmo
 	{
 		elemType := attrs["permissions"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetPermissions(), func(tkh keyhubmodel.AuthPermissionable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSAuthPermission(recurse, tkh)
+			val, d := tkhToTFObjectRSROAuthPermissionRO(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["permissions"] = val
+	}
+	obj["active"] = types.BoolPointerValue(tkh.GetActive())
+	obj["name"] = types.StringPointerValue(tkh.GetName())
+	{
+		val, d := tkhToTFObjectRSROProvisioningProvisionedSystemPrimerRO(recurse, tkh.GetSystem())
+		diags.Append(d...)
+		obj["system"] = val
+	}
+	obj["username"] = types.StringPointerValue(tkh.GetUsername())
+	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
+	obj["description"] = types.StringPointerValue(tkh.GetDescription())
+	{
+		val, d := tkhToTFObjectRSROVaultVaultRecordPrimerRO(false, tkh.GetPassword())
+		diags.Append(d...)
+		obj["password"] = val
+	}
+	obj["password_rotation"] = stringerToTF(tkh.GetPasswordRotation())
+	obj["ssh_public_key"] = types.StringPointerValue(tkh.GetSshPublicKey())
+	{
+		val, d := tkhToTFObjectRSROGroupGroupPrimerRO(false, tkh.GetTechnicalAdministrator())
+		diags.Append(d...)
+		obj["technical_administrator"] = val
+	}
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
+func tkhToTFObjectRSROServiceaccountServiceAccountGroupRO(recurse bool, tkh keyhubmodel.ServiceaccountServiceAccountGroupable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = serviceaccountServiceAccountGroupAttrTypesRSRORecurse
+	} else {
+		attrs = serviceaccountServiceAccountGroupAttrTypesRSRO
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	if recurse {
+		obj["additional"] = types.ListNull(types.StringType)
+	}
+	if recurse {
+		{
+			val, d := tkhToTFObjectRSROServiceaccountServiceAccountGroup_additionalObjectsRO(false, tkh.GetAdditionalObjects())
+			diags.Append(d...)
+			maps.Copy(obj, val.Attributes())
+		}
+	}
+	{
+		elemType := attrs["links"].(types.ListType).ElemType
+		val, d := sliceToTFList(elemType, tkh.GetLinks(), func(tkh keyhubmodel.RestLinkable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectRSRORestLinkRO(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["links"] = val
+	}
+	{
+		elemType := attrs["permissions"].(types.ListType).ElemType
+		val, d := sliceToTFList(elemType, tkh.GetPermissions(), func(tkh keyhubmodel.AuthPermissionable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectRSROAuthPermissionRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -4994,13 +7164,13 @@ func tkhToTFObjectRSServiceaccountServiceAccountGroup(recurse bool, tkh keyhubmo
 	return objVal, diags
 }
 
-func tkhToTFObjectRSServiceaccountServiceAccountGroupLinkableWrapper(recurse bool, tkh keyhubmodel.ServiceaccountServiceAccountGroupLinkableWrapperable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROServiceaccountServiceAccountGroupLinkableWrapperRO(recurse bool, tkh keyhubmodel.ServiceaccountServiceAccountGroupLinkableWrapperable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = serviceaccountServiceAccountGroupLinkableWrapperAttrTypesRSRecurse
+		attrs = serviceaccountServiceAccountGroupLinkableWrapperAttrTypesRSRORecurse
 	} else {
-		attrs = serviceaccountServiceAccountGroupLinkableWrapperAttrTypesRS
+		attrs = serviceaccountServiceAccountGroupLinkableWrapperAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -5010,7 +7180,7 @@ func tkhToTFObjectRSServiceaccountServiceAccountGroupLinkableWrapper(recurse boo
 	{
 		elemType := attrs["items"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetItems(), func(tkh keyhubmodel.ServiceaccountServiceAccountGroupable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSServiceaccountServiceAccountGroup(recurse, tkh)
+			val, d := tkhToTFObjectRSROServiceaccountServiceAccountGroupRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -5023,13 +7193,13 @@ func tkhToTFObjectRSServiceaccountServiceAccountGroupLinkableWrapper(recurse boo
 	return objVal, diags
 }
 
-func tkhToTFObjectRSServiceaccountServiceAccountGroup_additionalObjects(recurse bool, tkh keyhubmodel.ServiceaccountServiceAccountGroup_additionalObjectsable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROServiceaccountServiceAccountGroup_additionalObjectsRO(recurse bool, tkh keyhubmodel.ServiceaccountServiceAccountGroup_additionalObjectsable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = serviceaccountServiceAccountGroup_additionalObjectsAttrTypesRSRecurse
+		attrs = serviceaccountServiceAccountGroup_additionalObjectsAttrTypesRSRORecurse
 	} else {
-		attrs = serviceaccountServiceAccountGroup_additionalObjectsAttrTypesRS
+		attrs = serviceaccountServiceAccountGroup_additionalObjectsAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -5037,7 +7207,7 @@ func tkhToTFObjectRSServiceaccountServiceAccountGroup_additionalObjects(recurse 
 
 	obj := make(map[string]attr.Value)
 	{
-		val, d := tkhToTFObjectRSAuditInfo(recurse, tkh.GetAudit())
+		val, d := tkhToTFObjectRSROAuditInfoRO(recurse, tkh.GetAudit())
 		diags.Append(d...)
 		obj["audit"] = val
 	}
@@ -5047,13 +7217,13 @@ func tkhToTFObjectRSServiceaccountServiceAccountGroup_additionalObjects(recurse 
 	return objVal, diags
 }
 
-func tkhToTFObjectRSServiceaccountServiceAccountLinkableWrapper(recurse bool, tkh keyhubmodel.ServiceaccountServiceAccountLinkableWrapperable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROServiceaccountServiceAccountLinkableWrapperRO(recurse bool, tkh keyhubmodel.ServiceaccountServiceAccountLinkableWrapperable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = serviceaccountServiceAccountLinkableWrapperAttrTypesRSRecurse
+		attrs = serviceaccountServiceAccountLinkableWrapperAttrTypesRSRORecurse
 	} else {
-		attrs = serviceaccountServiceAccountLinkableWrapperAttrTypesRS
+		attrs = serviceaccountServiceAccountLinkableWrapperAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -5063,7 +7233,7 @@ func tkhToTFObjectRSServiceaccountServiceAccountLinkableWrapper(recurse bool, tk
 	{
 		elemType := attrs["items"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetItems(), func(tkh keyhubmodel.ServiceaccountServiceAccountable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSServiceaccountServiceAccount(recurse, tkh)
+			val, d := tkhToTFObjectRSROServiceaccountServiceAccountRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -5120,6 +7290,54 @@ func tkhToTFObjectRSServiceaccountServiceAccountPrimer(recurse bool, tkh keyhubm
 	return objVal, diags
 }
 
+func tkhToTFObjectRSROServiceaccountServiceAccountPrimerRO(recurse bool, tkh keyhubmodel.ServiceaccountServiceAccountPrimerable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = serviceaccountServiceAccountPrimerAttrTypesRSRORecurse
+	} else {
+		attrs = serviceaccountServiceAccountPrimerAttrTypesRSRO
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	{
+		elemType := attrs["links"].(types.ListType).ElemType
+		val, d := sliceToTFList(elemType, tkh.GetLinks(), func(tkh keyhubmodel.RestLinkable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectRSRORestLinkRO(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["links"] = val
+	}
+	{
+		elemType := attrs["permissions"].(types.ListType).ElemType
+		val, d := sliceToTFList(elemType, tkh.GetPermissions(), func(tkh keyhubmodel.AuthPermissionable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectRSROAuthPermissionRO(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["permissions"] = val
+	}
+	obj["active"] = types.BoolPointerValue(tkh.GetActive())
+	obj["name"] = types.StringPointerValue(tkh.GetName())
+	{
+		val, d := tkhToTFObjectRSROProvisioningProvisionedSystemPrimerRO(recurse, tkh.GetSystem())
+		diags.Append(d...)
+		obj["system"] = val
+	}
+	obj["username"] = types.StringPointerValue(tkh.GetUsername())
+	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
 func tkhToTFObjectRSServiceaccountServiceAccountPrimerLinkableWrapperWithCount(recurse bool, tkh keyhubmodel.ServiceaccountServiceAccountPrimerLinkableWrapperWithCountable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
@@ -5135,9 +7353,37 @@ func tkhToTFObjectRSServiceaccountServiceAccountPrimerLinkableWrapperWithCount(r
 	obj := make(map[string]attr.Value)
 	obj["count"] = types.Int64PointerValue(tkh.GetCount())
 	{
+		elemType := attrs["items"].(types.SetType).ElemType
+		val, d := sliceToTFSet(elemType, tkh.GetItems(), func(tkh keyhubmodel.ServiceaccountServiceAccountPrimerable, diags *diag.Diagnostics) attr.Value {
+			return withUuidToTF(tkh)
+		})
+		diags.Append(d...)
+		obj["items"] = val
+	}
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
+func tkhToTFObjectRSROServiceaccountServiceAccountPrimerLinkableWrapperWithCountRO(recurse bool, tkh keyhubmodel.ServiceaccountServiceAccountPrimerLinkableWrapperWithCountable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = serviceaccountServiceAccountPrimerLinkableWrapperWithCountAttrTypesRSRORecurse
+	} else {
+		attrs = serviceaccountServiceAccountPrimerLinkableWrapperWithCountAttrTypesRSRO
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	obj["count"] = types.Int64PointerValue(tkh.GetCount())
+	{
 		elemType := attrs["items"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetItems(), func(tkh keyhubmodel.ServiceaccountServiceAccountPrimerable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSServiceaccountServiceAccountPrimer(recurse, tkh)
+			val, d := tkhToTFObjectRSROServiceaccountServiceAccountPrimerRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -5150,13 +7396,13 @@ func tkhToTFObjectRSServiceaccountServiceAccountPrimerLinkableWrapperWithCount(r
 	return objVal, diags
 }
 
-func tkhToTFObjectRSServiceaccountServiceAccountSupportedFeatures(recurse bool, tkh keyhubmodel.ServiceaccountServiceAccountSupportedFeaturesable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROServiceaccountServiceAccountSupportedFeaturesRO(recurse bool, tkh keyhubmodel.ServiceaccountServiceAccountSupportedFeaturesable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = serviceaccountServiceAccountSupportedFeaturesAttrTypesRSRecurse
+		attrs = serviceaccountServiceAccountSupportedFeaturesAttrTypesRSRORecurse
 	} else {
-		attrs = serviceaccountServiceAccountSupportedFeaturesAttrTypesRS
+		attrs = serviceaccountServiceAccountSupportedFeaturesAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -5184,12 +7430,12 @@ func tkhToTFObjectRSServiceaccountServiceAccount_additionalObjects(recurse bool,
 
 	obj := make(map[string]attr.Value)
 	{
-		val, d := tkhToTFObjectRSAuditInfo(recurse, tkh.GetAudit())
+		val, d := tkhToTFObjectRSROAuditInfoRO(recurse, tkh.GetAudit())
 		diags.Append(d...)
 		obj["audit"] = val
 	}
 	{
-		val, d := tkhToTFObjectRSServiceaccountServiceAccountGroupLinkableWrapper(recurse, tkh.GetGroups())
+		val, d := tkhToTFObjectRSROServiceaccountServiceAccountGroupLinkableWrapperRO(recurse, tkh.GetGroups())
 		diags.Append(d...)
 		obj["groups"] = getItemsAttr(val, attrs["groups"])
 	}
@@ -5199,7 +7445,7 @@ func tkhToTFObjectRSServiceaccountServiceAccount_additionalObjects(recurse bool,
 		obj["secret"] = val
 	}
 	{
-		val, d := tkhToTFObjectRSServiceaccountServiceAccountSupportedFeatures(recurse, tkh.GetSupportedFeatures())
+		val, d := tkhToTFObjectRSROServiceaccountServiceAccountSupportedFeaturesRO(recurse, tkh.GetSupportedFeatures())
 		diags.Append(d...)
 		obj["supported_features"] = val
 	}
@@ -5209,13 +7455,52 @@ func tkhToTFObjectRSServiceaccountServiceAccount_additionalObjects(recurse bool,
 	return objVal, diags
 }
 
-func tkhToTFObjectRSVaultPasswordMetadata(recurse bool, tkh keyhubmodel.VaultPasswordMetadataable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROServiceaccountServiceAccount_additionalObjectsRO(recurse bool, tkh keyhubmodel.ServiceaccountServiceAccount_additionalObjectsable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = vaultPasswordMetadataAttrTypesRSRecurse
+		attrs = serviceaccountServiceAccount_additionalObjectsAttrTypesRSRORecurse
 	} else {
-		attrs = vaultPasswordMetadataAttrTypesRS
+		attrs = serviceaccountServiceAccount_additionalObjectsAttrTypesRSRO
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	{
+		val, d := tkhToTFObjectRSROAuditInfoRO(recurse, tkh.GetAudit())
+		diags.Append(d...)
+		obj["audit"] = val
+	}
+	{
+		val, d := tkhToTFObjectRSROServiceaccountServiceAccountGroupLinkableWrapperRO(recurse, tkh.GetGroups())
+		diags.Append(d...)
+		obj["groups"] = getItemsAttr(val, attrs["groups"])
+	}
+	{
+		val, d := tkhToTFObjectRSROGeneratedSecretRO(recurse, tkh.GetSecret())
+		diags.Append(d...)
+		obj["secret"] = val
+	}
+	{
+		val, d := tkhToTFObjectRSROServiceaccountServiceAccountSupportedFeaturesRO(recurse, tkh.GetSupportedFeatures())
+		diags.Append(d...)
+		obj["supported_features"] = val
+	}
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
+func tkhToTFObjectRSROVaultPasswordMetadataRO(recurse bool, tkh keyhubmodel.VaultPasswordMetadataable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = vaultPasswordMetadataAttrTypesRSRORecurse
+	} else {
+		attrs = vaultPasswordMetadataAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -5237,13 +7522,13 @@ func tkhToTFObjectRSVaultPasswordMetadata(recurse bool, tkh keyhubmodel.VaultPas
 	return objVal, diags
 }
 
-func tkhToTFObjectRSVaultVault(recurse bool, tkh keyhubmodel.VaultVaultable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROVaultVaultRO(recurse bool, tkh keyhubmodel.VaultVaultable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = vaultVaultAttrTypesRSRecurse
+		attrs = vaultVaultAttrTypesRSRORecurse
 	} else {
-		attrs = vaultVaultAttrTypesRS
+		attrs = vaultVaultAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -5253,7 +7538,7 @@ func tkhToTFObjectRSVaultVault(recurse bool, tkh keyhubmodel.VaultVaultable) (ty
 	{
 		elemType := attrs["links"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetLinks(), func(tkh keyhubmodel.RestLinkable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSRestLink(recurse, tkh)
+			val, d := tkhToTFObjectRSRORestLinkRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -5263,7 +7548,7 @@ func tkhToTFObjectRSVaultVault(recurse bool, tkh keyhubmodel.VaultVaultable) (ty
 	{
 		elemType := attrs["permissions"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetPermissions(), func(tkh keyhubmodel.AuthPermissionable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSAuthPermission(recurse, tkh)
+			val, d := tkhToTFObjectRSROAuthPermissionRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -5275,7 +7560,9 @@ func tkhToTFObjectRSVaultVault(recurse bool, tkh keyhubmodel.VaultVaultable) (ty
 	{
 		elemType := attrs["records"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetRecords(), func(tkh keyhubmodel.VaultVaultRecordable, diags *diag.Diagnostics) attr.Value {
-			return withUuidToTF(tkh)
+			val, d := tkhToTFObjectRSROVaultVaultRecordRO(recurse, tkh)
+			diags.Append(d...)
+			return val
 		})
 		diags.Append(d...)
 		obj["records"] = val
@@ -5286,13 +7573,13 @@ func tkhToTFObjectRSVaultVault(recurse bool, tkh keyhubmodel.VaultVaultable) (ty
 	return objVal, diags
 }
 
-func tkhToTFObjectRSVaultVaultActivationStatus(recurse bool, tkh keyhubmodel.VaultVaultActivationStatusable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROVaultVaultActivationStatusRO(recurse bool, tkh keyhubmodel.VaultVaultActivationStatusable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = vaultVaultActivationStatusAttrTypesRSRecurse
+		attrs = vaultVaultActivationStatusAttrTypesRSRORecurse
 	} else {
-		attrs = vaultVaultActivationStatusAttrTypesRS
+		attrs = vaultVaultActivationStatusAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -5307,13 +7594,13 @@ func tkhToTFObjectRSVaultVaultActivationStatus(recurse bool, tkh keyhubmodel.Vau
 	return objVal, diags
 }
 
-func tkhToTFObjectRSVaultVaultRecord(recurse bool, tkh keyhubmodel.VaultVaultRecordable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROVaultVaultRecordRO(recurse bool, tkh keyhubmodel.VaultVaultRecordable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = vaultVaultRecordAttrTypesRSRecurse
+		attrs = vaultVaultRecordAttrTypesRSRORecurse
 	} else {
-		attrs = vaultVaultRecordAttrTypesRS
+		attrs = vaultVaultRecordAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -5325,7 +7612,7 @@ func tkhToTFObjectRSVaultVaultRecord(recurse bool, tkh keyhubmodel.VaultVaultRec
 	}
 	if recurse {
 		{
-			val, d := tkhToTFObjectRSVaultVaultRecord_additionalObjects(false, tkh.GetAdditionalObjects())
+			val, d := tkhToTFObjectRSROVaultVaultRecord_additionalObjectsRO(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
 			maps.Copy(obj, val.Attributes())
 		}
@@ -5333,7 +7620,7 @@ func tkhToTFObjectRSVaultVaultRecord(recurse bool, tkh keyhubmodel.VaultVaultRec
 	{
 		elemType := attrs["links"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetLinks(), func(tkh keyhubmodel.RestLinkable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSRestLink(recurse, tkh)
+			val, d := tkhToTFObjectRSRORestLinkRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -5343,7 +7630,7 @@ func tkhToTFObjectRSVaultVaultRecord(recurse bool, tkh keyhubmodel.VaultVaultRec
 	{
 		elemType := attrs["permissions"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetPermissions(), func(tkh keyhubmodel.AuthPermissionable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSAuthPermission(recurse, tkh)
+			val, d := tkhToTFObjectRSROAuthPermissionRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -5417,13 +7704,56 @@ func tkhToTFObjectRSVaultVaultRecordPrimer(recurse bool, tkh keyhubmodel.VaultVa
 	return objVal, diags
 }
 
-func tkhToTFObjectRSVaultVaultRecordPrimerLinkableWrapper(recurse bool, tkh keyhubmodel.VaultVaultRecordPrimerLinkableWrapperable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROVaultVaultRecordPrimerRO(recurse bool, tkh keyhubmodel.VaultVaultRecordPrimerable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = vaultVaultRecordPrimerLinkableWrapperAttrTypesRSRecurse
+		attrs = vaultVaultRecordPrimerAttrTypesRSRORecurse
 	} else {
-		attrs = vaultVaultRecordPrimerLinkableWrapperAttrTypesRS
+		attrs = vaultVaultRecordPrimerAttrTypesRSRO
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	{
+		elemType := attrs["links"].(types.ListType).ElemType
+		val, d := sliceToTFList(elemType, tkh.GetLinks(), func(tkh keyhubmodel.RestLinkable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectRSRORestLinkRO(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["links"] = val
+	}
+	{
+		elemType := attrs["permissions"].(types.ListType).ElemType
+		val, d := sliceToTFList(elemType, tkh.GetPermissions(), func(tkh keyhubmodel.AuthPermissionable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectRSROAuthPermissionRO(recurse, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["permissions"] = val
+	}
+	obj["color"] = stringerToTF(tkh.GetColor())
+	obj["name"] = types.StringPointerValue(tkh.GetName())
+	obj["share_end_time"] = timePointerToTF(tkh.GetShareEndTime())
+	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
+func tkhToTFObjectRSROVaultVaultRecordPrimerLinkableWrapperRO(recurse bool, tkh keyhubmodel.VaultVaultRecordPrimerLinkableWrapperable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = vaultVaultRecordPrimerLinkableWrapperAttrTypesRSRORecurse
+	} else {
+		attrs = vaultVaultRecordPrimerLinkableWrapperAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -5433,7 +7763,7 @@ func tkhToTFObjectRSVaultVaultRecordPrimerLinkableWrapper(recurse bool, tkh keyh
 	{
 		elemType := attrs["items"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetItems(), func(tkh keyhubmodel.VaultVaultRecordPrimerable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSVaultVaultRecordPrimer(recurse, tkh)
+			val, d := tkhToTFObjectRSROVaultVaultRecordPrimerRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -5470,13 +7800,37 @@ func tkhToTFObjectRSVaultVaultRecordSecrets(recurse bool, tkh keyhubmodel.VaultV
 	return objVal, diags
 }
 
-func tkhToTFObjectRSVaultVaultRecordShare(recurse bool, tkh keyhubmodel.VaultVaultRecordShareable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROVaultVaultRecordSecretsRO(recurse bool, tkh keyhubmodel.VaultVaultRecordSecretsable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = vaultVaultRecordShareAttrTypesRSRecurse
+		attrs = vaultVaultRecordSecretsAttrTypesRSRORecurse
 	} else {
-		attrs = vaultVaultRecordShareAttrTypesRS
+		attrs = vaultVaultRecordSecretsAttrTypesRSRO
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	obj["comment"] = types.StringPointerValue(tkh.GetComment())
+	obj["file"] = types.StringPointerValue(tkh.GetFile())
+	obj["password"] = types.StringPointerValue(tkh.GetPassword())
+	obj["totp"] = types.StringPointerValue(tkh.GetTotp())
+	obj["totp_key"] = types.StringPointerValue(tkh.GetTotpKey())
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
+func tkhToTFObjectRSROVaultVaultRecordShareRO(recurse bool, tkh keyhubmodel.VaultVaultRecordShareable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = vaultVaultRecordShareAttrTypesRSRORecurse
+	} else {
+		attrs = vaultVaultRecordShareAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -5491,13 +7845,13 @@ func tkhToTFObjectRSVaultVaultRecordShare(recurse bool, tkh keyhubmodel.VaultVau
 	return objVal, diags
 }
 
-func tkhToTFObjectRSVaultVaultRecordShareSummary(recurse bool, tkh keyhubmodel.VaultVaultRecordShareSummaryable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROVaultVaultRecordShareSummaryRO(recurse bool, tkh keyhubmodel.VaultVaultRecordShareSummaryable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = vaultVaultRecordShareSummaryAttrTypesRSRecurse
+		attrs = vaultVaultRecordShareSummaryAttrTypesRSRORecurse
 	} else {
-		attrs = vaultVaultRecordShareSummaryAttrTypesRS
+		attrs = vaultVaultRecordShareSummaryAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -5507,7 +7861,7 @@ func tkhToTFObjectRSVaultVaultRecordShareSummary(recurse bool, tkh keyhubmodel.V
 	{
 		elemType := attrs["children"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetChildren(), func(tkh keyhubmodel.VaultVaultRecordShareable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSVaultVaultRecordShare(recurse, tkh)
+			val, d := tkhToTFObjectRSROVaultVaultRecordShareRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -5515,7 +7869,7 @@ func tkhToTFObjectRSVaultVaultRecordShareSummary(recurse bool, tkh keyhubmodel.V
 		obj["children"] = val
 	}
 	{
-		val, d := tkhToTFObjectRSVaultVaultRecordShare(recurse, tkh.GetParent())
+		val, d := tkhToTFObjectRSROVaultVaultRecordShareRO(recurse, tkh.GetParent())
 		diags.Append(d...)
 		obj["parent"] = val
 	}
@@ -5539,19 +7893,23 @@ func tkhToTFObjectRSVaultVaultRecord_additionalObjects(recurse bool, tkh keyhubm
 
 	obj := make(map[string]attr.Value)
 	{
-		val, d := tkhToTFObjectRSVaultVaultActivationStatus(recurse, tkh.GetActivationStatus())
+		val, d := tkhToTFObjectRSROVaultVaultActivationStatusRO(recurse, tkh.GetActivationStatus())
 		diags.Append(d...)
 		obj["activation_status"] = val
 	}
 	{
-		val, d := tkhToTFObjectRSAuditInfo(recurse, tkh.GetAudit())
+		val, d := tkhToTFObjectRSROAuditInfoRO(recurse, tkh.GetAudit())
 		diags.Append(d...)
 		obj["audit"] = val
 	}
 	obj["delete_tile"] = types.BoolPointerValue(tkh.GetDeleteTile())
-	obj["parent_uuid"] = withUuidToTF(tkh.GetParent())
 	{
-		val, d := tkhToTFObjectRSVaultPasswordMetadata(recurse, tkh.GetPasswordMetadata())
+		val, d := tkhToTFObjectRSROVaultVaultRecordPrimerRO(recurse, tkh.GetParent())
+		diags.Append(d...)
+		obj["parent"] = val
+	}
+	{
+		val, d := tkhToTFObjectRSROVaultPasswordMetadataRO(recurse, tkh.GetPasswordMetadata())
 		diags.Append(d...)
 		obj["password_metadata"] = val
 	}
@@ -5561,12 +7919,12 @@ func tkhToTFObjectRSVaultVaultRecord_additionalObjects(recurse bool, tkh keyhubm
 		obj["secret"] = val
 	}
 	{
-		val, d := tkhToTFObjectRSVaultVaultRecordShareSummary(recurse, tkh.GetShareSummary())
+		val, d := tkhToTFObjectRSROVaultVaultRecordShareSummaryRO(recurse, tkh.GetShareSummary())
 		diags.Append(d...)
 		obj["share_summary"] = val
 	}
 	{
-		val, d := tkhToTFObjectRSVaultVaultRecordPrimerLinkableWrapper(recurse, tkh.GetShares())
+		val, d := tkhToTFObjectRSROVaultVaultRecordPrimerLinkableWrapperRO(recurse, tkh.GetShares())
 		diags.Append(d...)
 		obj["shares"] = getItemsAttr(val, attrs["shares"])
 	}
@@ -5576,7 +7934,7 @@ func tkhToTFObjectRSVaultVaultRecord_additionalObjects(recurse bool, tkh keyhubm
 		obj["tile"] = val
 	}
 	{
-		val, d := tkhToTFObjectRSLinkable(recurse, tkh.GetVaultholder())
+		val, d := tkhToTFObjectRSROLinkableRO(recurse, tkh.GetVaultholder())
 		diags.Append(d...)
 		obj["vaultholder"] = val
 	}
@@ -5586,13 +7944,78 @@ func tkhToTFObjectRSVaultVaultRecord_additionalObjects(recurse bool, tkh keyhubm
 	return objVal, diags
 }
 
-func tkhToTFObjectRSWebhookWebhook(recurse bool, tkh keyhubmodel.WebhookWebhookable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROVaultVaultRecord_additionalObjectsRO(recurse bool, tkh keyhubmodel.VaultVaultRecord_additionalObjectsable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = webhookWebhookAttrTypesRSRecurse
+		attrs = vaultVaultRecord_additionalObjectsAttrTypesRSRORecurse
 	} else {
-		attrs = webhookWebhookAttrTypesRS
+		attrs = vaultVaultRecord_additionalObjectsAttrTypesRSRO
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	{
+		val, d := tkhToTFObjectRSROVaultVaultActivationStatusRO(recurse, tkh.GetActivationStatus())
+		diags.Append(d...)
+		obj["activation_status"] = val
+	}
+	{
+		val, d := tkhToTFObjectRSROAuditInfoRO(recurse, tkh.GetAudit())
+		diags.Append(d...)
+		obj["audit"] = val
+	}
+	obj["delete_tile"] = types.BoolPointerValue(tkh.GetDeleteTile())
+	{
+		val, d := tkhToTFObjectRSROVaultVaultRecordPrimerRO(recurse, tkh.GetParent())
+		diags.Append(d...)
+		obj["parent"] = val
+	}
+	{
+		val, d := tkhToTFObjectRSROVaultPasswordMetadataRO(recurse, tkh.GetPasswordMetadata())
+		diags.Append(d...)
+		obj["password_metadata"] = val
+	}
+	{
+		val, d := tkhToTFObjectRSROVaultVaultRecordSecretsRO(recurse, tkh.GetSecret())
+		diags.Append(d...)
+		obj["secret"] = val
+	}
+	{
+		val, d := tkhToTFObjectRSROVaultVaultRecordShareSummaryRO(recurse, tkh.GetShareSummary())
+		diags.Append(d...)
+		obj["share_summary"] = val
+	}
+	{
+		val, d := tkhToTFObjectRSROVaultVaultRecordPrimerLinkableWrapperRO(recurse, tkh.GetShares())
+		diags.Append(d...)
+		obj["shares"] = getItemsAttr(val, attrs["shares"])
+	}
+	{
+		val, d := tkhToTFObjectRSROLaunchpadVaultRecordLaunchpadTileRO(recurse, tkh.GetTile())
+		diags.Append(d...)
+		obj["tile"] = val
+	}
+	{
+		val, d := tkhToTFObjectRSROLinkableRO(recurse, tkh.GetVaultholder())
+		diags.Append(d...)
+		obj["vaultholder"] = val
+	}
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
+func tkhToTFObjectRSROWebhookWebhookRO(recurse bool, tkh keyhubmodel.WebhookWebhookable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = webhookWebhookAttrTypesRSRORecurse
+	} else {
+		attrs = webhookWebhookAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -5604,7 +8027,7 @@ func tkhToTFObjectRSWebhookWebhook(recurse bool, tkh keyhubmodel.WebhookWebhooka
 	}
 	if recurse {
 		{
-			val, d := tkhToTFObjectRSWebhookWebhook_additionalObjects(false, tkh.GetAdditionalObjects())
+			val, d := tkhToTFObjectRSROWebhookWebhook_additionalObjectsRO(false, tkh.GetAdditionalObjects())
 			diags.Append(d...)
 			maps.Copy(obj, val.Attributes())
 		}
@@ -5612,7 +8035,7 @@ func tkhToTFObjectRSWebhookWebhook(recurse bool, tkh keyhubmodel.WebhookWebhooka
 	{
 		elemType := attrs["links"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetLinks(), func(tkh keyhubmodel.RestLinkable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSRestLink(recurse, tkh)
+			val, d := tkhToTFObjectRSRORestLinkRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -5622,30 +8045,58 @@ func tkhToTFObjectRSWebhookWebhook(recurse bool, tkh keyhubmodel.WebhookWebhooka
 	{
 		elemType := attrs["permissions"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetPermissions(), func(tkh keyhubmodel.AuthPermissionable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSAuthPermission(recurse, tkh)
+			val, d := tkhToTFObjectRSROAuthPermissionRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
 		diags.Append(d...)
 		obj["permissions"] = val
 	}
-	obj["account_uuid"] = withUuidToTF(tkh.GetAccount())
+	{
+		val, d := tkhToTFObjectRSROAuthAccountPrimerRO(false, tkh.GetAccount())
+		diags.Append(d...)
+		obj["account"] = val
+	}
 	obj["active"] = types.BoolPointerValue(tkh.GetActive())
 	obj["all_types"] = types.BoolPointerValue(tkh.GetAllTypes())
 	obj["authentication_scheme"] = stringerToTF(tkh.GetAuthenticationScheme())
 	obj["basic_auth_password"] = types.StringPointerValue(tkh.GetBasicAuthPassword())
 	obj["basic_auth_username"] = types.StringPointerValue(tkh.GetBasicAuthUsername())
 	obj["bearer_token"] = types.StringPointerValue(tkh.GetBearerToken())
-	obj["client_uuid"] = withUuidToTF(tkh.GetClient())
-	obj["client_certificate_uuid"] = withUuidToTF(tkh.GetClientCertificate())
+	{
+		val, d := tkhToTFObjectRSROClientClientApplicationPrimerRO(false, tkh.GetClient())
+		diags.Append(d...)
+		obj["client"] = val
+	}
+	{
+		val, d := tkhToTFObjectRSROCertificateCertificatePrimerRO(false, tkh.GetClientCertificate())
+		diags.Append(d...)
+		obj["client_certificate"] = val
+	}
 	obj["custom_header_name"] = types.StringPointerValue(tkh.GetCustomHeaderName())
 	obj["custom_header_value"] = types.StringPointerValue(tkh.GetCustomHeaderValue())
-	obj["directory_uuid"] = withUuidToTF(tkh.GetDirectory())
-	obj["group_uuid"] = withUuidToTF(tkh.GetGroup())
+	{
+		val, d := tkhToTFObjectRSRODirectoryAccountDirectoryPrimerRO(false, tkh.GetDirectory())
+		diags.Append(d...)
+		obj["directory"] = val
+	}
+	{
+		val, d := tkhToTFObjectRSROGroupGroupPrimerRO(false, tkh.GetGroup())
+		diags.Append(d...)
+		obj["group"] = val
+	}
 	obj["name"] = types.StringPointerValue(tkh.GetName())
-	obj["system_uuid"] = withUuidToTF(tkh.GetSystem())
+	{
+		val, d := tkhToTFObjectRSROProvisioningProvisionedSystemPrimerRO(false, tkh.GetSystem())
+		diags.Append(d...)
+		obj["system"] = val
+	}
 	obj["tls"] = stringerToTF(tkh.GetTls())
-	obj["trusted_certificate_uuid"] = withUuidToTF(tkh.GetTrustedCertificate())
+	{
+		val, d := tkhToTFObjectRSROCertificateCertificatePrimerRO(false, tkh.GetTrustedCertificate())
+		diags.Append(d...)
+		obj["trusted_certificate"] = val
+	}
 	{
 		elemType := attrs["types"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetTypes(), func(tkh keyhubmodel.AuditAuditRecordType, diags *diag.Diagnostics) attr.Value {
@@ -5663,13 +8114,13 @@ func tkhToTFObjectRSWebhookWebhook(recurse bool, tkh keyhubmodel.WebhookWebhooka
 	return objVal, diags
 }
 
-func tkhToTFObjectRSWebhookWebhookLinkableWrapper(recurse bool, tkh keyhubmodel.WebhookWebhookLinkableWrapperable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROWebhookWebhookLinkableWrapperRO(recurse bool, tkh keyhubmodel.WebhookWebhookLinkableWrapperable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = webhookWebhookLinkableWrapperAttrTypesRSRecurse
+		attrs = webhookWebhookLinkableWrapperAttrTypesRSRORecurse
 	} else {
-		attrs = webhookWebhookLinkableWrapperAttrTypesRS
+		attrs = webhookWebhookLinkableWrapperAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -5679,7 +8130,7 @@ func tkhToTFObjectRSWebhookWebhookLinkableWrapper(recurse bool, tkh keyhubmodel.
 	{
 		elemType := attrs["items"].(types.ListType).ElemType
 		val, d := sliceToTFList(elemType, tkh.GetItems(), func(tkh keyhubmodel.WebhookWebhookable, diags *diag.Diagnostics) attr.Value {
-			val, d := tkhToTFObjectRSWebhookWebhook(recurse, tkh)
+			val, d := tkhToTFObjectRSROWebhookWebhookRO(recurse, tkh)
 			diags.Append(d...)
 			return val
 		})
@@ -5692,13 +8143,13 @@ func tkhToTFObjectRSWebhookWebhookLinkableWrapper(recurse bool, tkh keyhubmodel.
 	return objVal, diags
 }
 
-func tkhToTFObjectRSWebhookWebhook_additionalObjects(recurse bool, tkh keyhubmodel.WebhookWebhook_additionalObjectsable) (types.Object, diag.Diagnostics) {
+func tkhToTFObjectRSROWebhookWebhook_additionalObjectsRO(recurse bool, tkh keyhubmodel.WebhookWebhook_additionalObjectsable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = webhookWebhook_additionalObjectsAttrTypesRSRecurse
+		attrs = webhookWebhook_additionalObjectsAttrTypesRSRORecurse
 	} else {
-		attrs = webhookWebhook_additionalObjectsAttrTypesRS
+		attrs = webhookWebhook_additionalObjectsAttrTypesRSRO
 	}
 	if tkh == nil {
 		return types.ObjectNull(attrs), diags
@@ -5706,7 +8157,7 @@ func tkhToTFObjectRSWebhookWebhook_additionalObjects(recurse bool, tkh keyhubmod
 
 	obj := make(map[string]attr.Value)
 	{
-		val, d := tkhToTFObjectRSAuditInfo(recurse, tkh.GetAudit())
+		val, d := tkhToTFObjectRSROAuditInfoRO(recurse, tkh.GetAudit())
 		diags.Append(d...)
 		obj["audit"] = val
 	}

@@ -250,7 +250,12 @@ func toItemsList(ctx context.Context, val attr.Value) basetypes.ObjectValue {
 
 func getItemsAttr(val basetypes.ObjectValue, attrType attr.Type) attr.Value {
 	if val.IsNull() || val.IsUnknown() {
-		return types.ListNull(attrType.(basetypes.ListType).ElementType())
+		_, isList := attrType.(basetypes.ListType)
+		if isList {
+			return types.ListNull(attrType.(basetypes.ListType).ElementType())
+		} else {
+			return types.SetNull(attrType.(basetypes.SetType).ElementType())
+		}
 	}
 	return val.Attributes()["items"]
 }
@@ -335,8 +340,10 @@ func findGroupGroupPrimerByUUIDOptionallyNil(ctx context.Context, uuid *string, 
 	if ret == nil {
 		return ret, diag
 	}
+	var primerProtoype = keyhubmodels.NewGroupGroupPrimer()
 	if primer, ok := findSuperStruct(ret, reflect.TypeOf(keyhubmodels.GroupGroupPrimer{})); ok {
 		ret := primer.(keyhubmodels.GroupGroupPrimer)
+		ret.SetTypeEscaped(primerProtoype.GetTypeEscaped())
 		return &ret, diag
 	}
 	diag.AddError("Type error", "Result not of type GroupGroupPrimer")
@@ -370,12 +377,18 @@ func findDirectoryAccountDirectoryPrimerByUUID(ctx context.Context, uuid *string
 	if ret == nil {
 		return ret, diag
 	}
+	var primerProtoype = keyhubmodels.NewDirectoryAccountDirectoryPrimer()
 	if primer, ok := findSuperStruct(ret, reflect.TypeOf(keyhubmodels.DirectoryAccountDirectoryPrimer{})); ok {
 		ret := primer.(keyhubmodels.DirectoryAccountDirectoryPrimer)
+		ret.SetTypeEscaped(primerProtoype.GetTypeEscaped())
 		return &ret, diag
 	}
 	diag.AddError("Type error", "Result not of type DirectoryAccountDirectoryPrimer")
 	return nil, diag
+}
+
+func findOrganizationOrganizationalUnitPrimerROByUUID(ctx context.Context, uuid *string) (keyhubmodels.OrganizationOrganizationalUnitPrimerable, diag.Diagnostics) {
+	return findOrganizationOrganizationalUnitPrimerByUUID(ctx, uuid)
 }
 
 func findOrganizationOrganizationalUnitPrimerByUUID(ctx context.Context, uuid *string) (keyhubmodels.OrganizationOrganizationalUnitPrimerable, diag.Diagnostics) {
@@ -392,8 +405,10 @@ func findOrganizationOrganizationalUnitPrimerByUUID(ctx context.Context, uuid *s
 	if ret == nil {
 		return ret, diag
 	}
+	var primerProtoype = keyhubmodels.NewOrganizationOrganizationalUnitPrimer()
 	if primer, ok := findSuperStruct(ret, reflect.TypeOf(keyhubmodels.OrganizationOrganizationalUnitPrimer{})); ok {
 		ret := primer.(keyhubmodels.OrganizationOrganizationalUnitPrimer)
+		ret.SetTypeEscaped(primerProtoype.GetTypeEscaped())
 		return &ret, diag
 	}
 	diag.AddError("Type error", "Result not of type OrganizationOrganizationalUnitPrimer")
@@ -414,8 +429,10 @@ func findCertificateCertificatePrimerByUUID(ctx context.Context, uuid *string) (
 	if ret == nil {
 		return ret, diag
 	}
+	var primerProtoype = keyhubmodels.NewCertificateCertificatePrimer()
 	if primer, ok := findSuperStruct(ret, reflect.TypeOf(keyhubmodels.CertificateCertificatePrimer{})); ok {
 		ret := primer.(keyhubmodels.CertificateCertificatePrimer)
+		ret.SetTypeEscaped(primerProtoype.GetTypeEscaped())
 		return &ret, diag
 	}
 	diag.AddError("Type error", "Result not of type CertificateCertificatePrimer")
@@ -436,8 +453,10 @@ func findProfileAccessProfilePrimerByUUID(ctx context.Context, uuid *string) (ke
 	if ret == nil {
 		return ret, diag
 	}
+	var primerProtoype = keyhubmodels.NewProfileAccessProfilePrimer()
 	if primer, ok := findSuperStruct(ret, reflect.TypeOf(keyhubmodels.ProfileAccessProfilePrimer{})); ok {
 		ret := primer.(keyhubmodels.ProfileAccessProfilePrimer)
+		ret.SetTypeEscaped(primerProtoype.GetTypeEscaped())
 		return &ret, diag
 	}
 	diag.AddError("Type error", "Result not of type ProfileAccessProfilePrimerable")
@@ -466,8 +485,10 @@ func findProvisioningProvisionedSystemPrimerByUUIDOptionallyNil(ctx context.Cont
 	if ret == nil {
 		return ret, diag
 	}
+	var primerProtoype = keyhubmodels.NewProvisioningProvisionedSystemPrimer()
 	if primer, ok := findSuperStruct(ret, reflect.TypeOf(keyhubmodels.ProvisioningProvisionedSystemPrimer{})); ok {
 		ret := primer.(keyhubmodels.ProvisioningProvisionedSystemPrimer)
+		ret.SetTypeEscaped(primerProtoype.GetTypeEscaped())
 		return &ret, diag
 	}
 	diag.AddError("Type error", "Result not of type ProvisioningProvisionedSystemPrimer")
@@ -488,8 +509,10 @@ func findGroupGroupClassificationPrimerByUUID(ctx context.Context, uuid *string)
 	if ret == nil {
 		return ret, diag
 	}
+	var primerProtoype = keyhubmodels.NewGroupGroupClassificationPrimer()
 	if primer, ok := findSuperStruct(ret, reflect.TypeOf(keyhubmodels.GroupGroupClassificationPrimer{})); ok {
 		ret := primer.(keyhubmodels.GroupGroupClassificationPrimer)
+		ret.SetTypeEscaped(primerProtoype.GetTypeEscaped())
 		return &ret, diag
 	}
 	diag.AddError("Type error", "Result not of type GroupGroupClassificationPrimer")
@@ -518,8 +541,10 @@ func findClientClientApplicationPrimerByUUIDOptionallyNil(ctx context.Context, u
 	if ret == nil {
 		return ret, diag
 	}
+	var primerProtoype = keyhubmodels.NewClientClientApplicationPrimer()
 	if primer, ok := findSuperStruct(ret, reflect.TypeOf(keyhubmodels.ClientClientApplicationPrimer{})); ok {
 		ret := primer.(keyhubmodels.ClientClientApplicationPrimer)
+		ret.SetTypeEscaped(primerProtoype.GetTypeEscaped())
 		return &ret, diag
 	}
 	diag.AddError("Type error", "Result not of type ClientClientApplicationPrimer")
@@ -568,6 +593,10 @@ func findClientLdapClientByUUID(ctx context.Context, uuid *string) (keyhubmodels
 	return nil, diag
 }
 
+func findAuthAccountPrimerROByUUID(ctx context.Context, uuid *string) (keyhubmodels.AuthAccountPrimerable, diag.Diagnostics) {
+	return findAuthAccountPrimerByUUID(ctx, uuid)
+}
+
 func findAuthAccountPrimerByUUID(ctx context.Context, uuid *string) (keyhubmodels.AuthAccountPrimerable, diag.Diagnostics) {
 	ret, diag := findAuthAccountByUUID(ctx, uuid)
 	if ret == nil {
@@ -608,8 +637,10 @@ func findServiceaccountServiceAccountPrimerByUUID(ctx context.Context, uuid *str
 	if ret == nil {
 		return ret, diag
 	}
+	var primerProtoype = keyhubmodels.NewServiceaccountServiceAccountPrimer()
 	if primer, ok := findSuperStruct(ret, reflect.TypeOf(keyhubmodels.ServiceaccountServiceAccountPrimer{})); ok {
 		ret := primer.(keyhubmodels.ServiceaccountServiceAccountPrimer)
+		ret.SetTypeEscaped(primerProtoype.GetTypeEscaped())
 		return &ret, diag
 	}
 	diag.AddError("Type error", "Result not of type ServiceaccountServiceAccountPrimer")
@@ -621,8 +652,10 @@ func findVaultVaultRecordPrimerByUUID(ctx context.Context, uuid *string) (keyhub
 	if ret == nil {
 		return ret, diag
 	}
+	var primerProtoype = keyhubmodels.NewVaultVaultRecordPrimer()
 	if primer, ok := findSuperStruct(ret, reflect.TypeOf(keyhubmodels.VaultVaultRecordPrimer{})); ok {
 		ret := primer.(keyhubmodels.VaultVaultRecordPrimer)
+		ret.SetTypeEscaped(primerProtoype.GetTypeEscaped())
 		return &ret, diag
 	}
 	diag.AddError("Type error", "Result not of type VaultVaultRecordPrimer")
@@ -700,6 +733,14 @@ func resetListNestedAttributeFlags(schema rsschema.ListNestedAttribute) rsschema
 }
 
 func resetListAttributeFlags(schema rsschema.ListAttribute) rsschema.ListAttribute {
+	schema.Optional = false
+	schema.Computed = false
+	schema.Required = false
+	schema.PlanModifiers = nil
+	return schema
+}
+
+func resetSetAttributeFlags(schema rsschema.SetAttribute) rsschema.SetAttribute {
 	schema.Optional = false
 	schema.Computed = false
 	schema.Required = false

@@ -36,7 +36,7 @@ description: |-
 - `audit` (Attributes) (see [below for nested schema](#nestedatt--audit))
 - `groups` (Attributes List) (see [below for nested schema](#nestedatt--groups))
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--links))
-- `password_uuid` (String)
+- `password` (Attributes) (see [below for nested schema](#nestedatt--password))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--permissions))
 - `supported_features` (Attributes) (see [below for nested schema](#nestedatt--supported_features))
 - `uuid` (String)
@@ -112,6 +112,47 @@ Read-Only:
 - `id` (Number)
 - `rel` (String)
 - `type_escaped` (String)
+
+
+<a id="nestedatt--password"></a>
+### Nested Schema for `password`
+
+Required:
+
+- `name` (String)
+
+Optional:
+
+- `color` (String)
+
+Read-Only:
+
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--password--links))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--password--permissions))
+- `share_end_time` (String)
+- `uuid` (String)
+
+<a id="nestedatt--password--links"></a>
+### Nested Schema for `password.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--password--permissions"></a>
+### Nested Schema for `password.permissions`
+
+Optional:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
 
 
 <a id="nestedatt--permissions"></a>

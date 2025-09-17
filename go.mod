@@ -13,7 +13,7 @@ require (
 	github.com/microsoft/kiota-abstractions-go v1.9.3
 	github.com/sanity-io/litter v1.5.8
 	github.com/topicuskeyhub/sdk-go v0.43.0
-	github.com/topicuskeyhub/terraform-provider-keyhub-generator v1.0.29
+	github.com/topicuskeyhub/terraform-provider-keyhub-generator v1.0.30
 	golang.org/x/exp v0.0.0-20250819193227-8b4c13bb791b
 )
 

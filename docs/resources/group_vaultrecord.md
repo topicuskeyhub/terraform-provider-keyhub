@@ -41,7 +41,7 @@ description: |-
 - `audit` (Attributes) (see [below for nested schema](#nestedatt--audit))
 - `derived` (Boolean)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--links))
-- `parent_uuid` (String)
+- `parent` (Attributes) (see [below for nested schema](#nestedatt--parent))
 - `password_metadata` (Attributes) (see [below for nested schema](#nestedatt--password_metadata))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--permissions))
 - `share_end_time` (String)
@@ -99,6 +99,47 @@ Read-Only:
 - `id` (Number)
 - `rel` (String)
 - `type_escaped` (String)
+
+
+<a id="nestedatt--parent"></a>
+### Nested Schema for `parent`
+
+Required:
+
+- `name` (String)
+
+Optional:
+
+- `color` (String)
+
+Read-Only:
+
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--parent--links))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--parent--permissions))
+- `share_end_time` (String)
+- `uuid` (String)
+
+<a id="nestedatt--parent--links"></a>
+### Nested Schema for `parent.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--parent--permissions"></a>
+### Nested Schema for `parent.permissions`
+
+Optional:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
 
 
 <a id="nestedatt--password_metadata"></a>

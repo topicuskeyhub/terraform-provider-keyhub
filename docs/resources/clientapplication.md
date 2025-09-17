@@ -59,9 +59,52 @@ Required:
 
 Read-Only:
 
-- `client_uuid` (String)
+- `client` (Attributes) (see [below for nested schema](#nestedatt--accessprofileclients--client))
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--accessprofileclients--links))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--accessprofileclients--permissions))
+
+<a id="nestedatt--accessprofileclients--client"></a>
+### Nested Schema for `accessprofileclients.client`
+
+Required:
+
+- `name` (String)
+
+Optional:
+
+- `client_id` (String)
+- `scopes` (List of String)
+
+Read-Only:
+
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--accessprofileclients--client--links))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--accessprofileclients--client--permissions))
+- `sso_application` (Boolean)
+- `type` (String)
+- `uuid` (String)
+
+<a id="nestedatt--accessprofileclients--client--links"></a>
+### Nested Schema for `accessprofileclients.client.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--accessprofileclients--client--permissions"></a>
+### Nested Schema for `accessprofileclients.client.permissions`
+
+Optional:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
 
 <a id="nestedatt--accessprofileclients--links"></a>
 ### Nested Schema for `accessprofileclients.links`
@@ -101,9 +144,52 @@ Optional:
 
 Read-Only:
 
-- `client_uuid` (String)
+- `client` (Attributes) (see [below for nested schema](#nestedatt--groupclients--client))
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--groupclients--links))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--groupclients--permissions))
+
+<a id="nestedatt--groupclients--client"></a>
+### Nested Schema for `groupclients.client`
+
+Required:
+
+- `name` (String)
+
+Optional:
+
+- `client_id` (String)
+- `scopes` (List of String)
+
+Read-Only:
+
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--groupclients--client--links))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--groupclients--client--permissions))
+- `sso_application` (Boolean)
+- `type` (String)
+- `uuid` (String)
+
+<a id="nestedatt--groupclients--client--links"></a>
+### Nested Schema for `groupclients.client.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--groupclients--client--permissions"></a>
+### Nested Schema for `groupclients.client.permissions`
+
+Optional:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
 
 <a id="nestedatt--groupclients--links"></a>
 ### Nested Schema for `groupclients.links`
@@ -139,8 +225,49 @@ Optional:
 Read-Only:
 
 - `bind_dn` (String)
-- `shared_secret_uuid` (String)
+- `shared_secret` (Attributes) (see [below for nested schema](#nestedatt--ldap_client--shared_secret))
 - `used_for_provisioning` (Boolean)
+
+<a id="nestedatt--ldap_client--shared_secret"></a>
+### Nested Schema for `ldap_client.shared_secret`
+
+Required:
+
+- `name` (String)
+
+Optional:
+
+- `color` (String)
+
+Read-Only:
+
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--ldap_client--shared_secret--links))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--ldap_client--shared_secret--permissions))
+- `share_end_time` (String)
+- `uuid` (String)
+
+<a id="nestedatt--ldap_client--shared_secret--links"></a>
+### Nested Schema for `ldap_client.shared_secret.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--ldap_client--shared_secret--permissions"></a>
+### Nested Schema for `ldap_client.shared_secret.permissions`
+
+Optional:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
 
 
 <a id="nestedatt--oauth2_client"></a>
@@ -162,7 +289,7 @@ Read-Only:
 
 - `account_permissions` (Attributes List) (see [below for nested schema](#nestedatt--oauth2_client--account_permissions))
 - `for_identity_source` (Boolean)
-- `shared_secret_uuid` (String)
+- `shared_secret` (Attributes) (see [below for nested schema](#nestedatt--oauth2_client--shared_secret))
 - `use_client_credentials` (Boolean)
 
 <a id="nestedatt--oauth2_client--account_permissions"></a>
@@ -174,6 +301,47 @@ Optional:
 - `instances` (List of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
+
+
+<a id="nestedatt--oauth2_client--shared_secret"></a>
+### Nested Schema for `oauth2_client.shared_secret`
+
+Required:
+
+- `name` (String)
+
+Optional:
+
+- `color` (String)
+
+Read-Only:
+
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--oauth2_client--shared_secret--links))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--oauth2_client--shared_secret--permissions))
+- `share_end_time` (String)
+- `uuid` (String)
+
+<a id="nestedatt--oauth2_client--shared_secret--links"></a>
+### Nested Schema for `oauth2_client.shared_secret.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--oauth2_client--shared_secret--permissions"></a>
+### Nested Schema for `oauth2_client.shared_secret.permissions`
+
+Optional:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
 
 
 
@@ -234,16 +402,16 @@ Optional:
 
 - `application_administration` (Boolean)
 - `audit_config` (Attributes) (see [below for nested schema](#nestedatt--groups--audit_config))
-- `authorizing_group_auditing_uuid` (String)
-- `authorizing_group_delegation_uuid` (String)
-- `authorizing_group_membership_uuid` (String)
-- `authorizing_group_provisioning_uuid` (String)
-- `classification_uuid` (String)
+- `authorizing_group_auditing` (Attributes) (see [below for nested schema](#nestedatt--groups--authorizing_group_auditing))
+- `authorizing_group_delegation` (Attributes) (see [below for nested schema](#nestedatt--groups--authorizing_group_delegation))
+- `authorizing_group_membership` (Attributes) (see [below for nested schema](#nestedatt--groups--authorizing_group_membership))
+- `authorizing_group_provisioning` (Attributes) (see [below for nested schema](#nestedatt--groups--authorizing_group_provisioning))
+- `classification` (Attributes) (see [below for nested schema](#nestedatt--groups--classification))
 - `description` (String)
 - `extended_access` (String)
 - `hide_audit_trail` (Boolean)
-- `nested_under_uuid` (String)
-- `organizational_unit_uuid` (String)
+- `nested_under` (Attributes) (see [below for nested schema](#nestedatt--groups--nested_under))
+- `organizational_unit` (Attributes) (see [below for nested schema](#nestedatt--groups--organizational_unit))
 - `private_group` (Boolean)
 - `profile_administration` (Boolean)
 - `record_trail` (Boolean)
@@ -286,6 +454,463 @@ Read-Only:
 
 <a id="nestedatt--groups--audit_config--permissions"></a>
 ### Nested Schema for `groups.audit_config.permissions`
+
+Optional:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
+
+<a id="nestedatt--groups--authorizing_group_auditing"></a>
+### Nested Schema for `groups.authorizing_group_auditing`
+
+Required:
+
+- `name` (String)
+
+Optional:
+
+- `organizational_unit` (Attributes) (see [below for nested schema](#nestedatt--groups--authorizing_group_auditing--organizational_unit))
+
+Read-Only:
+
+- `admin` (Boolean)
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--groups--authorizing_group_auditing--links))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--groups--authorizing_group_auditing--permissions))
+- `uuid` (String)
+
+<a id="nestedatt--groups--authorizing_group_auditing--organizational_unit"></a>
+### Nested Schema for `groups.authorizing_group_auditing.organizational_unit`
+
+Required:
+
+- `name` (String)
+
+Read-Only:
+
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--groups--authorizing_group_auditing--organizational_unit--links))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--groups--authorizing_group_auditing--organizational_unit--permissions))
+- `uuid` (String)
+
+<a id="nestedatt--groups--authorizing_group_auditing--organizational_unit--links"></a>
+### Nested Schema for `groups.authorizing_group_auditing.organizational_unit.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--groups--authorizing_group_auditing--organizational_unit--permissions"></a>
+### Nested Schema for `groups.authorizing_group_auditing.organizational_unit.permissions`
+
+Optional:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
+
+<a id="nestedatt--groups--authorizing_group_auditing--links"></a>
+### Nested Schema for `groups.authorizing_group_auditing.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--groups--authorizing_group_auditing--permissions"></a>
+### Nested Schema for `groups.authorizing_group_auditing.permissions`
+
+Optional:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
+
+<a id="nestedatt--groups--authorizing_group_delegation"></a>
+### Nested Schema for `groups.authorizing_group_delegation`
+
+Required:
+
+- `name` (String)
+
+Optional:
+
+- `organizational_unit` (Attributes) (see [below for nested schema](#nestedatt--groups--authorizing_group_delegation--organizational_unit))
+
+Read-Only:
+
+- `admin` (Boolean)
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--groups--authorizing_group_delegation--links))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--groups--authorizing_group_delegation--permissions))
+- `uuid` (String)
+
+<a id="nestedatt--groups--authorizing_group_delegation--organizational_unit"></a>
+### Nested Schema for `groups.authorizing_group_delegation.organizational_unit`
+
+Required:
+
+- `name` (String)
+
+Read-Only:
+
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--groups--authorizing_group_delegation--organizational_unit--links))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--groups--authorizing_group_delegation--organizational_unit--permissions))
+- `uuid` (String)
+
+<a id="nestedatt--groups--authorizing_group_delegation--organizational_unit--links"></a>
+### Nested Schema for `groups.authorizing_group_delegation.organizational_unit.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--groups--authorizing_group_delegation--organizational_unit--permissions"></a>
+### Nested Schema for `groups.authorizing_group_delegation.organizational_unit.permissions`
+
+Optional:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
+
+<a id="nestedatt--groups--authorizing_group_delegation--links"></a>
+### Nested Schema for `groups.authorizing_group_delegation.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--groups--authorizing_group_delegation--permissions"></a>
+### Nested Schema for `groups.authorizing_group_delegation.permissions`
+
+Optional:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
+
+<a id="nestedatt--groups--authorizing_group_membership"></a>
+### Nested Schema for `groups.authorizing_group_membership`
+
+Required:
+
+- `name` (String)
+
+Optional:
+
+- `organizational_unit` (Attributes) (see [below for nested schema](#nestedatt--groups--authorizing_group_membership--organizational_unit))
+
+Read-Only:
+
+- `admin` (Boolean)
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--groups--authorizing_group_membership--links))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--groups--authorizing_group_membership--permissions))
+- `uuid` (String)
+
+<a id="nestedatt--groups--authorizing_group_membership--organizational_unit"></a>
+### Nested Schema for `groups.authorizing_group_membership.organizational_unit`
+
+Required:
+
+- `name` (String)
+
+Read-Only:
+
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--groups--authorizing_group_membership--organizational_unit--links))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--groups--authorizing_group_membership--organizational_unit--permissions))
+- `uuid` (String)
+
+<a id="nestedatt--groups--authorizing_group_membership--organizational_unit--links"></a>
+### Nested Schema for `groups.authorizing_group_membership.organizational_unit.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--groups--authorizing_group_membership--organizational_unit--permissions"></a>
+### Nested Schema for `groups.authorizing_group_membership.organizational_unit.permissions`
+
+Optional:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
+
+<a id="nestedatt--groups--authorizing_group_membership--links"></a>
+### Nested Schema for `groups.authorizing_group_membership.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--groups--authorizing_group_membership--permissions"></a>
+### Nested Schema for `groups.authorizing_group_membership.permissions`
+
+Optional:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
+
+<a id="nestedatt--groups--authorizing_group_provisioning"></a>
+### Nested Schema for `groups.authorizing_group_provisioning`
+
+Required:
+
+- `name` (String)
+
+Optional:
+
+- `organizational_unit` (Attributes) (see [below for nested schema](#nestedatt--groups--authorizing_group_provisioning--organizational_unit))
+
+Read-Only:
+
+- `admin` (Boolean)
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--groups--authorizing_group_provisioning--links))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--groups--authorizing_group_provisioning--permissions))
+- `uuid` (String)
+
+<a id="nestedatt--groups--authorizing_group_provisioning--organizational_unit"></a>
+### Nested Schema for `groups.authorizing_group_provisioning.organizational_unit`
+
+Required:
+
+- `name` (String)
+
+Read-Only:
+
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--groups--authorizing_group_provisioning--organizational_unit--links))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--groups--authorizing_group_provisioning--organizational_unit--permissions))
+- `uuid` (String)
+
+<a id="nestedatt--groups--authorizing_group_provisioning--organizational_unit--links"></a>
+### Nested Schema for `groups.authorizing_group_provisioning.organizational_unit.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--groups--authorizing_group_provisioning--organizational_unit--permissions"></a>
+### Nested Schema for `groups.authorizing_group_provisioning.organizational_unit.permissions`
+
+Optional:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
+
+<a id="nestedatt--groups--authorizing_group_provisioning--links"></a>
+### Nested Schema for `groups.authorizing_group_provisioning.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--groups--authorizing_group_provisioning--permissions"></a>
+### Nested Schema for `groups.authorizing_group_provisioning.permissions`
+
+Optional:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
+
+<a id="nestedatt--groups--classification"></a>
+### Nested Schema for `groups.classification`
+
+Required:
+
+- `name` (String)
+
+Read-Only:
+
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--groups--classification--links))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--groups--classification--permissions))
+- `uuid` (String)
+
+<a id="nestedatt--groups--classification--links"></a>
+### Nested Schema for `groups.classification.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--groups--classification--permissions"></a>
+### Nested Schema for `groups.classification.permissions`
+
+Optional:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
+
+<a id="nestedatt--groups--nested_under"></a>
+### Nested Schema for `groups.nested_under`
+
+Required:
+
+- `name` (String)
+
+Optional:
+
+- `organizational_unit` (Attributes) (see [below for nested schema](#nestedatt--groups--nested_under--organizational_unit))
+
+Read-Only:
+
+- `admin` (Boolean)
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--groups--nested_under--links))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--groups--nested_under--permissions))
+- `uuid` (String)
+
+<a id="nestedatt--groups--nested_under--organizational_unit"></a>
+### Nested Schema for `groups.nested_under.organizational_unit`
+
+Required:
+
+- `name` (String)
+
+Read-Only:
+
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--groups--nested_under--organizational_unit--links))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--groups--nested_under--organizational_unit--permissions))
+- `uuid` (String)
+
+<a id="nestedatt--groups--nested_under--organizational_unit--links"></a>
+### Nested Schema for `groups.nested_under.organizational_unit.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--groups--nested_under--organizational_unit--permissions"></a>
+### Nested Schema for `groups.nested_under.organizational_unit.permissions`
+
+Optional:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
+
+<a id="nestedatt--groups--nested_under--links"></a>
+### Nested Schema for `groups.nested_under.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--groups--nested_under--permissions"></a>
+### Nested Schema for `groups.nested_under.permissions`
+
+Optional:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
+
+<a id="nestedatt--groups--organizational_unit"></a>
+### Nested Schema for `groups.organizational_unit`
+
+Required:
+
+- `name` (String)
+
+Read-Only:
+
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--groups--organizational_unit--links))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--groups--organizational_unit--permissions))
+- `uuid` (String)
+
+<a id="nestedatt--groups--organizational_unit--links"></a>
+### Nested Schema for `groups.organizational_unit.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--groups--organizational_unit--permissions"></a>
+### Nested Schema for `groups.organizational_unit.permissions`
 
 Optional:
 
