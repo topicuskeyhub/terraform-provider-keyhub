@@ -1,3 +1,6 @@
+## 2.43.5
+* Added support to replace a list of objects by a list of UUIDs. As a side-effect, some read-only properties might now return an object instead of just a UUID, possibly necessitating changes in terraform configs.
+
 ## 2.43.0
 * Upgrade API to Topicus KeyHub version 43
 
