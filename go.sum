@@ -209,6 +209,8 @@ github.com/topicuskeyhub/sdk-go v0.43.0 h1:YsDPyuX1a4ddj74EZUuBFbvdMrnB6eKdGqDEF
 github.com/topicuskeyhub/sdk-go v0.43.0/go.mod h1:zqQ4cZxYWOnVysVfm9LtVVZv3B7W8FoEO5T/VDIEaoA=
 github.com/topicuskeyhub/terraform-provider-keyhub-generator v1.0.29 h1:jlJeRtZ5GxrAKe44qW88aCLA8TUFMz9zrUdikCyKgRo=
 github.com/topicuskeyhub/terraform-provider-keyhub-generator v1.0.29/go.mod h1:N7NyeqibtiQnGNhIujwXrnAdfDEPFHZSBzaUQVPN820=
+github.com/topicuskeyhub/terraform-provider-keyhub-generator v1.0.30 h1:Jwxpl8LFMkM8hrwDlVByFl2Ejkjq+Dcyf7A8zicoWH8=
+github.com/topicuskeyhub/terraform-provider-keyhub-generator v1.0.30/go.mod h1:N7NyeqibtiQnGNhIujwXrnAdfDEPFHZSBzaUQVPN820=
 github.com/ugorji/go/codec v1.2.7 h1:YPXUKf7fYbp/y8xloBqZOw2qaVggbfwMlI8WM3wZUJ0=
 github.com/ugorji/go/codec v1.2.7/go.mod h1:WGN1fab3R1fzQlVQTkfxVtIBhWDRqOviHU95kRgeqEY=
 github.com/vmihailenco/msgpack/v5 v5.4.1 h1:cQriyiUvjTwOHg8QZaPihLWeRAAVoCpE00IUPn0Bjt8=
