@@ -775,6 +775,7 @@ func tkhToTFObjectRSClientApplicationVaultVaultRecord(recurse bool, tkh keyhubmo
 	obj["name"] = types.StringPointerValue(tkh.GetName())
 	obj["share_end_time"] = timePointerToTF(tkh.GetShareEndTime())
 	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
+	obj["additional_urls"] = types.StringPointerValue(tkh.GetAdditionalURLs())
 	obj["derived"] = types.BoolPointerValue(tkh.GetDerived())
 	obj["end_date"] = stringerToTF(tkh.GetEndDate())
 	obj["filename"] = types.StringPointerValue(tkh.GetFilename())
@@ -3997,6 +3998,7 @@ func tkhToTFObjectRSGroupVaultVaultRecord(recurse bool, tkh keyhubmodel.VaultVau
 	obj["name"] = types.StringPointerValue(tkh.GetName())
 	obj["share_end_time"] = timePointerToTF(tkh.GetShareEndTime())
 	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
+	obj["additional_urls"] = types.StringPointerValue(tkh.GetAdditionalURLs())
 	obj["derived"] = types.BoolPointerValue(tkh.GetDerived())
 	obj["end_date"] = stringerToTF(tkh.GetEndDate())
 	obj["filename"] = types.StringPointerValue(tkh.GetFilename())
@@ -4061,6 +4063,7 @@ func tkhToTFObjectRSROIdentityAccountAttributeDefinitionRO(recurse bool, tkh key
 		obj["permissions"] = val
 	}
 	obj["format"] = stringerToTF(tkh.GetFormat())
+	obj["freely_useable"] = types.BoolPointerValue(tkh.GetFreelyUseable())
 	obj["list"] = types.BoolPointerValue(tkh.GetList())
 	obj["name"] = types.StringPointerValue(tkh.GetName())
 	obj["required"] = types.BoolPointerValue(tkh.GetRequired())
@@ -4147,6 +4150,7 @@ func tkhToTFObjectRSROIdentityAccountAttributeRuleRO(recurse bool, tkh keyhubmod
 		obj["attribute"] = val
 	}
 	obj["default_value"] = types.StringPointerValue(tkh.GetDefaultValue())
+	obj["exclusive"] = types.BoolPointerValue(tkh.GetExclusive())
 	obj["priority_directory"] = types.Int64PointerValue(int32PToInt64P(tkh.GetPriorityDirectory()))
 	obj["priority_external_source"] = types.Int64PointerValue(int32PToInt64P(tkh.GetPriorityExternalSource()))
 	obj["priority_formula"] = types.Int64PointerValue(int32PToInt64P(tkh.GetPriorityFormula()))
@@ -7641,6 +7645,7 @@ func tkhToTFObjectRSROVaultVaultRecordRO(recurse bool, tkh keyhubmodel.VaultVaul
 	obj["name"] = types.StringPointerValue(tkh.GetName())
 	obj["share_end_time"] = timePointerToTF(tkh.GetShareEndTime())
 	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
+	obj["additional_urls"] = types.StringPointerValue(tkh.GetAdditionalURLs())
 	obj["derived"] = types.BoolPointerValue(tkh.GetDerived())
 	obj["end_date"] = stringerToTF(tkh.GetEndDate())
 	obj["filename"] = types.StringPointerValue(tkh.GetFilename())

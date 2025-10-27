@@ -121,7 +121,7 @@ func (r *groupVaultrecordResource) Create(ctx context.Context, req resource.Crea
 				Additional: collectAdditional(ctx, planData, planData.Additional),
 			},
 		})
-	tkh, diags := findFirst[keyhubmodels.VaultVaultRecordable](ctx, wrapper, "group_vaultrecord", nil, false, err)
+	tkh, diags := findFirst(ctx, wrapper, "group_vaultrecord", nil, false, err)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -184,7 +184,7 @@ func (r *groupVaultrecordResource) Read(ctx context.Context, req resource.ReadRe
 		return
 	}
 
-	tkh, diags := findFirst[keyhubmodels.VaultVaultRecordable](ctx, wrapper, "group_vaultrecord", planData.UUID.ValueStringPointer(), true, err)
+	tkh, diags := findFirst(ctx, wrapper, "group_vaultrecord", planData.UUID.ValueStringPointer(), true, err)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return

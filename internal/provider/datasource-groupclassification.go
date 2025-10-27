@@ -16,7 +16,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 	keyhubreq "github.com/topicuskeyhub/sdk-go/groupclassification"
-	keyhubmodels "github.com/topicuskeyhub/sdk-go/models"
 )
 
 // Ensure provider defined types fully satisfy framework interfaces.
@@ -87,7 +86,7 @@ func (d *groupclassificationDataSource) Read(ctx context.Context, req datasource
 		},
 	})
 
-	tkh, diags := findFirst[keyhubmodels.GroupGroupClassificationable](ctx, wrapper, "groupclassification", &uuid, false, err)
+	tkh, diags := findFirst(ctx, wrapper, "groupclassification", &uuid, false, err)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return

@@ -1472,6 +1472,7 @@ func objectAttrsTypeDSIdentityAccountAttributeDefinition(recurse bool) map[strin
 	objectAttrs["links"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSRestLink(recurse)}}
 	objectAttrs["permissions"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSAuthPermission(recurse)}}
 	objectAttrs["format"] = types.StringType
+	objectAttrs["freely_useable"] = types.BoolType
 	objectAttrs["list"] = types.BoolType
 	objectAttrs["name"] = types.StringType
 	objectAttrs["required"] = types.BoolType
@@ -1491,6 +1492,7 @@ func objectAttrsTypeDSROIdentityAccountAttributeDefinitionRO(recurse bool) map[s
 	objectAttrs["links"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSRORestLinkRO(recurse)}}
 	objectAttrs["permissions"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSROAuthPermissionRO(recurse)}}
 	objectAttrs["format"] = types.StringType
+	objectAttrs["freely_useable"] = types.BoolType
 	objectAttrs["list"] = types.BoolType
 	objectAttrs["name"] = types.StringType
 	objectAttrs["required"] = types.BoolType
@@ -1525,6 +1527,7 @@ func objectAttrsTypeDSROIdentityAccountAttributeRuleRO(recurse bool) map[string]
 	objectAttrs["allow_self_service"] = types.BoolType
 	objectAttrs["attribute"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROIdentityAccountAttributeDefinitionRO(false)}
 	objectAttrs["default_value"] = types.StringType
+	objectAttrs["exclusive"] = types.BoolType
 	objectAttrs["priority_directory"] = types.Int64Type
 	objectAttrs["priority_external_source"] = types.Int64Type
 	objectAttrs["priority_formula"] = types.Int64Type
@@ -2721,6 +2724,7 @@ func objectAttrsTypeDSVaultVaultRecord(recurse bool) map[string]attr.Type {
 	objectAttrs["name"] = types.StringType
 	objectAttrs["share_end_time"] = types.StringType
 	objectAttrs["uuid"] = types.StringType
+	objectAttrs["additional_urls"] = types.StringType
 	objectAttrs["derived"] = types.BoolType
 	objectAttrs["end_date"] = types.StringType
 	objectAttrs["filename"] = types.StringType
@@ -2753,6 +2757,7 @@ func objectAttrsTypeDSROVaultVaultRecordRO(recurse bool) map[string]attr.Type {
 	objectAttrs["name"] = types.StringType
 	objectAttrs["share_end_time"] = types.StringType
 	objectAttrs["uuid"] = types.StringType
+	objectAttrs["additional_urls"] = types.StringType
 	objectAttrs["derived"] = types.BoolType
 	objectAttrs["end_date"] = types.StringType
 	objectAttrs["filename"] = types.StringType

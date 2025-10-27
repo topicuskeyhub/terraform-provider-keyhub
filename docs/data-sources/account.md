@@ -398,6 +398,7 @@ Read-Only:
 
 Read-Only:
 
+- `additional_urls` (String)
 - `color` (String)
 - `derived` (Boolean)
 - `end_date` (String)

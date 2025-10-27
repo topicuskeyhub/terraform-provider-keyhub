@@ -952,6 +952,7 @@ Required:
 
 Optional:
 
+- `freely_useable` (Boolean)
 - `list` (Boolean)
 - `required` (Boolean)
 - `unique` (Boolean)
@@ -1642,6 +1643,7 @@ Required:
 
 Optional:
 
+- `freely_useable` (Boolean)
 - `list` (Boolean)
 - `required` (Boolean)
 - `unique` (Boolean)
@@ -1887,6 +1889,7 @@ Required:
 
 Optional:
 
+- `freely_useable` (Boolean)
 - `list` (Boolean)
 - `required` (Boolean)
 - `unique` (Boolean)
@@ -3082,6 +3085,7 @@ Required:
 
 Optional:
 
+- `freely_useable` (Boolean)
 - `list` (Boolean)
 - `required` (Boolean)
 - `unique` (Boolean)
@@ -3772,6 +3776,7 @@ Required:
 
 Optional:
 
+- `freely_useable` (Boolean)
 - `list` (Boolean)
 - `required` (Boolean)
 - `unique` (Boolean)
@@ -4017,6 +4022,7 @@ Required:
 
 Optional:
 
+- `freely_useable` (Boolean)
 - `list` (Boolean)
 - `required` (Boolean)
 - `unique` (Boolean)
@@ -6517,6 +6523,7 @@ Required:
 
 Optional:
 
+- `freely_useable` (Boolean)
 - `list` (Boolean)
 - `required` (Boolean)
 - `unique` (Boolean)
@@ -7207,6 +7214,7 @@ Required:
 
 Optional:
 
+- `freely_useable` (Boolean)
 - `list` (Boolean)
 - `required` (Boolean)
 - `unique` (Boolean)
@@ -7452,6 +7460,7 @@ Required:
 
 Optional:
 
+- `freely_useable` (Boolean)
 - `list` (Boolean)
 - `required` (Boolean)
 - `unique` (Boolean)
@@ -8161,6 +8170,7 @@ Required:
 
 Optional:
 
+- `additional_urls` (String)
 - `color` (String)
 - `end_date` (String)
 - `filename` (String)

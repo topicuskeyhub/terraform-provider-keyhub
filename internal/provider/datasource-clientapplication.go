@@ -16,7 +16,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 	keyhubreq "github.com/topicuskeyhub/sdk-go/client"
-	keyhubmodels "github.com/topicuskeyhub/sdk-go/models"
 )
 
 // Ensure provider defined types fully satisfy framework interfaces.
@@ -87,7 +86,7 @@ func (d *clientapplicationDataSource) Read(ctx context.Context, req datasource.R
 		},
 	})
 
-	tkh, diags := findFirst[keyhubmodels.ClientClientApplicationable](ctx, wrapper, "clientapplication", &uuid, false, err)
+	tkh, diags := findFirst(ctx, wrapper, "clientapplication", &uuid, false, err)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return

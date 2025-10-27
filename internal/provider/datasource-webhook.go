@@ -15,7 +15,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
-	keyhubmodels "github.com/topicuskeyhub/sdk-go/models"
 	keyhubreq "github.com/topicuskeyhub/sdk-go/webhook"
 )
 
@@ -87,7 +86,7 @@ func (d *webhookDataSource) Read(ctx context.Context, req datasource.ReadRequest
 		},
 	})
 
-	tkh, diags := findFirst[keyhubmodels.WebhookWebhookable](ctx, wrapper, "webhook", &uuid, false, err)
+	tkh, diags := findFirst(ctx, wrapper, "webhook", &uuid, false, err)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return

@@ -114,7 +114,7 @@ func (r *clientapplicationResource) Create(ctx context.Context, req resource.Cre
 				Additional: collectAdditional(ctx, planData, planData.Additional),
 			},
 		})
-	tkh, diags := findFirst[keyhubmodels.ClientClientApplicationable](ctx, wrapper, "clientapplication", nil, false, err)
+	tkh, diags := findFirst(ctx, wrapper, "clientapplication", nil, false, err)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -164,7 +164,7 @@ func (r *clientapplicationResource) Read(ctx context.Context, req resource.ReadR
 		return
 	}
 
-	tkh, diags := findFirst[keyhubmodels.ClientClientApplicationable](ctx, wrapper, "clientapplication", planData.UUID.ValueStringPointer(), true, err)
+	tkh, diags := findFirst(ctx, wrapper, "clientapplication", planData.UUID.ValueStringPointer(), true, err)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return

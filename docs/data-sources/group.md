@@ -590,6 +590,7 @@ Read-Only:
 Read-Only:
 
 - `format` (String)
+- `freely_useable` (Boolean)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--administered_systems--abstract_provisioned_ldap--attributes--attribute_definition--links))
 - `list` (Boolean)
 - `name` (String)
@@ -1260,6 +1261,7 @@ Read-Only:
 Read-Only:
 
 - `format` (String)
+- `freely_useable` (Boolean)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--administered_systems--provisioned_ldap_directory--attributes--attribute_definition--links))
 - `list` (Boolean)
 - `name` (String)
@@ -1508,6 +1510,7 @@ Read-Only:
 Read-Only:
 
 - `format` (String)
+- `freely_useable` (Boolean)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--administered_systems--provisioned_scim--attributes--attribute_definition--links))
 - `list` (Boolean)
 - `name` (String)
@@ -3129,6 +3132,7 @@ Read-Only:
 Read-Only:
 
 - `format` (String)
+- `freely_useable` (Boolean)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--content_administered_systems--abstract_provisioned_ldap--attributes--attribute_definition--links))
 - `list` (Boolean)
 - `name` (String)
@@ -3799,6 +3803,7 @@ Read-Only:
 Read-Only:
 
 - `format` (String)
+- `freely_useable` (Boolean)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--content_administered_systems--provisioned_ldap_directory--attributes--attribute_definition--links))
 - `list` (Boolean)
 - `name` (String)
@@ -4047,6 +4052,7 @@ Read-Only:
 Read-Only:
 
 - `format` (String)
+- `freely_useable` (Boolean)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--content_administered_systems--provisioned_scim--attributes--attribute_definition--links))
 - `list` (Boolean)
 - `name` (String)
@@ -6325,6 +6331,7 @@ Read-Only:
 Read-Only:
 
 - `format` (String)
+- `freely_useable` (Boolean)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_systems--abstract_provisioned_ldap--attributes--attribute_definition--links))
 - `list` (Boolean)
 - `name` (String)
@@ -6995,6 +7002,7 @@ Read-Only:
 Read-Only:
 
 - `format` (String)
+- `freely_useable` (Boolean)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_systems--provisioned_ldap_directory--attributes--attribute_definition--links))
 - `list` (Boolean)
 - `name` (String)
@@ -7243,6 +7251,7 @@ Read-Only:
 Read-Only:
 
 - `format` (String)
+- `freely_useable` (Boolean)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_systems--provisioned_scim--attributes--attribute_definition--links))
 - `list` (Boolean)
 - `name` (String)
@@ -7939,6 +7948,7 @@ Read-Only:
 
 Read-Only:
 
+- `additional_urls` (String)
 - `color` (String)
 - `derived` (Boolean)
 - `end_date` (String)

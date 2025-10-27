@@ -121,7 +121,7 @@ func (r *grouponsystemResource) Create(ctx context.Context, req resource.CreateR
 				Additional: collectAdditional(ctx, planData, planData.Additional),
 			},
 		})
-	tkh, diags := findFirst[keyhubmodels.ProvisioningGroupOnSystemable](ctx, wrapper, "grouponsystem", nil, false, err)
+	tkh, diags := findFirst(ctx, wrapper, "grouponsystem", nil, false, err)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -184,7 +184,7 @@ func (r *grouponsystemResource) Read(ctx context.Context, req resource.ReadReque
 		return
 	}
 
-	tkh, diags := findFirst[keyhubmodels.ProvisioningGroupOnSystemable](ctx, wrapper, "grouponsystem", planData.NameInSystem.ValueStringPointer(), true, err)
+	tkh, diags := findFirst(ctx, wrapper, "grouponsystem", planData.NameInSystem.ValueStringPointer(), true, err)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return

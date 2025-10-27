@@ -639,6 +639,9 @@ func resourceSchemaAttrsClientApplicationVaultVaultRecord(recurse bool) map[stri
 		Computed:      true,
 		PlanModifiers: []planmodifier.String{stringplanmodifier.UseStateForUnknown()},
 	}
+	schemaAttrs["additional_urls"] = rsschema.StringAttribute{
+		Optional: true,
+	}
 	schemaAttrs["derived"] = rsschema.BoolAttribute{
 		Computed:      true,
 		PlanModifiers: []planmodifier.Bool{boolplanmodifier.UseStateForUnknown()},
@@ -3808,6 +3811,9 @@ func resourceSchemaAttrsGroupVaultVaultRecord(recurse bool) map[string]rsschema.
 		Computed:      true,
 		PlanModifiers: []planmodifier.String{stringplanmodifier.UseStateForUnknown()},
 	}
+	schemaAttrs["additional_urls"] = rsschema.StringAttribute{
+		Optional: true,
+	}
 	schemaAttrs["derived"] = rsschema.BoolAttribute{
 		Computed:      true,
 		PlanModifiers: []planmodifier.Bool{boolplanmodifier.UseStateForUnknown()},
@@ -3882,6 +3888,11 @@ func resourceSchemaAttrsIdentityAccountAttributeDefinitionRO(recurse bool) map[s
 				"INTERNAL", "EMAIL", "TELEPHONE", "NUMBER", "DATE", "DATETIME", "BOOLEAN", "TEXT",
 			),
 		},
+	}
+	schemaAttrs["freely_useable"] = rsschema.BoolAttribute{
+		Computed: true,
+		Optional: true,
+		Default:  booldefault.StaticBool(false),
 	}
 	schemaAttrs["list"] = rsschema.BoolAttribute{
 		Computed: true,
@@ -3969,6 +3980,11 @@ func resourceSchemaAttrsIdentityAccountAttributeRuleRO(recurse bool) map[string]
 
 	schemaAttrs["default_value"] = rsschema.StringAttribute{
 		Optional: true,
+	}
+	schemaAttrs["exclusive"] = rsschema.BoolAttribute{
+		Computed: true,
+		Optional: true,
+		Default:  booldefault.StaticBool(false),
 	}
 	schemaAttrs["priority_directory"] = rsschema.Int64Attribute{
 		Computed: true,
@@ -6965,6 +6981,9 @@ func resourceSchemaAttrsVaultVaultRecordRO(recurse bool) map[string]rsschema.Att
 	schemaAttrs["uuid"] = rsschema.StringAttribute{
 		Computed:      true,
 		PlanModifiers: []planmodifier.String{stringplanmodifier.UseStateForUnknown()},
+	}
+	schemaAttrs["additional_urls"] = rsschema.StringAttribute{
+		Optional: true,
 	}
 	schemaAttrs["derived"] = rsschema.BoolAttribute{
 		Computed:      true,

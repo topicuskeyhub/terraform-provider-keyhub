@@ -15,7 +15,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
-	keyhubmodels "github.com/topicuskeyhub/sdk-go/models"
 	keyhubreq "github.com/topicuskeyhub/sdk-go/vaultrecord"
 )
 
@@ -87,7 +86,7 @@ func (d *vaultrecordDataSource) Read(ctx context.Context, req datasource.ReadReq
 		},
 	})
 
-	tkh, diags := findFirst[keyhubmodels.VaultVaultRecordable](ctx, wrapper, "vaultrecord", &uuid, false, err)
+	tkh, diags := findFirst(ctx, wrapper, "vaultrecord", &uuid, false, err)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return

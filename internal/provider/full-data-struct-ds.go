@@ -1496,6 +1496,7 @@ type identityAccountAttributeDefinitionDataDS struct {
 	Additional       types.List   `tfsdk:"additional"`
 	Audit            types.Object `tfsdk:"audit" tkhao:"audit"`
 	Format           types.String `tfsdk:"format"`
+	FreelyUseable    types.Bool   `tfsdk:"freely_useable"`
 	List             types.Bool   `tfsdk:"list"`
 	Name             types.String `tfsdk:"name"`
 	Required         types.Bool   `tfsdk:"required"`
@@ -1512,6 +1513,7 @@ type identityAccountAttributeDefinitionDataDSRO struct {
 	Additional       types.List   `tfsdk:"additional"`
 	Audit            types.Object `tfsdk:"audit" tkhao:"audit"`
 	Format           types.String `tfsdk:"format"`
+	FreelyUseable    types.Bool   `tfsdk:"freely_useable"`
 	List             types.Bool   `tfsdk:"list"`
 	Name             types.String `tfsdk:"name"`
 	Required         types.Bool   `tfsdk:"required"`
@@ -1545,6 +1547,7 @@ type identityAccountAttributeRuleDataDSRO struct {
 	AllowSelfService       types.Bool   `tfsdk:"allow_self_service"`
 	Attribute              types.Object `tfsdk:"attribute"`
 	DefaultValue           types.String `tfsdk:"default_value"`
+	Exclusive              types.Bool   `tfsdk:"exclusive"`
 	PriorityDirectory      types.Int64  `tfsdk:"priority_directory"`
 	PriorityExternalSource types.Int64  `tfsdk:"priority_external_source"`
 	PriorityFormula        types.Int64  `tfsdk:"priority_formula"`
@@ -2770,6 +2773,7 @@ type vaultVaultRecordDataDS struct {
 	Shares           types.List   `tfsdk:"shares" tkhao:"shares"`
 	Tile             types.Object `tfsdk:"tile" tkhao:"tile"`
 	Vaultholder      types.Object `tfsdk:"vaultholder" tkhao:"vaultholder"`
+	AdditionalURLs   types.String `tfsdk:"additional_urls"`
 	Derived          types.Bool   `tfsdk:"derived"`
 	EndDate          types.String `tfsdk:"end_date"`
 	Filename         types.String `tfsdk:"filename"`
@@ -2799,6 +2803,7 @@ type vaultVaultRecordDataDSRO struct {
 	Shares           types.List   `tfsdk:"shares" tkhao:"shares"`
 	Tile             types.Object `tfsdk:"tile" tkhao:"tile"`
 	Vaultholder      types.Object `tfsdk:"vaultholder" tkhao:"vaultholder"`
+	AdditionalURLs   types.String `tfsdk:"additional_urls"`
 	Derived          types.Bool   `tfsdk:"derived"`
 	EndDate          types.String `tfsdk:"end_date"`
 	Filename         types.String `tfsdk:"filename"`

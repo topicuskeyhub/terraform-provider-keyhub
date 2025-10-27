@@ -4148,6 +4148,9 @@ func dataSourceSchemaAttrsIdentityAccountAttributeDefinition(recurse bool) map[s
 	schemaAttrs["format"] = dsschema.StringAttribute{
 		Computed: true,
 	}
+	schemaAttrs["freely_useable"] = dsschema.BoolAttribute{
+		Computed: true,
+	}
 	schemaAttrs["list"] = dsschema.BoolAttribute{
 		Computed: true,
 	}
@@ -4195,6 +4198,9 @@ func dataSourceSchemaAttrsIdentityAccountAttributeDefinitionRO(recurse bool) map
 		Computed: true,
 	}
 	schemaAttrs["format"] = dsschema.StringAttribute{
+		Computed: true,
+	}
+	schemaAttrs["freely_useable"] = dsschema.BoolAttribute{
 		Computed: true,
 	}
 	schemaAttrs["list"] = dsschema.BoolAttribute{
@@ -4282,6 +4288,9 @@ func dataSourceSchemaAttrsIdentityAccountAttributeRuleRO(recurse bool) map[strin
 	}
 
 	schemaAttrs["default_value"] = dsschema.StringAttribute{
+		Computed: true,
+	}
+	schemaAttrs["exclusive"] = dsschema.BoolAttribute{
 		Computed: true,
 	}
 	schemaAttrs["priority_directory"] = dsschema.Int64Attribute{
@@ -7610,6 +7619,9 @@ func dataSourceSchemaAttrsVaultVaultRecord(recurse bool) map[string]dsschema.Att
 			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
 	}
+	schemaAttrs["additional_urls"] = dsschema.StringAttribute{
+		Computed: true,
+	}
 	schemaAttrs["derived"] = dsschema.BoolAttribute{
 		Computed: true,
 	}
@@ -7679,6 +7691,9 @@ func dataSourceSchemaAttrsVaultVaultRecordRO(recurse bool) map[string]dsschema.A
 			stringvalidator.UTF8LengthBetween(0, 36),
 			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
+	}
+	schemaAttrs["additional_urls"] = dsschema.StringAttribute{
+		Computed: true,
 	}
 	schemaAttrs["derived"] = dsschema.BoolAttribute{
 		Computed: true,

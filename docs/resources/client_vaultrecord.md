@@ -25,6 +25,7 @@ description: |-
 > **NOTE**: [Write-only arguments](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments) are supported in Terraform 1.11 and later.
 
 - `additional` (List of String)
+- `additional_urls` (String)
 - `color` (String)
 - `delete_tile` (Boolean, [Write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments))
 - `end_date` (String)

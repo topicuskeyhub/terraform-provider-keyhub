@@ -104,6 +104,7 @@ Read-Only:
 Read-Only:
 
 - `format` (String)
+- `freely_useable` (Boolean)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--abstract_provisioned_ldap--attributes--attribute_definition--links))
 - `list` (Boolean)
 - `name` (String)
@@ -1095,6 +1096,7 @@ Read-Only:
 Read-Only:
 
 - `format` (String)
+- `freely_useable` (Boolean)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--provisioned_ldap_directory--attributes--attribute_definition--links))
 - `list` (Boolean)
 - `name` (String)
@@ -1343,6 +1345,7 @@ Read-Only:
 Read-Only:
 
 - `format` (String)
+- `freely_useable` (Boolean)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--provisioned_scim--attributes--attribute_definition--links))
 - `list` (Boolean)
 - `name` (String)

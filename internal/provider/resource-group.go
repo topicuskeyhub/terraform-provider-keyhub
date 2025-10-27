@@ -114,7 +114,7 @@ func (r *groupResource) Create(ctx context.Context, req resource.CreateRequest, 
 				Additional: collectAdditional(ctx, planData, planData.Additional),
 			},
 		})
-	tkh, diags := findFirst[keyhubmodels.GroupGroupable](ctx, wrapper, "group", nil, false, err)
+	tkh, diags := findFirst(ctx, wrapper, "group", nil, false, err)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -164,7 +164,7 @@ func (r *groupResource) Read(ctx context.Context, req resource.ReadRequest, resp
 		return
 	}
 
-	tkh, diags := findFirst[keyhubmodels.GroupGroupable](ctx, wrapper, "group", planData.UUID.ValueStringPointer(), true, err)
+	tkh, diags := findFirst(ctx, wrapper, "group", planData.UUID.ValueStringPointer(), true, err)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return

@@ -1075,6 +1075,8 @@ func tfObjectToTKHRSClientApplicationVaultVaultRecord(ctx context.Context, recur
 	}
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToStringPointer(planAttrValues["uuid"]))+" using SetUuid")
 	tkh.SetUuid(tfToStringPointer(planAttrValues["uuid"]))
+	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToStringPointer(planAttrValues["additional_urls"]))+" using SetAdditionalURLs")
+	tkh.SetAdditionalURLs(tfToStringPointer(planAttrValues["additional_urls"]))
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToBooleanPointer(planAttrValues["derived"]))+" using SetDerived")
 	tkh.SetDerived(tfToBooleanPointer(planAttrValues["derived"]))
 	{
@@ -5492,6 +5494,8 @@ func tfObjectToTKHRSGroupVaultVaultRecord(ctx context.Context, recurse bool, pla
 	}
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToStringPointer(planAttrValues["uuid"]))+" using SetUuid")
 	tkh.SetUuid(tfToStringPointer(planAttrValues["uuid"]))
+	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToStringPointer(planAttrValues["additional_urls"]))+" using SetAdditionalURLs")
+	tkh.SetAdditionalURLs(tfToStringPointer(planAttrValues["additional_urls"]))
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToBooleanPointer(planAttrValues["derived"]))+" using SetDerived")
 	tkh.SetDerived(tfToBooleanPointer(planAttrValues["derived"]))
 	{
@@ -5586,6 +5590,8 @@ func tfObjectToTKHRSROIdentityAccountAttributeDefinitionRO(ctx context.Context, 
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetFormat")
 		tkh.SetFormat(val)
 	}
+	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToBooleanPointer(planAttrValues["freely_useable"]))+" using SetFreelyUseable")
+	tkh.SetFreelyUseable(tfToBooleanPointer(planAttrValues["freely_useable"]))
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToBooleanPointer(planAttrValues["list"]))+" using SetList")
 	tkh.SetList(tfToBooleanPointer(planAttrValues["list"]))
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToStringPointer(planAttrValues["name"]))+" using SetName")
@@ -5700,6 +5706,8 @@ func tfObjectToTKHRSROIdentityAccountAttributeRuleRO(ctx context.Context, recurs
 	}
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToStringPointer(planAttrValues["default_value"]))+" using SetDefaultValue")
 	tkh.SetDefaultValue(tfToStringPointer(planAttrValues["default_value"]))
+	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToBooleanPointer(planAttrValues["exclusive"]))+" using SetExclusive")
+	tkh.SetExclusive(tfToBooleanPointer(planAttrValues["exclusive"]))
 	tflog.Debug(ctx, "Setting "+litter.Sdump(int64PToInt32P(tfToInt64Pointer(planAttrValues["priority_directory"])))+" using SetPriorityDirectory")
 	tkh.SetPriorityDirectory(int64PToInt32P(tfToInt64Pointer(planAttrValues["priority_directory"])))
 	tflog.Debug(ctx, "Setting "+litter.Sdump(int64PToInt32P(tfToInt64Pointer(planAttrValues["priority_external_source"])))+" using SetPriorityExternalSource")
@@ -10348,6 +10356,8 @@ func tfObjectToTKHRSROVaultVaultRecordRO(ctx context.Context, recurse bool, plan
 	}
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToStringPointer(planAttrValues["uuid"]))+" using SetUuid")
 	tkh.SetUuid(tfToStringPointer(planAttrValues["uuid"]))
+	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToStringPointer(planAttrValues["additional_urls"]))+" using SetAdditionalURLs")
+	tkh.SetAdditionalURLs(tfToStringPointer(planAttrValues["additional_urls"]))
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToBooleanPointer(planAttrValues["derived"]))+" using SetDerived")
 	tkh.SetDerived(tfToBooleanPointer(planAttrValues["derived"]))
 	{

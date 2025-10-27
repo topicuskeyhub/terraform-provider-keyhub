@@ -114,7 +114,7 @@ func (r *serviceaccountResource) Create(ctx context.Context, req resource.Create
 				Additional: collectAdditional(ctx, planData, planData.Additional),
 			},
 		})
-	tkh, diags := findFirst[keyhubmodels.ServiceaccountServiceAccountable](ctx, wrapper, "serviceaccount", nil, false, err)
+	tkh, diags := findFirst(ctx, wrapper, "serviceaccount", nil, false, err)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -164,7 +164,7 @@ func (r *serviceaccountResource) Read(ctx context.Context, req resource.ReadRequ
 		return
 	}
 
-	tkh, diags := findFirst[keyhubmodels.ServiceaccountServiceAccountable](ctx, wrapper, "serviceaccount", planData.UUID.ValueStringPointer(), true, err)
+	tkh, diags := findFirst(ctx, wrapper, "serviceaccount", planData.UUID.ValueStringPointer(), true, err)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return

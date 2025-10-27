@@ -26,6 +26,7 @@ description: |-
 ### Read-Only
 
 - `activation_status` (Attributes) (see [below for nested schema](#nestedatt--activation_status))
+- `additional_urls` (String)
 - `audit` (Attributes) (see [below for nested schema](#nestedatt--audit))
 - `color` (String)
 - `derived` (Boolean)

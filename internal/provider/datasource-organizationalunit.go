@@ -15,7 +15,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
-	keyhubmodels "github.com/topicuskeyhub/sdk-go/models"
 	keyhubreq "github.com/topicuskeyhub/sdk-go/organizationalunit"
 )
 
@@ -87,7 +86,7 @@ func (d *organizationalunitDataSource) Read(ctx context.Context, req datasource.
 		},
 	})
 
-	tkh, diags := findFirst[keyhubmodels.OrganizationOrganizationalUnitable](ctx, wrapper, "organizationalunit", &uuid, false, err)
+	tkh, diags := findFirst(ctx, wrapper, "organizationalunit", &uuid, false, err)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
 		return
