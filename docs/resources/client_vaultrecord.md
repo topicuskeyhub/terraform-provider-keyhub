@@ -70,6 +70,66 @@ Read-Only:
 <a id="nestedatt--tile"></a>
 ### Nested Schema for `tile`
 
+Optional:
+
+- `application_uuid` (String)
+- `group_uuid` (String)
+- `identicon_code` (Number)
+- `logo` (String)
+- `manual_launchpad_tile` (Attributes) (see [below for nested schema](#nestedatt--tile--manual_launchpad_tile))
+- `sso_application_launchpad_tile` (Attributes) (see [below for nested schema](#nestedatt--tile--sso_application_launchpad_tile))
+- `vault_record_launchpad_tile` (Attributes) (see [below for nested schema](#nestedatt--tile--vault_record_launchpad_tile))
+- `vault_record_uuid` (String)
+
+Read-Only:
+
+- `launchpad_launchpad_tile_type` (String)
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--tile--links))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--tile--permissions))
+
+<a id="nestedatt--tile--manual_launchpad_tile"></a>
+### Nested Schema for `tile.manual_launchpad_tile`
+
+Required:
+
+- `title` (String)
+- `uri` (String)
+
+
+<a id="nestedatt--tile--sso_application_launchpad_tile"></a>
+### Nested Schema for `tile.sso_application_launchpad_tile`
+
+Optional:
+
+- `uri` (String)
+
+
+<a id="nestedatt--tile--vault_record_launchpad_tile"></a>
+### Nested Schema for `tile.vault_record_launchpad_tile`
+
+
+<a id="nestedatt--tile--links"></a>
+### Nested Schema for `tile.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--tile--permissions"></a>
+### Nested Schema for `tile.permissions`
+
+Optional:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
 
 <a id="nestedatt--activation_status"></a>
 ### Nested Schema for `activation_status`

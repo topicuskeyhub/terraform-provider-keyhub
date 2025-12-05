@@ -28,30 +28,30 @@ func reorderAuditInfoRO(state basetypes.ObjectValue, priorState basetypes.Object
 	return types.ObjectValueMust(attrs, obj)
 }
 
-func reorderGeneratedSecret(state basetypes.ObjectValue, priorState basetypes.ObjectValue, recurse bool) basetypes.ObjectValue {
+func reorderGenerateSecret(state basetypes.ObjectValue, priorState basetypes.ObjectValue, recurse bool) basetypes.ObjectValue {
 	if state.IsNull() || state.IsUnknown() || priorState.IsNull() || priorState.IsUnknown() {
 		return state
 	}
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = generatedSecretAttrTypesRSRecurse
+		attrs = generateSecretAttrTypesRSRecurse
 	} else {
-		attrs = generatedSecretAttrTypesRS
+		attrs = generateSecretAttrTypesRS
 	}
 	obj := filterAttributes(state.Attributes(), attrs)
 
 	return types.ObjectValueMust(attrs, obj)
 }
 
-func reorderGeneratedSecretRO(state basetypes.ObjectValue, priorState basetypes.ObjectValue, recurse bool) basetypes.ObjectValue {
+func reorderGenerateSecretRO(state basetypes.ObjectValue, priorState basetypes.ObjectValue, recurse bool) basetypes.ObjectValue {
 	if state.IsNull() || state.IsUnknown() || priorState.IsNull() || priorState.IsUnknown() {
 		return state
 	}
 	var attrs map[string]attr.Type
 	if recurse {
-		attrs = generatedSecretAttrTypesRSRORecurse
+		attrs = generateSecretAttrTypesRSRORecurse
 	} else {
-		attrs = generatedSecretAttrTypesRSRO
+		attrs = generateSecretAttrTypesRSRO
 	}
 	obj := filterAttributes(state.Attributes(), attrs)
 
@@ -142,6 +142,21 @@ func reorderRestLinkRO(state basetypes.ObjectValue, priorState basetypes.ObjectV
 		attrs = restLinkAttrTypesRSRORecurse
 	} else {
 		attrs = restLinkAttrTypesRSRO
+	}
+	obj := filterAttributes(state.Attributes(), attrs)
+
+	return types.ObjectValueMust(attrs, obj)
+}
+
+func reorderSecretRO(state basetypes.ObjectValue, priorState basetypes.ObjectValue, recurse bool) basetypes.ObjectValue {
+	if state.IsNull() || state.IsUnknown() || priorState.IsNull() || priorState.IsUnknown() {
+		return state
+	}
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = secretAttrTypesRSRORecurse
+	} else {
+		attrs = secretAttrTypesRSRO
 	}
 	obj := filterAttributes(state.Attributes(), attrs)
 
@@ -357,9 +372,9 @@ func reorderClientClientApplication(state basetypes.ObjectValue, priorState base
 	if recurse {
 		maps.Copy(obj, reorderClientClientApplication_additionalObjects(state, priorState, false).Attributes())
 	}
-	obj["ldap_client"] = reorderClientLdapClient(state.Attributes()["ldap_client"].(types.Object), priorState.Attributes()["ldap_client"].(types.Object), recurse)
-	obj["oauth2_client"] = reorderClientOAuth2Client(state.Attributes()["oauth2_client"].(types.Object), priorState.Attributes()["oauth2_client"].(types.Object), recurse)
-	obj["saml2_client"] = reorderClientSaml2Client(state.Attributes()["saml2_client"].(types.Object), priorState.Attributes()["saml2_client"].(types.Object), recurse)
+	obj["ldap_client"] = reorderClientLdapClient(state.Attributes()["ldap_client"].(types.Object), priorState.Attributes()["ldap_client"].(types.Object), false)
+	obj["oauth2_client"] = reorderClientOAuth2Client(state.Attributes()["oauth2_client"].(types.Object), priorState.Attributes()["oauth2_client"].(types.Object), false)
+	obj["saml2_client"] = reorderClientSaml2Client(state.Attributes()["saml2_client"].(types.Object), priorState.Attributes()["saml2_client"].(types.Object), false)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -380,11 +395,11 @@ func reorderClientClientApplicationRO(state basetypes.ObjectValue, priorState ba
 	if recurse {
 		maps.Copy(obj, reorderClientClientApplication_additionalObjectsRO(state, priorState, false).Attributes())
 	}
-	obj["owner"] = reorderGroupGroupPrimerRO(state.Attributes()["owner"].(types.Object), priorState.Attributes()["owner"].(types.Object), recurse)
-	obj["technical_administrator"] = reorderGroupGroupPrimerRO(state.Attributes()["technical_administrator"].(types.Object), priorState.Attributes()["technical_administrator"].(types.Object), recurse)
-	obj["ldap_client"] = reorderClientLdapClientRO(state.Attributes()["ldap_client"].(types.Object), priorState.Attributes()["ldap_client"].(types.Object), recurse)
-	obj["oauth2_client"] = reorderClientOAuth2ClientRO(state.Attributes()["oauth2_client"].(types.Object), priorState.Attributes()["oauth2_client"].(types.Object), recurse)
-	obj["saml2_client"] = reorderClientSaml2ClientRO(state.Attributes()["saml2_client"].(types.Object), priorState.Attributes()["saml2_client"].(types.Object), recurse)
+	obj["owner"] = reorderGroupGroupPrimerRO(state.Attributes()["owner"].(types.Object), priorState.Attributes()["owner"].(types.Object), false)
+	obj["technical_administrator"] = reorderGroupGroupPrimerRO(state.Attributes()["technical_administrator"].(types.Object), priorState.Attributes()["technical_administrator"].(types.Object), false)
+	obj["ldap_client"] = reorderClientLdapClientRO(state.Attributes()["ldap_client"].(types.Object), priorState.Attributes()["ldap_client"].(types.Object), false)
+	obj["oauth2_client"] = reorderClientOAuth2ClientRO(state.Attributes()["oauth2_client"].(types.Object), priorState.Attributes()["oauth2_client"].(types.Object), false)
+	obj["saml2_client"] = reorderClientSaml2ClientRO(state.Attributes()["saml2_client"].(types.Object), priorState.Attributes()["saml2_client"].(types.Object), false)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -460,6 +475,7 @@ func reorderClientClientApplication_additionalObjects(state basetypes.ObjectValu
 			obj["accessprofileclients"] = types.ListValueMust(attrs["accessprofileclients"].(types.ListType).ElemType, newAttrState)
 		}
 	}
+	obj["generate_secret"] = reorderGenerateSecret(state.Attributes()["generate_secret"].(types.Object), priorState.Attributes()["generate_secret"].(types.Object), false)
 	{
 		attrState := state.Attributes()["groupclients"]
 		attrPriorState := priorState.Attributes()["groupclients"]
@@ -477,8 +493,7 @@ func reorderClientClientApplication_additionalObjects(state basetypes.ObjectValu
 			obj["groupclients"] = types.ListValueMust(attrs["groupclients"].(types.ListType).ElemType, newAttrState)
 		}
 	}
-	obj["secret"] = reorderGeneratedSecret(state.Attributes()["secret"].(types.Object), priorState.Attributes()["secret"].(types.Object), recurse)
-	obj["tile"] = reorderLaunchpadSsoApplicationLaunchpadTile(state.Attributes()["tile"].(types.Object), priorState.Attributes()["tile"].(types.Object), recurse)
+	obj["tile"] = reorderLaunchpadLaunchpadTile(state.Attributes()["tile"].(types.Object), priorState.Attributes()["tile"].(types.Object), false)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -506,6 +521,7 @@ func reorderClientClientApplication_additionalObjectsRO(state basetypes.ObjectVa
 			obj["accessprofileclients"] = types.ListValueMust(attrs["accessprofileclients"].(types.ListType).ElemType, newAttrState)
 		}
 	}
+	obj["generate_secret"] = reorderGenerateSecretRO(state.Attributes()["generate_secret"].(types.Object), priorState.Attributes()["generate_secret"].(types.Object), false)
 	{
 		attrState := state.Attributes()["groupclients"]
 		attrPriorState := priorState.Attributes()["groupclients"]
@@ -520,8 +536,7 @@ func reorderClientClientApplication_additionalObjectsRO(state basetypes.ObjectVa
 			obj["groupclients"] = types.ListValueMust(attrs["groupclients"].(types.ListType).ElemType, newAttrState)
 		}
 	}
-	obj["secret"] = reorderGeneratedSecretRO(state.Attributes()["secret"].(types.Object), priorState.Attributes()["secret"].(types.Object), recurse)
-	obj["tile"] = reorderLaunchpadSsoApplicationLaunchpadTileRO(state.Attributes()["tile"].(types.Object), priorState.Attributes()["tile"].(types.Object), recurse)
+	obj["tile"] = reorderLaunchpadLaunchpadTileRO(state.Attributes()["tile"].(types.Object), priorState.Attributes()["tile"].(types.Object), false)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -552,7 +567,7 @@ func reorderClientLdapClientRO(state basetypes.ObjectValue, priorState basetypes
 		attrs = clientLdapClientAttrTypesRSRO
 	}
 	obj := filterAttributes(state.Attributes(), attrs)
-	obj["client_certificate"] = reorderCertificateCertificatePrimerRO(state.Attributes()["client_certificate"].(types.Object), priorState.Attributes()["client_certificate"].(types.Object), recurse)
+	obj["client_certificate"] = reorderCertificateCertificatePrimerRO(state.Attributes()["client_certificate"].(types.Object), priorState.Attributes()["client_certificate"].(types.Object), false)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -568,7 +583,7 @@ func reorderClientOAuth2Client(state basetypes.ObjectValue, priorState basetypes
 		attrs = clientOAuth2ClientAttrTypesRS
 	}
 	obj := filterAttributes(state.Attributes(), attrs)
-	// Reordering not supported for attributes with type Map
+	// Reordering not supported for attributes with type List
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -584,7 +599,7 @@ func reorderClientOAuth2ClientRO(state basetypes.ObjectValue, priorState basetyp
 		attrs = clientOAuth2ClientAttrTypesRSRO
 	}
 	obj := filterAttributes(state.Attributes(), attrs)
-	// Reordering not supported for attributes with type Map
+	// Reordering not supported for attributes with type List
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -625,8 +640,8 @@ func reorderClientOAuth2ClientPermissionRO(state basetypes.ObjectValue, priorSta
 	if recurse {
 		maps.Copy(obj, reorderClientOAuth2ClientPermission_additionalObjectsRO(state, priorState, false).Attributes())
 	}
-	obj["for_group"] = reorderGroupGroupPrimerRO(state.Attributes()["for_group"].(types.Object), priorState.Attributes()["for_group"].(types.Object), recurse)
-	obj["for_system"] = reorderProvisioningProvisionedSystemPrimerRO(state.Attributes()["for_system"].(types.Object), priorState.Attributes()["for_system"].(types.Object), recurse)
+	obj["for_group"] = reorderGroupGroupPrimerRO(state.Attributes()["for_group"].(types.Object), priorState.Attributes()["for_group"].(types.Object), false)
+	obj["for_system"] = reorderProvisioningProvisionedSystemPrimerRO(state.Attributes()["for_system"].(types.Object), priorState.Attributes()["for_system"].(types.Object), false)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -667,9 +682,9 @@ func reorderClientOAuth2ClientPermissionWithClientRO(state basetypes.ObjectValue
 	if recurse {
 		maps.Copy(obj, reorderClientOAuth2ClientPermission_additionalObjectsRO(state, priorState, false).Attributes())
 	}
-	obj["for_group"] = reorderGroupGroupPrimerRO(state.Attributes()["for_group"].(types.Object), priorState.Attributes()["for_group"].(types.Object), recurse)
-	obj["for_system"] = reorderProvisioningProvisionedSystemPrimerRO(state.Attributes()["for_system"].(types.Object), priorState.Attributes()["for_system"].(types.Object), recurse)
-	obj["client"] = reorderClientOAuth2ClientRO(state.Attributes()["client"].(types.Object), priorState.Attributes()["client"].(types.Object), recurse)
+	obj["for_group"] = reorderGroupGroupPrimerRO(state.Attributes()["for_group"].(types.Object), priorState.Attributes()["for_group"].(types.Object), false)
+	obj["for_system"] = reorderProvisioningProvisionedSystemPrimerRO(state.Attributes()["for_system"].(types.Object), priorState.Attributes()["for_system"].(types.Object), false)
+	obj["client"] = reorderClientClientApplicationRO(state.Attributes()["client"].(types.Object), priorState.Attributes()["client"].(types.Object), false)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -747,7 +762,7 @@ func reorderClientSaml2Client(state basetypes.ObjectValue, priorState basetypes.
 		attrs = clientSaml2ClientAttrTypesRS
 	}
 	obj := filterAttributes(state.Attributes(), attrs)
-	// Reordering not supported for attributes with type Map
+	// Reordering not supported for attributes with type List
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -763,7 +778,7 @@ func reorderClientSaml2ClientRO(state basetypes.ObjectValue, priorState basetype
 		attrs = clientSaml2ClientAttrTypesRSRO
 	}
 	obj := filterAttributes(state.Attributes(), attrs)
-	// Reordering not supported for attributes with type Map
+	// Reordering not supported for attributes with type List
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -784,13 +799,13 @@ func reorderDirectoryAccountDirectoryRO(state basetypes.ObjectValue, priorState 
 	if recurse {
 		maps.Copy(obj, reorderDirectoryAccountDirectory_additionalObjectsRO(state, priorState, false).Attributes())
 	}
-	obj["base_organizational_unit"] = reorderOrganizationOrganizationalUnitPrimerRO(state.Attributes()["base_organizational_unit"].(types.Object), priorState.Attributes()["base_organizational_unit"].(types.Object), recurse)
-	obj["helpdesk_group"] = reorderGroupGroupPrimerRO(state.Attributes()["helpdesk_group"].(types.Object), priorState.Attributes()["helpdesk_group"].(types.Object), recurse)
-	obj["internal_directory"] = reorderDirectoryInternalDirectoryRO(state.Attributes()["internal_directory"].(types.Object), priorState.Attributes()["internal_directory"].(types.Object), recurse)
-	obj["ldap_directory"] = reorderDirectoryLDAPDirectoryRO(state.Attributes()["ldap_directory"].(types.Object), priorState.Attributes()["ldap_directory"].(types.Object), recurse)
-	obj["maintenance_directory"] = reorderDirectoryMaintenanceDirectoryRO(state.Attributes()["maintenance_directory"].(types.Object), priorState.Attributes()["maintenance_directory"].(types.Object), recurse)
-	obj["oidc_directory"] = reorderDirectoryOIDCDirectoryRO(state.Attributes()["oidc_directory"].(types.Object), priorState.Attributes()["oidc_directory"].(types.Object), recurse)
-	obj["pending_accounts_directory"] = reorderDirectoryPendingAccountsDirectoryRO(state.Attributes()["pending_accounts_directory"].(types.Object), priorState.Attributes()["pending_accounts_directory"].(types.Object), recurse)
+	obj["base_organizational_unit"] = reorderOrganizationOrganizationalUnitPrimerRO(state.Attributes()["base_organizational_unit"].(types.Object), priorState.Attributes()["base_organizational_unit"].(types.Object), false)
+	obj["helpdesk_group"] = reorderGroupGroupPrimerRO(state.Attributes()["helpdesk_group"].(types.Object), priorState.Attributes()["helpdesk_group"].(types.Object), false)
+	obj["internal_directory"] = reorderDirectoryInternalDirectoryRO(state.Attributes()["internal_directory"].(types.Object), priorState.Attributes()["internal_directory"].(types.Object), false)
+	obj["ldap_directory"] = reorderDirectoryLDAPDirectoryRO(state.Attributes()["ldap_directory"].(types.Object), priorState.Attributes()["ldap_directory"].(types.Object), false)
+	obj["maintenance_directory"] = reorderDirectoryMaintenanceDirectoryRO(state.Attributes()["maintenance_directory"].(types.Object), priorState.Attributes()["maintenance_directory"].(types.Object), false)
+	obj["oidc_directory"] = reorderDirectoryOIDCDirectoryRO(state.Attributes()["oidc_directory"].(types.Object), priorState.Attributes()["oidc_directory"].(types.Object), false)
+	obj["pending_accounts_directory"] = reorderDirectoryPendingAccountsDirectoryRO(state.Attributes()["pending_accounts_directory"].(types.Object), priorState.Attributes()["pending_accounts_directory"].(types.Object), false)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -852,7 +867,7 @@ func reorderDirectoryAccountDirectorySummaryRO(state basetypes.ObjectValue, prio
 		attrs = directoryAccountDirectorySummaryAttrTypesRSRO
 	}
 	obj := filterAttributes(state.Attributes(), attrs)
-	obj["status"] = reorderDirectoryAccountDirectoryStatusReportRO(state.Attributes()["status"].(types.Object), priorState.Attributes()["status"].(types.Object), recurse)
+	obj["status"] = reorderDirectoryAccountDirectoryStatusReportRO(state.Attributes()["status"].(types.Object), priorState.Attributes()["status"].(types.Object), false)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -899,7 +914,7 @@ func reorderDirectoryInternalDirectoryRO(state basetypes.ObjectValue, priorState
 		attrs = directoryInternalDirectoryAttrTypesRSRO
 	}
 	obj := filterAttributes(state.Attributes(), attrs)
-	obj["owner"] = reorderGroupGroupPrimerRO(state.Attributes()["owner"].(types.Object), priorState.Attributes()["owner"].(types.Object), recurse)
+	obj["owner"] = reorderGroupGroupPrimerRO(state.Attributes()["owner"].(types.Object), priorState.Attributes()["owner"].(types.Object), false)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -915,9 +930,9 @@ func reorderDirectoryLDAPDirectoryRO(state basetypes.ObjectValue, priorState bas
 		attrs = directoryLDAPDirectoryAttrTypesRSRO
 	}
 	obj := filterAttributes(state.Attributes(), attrs)
-	obj["client_certificate"] = reorderCertificateCertificatePrimerRO(state.Attributes()["client_certificate"].(types.Object), priorState.Attributes()["client_certificate"].(types.Object), recurse)
-	obj["failover_trusted_certificate"] = reorderCertificateCertificatePrimerRO(state.Attributes()["failover_trusted_certificate"].(types.Object), priorState.Attributes()["failover_trusted_certificate"].(types.Object), recurse)
-	obj["trusted_certificate"] = reorderCertificateCertificatePrimerRO(state.Attributes()["trusted_certificate"].(types.Object), priorState.Attributes()["trusted_certificate"].(types.Object), recurse)
+	obj["client_certificate"] = reorderCertificateCertificatePrimerRO(state.Attributes()["client_certificate"].(types.Object), priorState.Attributes()["client_certificate"].(types.Object), false)
+	obj["failover_trusted_certificate"] = reorderCertificateCertificatePrimerRO(state.Attributes()["failover_trusted_certificate"].(types.Object), priorState.Attributes()["failover_trusted_certificate"].(types.Object), false)
+	obj["trusted_certificate"] = reorderCertificateCertificatePrimerRO(state.Attributes()["trusted_certificate"].(types.Object), priorState.Attributes()["trusted_certificate"].(types.Object), false)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -983,7 +998,7 @@ func reorderGroupGroup(state basetypes.ObjectValue, priorState basetypes.ObjectV
 	if recurse {
 		maps.Copy(obj, reorderGroupGroup_additionalObjects(state, priorState, false).Attributes())
 	}
-	obj["audit_config"] = reorderGroupGroupAuditConfig(state.Attributes()["audit_config"].(types.Object), priorState.Attributes()["audit_config"].(types.Object), recurse)
+	obj["audit_config"] = reorderGroupGroupAuditConfig(state.Attributes()["audit_config"].(types.Object), priorState.Attributes()["audit_config"].(types.Object), false)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -1004,14 +1019,14 @@ func reorderGroupGroupRO(state basetypes.ObjectValue, priorState basetypes.Objec
 	if recurse {
 		maps.Copy(obj, reorderGroupGroup_additionalObjectsRO(state, priorState, false).Attributes())
 	}
-	obj["organizational_unit"] = reorderOrganizationOrganizationalUnitPrimerRO(state.Attributes()["organizational_unit"].(types.Object), priorState.Attributes()["organizational_unit"].(types.Object), recurse)
-	obj["audit_config"] = reorderGroupGroupAuditConfigRO(state.Attributes()["audit_config"].(types.Object), priorState.Attributes()["audit_config"].(types.Object), recurse)
-	obj["authorizing_group_auditing"] = reorderGroupGroupPrimerRO(state.Attributes()["authorizing_group_auditing"].(types.Object), priorState.Attributes()["authorizing_group_auditing"].(types.Object), recurse)
-	obj["authorizing_group_delegation"] = reorderGroupGroupPrimerRO(state.Attributes()["authorizing_group_delegation"].(types.Object), priorState.Attributes()["authorizing_group_delegation"].(types.Object), recurse)
-	obj["authorizing_group_membership"] = reorderGroupGroupPrimerRO(state.Attributes()["authorizing_group_membership"].(types.Object), priorState.Attributes()["authorizing_group_membership"].(types.Object), recurse)
-	obj["authorizing_group_provisioning"] = reorderGroupGroupPrimerRO(state.Attributes()["authorizing_group_provisioning"].(types.Object), priorState.Attributes()["authorizing_group_provisioning"].(types.Object), recurse)
-	obj["classification"] = reorderGroupGroupClassificationPrimerRO(state.Attributes()["classification"].(types.Object), priorState.Attributes()["classification"].(types.Object), recurse)
-	obj["nested_under"] = reorderGroupGroupPrimerRO(state.Attributes()["nested_under"].(types.Object), priorState.Attributes()["nested_under"].(types.Object), recurse)
+	obj["organizational_unit"] = reorderOrganizationOrganizationalUnitPrimerRO(state.Attributes()["organizational_unit"].(types.Object), priorState.Attributes()["organizational_unit"].(types.Object), false)
+	obj["audit_config"] = reorderGroupGroupAuditConfigRO(state.Attributes()["audit_config"].(types.Object), priorState.Attributes()["audit_config"].(types.Object), false)
+	obj["authorizing_group_auditing"] = reorderGroupGroupPrimerRO(state.Attributes()["authorizing_group_auditing"].(types.Object), priorState.Attributes()["authorizing_group_auditing"].(types.Object), false)
+	obj["authorizing_group_delegation"] = reorderGroupGroupPrimerRO(state.Attributes()["authorizing_group_delegation"].(types.Object), priorState.Attributes()["authorizing_group_delegation"].(types.Object), false)
+	obj["authorizing_group_membership"] = reorderGroupGroupPrimerRO(state.Attributes()["authorizing_group_membership"].(types.Object), priorState.Attributes()["authorizing_group_membership"].(types.Object), false)
+	obj["authorizing_group_provisioning"] = reorderGroupGroupPrimerRO(state.Attributes()["authorizing_group_provisioning"].(types.Object), priorState.Attributes()["authorizing_group_provisioning"].(types.Object), false)
+	obj["classification"] = reorderGroupGroupClassificationPrimerRO(state.Attributes()["classification"].(types.Object), priorState.Attributes()["classification"].(types.Object), false)
+	obj["nested_under"] = reorderGroupGroupPrimerRO(state.Attributes()["nested_under"].(types.Object), priorState.Attributes()["nested_under"].(types.Object), false)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -1244,9 +1259,9 @@ func reorderGroupGroupClientRO(state basetypes.ObjectValue, priorState basetypes
 	if recurse {
 		maps.Copy(obj, reorderGroupGroupClient_additionalObjectsRO(state, priorState, false).Attributes())
 	}
-	obj["group"] = reorderGroupGroupPrimerRO(state.Attributes()["group"].(types.Object), priorState.Attributes()["group"].(types.Object), recurse)
-	obj["owner"] = reorderGroupGroupPrimerRO(state.Attributes()["owner"].(types.Object), priorState.Attributes()["owner"].(types.Object), recurse)
-	obj["technical_administrator"] = reorderGroupGroupPrimerRO(state.Attributes()["technical_administrator"].(types.Object), priorState.Attributes()["technical_administrator"].(types.Object), recurse)
+	obj["group"] = reorderGroupGroupPrimerRO(state.Attributes()["group"].(types.Object), priorState.Attributes()["group"].(types.Object), false)
+	obj["owner"] = reorderGroupGroupPrimerRO(state.Attributes()["owner"].(types.Object), priorState.Attributes()["owner"].(types.Object), false)
+	obj["technical_administrator"] = reorderGroupGroupPrimerRO(state.Attributes()["technical_administrator"].(types.Object), priorState.Attributes()["technical_administrator"].(types.Object), false)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -1422,7 +1437,7 @@ func reorderGroupGroupPrimerRO(state basetypes.ObjectValue, priorState basetypes
 		attrs = groupGroupPrimerAttrTypesRSRO
 	}
 	obj := filterAttributes(state.Attributes(), attrs)
-	obj["organizational_unit"] = reorderOrganizationOrganizationalUnitPrimerRO(state.Attributes()["organizational_unit"].(types.Object), priorState.Attributes()["organizational_unit"].(types.Object), recurse)
+	obj["organizational_unit"] = reorderOrganizationOrganizationalUnitPrimerRO(state.Attributes()["organizational_unit"].(types.Object), priorState.Attributes()["organizational_unit"].(types.Object), false)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -1604,7 +1619,7 @@ func reorderGroupProvisioningGroupRO(state basetypes.ObjectValue, priorState bas
 	if recurse {
 		maps.Copy(obj, reorderGroupProvisioningGroup_additionalObjectsRO(state, priorState, false).Attributes())
 	}
-	obj["group"] = reorderGroupGroupPrimerRO(state.Attributes()["group"].(types.Object), priorState.Attributes()["group"].(types.Object), recurse)
+	obj["group"] = reorderGroupGroupPrimerRO(state.Attributes()["group"].(types.Object), priorState.Attributes()["group"].(types.Object), false)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -1707,6 +1722,26 @@ func reorderGroupVaultVaultRecord(state basetypes.ObjectValue, priorState basety
 	return types.ObjectValueMust(attrs, obj)
 }
 
+func reorderIdentityAccountAttributeDefinition(state basetypes.ObjectValue, priorState basetypes.ObjectValue, recurse bool) basetypes.ObjectValue {
+	if state.IsNull() || state.IsUnknown() || priorState.IsNull() || priorState.IsUnknown() {
+		return state
+	}
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = identityAccountAttributeDefinitionAttrTypesRSRecurse
+	} else {
+		attrs = identityAccountAttributeDefinitionAttrTypesRS
+	}
+	obj := filterAttributes(state.Attributes(), attrs)
+	if recurse {
+	}
+	if recurse {
+		maps.Copy(obj, reorderIdentityAccountAttributeDefinition_additionalObjects(state, priorState, false).Attributes())
+	}
+
+	return types.ObjectValueMust(attrs, obj)
+}
+
 func reorderIdentityAccountAttributeDefinitionRO(state basetypes.ObjectValue, priorState basetypes.ObjectValue, recurse bool) basetypes.ObjectValue {
 	if state.IsNull() || state.IsUnknown() || priorState.IsNull() || priorState.IsUnknown() {
 		return state
@@ -1723,6 +1758,21 @@ func reorderIdentityAccountAttributeDefinitionRO(state basetypes.ObjectValue, pr
 	if recurse {
 		maps.Copy(obj, reorderIdentityAccountAttributeDefinition_additionalObjectsRO(state, priorState, false).Attributes())
 	}
+
+	return types.ObjectValueMust(attrs, obj)
+}
+
+func reorderIdentityAccountAttributeDefinition_additionalObjects(state basetypes.ObjectValue, priorState basetypes.ObjectValue, recurse bool) basetypes.ObjectValue {
+	if state.IsNull() || state.IsUnknown() || priorState.IsNull() || priorState.IsUnknown() {
+		return state
+	}
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = identityAccountAttributeDefinition_additionalObjectsAttrTypesRSRecurse
+	} else {
+		attrs = identityAccountAttributeDefinition_additionalObjectsAttrTypesRS
+	}
+	obj := filterAttributes(state.Attributes(), attrs)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -1758,7 +1808,7 @@ func reorderIdentityAccountAttributeRuleRO(state basetypes.ObjectValue, priorSta
 	if recurse {
 		maps.Copy(obj, reorderIdentityAccountAttributeRule_additionalObjectsRO(state, priorState, false).Attributes())
 	}
-	obj["attribute"] = reorderIdentityAccountAttributeDefinitionRO(state.Attributes()["attribute"].(types.Object), priorState.Attributes()["attribute"].(types.Object), recurse)
+	obj["attribute"] = reorderIdentityAccountAttributeDefinitionRO(state.Attributes()["attribute"].(types.Object), priorState.Attributes()["attribute"].(types.Object), false)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -1805,7 +1855,146 @@ func reorderIdentityAccountAttributeValueSummaryRO(state basetypes.ObjectValue, 
 		attrs = identityAccountAttributeValueSummaryAttrTypesRSRO
 	}
 	obj := filterAttributes(state.Attributes(), attrs)
-	obj["attribute"] = reorderIdentityAccountAttributeDefinitionRO(state.Attributes()["attribute"].(types.Object), priorState.Attributes()["attribute"].(types.Object), recurse)
+	obj["attribute"] = reorderIdentityAccountAttributeDefinitionRO(state.Attributes()["attribute"].(types.Object), priorState.Attributes()["attribute"].(types.Object), false)
+
+	return types.ObjectValueMust(attrs, obj)
+}
+
+func reorderLaunchpadLaunchpadTile(state basetypes.ObjectValue, priorState basetypes.ObjectValue, recurse bool) basetypes.ObjectValue {
+	if state.IsNull() || state.IsUnknown() || priorState.IsNull() || priorState.IsUnknown() {
+		return state
+	}
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = launchpadLaunchpadTileAttrTypesRSRecurse
+	} else {
+		attrs = launchpadLaunchpadTileAttrTypesRS
+	}
+	obj := filterAttributes(state.Attributes(), attrs)
+	if recurse {
+	}
+	if recurse {
+		maps.Copy(obj, reorderLaunchpadLaunchpadTile_additionalObjects(state, priorState, false).Attributes())
+	}
+	obj["manual_launchpad_tile"] = reorderLaunchpadManualLaunchpadTile(state.Attributes()["manual_launchpad_tile"].(types.Object), priorState.Attributes()["manual_launchpad_tile"].(types.Object), false)
+	obj["sso_application_launchpad_tile"] = reorderLaunchpadSsoApplicationLaunchpadTile(state.Attributes()["sso_application_launchpad_tile"].(types.Object), priorState.Attributes()["sso_application_launchpad_tile"].(types.Object), false)
+	obj["vault_record_launchpad_tile"] = reorderLaunchpadVaultRecordLaunchpadTile(state.Attributes()["vault_record_launchpad_tile"].(types.Object), priorState.Attributes()["vault_record_launchpad_tile"].(types.Object), false)
+
+	return types.ObjectValueMust(attrs, obj)
+}
+
+func reorderLaunchpadLaunchpadTileRO(state basetypes.ObjectValue, priorState basetypes.ObjectValue, recurse bool) basetypes.ObjectValue {
+	if state.IsNull() || state.IsUnknown() || priorState.IsNull() || priorState.IsUnknown() {
+		return state
+	}
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = launchpadLaunchpadTileAttrTypesRSRORecurse
+	} else {
+		attrs = launchpadLaunchpadTileAttrTypesRSRO
+	}
+	obj := filterAttributes(state.Attributes(), attrs)
+	if recurse {
+	}
+	if recurse {
+		maps.Copy(obj, reorderLaunchpadLaunchpadTile_additionalObjectsRO(state, priorState, false).Attributes())
+	}
+	obj["application"] = reorderClientClientApplicationPrimerRO(state.Attributes()["application"].(types.Object), priorState.Attributes()["application"].(types.Object), false)
+	obj["group"] = reorderGroupGroupPrimerRO(state.Attributes()["group"].(types.Object), priorState.Attributes()["group"].(types.Object), false)
+	obj["vault_record"] = reorderVaultVaultRecordPrimerRO(state.Attributes()["vault_record"].(types.Object), priorState.Attributes()["vault_record"].(types.Object), false)
+	obj["manual_launchpad_tile"] = reorderLaunchpadManualLaunchpadTileRO(state.Attributes()["manual_launchpad_tile"].(types.Object), priorState.Attributes()["manual_launchpad_tile"].(types.Object), false)
+	obj["sso_application_launchpad_tile"] = reorderLaunchpadSsoApplicationLaunchpadTileRO(state.Attributes()["sso_application_launchpad_tile"].(types.Object), priorState.Attributes()["sso_application_launchpad_tile"].(types.Object), false)
+	obj["vault_record_launchpad_tile"] = reorderLaunchpadVaultRecordLaunchpadTileRO(state.Attributes()["vault_record_launchpad_tile"].(types.Object), priorState.Attributes()["vault_record_launchpad_tile"].(types.Object), false)
+
+	return types.ObjectValueMust(attrs, obj)
+}
+
+func reorderLaunchpadLaunchpadTilePrimer(state basetypes.ObjectValue, priorState basetypes.ObjectValue, recurse bool) basetypes.ObjectValue {
+	if state.IsNull() || state.IsUnknown() || priorState.IsNull() || priorState.IsUnknown() {
+		return state
+	}
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = launchpadLaunchpadTilePrimerAttrTypesRSRecurse
+	} else {
+		attrs = launchpadLaunchpadTilePrimerAttrTypesRS
+	}
+	obj := filterAttributes(state.Attributes(), attrs)
+
+	return types.ObjectValueMust(attrs, obj)
+}
+
+func reorderLaunchpadLaunchpadTilePrimerRO(state basetypes.ObjectValue, priorState basetypes.ObjectValue, recurse bool) basetypes.ObjectValue {
+	if state.IsNull() || state.IsUnknown() || priorState.IsNull() || priorState.IsUnknown() {
+		return state
+	}
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = launchpadLaunchpadTilePrimerAttrTypesRSRORecurse
+	} else {
+		attrs = launchpadLaunchpadTilePrimerAttrTypesRSRO
+	}
+	obj := filterAttributes(state.Attributes(), attrs)
+
+	return types.ObjectValueMust(attrs, obj)
+}
+
+func reorderLaunchpadLaunchpadTile_additionalObjects(state basetypes.ObjectValue, priorState basetypes.ObjectValue, recurse bool) basetypes.ObjectValue {
+	if state.IsNull() || state.IsUnknown() || priorState.IsNull() || priorState.IsUnknown() {
+		return state
+	}
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = launchpadLaunchpadTile_additionalObjectsAttrTypesRSRecurse
+	} else {
+		attrs = launchpadLaunchpadTile_additionalObjectsAttrTypesRS
+	}
+	obj := filterAttributes(state.Attributes(), attrs)
+
+	return types.ObjectValueMust(attrs, obj)
+}
+
+func reorderLaunchpadLaunchpadTile_additionalObjectsRO(state basetypes.ObjectValue, priorState basetypes.ObjectValue, recurse bool) basetypes.ObjectValue {
+	if state.IsNull() || state.IsUnknown() || priorState.IsNull() || priorState.IsUnknown() {
+		return state
+	}
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = launchpadLaunchpadTile_additionalObjectsAttrTypesRSRORecurse
+	} else {
+		attrs = launchpadLaunchpadTile_additionalObjectsAttrTypesRSRO
+	}
+	obj := filterAttributes(state.Attributes(), attrs)
+
+	return types.ObjectValueMust(attrs, obj)
+}
+
+func reorderLaunchpadManualLaunchpadTile(state basetypes.ObjectValue, priorState basetypes.ObjectValue, recurse bool) basetypes.ObjectValue {
+	if state.IsNull() || state.IsUnknown() || priorState.IsNull() || priorState.IsUnknown() {
+		return state
+	}
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = launchpadManualLaunchpadTileAttrTypesRSRecurse
+	} else {
+		attrs = launchpadManualLaunchpadTileAttrTypesRS
+	}
+	obj := filterAttributes(state.Attributes(), attrs)
+
+	return types.ObjectValueMust(attrs, obj)
+}
+
+func reorderLaunchpadManualLaunchpadTileRO(state basetypes.ObjectValue, priorState basetypes.ObjectValue, recurse bool) basetypes.ObjectValue {
+	if state.IsNull() || state.IsUnknown() || priorState.IsNull() || priorState.IsUnknown() {
+		return state
+	}
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = launchpadManualLaunchpadTileAttrTypesRSRORecurse
+	} else {
+		attrs = launchpadManualLaunchpadTileAttrTypesRSRO
+	}
+	obj := filterAttributes(state.Attributes(), attrs)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -1901,6 +2090,22 @@ func reorderMarkItemMarkersRO(state basetypes.ObjectValue, priorState basetypes.
 	return types.ObjectValueMust(attrs, obj)
 }
 
+func reorderMiscAttributeCustomization(state basetypes.ObjectValue, priorState basetypes.ObjectValue, recurse bool) basetypes.ObjectValue {
+	if state.IsNull() || state.IsUnknown() || priorState.IsNull() || priorState.IsUnknown() {
+		return state
+	}
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = miscAttributeCustomizationAttrTypesRSRecurse
+	} else {
+		attrs = miscAttributeCustomizationAttrTypesRS
+	}
+	obj := filterAttributes(state.Attributes(), attrs)
+	obj["attribute_definition"] = reorderIdentityAccountAttributeDefinition(state.Attributes()["attribute_definition"].(types.Object), priorState.Attributes()["attribute_definition"].(types.Object), false)
+
+	return types.ObjectValueMust(attrs, obj)
+}
+
 func reorderMiscAttributeCustomizationRO(state basetypes.ObjectValue, priorState basetypes.ObjectValue, recurse bool) basetypes.ObjectValue {
 	if state.IsNull() || state.IsUnknown() || priorState.IsNull() || priorState.IsUnknown() {
 		return state
@@ -1912,7 +2117,7 @@ func reorderMiscAttributeCustomizationRO(state basetypes.ObjectValue, priorState
 		attrs = miscAttributeCustomizationAttrTypesRSRO
 	}
 	obj := filterAttributes(state.Attributes(), attrs)
-	obj["attribute_definition"] = reorderIdentityAccountAttributeDefinitionRO(state.Attributes()["attribute_definition"].(types.Object), priorState.Attributes()["attribute_definition"].(types.Object), recurse)
+	obj["attribute_definition"] = reorderIdentityAccountAttributeDefinitionRO(state.Attributes()["attribute_definition"].(types.Object), priorState.Attributes()["attribute_definition"].(types.Object), false)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -1984,12 +2189,12 @@ func reorderOrganizationOrganizationalUnitRO(state basetypes.ObjectValue, priorS
 	if recurse {
 		maps.Copy(obj, reorderOrganizationOrganizationalUnit_additionalObjectsRO(state, priorState, false).Attributes())
 	}
-	obj["auditor_group"] = reorderGroupGroupPrimerRO(state.Attributes()["auditor_group"].(types.Object), priorState.Attributes()["auditor_group"].(types.Object), recurse)
-	obj["create_group_approve_group"] = reorderGroupGroupPrimerRO(state.Attributes()["create_group_approve_group"].(types.Object), priorState.Attributes()["create_group_approve_group"].(types.Object), recurse)
-	obj["enable_tech_admin_approve_group"] = reorderGroupGroupPrimerRO(state.Attributes()["enable_tech_admin_approve_group"].(types.Object), priorState.Attributes()["enable_tech_admin_approve_group"].(types.Object), recurse)
-	obj["owner"] = reorderGroupGroupPrimerRO(state.Attributes()["owner"].(types.Object), priorState.Attributes()["owner"].(types.Object), recurse)
-	obj["recovery_fallback_group"] = reorderGroupGroupPrimerRO(state.Attributes()["recovery_fallback_group"].(types.Object), priorState.Attributes()["recovery_fallback_group"].(types.Object), recurse)
-	obj["remove_group_approve_group"] = reorderGroupGroupPrimerRO(state.Attributes()["remove_group_approve_group"].(types.Object), priorState.Attributes()["remove_group_approve_group"].(types.Object), recurse)
+	obj["auditor_group"] = reorderGroupGroupPrimerRO(state.Attributes()["auditor_group"].(types.Object), priorState.Attributes()["auditor_group"].(types.Object), false)
+	obj["create_group_approve_group"] = reorderGroupGroupPrimerRO(state.Attributes()["create_group_approve_group"].(types.Object), priorState.Attributes()["create_group_approve_group"].(types.Object), false)
+	obj["enable_tech_admin_approve_group"] = reorderGroupGroupPrimerRO(state.Attributes()["enable_tech_admin_approve_group"].(types.Object), priorState.Attributes()["enable_tech_admin_approve_group"].(types.Object), false)
+	obj["owner"] = reorderGroupGroupPrimerRO(state.Attributes()["owner"].(types.Object), priorState.Attributes()["owner"].(types.Object), false)
+	obj["recovery_fallback_group"] = reorderGroupGroupPrimerRO(state.Attributes()["recovery_fallback_group"].(types.Object), priorState.Attributes()["recovery_fallback_group"].(types.Object), false)
+	obj["remove_group_approve_group"] = reorderGroupGroupPrimerRO(state.Attributes()["remove_group_approve_group"].(types.Object), priorState.Attributes()["remove_group_approve_group"].(types.Object), false)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -2067,10 +2272,10 @@ func reorderOrganizationOrganizationalUnitSettingsRO(state basetypes.ObjectValue
 		attrs = organizationOrganizationalUnitSettingsAttrTypesRSRO
 	}
 	obj := filterAttributes(state.Attributes(), attrs)
-	obj["create_group_approve_group"] = reorderGroupGroupPrimerRO(state.Attributes()["create_group_approve_group"].(types.Object), priorState.Attributes()["create_group_approve_group"].(types.Object), recurse)
-	obj["enable_tech_admin_approve_group"] = reorderGroupGroupPrimerRO(state.Attributes()["enable_tech_admin_approve_group"].(types.Object), priorState.Attributes()["enable_tech_admin_approve_group"].(types.Object), recurse)
-	obj["recovery_fallback_group"] = reorderGroupGroupPrimerRO(state.Attributes()["recovery_fallback_group"].(types.Object), priorState.Attributes()["recovery_fallback_group"].(types.Object), recurse)
-	obj["remove_group_approve_group"] = reorderGroupGroupPrimerRO(state.Attributes()["remove_group_approve_group"].(types.Object), priorState.Attributes()["remove_group_approve_group"].(types.Object), recurse)
+	obj["create_group_approve_group"] = reorderGroupGroupPrimerRO(state.Attributes()["create_group_approve_group"].(types.Object), priorState.Attributes()["create_group_approve_group"].(types.Object), false)
+	obj["enable_tech_admin_approve_group"] = reorderGroupGroupPrimerRO(state.Attributes()["enable_tech_admin_approve_group"].(types.Object), priorState.Attributes()["enable_tech_admin_approve_group"].(types.Object), false)
+	obj["recovery_fallback_group"] = reorderGroupGroupPrimerRO(state.Attributes()["recovery_fallback_group"].(types.Object), priorState.Attributes()["recovery_fallback_group"].(types.Object), false)
+	obj["remove_group_approve_group"] = reorderGroupGroupPrimerRO(state.Attributes()["remove_group_approve_group"].(types.Object), priorState.Attributes()["remove_group_approve_group"].(types.Object), false)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -2120,8 +2325,8 @@ func reorderProfileAccessProfileRO(state basetypes.ObjectValue, priorState baset
 	if recurse {
 		maps.Copy(obj, reorderProfileAccessProfile_additionalObjectsRO(state, priorState, false).Attributes())
 	}
-	obj["directory"] = reorderDirectoryAccountDirectoryPrimerRO(state.Attributes()["directory"].(types.Object), priorState.Attributes()["directory"].(types.Object), recurse)
-	obj["owner"] = reorderGroupGroupPrimerRO(state.Attributes()["owner"].(types.Object), priorState.Attributes()["owner"].(types.Object), recurse)
+	obj["directory"] = reorderDirectoryAccountDirectoryPrimerRO(state.Attributes()["directory"].(types.Object), priorState.Attributes()["directory"].(types.Object), false)
+	obj["owner"] = reorderGroupGroupPrimerRO(state.Attributes()["owner"].(types.Object), priorState.Attributes()["owner"].(types.Object), false)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -2233,7 +2438,7 @@ func reorderProfileAccessProfileClientRO(state basetypes.ObjectValue, priorState
 	if recurse {
 		maps.Copy(obj, reorderProfileAccessProfileClient_additionalObjectsRO(state, priorState, false).Attributes())
 	}
-	obj["access_profile"] = reorderProfileAccessProfilePrimerRO(state.Attributes()["access_profile"].(types.Object), priorState.Attributes()["access_profile"].(types.Object), recurse)
+	obj["access_profile"] = reorderProfileAccessProfilePrimerRO(state.Attributes()["access_profile"].(types.Object), priorState.Attributes()["access_profile"].(types.Object), false)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -2558,9 +2763,9 @@ func reorderProvisioningAbstractProvisionedLDAPRO(state basetypes.ObjectValue, p
 	}
 	obj := filterAttributes(state.Attributes(), attrs)
 	// Reordering not supported for attributes with type List
-	obj["client_certificate"] = reorderCertificateCertificatePrimerRO(state.Attributes()["client_certificate"].(types.Object), priorState.Attributes()["client_certificate"].(types.Object), recurse)
-	obj["failover_trusted_certificate"] = reorderCertificateCertificatePrimerRO(state.Attributes()["failover_trusted_certificate"].(types.Object), priorState.Attributes()["failover_trusted_certificate"].(types.Object), recurse)
-	obj["trusted_certificate"] = reorderCertificateCertificatePrimerRO(state.Attributes()["trusted_certificate"].(types.Object), priorState.Attributes()["trusted_certificate"].(types.Object), recurse)
+	obj["client_certificate"] = reorderCertificateCertificatePrimerRO(state.Attributes()["client_certificate"].(types.Object), priorState.Attributes()["client_certificate"].(types.Object), false)
+	obj["failover_trusted_certificate"] = reorderCertificateCertificatePrimerRO(state.Attributes()["failover_trusted_certificate"].(types.Object), priorState.Attributes()["failover_trusted_certificate"].(types.Object), false)
+	obj["trusted_certificate"] = reorderCertificateCertificatePrimerRO(state.Attributes()["trusted_certificate"].(types.Object), priorState.Attributes()["trusted_certificate"].(types.Object), false)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -2596,7 +2801,7 @@ func reorderProvisioningGroupOnSystemRO(state basetypes.ObjectValue, priorState 
 	if recurse {
 		maps.Copy(obj, reorderProvisioningGroupOnSystem_additionalObjectsRO(state, priorState, false).Attributes())
 	}
-	obj["owner"] = reorderGroupGroupPrimerRO(state.Attributes()["owner"].(types.Object), priorState.Attributes()["owner"].(types.Object), recurse)
+	obj["owner"] = reorderGroupGroupPrimerRO(state.Attributes()["owner"].(types.Object), priorState.Attributes()["owner"].(types.Object), false)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -2873,7 +3078,7 @@ func reorderProvisioningProvisionedAzureOIDCDirectoryRO(state basetypes.ObjectVa
 		attrs = provisioningProvisionedAzureOIDCDirectoryAttrTypesRSRO
 	}
 	obj := filterAttributes(state.Attributes(), attrs)
-	obj["directory"] = reorderDirectoryAccountDirectoryPrimerRO(state.Attributes()["directory"].(types.Object), priorState.Attributes()["directory"].(types.Object), recurse)
+	obj["directory"] = reorderDirectoryAccountDirectoryPrimerRO(state.Attributes()["directory"].(types.Object), priorState.Attributes()["directory"].(types.Object), false)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -2889,7 +3094,7 @@ func reorderProvisioningProvisionedAzureSyncLDAPDirectoryRO(state basetypes.Obje
 		attrs = provisioningProvisionedAzureSyncLDAPDirectoryAttrTypesRSRO
 	}
 	obj := filterAttributes(state.Attributes(), attrs)
-	obj["directory"] = reorderDirectoryAccountDirectoryPrimerRO(state.Attributes()["directory"].(types.Object), priorState.Attributes()["directory"].(types.Object), recurse)
+	obj["directory"] = reorderDirectoryAccountDirectoryPrimerRO(state.Attributes()["directory"].(types.Object), priorState.Attributes()["directory"].(types.Object), false)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -2920,7 +3125,7 @@ func reorderProvisioningProvisionedInternalLDAPRO(state basetypes.ObjectValue, p
 		attrs = provisioningProvisionedInternalLDAPAttrTypesRSRO
 	}
 	obj := filterAttributes(state.Attributes(), attrs)
-	obj["client"] = reorderClientLdapClientRO(state.Attributes()["client"].(types.Object), priorState.Attributes()["client"].(types.Object), recurse)
+	obj["client"] = reorderClientClientApplicationRO(state.Attributes()["client"].(types.Object), priorState.Attributes()["client"].(types.Object), false)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -2936,8 +3141,8 @@ func reorderProvisioningProvisionedLDAPRO(state basetypes.ObjectValue, priorStat
 		attrs = provisioningProvisionedLDAPAttrTypesRSRO
 	}
 	obj := filterAttributes(state.Attributes(), attrs)
-	obj["gid_numbering"] = reorderProvisioningProvisionNumberSequenceRO(state.Attributes()["gid_numbering"].(types.Object), priorState.Attributes()["gid_numbering"].(types.Object), recurse)
-	obj["numbering"] = reorderProvisioningProvisionNumberSequenceRO(state.Attributes()["numbering"].(types.Object), priorState.Attributes()["numbering"].(types.Object), recurse)
+	obj["gid_numbering"] = reorderProvisioningProvisionNumberSequenceRO(state.Attributes()["gid_numbering"].(types.Object), priorState.Attributes()["gid_numbering"].(types.Object), false)
+	obj["numbering"] = reorderProvisioningProvisionNumberSequenceRO(state.Attributes()["numbering"].(types.Object), priorState.Attributes()["numbering"].(types.Object), false)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -2954,9 +3159,9 @@ func reorderProvisioningProvisionedLDAPDirectoryRO(state basetypes.ObjectValue, 
 	}
 	obj := filterAttributes(state.Attributes(), attrs)
 	// Reordering not supported for attributes with type List
-	obj["directory"] = reorderDirectoryAccountDirectoryPrimerRO(state.Attributes()["directory"].(types.Object), priorState.Attributes()["directory"].(types.Object), recurse)
-	obj["gid_numbering"] = reorderProvisioningProvisionNumberSequenceRO(state.Attributes()["gid_numbering"].(types.Object), priorState.Attributes()["gid_numbering"].(types.Object), recurse)
-	obj["numbering"] = reorderProvisioningProvisionNumberSequenceRO(state.Attributes()["numbering"].(types.Object), priorState.Attributes()["numbering"].(types.Object), recurse)
+	obj["directory"] = reorderDirectoryAccountDirectoryPrimerRO(state.Attributes()["directory"].(types.Object), priorState.Attributes()["directory"].(types.Object), false)
+	obj["gid_numbering"] = reorderProvisioningProvisionNumberSequenceRO(state.Attributes()["gid_numbering"].(types.Object), priorState.Attributes()["gid_numbering"].(types.Object), false)
+	obj["numbering"] = reorderProvisioningProvisionNumberSequenceRO(state.Attributes()["numbering"].(types.Object), priorState.Attributes()["numbering"].(types.Object), false)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -2972,7 +3177,7 @@ func reorderProvisioningProvisionedNamespaceRO(state basetypes.ObjectValue, prio
 		attrs = provisioningProvisionedNamespaceAttrTypesRSRO
 	}
 	obj := filterAttributes(state.Attributes(), attrs)
-	obj["base_system"] = reorderProvisioningProvisionedSystemPrimerRO(state.Attributes()["base_system"].(types.Object), priorState.Attributes()["base_system"].(types.Object), recurse)
+	obj["base_system"] = reorderProvisioningProvisionedSystemPrimerRO(state.Attributes()["base_system"].(types.Object), priorState.Attributes()["base_system"].(types.Object), false)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -3009,21 +3214,21 @@ func reorderProvisioningProvisionedSystemRO(state basetypes.ObjectValue, priorSt
 	if recurse {
 		maps.Copy(obj, reorderProvisioningProvisionedSystem_additionalObjectsRO(state, priorState, false).Attributes())
 	}
-	obj["organizational_unit"] = reorderOrganizationOrganizationalUnitPrimerRO(state.Attributes()["organizational_unit"].(types.Object), priorState.Attributes()["organizational_unit"].(types.Object), recurse)
-	obj["cleanup_period"] = reorderProvisioningProvisionedSystem_cleanupPeriodRO(state.Attributes()["cleanup_period"].(types.Object), priorState.Attributes()["cleanup_period"].(types.Object), recurse)
-	obj["content_administrator"] = reorderGroupGroupPrimerRO(state.Attributes()["content_administrator"].(types.Object), priorState.Attributes()["content_administrator"].(types.Object), recurse)
-	obj["owner"] = reorderGroupGroupPrimerRO(state.Attributes()["owner"].(types.Object), priorState.Attributes()["owner"].(types.Object), recurse)
-	obj["technical_administrator"] = reorderGroupGroupPrimerRO(state.Attributes()["technical_administrator"].(types.Object), priorState.Attributes()["technical_administrator"].(types.Object), recurse)
-	obj["abstract_provisioned_ldap"] = reorderProvisioningAbstractProvisionedLDAPRO(state.Attributes()["abstract_provisioned_ldap"].(types.Object), priorState.Attributes()["abstract_provisioned_ldap"].(types.Object), recurse)
-	obj["provisioned_a_d"] = reorderProvisioningProvisionedADRO(state.Attributes()["provisioned_a_d"].(types.Object), priorState.Attributes()["provisioned_a_d"].(types.Object), recurse)
-	obj["provisioned_azure_oidc_directory"] = reorderProvisioningProvisionedAzureOIDCDirectoryRO(state.Attributes()["provisioned_azure_oidc_directory"].(types.Object), priorState.Attributes()["provisioned_azure_oidc_directory"].(types.Object), recurse)
-	obj["provisioned_azure_sync_ldap_directory"] = reorderProvisioningProvisionedAzureSyncLDAPDirectoryRO(state.Attributes()["provisioned_azure_sync_ldap_directory"].(types.Object), priorState.Attributes()["provisioned_azure_sync_ldap_directory"].(types.Object), recurse)
-	obj["provisioned_azure_tenant"] = reorderProvisioningProvisionedAzureTenantRO(state.Attributes()["provisioned_azure_tenant"].(types.Object), priorState.Attributes()["provisioned_azure_tenant"].(types.Object), recurse)
-	obj["provisioned_internal_ldap"] = reorderProvisioningProvisionedInternalLDAPRO(state.Attributes()["provisioned_internal_ldap"].(types.Object), priorState.Attributes()["provisioned_internal_ldap"].(types.Object), recurse)
-	obj["provisioned_ldap"] = reorderProvisioningProvisionedLDAPRO(state.Attributes()["provisioned_ldap"].(types.Object), priorState.Attributes()["provisioned_ldap"].(types.Object), recurse)
-	obj["provisioned_ldap_directory"] = reorderProvisioningProvisionedLDAPDirectoryRO(state.Attributes()["provisioned_ldap_directory"].(types.Object), priorState.Attributes()["provisioned_ldap_directory"].(types.Object), recurse)
-	obj["provisioned_namespace"] = reorderProvisioningProvisionedNamespaceRO(state.Attributes()["provisioned_namespace"].(types.Object), priorState.Attributes()["provisioned_namespace"].(types.Object), recurse)
-	obj["provisioned_scim"] = reorderProvisioningProvisionedSCIMRO(state.Attributes()["provisioned_scim"].(types.Object), priorState.Attributes()["provisioned_scim"].(types.Object), recurse)
+	obj["organizational_unit"] = reorderOrganizationOrganizationalUnitPrimerRO(state.Attributes()["organizational_unit"].(types.Object), priorState.Attributes()["organizational_unit"].(types.Object), false)
+	obj["cleanup_period"] = reorderProvisioningProvisionedSystem_cleanupPeriodRO(state.Attributes()["cleanup_period"].(types.Object), priorState.Attributes()["cleanup_period"].(types.Object), false)
+	obj["content_administrator"] = reorderGroupGroupPrimerRO(state.Attributes()["content_administrator"].(types.Object), priorState.Attributes()["content_administrator"].(types.Object), false)
+	obj["owner"] = reorderGroupGroupPrimerRO(state.Attributes()["owner"].(types.Object), priorState.Attributes()["owner"].(types.Object), false)
+	obj["technical_administrator"] = reorderGroupGroupPrimerRO(state.Attributes()["technical_administrator"].(types.Object), priorState.Attributes()["technical_administrator"].(types.Object), false)
+	obj["abstract_provisioned_ldap"] = reorderProvisioningAbstractProvisionedLDAPRO(state.Attributes()["abstract_provisioned_ldap"].(types.Object), priorState.Attributes()["abstract_provisioned_ldap"].(types.Object), false)
+	obj["provisioned_a_d"] = reorderProvisioningProvisionedADRO(state.Attributes()["provisioned_a_d"].(types.Object), priorState.Attributes()["provisioned_a_d"].(types.Object), false)
+	obj["provisioned_azure_oidc_directory"] = reorderProvisioningProvisionedAzureOIDCDirectoryRO(state.Attributes()["provisioned_azure_oidc_directory"].(types.Object), priorState.Attributes()["provisioned_azure_oidc_directory"].(types.Object), false)
+	obj["provisioned_azure_sync_ldap_directory"] = reorderProvisioningProvisionedAzureSyncLDAPDirectoryRO(state.Attributes()["provisioned_azure_sync_ldap_directory"].(types.Object), priorState.Attributes()["provisioned_azure_sync_ldap_directory"].(types.Object), false)
+	obj["provisioned_azure_tenant"] = reorderProvisioningProvisionedAzureTenantRO(state.Attributes()["provisioned_azure_tenant"].(types.Object), priorState.Attributes()["provisioned_azure_tenant"].(types.Object), false)
+	obj["provisioned_internal_ldap"] = reorderProvisioningProvisionedInternalLDAPRO(state.Attributes()["provisioned_internal_ldap"].(types.Object), priorState.Attributes()["provisioned_internal_ldap"].(types.Object), false)
+	obj["provisioned_ldap"] = reorderProvisioningProvisionedLDAPRO(state.Attributes()["provisioned_ldap"].(types.Object), priorState.Attributes()["provisioned_ldap"].(types.Object), false)
+	obj["provisioned_ldap_directory"] = reorderProvisioningProvisionedLDAPDirectoryRO(state.Attributes()["provisioned_ldap_directory"].(types.Object), priorState.Attributes()["provisioned_ldap_directory"].(types.Object), false)
+	obj["provisioned_namespace"] = reorderProvisioningProvisionedNamespaceRO(state.Attributes()["provisioned_namespace"].(types.Object), priorState.Attributes()["provisioned_namespace"].(types.Object), false)
+	obj["provisioned_scim"] = reorderProvisioningProvisionedSCIMRO(state.Attributes()["provisioned_scim"].(types.Object), priorState.Attributes()["provisioned_scim"].(types.Object), false)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -3070,7 +3275,7 @@ func reorderProvisioningProvisionedSystemPrimerRO(state basetypes.ObjectValue, p
 		attrs = provisioningProvisionedSystemPrimerAttrTypesRSRO
 	}
 	obj := filterAttributes(state.Attributes(), attrs)
-	obj["organizational_unit"] = reorderOrganizationOrganizationalUnitPrimerRO(state.Attributes()["organizational_unit"].(types.Object), priorState.Attributes()["organizational_unit"].(types.Object), recurse)
+	obj["organizational_unit"] = reorderOrganizationOrganizationalUnitPrimerRO(state.Attributes()["organizational_unit"].(types.Object), priorState.Attributes()["organizational_unit"].(types.Object), false)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -3172,8 +3377,8 @@ func reorderServiceaccountServiceAccountRO(state basetypes.ObjectValue, priorSta
 	if recurse {
 		maps.Copy(obj, reorderServiceaccountServiceAccount_additionalObjectsRO(state, priorState, false).Attributes())
 	}
-	obj["system"] = reorderProvisioningProvisionedSystemPrimerRO(state.Attributes()["system"].(types.Object), priorState.Attributes()["system"].(types.Object), recurse)
-	obj["technical_administrator"] = reorderGroupGroupPrimerRO(state.Attributes()["technical_administrator"].(types.Object), priorState.Attributes()["technical_administrator"].(types.Object), recurse)
+	obj["system"] = reorderProvisioningProvisionedSystemPrimerRO(state.Attributes()["system"].(types.Object), priorState.Attributes()["system"].(types.Object), false)
+	obj["technical_administrator"] = reorderGroupGroupPrimerRO(state.Attributes()["technical_administrator"].(types.Object), priorState.Attributes()["technical_administrator"].(types.Object), false)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -3271,7 +3476,7 @@ func reorderServiceaccountServiceAccountPrimerRO(state basetypes.ObjectValue, pr
 		attrs = serviceaccountServiceAccountPrimerAttrTypesRSRO
 	}
 	obj := filterAttributes(state.Attributes(), attrs)
-	obj["system"] = reorderProvisioningProvisionedSystemPrimerRO(state.Attributes()["system"].(types.Object), priorState.Attributes()["system"].(types.Object), recurse)
+	obj["system"] = reorderProvisioningProvisionedSystemPrimerRO(state.Attributes()["system"].(types.Object), priorState.Attributes()["system"].(types.Object), false)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -3333,7 +3538,7 @@ func reorderServiceaccountServiceAccount_additionalObjects(state basetypes.Objec
 		attrs = serviceaccountServiceAccount_additionalObjectsAttrTypesRS
 	}
 	obj := filterAttributes(state.Attributes(), attrs)
-	obj["secret"] = reorderGeneratedSecret(state.Attributes()["secret"].(types.Object), priorState.Attributes()["secret"].(types.Object), recurse)
+	obj["generate_secret"] = reorderGenerateSecret(state.Attributes()["generate_secret"].(types.Object), priorState.Attributes()["generate_secret"].(types.Object), false)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -3349,7 +3554,7 @@ func reorderServiceaccountServiceAccount_additionalObjectsRO(state basetypes.Obj
 		attrs = serviceaccountServiceAccount_additionalObjectsAttrTypesRSRO
 	}
 	obj := filterAttributes(state.Attributes(), attrs)
-	obj["secret"] = reorderGeneratedSecretRO(state.Attributes()["secret"].(types.Object), priorState.Attributes()["secret"].(types.Object), recurse)
+	obj["generate_secret"] = reorderGenerateSecretRO(state.Attributes()["generate_secret"].(types.Object), priorState.Attributes()["generate_secret"].(types.Object), false)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -3523,7 +3728,7 @@ func reorderVaultVaultRecordShareSummaryRO(state basetypes.ObjectValue, priorSta
 	}
 	obj := filterAttributes(state.Attributes(), attrs)
 	// Reordering not supported for children with type List
-	obj["parent"] = reorderVaultVaultRecordShareRO(state.Attributes()["parent"].(types.Object), priorState.Attributes()["parent"].(types.Object), recurse)
+	obj["parent"] = reorderVaultVaultRecordShareRO(state.Attributes()["parent"].(types.Object), priorState.Attributes()["parent"].(types.Object), false)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -3539,8 +3744,8 @@ func reorderVaultVaultRecord_additionalObjects(state basetypes.ObjectValue, prio
 		attrs = vaultVaultRecord_additionalObjectsAttrTypesRS
 	}
 	obj := filterAttributes(state.Attributes(), attrs)
-	obj["secret"] = reorderVaultVaultRecordSecrets(state.Attributes()["secret"].(types.Object), priorState.Attributes()["secret"].(types.Object), recurse)
-	obj["tile"] = reorderLaunchpadVaultRecordLaunchpadTile(state.Attributes()["tile"].(types.Object), priorState.Attributes()["tile"].(types.Object), recurse)
+	obj["secret"] = reorderVaultVaultRecordSecrets(state.Attributes()["secret"].(types.Object), priorState.Attributes()["secret"].(types.Object), false)
+	obj["tile"] = reorderLaunchpadLaunchpadTile(state.Attributes()["tile"].(types.Object), priorState.Attributes()["tile"].(types.Object), false)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -3556,8 +3761,8 @@ func reorderVaultVaultRecord_additionalObjectsRO(state basetypes.ObjectValue, pr
 		attrs = vaultVaultRecord_additionalObjectsAttrTypesRSRO
 	}
 	obj := filterAttributes(state.Attributes(), attrs)
-	obj["secret"] = reorderVaultVaultRecordSecretsRO(state.Attributes()["secret"].(types.Object), priorState.Attributes()["secret"].(types.Object), recurse)
-	obj["tile"] = reorderLaunchpadVaultRecordLaunchpadTileRO(state.Attributes()["tile"].(types.Object), priorState.Attributes()["tile"].(types.Object), recurse)
+	obj["secret"] = reorderVaultVaultRecordSecretsRO(state.Attributes()["secret"].(types.Object), priorState.Attributes()["secret"].(types.Object), false)
+	obj["tile"] = reorderLaunchpadLaunchpadTileRO(state.Attributes()["tile"].(types.Object), priorState.Attributes()["tile"].(types.Object), false)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -3578,13 +3783,13 @@ func reorderWebhookWebhookRO(state basetypes.ObjectValue, priorState basetypes.O
 	if recurse {
 		maps.Copy(obj, reorderWebhookWebhook_additionalObjectsRO(state, priorState, false).Attributes())
 	}
-	obj["account"] = reorderAuthAccountPrimerRO(state.Attributes()["account"].(types.Object), priorState.Attributes()["account"].(types.Object), recurse)
-	obj["client"] = reorderClientClientApplicationPrimerRO(state.Attributes()["client"].(types.Object), priorState.Attributes()["client"].(types.Object), recurse)
-	obj["client_certificate"] = reorderCertificateCertificatePrimerRO(state.Attributes()["client_certificate"].(types.Object), priorState.Attributes()["client_certificate"].(types.Object), recurse)
-	obj["directory"] = reorderDirectoryAccountDirectoryPrimerRO(state.Attributes()["directory"].(types.Object), priorState.Attributes()["directory"].(types.Object), recurse)
-	obj["group"] = reorderGroupGroupPrimerRO(state.Attributes()["group"].(types.Object), priorState.Attributes()["group"].(types.Object), recurse)
-	obj["system"] = reorderProvisioningProvisionedSystemPrimerRO(state.Attributes()["system"].(types.Object), priorState.Attributes()["system"].(types.Object), recurse)
-	obj["trusted_certificate"] = reorderCertificateCertificatePrimerRO(state.Attributes()["trusted_certificate"].(types.Object), priorState.Attributes()["trusted_certificate"].(types.Object), recurse)
+	obj["account"] = reorderAuthAccountPrimerRO(state.Attributes()["account"].(types.Object), priorState.Attributes()["account"].(types.Object), false)
+	obj["client"] = reorderClientClientApplicationPrimerRO(state.Attributes()["client"].(types.Object), priorState.Attributes()["client"].(types.Object), false)
+	obj["client_certificate"] = reorderCertificateCertificatePrimerRO(state.Attributes()["client_certificate"].(types.Object), priorState.Attributes()["client_certificate"].(types.Object), false)
+	obj["directory"] = reorderDirectoryAccountDirectoryPrimerRO(state.Attributes()["directory"].(types.Object), priorState.Attributes()["directory"].(types.Object), false)
+	obj["group"] = reorderGroupGroupPrimerRO(state.Attributes()["group"].(types.Object), priorState.Attributes()["group"].(types.Object), false)
+	obj["system"] = reorderProvisioningProvisionedSystemPrimerRO(state.Attributes()["system"].(types.Object), priorState.Attributes()["system"].(types.Object), false)
+	obj["trusted_certificate"] = reorderCertificateCertificatePrimerRO(state.Attributes()["trusted_certificate"].(types.Object), priorState.Attributes()["trusted_certificate"].(types.Object), false)
 
 	return types.ObjectValueMust(attrs, obj)
 }

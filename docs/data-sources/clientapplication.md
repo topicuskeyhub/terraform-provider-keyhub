@@ -1035,7 +1035,7 @@ Read-Only:
 Read-Only:
 
 - `account_permissions` (Attributes List) (see [below for nested schema](#nestedatt--oauth2_client--account_permissions))
-- `attributes` (Map of String)
+- `attributes` (Attributes List) (see [below for nested schema](#nestedatt--oauth2_client--attributes))
 - `callback_uri` (String)
 - `debug_mode` (Boolean)
 - `for_identity_source` (Boolean)
@@ -1057,6 +1057,54 @@ Read-Only:
 - `instances` (List of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
+
+
+<a id="nestedatt--oauth2_client--attributes"></a>
+### Nested Schema for `oauth2_client.attributes`
+
+Read-Only:
+
+- `attribute_definition` (Attributes) (see [below for nested schema](#nestedatt--oauth2_client--attributes--attribute_definition))
+- `name` (String)
+- `script` (String)
+
+<a id="nestedatt--oauth2_client--attributes--attribute_definition"></a>
+### Nested Schema for `oauth2_client.attributes.attribute_definition`
+
+Read-Only:
+
+- `format` (String)
+- `freely_useable` (Boolean)
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--oauth2_client--attributes--attribute_definition--links))
+- `list` (Boolean)
+- `name` (String)
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--oauth2_client--attributes--attribute_definition--permissions))
+- `required` (Boolean)
+- `system_definition` (String)
+- `unique` (Boolean)
+
+<a id="nestedatt--oauth2_client--attributes--attribute_definition--links"></a>
+### Nested Schema for `oauth2_client.attributes.attribute_definition.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--oauth2_client--attributes--attribute_definition--permissions"></a>
+### Nested Schema for `oauth2_client.attributes.attribute_definition.permissions`
+
+Read-Only:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
 
 
 <a id="nestedatt--oauth2_client--shared_secret"></a>
@@ -1212,10 +1260,58 @@ Read-Only:
 
 Read-Only:
 
-- `attributes` (Map of String)
+- `attributes` (Attributes List) (see [below for nested schema](#nestedatt--saml2_client--attributes))
 - `metadata` (String)
 - `metadata_url` (String)
 - `subject_format` (String)
+
+<a id="nestedatt--saml2_client--attributes"></a>
+### Nested Schema for `saml2_client.attributes`
+
+Read-Only:
+
+- `attribute_definition` (Attributes) (see [below for nested schema](#nestedatt--saml2_client--attributes--attribute_definition))
+- `name` (String)
+- `script` (String)
+
+<a id="nestedatt--saml2_client--attributes--attribute_definition"></a>
+### Nested Schema for `saml2_client.attributes.attribute_definition`
+
+Read-Only:
+
+- `format` (String)
+- `freely_useable` (Boolean)
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--saml2_client--attributes--attribute_definition--links))
+- `list` (Boolean)
+- `name` (String)
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--saml2_client--attributes--attribute_definition--permissions))
+- `required` (Boolean)
+- `system_definition` (String)
+- `unique` (Boolean)
+
+<a id="nestedatt--saml2_client--attributes--attribute_definition--links"></a>
+### Nested Schema for `saml2_client.attributes.attribute_definition.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--saml2_client--attributes--attribute_definition--permissions"></a>
+### Nested Schema for `saml2_client.attributes.attribute_definition.permissions`
+
+Read-Only:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
+
 
 
 <a id="nestedatt--secret"></a>
@@ -1223,9 +1319,7 @@ Read-Only:
 
 Read-Only:
 
-- `generated_secret` (String, Sensitive)
-- `old_secret` (String, Sensitive)
-- `regenerate` (Boolean)
+- `secret` (String, Sensitive)
 
 
 <a id="nestedatt--technical_administrator"></a>
@@ -1301,4 +1395,196 @@ Read-Only:
 
 Read-Only:
 
+- `application` (Attributes) (see [below for nested schema](#nestedatt--tile--application))
+- `group` (Attributes) (see [below for nested schema](#nestedatt--tile--group))
+- `identicon_code` (Number)
+- `launchpad_launchpad_tile_type` (String)
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--tile--links))
+- `logo` (String)
+- `manual_launchpad_tile` (Attributes) (see [below for nested schema](#nestedatt--tile--manual_launchpad_tile))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--tile--permissions))
+- `sso_application_launchpad_tile` (Attributes) (see [below for nested schema](#nestedatt--tile--sso_application_launchpad_tile))
+- `vault_record` (Attributes) (see [below for nested schema](#nestedatt--tile--vault_record))
+- `vault_record_launchpad_tile` (Attributes) (see [below for nested schema](#nestedatt--tile--vault_record_launchpad_tile))
+
+<a id="nestedatt--tile--application"></a>
+### Nested Schema for `tile.application`
+
+Read-Only:
+
+- `client_id` (String)
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--tile--application--links))
+- `name` (String)
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--tile--application--permissions))
+- `scopes` (List of String)
+- `sso_application` (Boolean)
+- `type` (String)
+- `uuid` (String)
+
+<a id="nestedatt--tile--application--links"></a>
+### Nested Schema for `tile.application.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--tile--application--permissions"></a>
+### Nested Schema for `tile.application.permissions`
+
+Read-Only:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
+
+<a id="nestedatt--tile--group"></a>
+### Nested Schema for `tile.group`
+
+Read-Only:
+
+- `admin` (Boolean)
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--tile--group--links))
+- `name` (String)
+- `organizational_unit` (Attributes) (see [below for nested schema](#nestedatt--tile--group--organizational_unit))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--tile--group--permissions))
+- `uuid` (String)
+
+<a id="nestedatt--tile--group--links"></a>
+### Nested Schema for `tile.group.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--tile--group--organizational_unit"></a>
+### Nested Schema for `tile.group.organizational_unit`
+
+Read-Only:
+
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--tile--group--organizational_unit--links))
+- `name` (String)
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--tile--group--organizational_unit--permissions))
+- `uuid` (String)
+
+<a id="nestedatt--tile--group--organizational_unit--links"></a>
+### Nested Schema for `tile.group.organizational_unit.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--tile--group--organizational_unit--permissions"></a>
+### Nested Schema for `tile.group.organizational_unit.permissions`
+
+Read-Only:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
+
+<a id="nestedatt--tile--group--permissions"></a>
+### Nested Schema for `tile.group.permissions`
+
+Read-Only:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
+
+<a id="nestedatt--tile--links"></a>
+### Nested Schema for `tile.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--tile--manual_launchpad_tile"></a>
+### Nested Schema for `tile.manual_launchpad_tile`
+
+Read-Only:
+
+- `title` (String)
 - `uri` (String)
+
+
+<a id="nestedatt--tile--permissions"></a>
+### Nested Schema for `tile.permissions`
+
+Read-Only:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--tile--sso_application_launchpad_tile"></a>
+### Nested Schema for `tile.sso_application_launchpad_tile`
+
+Read-Only:
+
+- `uri` (String)
+
+
+<a id="nestedatt--tile--vault_record"></a>
+### Nested Schema for `tile.vault_record`
+
+Read-Only:
+
+- `color` (String)
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--tile--vault_record--links))
+- `name` (String)
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--tile--vault_record--permissions))
+- `share_end_time` (String)
+- `uuid` (String)
+
+<a id="nestedatt--tile--vault_record--links"></a>
+### Nested Schema for `tile.vault_record.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--tile--vault_record--permissions"></a>
+### Nested Schema for `tile.vault_record.permissions`
+
+Read-Only:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
+
+<a id="nestedatt--tile--vault_record_launchpad_tile"></a>
+### Nested Schema for `tile.vault_record_launchpad_tile`

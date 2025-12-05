@@ -25,9 +25,9 @@ description: |-
 ### Optional
 
 - `access_profile_provisioning` (Attributes List) (see [below for nested schema](#nestedatt--access_profile_provisioning))
+- `account_provisioning` (String)
 - `additional` (List of String)
 - `provgroups` (Attributes List) (see [below for nested schema](#nestedatt--provgroups))
-- `provisioning_enabled` (Boolean)
 - `service_accounts_uuid` (Set of String)
 
 ### Read-Only
@@ -95,7 +95,7 @@ Required:
 
 Optional:
 
-- `provisioning_enabled` (Boolean)
+- `account_provisioning` (String)
 
 Read-Only:
 
@@ -255,7 +255,7 @@ Required:
 
 Optional:
 
-- `provisioning_enabled` (Boolean)
+- `account_provisioning` (String)
 
 Read-Only:
 

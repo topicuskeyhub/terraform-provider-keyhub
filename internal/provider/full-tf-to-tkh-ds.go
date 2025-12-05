@@ -60,70 +60,6 @@ func tfObjectToTKHDSROAuditInfoRO(ctx context.Context, recurse bool, planValues 
 	return tkh, diags
 }
 
-func tfObjectToTKHDSGeneratedSecret(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.GeneratedSecretable, diag.Diagnostics) {
-	var diags diag.Diagnostics
-	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
-	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
-	if missingPlanValues && missingConfigValues {
-		return nil, diags
-	}
-	planAttrValues := make(map[string]attr.Value)
-	if !missingPlanValues {
-		planAttrValues = planValues.Attributes()
-	}
-	configAttrValues := make(map[string]attr.Value)
-	if !missingConfigValues {
-		configAttrValues = configValues.Attributes()
-	}
-
-	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
-	_, _ = planAttrValues, configAttrValues
-	litter.Config.HidePrivateFields = false
-	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
-	var tkh keyhubmodel.GeneratedSecretable
-	tkh = keyhubmodel.NewGeneratedSecret()
-	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToStringPointer(planAttrValues["generated_secret"]))+" using SetGeneratedSecret")
-	tkh.SetGeneratedSecret(tfToStringPointer(planAttrValues["generated_secret"]))
-	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToStringPointer(planAttrValues["old_secret"]))+" using SetOldSecret")
-	tkh.SetOldSecret(tfToStringPointer(planAttrValues["old_secret"]))
-	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToBooleanPointer(planAttrValues["regenerate"]))+" using SetRegenerate")
-	tkh.SetRegenerate(tfToBooleanPointer(planAttrValues["regenerate"]))
-	return tkh, diags
-}
-
-func tfObjectToTKHDSROGeneratedSecretRO(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.GeneratedSecretable, diag.Diagnostics) {
-	var diags diag.Diagnostics
-	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
-	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
-	if missingPlanValues && missingConfigValues {
-		return nil, diags
-	}
-	planAttrValues := make(map[string]attr.Value)
-	if !missingPlanValues {
-		planAttrValues = planValues.Attributes()
-	}
-	configAttrValues := make(map[string]attr.Value)
-	if !missingConfigValues {
-		configAttrValues = configValues.Attributes()
-	}
-
-	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
-	_, _ = planAttrValues, configAttrValues
-	litter.Config.HidePrivateFields = false
-	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
-	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
-	var tkh keyhubmodel.GeneratedSecretable
-	tkh = keyhubmodel.NewGeneratedSecret()
-	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToStringPointer(planAttrValues["generated_secret"]))+" using SetGeneratedSecret")
-	tkh.SetGeneratedSecret(tfToStringPointer(planAttrValues["generated_secret"]))
-	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToStringPointer(planAttrValues["old_secret"]))+" using SetOldSecret")
-	tkh.SetOldSecret(tfToStringPointer(planAttrValues["old_secret"]))
-	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToBooleanPointer(planAttrValues["regenerate"]))+" using SetRegenerate")
-	tkh.SetRegenerate(tfToBooleanPointer(planAttrValues["regenerate"]))
-	return tkh, diags
-}
-
 func tfObjectToTKHDSLinkable(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.Linkableable, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
@@ -305,6 +241,34 @@ func tfObjectToTKHDSRORestLinkRO(ctx context.Context, recurse bool, planValues t
 	tkh.SetRel(tfToStringPointer(planAttrValues["rel"]))
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToStringPointer(planAttrValues["type_escaped"]))+" using SetTypeEscaped")
 	tkh.SetTypeEscaped(tfToStringPointer(planAttrValues["type_escaped"]))
+	return tkh, diags
+}
+
+func tfObjectToTKHDSROSecretRO(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.Secretable, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
+		return nil, diags
+	}
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
+	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
+	_, _ = planAttrValues, configAttrValues
+	litter.Config.HidePrivateFields = false
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	var tkh keyhubmodel.Secretable
+	tkh = keyhubmodel.NewSecret()
+	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToStringPointer(planAttrValues["secret"]))+" using SetSecret")
+	tkh.SetSecret(tfToStringPointer(planAttrValues["secret"]))
 	return tkh, diags
 }
 
@@ -1996,13 +1960,13 @@ func tfObjectToTKHDSClientClientApplication_additionalObjects(ctx context.Contex
 		tkh.SetOrganizationalUnits(val)
 	}
 	{
-		val, d := tfObjectToTKHDSGeneratedSecret(ctx, recurse, toObjectValue(planAttrValues["secret"]), toObjectValue(configAttrValues["secret"]))
+		val, d := tfObjectToTKHDSROSecretRO(ctx, recurse, toObjectValue(planAttrValues["secret"]), toObjectValue(configAttrValues["secret"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetSecret")
 		tkh.SetSecret(val)
 	}
 	{
-		val, d := tfObjectToTKHDSLaunchpadSsoApplicationLaunchpadTile(ctx, recurse, toObjectValue(planAttrValues["tile"]), toObjectValue(configAttrValues["tile"]))
+		val, d := castTKHToLaunchpadSsoApplicationLaunchpadTile(tfObjectToTKHDSLaunchpadLaunchpadTile(ctx, recurse, toObjectValue(planAttrValues["tile"]), toObjectValue(configAttrValues["tile"])))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetTile")
 		tkh.SetTile(val)
@@ -2066,13 +2030,13 @@ func tfObjectToTKHDSROClientClientApplication_additionalObjectsRO(ctx context.Co
 		tkh.SetOrganizationalUnits(val)
 	}
 	{
-		val, d := tfObjectToTKHDSROGeneratedSecretRO(ctx, recurse, toObjectValue(planAttrValues["secret"]), toObjectValue(configAttrValues["secret"]))
+		val, d := tfObjectToTKHDSROSecretRO(ctx, recurse, toObjectValue(planAttrValues["secret"]), toObjectValue(configAttrValues["secret"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetSecret")
 		tkh.SetSecret(val)
 	}
 	{
-		val, d := tfObjectToTKHDSROLaunchpadSsoApplicationLaunchpadTileRO(ctx, recurse, toObjectValue(planAttrValues["tile"]), toObjectValue(configAttrValues["tile"]))
+		val, d := castTKHToLaunchpadSsoApplicationLaunchpadTile(tfObjectToTKHDSROLaunchpadLaunchpadTileRO(ctx, recurse, toObjectValue(planAttrValues["tile"]), toObjectValue(configAttrValues["tile"])))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetTile")
 		tkh.SetTile(val)
@@ -2204,9 +2168,11 @@ func tfObjectToTKHDSClientOAuth2Client(ctx context.Context, recurse bool, planVa
 		tkh.SetAccountPermissions(val)
 	}
 	{
-		val, d := tfToMap(toMapValue(planAttrValues["attributes"]), toMapValue(configAttrValues["attributes"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) any {
-			return planValue.(basetypes.StringValue).ValueString()
-		}, keyhubmodel.NewClientOAuth2Client_attributes())
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["attributes"]), toListValue(configAttrValues["attributes"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.MiscAttributeCustomizationable {
+			tkh, d := tfObjectToTKHDSMiscAttributeCustomization(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
+			diags.Append(d...)
+			return tkh
+		})
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetAttributes")
 		tkh.SetAttributes(val)
@@ -2280,9 +2246,11 @@ func tfObjectToTKHDSROClientOAuth2ClientRO(ctx context.Context, recurse bool, pl
 		tkh.SetAccountPermissions(val)
 	}
 	{
-		val, d := tfToMap(toMapValue(planAttrValues["attributes"]), toMapValue(configAttrValues["attributes"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) any {
-			return planValue.(basetypes.StringValue).ValueString()
-		}, keyhubmodel.NewClientOAuth2Client_attributes())
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["attributes"]), toListValue(configAttrValues["attributes"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.MiscAttributeCustomizationable {
+			tkh, d := tfObjectToTKHDSROMiscAttributeCustomizationRO(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
+			diags.Append(d...)
+			return tkh
+		})
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetAttributes")
 		tkh.SetAttributes(val)
@@ -2614,7 +2582,7 @@ func tfObjectToTKHDSROClientOAuth2ClientPermissionWithClientRO(ctx context.Conte
 		tkh.SetValue(val)
 	}
 	{
-		val, d := tfObjectToTKHDSROClientOAuth2ClientRO(ctx, false, toObjectValue(planAttrValues["client"]), toObjectValue(configAttrValues["client"]))
+		val, d := castTKHToClientOAuth2Client(tfObjectToTKHDSROClientClientApplicationRO(ctx, false, toObjectValue(planAttrValues["client"]), toObjectValue(configAttrValues["client"])))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetClient")
 		tkh.SetClient(val)
@@ -2790,9 +2758,11 @@ func tfObjectToTKHDSClientSaml2Client(ctx context.Context, recurse bool, planVal
 	var tkh keyhubmodel.ClientSaml2Clientable
 	tkh = keyhubmodel.NewClientSaml2Client()
 	{
-		val, d := tfToMap(toMapValue(planAttrValues["attributes"]), toMapValue(configAttrValues["attributes"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) any {
-			return planValue.(basetypes.StringValue).ValueString()
-		}, keyhubmodel.NewClientSaml2Client_attributes())
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["attributes"]), toListValue(configAttrValues["attributes"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.MiscAttributeCustomizationable {
+			tkh, d := tfObjectToTKHDSMiscAttributeCustomization(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
+			diags.Append(d...)
+			return tkh
+		})
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetAttributes")
 		tkh.SetAttributes(val)
@@ -2834,9 +2804,11 @@ func tfObjectToTKHDSROClientSaml2ClientRO(ctx context.Context, recurse bool, pla
 	var tkh keyhubmodel.ClientSaml2Clientable
 	tkh = keyhubmodel.NewClientSaml2Client()
 	{
-		val, d := tfToMap(toMapValue(planAttrValues["attributes"]), toMapValue(configAttrValues["attributes"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) any {
-			return planValue.(basetypes.StringValue).ValueString()
-		}, keyhubmodel.NewClientSaml2Client_attributes())
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["attributes"]), toListValue(configAttrValues["attributes"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.MiscAttributeCustomizationable {
+			tkh, d := tfObjectToTKHDSROMiscAttributeCustomizationRO(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
+			diags.Append(d...)
+			return tkh
+		})
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetAttributes")
 		tkh.SetAttributes(val)
@@ -7046,6 +7018,446 @@ func tfObjectToTKHDSIdentityIdentity(ctx context.Context, recurse bool, planValu
 	return tkh, diags
 }
 
+func tfObjectToTKHDSLaunchpadLaunchpadTile(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.LaunchpadLaunchpadTileable, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
+		return nil, diags
+	}
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
+	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
+	_, _ = planAttrValues, configAttrValues
+	litter.Config.HidePrivateFields = false
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	var tkh keyhubmodel.LaunchpadLaunchpadTileable
+	tkh = keyhubmodel.NewLaunchpadLaunchpadTile()
+	{
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["links"]), toListValue(configAttrValues["links"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+			tkh, d := tfObjectToTKHDSRestLink(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
+			diags.Append(d...)
+			return tkh
+		})
+		diags.Append(d...)
+		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetLinks")
+		tkh.SetLinks(val)
+	}
+	{
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["permissions"]), toListValue(configAttrValues["permissions"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+			tkh, d := tfObjectToTKHDSAuthPermission(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
+			diags.Append(d...)
+			return tkh
+		})
+		diags.Append(d...)
+		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetPermissions")
+		tkh.SetPermissions(val)
+	}
+	{
+		val, d := tfObjectToTKHDSClientClientApplicationPrimer(ctx, false, toObjectValue(planAttrValues["application"]), toObjectValue(configAttrValues["application"]))
+		diags.Append(d...)
+		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetApplication")
+		tkh.SetApplication(val)
+	}
+	{
+		val, d := tfObjectToTKHDSGroupGroupPrimer(ctx, false, toObjectValue(planAttrValues["group"]), toObjectValue(configAttrValues["group"]))
+		diags.Append(d...)
+		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetGroup")
+		tkh.SetGroup(val)
+	}
+	tflog.Debug(ctx, "Setting "+litter.Sdump(int64PToInt32P(tfToInt64Pointer(planAttrValues["identicon_code"])))+" using SetIdenticonCode")
+	tkh.SetIdenticonCode(int64PToInt32P(tfToInt64Pointer(planAttrValues["identicon_code"])))
+	{
+		val, d := parseCastPointer(planAttrValues["launchpad_launchpad_tile_type"].(basetypes.StringValue), keyhubmodel.ParseLaunchpadLaunchpadTileType, func(val any) keyhubmodel.LaunchpadLaunchpadTileType {
+			return *val.(*keyhubmodel.LaunchpadLaunchpadTileType)
+		})
+		diags.Append(d...)
+		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetLaunchpadLaunchpadTileType")
+		tkh.SetLaunchpadLaunchpadTileType(val)
+	}
+	{
+		val, d := tfBase64ToByteArray(planAttrValues["logo"].(basetypes.StringValue))
+		diags.Append(d...)
+		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetLogo")
+		tkh.SetLogo(val)
+	}
+	{
+		val, d := tfObjectToTKHDSVaultVaultRecordPrimer(ctx, false, toObjectValue(planAttrValues["vault_record"]), toObjectValue(configAttrValues["vault_record"]))
+		diags.Append(d...)
+		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetVaultRecord")
+		tkh.SetVaultRecord(val)
+	}
+	if !planAttrValues["manual_launchpad_tile"].IsNull() {
+		val, d := tfObjectToTKHDSLaunchpadManualLaunchpadTile(ctx, false, planAttrValues["manual_launchpad_tile"].(basetypes.ObjectValue), configAttrValues["manual_launchpad_tile"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		dtype := val.GetTypeEscaped()
+		(*val.(*keyhubmodel.LaunchpadManualLaunchpadTile)).LaunchpadLaunchpadTile = *tkh.(*keyhubmodel.LaunchpadLaunchpadTile)
+		val.SetTypeEscaped(dtype)
+		tkh = val
+	}
+	if !planAttrValues["sso_application_launchpad_tile"].IsNull() {
+		val, d := tfObjectToTKHDSLaunchpadSsoApplicationLaunchpadTile(ctx, false, planAttrValues["sso_application_launchpad_tile"].(basetypes.ObjectValue), configAttrValues["sso_application_launchpad_tile"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		dtype := val.GetTypeEscaped()
+		(*val.(*keyhubmodel.LaunchpadSsoApplicationLaunchpadTile)).LaunchpadLaunchpadTile = *tkh.(*keyhubmodel.LaunchpadLaunchpadTile)
+		val.SetTypeEscaped(dtype)
+		tkh = val
+	}
+	if !planAttrValues["vault_record_launchpad_tile"].IsNull() {
+		val, d := tfObjectToTKHDSLaunchpadVaultRecordLaunchpadTile(ctx, false, planAttrValues["vault_record_launchpad_tile"].(basetypes.ObjectValue), configAttrValues["vault_record_launchpad_tile"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		dtype := val.GetTypeEscaped()
+		(*val.(*keyhubmodel.LaunchpadVaultRecordLaunchpadTile)).LaunchpadLaunchpadTile = *tkh.(*keyhubmodel.LaunchpadLaunchpadTile)
+		val.SetTypeEscaped(dtype)
+		tkh = val
+	}
+	if recurse {
+		{
+			val, d := tfObjectToTKHDSLaunchpadLaunchpadTile_additionalObjects(ctx, false, planValues, configValues)
+			diags.Append(d...)
+			tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetAdditionalObjects")
+			tkh.SetAdditionalObjects(val)
+		}
+	}
+	return tkh, diags
+}
+
+func tfObjectToTKHDSROLaunchpadLaunchpadTileRO(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.LaunchpadLaunchpadTileable, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
+		return nil, diags
+	}
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
+	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
+	_, _ = planAttrValues, configAttrValues
+	litter.Config.HidePrivateFields = false
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	var tkh keyhubmodel.LaunchpadLaunchpadTileable
+	tkh = keyhubmodel.NewLaunchpadLaunchpadTile()
+	{
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["links"]), toListValue(configAttrValues["links"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+			tkh, d := tfObjectToTKHDSRORestLinkRO(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
+			diags.Append(d...)
+			return tkh
+		})
+		diags.Append(d...)
+		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetLinks")
+		tkh.SetLinks(val)
+	}
+	{
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["permissions"]), toListValue(configAttrValues["permissions"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+			tkh, d := tfObjectToTKHDSROAuthPermissionRO(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
+			diags.Append(d...)
+			return tkh
+		})
+		diags.Append(d...)
+		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetPermissions")
+		tkh.SetPermissions(val)
+	}
+	{
+		val, d := tfObjectToTKHDSROClientClientApplicationPrimerRO(ctx, false, toObjectValue(planAttrValues["application"]), toObjectValue(configAttrValues["application"]))
+		diags.Append(d...)
+		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetApplication")
+		tkh.SetApplication(val)
+	}
+	{
+		val, d := tfObjectToTKHDSROGroupGroupPrimerRO(ctx, false, toObjectValue(planAttrValues["group"]), toObjectValue(configAttrValues["group"]))
+		diags.Append(d...)
+		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetGroup")
+		tkh.SetGroup(val)
+	}
+	tflog.Debug(ctx, "Setting "+litter.Sdump(int64PToInt32P(tfToInt64Pointer(planAttrValues["identicon_code"])))+" using SetIdenticonCode")
+	tkh.SetIdenticonCode(int64PToInt32P(tfToInt64Pointer(planAttrValues["identicon_code"])))
+	{
+		val, d := parseCastPointer(planAttrValues["launchpad_launchpad_tile_type"].(basetypes.StringValue), keyhubmodel.ParseLaunchpadLaunchpadTileType, func(val any) keyhubmodel.LaunchpadLaunchpadTileType {
+			return *val.(*keyhubmodel.LaunchpadLaunchpadTileType)
+		})
+		diags.Append(d...)
+		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetLaunchpadLaunchpadTileType")
+		tkh.SetLaunchpadLaunchpadTileType(val)
+	}
+	{
+		val, d := tfBase64ToByteArray(planAttrValues["logo"].(basetypes.StringValue))
+		diags.Append(d...)
+		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetLogo")
+		tkh.SetLogo(val)
+	}
+	{
+		val, d := tfObjectToTKHDSROVaultVaultRecordPrimerRO(ctx, false, toObjectValue(planAttrValues["vault_record"]), toObjectValue(configAttrValues["vault_record"]))
+		diags.Append(d...)
+		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetVaultRecord")
+		tkh.SetVaultRecord(val)
+	}
+	if !planAttrValues["manual_launchpad_tile"].IsNull() {
+		val, d := tfObjectToTKHDSROLaunchpadManualLaunchpadTileRO(ctx, false, planAttrValues["manual_launchpad_tile"].(basetypes.ObjectValue), configAttrValues["manual_launchpad_tile"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		dtype := val.GetTypeEscaped()
+		(*val.(*keyhubmodel.LaunchpadManualLaunchpadTile)).LaunchpadLaunchpadTile = *tkh.(*keyhubmodel.LaunchpadLaunchpadTile)
+		val.SetTypeEscaped(dtype)
+		tkh = val
+	}
+	if !planAttrValues["sso_application_launchpad_tile"].IsNull() {
+		val, d := tfObjectToTKHDSROLaunchpadSsoApplicationLaunchpadTileRO(ctx, false, planAttrValues["sso_application_launchpad_tile"].(basetypes.ObjectValue), configAttrValues["sso_application_launchpad_tile"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		dtype := val.GetTypeEscaped()
+		(*val.(*keyhubmodel.LaunchpadSsoApplicationLaunchpadTile)).LaunchpadLaunchpadTile = *tkh.(*keyhubmodel.LaunchpadLaunchpadTile)
+		val.SetTypeEscaped(dtype)
+		tkh = val
+	}
+	if !planAttrValues["vault_record_launchpad_tile"].IsNull() {
+		val, d := tfObjectToTKHDSROLaunchpadVaultRecordLaunchpadTileRO(ctx, false, planAttrValues["vault_record_launchpad_tile"].(basetypes.ObjectValue), configAttrValues["vault_record_launchpad_tile"].(basetypes.ObjectValue))
+		diags.Append(d...)
+		dtype := val.GetTypeEscaped()
+		(*val.(*keyhubmodel.LaunchpadVaultRecordLaunchpadTile)).LaunchpadLaunchpadTile = *tkh.(*keyhubmodel.LaunchpadLaunchpadTile)
+		val.SetTypeEscaped(dtype)
+		tkh = val
+	}
+	if recurse {
+		{
+			val, d := tfObjectToTKHDSROLaunchpadLaunchpadTile_additionalObjectsRO(ctx, false, planValues, configValues)
+			diags.Append(d...)
+			tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetAdditionalObjects")
+			tkh.SetAdditionalObjects(val)
+		}
+	}
+	return tkh, diags
+}
+
+func tfObjectToTKHDSLaunchpadLaunchpadTilePrimer(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.LaunchpadLaunchpadTilePrimerable, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
+		return nil, diags
+	}
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
+	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
+	_, _ = planAttrValues, configAttrValues
+	litter.Config.HidePrivateFields = false
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	var tkh keyhubmodel.LaunchpadLaunchpadTilePrimerable
+	tkh = keyhubmodel.NewLaunchpadLaunchpadTilePrimer()
+	{
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["links"]), toListValue(configAttrValues["links"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+			tkh, d := tfObjectToTKHDSRestLink(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
+			diags.Append(d...)
+			return tkh
+		})
+		diags.Append(d...)
+		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetLinks")
+		tkh.SetLinks(val)
+	}
+	{
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["permissions"]), toListValue(configAttrValues["permissions"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+			tkh, d := tfObjectToTKHDSAuthPermission(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
+			diags.Append(d...)
+			return tkh
+		})
+		diags.Append(d...)
+		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetPermissions")
+		tkh.SetPermissions(val)
+	}
+	return tkh, diags
+}
+
+func tfObjectToTKHDSROLaunchpadLaunchpadTilePrimerRO(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.LaunchpadLaunchpadTilePrimerable, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
+		return nil, diags
+	}
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
+	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
+	_, _ = planAttrValues, configAttrValues
+	litter.Config.HidePrivateFields = false
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	var tkh keyhubmodel.LaunchpadLaunchpadTilePrimerable
+	tkh = keyhubmodel.NewLaunchpadLaunchpadTilePrimer()
+	{
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["links"]), toListValue(configAttrValues["links"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.RestLinkable {
+			tkh, d := tfObjectToTKHDSRORestLinkRO(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
+			diags.Append(d...)
+			return tkh
+		})
+		diags.Append(d...)
+		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetLinks")
+		tkh.SetLinks(val)
+	}
+	{
+		val, d := tfToSliceListBinary(toListValue(planAttrValues["permissions"]), toListValue(configAttrValues["permissions"]), func(planValue attr.Value, configValue attr.Value, diags *diag.Diagnostics) keyhubmodel.AuthPermissionable {
+			tkh, d := tfObjectToTKHDSROAuthPermissionRO(ctx, recurse, toObjectValue(planValue), toObjectValue(configValue))
+			diags.Append(d...)
+			return tkh
+		})
+		diags.Append(d...)
+		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetPermissions")
+		tkh.SetPermissions(val)
+	}
+	return tkh, diags
+}
+
+func tfObjectToTKHDSLaunchpadLaunchpadTile_additionalObjects(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.LaunchpadLaunchpadTile_additionalObjectsable, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
+		return nil, diags
+	}
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
+	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
+	_, _ = planAttrValues, configAttrValues
+	litter.Config.HidePrivateFields = false
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	var tkh keyhubmodel.LaunchpadLaunchpadTile_additionalObjectsable
+	tkh = keyhubmodel.NewLaunchpadLaunchpadTile_additionalObjects()
+	{
+		val, d := tfObjectToTKHDSROAuditInfoRO(ctx, recurse, toObjectValue(planAttrValues["audit"]), toObjectValue(configAttrValues["audit"]))
+		diags.Append(d...)
+		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetAudit")
+		tkh.SetAudit(val)
+	}
+	return tkh, diags
+}
+
+func tfObjectToTKHDSROLaunchpadLaunchpadTile_additionalObjectsRO(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.LaunchpadLaunchpadTile_additionalObjectsable, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
+		return nil, diags
+	}
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
+	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
+	_, _ = planAttrValues, configAttrValues
+	litter.Config.HidePrivateFields = false
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	var tkh keyhubmodel.LaunchpadLaunchpadTile_additionalObjectsable
+	tkh = keyhubmodel.NewLaunchpadLaunchpadTile_additionalObjects()
+	{
+		val, d := tfObjectToTKHDSROAuditInfoRO(ctx, recurse, toObjectValue(planAttrValues["audit"]), toObjectValue(configAttrValues["audit"]))
+		diags.Append(d...)
+		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetAudit")
+		tkh.SetAudit(val)
+	}
+	return tkh, diags
+}
+
+func tfObjectToTKHDSLaunchpadManualLaunchpadTile(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.LaunchpadManualLaunchpadTileable, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
+		return nil, diags
+	}
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
+	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
+	_, _ = planAttrValues, configAttrValues
+	litter.Config.HidePrivateFields = false
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	var tkh keyhubmodel.LaunchpadManualLaunchpadTileable
+	tkh = keyhubmodel.NewLaunchpadManualLaunchpadTile()
+	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToStringPointer(planAttrValues["title"]))+" using SetTitle")
+	tkh.SetTitle(tfToStringPointer(planAttrValues["title"]))
+	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToStringPointer(planAttrValues["uri"]))+" using SetUri")
+	tkh.SetUri(tfToStringPointer(planAttrValues["uri"]))
+	return tkh, diags
+}
+
+func tfObjectToTKHDSROLaunchpadManualLaunchpadTileRO(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.LaunchpadManualLaunchpadTileable, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
+	var missingConfigValues = configValues.IsNull() || configValues.IsUnknown()
+	if missingPlanValues && missingConfigValues {
+		return nil, diags
+	}
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
+	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
+	_, _ = planAttrValues, configAttrValues
+	litter.Config.HidePrivateFields = false
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
+	var tkh keyhubmodel.LaunchpadManualLaunchpadTileable
+	tkh = keyhubmodel.NewLaunchpadManualLaunchpadTile()
+	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToStringPointer(planAttrValues["title"]))+" using SetTitle")
+	tkh.SetTitle(tfToStringPointer(planAttrValues["title"]))
+	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToStringPointer(planAttrValues["uri"]))+" using SetUri")
+	tkh.SetUri(tfToStringPointer(planAttrValues["uri"]))
+	return tkh, diags
+}
+
 func tfObjectToTKHDSLaunchpadSsoApplicationLaunchpadTile(ctx context.Context, recurse bool, planValues types.Object, configValues types.Object) (keyhubmodel.LaunchpadSsoApplicationLaunchpadTileable, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var missingPlanValues = planValues.IsNull() || planValues.IsUnknown()
@@ -9246,13 +9658,19 @@ func tfObjectToTKHDSROProvisioningGroupOnSystemRO(ctx context.Context, recurse b
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToStringPointer(planAttrValues["short_name_in_system"]))+" using SetShortNameInSystem")
 	tkh.SetShortNameInSystem(tfToStringPointer(planAttrValues["short_name_in_system"]))
 	{
+		val, d := parseCastPointer(planAttrValues["account_provisioning"].(basetypes.StringValue), keyhubmodel.ParseProvisioningGroupOnSystemProvisioningStatus, func(val any) keyhubmodel.ProvisioningGroupOnSystemProvisioningStatus {
+			return *val.(*keyhubmodel.ProvisioningGroupOnSystemProvisioningStatus)
+		})
+		diags.Append(d...)
+		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetAccountProvisioning")
+		tkh.SetAccountProvisioning(val)
+	}
+	{
 		val, d := tfObjectToTKHDSROGroupGroupPrimerRO(ctx, false, toObjectValue(planAttrValues["owner"]), toObjectValue(configAttrValues["owner"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetOwner")
 		tkh.SetOwner(val)
 	}
-	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToBooleanPointer(planAttrValues["provisioning_enabled"]))+" using SetProvisioningEnabled")
-	tkh.SetProvisioningEnabled(tfToBooleanPointer(planAttrValues["provisioning_enabled"]))
 	if recurse {
 		{
 			val, d := tfObjectToTKHDSROProvisioningGroupOnSystem_additionalObjectsRO(ctx, false, planValues, configValues)
@@ -10124,7 +10542,7 @@ func tfObjectToTKHDSROProvisioningProvisionedInternalLDAPRO(ctx context.Context,
 	var tkh keyhubmodel.ProvisioningProvisionedInternalLDAPable
 	tkh = keyhubmodel.NewProvisioningProvisionedInternalLDAP()
 	{
-		val, d := tfObjectToTKHDSROClientLdapClientRO(ctx, recurse, toObjectValue(planAttrValues["client"]), toObjectValue(configAttrValues["client"]))
+		val, d := castTKHToClientLdapClient(tfObjectToTKHDSROClientClientApplicationRO(ctx, recurse, toObjectValue(planAttrValues["client"]), toObjectValue(configAttrValues["client"])))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetClient")
 		tkh.SetClient(val)
@@ -12062,7 +12480,7 @@ func tfObjectToTKHDSServiceaccountServiceAccount_additionalObjects(ctx context.C
 		tkh.SetGroups(val)
 	}
 	{
-		val, d := tfObjectToTKHDSGeneratedSecret(ctx, recurse, toObjectValue(planAttrValues["secret"]), toObjectValue(configAttrValues["secret"]))
+		val, d := tfObjectToTKHDSROSecretRO(ctx, recurse, toObjectValue(planAttrValues["secret"]), toObjectValue(configAttrValues["secret"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetSecret")
 		tkh.SetSecret(val)
@@ -12112,7 +12530,7 @@ func tfObjectToTKHDSROServiceaccountServiceAccount_additionalObjectsRO(ctx conte
 		tkh.SetGroups(val)
 	}
 	{
-		val, d := tfObjectToTKHDSROGeneratedSecretRO(ctx, recurse, toObjectValue(planAttrValues["secret"]), toObjectValue(configAttrValues["secret"]))
+		val, d := tfObjectToTKHDSROSecretRO(ctx, recurse, toObjectValue(planAttrValues["secret"]), toObjectValue(configAttrValues["secret"]))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetSecret")
 		tkh.SetSecret(val)
@@ -12838,7 +13256,7 @@ func tfObjectToTKHDSVaultVaultRecord_additionalObjects(ctx context.Context, recu
 		tkh.SetShares(val)
 	}
 	{
-		val, d := tfObjectToTKHDSLaunchpadVaultRecordLaunchpadTile(ctx, recurse, toObjectValue(planAttrValues["tile"]), toObjectValue(configAttrValues["tile"]))
+		val, d := castTKHToLaunchpadVaultRecordLaunchpadTile(tfObjectToTKHDSLaunchpadLaunchpadTile(ctx, recurse, toObjectValue(planAttrValues["tile"]), toObjectValue(configAttrValues["tile"])))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetTile")
 		tkh.SetTile(val)
@@ -12918,7 +13336,7 @@ func tfObjectToTKHDSROVaultVaultRecord_additionalObjectsRO(ctx context.Context, 
 		tkh.SetShares(val)
 	}
 	{
-		val, d := tfObjectToTKHDSROLaunchpadVaultRecordLaunchpadTileRO(ctx, recurse, toObjectValue(planAttrValues["tile"]), toObjectValue(configAttrValues["tile"]))
+		val, d := castTKHToLaunchpadVaultRecordLaunchpadTile(tfObjectToTKHDSROLaunchpadLaunchpadTileRO(ctx, recurse, toObjectValue(planAttrValues["tile"]), toObjectValue(configAttrValues["tile"])))
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetTile")
 		tkh.SetTile(val)

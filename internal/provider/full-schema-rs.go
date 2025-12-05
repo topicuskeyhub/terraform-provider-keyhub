@@ -13,14 +13,12 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/setvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
-	"github.com/hashicorp/terraform-plugin-framework/attr"
 	rsschema "github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/boolplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64default"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/listplanmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/mapdefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/objectplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
@@ -45,33 +43,29 @@ func resourceSchemaAttrsAuditInfoRO(recurse bool) map[string]rsschema.Attribute 
 	}
 	return schemaAttrs
 }
-func resourceSchemaAttrsGeneratedSecret(recurse bool) map[string]rsschema.Attribute {
+func resourceSchemaAttrsGenerateSecret(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
-	schemaAttrs["generated_secret"] = rsschema.StringAttribute{
-		Computed:  true,
-		Sensitive: true,
-	}
 	schemaAttrs["old_secret"] = rsschema.StringAttribute{
+		WriteOnly: true,
 		Optional:  true,
 		Sensitive: true,
 	}
 	schemaAttrs["regenerate"] = rsschema.BoolAttribute{
-		Optional: true,
+		WriteOnly: true,
+		Optional:  true,
 	}
 	return schemaAttrs
 }
-func resourceSchemaAttrsGeneratedSecretRO(recurse bool) map[string]rsschema.Attribute {
+func resourceSchemaAttrsGenerateSecretRO(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
-	schemaAttrs["generated_secret"] = rsschema.StringAttribute{
-		Computed:  true,
-		Sensitive: true,
-	}
 	schemaAttrs["old_secret"] = rsschema.StringAttribute{
+		WriteOnly: true,
 		Optional:  true,
 		Sensitive: true,
 	}
 	schemaAttrs["regenerate"] = rsschema.BoolAttribute{
-		Optional: true,
+		WriteOnly: true,
+		Optional:  true,
 	}
 	return schemaAttrs
 }
@@ -156,6 +150,14 @@ func resourceSchemaAttrsRestLinkRO(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs["type_escaped"] = rsschema.StringAttribute{
 		Computed:      true,
 		PlanModifiers: []planmodifier.String{stringplanmodifier.UseStateForUnknown()},
+	}
+	return schemaAttrs
+}
+func resourceSchemaAttrsSecretRO(recurse bool) map[string]rsschema.Attribute {
+	schemaAttrs := make(map[string]rsschema.Attribute)
+	schemaAttrs["secret"] = rsschema.StringAttribute{
+		Computed:  true,
+		Sensitive: true,
 	}
 	return schemaAttrs
 }
@@ -1017,6 +1019,15 @@ func resourceSchemaAttrsClientClientApplication_additionalObjects(recurse bool) 
 		Optional:  true,
 	}
 	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsGenerateSecret(recurse),
+		}
+		attr.Optional = true
+		attr.WriteOnly = true
+		schemaAttrs["generate_secret"] = attr
+	}
+
+	{
 		attr := resetListNestedAttributeFlags(resourceSchemaAttrsGroupGroupClientLinkableWrapperWithCount(recurse)["items"].(rsschema.ListNestedAttribute))
 		attr.Optional = true
 		schemaAttrs["groupclients"] = attr
@@ -1036,16 +1047,15 @@ func resourceSchemaAttrsClientClientApplication_additionalObjects(recurse bool) 
 
 	{
 		attr := rsschema.SingleNestedAttribute{
-			Attributes: resourceSchemaAttrsGeneratedSecret(recurse),
+			Attributes: resourceSchemaAttrsSecretRO(recurse),
 		}
-		attr.Optional = true
 		attr.Computed = true
 		schemaAttrs["secret"] = attr
 	}
 
 	{
 		attr := rsschema.SingleNestedAttribute{
-			Attributes: resourceSchemaAttrsLaunchpadSsoApplicationLaunchpadTile(recurse),
+			Attributes: resourceSchemaAttrsLaunchpadLaunchpadTile(recurse),
 		}
 		attr.Optional = true
 		schemaAttrs["tile"] = attr
@@ -1077,6 +1087,15 @@ func resourceSchemaAttrsClientClientApplication_additionalObjectsRO(recurse bool
 		Optional:  true,
 	}
 	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsGenerateSecretRO(recurse),
+		}
+		attr.Optional = true
+		attr.WriteOnly = true
+		schemaAttrs["generate_secret"] = attr
+	}
+
+	{
 		attr := resetListNestedAttributeFlags(resourceSchemaAttrsGroupGroupClientLinkableWrapperWithCountRO(recurse)["items"].(rsschema.ListNestedAttribute))
 		attr.Optional = true
 		schemaAttrs["groupclients"] = attr
@@ -1096,16 +1115,15 @@ func resourceSchemaAttrsClientClientApplication_additionalObjectsRO(recurse bool
 
 	{
 		attr := rsschema.SingleNestedAttribute{
-			Attributes: resourceSchemaAttrsGeneratedSecretRO(recurse),
+			Attributes: resourceSchemaAttrsSecretRO(recurse),
 		}
-		attr.Optional = true
 		attr.Computed = true
 		schemaAttrs["secret"] = attr
 	}
 
 	{
 		attr := rsschema.SingleNestedAttribute{
-			Attributes: resourceSchemaAttrsLaunchpadSsoApplicationLaunchpadTileRO(recurse),
+			Attributes: resourceSchemaAttrsLaunchpadLaunchpadTileRO(recurse),
 		}
 		attr.Optional = true
 		schemaAttrs["tile"] = attr
@@ -1184,13 +1202,13 @@ func resourceSchemaAttrsClientOAuth2Client(recurse bool) map[string]rsschema.Att
 		},
 		Computed: true,
 	}
-	schemaAttrs["attributes"] = rsschema.MapAttribute{
-		ElementType: types.StringType,
-		Optional:    true,
-		Computed:    true,
-		Default:     mapdefault.StaticValue(types.MapValueMust(types.StringType, make(map[string]attr.Value))),
+	schemaAttrs["attributes"] = rsschema.ListNestedAttribute{
+		NestedObject: rsschema.NestedAttributeObject{
+			Attributes: resourceSchemaAttrsMiscAttributeCustomization(recurse),
+		},
+		Optional: true,
+		Computed: true,
 	}
-
 	schemaAttrs["callback_uri"] = rsschema.StringAttribute{
 		Optional: true,
 	}
@@ -1255,13 +1273,13 @@ func resourceSchemaAttrsClientOAuth2ClientRO(recurse bool) map[string]rsschema.A
 		},
 		Computed: true,
 	}
-	schemaAttrs["attributes"] = rsschema.MapAttribute{
-		ElementType: types.StringType,
-		Optional:    true,
-		Computed:    true,
-		Default:     mapdefault.StaticValue(types.MapValueMust(types.StringType, make(map[string]attr.Value))),
+	schemaAttrs["attributes"] = rsschema.ListNestedAttribute{
+		NestedObject: rsschema.NestedAttributeObject{
+			Attributes: resourceSchemaAttrsMiscAttributeCustomizationRO(recurse),
+		},
+		Optional: true,
+		Computed: true,
 	}
-
 	schemaAttrs["callback_uri"] = rsschema.StringAttribute{
 		Optional: true,
 	}
@@ -1552,7 +1570,7 @@ func resourceSchemaAttrsClientOAuth2ClientPermissionWithClientRO(recurse bool) m
 	}
 	{
 		attr := rsschema.SingleNestedAttribute{
-			Attributes: resourceSchemaAttrsClientOAuth2ClientRO(false),
+			Attributes: resourceSchemaAttrsClientClientApplicationRO(false),
 		}
 		attr.Optional = true
 		schemaAttrs["client"] = attr
@@ -1606,13 +1624,13 @@ func resourceSchemaAttrsClientOAuth2ClientPermission_additionalObjectsRO(recurse
 }
 func resourceSchemaAttrsClientSaml2Client(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
-	schemaAttrs["attributes"] = rsschema.MapAttribute{
-		ElementType: types.StringType,
-		Optional:    true,
-		Computed:    true,
-		Default:     mapdefault.StaticValue(types.MapValueMust(types.StringType, make(map[string]attr.Value))),
+	schemaAttrs["attributes"] = rsschema.ListNestedAttribute{
+		NestedObject: rsschema.NestedAttributeObject{
+			Attributes: resourceSchemaAttrsMiscAttributeCustomization(recurse),
+		},
+		Optional: true,
+		Computed: true,
 	}
-
 	schemaAttrs["metadata"] = rsschema.StringAttribute{
 		Optional: true,
 	}
@@ -1634,13 +1652,13 @@ func resourceSchemaAttrsClientSaml2Client(recurse bool) map[string]rsschema.Attr
 }
 func resourceSchemaAttrsClientSaml2ClientRO(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
-	schemaAttrs["attributes"] = rsschema.MapAttribute{
-		ElementType: types.StringType,
-		Optional:    true,
-		Computed:    true,
-		Default:     mapdefault.StaticValue(types.MapValueMust(types.StringType, make(map[string]attr.Value))),
+	schemaAttrs["attributes"] = rsschema.ListNestedAttribute{
+		NestedObject: rsschema.NestedAttributeObject{
+			Attributes: resourceSchemaAttrsMiscAttributeCustomizationRO(recurse),
+		},
+		Optional: true,
+		Computed: true,
 	}
-
 	schemaAttrs["metadata"] = rsschema.StringAttribute{
 		Optional: true,
 	}
@@ -3850,6 +3868,73 @@ func resourceSchemaAttrsGroupVaultVaultRecord(recurse bool) map[string]rsschema.
 	}
 	return schemaAttrs
 }
+func resourceSchemaAttrsIdentityAccountAttributeDefinition(recurse bool) map[string]rsschema.Attribute {
+	schemaAttrs := make(map[string]rsschema.Attribute)
+	if recurse {
+		schemaAttrs["additional"] = rsschema.ListAttribute{
+			ElementType: types.StringType,
+			Optional:    true,
+			Validators: []validator.List{
+				listvalidator.ValueStringsAre(stringvalidator.OneOf(
+					"audit",
+				)),
+			},
+		}
+	}
+	if recurse {
+		maps.Copy(schemaAttrs, resourceSchemaAttrsIdentityAccountAttributeDefinition_additionalObjects(false))
+
+	}
+	schemaAttrs["links"] = rsschema.ListNestedAttribute{
+		NestedObject: rsschema.NestedAttributeObject{
+			Attributes: resourceSchemaAttrsRestLink(recurse),
+		},
+		Computed:      true,
+		PlanModifiers: []planmodifier.List{listplanmodifier.UseStateForUnknown()},
+	}
+	schemaAttrs["permissions"] = rsschema.ListNestedAttribute{
+		NestedObject: rsschema.NestedAttributeObject{
+			Attributes: resourceSchemaAttrsAuthPermission(recurse),
+		},
+		Computed:      true,
+		PlanModifiers: []planmodifier.List{listplanmodifier.UseStateForUnknown()},
+	}
+	schemaAttrs["format"] = rsschema.StringAttribute{
+		Required: true,
+		Validators: []validator.String{
+			stringvalidator.OneOf(
+				"INTERNAL", "EMAIL", "TELEPHONE", "NUMBER", "DATE", "DATETIME", "BOOLEAN", "TEXT",
+			),
+		},
+	}
+	schemaAttrs["freely_useable"] = rsschema.BoolAttribute{
+		Computed: true,
+		Optional: true,
+		Default:  booldefault.StaticBool(false),
+	}
+	schemaAttrs["list"] = rsschema.BoolAttribute{
+		Computed: true,
+		Optional: true,
+		Default:  booldefault.StaticBool(false),
+	}
+	schemaAttrs["name"] = rsschema.StringAttribute{
+		Required: true,
+	}
+	schemaAttrs["required"] = rsschema.BoolAttribute{
+		Computed: true,
+		Optional: true,
+		Default:  booldefault.StaticBool(false),
+	}
+	schemaAttrs["system_definition"] = rsschema.StringAttribute{
+		Computed: true,
+	}
+	schemaAttrs["unique"] = rsschema.BoolAttribute{
+		Computed: true,
+		Optional: true,
+		Default:  booldefault.StaticBool(false),
+	}
+	return schemaAttrs
+}
 func resourceSchemaAttrsIdentityAccountAttributeDefinitionRO(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	if recurse {
@@ -3915,6 +4000,18 @@ func resourceSchemaAttrsIdentityAccountAttributeDefinitionRO(recurse bool) map[s
 		Optional: true,
 		Default:  booldefault.StaticBool(false),
 	}
+	return schemaAttrs
+}
+func resourceSchemaAttrsIdentityAccountAttributeDefinition_additionalObjects(recurse bool) map[string]rsschema.Attribute {
+	schemaAttrs := make(map[string]rsschema.Attribute)
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsAuditInfoRO(recurse),
+		}
+		attr.Computed = true
+		schemaAttrs["audit"] = attr
+	}
+
 	return schemaAttrs
 }
 func resourceSchemaAttrsIdentityAccountAttributeDefinition_additionalObjectsRO(recurse bool) map[string]rsschema.Attribute {
@@ -4076,6 +4173,272 @@ func resourceSchemaAttrsIdentityAccountAttributeValueSummaryRO(recurse bool) map
 	}
 	return schemaAttrs
 }
+func resourceSchemaAttrsLaunchpadLaunchpadTile(recurse bool) map[string]rsschema.Attribute {
+	schemaAttrs := make(map[string]rsschema.Attribute)
+	if recurse {
+		schemaAttrs["additional"] = rsschema.ListAttribute{
+			ElementType: types.StringType,
+			Optional:    true,
+			Validators: []validator.List{
+				listvalidator.ValueStringsAre(stringvalidator.OneOf(
+					"audit",
+				)),
+			},
+		}
+	}
+	if recurse {
+		maps.Copy(schemaAttrs, resourceSchemaAttrsLaunchpadLaunchpadTile_additionalObjects(false))
+
+	}
+	schemaAttrs["links"] = rsschema.ListNestedAttribute{
+		NestedObject: rsschema.NestedAttributeObject{
+			Attributes: resourceSchemaAttrsRestLink(recurse),
+		},
+		Computed:      true,
+		PlanModifiers: []planmodifier.List{listplanmodifier.UseStateForUnknown()},
+	}
+	schemaAttrs["permissions"] = rsschema.ListNestedAttribute{
+		NestedObject: rsschema.NestedAttributeObject{
+			Attributes: resourceSchemaAttrsAuthPermission(recurse),
+		},
+		Computed:      true,
+		PlanModifiers: []planmodifier.List{listplanmodifier.UseStateForUnknown()},
+	}
+	schemaAttrs["application_uuid"] = rsschema.StringAttribute{
+		Optional: true,
+		Validators: []validator.String{
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
+		},
+	}
+	schemaAttrs["group_uuid"] = rsschema.StringAttribute{
+		Optional: true,
+		Validators: []validator.String{
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
+		},
+	}
+	schemaAttrs["identicon_code"] = rsschema.Int64Attribute{
+		Computed: true,
+		Optional: true,
+		Default:  int64default.StaticInt64(0),
+	}
+	schemaAttrs["launchpad_launchpad_tile_type"] = rsschema.StringAttribute{
+		Computed:      true,
+		PlanModifiers: []planmodifier.String{stringplanmodifier.UseStateForUnknown()},
+	}
+	schemaAttrs["logo"] = rsschema.StringAttribute{
+		Optional: true,
+	}
+	schemaAttrs["vault_record_uuid"] = rsschema.StringAttribute{
+		Optional: true,
+		Validators: []validator.String{
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
+		},
+	}
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsLaunchpadManualLaunchpadTile(false),
+		}
+		attr.Optional = true
+		schemaAttrs["manual_launchpad_tile"] = attr
+	}
+
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsLaunchpadSsoApplicationLaunchpadTile(false),
+		}
+		attr.Optional = true
+		schemaAttrs["sso_application_launchpad_tile"] = attr
+	}
+
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsLaunchpadVaultRecordLaunchpadTile(false),
+		}
+		attr.Optional = true
+		schemaAttrs["vault_record_launchpad_tile"] = attr
+	}
+
+	return schemaAttrs
+}
+func resourceSchemaAttrsLaunchpadLaunchpadTileRO(recurse bool) map[string]rsschema.Attribute {
+	schemaAttrs := make(map[string]rsschema.Attribute)
+	if recurse {
+		schemaAttrs["additional"] = rsschema.ListAttribute{
+			ElementType: types.StringType,
+			Optional:    true,
+			Validators: []validator.List{
+				listvalidator.ValueStringsAre(stringvalidator.OneOf(
+					"audit",
+				)),
+			},
+		}
+	}
+	if recurse {
+		maps.Copy(schemaAttrs, resourceSchemaAttrsLaunchpadLaunchpadTile_additionalObjectsRO(false))
+
+	}
+	schemaAttrs["links"] = rsschema.ListNestedAttribute{
+		NestedObject: rsschema.NestedAttributeObject{
+			Attributes: resourceSchemaAttrsRestLinkRO(recurse),
+		},
+		Computed:      true,
+		PlanModifiers: []planmodifier.List{listplanmodifier.UseStateForUnknown()},
+	}
+	schemaAttrs["permissions"] = rsschema.ListNestedAttribute{
+		NestedObject: rsschema.NestedAttributeObject{
+			Attributes: resourceSchemaAttrsAuthPermissionRO(recurse),
+		},
+		Computed:      true,
+		PlanModifiers: []planmodifier.List{listplanmodifier.UseStateForUnknown()},
+	}
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsClientClientApplicationPrimerRO(false),
+		}
+		attr.Optional = true
+		schemaAttrs["application"] = attr
+	}
+
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsGroupGroupPrimerRO(false),
+		}
+		attr.Optional = true
+		schemaAttrs["group"] = attr
+	}
+
+	schemaAttrs["identicon_code"] = rsschema.Int64Attribute{
+		Computed: true,
+		Optional: true,
+		Default:  int64default.StaticInt64(0),
+	}
+	schemaAttrs["launchpad_launchpad_tile_type"] = rsschema.StringAttribute{
+		Computed:      true,
+		PlanModifiers: []planmodifier.String{stringplanmodifier.UseStateForUnknown()},
+	}
+	schemaAttrs["logo"] = rsschema.StringAttribute{
+		Optional: true,
+	}
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsVaultVaultRecordPrimerRO(false),
+		}
+		attr.Optional = true
+		schemaAttrs["vault_record"] = attr
+	}
+
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsLaunchpadManualLaunchpadTileRO(false),
+		}
+		attr.Optional = true
+		schemaAttrs["manual_launchpad_tile"] = attr
+	}
+
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsLaunchpadSsoApplicationLaunchpadTileRO(false),
+		}
+		attr.Optional = true
+		schemaAttrs["sso_application_launchpad_tile"] = attr
+	}
+
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsLaunchpadVaultRecordLaunchpadTileRO(false),
+		}
+		attr.Optional = true
+		schemaAttrs["vault_record_launchpad_tile"] = attr
+	}
+
+	return schemaAttrs
+}
+func resourceSchemaAttrsLaunchpadLaunchpadTilePrimer(recurse bool) map[string]rsschema.Attribute {
+	schemaAttrs := make(map[string]rsschema.Attribute)
+	schemaAttrs["links"] = rsschema.ListNestedAttribute{
+		NestedObject: rsschema.NestedAttributeObject{
+			Attributes: resourceSchemaAttrsRestLink(recurse),
+		},
+		Computed:      true,
+		PlanModifiers: []planmodifier.List{listplanmodifier.UseStateForUnknown()},
+	}
+	schemaAttrs["permissions"] = rsschema.ListNestedAttribute{
+		NestedObject: rsschema.NestedAttributeObject{
+			Attributes: resourceSchemaAttrsAuthPermission(recurse),
+		},
+		Computed:      true,
+		PlanModifiers: []planmodifier.List{listplanmodifier.UseStateForUnknown()},
+	}
+	return schemaAttrs
+}
+func resourceSchemaAttrsLaunchpadLaunchpadTilePrimerRO(recurse bool) map[string]rsschema.Attribute {
+	schemaAttrs := make(map[string]rsschema.Attribute)
+	schemaAttrs["links"] = rsschema.ListNestedAttribute{
+		NestedObject: rsschema.NestedAttributeObject{
+			Attributes: resourceSchemaAttrsRestLinkRO(recurse),
+		},
+		Computed:      true,
+		PlanModifiers: []planmodifier.List{listplanmodifier.UseStateForUnknown()},
+	}
+	schemaAttrs["permissions"] = rsschema.ListNestedAttribute{
+		NestedObject: rsschema.NestedAttributeObject{
+			Attributes: resourceSchemaAttrsAuthPermissionRO(recurse),
+		},
+		Computed:      true,
+		PlanModifiers: []planmodifier.List{listplanmodifier.UseStateForUnknown()},
+	}
+	return schemaAttrs
+}
+func resourceSchemaAttrsLaunchpadLaunchpadTile_additionalObjects(recurse bool) map[string]rsschema.Attribute {
+	schemaAttrs := make(map[string]rsschema.Attribute)
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsAuditInfoRO(recurse),
+		}
+		attr.Computed = true
+		schemaAttrs["audit"] = attr
+	}
+
+	return schemaAttrs
+}
+func resourceSchemaAttrsLaunchpadLaunchpadTile_additionalObjectsRO(recurse bool) map[string]rsschema.Attribute {
+	schemaAttrs := make(map[string]rsschema.Attribute)
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsAuditInfoRO(recurse),
+		}
+		attr.Computed = true
+		schemaAttrs["audit"] = attr
+	}
+
+	return schemaAttrs
+}
+func resourceSchemaAttrsLaunchpadManualLaunchpadTile(recurse bool) map[string]rsschema.Attribute {
+	schemaAttrs := make(map[string]rsschema.Attribute)
+	schemaAttrs["title"] = rsschema.StringAttribute{
+		Required: true,
+		Validators: []validator.String{
+			stringvalidator.UTF8LengthBetween(0, 255),
+		},
+	}
+	schemaAttrs["uri"] = rsschema.StringAttribute{
+		Required: true,
+	}
+	return schemaAttrs
+}
+func resourceSchemaAttrsLaunchpadManualLaunchpadTileRO(recurse bool) map[string]rsschema.Attribute {
+	schemaAttrs := make(map[string]rsschema.Attribute)
+	schemaAttrs["title"] = rsschema.StringAttribute{
+		Required: true,
+		Validators: []validator.String{
+			stringvalidator.UTF8LengthBetween(0, 255),
+		},
+	}
+	schemaAttrs["uri"] = rsschema.StringAttribute{
+		Required: true,
+	}
+	return schemaAttrs
+}
 func resourceSchemaAttrsLaunchpadSsoApplicationLaunchpadTile(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	schemaAttrs["uri"] = rsschema.StringAttribute{
@@ -4119,6 +4482,27 @@ func resourceSchemaAttrsMarkItemMarkersRO(recurse bool) map[string]rsschema.Attr
 		NestedObject: rsschema.NestedAttributeObject{
 			Attributes: resourceSchemaAttrsMarkItemMarkerRO(recurse),
 		},
+		Optional: true,
+	}
+	return schemaAttrs
+}
+func resourceSchemaAttrsMiscAttributeCustomization(recurse bool) map[string]rsschema.Attribute {
+	schemaAttrs := make(map[string]rsschema.Attribute)
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsIdentityAccountAttributeDefinition(recurse),
+		}
+		attr.Optional = true
+		schemaAttrs["attribute_definition"] = attr
+	}
+
+	schemaAttrs["name"] = rsschema.StringAttribute{
+		Required: true,
+		Validators: []validator.String{
+			stringvalidator.UTF8LengthBetween(0, 255),
+		},
+	}
+	schemaAttrs["script"] = rsschema.StringAttribute{
 		Optional: true,
 	}
 	return schemaAttrs
@@ -4195,23 +4579,28 @@ func resourceSchemaAttrsNestedProvisioningGroupOnSystem(recurse bool) map[string
 		Required: true,
 		Validators: []validator.String{
 			stringvalidator.OneOf(
-				"POSIX_GROUP", "GROUP_OF_NAMES", "GROUP_OF_UNIQUE_NAMES", "GROUP_GLOBAL_SECURITY", "GROUP_LOCAL_SECURITY", "GROUP_UNIVERSAL_SECURITY", "GROUP_UNKNOWN", "AZURE_ROLE", "AZURE_UNIFIED_GROUP", "AZURE_SECURITY_GROUP", "SCIM", "ACCOUNT_ONLY",
+				"POSIX_GROUP", "GROUP_OF_NAMES", "GROUP_OF_UNIQUE_NAMES", "GROUP_GLOBAL_SECURITY", "GROUP_LOCAL_SECURITY", "GROUP_UNIVERSAL_SECURITY", "GROUP_UNKNOWN", "AZURE_ROLE", "AZURE_UNIFIED_GROUP", "AZURE_SECURITY_GROUP", "AZURE_DYNAMIC_UNIFIED_GROUP", "AZURE_DYNAMIC_SECURITY_GROUP", "SCIM", "ACCOUNT_ONLY",
 			),
 		},
 	}
 	schemaAttrs["short_name_in_system"] = rsschema.StringAttribute{
 		Computed: true,
 	}
+	schemaAttrs["account_provisioning"] = rsschema.StringAttribute{
+		Computed: true,
+		Optional: true,
+		Default:  stringdefault.StaticString("ENABLED"),
+		Validators: []validator.String{
+			stringvalidator.OneOf(
+				"ENABLED", "DISABLED_KEEP_ACCOUNT_ACTIVE", "DISABLED",
+			),
+		},
+	}
 	schemaAttrs["owner_uuid"] = rsschema.StringAttribute{
 		Required: true,
 		Validators: []validator.String{
 			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
 		},
-	}
-	schemaAttrs["provisioning_enabled"] = rsschema.BoolAttribute{
-		Computed: true,
-		Optional: true,
-		Default:  booldefault.StaticBool(true),
 	}
 	return schemaAttrs
 }
@@ -4470,6 +4859,7 @@ func resourceSchemaAttrsOrganizationOrganizationalUnit_additionalObjectsRO(recur
 
 	{
 		attr := resetListNestedAttributeFlags(resourceSchemaAttrsOrganizationOrganizationalUnitPrimerLinkableWrapperRO(recurse)["items"].(rsschema.ListNestedAttribute))
+		attr.Optional = true
 		attr.WriteOnly = true
 		schemaAttrs["create_as_parent_of"] = attr
 	}
@@ -5330,12 +5720,22 @@ func resourceSchemaAttrsProvisioningGroupOnSystemRO(recurse bool) map[string]rss
 		Required: true,
 		Validators: []validator.String{
 			stringvalidator.OneOf(
-				"POSIX_GROUP", "GROUP_OF_NAMES", "GROUP_OF_UNIQUE_NAMES", "GROUP_GLOBAL_SECURITY", "GROUP_LOCAL_SECURITY", "GROUP_UNIVERSAL_SECURITY", "GROUP_UNKNOWN", "AZURE_ROLE", "AZURE_UNIFIED_GROUP", "AZURE_SECURITY_GROUP", "SCIM", "ACCOUNT_ONLY",
+				"POSIX_GROUP", "GROUP_OF_NAMES", "GROUP_OF_UNIQUE_NAMES", "GROUP_GLOBAL_SECURITY", "GROUP_LOCAL_SECURITY", "GROUP_UNIVERSAL_SECURITY", "GROUP_UNKNOWN", "AZURE_ROLE", "AZURE_UNIFIED_GROUP", "AZURE_SECURITY_GROUP", "AZURE_DYNAMIC_UNIFIED_GROUP", "AZURE_DYNAMIC_SECURITY_GROUP", "SCIM", "ACCOUNT_ONLY",
 			),
 		},
 	}
 	schemaAttrs["short_name_in_system"] = rsschema.StringAttribute{
 		Computed: true,
+	}
+	schemaAttrs["account_provisioning"] = rsschema.StringAttribute{
+		Computed: true,
+		Optional: true,
+		Default:  stringdefault.StaticString("ENABLED"),
+		Validators: []validator.String{
+			stringvalidator.OneOf(
+				"ENABLED", "DISABLED_KEEP_ACCOUNT_ACTIVE", "DISABLED",
+			),
+		},
 	}
 	{
 		attr := rsschema.SingleNestedAttribute{
@@ -5345,11 +5745,6 @@ func resourceSchemaAttrsProvisioningGroupOnSystemRO(recurse bool) map[string]rss
 		schemaAttrs["owner"] = attr
 	}
 
-	schemaAttrs["provisioning_enabled"] = rsschema.BoolAttribute{
-		Computed: true,
-		Optional: true,
-		Default:  booldefault.StaticBool(true),
-	}
 	return schemaAttrs
 }
 func resourceSchemaAttrsProvisioningGroupOnSystemLinkableWrapperRO(recurse bool) map[string]rsschema.Attribute {
@@ -5391,7 +5786,7 @@ func resourceSchemaAttrsProvisioningGroupOnSystemPrimer(recurse bool) map[string
 		Required: true,
 		Validators: []validator.String{
 			stringvalidator.OneOf(
-				"POSIX_GROUP", "GROUP_OF_NAMES", "GROUP_OF_UNIQUE_NAMES", "GROUP_GLOBAL_SECURITY", "GROUP_LOCAL_SECURITY", "GROUP_UNIVERSAL_SECURITY", "GROUP_UNKNOWN", "AZURE_ROLE", "AZURE_UNIFIED_GROUP", "AZURE_SECURITY_GROUP", "SCIM", "ACCOUNT_ONLY",
+				"POSIX_GROUP", "GROUP_OF_NAMES", "GROUP_OF_UNIQUE_NAMES", "GROUP_GLOBAL_SECURITY", "GROUP_LOCAL_SECURITY", "GROUP_UNIVERSAL_SECURITY", "GROUP_UNKNOWN", "AZURE_ROLE", "AZURE_UNIFIED_GROUP", "AZURE_SECURITY_GROUP", "AZURE_DYNAMIC_UNIFIED_GROUP", "AZURE_DYNAMIC_SECURITY_GROUP", "SCIM", "ACCOUNT_ONLY",
 			),
 		},
 	}
@@ -5429,7 +5824,7 @@ func resourceSchemaAttrsProvisioningGroupOnSystemPrimerRO(recurse bool) map[stri
 		Required: true,
 		Validators: []validator.String{
 			stringvalidator.OneOf(
-				"POSIX_GROUP", "GROUP_OF_NAMES", "GROUP_OF_UNIQUE_NAMES", "GROUP_GLOBAL_SECURITY", "GROUP_LOCAL_SECURITY", "GROUP_UNIVERSAL_SECURITY", "GROUP_UNKNOWN", "AZURE_ROLE", "AZURE_UNIFIED_GROUP", "AZURE_SECURITY_GROUP", "SCIM", "ACCOUNT_ONLY",
+				"POSIX_GROUP", "GROUP_OF_NAMES", "GROUP_OF_UNIQUE_NAMES", "GROUP_GLOBAL_SECURITY", "GROUP_LOCAL_SECURITY", "GROUP_UNIVERSAL_SECURITY", "GROUP_UNKNOWN", "AZURE_ROLE", "AZURE_UNIFIED_GROUP", "AZURE_SECURITY_GROUP", "AZURE_DYNAMIC_UNIFIED_GROUP", "AZURE_DYNAMIC_SECURITY_GROUP", "SCIM", "ACCOUNT_ONLY",
 			),
 		},
 	}
@@ -5446,7 +5841,7 @@ func resourceSchemaAttrsProvisioningGroupOnSystemTypesRO(recurse bool) map[strin
 		Validators: []validator.List{
 			listvalidator.ValueStringsAre(
 				stringvalidator.OneOf(
-					"POSIX_GROUP", "GROUP_OF_NAMES", "GROUP_OF_UNIQUE_NAMES", "GROUP_GLOBAL_SECURITY", "GROUP_LOCAL_SECURITY", "GROUP_UNIVERSAL_SECURITY", "GROUP_UNKNOWN", "AZURE_ROLE", "AZURE_UNIFIED_GROUP", "AZURE_SECURITY_GROUP", "SCIM", "ACCOUNT_ONLY",
+					"POSIX_GROUP", "GROUP_OF_NAMES", "GROUP_OF_UNIQUE_NAMES", "GROUP_GLOBAL_SECURITY", "GROUP_LOCAL_SECURITY", "GROUP_UNIVERSAL_SECURITY", "GROUP_UNKNOWN", "AZURE_ROLE", "AZURE_UNIFIED_GROUP", "AZURE_SECURITY_GROUP", "AZURE_DYNAMIC_UNIFIED_GROUP", "AZURE_DYNAMIC_SECURITY_GROUP", "SCIM", "ACCOUNT_ONLY",
 				),
 			),
 		},
@@ -5716,7 +6111,7 @@ func resourceSchemaAttrsProvisioningProvisionedInternalLDAPRO(recurse bool) map[
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	{
 		attr := rsschema.SingleNestedAttribute{
-			Attributes: resourceSchemaAttrsClientLdapClientRO(recurse),
+			Attributes: resourceSchemaAttrsClientClientApplicationRO(recurse),
 		}
 		attr.Optional = true
 		schemaAttrs["client"] = attr
@@ -6609,7 +7004,7 @@ func resourceSchemaAttrsServiceaccountServiceAccountGroupRO(recurse bool) map[st
 		Required: true,
 		Validators: []validator.String{
 			stringvalidator.OneOf(
-				"POSIX_GROUP", "GROUP_OF_NAMES", "GROUP_OF_UNIQUE_NAMES", "GROUP_GLOBAL_SECURITY", "GROUP_LOCAL_SECURITY", "GROUP_UNIVERSAL_SECURITY", "GROUP_UNKNOWN", "AZURE_ROLE", "AZURE_UNIFIED_GROUP", "AZURE_SECURITY_GROUP", "SCIM", "ACCOUNT_ONLY",
+				"POSIX_GROUP", "GROUP_OF_NAMES", "GROUP_OF_UNIQUE_NAMES", "GROUP_GLOBAL_SECURITY", "GROUP_LOCAL_SECURITY", "GROUP_UNIVERSAL_SECURITY", "GROUP_UNKNOWN", "AZURE_ROLE", "AZURE_UNIFIED_GROUP", "AZURE_SECURITY_GROUP", "AZURE_DYNAMIC_UNIFIED_GROUP", "AZURE_DYNAMIC_SECURITY_GROUP", "SCIM", "ACCOUNT_ONLY",
 			),
 		},
 	}
@@ -6791,6 +7186,15 @@ func resourceSchemaAttrsServiceaccountServiceAccount_additionalObjects(recurse b
 	}
 
 	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsGenerateSecret(recurse),
+		}
+		attr.Optional = true
+		attr.WriteOnly = true
+		schemaAttrs["generate_secret"] = attr
+	}
+
+	{
 		attr := resetListNestedAttributeFlags(resourceSchemaAttrsServiceaccountServiceAccountGroupLinkableWrapperRO(recurse)["items"].(rsschema.ListNestedAttribute))
 		attr.Computed = true
 		schemaAttrs["groups"] = attr
@@ -6798,9 +7202,8 @@ func resourceSchemaAttrsServiceaccountServiceAccount_additionalObjects(recurse b
 
 	{
 		attr := rsschema.SingleNestedAttribute{
-			Attributes: resourceSchemaAttrsGeneratedSecret(recurse),
+			Attributes: resourceSchemaAttrsSecretRO(recurse),
 		}
-		attr.Optional = true
 		attr.Computed = true
 		schemaAttrs["secret"] = attr
 	}
@@ -6826,6 +7229,15 @@ func resourceSchemaAttrsServiceaccountServiceAccount_additionalObjectsRO(recurse
 	}
 
 	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsGenerateSecretRO(recurse),
+		}
+		attr.Optional = true
+		attr.WriteOnly = true
+		schemaAttrs["generate_secret"] = attr
+	}
+
+	{
 		attr := resetListNestedAttributeFlags(resourceSchemaAttrsServiceaccountServiceAccountGroupLinkableWrapperRO(recurse)["items"].(rsschema.ListNestedAttribute))
 		attr.Computed = true
 		schemaAttrs["groups"] = attr
@@ -6833,9 +7245,8 @@ func resourceSchemaAttrsServiceaccountServiceAccount_additionalObjectsRO(recurse
 
 	{
 		attr := rsschema.SingleNestedAttribute{
-			Attributes: resourceSchemaAttrsGeneratedSecretRO(recurse),
+			Attributes: resourceSchemaAttrsSecretRO(recurse),
 		}
-		attr.Optional = true
 		attr.Computed = true
 		schemaAttrs["secret"] = attr
 	}
@@ -7260,7 +7671,7 @@ func resourceSchemaAttrsVaultVaultRecord_additionalObjects(recurse bool) map[str
 
 	{
 		attr := rsschema.SingleNestedAttribute{
-			Attributes: resourceSchemaAttrsLaunchpadVaultRecordLaunchpadTile(recurse),
+			Attributes: resourceSchemaAttrsLaunchpadLaunchpadTile(recurse),
 		}
 		attr.Optional = true
 		schemaAttrs["tile"] = attr
@@ -7338,7 +7749,7 @@ func resourceSchemaAttrsVaultVaultRecord_additionalObjectsRO(recurse bool) map[s
 
 	{
 		attr := rsschema.SingleNestedAttribute{
-			Attributes: resourceSchemaAttrsLaunchpadVaultRecordLaunchpadTileRO(recurse),
+			Attributes: resourceSchemaAttrsLaunchpadLaunchpadTileRO(recurse),
 		}
 		attr.Optional = true
 		schemaAttrs["tile"] = attr

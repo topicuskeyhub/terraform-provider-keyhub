@@ -17,18 +17,6 @@ func fillDataStructFromTFObjectDSROAuditInfoRO(data *auditInfoDataDSRO, obj type
 	data.LastModifiedBy = obj.Attributes()["last_modified_by"].(basetypes.StringValue)
 }
 
-func fillDataStructFromTFObjectDSGeneratedSecret(data *generatedSecretDataDS, obj types.Object) {
-	data.GeneratedSecret = obj.Attributes()["generated_secret"].(basetypes.StringValue)
-	data.OldSecret = obj.Attributes()["old_secret"].(basetypes.StringValue)
-	data.Regenerate = obj.Attributes()["regenerate"].(basetypes.BoolValue)
-}
-
-func fillDataStructFromTFObjectDSROGeneratedSecretRO(data *generatedSecretDataDSRO, obj types.Object) {
-	data.GeneratedSecret = obj.Attributes()["generated_secret"].(basetypes.StringValue)
-	data.OldSecret = obj.Attributes()["old_secret"].(basetypes.StringValue)
-	data.Regenerate = obj.Attributes()["regenerate"].(basetypes.BoolValue)
-}
-
 func fillDataStructFromTFObjectDSLinkable(data *linkableDataDS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
@@ -57,6 +45,10 @@ func fillDataStructFromTFObjectDSRORestLinkRO(data *restLinkDataDSRO, obj types.
 	data.ID = obj.Attributes()["id"].(basetypes.Int64Value)
 	data.Rel = obj.Attributes()["rel"].(basetypes.StringValue)
 	data.TypeEscaped = obj.Attributes()["type_escaped"].(basetypes.StringValue)
+}
+
+func fillDataStructFromTFObjectDSROSecretRO(data *secretDataDSRO, obj types.Object) {
+	data.Secret = obj.Attributes()["secret"].(basetypes.StringValue)
 }
 
 func fillDataStructFromTFObjectDSROAuditGroupAuditRO(data *auditGroupAuditDataDSRO, obj types.Object) {
@@ -389,7 +381,7 @@ func fillDataStructFromTFObjectDSROClientLdapClientRO(data *clientLdapClientData
 
 func fillDataStructFromTFObjectDSClientOAuth2Client(data *clientOAuth2ClientDataDS, obj types.Object) {
 	data.AccountPermissions = obj.Attributes()["account_permissions"].(basetypes.ListValue)
-	data.Attributes = obj.Attributes()["attributes"].(basetypes.MapValue)
+	data.Attributes = obj.Attributes()["attributes"].(basetypes.ListValue)
 	data.CallbackURI = obj.Attributes()["callback_uri"].(basetypes.StringValue)
 	data.DebugMode = obj.Attributes()["debug_mode"].(basetypes.BoolValue)
 	data.ForIDentitySource = obj.Attributes()["for_identity_source"].(basetypes.BoolValue)
@@ -405,7 +397,7 @@ func fillDataStructFromTFObjectDSClientOAuth2Client(data *clientOAuth2ClientData
 
 func fillDataStructFromTFObjectDSROClientOAuth2ClientRO(data *clientOAuth2ClientDataDSRO, obj types.Object) {
 	data.AccountPermissions = obj.Attributes()["account_permissions"].(basetypes.ListValue)
-	data.Attributes = obj.Attributes()["attributes"].(basetypes.MapValue)
+	data.Attributes = obj.Attributes()["attributes"].(basetypes.ListValue)
 	data.CallbackURI = obj.Attributes()["callback_uri"].(basetypes.StringValue)
 	data.DebugMode = obj.Attributes()["debug_mode"].(basetypes.BoolValue)
 	data.ForIDentitySource = obj.Attributes()["for_identity_source"].(basetypes.BoolValue)
@@ -478,14 +470,14 @@ func fillDataStructFromTFObjectDSROClientOAuth2ClientPermission_additionalObject
 }
 
 func fillDataStructFromTFObjectDSClientSaml2Client(data *clientSaml2ClientDataDS, obj types.Object) {
-	data.Attributes = obj.Attributes()["attributes"].(basetypes.MapValue)
+	data.Attributes = obj.Attributes()["attributes"].(basetypes.ListValue)
 	data.Metadata = obj.Attributes()["metadata"].(basetypes.StringValue)
 	data.MetadataURL = obj.Attributes()["metadata_url"].(basetypes.StringValue)
 	data.SubjectFormat = obj.Attributes()["subject_format"].(basetypes.StringValue)
 }
 
 func fillDataStructFromTFObjectDSROClientSaml2ClientRO(data *clientSaml2ClientDataDSRO, obj types.Object) {
-	data.Attributes = obj.Attributes()["attributes"].(basetypes.MapValue)
+	data.Attributes = obj.Attributes()["attributes"].(basetypes.ListValue)
 	data.Metadata = obj.Attributes()["metadata"].(basetypes.StringValue)
 	data.MetadataURL = obj.Attributes()["metadata_url"].(basetypes.StringValue)
 	data.SubjectFormat = obj.Attributes()["subject_format"].(basetypes.StringValue)
@@ -1239,6 +1231,66 @@ func fillDataStructFromTFObjectDSIdentityIdentity(data *identityIdentityDataDS, 
 	data.Telephone = obj.Attributes()["telephone"].(basetypes.StringValue)
 }
 
+func fillDataStructFromTFObjectDSLaunchpadLaunchpadTile(data *launchpadLaunchpadTileDataDS, obj types.Object) {
+	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
+	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
+	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
+	data.Application = obj.Attributes()["application"].(basetypes.ObjectValue)
+	data.Group = obj.Attributes()["group"].(basetypes.ObjectValue)
+	data.IDenticonCode = obj.Attributes()["identicon_code"].(basetypes.Int64Value)
+	data.LaunchpadLaunchpadTileType = obj.Attributes()["launchpad_launchpad_tile_type"].(basetypes.StringValue)
+	data.Logo = obj.Attributes()["logo"].(basetypes.StringValue)
+	data.VaultRecord = obj.Attributes()["vault_record"].(basetypes.ObjectValue)
+	data.ManualLaunchpadTile = obj.Attributes()["manual_launchpad_tile"].(basetypes.ObjectValue)
+	data.SsoApplicationLaunchpadTile = obj.Attributes()["sso_application_launchpad_tile"].(basetypes.ObjectValue)
+	data.VaultRecordLaunchpadTile = obj.Attributes()["vault_record_launchpad_tile"].(basetypes.ObjectValue)
+}
+
+func fillDataStructFromTFObjectDSROLaunchpadLaunchpadTileRO(data *launchpadLaunchpadTileDataDSRO, obj types.Object) {
+	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
+	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
+	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
+	data.Application = obj.Attributes()["application"].(basetypes.ObjectValue)
+	data.Group = obj.Attributes()["group"].(basetypes.ObjectValue)
+	data.IDenticonCode = obj.Attributes()["identicon_code"].(basetypes.Int64Value)
+	data.LaunchpadLaunchpadTileType = obj.Attributes()["launchpad_launchpad_tile_type"].(basetypes.StringValue)
+	data.Logo = obj.Attributes()["logo"].(basetypes.StringValue)
+	data.VaultRecord = obj.Attributes()["vault_record"].(basetypes.ObjectValue)
+	data.ManualLaunchpadTile = obj.Attributes()["manual_launchpad_tile"].(basetypes.ObjectValue)
+	data.SsoApplicationLaunchpadTile = obj.Attributes()["sso_application_launchpad_tile"].(basetypes.ObjectValue)
+	data.VaultRecordLaunchpadTile = obj.Attributes()["vault_record_launchpad_tile"].(basetypes.ObjectValue)
+}
+
+func fillDataStructFromTFObjectDSLaunchpadLaunchpadTilePrimer(data *launchpadLaunchpadTilePrimerDataDS, obj types.Object) {
+	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
+	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+}
+
+func fillDataStructFromTFObjectDSROLaunchpadLaunchpadTilePrimerRO(data *launchpadLaunchpadTilePrimerDataDSRO, obj types.Object) {
+	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
+	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+}
+
+func fillDataStructFromTFObjectDSLaunchpadLaunchpadTile_additionalObjects(data *launchpadLaunchpadTile_additionalObjectsDataDS, obj types.Object) {
+	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
+}
+
+func fillDataStructFromTFObjectDSROLaunchpadLaunchpadTile_additionalObjectsRO(data *launchpadLaunchpadTile_additionalObjectsDataDSRO, obj types.Object) {
+	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
+}
+
+func fillDataStructFromTFObjectDSLaunchpadManualLaunchpadTile(data *launchpadManualLaunchpadTileDataDS, obj types.Object) {
+	data.Title = obj.Attributes()["title"].(basetypes.StringValue)
+	data.URI = obj.Attributes()["uri"].(basetypes.StringValue)
+}
+
+func fillDataStructFromTFObjectDSROLaunchpadManualLaunchpadTileRO(data *launchpadManualLaunchpadTileDataDSRO, obj types.Object) {
+	data.Title = obj.Attributes()["title"].(basetypes.StringValue)
+	data.URI = obj.Attributes()["uri"].(basetypes.StringValue)
+}
+
 func fillDataStructFromTFObjectDSLaunchpadSsoApplicationLaunchpadTile(data *launchpadSsoApplicationLaunchpadTileDataDS, obj types.Object) {
 	data.URI = obj.Attributes()["uri"].(basetypes.StringValue)
 }
@@ -1577,12 +1629,12 @@ func fillDataStructFromTFObjectDSROProvisioningGroupOnSystemRO(data *provisionin
 	data.ProvisioningGroupOnSystemPrimerType = obj.Attributes()["type"].(basetypes.StringValue)
 	data.ShortNameInSystem = obj.Attributes()["short_name_in_system"].(basetypes.StringValue)
 	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
+	data.AccountProvisioning = obj.Attributes()["account_provisioning"].(basetypes.StringValue)
 	data.AccessProfileProvisioning = obj.Attributes()["access_profile_provisioning"].(basetypes.ListValue)
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
 	data.Provgroups = obj.Attributes()["provgroups"].(basetypes.ListValue)
 	data.ServiceAccounts = obj.Attributes()["service_accounts"].(basetypes.ListValue)
 	data.Owner = obj.Attributes()["owner"].(basetypes.ObjectValue)
-	data.ProvisioningEnabled = obj.Attributes()["provisioning_enabled"].(basetypes.BoolValue)
 }
 
 func fillDataStructFromTFObjectDSROProvisioningGroupOnSystemLinkableWrapperRO(data *provisioningGroupOnSystemLinkableWrapperDataDSRO, obj types.Object) {

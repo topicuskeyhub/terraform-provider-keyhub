@@ -19,22 +19,6 @@ func objectAttrsTypeDSROAuditInfoRO(recurse bool) map[string]attr.Type {
 	return objectAttrs
 }
 
-func objectAttrsTypeDSGeneratedSecret(recurse bool) map[string]attr.Type {
-	objectAttrs := make(map[string]attr.Type)
-	objectAttrs["generated_secret"] = types.StringType
-	objectAttrs["old_secret"] = types.StringType
-	objectAttrs["regenerate"] = types.BoolType
-	return objectAttrs
-}
-
-func objectAttrsTypeDSROGeneratedSecretRO(recurse bool) map[string]attr.Type {
-	objectAttrs := make(map[string]attr.Type)
-	objectAttrs["generated_secret"] = types.StringType
-	objectAttrs["old_secret"] = types.StringType
-	objectAttrs["regenerate"] = types.BoolType
-	return objectAttrs
-}
-
 func objectAttrsTypeDSLinkable(recurse bool) map[string]attr.Type {
 	objectAttrs := make(map[string]attr.Type)
 	objectAttrs["links"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSRestLink(recurse)}}
@@ -74,6 +58,12 @@ func objectAttrsTypeDSRORestLinkRO(recurse bool) map[string]attr.Type {
 	objectAttrs["id"] = types.Int64Type
 	objectAttrs["rel"] = types.StringType
 	objectAttrs["type_escaped"] = types.StringType
+	return objectAttrs
+}
+
+func objectAttrsTypeDSROSecretRO(recurse bool) map[string]attr.Type {
+	objectAttrs := make(map[string]attr.Type)
+	objectAttrs["secret"] = types.StringType
 	return objectAttrs
 }
 
@@ -350,8 +340,8 @@ func objectAttrsTypeDSClientClientApplication(recurse bool) map[string]attr.Type
 		objectAttrs["groupclients"] = objectAttrsTypeDSGroupGroupClientLinkableWrapperWithCount(false)["items"]
 		objectAttrs["groups"] = objectAttrsTypeDSROGroupGroupLinkableWrapperRO(false)["items"]
 		objectAttrs["organizational_units"] = objectAttrsTypeDSROOrganizationClientApplicationOrganizationalUnitLinkableWrapperRO(false)["items"]
-		objectAttrs["secret"] = types.ObjectType{AttrTypes: objectAttrsTypeDSGeneratedSecret(false)}
-		objectAttrs["tile"] = types.ObjectType{AttrTypes: objectAttrsTypeDSLaunchpadSsoApplicationLaunchpadTile(false)}
+		objectAttrs["secret"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROSecretRO(false)}
+		objectAttrs["tile"] = types.ObjectType{AttrTypes: objectAttrsTypeDSLaunchpadLaunchpadTile(false)}
 		objectAttrs["vault_record_count"] = types.Int64Type
 	}
 	objectAttrs["links"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSRestLink(recurse)}}
@@ -382,8 +372,8 @@ func objectAttrsTypeDSROClientClientApplicationRO(recurse bool) map[string]attr.
 		objectAttrs["groupclients"] = objectAttrsTypeDSROGroupGroupClientLinkableWrapperWithCountRO(false)["items"]
 		objectAttrs["groups"] = objectAttrsTypeDSROGroupGroupLinkableWrapperRO(false)["items"]
 		objectAttrs["organizational_units"] = objectAttrsTypeDSROOrganizationClientApplicationOrganizationalUnitLinkableWrapperRO(false)["items"]
-		objectAttrs["secret"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROGeneratedSecretRO(false)}
-		objectAttrs["tile"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROLaunchpadSsoApplicationLaunchpadTileRO(false)}
+		objectAttrs["secret"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROSecretRO(false)}
+		objectAttrs["tile"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROLaunchpadLaunchpadTileRO(false)}
 		objectAttrs["vault_record_count"] = types.Int64Type
 	}
 	objectAttrs["links"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSRORestLinkRO(recurse)}}
@@ -442,8 +432,8 @@ func objectAttrsTypeDSClientClientApplication_additionalObjects(recurse bool) ma
 	objectAttrs["groupclients"] = objectAttrsTypeDSGroupGroupClientLinkableWrapperWithCount(recurse)["items"]
 	objectAttrs["groups"] = objectAttrsTypeDSROGroupGroupLinkableWrapperRO(recurse)["items"]
 	objectAttrs["organizational_units"] = objectAttrsTypeDSROOrganizationClientApplicationOrganizationalUnitLinkableWrapperRO(recurse)["items"]
-	objectAttrs["secret"] = types.ObjectType{AttrTypes: objectAttrsTypeDSGeneratedSecret(recurse)}
-	objectAttrs["tile"] = types.ObjectType{AttrTypes: objectAttrsTypeDSLaunchpadSsoApplicationLaunchpadTile(recurse)}
+	objectAttrs["secret"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROSecretRO(recurse)}
+	objectAttrs["tile"] = types.ObjectType{AttrTypes: objectAttrsTypeDSLaunchpadLaunchpadTile(recurse)}
 	objectAttrs["vault_record_count"] = types.Int64Type
 	return objectAttrs
 }
@@ -455,8 +445,8 @@ func objectAttrsTypeDSROClientClientApplication_additionalObjectsRO(recurse bool
 	objectAttrs["groupclients"] = objectAttrsTypeDSROGroupGroupClientLinkableWrapperWithCountRO(recurse)["items"]
 	objectAttrs["groups"] = objectAttrsTypeDSROGroupGroupLinkableWrapperRO(recurse)["items"]
 	objectAttrs["organizational_units"] = objectAttrsTypeDSROOrganizationClientApplicationOrganizationalUnitLinkableWrapperRO(recurse)["items"]
-	objectAttrs["secret"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROGeneratedSecretRO(recurse)}
-	objectAttrs["tile"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROLaunchpadSsoApplicationLaunchpadTileRO(recurse)}
+	objectAttrs["secret"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROSecretRO(recurse)}
+	objectAttrs["tile"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROLaunchpadLaunchpadTileRO(recurse)}
 	objectAttrs["vault_record_count"] = types.Int64Type
 	return objectAttrs
 }
@@ -484,7 +474,7 @@ func objectAttrsTypeDSROClientLdapClientRO(recurse bool) map[string]attr.Type {
 func objectAttrsTypeDSClientOAuth2Client(recurse bool) map[string]attr.Type {
 	objectAttrs := make(map[string]attr.Type)
 	objectAttrs["account_permissions"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSROAuthPermissionRO(recurse)}}
-	objectAttrs["attributes"] = types.MapType{ElemType: types.StringType}
+	objectAttrs["attributes"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSMiscAttributeCustomization(recurse)}}
 	objectAttrs["callback_uri"] = types.StringType
 	objectAttrs["debug_mode"] = types.BoolType
 	objectAttrs["for_identity_source"] = types.BoolType
@@ -502,7 +492,7 @@ func objectAttrsTypeDSClientOAuth2Client(recurse bool) map[string]attr.Type {
 func objectAttrsTypeDSROClientOAuth2ClientRO(recurse bool) map[string]attr.Type {
 	objectAttrs := make(map[string]attr.Type)
 	objectAttrs["account_permissions"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSROAuthPermissionRO(recurse)}}
-	objectAttrs["attributes"] = types.MapType{ElemType: types.StringType}
+	objectAttrs["attributes"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSROMiscAttributeCustomizationRO(recurse)}}
 	objectAttrs["callback_uri"] = types.StringType
 	objectAttrs["debug_mode"] = types.BoolType
 	objectAttrs["for_identity_source"] = types.BoolType
@@ -579,7 +569,7 @@ func objectAttrsTypeDSROClientOAuth2ClientPermissionWithClientRO(recurse bool) m
 	objectAttrs["for_group"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROGroupGroupPrimerRO(false)}
 	objectAttrs["for_system"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROProvisioningProvisionedSystemPrimerRO(false)}
 	objectAttrs["value"] = types.StringType
-	objectAttrs["client"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROClientOAuth2ClientRO(false)}
+	objectAttrs["client"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROClientClientApplicationRO(false)}
 	return objectAttrs
 }
 
@@ -609,7 +599,7 @@ func objectAttrsTypeDSROClientOAuth2ClientPermission_additionalObjectsRO(recurse
 
 func objectAttrsTypeDSClientSaml2Client(recurse bool) map[string]attr.Type {
 	objectAttrs := make(map[string]attr.Type)
-	objectAttrs["attributes"] = types.MapType{ElemType: types.StringType}
+	objectAttrs["attributes"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSMiscAttributeCustomization(recurse)}}
 	objectAttrs["metadata"] = types.StringType
 	objectAttrs["metadata_url"] = types.StringType
 	objectAttrs["subject_format"] = types.StringType
@@ -618,7 +608,7 @@ func objectAttrsTypeDSClientSaml2Client(recurse bool) map[string]attr.Type {
 
 func objectAttrsTypeDSROClientSaml2ClientRO(recurse bool) map[string]attr.Type {
 	objectAttrs := make(map[string]attr.Type)
-	objectAttrs["attributes"] = types.MapType{ElemType: types.StringType}
+	objectAttrs["attributes"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSROMiscAttributeCustomizationRO(recurse)}}
 	objectAttrs["metadata"] = types.StringType
 	objectAttrs["metadata_url"] = types.StringType
 	objectAttrs["subject_format"] = types.StringType
@@ -1575,6 +1565,90 @@ func objectAttrsTypeDSIdentityIdentity(recurse bool) map[string]attr.Type {
 	return objectAttrs
 }
 
+func objectAttrsTypeDSLaunchpadLaunchpadTile(recurse bool) map[string]attr.Type {
+	objectAttrs := make(map[string]attr.Type)
+	if recurse {
+		objectAttrs["additional"] = types.ListType{ElemType: types.StringType}
+	}
+	if recurse {
+		objectAttrs["audit"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROAuditInfoRO(false)}
+	}
+	objectAttrs["links"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSRestLink(recurse)}}
+	objectAttrs["permissions"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSAuthPermission(recurse)}}
+	objectAttrs["application"] = types.ObjectType{AttrTypes: objectAttrsTypeDSClientClientApplicationPrimer(false)}
+	objectAttrs["group"] = types.ObjectType{AttrTypes: objectAttrsTypeDSGroupGroupPrimer(false)}
+	objectAttrs["identicon_code"] = types.Int64Type
+	objectAttrs["launchpad_launchpad_tile_type"] = types.StringType
+	objectAttrs["logo"] = types.StringType
+	objectAttrs["vault_record"] = types.ObjectType{AttrTypes: objectAttrsTypeDSVaultVaultRecordPrimer(false)}
+	objectAttrs["manual_launchpad_tile"] = types.ObjectType{AttrTypes: objectAttrsTypeDSLaunchpadManualLaunchpadTile(false)}
+	objectAttrs["sso_application_launchpad_tile"] = types.ObjectType{AttrTypes: objectAttrsTypeDSLaunchpadSsoApplicationLaunchpadTile(false)}
+	objectAttrs["vault_record_launchpad_tile"] = types.ObjectType{AttrTypes: objectAttrsTypeDSLaunchpadVaultRecordLaunchpadTile(false)}
+	return objectAttrs
+}
+
+func objectAttrsTypeDSROLaunchpadLaunchpadTileRO(recurse bool) map[string]attr.Type {
+	objectAttrs := make(map[string]attr.Type)
+	if recurse {
+		objectAttrs["additional"] = types.ListType{ElemType: types.StringType}
+	}
+	if recurse {
+		objectAttrs["audit"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROAuditInfoRO(false)}
+	}
+	objectAttrs["links"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSRORestLinkRO(recurse)}}
+	objectAttrs["permissions"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSROAuthPermissionRO(recurse)}}
+	objectAttrs["application"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROClientClientApplicationPrimerRO(false)}
+	objectAttrs["group"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROGroupGroupPrimerRO(false)}
+	objectAttrs["identicon_code"] = types.Int64Type
+	objectAttrs["launchpad_launchpad_tile_type"] = types.StringType
+	objectAttrs["logo"] = types.StringType
+	objectAttrs["vault_record"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROVaultVaultRecordPrimerRO(false)}
+	objectAttrs["manual_launchpad_tile"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROLaunchpadManualLaunchpadTileRO(false)}
+	objectAttrs["sso_application_launchpad_tile"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROLaunchpadSsoApplicationLaunchpadTileRO(false)}
+	objectAttrs["vault_record_launchpad_tile"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROLaunchpadVaultRecordLaunchpadTileRO(false)}
+	return objectAttrs
+}
+
+func objectAttrsTypeDSLaunchpadLaunchpadTilePrimer(recurse bool) map[string]attr.Type {
+	objectAttrs := make(map[string]attr.Type)
+	objectAttrs["links"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSRestLink(recurse)}}
+	objectAttrs["permissions"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSAuthPermission(recurse)}}
+	return objectAttrs
+}
+
+func objectAttrsTypeDSROLaunchpadLaunchpadTilePrimerRO(recurse bool) map[string]attr.Type {
+	objectAttrs := make(map[string]attr.Type)
+	objectAttrs["links"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSRORestLinkRO(recurse)}}
+	objectAttrs["permissions"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSROAuthPermissionRO(recurse)}}
+	return objectAttrs
+}
+
+func objectAttrsTypeDSLaunchpadLaunchpadTile_additionalObjects(recurse bool) map[string]attr.Type {
+	objectAttrs := make(map[string]attr.Type)
+	objectAttrs["audit"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROAuditInfoRO(recurse)}
+	return objectAttrs
+}
+
+func objectAttrsTypeDSROLaunchpadLaunchpadTile_additionalObjectsRO(recurse bool) map[string]attr.Type {
+	objectAttrs := make(map[string]attr.Type)
+	objectAttrs["audit"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROAuditInfoRO(recurse)}
+	return objectAttrs
+}
+
+func objectAttrsTypeDSLaunchpadManualLaunchpadTile(recurse bool) map[string]attr.Type {
+	objectAttrs := make(map[string]attr.Type)
+	objectAttrs["title"] = types.StringType
+	objectAttrs["uri"] = types.StringType
+	return objectAttrs
+}
+
+func objectAttrsTypeDSROLaunchpadManualLaunchpadTileRO(recurse bool) map[string]attr.Type {
+	objectAttrs := make(map[string]attr.Type)
+	objectAttrs["title"] = types.StringType
+	objectAttrs["uri"] = types.StringType
+	return objectAttrs
+}
+
 func objectAttrsTypeDSLaunchpadSsoApplicationLaunchpadTile(recurse bool) map[string]attr.Type {
 	objectAttrs := make(map[string]attr.Type)
 	objectAttrs["uri"] = types.StringType
@@ -2046,8 +2120,8 @@ func objectAttrsTypeDSROProvisioningGroupOnSystemRO(recurse bool) map[string]att
 	objectAttrs["name_in_system"] = types.StringType
 	objectAttrs["type"] = types.StringType
 	objectAttrs["short_name_in_system"] = types.StringType
+	objectAttrs["account_provisioning"] = types.StringType
 	objectAttrs["owner"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROGroupGroupPrimerRO(false)}
-	objectAttrs["provisioning_enabled"] = types.BoolType
 	return objectAttrs
 }
 
@@ -2233,7 +2307,7 @@ func objectAttrsTypeDSProvisioningProvisionedInternalLDAP(recurse bool) map[stri
 
 func objectAttrsTypeDSROProvisioningProvisionedInternalLDAPRO(recurse bool) map[string]attr.Type {
 	objectAttrs := make(map[string]attr.Type)
-	objectAttrs["client"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROClientLdapClientRO(recurse)}
+	objectAttrs["client"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROClientClientApplicationRO(recurse)}
 	return objectAttrs
 }
 
@@ -2537,7 +2611,7 @@ func objectAttrsTypeDSServiceaccountServiceAccount(recurse bool) map[string]attr
 	if recurse {
 		objectAttrs["audit"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROAuditInfoRO(false)}
 		objectAttrs["groups"] = objectAttrsTypeDSROServiceaccountServiceAccountGroupLinkableWrapperRO(false)["items"]
-		objectAttrs["secret"] = types.ObjectType{AttrTypes: objectAttrsTypeDSGeneratedSecret(false)}
+		objectAttrs["secret"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROSecretRO(false)}
 		objectAttrs["supported_features"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROServiceaccountServiceAccountSupportedFeaturesRO(false)}
 	}
 	objectAttrs["links"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSRestLink(recurse)}}
@@ -2563,7 +2637,7 @@ func objectAttrsTypeDSROServiceaccountServiceAccountRO(recurse bool) map[string]
 	if recurse {
 		objectAttrs["audit"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROAuditInfoRO(false)}
 		objectAttrs["groups"] = objectAttrsTypeDSROServiceaccountServiceAccountGroupLinkableWrapperRO(false)["items"]
-		objectAttrs["secret"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROGeneratedSecretRO(false)}
+		objectAttrs["secret"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROSecretRO(false)}
 		objectAttrs["supported_features"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROServiceaccountServiceAccountSupportedFeaturesRO(false)}
 	}
 	objectAttrs["links"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSRORestLinkRO(recurse)}}
@@ -2657,7 +2731,7 @@ func objectAttrsTypeDSServiceaccountServiceAccount_additionalObjects(recurse boo
 	objectAttrs := make(map[string]attr.Type)
 	objectAttrs["audit"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROAuditInfoRO(recurse)}
 	objectAttrs["groups"] = objectAttrsTypeDSROServiceaccountServiceAccountGroupLinkableWrapperRO(recurse)["items"]
-	objectAttrs["secret"] = types.ObjectType{AttrTypes: objectAttrsTypeDSGeneratedSecret(recurse)}
+	objectAttrs["secret"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROSecretRO(recurse)}
 	objectAttrs["supported_features"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROServiceaccountServiceAccountSupportedFeaturesRO(recurse)}
 	return objectAttrs
 }
@@ -2666,7 +2740,7 @@ func objectAttrsTypeDSROServiceaccountServiceAccount_additionalObjectsRO(recurse
 	objectAttrs := make(map[string]attr.Type)
 	objectAttrs["audit"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROAuditInfoRO(recurse)}
 	objectAttrs["groups"] = objectAttrsTypeDSROServiceaccountServiceAccountGroupLinkableWrapperRO(recurse)["items"]
-	objectAttrs["secret"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROGeneratedSecretRO(recurse)}
+	objectAttrs["secret"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROSecretRO(recurse)}
 	objectAttrs["supported_features"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROServiceaccountServiceAccountSupportedFeaturesRO(recurse)}
 	return objectAttrs
 }
@@ -2715,7 +2789,7 @@ func objectAttrsTypeDSVaultVaultRecord(recurse bool) map[string]attr.Type {
 		objectAttrs["secret"] = types.ObjectType{AttrTypes: objectAttrsTypeDSVaultVaultRecordSecrets(false)}
 		objectAttrs["share_summary"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROVaultVaultRecordShareSummaryRO(false)}
 		objectAttrs["shares"] = objectAttrsTypeDSROVaultVaultRecordPrimerLinkableWrapperRO(false)["items"]
-		objectAttrs["tile"] = types.ObjectType{AttrTypes: objectAttrsTypeDSLaunchpadVaultRecordLaunchpadTile(false)}
+		objectAttrs["tile"] = types.ObjectType{AttrTypes: objectAttrsTypeDSLaunchpadLaunchpadTile(false)}
 		objectAttrs["vaultholder"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROLinkableRO(false)}
 	}
 	objectAttrs["links"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSRestLink(recurse)}}
@@ -2748,7 +2822,7 @@ func objectAttrsTypeDSROVaultVaultRecordRO(recurse bool) map[string]attr.Type {
 		objectAttrs["secret"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROVaultVaultRecordSecretsRO(false)}
 		objectAttrs["share_summary"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROVaultVaultRecordShareSummaryRO(false)}
 		objectAttrs["shares"] = objectAttrsTypeDSROVaultVaultRecordPrimerLinkableWrapperRO(false)["items"]
-		objectAttrs["tile"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROLaunchpadVaultRecordLaunchpadTileRO(false)}
+		objectAttrs["tile"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROLaunchpadLaunchpadTileRO(false)}
 		objectAttrs["vaultholder"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROLinkableRO(false)}
 	}
 	objectAttrs["links"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSRORestLinkRO(recurse)}}
@@ -2837,7 +2911,7 @@ func objectAttrsTypeDSVaultVaultRecord_additionalObjects(recurse bool) map[strin
 	objectAttrs["secret"] = types.ObjectType{AttrTypes: objectAttrsTypeDSVaultVaultRecordSecrets(recurse)}
 	objectAttrs["share_summary"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROVaultVaultRecordShareSummaryRO(recurse)}
 	objectAttrs["shares"] = objectAttrsTypeDSROVaultVaultRecordPrimerLinkableWrapperRO(recurse)["items"]
-	objectAttrs["tile"] = types.ObjectType{AttrTypes: objectAttrsTypeDSLaunchpadVaultRecordLaunchpadTile(recurse)}
+	objectAttrs["tile"] = types.ObjectType{AttrTypes: objectAttrsTypeDSLaunchpadLaunchpadTile(recurse)}
 	objectAttrs["vaultholder"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROLinkableRO(recurse)}
 	return objectAttrs
 }
@@ -2851,7 +2925,7 @@ func objectAttrsTypeDSROVaultVaultRecord_additionalObjectsRO(recurse bool) map[s
 	objectAttrs["secret"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROVaultVaultRecordSecretsRO(recurse)}
 	objectAttrs["share_summary"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROVaultVaultRecordShareSummaryRO(recurse)}
 	objectAttrs["shares"] = objectAttrsTypeDSROVaultVaultRecordPrimerLinkableWrapperRO(recurse)["items"]
-	objectAttrs["tile"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROLaunchpadVaultRecordLaunchpadTileRO(recurse)}
+	objectAttrs["tile"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROLaunchpadLaunchpadTileRO(recurse)}
 	objectAttrs["vaultholder"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROLinkableRO(recurse)}
 	return objectAttrs
 }

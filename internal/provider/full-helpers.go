@@ -318,6 +318,38 @@ func findFirst[T keyhubmodels.Linkableable](ctx context.Context, wrapper interfa
 	return wrapper.GetItems()[0], nil
 }
 
+func castTKHToLaunchpadSsoApplicationLaunchpadTile(tkh keyhubmodels.LaunchpadLaunchpadTileable, diags diag.Diagnostics) (keyhubmodels.LaunchpadSsoApplicationLaunchpadTileable, diag.Diagnostics) {
+	ret, ok := tkh.(keyhubmodels.LaunchpadSsoApplicationLaunchpadTileable)
+	if !ok {
+		diags.AddError("Conversion error", "Unable convert launchpad tile to LaunchpadSsoApplicationLaunchpadTilea")
+	}
+	return ret, diags
+}
+
+func castTKHToLaunchpadVaultRecordLaunchpadTile(tkh keyhubmodels.LaunchpadLaunchpadTileable, diags diag.Diagnostics) (keyhubmodels.LaunchpadVaultRecordLaunchpadTileable, diag.Diagnostics) {
+	ret, ok := tkh.(keyhubmodels.LaunchpadSsoApplicationLaunchpadTileable)
+	if !ok {
+		diags.AddError("Conversion error", "Unable convert launchpad tile to LaunchpadVaultRecordLaunchpadTile")
+	}
+	return ret, diags
+}
+
+func castTKHToClientOAuth2Client(tkh keyhubmodels.ClientClientApplicationable, diags diag.Diagnostics) (keyhubmodels.ClientOAuth2Clientable, diag.Diagnostics) {
+	ret, ok := tkh.(keyhubmodels.ClientOAuth2Clientable)
+	if !ok {
+		diags.AddError("Conversion error", "Unable convert client application to ClientOAuth2Client")
+	}
+	return ret, diags
+}
+
+func castTKHToClientLdapClient(tkh keyhubmodels.ClientClientApplicationable, diags diag.Diagnostics) (keyhubmodels.ClientLdapClientable, diag.Diagnostics) {
+	ret, ok := tkh.(keyhubmodels.ClientLdapClientable)
+	if !ok {
+		diags.AddError("Conversion error", "Unable convert client application to ClientLdapClient")
+	}
+	return ret, diags
+}
+
 func findGroupGroupPrimerByUUID(ctx context.Context, uuid *string) (keyhubmodels.GroupGroupPrimerable, diag.Diagnostics) {
 	return findGroupGroupPrimerByUUIDOptionallyNil(ctx, uuid, false)
 }

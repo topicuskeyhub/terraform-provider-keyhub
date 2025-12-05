@@ -24,11 +24,13 @@ description: |-
 
 ### Optional
 
+> **NOTE**: [Write-only arguments](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments) are supported in Terraform 1.11 and later.
+
 - `active` (Boolean)
 - `additional` (List of String)
 - `description` (String)
+- `generate_secret` (Attributes, [Write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments)) (see [below for nested schema](#nestedatt--generate_secret))
 - `password_rotation` (String)
-- `secret` (Attributes) (see [below for nested schema](#nestedatt--secret))
 - `ssh_public_key` (String)
 
 ### Read-Only
@@ -38,20 +40,17 @@ description: |-
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--links))
 - `password` (Attributes) (see [below for nested schema](#nestedatt--password))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--permissions))
+- `secret` (Attributes) (see [below for nested schema](#nestedatt--secret))
 - `supported_features` (Attributes) (see [below for nested schema](#nestedatt--supported_features))
 - `uuid` (String)
 
-<a id="nestedatt--secret"></a>
-### Nested Schema for `secret`
+<a id="nestedatt--generate_secret"></a>
+### Nested Schema for `generate_secret`
 
 Optional:
 
-- `old_secret` (String, Sensitive)
-- `regenerate` (Boolean)
-
-Read-Only:
-
-- `generated_secret` (String, Sensitive)
+- `old_secret` (String, Sensitive, [Write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments))
+- `regenerate` (Boolean, [Write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments))
 
 
 <a id="nestedatt--audit"></a>
@@ -164,6 +163,14 @@ Optional:
 - `instances` (List of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
+
+
+<a id="nestedatt--secret"></a>
+### Nested Schema for `secret`
+
+Read-Only:
+
+- `secret` (String, Sensitive)
 
 
 <a id="nestedatt--supported_features"></a>
