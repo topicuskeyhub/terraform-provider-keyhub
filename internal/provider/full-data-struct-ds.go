@@ -468,22 +468,20 @@ var clientLdapClientAttrTypesDS = objectAttrsTypeDSClientLdapClient(false)
 var clientLdapClientAttrTypesDSRecurse = objectAttrsTypeDSClientLdapClient(true)
 
 type clientLdapClientDataDS struct {
-	BindDN              types.String `tfsdk:"bind_dn"`
-	ClientCertificate   types.Object `tfsdk:"client_certificate"`
-	ShareSecretInVault  types.Bool   `tfsdk:"share_secret_in_vault"`
-	SharedSecret        types.Object `tfsdk:"shared_secret"`
-	UsedForProvisioning types.Bool   `tfsdk:"used_for_provisioning"`
+	BindDN             types.String `tfsdk:"bind_dn"`
+	ClientCertificate  types.Object `tfsdk:"client_certificate"`
+	ShareSecretInVault types.Bool   `tfsdk:"share_secret_in_vault"`
+	SharedSecret       types.Object `tfsdk:"shared_secret"`
 }
 
 var clientLdapClientAttrTypesDSRO = objectAttrsTypeDSROClientLdapClientRO(false)
 var clientLdapClientAttrTypesDSRORecurse = objectAttrsTypeDSROClientLdapClientRO(true)
 
 type clientLdapClientDataDSRO struct {
-	BindDN              types.String `tfsdk:"bind_dn"`
-	ClientCertificate   types.Object `tfsdk:"client_certificate"`
-	ShareSecretInVault  types.Bool   `tfsdk:"share_secret_in_vault"`
-	SharedSecret        types.Object `tfsdk:"shared_secret"`
-	UsedForProvisioning types.Bool   `tfsdk:"used_for_provisioning"`
+	BindDN             types.String `tfsdk:"bind_dn"`
+	ClientCertificate  types.Object `tfsdk:"client_certificate"`
+	ShareSecretInVault types.Bool   `tfsdk:"share_secret_in_vault"`
+	SharedSecret       types.Object `tfsdk:"shared_secret"`
 }
 
 var clientOAuth2ClientAttrTypesDS = objectAttrsTypeDSClientOAuth2Client(false)
@@ -1595,12 +1593,9 @@ type launchpadLaunchpadTileDataDS struct {
 	Permissions                 types.List   `tfsdk:"permissions"`
 	Additional                  types.List   `tfsdk:"additional"`
 	Audit                       types.Object `tfsdk:"audit" tkhao:"audit"`
-	Application                 types.Object `tfsdk:"application"`
-	Group                       types.Object `tfsdk:"group"`
 	IDenticonCode               types.Int64  `tfsdk:"identicon_code"`
 	LaunchpadLaunchpadTileType  types.String `tfsdk:"launchpad_launchpad_tile_type"`
 	Logo                        types.String `tfsdk:"logo"`
-	VaultRecord                 types.Object `tfsdk:"vault_record"`
 	ManualLaunchpadTile         types.Object `tfsdk:"manual_launchpad_tile"`
 	SsoApplicationLaunchpadTile types.Object `tfsdk:"sso_application_launchpad_tile"`
 	VaultRecordLaunchpadTile    types.Object `tfsdk:"vault_record_launchpad_tile"`
@@ -1614,12 +1609,9 @@ type launchpadLaunchpadTileDataDSRO struct {
 	Permissions                 types.List   `tfsdk:"permissions"`
 	Additional                  types.List   `tfsdk:"additional"`
 	Audit                       types.Object `tfsdk:"audit" tkhao:"audit"`
-	Application                 types.Object `tfsdk:"application"`
-	Group                       types.Object `tfsdk:"group"`
 	IDenticonCode               types.Int64  `tfsdk:"identicon_code"`
 	LaunchpadLaunchpadTileType  types.String `tfsdk:"launchpad_launchpad_tile_type"`
 	Logo                        types.String `tfsdk:"logo"`
-	VaultRecord                 types.Object `tfsdk:"vault_record"`
 	ManualLaunchpadTile         types.Object `tfsdk:"manual_launchpad_tile"`
 	SsoApplicationLaunchpadTile types.Object `tfsdk:"sso_application_launchpad_tile"`
 	VaultRecordLaunchpadTile    types.Object `tfsdk:"vault_record_launchpad_tile"`
@@ -1659,6 +1651,7 @@ var launchpadManualLaunchpadTileAttrTypesDS = objectAttrsTypeDSLaunchpadManualLa
 var launchpadManualLaunchpadTileAttrTypesDSRecurse = objectAttrsTypeDSLaunchpadManualLaunchpadTile(true)
 
 type launchpadManualLaunchpadTileDataDS struct {
+	Group types.Object `tfsdk:"group"`
 	Title types.String `tfsdk:"title"`
 	URI   types.String `tfsdk:"uri"`
 }
@@ -1667,6 +1660,7 @@ var launchpadManualLaunchpadTileAttrTypesDSRO = objectAttrsTypeDSROLaunchpadManu
 var launchpadManualLaunchpadTileAttrTypesDSRORecurse = objectAttrsTypeDSROLaunchpadManualLaunchpadTileRO(true)
 
 type launchpadManualLaunchpadTileDataDSRO struct {
+	Group types.Object `tfsdk:"group"`
 	Title types.String `tfsdk:"title"`
 	URI   types.String `tfsdk:"uri"`
 }
@@ -1675,26 +1669,30 @@ var launchpadSsoApplicationLaunchpadTileAttrTypesDS = objectAttrsTypeDSLaunchpad
 var launchpadSsoApplicationLaunchpadTileAttrTypesDSRecurse = objectAttrsTypeDSLaunchpadSsoApplicationLaunchpadTile(true)
 
 type launchpadSsoApplicationLaunchpadTileDataDS struct {
-	URI types.String `tfsdk:"uri"`
+	Application types.Object `tfsdk:"application"`
+	URI         types.String `tfsdk:"uri"`
 }
 
 var launchpadSsoApplicationLaunchpadTileAttrTypesDSRO = objectAttrsTypeDSROLaunchpadSsoApplicationLaunchpadTileRO(false)
 var launchpadSsoApplicationLaunchpadTileAttrTypesDSRORecurse = objectAttrsTypeDSROLaunchpadSsoApplicationLaunchpadTileRO(true)
 
 type launchpadSsoApplicationLaunchpadTileDataDSRO struct {
-	URI types.String `tfsdk:"uri"`
+	Application types.Object `tfsdk:"application"`
+	URI         types.String `tfsdk:"uri"`
 }
 
 var launchpadVaultRecordLaunchpadTileAttrTypesDS = objectAttrsTypeDSLaunchpadVaultRecordLaunchpadTile(false)
 var launchpadVaultRecordLaunchpadTileAttrTypesDSRecurse = objectAttrsTypeDSLaunchpadVaultRecordLaunchpadTile(true)
 
 type launchpadVaultRecordLaunchpadTileDataDS struct {
+	VaultRecord types.Object `tfsdk:"vault_record"`
 }
 
 var launchpadVaultRecordLaunchpadTileAttrTypesDSRO = objectAttrsTypeDSROLaunchpadVaultRecordLaunchpadTileRO(false)
 var launchpadVaultRecordLaunchpadTileAttrTypesDSRORecurse = objectAttrsTypeDSROLaunchpadVaultRecordLaunchpadTileRO(true)
 
 type launchpadVaultRecordLaunchpadTileDataDSRO struct {
+	VaultRecord types.Object `tfsdk:"vault_record"`
 }
 
 var markItemMarkerAttrTypesDSRO = objectAttrsTypeDSROMarkItemMarkerRO(false)
@@ -2143,6 +2141,7 @@ type provisioningGroupOnSystemDataDSRO struct {
 	NameInSystem                        types.String `tfsdk:"name_in_system"`
 	ProvisioningGroupOnSystemPrimerType types.String `tfsdk:"type"`
 	ShortNameInSystem                   types.String `tfsdk:"short_name_in_system"`
+	UUID                                types.String `tfsdk:"uuid"`
 	Additional                          types.List   `tfsdk:"additional"`
 	AccountProvisioning                 types.String `tfsdk:"account_provisioning"`
 	AccessProfileProvisioning           types.List   `tfsdk:"access_profile_provisioning" tkhao:"accessProfileProvisioning"`
@@ -2169,6 +2168,7 @@ type provisioningGroupOnSystemPrimerDataDSRO struct {
 	NameInSystem                        types.String `tfsdk:"name_in_system"`
 	ProvisioningGroupOnSystemPrimerType types.String `tfsdk:"type"`
 	ShortNameInSystem                   types.String `tfsdk:"short_name_in_system"`
+	UUID                                types.String `tfsdk:"uuid"`
 }
 
 var provisioningGroupOnSystemTypesAttrTypesDSRO = objectAttrsTypeDSROProvisioningGroupOnSystemTypesRO(false)
@@ -2423,30 +2423,46 @@ var provisioningProvisionedSCIMAttrTypesDS = objectAttrsTypeDSProvisioningProvis
 var provisioningProvisionedSCIMAttrTypesDSRecurse = objectAttrsTypeDSProvisioningProvisionedSCIM(true)
 
 type provisioningProvisionedSCIMDataDS struct {
-	Attributes           types.List   `tfsdk:"attributes"`
-	AuthenticationScheme types.String `tfsdk:"authentication_scheme"`
-	BasicAuthPassword    types.String `tfsdk:"basic_auth_password"`
-	BasicAuthUsername    types.String `tfsdk:"basic_auth_username"`
-	BearerToken          types.String `tfsdk:"bearer_token"`
-	CustomHeaderName     types.String `tfsdk:"custom_header_name"`
-	CustomHeaderValue    types.String `tfsdk:"custom_header_value"`
-	URL                  types.String `tfsdk:"url"`
-	VendorEscaped        types.String `tfsdk:"vendor_escaped"`
+	Attributes                 types.List   `tfsdk:"attributes"`
+	AuthenticationScheme       types.String `tfsdk:"authentication_scheme"`
+	BasicAuthPassword          types.String `tfsdk:"basic_auth_password"`
+	BasicAuthUsername          types.String `tfsdk:"basic_auth_username"`
+	BearerToken                types.String `tfsdk:"bearer_token"`
+	ConnectorConfiguration     types.String `tfsdk:"connector_configuration"`
+	CustomHeaderName           types.String `tfsdk:"custom_header_name"`
+	CustomHeaderValue          types.String `tfsdk:"custom_header_value"`
+	ExternalIDSupported        types.Bool   `tfsdk:"external_id_supported"`
+	FilterActiveUsersSupported types.Bool   `tfsdk:"filter_active_users_supported"`
+	GroupsSupported            types.Bool   `tfsdk:"groups_supported"`
+	PageSize                   types.Int64  `tfsdk:"page_size"`
+	PasswordSupported          types.Bool   `tfsdk:"password_supported"`
+	UpdateStrategy             types.String `tfsdk:"update_strategy"`
+	URL                        types.String `tfsdk:"url"`
+	UseSCIMJsonMimetype        types.Bool   `tfsdk:"use_scim_json_mimetype"`
+	VendorEscaped              types.String `tfsdk:"vendor_escaped"`
 }
 
 var provisioningProvisionedSCIMAttrTypesDSRO = objectAttrsTypeDSROProvisioningProvisionedSCIMRO(false)
 var provisioningProvisionedSCIMAttrTypesDSRORecurse = objectAttrsTypeDSROProvisioningProvisionedSCIMRO(true)
 
 type provisioningProvisionedSCIMDataDSRO struct {
-	Attributes           types.List   `tfsdk:"attributes"`
-	AuthenticationScheme types.String `tfsdk:"authentication_scheme"`
-	BasicAuthPassword    types.String `tfsdk:"basic_auth_password"`
-	BasicAuthUsername    types.String `tfsdk:"basic_auth_username"`
-	BearerToken          types.String `tfsdk:"bearer_token"`
-	CustomHeaderName     types.String `tfsdk:"custom_header_name"`
-	CustomHeaderValue    types.String `tfsdk:"custom_header_value"`
-	URL                  types.String `tfsdk:"url"`
-	VendorEscaped        types.String `tfsdk:"vendor_escaped"`
+	Attributes                 types.List   `tfsdk:"attributes"`
+	AuthenticationScheme       types.String `tfsdk:"authentication_scheme"`
+	BasicAuthPassword          types.String `tfsdk:"basic_auth_password"`
+	BasicAuthUsername          types.String `tfsdk:"basic_auth_username"`
+	BearerToken                types.String `tfsdk:"bearer_token"`
+	ConnectorConfiguration     types.String `tfsdk:"connector_configuration"`
+	CustomHeaderName           types.String `tfsdk:"custom_header_name"`
+	CustomHeaderValue          types.String `tfsdk:"custom_header_value"`
+	ExternalIDSupported        types.Bool   `tfsdk:"external_id_supported"`
+	FilterActiveUsersSupported types.Bool   `tfsdk:"filter_active_users_supported"`
+	GroupsSupported            types.Bool   `tfsdk:"groups_supported"`
+	PageSize                   types.Int64  `tfsdk:"page_size"`
+	PasswordSupported          types.Bool   `tfsdk:"password_supported"`
+	UpdateStrategy             types.String `tfsdk:"update_strategy"`
+	URL                        types.String `tfsdk:"url"`
+	UseSCIMJsonMimetype        types.Bool   `tfsdk:"use_scim_json_mimetype"`
+	VendorEscaped              types.String `tfsdk:"vendor_escaped"`
 }
 
 var provisioningProvisionedSystemAttrTypesDS = objectAttrsTypeDSProvisioningProvisionedSystem(false)
@@ -2706,6 +2722,7 @@ type serviceaccountServiceAccountGroupDataDSRO struct {
 	NameInSystem                        types.String `tfsdk:"name_in_system"`
 	ProvisioningGroupOnSystemPrimerType types.String `tfsdk:"type"`
 	ShortNameInSystem                   types.String `tfsdk:"short_name_in_system"`
+	UUID                                types.String `tfsdk:"uuid"`
 	Additional                          types.List   `tfsdk:"additional"`
 	Audit                               types.Object `tfsdk:"audit" tkhao:"audit"`
 }

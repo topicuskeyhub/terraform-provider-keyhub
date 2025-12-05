@@ -1764,8 +1764,6 @@ func tfObjectToTKHRSClientLdapClient(ctx context.Context, recurse bool, planValu
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetSharedSecret")
 		tkh.SetSharedSecret(val)
 	}
-	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToBooleanPointer(planAttrValues["used_for_provisioning"]))+" using SetUsedForProvisioning")
-	tkh.SetUsedForProvisioning(tfToBooleanPointer(planAttrValues["used_for_provisioning"]))
 	return tkh, diags
 }
 
@@ -1808,8 +1806,6 @@ func tfObjectToTKHRSROClientLdapClientRO(ctx context.Context, recurse bool, plan
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetSharedSecret")
 		tkh.SetSharedSecret(val)
 	}
-	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToBooleanPointer(planAttrValues["used_for_provisioning"]))+" using SetUsedForProvisioning")
-	tkh.SetUsedForProvisioning(tfToBooleanPointer(planAttrValues["used_for_provisioning"]))
 	return tkh, diags
 }
 
@@ -6058,18 +6054,6 @@ func tfObjectToTKHRSLaunchpadLaunchpadTile(ctx context.Context, recurse bool, pl
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetPermissions")
 		tkh.SetPermissions(val)
 	}
-	{
-		val, d := findClientClientApplicationPrimerByUUID(ctx, planAttrValues["application_uuid"].(basetypes.StringValue).ValueStringPointer())
-		diags.Append(d...)
-		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetApplication")
-		tkh.SetApplication(val)
-	}
-	{
-		val, d := findGroupGroupPrimerByUUID(ctx, planAttrValues["group_uuid"].(basetypes.StringValue).ValueStringPointer())
-		diags.Append(d...)
-		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetGroup")
-		tkh.SetGroup(val)
-	}
 	tflog.Debug(ctx, "Setting "+litter.Sdump(int64PToInt32P(tfToInt64Pointer(planAttrValues["identicon_code"])))+" using SetIdenticonCode")
 	tkh.SetIdenticonCode(int64PToInt32P(tfToInt64Pointer(planAttrValues["identicon_code"])))
 	{
@@ -6085,12 +6069,6 @@ func tfObjectToTKHRSLaunchpadLaunchpadTile(ctx context.Context, recurse bool, pl
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetLogo")
 		tkh.SetLogo(val)
-	}
-	{
-		val, d := findVaultVaultRecordPrimerByUUID(ctx, planAttrValues["vault_record_uuid"].(basetypes.StringValue).ValueStringPointer())
-		diags.Append(d...)
-		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetVaultRecord")
-		tkh.SetVaultRecord(val)
 	}
 	if !planAttrValues["manual_launchpad_tile"].IsNull() {
 		val, d := tfObjectToTKHRSLaunchpadManualLaunchpadTile(ctx, false, planAttrValues["manual_launchpad_tile"].(basetypes.ObjectValue), configAttrValues["manual_launchpad_tile"].(basetypes.ObjectValue))
@@ -6170,18 +6148,6 @@ func tfObjectToTKHRSROLaunchpadLaunchpadTileRO(ctx context.Context, recurse bool
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetPermissions")
 		tkh.SetPermissions(val)
 	}
-	{
-		val, d := tfObjectToTKHRSROClientClientApplicationPrimerRO(ctx, false, toObjectValue(planAttrValues["application"]), toObjectValue(configAttrValues["application"]))
-		diags.Append(d...)
-		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetApplication")
-		tkh.SetApplication(val)
-	}
-	{
-		val, d := tfObjectToTKHRSROGroupGroupPrimerRO(ctx, false, toObjectValue(planAttrValues["group"]), toObjectValue(configAttrValues["group"]))
-		diags.Append(d...)
-		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetGroup")
-		tkh.SetGroup(val)
-	}
 	tflog.Debug(ctx, "Setting "+litter.Sdump(int64PToInt32P(tfToInt64Pointer(planAttrValues["identicon_code"])))+" using SetIdenticonCode")
 	tkh.SetIdenticonCode(int64PToInt32P(tfToInt64Pointer(planAttrValues["identicon_code"])))
 	{
@@ -6197,12 +6163,6 @@ func tfObjectToTKHRSROLaunchpadLaunchpadTileRO(ctx context.Context, recurse bool
 		diags.Append(d...)
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetLogo")
 		tkh.SetLogo(val)
-	}
-	{
-		val, d := tfObjectToTKHRSROVaultVaultRecordPrimerRO(ctx, false, toObjectValue(planAttrValues["vault_record"]), toObjectValue(configAttrValues["vault_record"]))
-		diags.Append(d...)
-		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetVaultRecord")
-		tkh.SetVaultRecord(val)
 	}
 	if !planAttrValues["manual_launchpad_tile"].IsNull() {
 		val, d := tfObjectToTKHRSROLaunchpadManualLaunchpadTileRO(ctx, false, planAttrValues["manual_launchpad_tile"].(basetypes.ObjectValue), configAttrValues["manual_launchpad_tile"].(basetypes.ObjectValue))
@@ -6418,6 +6378,12 @@ func tfObjectToTKHRSLaunchpadManualLaunchpadTile(ctx context.Context, recurse bo
 	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.LaunchpadManualLaunchpadTileable
 	tkh = keyhubmodel.NewLaunchpadManualLaunchpadTile()
+	{
+		val, d := findGroupGroupPrimerByUUID(ctx, planAttrValues["group_uuid"].(basetypes.StringValue).ValueStringPointer())
+		diags.Append(d...)
+		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetGroup")
+		tkh.SetGroup(val)
+	}
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToStringPointer(planAttrValues["title"]))+" using SetTitle")
 	tkh.SetTitle(tfToStringPointer(planAttrValues["title"]))
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToStringPointer(planAttrValues["uri"]))+" using SetUri")
@@ -6448,6 +6414,12 @@ func tfObjectToTKHRSROLaunchpadManualLaunchpadTileRO(ctx context.Context, recurs
 	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.LaunchpadManualLaunchpadTileable
 	tkh = keyhubmodel.NewLaunchpadManualLaunchpadTile()
+	{
+		val, d := tfObjectToTKHRSROGroupGroupPrimerRO(ctx, recurse, toObjectValue(planAttrValues["group"]), toObjectValue(configAttrValues["group"]))
+		diags.Append(d...)
+		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetGroup")
+		tkh.SetGroup(val)
+	}
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToStringPointer(planAttrValues["title"]))+" using SetTitle")
 	tkh.SetTitle(tfToStringPointer(planAttrValues["title"]))
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToStringPointer(planAttrValues["uri"]))+" using SetUri")
@@ -6478,6 +6450,12 @@ func tfObjectToTKHRSLaunchpadSsoApplicationLaunchpadTile(ctx context.Context, re
 	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.LaunchpadSsoApplicationLaunchpadTileable
 	tkh = keyhubmodel.NewLaunchpadSsoApplicationLaunchpadTile()
+	{
+		val, d := findClientClientApplicationPrimerByUUID(ctx, planAttrValues["application_uuid"].(basetypes.StringValue).ValueStringPointer())
+		diags.Append(d...)
+		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetApplication")
+		tkh.SetApplication(val)
+	}
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToStringPointer(planAttrValues["uri"]))+" using SetUri")
 	tkh.SetUri(tfToStringPointer(planAttrValues["uri"]))
 	return tkh, diags
@@ -6506,6 +6484,12 @@ func tfObjectToTKHRSROLaunchpadSsoApplicationLaunchpadTileRO(ctx context.Context
 	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.LaunchpadSsoApplicationLaunchpadTileable
 	tkh = keyhubmodel.NewLaunchpadSsoApplicationLaunchpadTile()
+	{
+		val, d := tfObjectToTKHRSROClientClientApplicationPrimerRO(ctx, recurse, toObjectValue(planAttrValues["application"]), toObjectValue(configAttrValues["application"]))
+		diags.Append(d...)
+		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetApplication")
+		tkh.SetApplication(val)
+	}
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToStringPointer(planAttrValues["uri"]))+" using SetUri")
 	tkh.SetUri(tfToStringPointer(planAttrValues["uri"]))
 	return tkh, diags
@@ -6518,8 +6502,28 @@ func tfObjectToTKHRSLaunchpadVaultRecordLaunchpadTile(ctx context.Context, recur
 	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
+	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
+	_, _ = planAttrValues, configAttrValues
+	litter.Config.HidePrivateFields = false
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.LaunchpadVaultRecordLaunchpadTileable
 	tkh = keyhubmodel.NewLaunchpadVaultRecordLaunchpadTile()
+	{
+		val, d := findVaultVaultRecordPrimerByUUID(ctx, planAttrValues["vault_record_uuid"].(basetypes.StringValue).ValueStringPointer())
+		diags.Append(d...)
+		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetVaultRecord")
+		tkh.SetVaultRecord(val)
+	}
 	return tkh, diags
 }
 
@@ -6530,8 +6534,28 @@ func tfObjectToTKHRSROLaunchpadVaultRecordLaunchpadTileRO(ctx context.Context, r
 	if missingPlanValues && missingConfigValues {
 		return nil, diags
 	}
+	planAttrValues := make(map[string]attr.Value)
+	if !missingPlanValues {
+		planAttrValues = planValues.Attributes()
+	}
+	configAttrValues := make(map[string]attr.Value)
+	if !missingConfigValues {
+		configAttrValues = configValues.Attributes()
+	}
+
+	// avoids the "declared but not used" compiler errors since we don't know beforehand which one we need
+	_, _ = planAttrValues, configAttrValues
+	litter.Config.HidePrivateFields = false
+	tflog.Trace(ctx, "planAttrValues: "+litter.Sdump(planAttrValues))
+	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.LaunchpadVaultRecordLaunchpadTileable
 	tkh = keyhubmodel.NewLaunchpadVaultRecordLaunchpadTile()
+	{
+		val, d := tfObjectToTKHRSROVaultVaultRecordPrimerRO(ctx, recurse, toObjectValue(planAttrValues["vault_record"]), toObjectValue(configAttrValues["vault_record"]))
+		diags.Append(d...)
+		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetVaultRecord")
+		tkh.SetVaultRecord(val)
+	}
 	return tkh, diags
 }
 
@@ -6746,6 +6770,8 @@ func tfObjectToTKHRSNestedProvisioningGroupOnSystem(ctx context.Context, recurse
 	}
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToStringPointer(planAttrValues["short_name_in_system"]))+" using SetShortNameInSystem")
 	tkh.SetShortNameInSystem(tfToStringPointer(planAttrValues["short_name_in_system"]))
+	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToStringPointer(planAttrValues["uuid"]))+" using SetUuid")
+	tkh.SetUuid(tfToStringPointer(planAttrValues["uuid"]))
 	{
 		val, d := parseCastPointer(planAttrValues["account_provisioning"].(basetypes.StringValue), keyhubmodel.ParseProvisioningGroupOnSystemProvisioningStatus, func(val any) keyhubmodel.ProvisioningGroupOnSystemProvisioningStatus {
 			return *val.(*keyhubmodel.ProvisioningGroupOnSystemProvisioningStatus)
@@ -8609,6 +8635,8 @@ func tfObjectToTKHRSROProvisioningGroupOnSystemRO(ctx context.Context, recurse b
 	}
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToStringPointer(planAttrValues["short_name_in_system"]))+" using SetShortNameInSystem")
 	tkh.SetShortNameInSystem(tfToStringPointer(planAttrValues["short_name_in_system"]))
+	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToStringPointer(planAttrValues["uuid"]))+" using SetUuid")
+	tkh.SetUuid(tfToStringPointer(planAttrValues["uuid"]))
 	{
 		val, d := parseCastPointer(planAttrValues["account_provisioning"].(basetypes.StringValue), keyhubmodel.ParseProvisioningGroupOnSystemProvisioningStatus, func(val any) keyhubmodel.ProvisioningGroupOnSystemProvisioningStatus {
 			return *val.(*keyhubmodel.ProvisioningGroupOnSystemProvisioningStatus)
@@ -8727,6 +8755,8 @@ func tfObjectToTKHRSProvisioningGroupOnSystemPrimer(ctx context.Context, recurse
 	}
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToStringPointer(planAttrValues["short_name_in_system"]))+" using SetShortNameInSystem")
 	tkh.SetShortNameInSystem(tfToStringPointer(planAttrValues["short_name_in_system"]))
+	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToStringPointer(planAttrValues["uuid"]))+" using SetUuid")
+	tkh.SetUuid(tfToStringPointer(planAttrValues["uuid"]))
 	return tkh, diags
 }
 
@@ -8787,6 +8817,8 @@ func tfObjectToTKHRSROProvisioningGroupOnSystemPrimerRO(ctx context.Context, rec
 	}
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToStringPointer(planAttrValues["short_name_in_system"]))+" using SetShortNameInSystem")
 	tkh.SetShortNameInSystem(tfToStringPointer(planAttrValues["short_name_in_system"]))
+	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToStringPointer(planAttrValues["uuid"]))+" using SetUuid")
+	tkh.SetUuid(tfToStringPointer(planAttrValues["uuid"]))
 	return tkh, diags
 }
 
@@ -9539,12 +9571,34 @@ func tfObjectToTKHRSROProvisioningProvisionedSCIMRO(ctx context.Context, recurse
 	tkh.SetBasicAuthUsername(tfToStringPointer(planAttrValues["basic_auth_username"]))
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToStringPointer(planAttrValues["bearer_token"]))+" using SetBearerToken")
 	tkh.SetBearerToken(tfToStringPointer(planAttrValues["bearer_token"]))
+	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToStringPointer(planAttrValues["connector_configuration"]))+" using SetConnectorConfiguration")
+	tkh.SetConnectorConfiguration(tfToStringPointer(planAttrValues["connector_configuration"]))
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToStringPointer(planAttrValues["custom_header_name"]))+" using SetCustomHeaderName")
 	tkh.SetCustomHeaderName(tfToStringPointer(planAttrValues["custom_header_name"]))
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToStringPointer(planAttrValues["custom_header_value"]))+" using SetCustomHeaderValue")
 	tkh.SetCustomHeaderValue(tfToStringPointer(planAttrValues["custom_header_value"]))
+	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToBooleanPointer(planAttrValues["external_id_supported"]))+" using SetExternalIdSupported")
+	tkh.SetExternalIdSupported(tfToBooleanPointer(planAttrValues["external_id_supported"]))
+	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToBooleanPointer(planAttrValues["filter_active_users_supported"]))+" using SetFilterActiveUsersSupported")
+	tkh.SetFilterActiveUsersSupported(tfToBooleanPointer(planAttrValues["filter_active_users_supported"]))
+	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToBooleanPointer(planAttrValues["groups_supported"]))+" using SetGroupsSupported")
+	tkh.SetGroupsSupported(tfToBooleanPointer(planAttrValues["groups_supported"]))
+	tflog.Debug(ctx, "Setting "+litter.Sdump(int64PToInt32P(tfToInt64Pointer(planAttrValues["page_size"])))+" using SetPageSize")
+	tkh.SetPageSize(int64PToInt32P(tfToInt64Pointer(planAttrValues["page_size"])))
+	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToBooleanPointer(planAttrValues["password_supported"]))+" using SetPasswordSupported")
+	tkh.SetPasswordSupported(tfToBooleanPointer(planAttrValues["password_supported"]))
+	{
+		val, d := parseCastPointer(planAttrValues["update_strategy"].(basetypes.StringValue), keyhubmodel.ParseProvisioningSCIMUpdateStrategy, func(val any) keyhubmodel.ProvisioningSCIMUpdateStrategy {
+			return *val.(*keyhubmodel.ProvisioningSCIMUpdateStrategy)
+		})
+		diags.Append(d...)
+		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetUpdateStrategy")
+		tkh.SetUpdateStrategy(val)
+	}
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToStringPointer(planAttrValues["url"]))+" using SetUrl")
 	tkh.SetUrl(tfToStringPointer(planAttrValues["url"]))
+	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToBooleanPointer(planAttrValues["use_scim_json_mimetype"]))+" using SetUseScimJsonMimetype")
+	tkh.SetUseScimJsonMimetype(tfToBooleanPointer(planAttrValues["use_scim_json_mimetype"]))
 	{
 		val, d := parseCastPointer(planAttrValues["vendor_escaped"].(basetypes.StringValue), keyhubmodel.ParseProvisioningProvisionedSCIMVendor, func(val any) keyhubmodel.ProvisioningProvisionedSCIMVendor {
 			return *val.(*keyhubmodel.ProvisioningProvisionedSCIMVendor)
@@ -10365,6 +10419,8 @@ func tfObjectToTKHRSROServiceaccountServiceAccountGroupRO(ctx context.Context, r
 	}
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToStringPointer(planAttrValues["short_name_in_system"]))+" using SetShortNameInSystem")
 	tkh.SetShortNameInSystem(tfToStringPointer(planAttrValues["short_name_in_system"]))
+	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToStringPointer(planAttrValues["uuid"]))+" using SetUuid")
+	tkh.SetUuid(tfToStringPointer(planAttrValues["uuid"]))
 	if recurse {
 		{
 			val, d := tfObjectToTKHRSROServiceaccountServiceAccountGroup_additionalObjectsRO(ctx, false, planValues, configValues)

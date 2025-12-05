@@ -425,7 +425,6 @@ Read-Only:
 - `client_certificate` (Attributes) (see [below for nested schema](#nestedatt--issued_permissions--client--ldap_client--client_certificate))
 - `share_secret_in_vault` (Boolean)
 - `shared_secret` (Attributes) (see [below for nested schema](#nestedatt--issued_permissions--client--ldap_client--shared_secret))
-- `used_for_provisioning` (Boolean)
 
 <a id="nestedatt--issued_permissions--client--ldap_client--client_certificate"></a>
 ### Nested Schema for `issued_permissions.client.ldap_client.client_certificate`
@@ -1281,7 +1280,6 @@ Read-Only:
 - `client_certificate` (Attributes) (see [below for nested schema](#nestedatt--provisioned_internal_ldap--client--client_certificate))
 - `share_secret_in_vault` (Boolean)
 - `shared_secret` (Attributes) (see [below for nested schema](#nestedatt--provisioned_internal_ldap--client--shared_secret))
-- `used_for_provisioning` (Boolean)
 
 <a id="nestedatt--provisioned_internal_ldap--client--client_certificate"></a>
 ### Nested Schema for `provisioned_internal_ldap.client.client_certificate`
@@ -1698,9 +1696,17 @@ Read-Only:
 - `basic_auth_password` (String, Sensitive)
 - `basic_auth_username` (String)
 - `bearer_token` (String, Sensitive)
+- `connector_configuration` (String)
 - `custom_header_name` (String)
 - `custom_header_value` (String, Sensitive)
+- `external_id_supported` (Boolean)
+- `filter_active_users_supported` (Boolean)
+- `groups_supported` (Boolean)
+- `page_size` (Number)
+- `password_supported` (Boolean)
+- `update_strategy` (String)
 - `url` (String)
+- `use_scim_json_mimetype` (Boolean)
 - `vendor_escaped` (String)
 
 <a id="nestedatt--provisioned_scim--attributes"></a>

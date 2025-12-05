@@ -1899,9 +1899,6 @@ func reorderLaunchpadLaunchpadTileRO(state basetypes.ObjectValue, priorState bas
 	if recurse {
 		maps.Copy(obj, reorderLaunchpadLaunchpadTile_additionalObjectsRO(state, priorState, false).Attributes())
 	}
-	obj["application"] = reorderClientClientApplicationPrimerRO(state.Attributes()["application"].(types.Object), priorState.Attributes()["application"].(types.Object), false)
-	obj["group"] = reorderGroupGroupPrimerRO(state.Attributes()["group"].(types.Object), priorState.Attributes()["group"].(types.Object), false)
-	obj["vault_record"] = reorderVaultVaultRecordPrimerRO(state.Attributes()["vault_record"].(types.Object), priorState.Attributes()["vault_record"].(types.Object), false)
 	obj["manual_launchpad_tile"] = reorderLaunchpadManualLaunchpadTileRO(state.Attributes()["manual_launchpad_tile"].(types.Object), priorState.Attributes()["manual_launchpad_tile"].(types.Object), false)
 	obj["sso_application_launchpad_tile"] = reorderLaunchpadSsoApplicationLaunchpadTileRO(state.Attributes()["sso_application_launchpad_tile"].(types.Object), priorState.Attributes()["sso_application_launchpad_tile"].(types.Object), false)
 	obj["vault_record_launchpad_tile"] = reorderLaunchpadVaultRecordLaunchpadTileRO(state.Attributes()["vault_record_launchpad_tile"].(types.Object), priorState.Attributes()["vault_record_launchpad_tile"].(types.Object), false)
@@ -1995,6 +1992,7 @@ func reorderLaunchpadManualLaunchpadTileRO(state basetypes.ObjectValue, priorSta
 		attrs = launchpadManualLaunchpadTileAttrTypesRSRO
 	}
 	obj := filterAttributes(state.Attributes(), attrs)
+	obj["group"] = reorderGroupGroupPrimerRO(state.Attributes()["group"].(types.Object), priorState.Attributes()["group"].(types.Object), false)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -2025,6 +2023,7 @@ func reorderLaunchpadSsoApplicationLaunchpadTileRO(state basetypes.ObjectValue, 
 		attrs = launchpadSsoApplicationLaunchpadTileAttrTypesRSRO
 	}
 	obj := filterAttributes(state.Attributes(), attrs)
+	obj["application"] = reorderClientClientApplicationPrimerRO(state.Attributes()["application"].(types.Object), priorState.Attributes()["application"].(types.Object), false)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -2055,6 +2054,7 @@ func reorderLaunchpadVaultRecordLaunchpadTileRO(state basetypes.ObjectValue, pri
 		attrs = launchpadVaultRecordLaunchpadTileAttrTypesRSRO
 	}
 	obj := filterAttributes(state.Attributes(), attrs)
+	obj["vault_record"] = reorderVaultVaultRecordPrimerRO(state.Attributes()["vault_record"].(types.Object), priorState.Attributes()["vault_record"].(types.Object), false)
 
 	return types.ObjectValueMust(attrs, obj)
 }

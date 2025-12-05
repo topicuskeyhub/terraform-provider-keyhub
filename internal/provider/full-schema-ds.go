@@ -1236,9 +1236,6 @@ func dataSourceSchemaAttrsClientLdapClient(recurse bool) map[string]dsschema.Att
 		schemaAttrs["shared_secret"] = attr
 	}
 
-	schemaAttrs["used_for_provisioning"] = dsschema.BoolAttribute{
-		Computed: true,
-	}
 	return schemaAttrs
 }
 func dataSourceSchemaAttrsClientLdapClientRO(recurse bool) map[string]dsschema.Attribute {
@@ -1265,9 +1262,6 @@ func dataSourceSchemaAttrsClientLdapClientRO(recurse bool) map[string]dsschema.A
 		schemaAttrs["shared_secret"] = attr
 	}
 
-	schemaAttrs["used_for_provisioning"] = dsschema.BoolAttribute{
-		Computed: true,
-	}
 	return schemaAttrs
 }
 func dataSourceSchemaAttrsClientOAuth2Client(recurse bool) map[string]dsschema.Attribute {
@@ -4417,22 +4411,6 @@ func dataSourceSchemaAttrsLaunchpadLaunchpadTile(recurse bool) map[string]dssche
 		},
 		Computed: true,
 	}
-	{
-		attr := dsschema.SingleNestedAttribute{
-			Attributes: dataSourceSchemaAttrsClientClientApplicationPrimer(false),
-		}
-		attr.Computed = true
-		schemaAttrs["application"] = attr
-	}
-
-	{
-		attr := dsschema.SingleNestedAttribute{
-			Attributes: dataSourceSchemaAttrsGroupGroupPrimer(false),
-		}
-		attr.Computed = true
-		schemaAttrs["group"] = attr
-	}
-
 	schemaAttrs["identicon_code"] = dsschema.Int64Attribute{
 		Computed: true,
 	}
@@ -4442,14 +4420,6 @@ func dataSourceSchemaAttrsLaunchpadLaunchpadTile(recurse bool) map[string]dssche
 	schemaAttrs["logo"] = dsschema.StringAttribute{
 		Computed: true,
 	}
-	{
-		attr := dsschema.SingleNestedAttribute{
-			Attributes: dataSourceSchemaAttrsVaultVaultRecordPrimer(false),
-		}
-		attr.Computed = true
-		schemaAttrs["vault_record"] = attr
-	}
-
 	{
 		attr := dsschema.SingleNestedAttribute{
 			Attributes: dataSourceSchemaAttrsLaunchpadManualLaunchpadTile(false),
@@ -4505,22 +4475,6 @@ func dataSourceSchemaAttrsLaunchpadLaunchpadTileRO(recurse bool) map[string]dssc
 		},
 		Computed: true,
 	}
-	{
-		attr := dsschema.SingleNestedAttribute{
-			Attributes: dataSourceSchemaAttrsClientClientApplicationPrimerRO(false),
-		}
-		attr.Computed = true
-		schemaAttrs["application"] = attr
-	}
-
-	{
-		attr := dsschema.SingleNestedAttribute{
-			Attributes: dataSourceSchemaAttrsGroupGroupPrimerRO(false),
-		}
-		attr.Computed = true
-		schemaAttrs["group"] = attr
-	}
-
 	schemaAttrs["identicon_code"] = dsschema.Int64Attribute{
 		Computed: true,
 	}
@@ -4530,14 +4484,6 @@ func dataSourceSchemaAttrsLaunchpadLaunchpadTileRO(recurse bool) map[string]dssc
 	schemaAttrs["logo"] = dsschema.StringAttribute{
 		Computed: true,
 	}
-	{
-		attr := dsschema.SingleNestedAttribute{
-			Attributes: dataSourceSchemaAttrsVaultVaultRecordPrimerRO(false),
-		}
-		attr.Computed = true
-		schemaAttrs["vault_record"] = attr
-	}
-
 	{
 		attr := dsschema.SingleNestedAttribute{
 			Attributes: dataSourceSchemaAttrsLaunchpadManualLaunchpadTileRO(false),
@@ -4622,6 +4568,14 @@ func dataSourceSchemaAttrsLaunchpadLaunchpadTile_additionalObjectsRO(recurse boo
 }
 func dataSourceSchemaAttrsLaunchpadManualLaunchpadTile(recurse bool) map[string]dsschema.Attribute {
 	schemaAttrs := make(map[string]dsschema.Attribute)
+	{
+		attr := dsschema.SingleNestedAttribute{
+			Attributes: dataSourceSchemaAttrsGroupGroupPrimer(recurse),
+		}
+		attr.Computed = true
+		schemaAttrs["group"] = attr
+	}
+
 	schemaAttrs["title"] = dsschema.StringAttribute{
 		Computed: true,
 	}
@@ -4632,6 +4586,14 @@ func dataSourceSchemaAttrsLaunchpadManualLaunchpadTile(recurse bool) map[string]
 }
 func dataSourceSchemaAttrsLaunchpadManualLaunchpadTileRO(recurse bool) map[string]dsschema.Attribute {
 	schemaAttrs := make(map[string]dsschema.Attribute)
+	{
+		attr := dsschema.SingleNestedAttribute{
+			Attributes: dataSourceSchemaAttrsGroupGroupPrimerRO(recurse),
+		}
+		attr.Computed = true
+		schemaAttrs["group"] = attr
+	}
+
 	schemaAttrs["title"] = dsschema.StringAttribute{
 		Computed: true,
 	}
@@ -4642,6 +4604,14 @@ func dataSourceSchemaAttrsLaunchpadManualLaunchpadTileRO(recurse bool) map[strin
 }
 func dataSourceSchemaAttrsLaunchpadSsoApplicationLaunchpadTile(recurse bool) map[string]dsschema.Attribute {
 	schemaAttrs := make(map[string]dsschema.Attribute)
+	{
+		attr := dsschema.SingleNestedAttribute{
+			Attributes: dataSourceSchemaAttrsClientClientApplicationPrimer(recurse),
+		}
+		attr.Computed = true
+		schemaAttrs["application"] = attr
+	}
+
 	schemaAttrs["uri"] = dsschema.StringAttribute{
 		Computed: true,
 	}
@@ -4649,6 +4619,14 @@ func dataSourceSchemaAttrsLaunchpadSsoApplicationLaunchpadTile(recurse bool) map
 }
 func dataSourceSchemaAttrsLaunchpadSsoApplicationLaunchpadTileRO(recurse bool) map[string]dsschema.Attribute {
 	schemaAttrs := make(map[string]dsschema.Attribute)
+	{
+		attr := dsschema.SingleNestedAttribute{
+			Attributes: dataSourceSchemaAttrsClientClientApplicationPrimerRO(recurse),
+		}
+		attr.Computed = true
+		schemaAttrs["application"] = attr
+	}
+
 	schemaAttrs["uri"] = dsschema.StringAttribute{
 		Computed: true,
 	}
@@ -4656,10 +4634,26 @@ func dataSourceSchemaAttrsLaunchpadSsoApplicationLaunchpadTileRO(recurse bool) m
 }
 func dataSourceSchemaAttrsLaunchpadVaultRecordLaunchpadTile(recurse bool) map[string]dsschema.Attribute {
 	schemaAttrs := make(map[string]dsschema.Attribute)
+	{
+		attr := dsschema.SingleNestedAttribute{
+			Attributes: dataSourceSchemaAttrsVaultVaultRecordPrimer(recurse),
+		}
+		attr.Computed = true
+		schemaAttrs["vault_record"] = attr
+	}
+
 	return schemaAttrs
 }
 func dataSourceSchemaAttrsLaunchpadVaultRecordLaunchpadTileRO(recurse bool) map[string]dsschema.Attribute {
 	schemaAttrs := make(map[string]dsschema.Attribute)
+	{
+		attr := dsschema.SingleNestedAttribute{
+			Attributes: dataSourceSchemaAttrsVaultVaultRecordPrimerRO(recurse),
+		}
+		attr.Computed = true
+		schemaAttrs["vault_record"] = attr
+	}
+
 	return schemaAttrs
 }
 func dataSourceSchemaAttrsMarkItemMarkerRO(recurse bool) map[string]dsschema.Attribute {
@@ -5933,6 +5927,14 @@ func dataSourceSchemaAttrsProvisioningGroupOnSystemRO(recurse bool) map[string]d
 	schemaAttrs["short_name_in_system"] = dsschema.StringAttribute{
 		Computed: true,
 	}
+	schemaAttrs["uuid"] = dsschema.StringAttribute{
+		Required: recurse,
+		Computed: !recurse,
+		Validators: []validator.String{
+			stringvalidator.UTF8LengthBetween(0, 36),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
+		},
+	}
 	schemaAttrs["account_provisioning"] = dsschema.StringAttribute{
 		Computed: true,
 	}
@@ -5981,6 +5983,14 @@ func dataSourceSchemaAttrsProvisioningGroupOnSystemPrimerRO(recurse bool) map[st
 	}
 	schemaAttrs["short_name_in_system"] = dsschema.StringAttribute{
 		Computed: true,
+	}
+	schemaAttrs["uuid"] = dsschema.StringAttribute{
+		Required: recurse,
+		Computed: !recurse,
+		Validators: []validator.String{
+			stringvalidator.UTF8LengthBetween(0, 36),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
+		},
 	}
 	return schemaAttrs
 }
@@ -6582,6 +6592,9 @@ func dataSourceSchemaAttrsProvisioningProvisionedSCIM(recurse bool) map[string]d
 		Computed:  true,
 		Sensitive: true,
 	}
+	schemaAttrs["connector_configuration"] = dsschema.StringAttribute{
+		Computed: true,
+	}
 	schemaAttrs["custom_header_name"] = dsschema.StringAttribute{
 		Computed: true,
 	}
@@ -6589,7 +6602,28 @@ func dataSourceSchemaAttrsProvisioningProvisionedSCIM(recurse bool) map[string]d
 		Computed:  true,
 		Sensitive: true,
 	}
+	schemaAttrs["external_id_supported"] = dsschema.BoolAttribute{
+		Computed: true,
+	}
+	schemaAttrs["filter_active_users_supported"] = dsschema.BoolAttribute{
+		Computed: true,
+	}
+	schemaAttrs["groups_supported"] = dsschema.BoolAttribute{
+		Computed: true,
+	}
+	schemaAttrs["page_size"] = dsschema.Int64Attribute{
+		Computed: true,
+	}
+	schemaAttrs["password_supported"] = dsschema.BoolAttribute{
+		Computed: true,
+	}
+	schemaAttrs["update_strategy"] = dsschema.StringAttribute{
+		Computed: true,
+	}
 	schemaAttrs["url"] = dsschema.StringAttribute{
+		Computed: true,
+	}
+	schemaAttrs["use_scim_json_mimetype"] = dsschema.BoolAttribute{
 		Computed: true,
 	}
 	schemaAttrs["vendor_escaped"] = dsschema.StringAttribute{
@@ -6619,6 +6653,9 @@ func dataSourceSchemaAttrsProvisioningProvisionedSCIMRO(recurse bool) map[string
 		Computed:  true,
 		Sensitive: true,
 	}
+	schemaAttrs["connector_configuration"] = dsschema.StringAttribute{
+		Computed: true,
+	}
 	schemaAttrs["custom_header_name"] = dsschema.StringAttribute{
 		Computed: true,
 	}
@@ -6626,7 +6663,28 @@ func dataSourceSchemaAttrsProvisioningProvisionedSCIMRO(recurse bool) map[string
 		Computed:  true,
 		Sensitive: true,
 	}
+	schemaAttrs["external_id_supported"] = dsschema.BoolAttribute{
+		Computed: true,
+	}
+	schemaAttrs["filter_active_users_supported"] = dsschema.BoolAttribute{
+		Computed: true,
+	}
+	schemaAttrs["groups_supported"] = dsschema.BoolAttribute{
+		Computed: true,
+	}
+	schemaAttrs["page_size"] = dsschema.Int64Attribute{
+		Computed: true,
+	}
+	schemaAttrs["password_supported"] = dsschema.BoolAttribute{
+		Computed: true,
+	}
+	schemaAttrs["update_strategy"] = dsschema.StringAttribute{
+		Computed: true,
+	}
 	schemaAttrs["url"] = dsschema.StringAttribute{
+		Computed: true,
+	}
+	schemaAttrs["use_scim_json_mimetype"] = dsschema.BoolAttribute{
 		Computed: true,
 	}
 	schemaAttrs["vendor_escaped"] = dsschema.StringAttribute{
@@ -7537,6 +7595,14 @@ func dataSourceSchemaAttrsServiceaccountServiceAccountGroupRO(recurse bool) map[
 	}
 	schemaAttrs["short_name_in_system"] = dsschema.StringAttribute{
 		Computed: true,
+	}
+	schemaAttrs["uuid"] = dsschema.StringAttribute{
+		Required: recurse,
+		Computed: !recurse,
+		Validators: []validator.String{
+			stringvalidator.UTF8LengthBetween(0, 36),
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
+		},
 	}
 	return schemaAttrs
 }

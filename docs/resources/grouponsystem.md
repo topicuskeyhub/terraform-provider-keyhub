@@ -37,6 +37,7 @@ description: |-
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--links))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--permissions))
 - `short_name_in_system` (String)
+- `uuid` (String)
 
 <a id="nestedatt--access_profile_provisioning"></a>
 ### Nested Schema for `access_profile_provisioning`
@@ -103,6 +104,7 @@ Read-Only:
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--access_profile_provisioning--group_on_system--links))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--access_profile_provisioning--group_on_system--permissions))
 - `short_name_in_system` (String)
+- `uuid` (String)
 
 <a id="nestedatt--access_profile_provisioning--group_on_system--owner"></a>
 ### Nested Schema for `access_profile_provisioning.group_on_system.owner`
@@ -263,6 +265,7 @@ Read-Only:
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--provgroups--group_on_system--links))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--provgroups--group_on_system--permissions))
 - `short_name_in_system` (String)
+- `uuid` (String)
 
 <a id="nestedatt--provgroups--group_on_system--owner"></a>
 ### Nested Schema for `provgroups.group_on_system.owner`

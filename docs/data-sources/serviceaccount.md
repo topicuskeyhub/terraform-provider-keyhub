@@ -63,6 +63,7 @@ Read-Only:
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--groups--permissions))
 - `short_name_in_system` (String)
 - `type` (String)
+- `uuid` (String)
 
 <a id="nestedatt--groups--links"></a>
 ### Nested Schema for `groups.links`

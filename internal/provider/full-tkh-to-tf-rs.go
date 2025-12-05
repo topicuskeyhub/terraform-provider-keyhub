@@ -1264,7 +1264,6 @@ func tkhToTFObjectRSClientLdapClient(recurse bool, tkh keyhubmodel.ClientLdapCli
 		diags.Append(d...)
 		obj["shared_secret"] = val
 	}
-	obj["used_for_provisioning"] = types.BoolPointerValue(tkh.GetUsedForProvisioning())
 
 	objVal, d := types.ObjectValue(attrs, obj)
 	diags.Append(d...)
@@ -1296,7 +1295,6 @@ func tkhToTFObjectRSROClientLdapClientRO(recurse bool, tkh keyhubmodel.ClientLda
 		diags.Append(d...)
 		obj["shared_secret"] = val
 	}
-	obj["used_for_provisioning"] = types.BoolPointerValue(tkh.GetUsedForProvisioning())
 
 	objVal, d := types.ObjectValue(attrs, obj)
 	diags.Append(d...)
@@ -4405,12 +4403,9 @@ func tkhToTFObjectRSLaunchpadLaunchpadTile(recurse bool, tkh keyhubmodel.Launchp
 		diags.Append(d...)
 		obj["permissions"] = val
 	}
-	obj["application_uuid"] = withUuidToTF(tkh.GetApplication())
-	obj["group_uuid"] = withUuidToTF(tkh.GetGroup())
 	obj["identicon_code"] = types.Int64PointerValue(int32PToInt64P(tkh.GetIdenticonCode()))
 	obj["launchpad_launchpad_tile_type"] = stringerToTF(tkh.GetLaunchpadLaunchpadTileType())
 	obj["logo"] = byteArrayToTfBase64(tkh.GetLogo())
-	obj["vault_record_uuid"] = withUuidToTF(tkh.GetVaultRecord())
 	{
 		tkhCast, _ := tkh.(keyhubmodel.LaunchpadManualLaunchpadTileable)
 		val, d := tkhToTFObjectRSLaunchpadManualLaunchpadTile(false, tkhCast)
@@ -4478,24 +4473,9 @@ func tkhToTFObjectRSROLaunchpadLaunchpadTileRO(recurse bool, tkh keyhubmodel.Lau
 		diags.Append(d...)
 		obj["permissions"] = val
 	}
-	{
-		val, d := tkhToTFObjectRSROClientClientApplicationPrimerRO(false, tkh.GetApplication())
-		diags.Append(d...)
-		obj["application"] = val
-	}
-	{
-		val, d := tkhToTFObjectRSROGroupGroupPrimerRO(false, tkh.GetGroup())
-		diags.Append(d...)
-		obj["group"] = val
-	}
 	obj["identicon_code"] = types.Int64PointerValue(int32PToInt64P(tkh.GetIdenticonCode()))
 	obj["launchpad_launchpad_tile_type"] = stringerToTF(tkh.GetLaunchpadLaunchpadTileType())
 	obj["logo"] = byteArrayToTfBase64(tkh.GetLogo())
-	{
-		val, d := tkhToTFObjectRSROVaultVaultRecordPrimerRO(false, tkh.GetVaultRecord())
-		diags.Append(d...)
-		obj["vault_record"] = val
-	}
 	{
 		tkhCast, _ := tkh.(keyhubmodel.LaunchpadManualLaunchpadTileable)
 		val, d := tkhToTFObjectRSROLaunchpadManualLaunchpadTileRO(false, tkhCast)
@@ -4659,6 +4639,7 @@ func tkhToTFObjectRSLaunchpadManualLaunchpadTile(recurse bool, tkh keyhubmodel.L
 	}
 
 	obj := make(map[string]attr.Value)
+	obj["group_uuid"] = withUuidToTF(tkh.GetGroup())
 	obj["title"] = types.StringPointerValue(tkh.GetTitle())
 	obj["uri"] = types.StringPointerValue(tkh.GetUri())
 
@@ -4680,6 +4661,11 @@ func tkhToTFObjectRSROLaunchpadManualLaunchpadTileRO(recurse bool, tkh keyhubmod
 	}
 
 	obj := make(map[string]attr.Value)
+	{
+		val, d := tkhToTFObjectRSROGroupGroupPrimerRO(recurse, tkh.GetGroup())
+		diags.Append(d...)
+		obj["group"] = val
+	}
 	obj["title"] = types.StringPointerValue(tkh.GetTitle())
 	obj["uri"] = types.StringPointerValue(tkh.GetUri())
 
@@ -4701,6 +4687,7 @@ func tkhToTFObjectRSLaunchpadSsoApplicationLaunchpadTile(recurse bool, tkh keyhu
 	}
 
 	obj := make(map[string]attr.Value)
+	obj["application_uuid"] = withUuidToTF(tkh.GetApplication())
 	obj["uri"] = types.StringPointerValue(tkh.GetUri())
 
 	objVal, d := types.ObjectValue(attrs, obj)
@@ -4721,6 +4708,11 @@ func tkhToTFObjectRSROLaunchpadSsoApplicationLaunchpadTileRO(recurse bool, tkh k
 	}
 
 	obj := make(map[string]attr.Value)
+	{
+		val, d := tkhToTFObjectRSROClientClientApplicationPrimerRO(recurse, tkh.GetApplication())
+		diags.Append(d...)
+		obj["application"] = val
+	}
 	obj["uri"] = types.StringPointerValue(tkh.GetUri())
 
 	objVal, d := types.ObjectValue(attrs, obj)
@@ -4741,6 +4733,7 @@ func tkhToTFObjectRSLaunchpadVaultRecordLaunchpadTile(recurse bool, tkh keyhubmo
 	}
 
 	obj := make(map[string]attr.Value)
+	obj["vault_record_uuid"] = withUuidToTF(tkh.GetVaultRecord())
 
 	objVal, d := types.ObjectValue(attrs, obj)
 	diags.Append(d...)
@@ -4760,6 +4753,11 @@ func tkhToTFObjectRSROLaunchpadVaultRecordLaunchpadTileRO(recurse bool, tkh keyh
 	}
 
 	obj := make(map[string]attr.Value)
+	{
+		val, d := tkhToTFObjectRSROVaultVaultRecordPrimerRO(recurse, tkh.GetVaultRecord())
+		diags.Append(d...)
+		obj["vault_record"] = val
+	}
 
 	objVal, d := types.ObjectValue(attrs, obj)
 	diags.Append(d...)
@@ -4924,6 +4922,7 @@ func tkhToTFObjectRSNestedProvisioningGroupOnSystem(recurse bool, tkh keyhubmode
 	obj["name_in_system"] = types.StringPointerValue(tkh.GetNameInSystem())
 	obj["type"] = stringerToTF(tkh.GetProvisioningGroupOnSystemPrimerType())
 	obj["short_name_in_system"] = types.StringPointerValue(tkh.GetShortNameInSystem())
+	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
 	obj["account_provisioning"] = stringerToTF(tkh.GetAccountProvisioning())
 	obj["owner_uuid"] = withUuidToTF(tkh.GetOwner())
 
@@ -6379,6 +6378,7 @@ func tkhToTFObjectRSROProvisioningGroupOnSystemRO(recurse bool, tkh keyhubmodel.
 	obj["name_in_system"] = types.StringPointerValue(tkh.GetNameInSystem())
 	obj["type"] = stringerToTF(tkh.GetProvisioningGroupOnSystemPrimerType())
 	obj["short_name_in_system"] = types.StringPointerValue(tkh.GetShortNameInSystem())
+	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
 	obj["account_provisioning"] = stringerToTF(tkh.GetAccountProvisioning())
 	{
 		val, d := tkhToTFObjectRSROGroupGroupPrimerRO(false, tkh.GetOwner())
@@ -6457,6 +6457,7 @@ func tkhToTFObjectRSProvisioningGroupOnSystemPrimer(recurse bool, tkh keyhubmode
 	obj["name_in_system"] = types.StringPointerValue(tkh.GetNameInSystem())
 	obj["type"] = stringerToTF(tkh.GetProvisioningGroupOnSystemPrimerType())
 	obj["short_name_in_system"] = types.StringPointerValue(tkh.GetShortNameInSystem())
+	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
 
 	objVal, d := types.ObjectValue(attrs, obj)
 	diags.Append(d...)
@@ -6500,6 +6501,7 @@ func tkhToTFObjectRSROProvisioningGroupOnSystemPrimerRO(recurse bool, tkh keyhub
 	obj["name_in_system"] = types.StringPointerValue(tkh.GetNameInSystem())
 	obj["type"] = stringerToTF(tkh.GetProvisioningGroupOnSystemPrimerType())
 	obj["short_name_in_system"] = types.StringPointerValue(tkh.GetShortNameInSystem())
+	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
 
 	objVal, d := types.ObjectValue(attrs, obj)
 	diags.Append(d...)
@@ -7031,9 +7033,17 @@ func tkhToTFObjectRSROProvisioningProvisionedSCIMRO(recurse bool, tkh keyhubmode
 	obj["basic_auth_password"] = types.StringPointerValue(tkh.GetBasicAuthPassword())
 	obj["basic_auth_username"] = types.StringPointerValue(tkh.GetBasicAuthUsername())
 	obj["bearer_token"] = types.StringPointerValue(tkh.GetBearerToken())
+	obj["connector_configuration"] = types.StringPointerValue(tkh.GetConnectorConfiguration())
 	obj["custom_header_name"] = types.StringPointerValue(tkh.GetCustomHeaderName())
 	obj["custom_header_value"] = types.StringPointerValue(tkh.GetCustomHeaderValue())
+	obj["external_id_supported"] = types.BoolPointerValue(tkh.GetExternalIdSupported())
+	obj["filter_active_users_supported"] = types.BoolPointerValue(tkh.GetFilterActiveUsersSupported())
+	obj["groups_supported"] = types.BoolPointerValue(tkh.GetGroupsSupported())
+	obj["page_size"] = types.Int64PointerValue(int32PToInt64P(tkh.GetPageSize()))
+	obj["password_supported"] = types.BoolPointerValue(tkh.GetPasswordSupported())
+	obj["update_strategy"] = stringerToTF(tkh.GetUpdateStrategy())
 	obj["url"] = types.StringPointerValue(tkh.GetUrl())
+	obj["use_scim_json_mimetype"] = types.BoolPointerValue(tkh.GetUseScimJsonMimetype())
 	obj["vendor_escaped"] = stringerToTF(tkh.GetVendorEscaped())
 
 	objVal, d := types.ObjectValue(attrs, obj)
@@ -7630,6 +7640,7 @@ func tkhToTFObjectRSROServiceaccountServiceAccountGroupRO(recurse bool, tkh keyh
 	obj["name_in_system"] = types.StringPointerValue(tkh.GetNameInSystem())
 	obj["type"] = stringerToTF(tkh.GetProvisioningGroupOnSystemPrimerType())
 	obj["short_name_in_system"] = types.StringPointerValue(tkh.GetShortNameInSystem())
+	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
 
 	objVal, d := types.ObjectValue(attrs, obj)
 	diags.Append(d...)

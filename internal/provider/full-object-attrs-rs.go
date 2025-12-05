@@ -393,7 +393,6 @@ func objectAttrsTypeRSClientLdapClient(recurse bool) map[string]attr.Type {
 	objectAttrs["client_certificate_uuid"] = types.StringType
 	objectAttrs["share_secret_in_vault"] = types.BoolType
 	objectAttrs["shared_secret"] = types.ObjectType{AttrTypes: objectAttrsTypeRSROVaultVaultRecordPrimerRO(recurse)}
-	objectAttrs["used_for_provisioning"] = types.BoolType
 	return objectAttrs
 }
 
@@ -403,7 +402,6 @@ func objectAttrsTypeRSROClientLdapClientRO(recurse bool) map[string]attr.Type {
 	objectAttrs["client_certificate"] = types.ObjectType{AttrTypes: objectAttrsTypeRSROCertificateCertificatePrimerRO(recurse)}
 	objectAttrs["share_secret_in_vault"] = types.BoolType
 	objectAttrs["shared_secret"] = types.ObjectType{AttrTypes: objectAttrsTypeRSROVaultVaultRecordPrimerRO(recurse)}
-	objectAttrs["used_for_provisioning"] = types.BoolType
 	return objectAttrs
 }
 
@@ -1348,12 +1346,9 @@ func objectAttrsTypeRSLaunchpadLaunchpadTile(recurse bool) map[string]attr.Type 
 	}
 	objectAttrs["links"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeRSRestLink(recurse)}}
 	objectAttrs["permissions"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeRSAuthPermission(recurse)}}
-	objectAttrs["application_uuid"] = types.StringType
-	objectAttrs["group_uuid"] = types.StringType
 	objectAttrs["identicon_code"] = types.Int64Type
 	objectAttrs["launchpad_launchpad_tile_type"] = types.StringType
 	objectAttrs["logo"] = types.StringType
-	objectAttrs["vault_record_uuid"] = types.StringType
 	objectAttrs["manual_launchpad_tile"] = types.ObjectType{AttrTypes: objectAttrsTypeRSLaunchpadManualLaunchpadTile(false)}
 	objectAttrs["sso_application_launchpad_tile"] = types.ObjectType{AttrTypes: objectAttrsTypeRSLaunchpadSsoApplicationLaunchpadTile(false)}
 	objectAttrs["vault_record_launchpad_tile"] = types.ObjectType{AttrTypes: objectAttrsTypeRSLaunchpadVaultRecordLaunchpadTile(false)}
@@ -1370,12 +1365,9 @@ func objectAttrsTypeRSROLaunchpadLaunchpadTileRO(recurse bool) map[string]attr.T
 	}
 	objectAttrs["links"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeRSRORestLinkRO(recurse)}}
 	objectAttrs["permissions"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeRSROAuthPermissionRO(recurse)}}
-	objectAttrs["application"] = types.ObjectType{AttrTypes: objectAttrsTypeRSROClientClientApplicationPrimerRO(false)}
-	objectAttrs["group"] = types.ObjectType{AttrTypes: objectAttrsTypeRSROGroupGroupPrimerRO(false)}
 	objectAttrs["identicon_code"] = types.Int64Type
 	objectAttrs["launchpad_launchpad_tile_type"] = types.StringType
 	objectAttrs["logo"] = types.StringType
-	objectAttrs["vault_record"] = types.ObjectType{AttrTypes: objectAttrsTypeRSROVaultVaultRecordPrimerRO(false)}
 	objectAttrs["manual_launchpad_tile"] = types.ObjectType{AttrTypes: objectAttrsTypeRSROLaunchpadManualLaunchpadTileRO(false)}
 	objectAttrs["sso_application_launchpad_tile"] = types.ObjectType{AttrTypes: objectAttrsTypeRSROLaunchpadSsoApplicationLaunchpadTileRO(false)}
 	objectAttrs["vault_record_launchpad_tile"] = types.ObjectType{AttrTypes: objectAttrsTypeRSROLaunchpadVaultRecordLaunchpadTileRO(false)}
@@ -1410,6 +1402,7 @@ func objectAttrsTypeRSROLaunchpadLaunchpadTile_additionalObjectsRO(recurse bool)
 
 func objectAttrsTypeRSLaunchpadManualLaunchpadTile(recurse bool) map[string]attr.Type {
 	objectAttrs := make(map[string]attr.Type)
+	objectAttrs["group_uuid"] = types.StringType
 	objectAttrs["title"] = types.StringType
 	objectAttrs["uri"] = types.StringType
 	return objectAttrs
@@ -1417,6 +1410,7 @@ func objectAttrsTypeRSLaunchpadManualLaunchpadTile(recurse bool) map[string]attr
 
 func objectAttrsTypeRSROLaunchpadManualLaunchpadTileRO(recurse bool) map[string]attr.Type {
 	objectAttrs := make(map[string]attr.Type)
+	objectAttrs["group"] = types.ObjectType{AttrTypes: objectAttrsTypeRSROGroupGroupPrimerRO(recurse)}
 	objectAttrs["title"] = types.StringType
 	objectAttrs["uri"] = types.StringType
 	return objectAttrs
@@ -1424,23 +1418,27 @@ func objectAttrsTypeRSROLaunchpadManualLaunchpadTileRO(recurse bool) map[string]
 
 func objectAttrsTypeRSLaunchpadSsoApplicationLaunchpadTile(recurse bool) map[string]attr.Type {
 	objectAttrs := make(map[string]attr.Type)
+	objectAttrs["application_uuid"] = types.StringType
 	objectAttrs["uri"] = types.StringType
 	return objectAttrs
 }
 
 func objectAttrsTypeRSROLaunchpadSsoApplicationLaunchpadTileRO(recurse bool) map[string]attr.Type {
 	objectAttrs := make(map[string]attr.Type)
+	objectAttrs["application"] = types.ObjectType{AttrTypes: objectAttrsTypeRSROClientClientApplicationPrimerRO(recurse)}
 	objectAttrs["uri"] = types.StringType
 	return objectAttrs
 }
 
 func objectAttrsTypeRSLaunchpadVaultRecordLaunchpadTile(recurse bool) map[string]attr.Type {
 	objectAttrs := make(map[string]attr.Type)
+	objectAttrs["vault_record_uuid"] = types.StringType
 	return objectAttrs
 }
 
 func objectAttrsTypeRSROLaunchpadVaultRecordLaunchpadTileRO(recurse bool) map[string]attr.Type {
 	objectAttrs := make(map[string]attr.Type)
+	objectAttrs["vault_record"] = types.ObjectType{AttrTypes: objectAttrsTypeRSROVaultVaultRecordPrimerRO(recurse)}
 	return objectAttrs
 }
 
@@ -1492,6 +1490,7 @@ func objectAttrsTypeRSNestedProvisioningGroupOnSystem(recurse bool) map[string]a
 	objectAttrs["name_in_system"] = types.StringType
 	objectAttrs["type"] = types.StringType
 	objectAttrs["short_name_in_system"] = types.StringType
+	objectAttrs["uuid"] = types.StringType
 	objectAttrs["account_provisioning"] = types.StringType
 	objectAttrs["owner_uuid"] = types.StringType
 	return objectAttrs
@@ -1883,6 +1882,7 @@ func objectAttrsTypeRSROProvisioningGroupOnSystemRO(recurse bool) map[string]att
 	objectAttrs["name_in_system"] = types.StringType
 	objectAttrs["type"] = types.StringType
 	objectAttrs["short_name_in_system"] = types.StringType
+	objectAttrs["uuid"] = types.StringType
 	objectAttrs["account_provisioning"] = types.StringType
 	objectAttrs["owner"] = types.ObjectType{AttrTypes: objectAttrsTypeRSROGroupGroupPrimerRO(false)}
 	return objectAttrs
@@ -1902,6 +1902,7 @@ func objectAttrsTypeRSProvisioningGroupOnSystemPrimer(recurse bool) map[string]a
 	objectAttrs["name_in_system"] = types.StringType
 	objectAttrs["type"] = types.StringType
 	objectAttrs["short_name_in_system"] = types.StringType
+	objectAttrs["uuid"] = types.StringType
 	return objectAttrs
 }
 
@@ -1913,6 +1914,7 @@ func objectAttrsTypeRSROProvisioningGroupOnSystemPrimerRO(recurse bool) map[stri
 	objectAttrs["name_in_system"] = types.StringType
 	objectAttrs["type"] = types.StringType
 	objectAttrs["short_name_in_system"] = types.StringType
+	objectAttrs["uuid"] = types.StringType
 	return objectAttrs
 }
 
@@ -2067,9 +2069,17 @@ func objectAttrsTypeRSROProvisioningProvisionedSCIMRO(recurse bool) map[string]a
 	objectAttrs["basic_auth_password"] = types.StringType
 	objectAttrs["basic_auth_username"] = types.StringType
 	objectAttrs["bearer_token"] = types.StringType
+	objectAttrs["connector_configuration"] = types.StringType
 	objectAttrs["custom_header_name"] = types.StringType
 	objectAttrs["custom_header_value"] = types.StringType
+	objectAttrs["external_id_supported"] = types.BoolType
+	objectAttrs["filter_active_users_supported"] = types.BoolType
+	objectAttrs["groups_supported"] = types.BoolType
+	objectAttrs["page_size"] = types.Int64Type
+	objectAttrs["password_supported"] = types.BoolType
+	objectAttrs["update_strategy"] = types.StringType
 	objectAttrs["url"] = types.StringType
+	objectAttrs["use_scim_json_mimetype"] = types.BoolType
 	objectAttrs["vendor_escaped"] = types.StringType
 	return objectAttrs
 }
@@ -2267,6 +2277,7 @@ func objectAttrsTypeRSROServiceaccountServiceAccountGroupRO(recurse bool) map[st
 	objectAttrs["name_in_system"] = types.StringType
 	objectAttrs["type"] = types.StringType
 	objectAttrs["short_name_in_system"] = types.StringType
+	objectAttrs["uuid"] = types.StringType
 	return objectAttrs
 }
 

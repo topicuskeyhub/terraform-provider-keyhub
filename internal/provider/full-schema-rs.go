@@ -1158,9 +1158,6 @@ func resourceSchemaAttrsClientLdapClient(recurse bool) map[string]rsschema.Attri
 		schemaAttrs["shared_secret"] = attr
 	}
 
-	schemaAttrs["used_for_provisioning"] = rsschema.BoolAttribute{
-		Computed: true,
-	}
 	return schemaAttrs
 }
 func resourceSchemaAttrsClientLdapClientRO(recurse bool) map[string]rsschema.Attribute {
@@ -1189,9 +1186,6 @@ func resourceSchemaAttrsClientLdapClientRO(recurse bool) map[string]rsschema.Att
 		schemaAttrs["shared_secret"] = attr
 	}
 
-	schemaAttrs["used_for_provisioning"] = rsschema.BoolAttribute{
-		Computed: true,
-	}
 	return schemaAttrs
 }
 func resourceSchemaAttrsClientOAuth2Client(recurse bool) map[string]rsschema.Attribute {
@@ -4204,18 +4198,6 @@ func resourceSchemaAttrsLaunchpadLaunchpadTile(recurse bool) map[string]rsschema
 		Computed:      true,
 		PlanModifiers: []planmodifier.List{listplanmodifier.UseStateForUnknown()},
 	}
-	schemaAttrs["application_uuid"] = rsschema.StringAttribute{
-		Optional: true,
-		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
-		},
-	}
-	schemaAttrs["group_uuid"] = rsschema.StringAttribute{
-		Optional: true,
-		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
-		},
-	}
 	schemaAttrs["identicon_code"] = rsschema.Int64Attribute{
 		Computed: true,
 		Optional: true,
@@ -4226,13 +4208,8 @@ func resourceSchemaAttrsLaunchpadLaunchpadTile(recurse bool) map[string]rsschema
 		PlanModifiers: []planmodifier.String{stringplanmodifier.UseStateForUnknown()},
 	}
 	schemaAttrs["logo"] = rsschema.StringAttribute{
+		Computed: true,
 		Optional: true,
-	}
-	schemaAttrs["vault_record_uuid"] = rsschema.StringAttribute{
-		Optional: true,
-		Validators: []validator.String{
-			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
-		},
 	}
 	{
 		attr := rsschema.SingleNestedAttribute{
@@ -4291,22 +4268,6 @@ func resourceSchemaAttrsLaunchpadLaunchpadTileRO(recurse bool) map[string]rssche
 		Computed:      true,
 		PlanModifiers: []planmodifier.List{listplanmodifier.UseStateForUnknown()},
 	}
-	{
-		attr := rsschema.SingleNestedAttribute{
-			Attributes: resourceSchemaAttrsClientClientApplicationPrimerRO(false),
-		}
-		attr.Optional = true
-		schemaAttrs["application"] = attr
-	}
-
-	{
-		attr := rsschema.SingleNestedAttribute{
-			Attributes: resourceSchemaAttrsGroupGroupPrimerRO(false),
-		}
-		attr.Optional = true
-		schemaAttrs["group"] = attr
-	}
-
 	schemaAttrs["identicon_code"] = rsschema.Int64Attribute{
 		Computed: true,
 		Optional: true,
@@ -4317,16 +4278,9 @@ func resourceSchemaAttrsLaunchpadLaunchpadTileRO(recurse bool) map[string]rssche
 		PlanModifiers: []planmodifier.String{stringplanmodifier.UseStateForUnknown()},
 	}
 	schemaAttrs["logo"] = rsschema.StringAttribute{
+		Computed: true,
 		Optional: true,
 	}
-	{
-		attr := rsschema.SingleNestedAttribute{
-			Attributes: resourceSchemaAttrsVaultVaultRecordPrimerRO(false),
-		}
-		attr.Optional = true
-		schemaAttrs["vault_record"] = attr
-	}
-
 	{
 		attr := rsschema.SingleNestedAttribute{
 			Attributes: resourceSchemaAttrsLaunchpadManualLaunchpadTileRO(false),
@@ -4415,6 +4369,12 @@ func resourceSchemaAttrsLaunchpadLaunchpadTile_additionalObjectsRO(recurse bool)
 }
 func resourceSchemaAttrsLaunchpadManualLaunchpadTile(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
+	schemaAttrs["group_uuid"] = rsschema.StringAttribute{
+		Required: true,
+		Validators: []validator.String{
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
+		},
+	}
 	schemaAttrs["title"] = rsschema.StringAttribute{
 		Required: true,
 		Validators: []validator.String{
@@ -4428,6 +4388,14 @@ func resourceSchemaAttrsLaunchpadManualLaunchpadTile(recurse bool) map[string]rs
 }
 func resourceSchemaAttrsLaunchpadManualLaunchpadTileRO(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsGroupGroupPrimerRO(recurse),
+		}
+		attr.Required = true
+		schemaAttrs["group"] = attr
+	}
+
 	schemaAttrs["title"] = rsschema.StringAttribute{
 		Required: true,
 		Validators: []validator.String{
@@ -4441,6 +4409,13 @@ func resourceSchemaAttrsLaunchpadManualLaunchpadTileRO(recurse bool) map[string]
 }
 func resourceSchemaAttrsLaunchpadSsoApplicationLaunchpadTile(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
+	schemaAttrs["application_uuid"] = rsschema.StringAttribute{
+		Computed: true,
+		Optional: true,
+		Validators: []validator.String{
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
+		},
+	}
 	schemaAttrs["uri"] = rsschema.StringAttribute{
 		Optional: true,
 	}
@@ -4448,6 +4423,15 @@ func resourceSchemaAttrsLaunchpadSsoApplicationLaunchpadTile(recurse bool) map[s
 }
 func resourceSchemaAttrsLaunchpadSsoApplicationLaunchpadTileRO(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsClientClientApplicationPrimerRO(recurse),
+		}
+		attr.Optional = true
+		attr.Computed = true
+		schemaAttrs["application"] = attr
+	}
+
 	schemaAttrs["uri"] = rsschema.StringAttribute{
 		Optional: true,
 	}
@@ -4455,10 +4439,26 @@ func resourceSchemaAttrsLaunchpadSsoApplicationLaunchpadTileRO(recurse bool) map
 }
 func resourceSchemaAttrsLaunchpadVaultRecordLaunchpadTile(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
+	schemaAttrs["vault_record_uuid"] = rsschema.StringAttribute{
+		Computed: true,
+		Optional: true,
+		Validators: []validator.String{
+			stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
+		},
+	}
 	return schemaAttrs
 }
 func resourceSchemaAttrsLaunchpadVaultRecordLaunchpadTileRO(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsVaultVaultRecordPrimerRO(recurse),
+		}
+		attr.Optional = true
+		attr.Computed = true
+		schemaAttrs["vault_record"] = attr
+	}
+
 	return schemaAttrs
 }
 func resourceSchemaAttrsMarkItemMarkerRO(recurse bool) map[string]rsschema.Attribute {
@@ -4585,6 +4585,10 @@ func resourceSchemaAttrsNestedProvisioningGroupOnSystem(recurse bool) map[string
 	}
 	schemaAttrs["short_name_in_system"] = rsschema.StringAttribute{
 		Computed: true,
+	}
+	schemaAttrs["uuid"] = rsschema.StringAttribute{
+		Computed:      true,
+		PlanModifiers: []planmodifier.String{stringplanmodifier.UseStateForUnknown()},
 	}
 	schemaAttrs["account_provisioning"] = rsschema.StringAttribute{
 		Computed: true,
@@ -5727,6 +5731,10 @@ func resourceSchemaAttrsProvisioningGroupOnSystemRO(recurse bool) map[string]rss
 	schemaAttrs["short_name_in_system"] = rsschema.StringAttribute{
 		Computed: true,
 	}
+	schemaAttrs["uuid"] = rsschema.StringAttribute{
+		Computed:      true,
+		PlanModifiers: []planmodifier.String{stringplanmodifier.UseStateForUnknown()},
+	}
 	schemaAttrs["account_provisioning"] = rsschema.StringAttribute{
 		Computed: true,
 		Optional: true,
@@ -5793,6 +5801,10 @@ func resourceSchemaAttrsProvisioningGroupOnSystemPrimer(recurse bool) map[string
 	schemaAttrs["short_name_in_system"] = rsschema.StringAttribute{
 		Computed: true,
 	}
+	schemaAttrs["uuid"] = rsschema.StringAttribute{
+		Computed:      true,
+		PlanModifiers: []planmodifier.String{stringplanmodifier.UseStateForUnknown()},
+	}
 	return schemaAttrs
 }
 func resourceSchemaAttrsProvisioningGroupOnSystemPrimerRO(recurse bool) map[string]rsschema.Attribute {
@@ -5830,6 +5842,10 @@ func resourceSchemaAttrsProvisioningGroupOnSystemPrimerRO(recurse bool) map[stri
 	}
 	schemaAttrs["short_name_in_system"] = rsschema.StringAttribute{
 		Computed: true,
+	}
+	schemaAttrs["uuid"] = rsschema.StringAttribute{
+		Computed:      true,
+		PlanModifiers: []planmodifier.String{stringplanmodifier.UseStateForUnknown()},
 	}
 	return schemaAttrs
 }
@@ -6276,7 +6292,7 @@ func resourceSchemaAttrsProvisioningProvisionedSCIMRO(recurse bool) map[string]r
 		Default:  stringdefault.StaticString("NONE"),
 		Validators: []validator.String{
 			stringvalidator.OneOf(
-				"NONE", "BASIC", "BEARER", "CUSTOM",
+				"NONE", "BASIC", "BEARER", "KEYHUB", "CUSTOM",
 			),
 		},
 	}
@@ -6294,6 +6310,9 @@ func resourceSchemaAttrsProvisioningProvisionedSCIMRO(recurse bool) map[string]r
 		Optional:  true,
 		Sensitive: true,
 	}
+	schemaAttrs["connector_configuration"] = rsschema.StringAttribute{
+		Optional: true,
+	}
 	schemaAttrs["custom_header_name"] = rsschema.StringAttribute{
 		Optional: true,
 		Validators: []validator.String{
@@ -6304,11 +6323,51 @@ func resourceSchemaAttrsProvisioningProvisionedSCIMRO(recurse bool) map[string]r
 		Optional:  true,
 		Sensitive: true,
 	}
+	schemaAttrs["external_id_supported"] = rsschema.BoolAttribute{
+		Computed: true,
+		Optional: true,
+		Default:  booldefault.StaticBool(false),
+	}
+	schemaAttrs["filter_active_users_supported"] = rsschema.BoolAttribute{
+		Computed: true,
+		Optional: true,
+		Default:  booldefault.StaticBool(true),
+	}
+	schemaAttrs["groups_supported"] = rsschema.BoolAttribute{
+		Computed: true,
+		Optional: true,
+		Default:  booldefault.StaticBool(false),
+	}
+	schemaAttrs["page_size"] = rsschema.Int64Attribute{
+		Computed: true,
+		Optional: true,
+		Default:  int64default.StaticInt64(100),
+	}
+	schemaAttrs["password_supported"] = rsschema.BoolAttribute{
+		Computed: true,
+		Optional: true,
+		Default:  booldefault.StaticBool(true),
+	}
+	schemaAttrs["update_strategy"] = rsschema.StringAttribute{
+		Computed: true,
+		Optional: true,
+		Default:  stringdefault.StaticString("PATCH"),
+		Validators: []validator.String{
+			stringvalidator.OneOf(
+				"PATCH", "PUT", "DELETE_POST",
+			),
+		},
+	}
 	schemaAttrs["url"] = rsschema.StringAttribute{
 		Required: true,
 		Validators: []validator.String{
 			stringvalidator.UTF8LengthBetween(0, 512),
 		},
+	}
+	schemaAttrs["use_scim_json_mimetype"] = rsschema.BoolAttribute{
+		Computed: true,
+		Optional: true,
+		Default:  booldefault.StaticBool(true),
 	}
 	schemaAttrs["vendor_escaped"] = rsschema.StringAttribute{
 		Computed: true,
@@ -6316,7 +6375,7 @@ func resourceSchemaAttrsProvisioningProvisionedSCIMRO(recurse bool) map[string]r
 		Default:  stringdefault.StaticString("DEFAULT"),
 		Validators: []validator.String{
 			stringvalidator.OneOf(
-				"DEFAULT", "AWS", "KEYSTONE",
+				"DEFAULT", "AWS", "KEYSTONE", "TOPICUS_KEYHUB_CONNECTOR", "CUSTOM",
 			),
 		},
 	}
@@ -7010,6 +7069,10 @@ func resourceSchemaAttrsServiceaccountServiceAccountGroupRO(recurse bool) map[st
 	}
 	schemaAttrs["short_name_in_system"] = rsschema.StringAttribute{
 		Computed: true,
+	}
+	schemaAttrs["uuid"] = rsschema.StringAttribute{
+		Computed:      true,
+		PlanModifiers: []planmodifier.String{stringplanmodifier.UseStateForUnknown()},
 	}
 	return schemaAttrs
 }
@@ -7820,7 +7883,7 @@ func resourceSchemaAttrsWebhookWebhookRO(recurse bool) map[string]rsschema.Attri
 		Default:  stringdefault.StaticString("NONE"),
 		Validators: []validator.String{
 			stringvalidator.OneOf(
-				"NONE", "BASIC", "BEARER", "CUSTOM",
+				"NONE", "BASIC", "BEARER", "KEYHUB", "CUSTOM",
 			),
 		},
 	}

@@ -319,33 +319,45 @@ func findFirst[T keyhubmodels.Linkableable](ctx context.Context, wrapper interfa
 }
 
 func castTKHToLaunchpadSsoApplicationLaunchpadTile(tkh keyhubmodels.LaunchpadLaunchpadTileable, diags diag.Diagnostics) (keyhubmodels.LaunchpadSsoApplicationLaunchpadTileable, diag.Diagnostics) {
+	if tkh == nil {
+		return nil, diags
+	}
 	ret, ok := tkh.(keyhubmodels.LaunchpadSsoApplicationLaunchpadTileable)
 	if !ok {
-		diags.AddError("Conversion error", "Unable convert launchpad tile to LaunchpadSsoApplicationLaunchpadTilea")
+		diags.AddError("Conversion error", "Unable to convert "+reflect.TypeOf(tkh).String()+" to LaunchpadSsoApplicationLaunchpadTileable")
 	}
 	return ret, diags
 }
 
 func castTKHToLaunchpadVaultRecordLaunchpadTile(tkh keyhubmodels.LaunchpadLaunchpadTileable, diags diag.Diagnostics) (keyhubmodels.LaunchpadVaultRecordLaunchpadTileable, diag.Diagnostics) {
-	ret, ok := tkh.(keyhubmodels.LaunchpadSsoApplicationLaunchpadTileable)
+	if tkh == nil {
+		return nil, diags
+	}
+	ret, ok := tkh.(keyhubmodels.LaunchpadVaultRecordLaunchpadTileable)
 	if !ok {
-		diags.AddError("Conversion error", "Unable convert launchpad tile to LaunchpadVaultRecordLaunchpadTile")
+		diags.AddError("Conversion error", "Unable to convert "+reflect.TypeOf(tkh).String()+" to LaunchpadVaultRecordLaunchpadTileable")
 	}
 	return ret, diags
 }
 
 func castTKHToClientOAuth2Client(tkh keyhubmodels.ClientClientApplicationable, diags diag.Diagnostics) (keyhubmodels.ClientOAuth2Clientable, diag.Diagnostics) {
+	if tkh == nil {
+		return nil, diags
+	}
 	ret, ok := tkh.(keyhubmodels.ClientOAuth2Clientable)
 	if !ok {
-		diags.AddError("Conversion error", "Unable convert client application to ClientOAuth2Client")
+		diags.AddError("Conversion error", "Unable to convert "+reflect.TypeOf(tkh).String()+" to ClientOAuth2Clientable")
 	}
 	return ret, diags
 }
 
 func castTKHToClientLdapClient(tkh keyhubmodels.ClientClientApplicationable, diags diag.Diagnostics) (keyhubmodels.ClientLdapClientable, diag.Diagnostics) {
+	if tkh == nil {
+		return nil, diags
+	}
 	ret, ok := tkh.(keyhubmodels.ClientLdapClientable)
 	if !ok {
-		diags.AddError("Conversion error", "Unable convert client application to ClientLdapClient")
+		diags.AddError("Conversion error", "Unable to convert "+reflect.TypeOf(tkh).String()+" to ClientLdapClientable")
 	}
 	return ret, diags
 }

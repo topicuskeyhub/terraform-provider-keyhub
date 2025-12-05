@@ -219,8 +219,6 @@ Read-Only:
 
 Read-Only:
 
-- `application` (Attributes) (see [below for nested schema](#nestedatt--tile--application))
-- `group` (Attributes) (see [below for nested schema](#nestedatt--tile--group))
 - `identicon_code` (Number)
 - `launchpad_launchpad_tile_type` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--tile--links))
@@ -228,113 +226,7 @@ Read-Only:
 - `manual_launchpad_tile` (Attributes) (see [below for nested schema](#nestedatt--tile--manual_launchpad_tile))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--tile--permissions))
 - `sso_application_launchpad_tile` (Attributes) (see [below for nested schema](#nestedatt--tile--sso_application_launchpad_tile))
-- `vault_record` (Attributes) (see [below for nested schema](#nestedatt--tile--vault_record))
 - `vault_record_launchpad_tile` (Attributes) (see [below for nested schema](#nestedatt--tile--vault_record_launchpad_tile))
-
-<a id="nestedatt--tile--application"></a>
-### Nested Schema for `tile.application`
-
-Read-Only:
-
-- `client_id` (String)
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--tile--application--links))
-- `name` (String)
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--tile--application--permissions))
-- `scopes` (List of String)
-- `sso_application` (Boolean)
-- `type` (String)
-- `uuid` (String)
-
-<a id="nestedatt--tile--application--links"></a>
-### Nested Schema for `tile.application.links`
-
-Read-Only:
-
-- `href` (String)
-- `id` (Number)
-- `rel` (String)
-- `type_escaped` (String)
-
-
-<a id="nestedatt--tile--application--permissions"></a>
-### Nested Schema for `tile.application.permissions`
-
-Read-Only:
-
-- `full` (String)
-- `instances` (List of String)
-- `operations` (Set of String)
-- `type_escaped` (String)
-
-
-
-<a id="nestedatt--tile--group"></a>
-### Nested Schema for `tile.group`
-
-Read-Only:
-
-- `admin` (Boolean)
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--tile--group--links))
-- `name` (String)
-- `organizational_unit` (Attributes) (see [below for nested schema](#nestedatt--tile--group--organizational_unit))
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--tile--group--permissions))
-- `uuid` (String)
-
-<a id="nestedatt--tile--group--links"></a>
-### Nested Schema for `tile.group.links`
-
-Read-Only:
-
-- `href` (String)
-- `id` (Number)
-- `rel` (String)
-- `type_escaped` (String)
-
-
-<a id="nestedatt--tile--group--organizational_unit"></a>
-### Nested Schema for `tile.group.organizational_unit`
-
-Read-Only:
-
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--tile--group--organizational_unit--links))
-- `name` (String)
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--tile--group--organizational_unit--permissions))
-- `uuid` (String)
-
-<a id="nestedatt--tile--group--organizational_unit--links"></a>
-### Nested Schema for `tile.group.organizational_unit.links`
-
-Read-Only:
-
-- `href` (String)
-- `id` (Number)
-- `rel` (String)
-- `type_escaped` (String)
-
-
-<a id="nestedatt--tile--group--organizational_unit--permissions"></a>
-### Nested Schema for `tile.group.organizational_unit.permissions`
-
-Read-Only:
-
-- `full` (String)
-- `instances` (List of String)
-- `operations` (Set of String)
-- `type_escaped` (String)
-
-
-
-<a id="nestedatt--tile--group--permissions"></a>
-### Nested Schema for `tile.group.permissions`
-
-Read-Only:
-
-- `full` (String)
-- `instances` (List of String)
-- `operations` (Set of String)
-- `type_escaped` (String)
-
-
 
 <a id="nestedatt--tile--links"></a>
 ### Nested Schema for `tile.links`
@@ -352,8 +244,77 @@ Read-Only:
 
 Read-Only:
 
+- `group` (Attributes) (see [below for nested schema](#nestedatt--tile--manual_launchpad_tile--group))
 - `title` (String)
 - `uri` (String)
+
+<a id="nestedatt--tile--manual_launchpad_tile--group"></a>
+### Nested Schema for `tile.manual_launchpad_tile.group`
+
+Read-Only:
+
+- `admin` (Boolean)
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--tile--manual_launchpad_tile--group--links))
+- `name` (String)
+- `organizational_unit` (Attributes) (see [below for nested schema](#nestedatt--tile--manual_launchpad_tile--group--organizational_unit))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--tile--manual_launchpad_tile--group--permissions))
+- `uuid` (String)
+
+<a id="nestedatt--tile--manual_launchpad_tile--group--links"></a>
+### Nested Schema for `tile.manual_launchpad_tile.group.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--tile--manual_launchpad_tile--group--organizational_unit"></a>
+### Nested Schema for `tile.manual_launchpad_tile.group.organizational_unit`
+
+Read-Only:
+
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--tile--manual_launchpad_tile--group--organizational_unit--links))
+- `name` (String)
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--tile--manual_launchpad_tile--group--organizational_unit--permissions))
+- `uuid` (String)
+
+<a id="nestedatt--tile--manual_launchpad_tile--group--organizational_unit--links"></a>
+### Nested Schema for `tile.manual_launchpad_tile.group.organizational_unit.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--tile--manual_launchpad_tile--group--organizational_unit--permissions"></a>
+### Nested Schema for `tile.manual_launchpad_tile.group.organizational_unit.permissions`
+
+Read-Only:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
+
+<a id="nestedatt--tile--manual_launchpad_tile--group--permissions"></a>
+### Nested Schema for `tile.manual_launchpad_tile.group.permissions`
+
+Read-Only:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
 
 
 <a id="nestedatt--tile--permissions"></a>
@@ -372,23 +333,25 @@ Read-Only:
 
 Read-Only:
 
+- `application` (Attributes) (see [below for nested schema](#nestedatt--tile--sso_application_launchpad_tile--application))
 - `uri` (String)
 
-
-<a id="nestedatt--tile--vault_record"></a>
-### Nested Schema for `tile.vault_record`
+<a id="nestedatt--tile--sso_application_launchpad_tile--application"></a>
+### Nested Schema for `tile.sso_application_launchpad_tile.application`
 
 Read-Only:
 
-- `color` (String)
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--tile--vault_record--links))
+- `client_id` (String)
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--tile--sso_application_launchpad_tile--application--links))
 - `name` (String)
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--tile--vault_record--permissions))
-- `share_end_time` (String)
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--tile--sso_application_launchpad_tile--application--permissions))
+- `scopes` (List of String)
+- `sso_application` (Boolean)
+- `type` (String)
 - `uuid` (String)
 
-<a id="nestedatt--tile--vault_record--links"></a>
-### Nested Schema for `tile.vault_record.links`
+<a id="nestedatt--tile--sso_application_launchpad_tile--application--links"></a>
+### Nested Schema for `tile.sso_application_launchpad_tile.application.links`
 
 Read-Only:
 
@@ -398,8 +361,8 @@ Read-Only:
 - `type_escaped` (String)
 
 
-<a id="nestedatt--tile--vault_record--permissions"></a>
-### Nested Schema for `tile.vault_record.permissions`
+<a id="nestedatt--tile--sso_application_launchpad_tile--application--permissions"></a>
+### Nested Schema for `tile.sso_application_launchpad_tile.application.permissions`
 
 Read-Only:
 
@@ -410,8 +373,48 @@ Read-Only:
 
 
 
+
 <a id="nestedatt--tile--vault_record_launchpad_tile"></a>
 ### Nested Schema for `tile.vault_record_launchpad_tile`
+
+Read-Only:
+
+- `vault_record` (Attributes) (see [below for nested schema](#nestedatt--tile--vault_record_launchpad_tile--vault_record))
+
+<a id="nestedatt--tile--vault_record_launchpad_tile--vault_record"></a>
+### Nested Schema for `tile.vault_record_launchpad_tile.vault_record`
+
+Read-Only:
+
+- `color` (String)
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--tile--vault_record_launchpad_tile--vault_record--links))
+- `name` (String)
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--tile--vault_record_launchpad_tile--vault_record--permissions))
+- `share_end_time` (String)
+- `uuid` (String)
+
+<a id="nestedatt--tile--vault_record_launchpad_tile--vault_record--links"></a>
+### Nested Schema for `tile.vault_record_launchpad_tile.vault_record.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--tile--vault_record_launchpad_tile--vault_record--permissions"></a>
+### Nested Schema for `tile.vault_record_launchpad_tile.vault_record.permissions`
+
+Read-Only:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
 
 
 

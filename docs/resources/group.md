@@ -342,7 +342,6 @@ Read-Only:
 
 - `bind_dn` (String)
 - `shared_secret` (Attributes) (see [below for nested schema](#nestedatt--administered_clients--ldap_client--shared_secret))
-- `used_for_provisioning` (Boolean)
 
 <a id="nestedatt--administered_clients--ldap_client--client_certificate"></a>
 ### Nested Schema for `administered_clients.ldap_client.client_certificate`
@@ -1519,7 +1518,6 @@ Read-Only:
 
 - `bind_dn` (String)
 - `shared_secret` (Attributes) (see [below for nested schema](#nestedatt--administered_systems--provisioned_internal_ldap--client--ldap_client--shared_secret))
-- `used_for_provisioning` (Boolean)
 
 <a id="nestedatt--administered_systems--provisioned_internal_ldap--client--ldap_client--client_certificate"></a>
 ### Nested Schema for `administered_systems.provisioned_internal_ldap.client.ldap_client.client_certificate`
@@ -2383,8 +2381,16 @@ Optional:
 - `basic_auth_password` (String, Sensitive)
 - `basic_auth_username` (String)
 - `bearer_token` (String, Sensitive)
+- `connector_configuration` (String)
 - `custom_header_name` (String)
 - `custom_header_value` (String, Sensitive)
+- `external_id_supported` (Boolean)
+- `filter_active_users_supported` (Boolean)
+- `groups_supported` (Boolean)
+- `page_size` (Number)
+- `password_supported` (Boolean)
+- `update_strategy` (String)
+- `use_scim_json_mimetype` (Boolean)
 - `vendor_escaped` (String)
 
 <a id="nestedatt--administered_systems--provisioned_scim--attributes"></a>
@@ -4058,7 +4064,6 @@ Read-Only:
 
 - `bind_dn` (String)
 - `shared_secret` (Attributes) (see [below for nested schema](#nestedatt--content_administered_systems--provisioned_internal_ldap--client--ldap_client--shared_secret))
-- `used_for_provisioning` (Boolean)
 
 <a id="nestedatt--content_administered_systems--provisioned_internal_ldap--client--ldap_client--client_certificate"></a>
 ### Nested Schema for `content_administered_systems.provisioned_internal_ldap.client.ldap_client.client_certificate`
@@ -4922,8 +4927,16 @@ Optional:
 - `basic_auth_password` (String, Sensitive)
 - `basic_auth_username` (String)
 - `bearer_token` (String, Sensitive)
+- `connector_configuration` (String)
 - `custom_header_name` (String)
 - `custom_header_value` (String, Sensitive)
+- `external_id_supported` (Boolean)
+- `filter_active_users_supported` (Boolean)
+- `groups_supported` (Boolean)
+- `page_size` (Number)
+- `password_supported` (Boolean)
+- `update_strategy` (String)
+- `use_scim_json_mimetype` (Boolean)
 - `vendor_escaped` (String)
 
 <a id="nestedatt--content_administered_systems--provisioned_scim--attributes"></a>
@@ -5724,7 +5737,6 @@ Read-Only:
 
 - `bind_dn` (String)
 - `shared_secret` (Attributes) (see [below for nested schema](#nestedatt--owned_clients--ldap_client--shared_secret))
-- `used_for_provisioning` (Boolean)
 
 <a id="nestedatt--owned_clients--ldap_client--client_certificate"></a>
 ### Nested Schema for `owned_clients.ldap_client.client_certificate`
@@ -6657,6 +6669,7 @@ Read-Only:
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_groups_on_system--items--links))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_groups_on_system--items--permissions))
 - `short_name_in_system` (String)
+- `uuid` (String)
 
 <a id="nestedatt--owned_groups_on_system--items--owner"></a>
 ### Nested Schema for `owned_groups_on_system.items.owner`
@@ -8016,7 +8029,6 @@ Read-Only:
 
 - `bind_dn` (String)
 - `shared_secret` (Attributes) (see [below for nested schema](#nestedatt--owned_systems--provisioned_internal_ldap--client--ldap_client--shared_secret))
-- `used_for_provisioning` (Boolean)
 
 <a id="nestedatt--owned_systems--provisioned_internal_ldap--client--ldap_client--client_certificate"></a>
 ### Nested Schema for `owned_systems.provisioned_internal_ldap.client.ldap_client.client_certificate`
@@ -8880,8 +8892,16 @@ Optional:
 - `basic_auth_password` (String, Sensitive)
 - `basic_auth_username` (String)
 - `bearer_token` (String, Sensitive)
+- `connector_configuration` (String)
 - `custom_header_name` (String)
 - `custom_header_value` (String, Sensitive)
+- `external_id_supported` (Boolean)
+- `filter_active_users_supported` (Boolean)
+- `groups_supported` (Boolean)
+- `page_size` (Number)
+- `password_supported` (Boolean)
+- `update_strategy` (String)
+- `use_scim_json_mimetype` (Boolean)
 - `vendor_escaped` (String)
 
 <a id="nestedatt--owned_systems--provisioned_scim--attributes"></a>
@@ -9469,6 +9489,7 @@ Read-Only:
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--systems--group_on_system--links))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--systems--group_on_system--permissions))
 - `short_name_in_system` (String)
+- `uuid` (String)
 
 <a id="nestedatt--systems--group_on_system--owner"></a>
 ### Nested Schema for `systems.group_on_system.owner`

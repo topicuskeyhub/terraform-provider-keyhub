@@ -236,7 +236,6 @@ Read-Only:
 
 - `bind_dn` (String)
 - `shared_secret` (Attributes) (see [below for nested schema](#nestedatt--ldap_client--shared_secret))
-- `used_for_provisioning` (Boolean)
 
 <a id="nestedatt--ldap_client--shared_secret"></a>
 ### Nested Schema for `ldap_client.shared_secret`
@@ -488,14 +487,11 @@ Optional:
 
 Optional:
 
-- `application_uuid` (String)
-- `group_uuid` (String)
 - `identicon_code` (Number)
 - `logo` (String)
 - `manual_launchpad_tile` (Attributes) (see [below for nested schema](#nestedatt--tile--manual_launchpad_tile))
 - `sso_application_launchpad_tile` (Attributes) (see [below for nested schema](#nestedatt--tile--sso_application_launchpad_tile))
 - `vault_record_launchpad_tile` (Attributes) (see [below for nested schema](#nestedatt--tile--vault_record_launchpad_tile))
-- `vault_record_uuid` (String)
 
 Read-Only:
 
@@ -508,6 +504,7 @@ Read-Only:
 
 Required:
 
+- `group_uuid` (String)
 - `title` (String)
 - `uri` (String)
 
@@ -517,11 +514,16 @@ Required:
 
 Optional:
 
+- `application_uuid` (String)
 - `uri` (String)
 
 
 <a id="nestedatt--tile--vault_record_launchpad_tile"></a>
 ### Nested Schema for `tile.vault_record_launchpad_tile`
+
+Optional:
+
+- `vault_record_uuid` (String)
 
 
 <a id="nestedatt--tile--links"></a>
