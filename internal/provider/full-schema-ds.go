@@ -3076,6 +3076,14 @@ func dataSourceSchemaAttrsGroupGroupClassification(recurse bool) map[string]dssc
 	schemaAttrs["name"] = dsschema.StringAttribute{
 		Computed: true,
 	}
+	{
+		attr := dsschema.SingleNestedAttribute{
+			Attributes: dataSourceSchemaAttrsOrganizationOrganizationalUnitPrimer(recurse),
+		}
+		attr.Computed = true
+		schemaAttrs["organizational_unit"] = attr
+	}
+
 	schemaAttrs["uuid"] = dsschema.StringAttribute{
 		Required: recurse,
 		Computed: !recurse,
@@ -3147,6 +3155,14 @@ func dataSourceSchemaAttrsGroupGroupClassificationPrimer(recurse bool) map[strin
 	schemaAttrs["name"] = dsschema.StringAttribute{
 		Computed: true,
 	}
+	{
+		attr := dsschema.SingleNestedAttribute{
+			Attributes: dataSourceSchemaAttrsOrganizationOrganizationalUnitPrimer(recurse),
+		}
+		attr.Computed = true
+		schemaAttrs["organizational_unit"] = attr
+	}
+
 	schemaAttrs["uuid"] = dsschema.StringAttribute{
 		Required: recurse,
 		Computed: !recurse,
@@ -3174,6 +3190,14 @@ func dataSourceSchemaAttrsGroupGroupClassificationPrimerRO(recurse bool) map[str
 	schemaAttrs["name"] = dsschema.StringAttribute{
 		Computed: true,
 	}
+	{
+		attr := dsschema.SingleNestedAttribute{
+			Attributes: dataSourceSchemaAttrsOrganizationOrganizationalUnitPrimerRO(recurse),
+		}
+		attr.Computed = true
+		schemaAttrs["organizational_unit"] = attr
+	}
+
 	schemaAttrs["uuid"] = dsschema.StringAttribute{
 		Required: recurse,
 		Computed: !recurse,
@@ -4137,6 +4161,15 @@ func dataSourceSchemaAttrsIdentityAccountAttributeDefinition(recurse bool) map[s
 	schemaAttrs["name"] = dsschema.StringAttribute{
 		Computed: true,
 	}
+	schemaAttrs["properties"] = dsschema.ListNestedAttribute{
+		NestedObject: dsschema.NestedAttributeObject{
+			Attributes: dataSourceSchemaAttrsIdentityAccountAttributeDefinitionProperty(false),
+		},
+		Computed: true,
+	}
+	schemaAttrs["property_handling"] = dsschema.StringAttribute{
+		Computed: true,
+	}
 	schemaAttrs["required"] = dsschema.BoolAttribute{
 		Computed: true,
 	}
@@ -4189,6 +4222,15 @@ func dataSourceSchemaAttrsIdentityAccountAttributeDefinitionRO(recurse bool) map
 	schemaAttrs["name"] = dsschema.StringAttribute{
 		Computed: true,
 	}
+	schemaAttrs["properties"] = dsschema.ListNestedAttribute{
+		NestedObject: dsschema.NestedAttributeObject{
+			Attributes: dataSourceSchemaAttrsIdentityAccountAttributeDefinitionPropertyRO(false),
+		},
+		Computed: true,
+	}
+	schemaAttrs["property_handling"] = dsschema.StringAttribute{
+		Computed: true,
+	}
 	schemaAttrs["required"] = dsschema.BoolAttribute{
 		Computed: true,
 	}
@@ -4196,6 +4238,38 @@ func dataSourceSchemaAttrsIdentityAccountAttributeDefinitionRO(recurse bool) map
 		Computed: true,
 	}
 	schemaAttrs["unique"] = dsschema.BoolAttribute{
+		Computed: true,
+	}
+	return schemaAttrs
+}
+func dataSourceSchemaAttrsIdentityAccountAttributeDefinitionProperty(recurse bool) map[string]dsschema.Attribute {
+	schemaAttrs := make(map[string]dsschema.Attribute)
+	schemaAttrs["format"] = dsschema.StringAttribute{
+		Computed: true,
+	}
+	schemaAttrs["list"] = dsschema.BoolAttribute{
+		Computed: true,
+	}
+	schemaAttrs["name"] = dsschema.StringAttribute{
+		Computed: true,
+	}
+	schemaAttrs["required"] = dsschema.BoolAttribute{
+		Computed: true,
+	}
+	return schemaAttrs
+}
+func dataSourceSchemaAttrsIdentityAccountAttributeDefinitionPropertyRO(recurse bool) map[string]dsschema.Attribute {
+	schemaAttrs := make(map[string]dsschema.Attribute)
+	schemaAttrs["format"] = dsschema.StringAttribute{
+		Computed: true,
+	}
+	schemaAttrs["list"] = dsschema.BoolAttribute{
+		Computed: true,
+	}
+	schemaAttrs["name"] = dsschema.StringAttribute{
+		Computed: true,
+	}
+	schemaAttrs["required"] = dsschema.BoolAttribute{
 		Computed: true,
 	}
 	return schemaAttrs
@@ -6217,6 +6291,9 @@ func dataSourceSchemaAttrsProvisioningProvisionedAccountRO(recurse bool) map[str
 	schemaAttrs["validity"] = dsschema.StringAttribute{
 		Computed: true,
 	}
+	schemaAttrs["login_name"] = dsschema.StringAttribute{
+		Computed: true,
+	}
 	schemaAttrs["uid"] = dsschema.Int64Attribute{
 		Computed: true,
 	}
@@ -6777,7 +6854,13 @@ func dataSourceSchemaAttrsProvisioningProvisionedSystem(recurse bool) map[string
 		schemaAttrs["content_administrator"] = attr
 	}
 
+	schemaAttrs["effective_full_sync_interval"] = dsschema.Int64Attribute{
+		Computed: true,
+	}
 	schemaAttrs["external_uuid"] = dsschema.StringAttribute{
+		Computed: true,
+	}
+	schemaAttrs["full_sync_interval"] = dsschema.Int64Attribute{
 		Computed: true,
 	}
 	schemaAttrs["group_on_system_provisioning"] = dsschema.StringAttribute{
@@ -6814,6 +6897,9 @@ func dataSourceSchemaAttrsProvisioningProvisionedSystem(recurse bool) map[string
 		schemaAttrs["technical_administrator"] = attr
 	}
 
+	schemaAttrs["trace_logging_enabled"] = dsschema.BoolAttribute{
+		Computed: true,
+	}
 	schemaAttrs["username_prefix"] = dsschema.StringAttribute{
 		Computed: true,
 	}
@@ -6984,7 +7070,13 @@ func dataSourceSchemaAttrsProvisioningProvisionedSystemRO(recurse bool) map[stri
 		schemaAttrs["content_administrator"] = attr
 	}
 
+	schemaAttrs["effective_full_sync_interval"] = dsschema.Int64Attribute{
+		Computed: true,
+	}
 	schemaAttrs["external_uuid"] = dsschema.StringAttribute{
+		Computed: true,
+	}
+	schemaAttrs["full_sync_interval"] = dsschema.Int64Attribute{
 		Computed: true,
 	}
 	schemaAttrs["group_on_system_provisioning"] = dsschema.StringAttribute{
@@ -7021,6 +7113,9 @@ func dataSourceSchemaAttrsProvisioningProvisionedSystemRO(recurse bool) map[stri
 		schemaAttrs["technical_administrator"] = attr
 	}
 
+	schemaAttrs["trace_logging_enabled"] = dsschema.BoolAttribute{
+		Computed: true,
+	}
 	schemaAttrs["username_prefix"] = dsschema.StringAttribute{
 		Computed: true,
 	}
@@ -7257,7 +7352,8 @@ func dataSourceSchemaAttrsProvisioningProvisionedSystem_additionalObjects(recurs
 	}
 
 	schemaAttrs["login_name"] = dsschema.StringAttribute{
-		Computed: true,
+		Computed:           true,
+		DeprecationMessage: "This property will be removed in a future version.",
 	}
 	{
 		attr := dsschema.SingleNestedAttribute{
@@ -7318,7 +7414,8 @@ func dataSourceSchemaAttrsProvisioningProvisionedSystem_additionalObjectsRO(recu
 	}
 
 	schemaAttrs["login_name"] = dsschema.StringAttribute{
-		Computed: true,
+		Computed:           true,
+		DeprecationMessage: "This property will be removed in a future version.",
 	}
 	{
 		attr := dsschema.SingleNestedAttribute{
@@ -8344,14 +8441,6 @@ func dataSourceSchemaAttrsWebhookWebhook(recurse bool) map[string]dsschema.Attri
 		},
 		Computed: true,
 	}
-	{
-		attr := dsschema.SingleNestedAttribute{
-			Attributes: dataSourceSchemaAttrsAuthAccountPrimer(false),
-		}
-		attr.Computed = true
-		schemaAttrs["account"] = attr
-	}
-
 	schemaAttrs["active"] = dsschema.BoolAttribute{
 		Computed: true,
 	}
@@ -8414,6 +8503,14 @@ func dataSourceSchemaAttrsWebhookWebhook(recurse bool) map[string]dsschema.Attri
 	schemaAttrs["name"] = dsschema.StringAttribute{
 		Computed: true,
 	}
+	{
+		attr := dsschema.SingleNestedAttribute{
+			Attributes: dataSourceSchemaAttrsServiceaccountServiceAccountPrimer(false),
+		}
+		attr.Computed = true
+		schemaAttrs["service_account"] = attr
+	}
+
 	{
 		attr := dsschema.SingleNestedAttribute{
 			Attributes: dataSourceSchemaAttrsProvisioningProvisionedSystemPrimer(false),
@@ -8482,14 +8579,6 @@ func dataSourceSchemaAttrsWebhookWebhookRO(recurse bool) map[string]dsschema.Att
 		},
 		Computed: true,
 	}
-	{
-		attr := dsschema.SingleNestedAttribute{
-			Attributes: dataSourceSchemaAttrsAuthAccountPrimerRO(false),
-		}
-		attr.Computed = true
-		schemaAttrs["account"] = attr
-	}
-
 	schemaAttrs["active"] = dsschema.BoolAttribute{
 		Computed: true,
 	}
@@ -8552,6 +8641,14 @@ func dataSourceSchemaAttrsWebhookWebhookRO(recurse bool) map[string]dsschema.Att
 	schemaAttrs["name"] = dsschema.StringAttribute{
 		Computed: true,
 	}
+	{
+		attr := dsschema.SingleNestedAttribute{
+			Attributes: dataSourceSchemaAttrsServiceaccountServiceAccountPrimerRO(false),
+		}
+		attr.Computed = true
+		schemaAttrs["service_account"] = attr
+	}
+
 	{
 		attr := dsschema.SingleNestedAttribute{
 			Attributes: dataSourceSchemaAttrsProvisioningProvisionedSystemPrimerRO(false),

@@ -35,11 +35,13 @@ description: |-
 - `cleanup_period` (Attributes) (see [below for nested schema](#nestedatt--cleanup_period))
 - `content_admin_permissions` (Boolean)
 - `content_administrator` (Attributes) (see [below for nested schema](#nestedatt--content_administrator))
+- `effective_full_sync_interval` (Number)
 - `external_uuid` (String)
+- `full_sync_interval` (Number)
 - `group_on_system_provisioning` (String)
 - `issued_permissions` (Attributes List) (see [below for nested schema](#nestedatt--issued_permissions))
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--links))
-- `login_name` (String)
+- `login_name` (String, Deprecated)
 - `management_permissions` (Attributes) (see [below for nested schema](#nestedatt--management_permissions))
 - `markers` (Attributes) (see [below for nested schema](#nestedatt--markers))
 - `name` (String)
@@ -64,6 +66,7 @@ description: |-
 - `statistics` (Attributes) (see [below for nested schema](#nestedatt--statistics))
 - `supported_group_types` (Attributes) (see [below for nested schema](#nestedatt--supported_group_types))
 - `technical_administrator` (Attributes) (see [below for nested schema](#nestedatt--technical_administrator))
+- `trace_logging_enabled` (Boolean)
 - `type` (String)
 - `username_prefix` (String)
 
@@ -109,6 +112,8 @@ Read-Only:
 - `list` (Boolean)
 - `name` (String)
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--abstract_provisioned_ldap--attributes--attribute_definition--permissions))
+- `properties` (Attributes List) (see [below for nested schema](#nestedatt--abstract_provisioned_ldap--attributes--attribute_definition--properties))
+- `property_handling` (String)
 - `required` (Boolean)
 - `system_definition` (String)
 - `unique` (Boolean)
@@ -133,6 +138,17 @@ Read-Only:
 - `instances` (List of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
+
+
+<a id="nestedatt--abstract_provisioned_ldap--attributes--attribute_definition--properties"></a>
+### Nested Schema for `abstract_provisioned_ldap.attributes.attribute_definition.properties`
+
+Read-Only:
+
+- `format` (String)
+- `list` (Boolean)
+- `name` (String)
+- `required` (Boolean)
 
 
 
@@ -266,6 +282,7 @@ Read-Only:
 - `display_name` (String)
 - `last_active` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--account--links))
+- `login_name` (String)
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--account--permissions))
 - `uid` (Number)
 - `username` (String)
@@ -563,6 +580,8 @@ Read-Only:
 - `list` (Boolean)
 - `name` (String)
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--issued_permissions--client--oauth2_client--attributes--attribute_definition--permissions))
+- `properties` (Attributes List) (see [below for nested schema](#nestedatt--issued_permissions--client--oauth2_client--attributes--attribute_definition--properties))
+- `property_handling` (String)
 - `required` (Boolean)
 - `system_definition` (String)
 - `unique` (Boolean)
@@ -587,6 +606,17 @@ Read-Only:
 - `instances` (List of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
+
+
+<a id="nestedatt--issued_permissions--client--oauth2_client--attributes--attribute_definition--properties"></a>
+### Nested Schema for `issued_permissions.client.oauth2_client.attributes.attribute_definition.properties`
+
+Read-Only:
+
+- `format` (String)
+- `list` (Boolean)
+- `name` (String)
+- `required` (Boolean)
 
 
 
@@ -736,6 +766,8 @@ Read-Only:
 - `list` (Boolean)
 - `name` (String)
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--issued_permissions--client--saml2_client--attributes--attribute_definition--permissions))
+- `properties` (Attributes List) (see [below for nested schema](#nestedatt--issued_permissions--client--saml2_client--attributes--attribute_definition--properties))
+- `property_handling` (String)
 - `required` (Boolean)
 - `system_definition` (String)
 - `unique` (Boolean)
@@ -760,6 +792,17 @@ Read-Only:
 - `instances` (List of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
+
+
+<a id="nestedatt--issued_permissions--client--saml2_client--attributes--attribute_definition--properties"></a>
+### Nested Schema for `issued_permissions.client.saml2_client.attributes.attribute_definition.properties`
+
+Read-Only:
+
+- `format` (String)
+- `list` (Boolean)
+- `name` (String)
+- `required` (Boolean)
 
 
 
@@ -1472,6 +1515,8 @@ Read-Only:
 - `list` (Boolean)
 - `name` (String)
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--provisioned_ldap_directory--attributes--attribute_definition--permissions))
+- `properties` (Attributes List) (see [below for nested schema](#nestedatt--provisioned_ldap_directory--attributes--attribute_definition--properties))
+- `property_handling` (String)
 - `required` (Boolean)
 - `system_definition` (String)
 - `unique` (Boolean)
@@ -1496,6 +1541,17 @@ Read-Only:
 - `instances` (List of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
+
+
+<a id="nestedatt--provisioned_ldap_directory--attributes--attribute_definition--properties"></a>
+### Nested Schema for `provisioned_ldap_directory.attributes.attribute_definition.properties`
+
+Read-Only:
+
+- `format` (String)
+- `list` (Boolean)
+- `name` (String)
+- `required` (Boolean)
 
 
 
@@ -1729,6 +1785,8 @@ Read-Only:
 - `list` (Boolean)
 - `name` (String)
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--provisioned_scim--attributes--attribute_definition--permissions))
+- `properties` (Attributes List) (see [below for nested schema](#nestedatt--provisioned_scim--attributes--attribute_definition--properties))
+- `property_handling` (String)
 - `required` (Boolean)
 - `system_definition` (String)
 - `unique` (Boolean)
@@ -1753,6 +1811,17 @@ Read-Only:
 - `instances` (List of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
+
+
+<a id="nestedatt--provisioned_scim--attributes--attribute_definition--properties"></a>
+### Nested Schema for `provisioned_scim.attributes.attribute_definition.properties`
+
+Read-Only:
+
+- `format` (String)
+- `list` (Boolean)
+- `name` (String)
+- `required` (Boolean)
 
 
 

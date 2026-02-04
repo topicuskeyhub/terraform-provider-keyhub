@@ -1147,6 +1147,7 @@ func objectAttrsTypeDSGroupGroupClassification(recurse bool) map[string]attr.Typ
 	objectAttrs["links"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSRestLink(recurse)}}
 	objectAttrs["permissions"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSAuthPermission(recurse)}}
 	objectAttrs["name"] = types.StringType
+	objectAttrs["organizational_unit"] = types.ObjectType{AttrTypes: objectAttrsTypeDSOrganizationOrganizationalUnitPrimer(recurse)}
 	objectAttrs["uuid"] = types.StringType
 	objectAttrs["authorizing_group_auditing_required"] = types.BoolType
 	objectAttrs["authorizing_group_delegation_required"] = types.BoolType
@@ -1174,6 +1175,7 @@ func objectAttrsTypeDSGroupGroupClassificationPrimer(recurse bool) map[string]at
 	objectAttrs["links"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSRestLink(recurse)}}
 	objectAttrs["permissions"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSAuthPermission(recurse)}}
 	objectAttrs["name"] = types.StringType
+	objectAttrs["organizational_unit"] = types.ObjectType{AttrTypes: objectAttrsTypeDSOrganizationOrganizationalUnitPrimer(recurse)}
 	objectAttrs["uuid"] = types.StringType
 	return objectAttrs
 }
@@ -1183,6 +1185,7 @@ func objectAttrsTypeDSROGroupGroupClassificationPrimerRO(recurse bool) map[strin
 	objectAttrs["links"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSRORestLinkRO(recurse)}}
 	objectAttrs["permissions"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSROAuthPermissionRO(recurse)}}
 	objectAttrs["name"] = types.StringType
+	objectAttrs["organizational_unit"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROOrganizationOrganizationalUnitPrimerRO(recurse)}
 	objectAttrs["uuid"] = types.StringType
 	return objectAttrs
 }
@@ -1463,6 +1466,8 @@ func objectAttrsTypeDSIdentityAccountAttributeDefinition(recurse bool) map[strin
 	objectAttrs["freely_useable"] = types.BoolType
 	objectAttrs["list"] = types.BoolType
 	objectAttrs["name"] = types.StringType
+	objectAttrs["properties"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSIdentityAccountAttributeDefinitionProperty(false)}}
+	objectAttrs["property_handling"] = types.StringType
 	objectAttrs["required"] = types.BoolType
 	objectAttrs["system_definition"] = types.StringType
 	objectAttrs["unique"] = types.BoolType
@@ -1483,9 +1488,29 @@ func objectAttrsTypeDSROIdentityAccountAttributeDefinitionRO(recurse bool) map[s
 	objectAttrs["freely_useable"] = types.BoolType
 	objectAttrs["list"] = types.BoolType
 	objectAttrs["name"] = types.StringType
+	objectAttrs["properties"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSROIdentityAccountAttributeDefinitionPropertyRO(false)}}
+	objectAttrs["property_handling"] = types.StringType
 	objectAttrs["required"] = types.BoolType
 	objectAttrs["system_definition"] = types.StringType
 	objectAttrs["unique"] = types.BoolType
+	return objectAttrs
+}
+
+func objectAttrsTypeDSIdentityAccountAttributeDefinitionProperty(recurse bool) map[string]attr.Type {
+	objectAttrs := make(map[string]attr.Type)
+	objectAttrs["format"] = types.StringType
+	objectAttrs["list"] = types.BoolType
+	objectAttrs["name"] = types.StringType
+	objectAttrs["required"] = types.BoolType
+	return objectAttrs
+}
+
+func objectAttrsTypeDSROIdentityAccountAttributeDefinitionPropertyRO(recurse bool) map[string]attr.Type {
+	objectAttrs := make(map[string]attr.Type)
+	objectAttrs["format"] = types.StringType
+	objectAttrs["list"] = types.BoolType
+	objectAttrs["name"] = types.StringType
+	objectAttrs["required"] = types.BoolType
 	return objectAttrs
 }
 
@@ -2237,6 +2262,7 @@ func objectAttrsTypeDSROProvisioningProvisionedAccountRO(recurse bool) map[strin
 	objectAttrs["username"] = types.StringType
 	objectAttrs["uuid"] = types.StringType
 	objectAttrs["validity"] = types.StringType
+	objectAttrs["login_name"] = types.StringType
 	objectAttrs["uid"] = types.Int64Type
 	return objectAttrs
 }
@@ -2450,7 +2476,9 @@ func objectAttrsTypeDSProvisioningProvisionedSystem(recurse bool) map[string]att
 	objectAttrs["account_count"] = types.Int64Type
 	objectAttrs["cleanup_period"] = types.ObjectType{AttrTypes: objectAttrsTypeDSProvisioningProvisionedSystem_cleanupPeriod(false)}
 	objectAttrs["content_administrator"] = types.ObjectType{AttrTypes: objectAttrsTypeDSGroupGroupPrimer(false)}
+	objectAttrs["effective_full_sync_interval"] = types.Int64Type
 	objectAttrs["external_uuid"] = types.StringType
+	objectAttrs["full_sync_interval"] = types.Int64Type
 	objectAttrs["group_on_system_provisioning"] = types.StringType
 	objectAttrs["owner"] = types.ObjectType{AttrTypes: objectAttrsTypeDSGroupGroupPrimer(false)}
 	objectAttrs["self_service_existing_groups"] = types.BoolType
@@ -2459,6 +2487,7 @@ func objectAttrsTypeDSProvisioningProvisionedSystem(recurse bool) map[string]att
 	objectAttrs["self_service_service_accounts"] = types.BoolType
 	objectAttrs["should_destroy_unknown_accounts"] = types.BoolType
 	objectAttrs["technical_administrator"] = types.ObjectType{AttrTypes: objectAttrsTypeDSGroupGroupPrimer(false)}
+	objectAttrs["trace_logging_enabled"] = types.BoolType
 	objectAttrs["username_prefix"] = types.StringType
 	objectAttrs["abstract_provisioned_ldap"] = types.ObjectType{AttrTypes: objectAttrsTypeDSProvisioningAbstractProvisionedLDAP(false)}
 	objectAttrs["provisioned_a_d"] = types.ObjectType{AttrTypes: objectAttrsTypeDSProvisioningProvisionedAD(false)}
@@ -2502,7 +2531,9 @@ func objectAttrsTypeDSROProvisioningProvisionedSystemRO(recurse bool) map[string
 	objectAttrs["account_count"] = types.Int64Type
 	objectAttrs["cleanup_period"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROProvisioningProvisionedSystem_cleanupPeriodRO(false)}
 	objectAttrs["content_administrator"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROGroupGroupPrimerRO(false)}
+	objectAttrs["effective_full_sync_interval"] = types.Int64Type
 	objectAttrs["external_uuid"] = types.StringType
+	objectAttrs["full_sync_interval"] = types.Int64Type
 	objectAttrs["group_on_system_provisioning"] = types.StringType
 	objectAttrs["owner"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROGroupGroupPrimerRO(false)}
 	objectAttrs["self_service_existing_groups"] = types.BoolType
@@ -2511,6 +2542,7 @@ func objectAttrsTypeDSROProvisioningProvisionedSystemRO(recurse bool) map[string
 	objectAttrs["self_service_service_accounts"] = types.BoolType
 	objectAttrs["should_destroy_unknown_accounts"] = types.BoolType
 	objectAttrs["technical_administrator"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROGroupGroupPrimerRO(false)}
+	objectAttrs["trace_logging_enabled"] = types.BoolType
 	objectAttrs["username_prefix"] = types.StringType
 	objectAttrs["abstract_provisioned_ldap"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROProvisioningAbstractProvisionedLDAPRO(false)}
 	objectAttrs["provisioned_a_d"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROProvisioningProvisionedADRO(false)}
@@ -2957,7 +2989,6 @@ func objectAttrsTypeDSWebhookWebhook(recurse bool) map[string]attr.Type {
 	}
 	objectAttrs["links"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSRestLink(recurse)}}
 	objectAttrs["permissions"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSAuthPermission(recurse)}}
-	objectAttrs["account"] = types.ObjectType{AttrTypes: objectAttrsTypeDSAuthAccountPrimer(false)}
 	objectAttrs["active"] = types.BoolType
 	objectAttrs["all_types"] = types.BoolType
 	objectAttrs["authentication_scheme"] = types.StringType
@@ -2971,6 +3002,7 @@ func objectAttrsTypeDSWebhookWebhook(recurse bool) map[string]attr.Type {
 	objectAttrs["directory"] = types.ObjectType{AttrTypes: objectAttrsTypeDSDirectoryAccountDirectoryPrimer(false)}
 	objectAttrs["group"] = types.ObjectType{AttrTypes: objectAttrsTypeDSGroupGroupPrimer(false)}
 	objectAttrs["name"] = types.StringType
+	objectAttrs["service_account"] = types.ObjectType{AttrTypes: objectAttrsTypeDSServiceaccountServiceAccountPrimer(false)}
 	objectAttrs["system"] = types.ObjectType{AttrTypes: objectAttrsTypeDSProvisioningProvisionedSystemPrimer(false)}
 	objectAttrs["tls"] = types.StringType
 	objectAttrs["trusted_certificate"] = types.ObjectType{AttrTypes: objectAttrsTypeDSCertificateCertificatePrimer(false)}
@@ -2991,7 +3023,6 @@ func objectAttrsTypeDSROWebhookWebhookRO(recurse bool) map[string]attr.Type {
 	}
 	objectAttrs["links"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSRORestLinkRO(recurse)}}
 	objectAttrs["permissions"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSROAuthPermissionRO(recurse)}}
-	objectAttrs["account"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROAuthAccountPrimerRO(false)}
 	objectAttrs["active"] = types.BoolType
 	objectAttrs["all_types"] = types.BoolType
 	objectAttrs["authentication_scheme"] = types.StringType
@@ -3005,6 +3036,7 @@ func objectAttrsTypeDSROWebhookWebhookRO(recurse bool) map[string]attr.Type {
 	objectAttrs["directory"] = types.ObjectType{AttrTypes: objectAttrsTypeDSRODirectoryAccountDirectoryPrimerRO(false)}
 	objectAttrs["group"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROGroupGroupPrimerRO(false)}
 	objectAttrs["name"] = types.StringType
+	objectAttrs["service_account"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROServiceaccountServiceAccountPrimerRO(false)}
 	objectAttrs["system"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROProvisioningProvisionedSystemPrimerRO(false)}
 	objectAttrs["tls"] = types.StringType
 	objectAttrs["trusted_certificate"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROCertificateCertificatePrimerRO(false)}

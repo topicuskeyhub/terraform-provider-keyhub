@@ -2816,6 +2816,7 @@ func tkhToTFObjectRSGroupGroupClassificationPrimer(recurse bool, tkh keyhubmodel
 		obj["permissions"] = val
 	}
 	obj["name"] = types.StringPointerValue(tkh.GetName())
+	obj["organizational_unit_uuid"] = withUuidToTF(tkh.GetOrganizationalUnit())
 	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
 
 	objVal, d := types.ObjectValue(attrs, obj)
@@ -2857,6 +2858,11 @@ func tkhToTFObjectRSROGroupGroupClassificationPrimerRO(recurse bool, tkh keyhubm
 		obj["permissions"] = val
 	}
 	obj["name"] = types.StringPointerValue(tkh.GetName())
+	{
+		val, d := tkhToTFObjectRSROOrganizationOrganizationalUnitPrimerRO(recurse, tkh.GetOrganizationalUnit())
+		diags.Append(d...)
+		obj["organizational_unit"] = val
+	}
 	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
 
 	objVal, d := types.ObjectValue(attrs, obj)
@@ -4100,6 +4106,17 @@ func tkhToTFObjectRSIdentityAccountAttributeDefinition(recurse bool, tkh keyhubm
 	obj["freely_useable"] = types.BoolPointerValue(tkh.GetFreelyUseable())
 	obj["list"] = types.BoolPointerValue(tkh.GetList())
 	obj["name"] = types.StringPointerValue(tkh.GetName())
+	{
+		elemType := attrs["properties"].(types.ListType).ElemType
+		val, d := sliceToTFList(elemType, tkh.GetProperties(), func(tkh keyhubmodel.IdentityAccountAttributeDefinitionPropertyable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectRSIdentityAccountAttributeDefinitionProperty(false, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["properties"] = val
+	}
+	obj["property_handling"] = stringerToTF(tkh.GetPropertyHandling())
 	obj["required"] = types.BoolPointerValue(tkh.GetRequired())
 	obj["system_definition"] = stringerToTF(tkh.GetSystemDefinition())
 	obj["unique"] = types.BoolPointerValue(tkh.GetUnique())
@@ -4156,9 +4173,66 @@ func tkhToTFObjectRSROIdentityAccountAttributeDefinitionRO(recurse bool, tkh key
 	obj["freely_useable"] = types.BoolPointerValue(tkh.GetFreelyUseable())
 	obj["list"] = types.BoolPointerValue(tkh.GetList())
 	obj["name"] = types.StringPointerValue(tkh.GetName())
+	{
+		elemType := attrs["properties"].(types.ListType).ElemType
+		val, d := sliceToTFList(elemType, tkh.GetProperties(), func(tkh keyhubmodel.IdentityAccountAttributeDefinitionPropertyable, diags *diag.Diagnostics) attr.Value {
+			val, d := tkhToTFObjectRSROIdentityAccountAttributeDefinitionPropertyRO(false, tkh)
+			diags.Append(d...)
+			return val
+		})
+		diags.Append(d...)
+		obj["properties"] = val
+	}
+	obj["property_handling"] = stringerToTF(tkh.GetPropertyHandling())
 	obj["required"] = types.BoolPointerValue(tkh.GetRequired())
 	obj["system_definition"] = stringerToTF(tkh.GetSystemDefinition())
 	obj["unique"] = types.BoolPointerValue(tkh.GetUnique())
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
+func tkhToTFObjectRSIdentityAccountAttributeDefinitionProperty(recurse bool, tkh keyhubmodel.IdentityAccountAttributeDefinitionPropertyable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = identityAccountAttributeDefinitionPropertyAttrTypesRSRecurse
+	} else {
+		attrs = identityAccountAttributeDefinitionPropertyAttrTypesRS
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	obj["format"] = stringerToTF(tkh.GetFormat())
+	obj["list"] = types.BoolPointerValue(tkh.GetList())
+	obj["name"] = types.StringPointerValue(tkh.GetName())
+	obj["required"] = types.BoolPointerValue(tkh.GetRequired())
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
+func tkhToTFObjectRSROIdentityAccountAttributeDefinitionPropertyRO(recurse bool, tkh keyhubmodel.IdentityAccountAttributeDefinitionPropertyable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = identityAccountAttributeDefinitionPropertyAttrTypesRSRORecurse
+	} else {
+		attrs = identityAccountAttributeDefinitionPropertyAttrTypesRSRO
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	obj["format"] = stringerToTF(tkh.GetFormat())
+	obj["list"] = types.BoolPointerValue(tkh.GetList())
+	obj["name"] = types.StringPointerValue(tkh.GetName())
+	obj["required"] = types.BoolPointerValue(tkh.GetRequired())
 
 	objVal, d := types.ObjectValue(attrs, obj)
 	diags.Append(d...)
@@ -6767,6 +6841,7 @@ func tkhToTFObjectRSROProvisioningProvisionedAccountRO(recurse bool, tkh keyhubm
 		}
 	}
 	obj["uuid"] = withUuidToTF(tkh)
+	obj["login_name"] = types.StringPointerValue(tkh.GetLoginName())
 	obj["uid"] = types.Int64PointerValue(tkh.GetUid())
 
 	objVal, d := types.ObjectValue(attrs, obj)
@@ -7118,7 +7193,9 @@ func tkhToTFObjectRSROProvisioningProvisionedSystemRO(recurse bool, tkh keyhubmo
 		diags.Append(d...)
 		obj["content_administrator"] = val
 	}
+	obj["effective_full_sync_interval"] = types.Int64PointerValue(int32PToInt64P(tkh.GetEffectiveFullSyncInterval()))
 	obj["external_uuid"] = stringerToTF(tkh.GetExternalUuid())
+	obj["full_sync_interval"] = types.Int64PointerValue(int32PToInt64P(tkh.GetFullSyncInterval()))
 	obj["group_on_system_provisioning"] = stringerToTF(tkh.GetGroupOnSystemProvisioning())
 	{
 		val, d := tkhToTFObjectRSROGroupGroupPrimerRO(false, tkh.GetOwner())
@@ -7135,6 +7212,7 @@ func tkhToTFObjectRSROProvisioningProvisionedSystemRO(recurse bool, tkh keyhubmo
 		diags.Append(d...)
 		obj["technical_administrator"] = val
 	}
+	obj["trace_logging_enabled"] = types.BoolPointerValue(tkh.GetTraceLoggingEnabled())
 	obj["username_prefix"] = types.StringPointerValue(tkh.GetUsernamePrefix())
 	{
 		tkhCast, _ := tkh.(keyhubmodel.ProvisioningAbstractProvisionedLDAPable)
@@ -8546,11 +8624,6 @@ func tkhToTFObjectRSROWebhookWebhookRO(recurse bool, tkh keyhubmodel.WebhookWebh
 		diags.Append(d...)
 		obj["permissions"] = val
 	}
-	{
-		val, d := tkhToTFObjectRSROAuthAccountPrimerRO(false, tkh.GetAccount())
-		diags.Append(d...)
-		obj["account"] = val
-	}
 	obj["active"] = types.BoolPointerValue(tkh.GetActive())
 	obj["all_types"] = types.BoolPointerValue(tkh.GetAllTypes())
 	obj["authentication_scheme"] = stringerToTF(tkh.GetAuthenticationScheme())
@@ -8580,6 +8653,11 @@ func tkhToTFObjectRSROWebhookWebhookRO(recurse bool, tkh keyhubmodel.WebhookWebh
 		obj["group"] = val
 	}
 	obj["name"] = types.StringPointerValue(tkh.GetName())
+	{
+		val, d := tkhToTFObjectRSROServiceaccountServiceAccountPrimerRO(false, tkh.GetServiceAccount())
+		diags.Append(d...)
+		obj["service_account"] = val
+	}
 	{
 		val, d := tkhToTFObjectRSROProvisioningProvisionedSystemPrimerRO(false, tkh.GetSystem())
 		diags.Append(d...)

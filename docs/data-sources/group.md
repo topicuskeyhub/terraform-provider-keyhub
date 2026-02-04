@@ -337,6 +337,8 @@ Read-Only:
 - `list` (Boolean)
 - `name` (String)
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--administered_clients--oauth2_client--attributes--attribute_definition--permissions))
+- `properties` (Attributes List) (see [below for nested schema](#nestedatt--administered_clients--oauth2_client--attributes--attribute_definition--properties))
+- `property_handling` (String)
 - `required` (Boolean)
 - `system_definition` (String)
 - `unique` (Boolean)
@@ -361,6 +363,17 @@ Read-Only:
 - `instances` (List of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
+
+
+<a id="nestedatt--administered_clients--oauth2_client--attributes--attribute_definition--properties"></a>
+### Nested Schema for `administered_clients.oauth2_client.attributes.attribute_definition.properties`
+
+Read-Only:
+
+- `format` (String)
+- `list` (Boolean)
+- `name` (String)
+- `required` (Boolean)
 
 
 
@@ -510,6 +523,8 @@ Read-Only:
 - `list` (Boolean)
 - `name` (String)
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--administered_clients--saml2_client--attributes--attribute_definition--permissions))
+- `properties` (Attributes List) (see [below for nested schema](#nestedatt--administered_clients--saml2_client--attributes--attribute_definition--properties))
+- `property_handling` (String)
 - `required` (Boolean)
 - `system_definition` (String)
 - `unique` (Boolean)
@@ -534,6 +549,17 @@ Read-Only:
 - `instances` (List of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
+
+
+<a id="nestedatt--administered_clients--saml2_client--attributes--attribute_definition--properties"></a>
+### Nested Schema for `administered_clients.saml2_client.attributes.attribute_definition.properties`
+
+Read-Only:
+
+- `format` (String)
+- `list` (Boolean)
+- `name` (String)
+- `required` (Boolean)
 
 
 
@@ -621,7 +647,9 @@ Read-Only:
 - `cleanup_period` (Attributes) (see [below for nested schema](#nestedatt--administered_systems--cleanup_period))
 - `content_admin_permissions` (Boolean)
 - `content_administrator` (Attributes) (see [below for nested schema](#nestedatt--administered_systems--content_administrator))
+- `effective_full_sync_interval` (Number)
 - `external_uuid` (String)
+- `full_sync_interval` (Number)
 - `group_on_system_provisioning` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--administered_systems--links))
 - `name` (String)
@@ -644,6 +672,7 @@ Read-Only:
 - `self_service_service_accounts` (Boolean)
 - `should_destroy_unknown_accounts` (Boolean)
 - `technical_administrator` (Attributes) (see [below for nested schema](#nestedatt--administered_systems--technical_administrator))
+- `trace_logging_enabled` (Boolean)
 - `type` (String)
 - `username_prefix` (String)
 - `uuid` (String)
@@ -690,6 +719,8 @@ Read-Only:
 - `list` (Boolean)
 - `name` (String)
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--administered_systems--abstract_provisioned_ldap--attributes--attribute_definition--permissions))
+- `properties` (Attributes List) (see [below for nested schema](#nestedatt--administered_systems--abstract_provisioned_ldap--attributes--attribute_definition--properties))
+- `property_handling` (String)
 - `required` (Boolean)
 - `system_definition` (String)
 - `unique` (Boolean)
@@ -714,6 +745,17 @@ Read-Only:
 - `instances` (List of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
+
+
+<a id="nestedatt--administered_systems--abstract_provisioned_ldap--attributes--attribute_definition--properties"></a>
+### Nested Schema for `administered_systems.abstract_provisioned_ldap.attributes.attribute_definition.properties`
+
+Read-Only:
+
+- `format` (String)
+- `list` (Boolean)
+- `name` (String)
+- `required` (Boolean)
 
 
 
@@ -1326,6 +1368,8 @@ Read-Only:
 - `list` (Boolean)
 - `name` (String)
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--administered_systems--provisioned_internal_ldap--client--oauth2_client--attributes--attribute_definition--permissions))
+- `properties` (Attributes List) (see [below for nested schema](#nestedatt--administered_systems--provisioned_internal_ldap--client--oauth2_client--attributes--attribute_definition--properties))
+- `property_handling` (String)
 - `required` (Boolean)
 - `system_definition` (String)
 - `unique` (Boolean)
@@ -1350,6 +1394,17 @@ Read-Only:
 - `instances` (List of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
+
+
+<a id="nestedatt--administered_systems--provisioned_internal_ldap--client--oauth2_client--attributes--attribute_definition--properties"></a>
+### Nested Schema for `administered_systems.provisioned_internal_ldap.client.oauth2_client.attributes.attribute_definition.properties`
+
+Read-Only:
+
+- `format` (String)
+- `list` (Boolean)
+- `name` (String)
+- `required` (Boolean)
 
 
 
@@ -1499,6 +1554,8 @@ Read-Only:
 - `list` (Boolean)
 - `name` (String)
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--administered_systems--provisioned_internal_ldap--client--saml2_client--attributes--attribute_definition--permissions))
+- `properties` (Attributes List) (see [below for nested schema](#nestedatt--administered_systems--provisioned_internal_ldap--client--saml2_client--attributes--attribute_definition--properties))
+- `property_handling` (String)
 - `required` (Boolean)
 - `system_definition` (String)
 - `unique` (Boolean)
@@ -1523,6 +1580,17 @@ Read-Only:
 - `instances` (List of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
+
+
+<a id="nestedatt--administered_systems--provisioned_internal_ldap--client--saml2_client--attributes--attribute_definition--properties"></a>
+### Nested Schema for `administered_systems.provisioned_internal_ldap.client.saml2_client.attributes.attribute_definition.properties`
+
+Read-Only:
+
+- `format` (String)
+- `list` (Boolean)
+- `name` (String)
+- `required` (Boolean)
 
 
 
@@ -1712,6 +1780,8 @@ Read-Only:
 - `list` (Boolean)
 - `name` (String)
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--administered_systems--provisioned_ldap_directory--attributes--attribute_definition--permissions))
+- `properties` (Attributes List) (see [below for nested schema](#nestedatt--administered_systems--provisioned_ldap_directory--attributes--attribute_definition--properties))
+- `property_handling` (String)
 - `required` (Boolean)
 - `system_definition` (String)
 - `unique` (Boolean)
@@ -1736,6 +1806,17 @@ Read-Only:
 - `instances` (List of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
+
+
+<a id="nestedatt--administered_systems--provisioned_ldap_directory--attributes--attribute_definition--properties"></a>
+### Nested Schema for `administered_systems.provisioned_ldap_directory.attributes.attribute_definition.properties`
+
+Read-Only:
+
+- `format` (String)
+- `list` (Boolean)
+- `name` (String)
+- `required` (Boolean)
 
 
 
@@ -1969,6 +2050,8 @@ Read-Only:
 - `list` (Boolean)
 - `name` (String)
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--administered_systems--provisioned_scim--attributes--attribute_definition--permissions))
+- `properties` (Attributes List) (see [below for nested schema](#nestedatt--administered_systems--provisioned_scim--attributes--attribute_definition--properties))
+- `property_handling` (String)
 - `required` (Boolean)
 - `system_definition` (String)
 - `unique` (Boolean)
@@ -1993,6 +2076,17 @@ Read-Only:
 - `instances` (List of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
+
+
+<a id="nestedatt--administered_systems--provisioned_scim--attributes--attribute_definition--properties"></a>
+### Nested Schema for `administered_systems.provisioned_scim.attributes.attribute_definition.properties`
+
+Read-Only:
+
+- `format` (String)
+- `list` (Boolean)
+- `name` (String)
+- `required` (Boolean)
 
 
 
@@ -2535,6 +2629,7 @@ Read-Only:
 
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--authorized_groups--classification--links))
 - `name` (String)
+- `organizational_unit` (Attributes) (see [below for nested schema](#nestedatt--authorized_groups--classification--organizational_unit))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--authorized_groups--classification--permissions))
 - `uuid` (String)
 
@@ -2547,6 +2642,39 @@ Read-Only:
 - `id` (Number)
 - `rel` (String)
 - `type_escaped` (String)
+
+
+<a id="nestedatt--authorized_groups--classification--organizational_unit"></a>
+### Nested Schema for `authorized_groups.classification.organizational_unit`
+
+Read-Only:
+
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--authorized_groups--classification--organizational_unit--links))
+- `name` (String)
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--authorized_groups--classification--organizational_unit--permissions))
+- `uuid` (String)
+
+<a id="nestedatt--authorized_groups--classification--organizational_unit--links"></a>
+### Nested Schema for `authorized_groups.classification.organizational_unit.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--authorized_groups--classification--organizational_unit--permissions"></a>
+### Nested Schema for `authorized_groups.classification.organizational_unit.permissions`
+
+Read-Only:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
 
 
 <a id="nestedatt--authorized_groups--classification--permissions"></a>
@@ -2964,6 +3092,7 @@ Read-Only:
 
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--classification--links))
 - `name` (String)
+- `organizational_unit` (Attributes) (see [below for nested schema](#nestedatt--classification--organizational_unit))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--classification--permissions))
 - `uuid` (String)
 
@@ -2976,6 +3105,39 @@ Read-Only:
 - `id` (Number)
 - `rel` (String)
 - `type_escaped` (String)
+
+
+<a id="nestedatt--classification--organizational_unit"></a>
+### Nested Schema for `classification.organizational_unit`
+
+Read-Only:
+
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--classification--organizational_unit--links))
+- `name` (String)
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--classification--organizational_unit--permissions))
+- `uuid` (String)
+
+<a id="nestedatt--classification--organizational_unit--links"></a>
+### Nested Schema for `classification.organizational_unit.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--classification--organizational_unit--permissions"></a>
+### Nested Schema for `classification.organizational_unit.permissions`
+
+Read-Only:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
 
 
 <a id="nestedatt--classification--permissions"></a>
@@ -3052,6 +3214,8 @@ Read-Only:
 - `list` (Boolean)
 - `name` (String)
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--client_permissions--client--attributes--attribute_definition--permissions))
+- `properties` (Attributes List) (see [below for nested schema](#nestedatt--client_permissions--client--attributes--attribute_definition--properties))
+- `property_handling` (String)
 - `required` (Boolean)
 - `system_definition` (String)
 - `unique` (Boolean)
@@ -3076,6 +3240,17 @@ Read-Only:
 - `instances` (List of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
+
+
+<a id="nestedatt--client_permissions--client--attributes--attribute_definition--properties"></a>
+### Nested Schema for `client_permissions.client.attributes.attribute_definition.properties`
+
+Read-Only:
+
+- `format` (String)
+- `list` (Boolean)
+- `name` (String)
+- `required` (Boolean)
 
 
 
@@ -3570,7 +3745,9 @@ Read-Only:
 - `cleanup_period` (Attributes) (see [below for nested schema](#nestedatt--content_administered_systems--cleanup_period))
 - `content_admin_permissions` (Boolean)
 - `content_administrator` (Attributes) (see [below for nested schema](#nestedatt--content_administered_systems--content_administrator))
+- `effective_full_sync_interval` (Number)
 - `external_uuid` (String)
+- `full_sync_interval` (Number)
 - `group_on_system_provisioning` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--content_administered_systems--links))
 - `name` (String)
@@ -3593,6 +3770,7 @@ Read-Only:
 - `self_service_service_accounts` (Boolean)
 - `should_destroy_unknown_accounts` (Boolean)
 - `technical_administrator` (Attributes) (see [below for nested schema](#nestedatt--content_administered_systems--technical_administrator))
+- `trace_logging_enabled` (Boolean)
 - `type` (String)
 - `username_prefix` (String)
 - `uuid` (String)
@@ -3639,6 +3817,8 @@ Read-Only:
 - `list` (Boolean)
 - `name` (String)
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--content_administered_systems--abstract_provisioned_ldap--attributes--attribute_definition--permissions))
+- `properties` (Attributes List) (see [below for nested schema](#nestedatt--content_administered_systems--abstract_provisioned_ldap--attributes--attribute_definition--properties))
+- `property_handling` (String)
 - `required` (Boolean)
 - `system_definition` (String)
 - `unique` (Boolean)
@@ -3663,6 +3843,17 @@ Read-Only:
 - `instances` (List of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
+
+
+<a id="nestedatt--content_administered_systems--abstract_provisioned_ldap--attributes--attribute_definition--properties"></a>
+### Nested Schema for `content_administered_systems.abstract_provisioned_ldap.attributes.attribute_definition.properties`
+
+Read-Only:
+
+- `format` (String)
+- `list` (Boolean)
+- `name` (String)
+- `required` (Boolean)
 
 
 
@@ -4275,6 +4466,8 @@ Read-Only:
 - `list` (Boolean)
 - `name` (String)
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--content_administered_systems--provisioned_internal_ldap--client--oauth2_client--attributes--attribute_definition--permissions))
+- `properties` (Attributes List) (see [below for nested schema](#nestedatt--content_administered_systems--provisioned_internal_ldap--client--oauth2_client--attributes--attribute_definition--properties))
+- `property_handling` (String)
 - `required` (Boolean)
 - `system_definition` (String)
 - `unique` (Boolean)
@@ -4299,6 +4492,17 @@ Read-Only:
 - `instances` (List of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
+
+
+<a id="nestedatt--content_administered_systems--provisioned_internal_ldap--client--oauth2_client--attributes--attribute_definition--properties"></a>
+### Nested Schema for `content_administered_systems.provisioned_internal_ldap.client.oauth2_client.attributes.attribute_definition.properties`
+
+Read-Only:
+
+- `format` (String)
+- `list` (Boolean)
+- `name` (String)
+- `required` (Boolean)
 
 
 
@@ -4448,6 +4652,8 @@ Read-Only:
 - `list` (Boolean)
 - `name` (String)
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--content_administered_systems--provisioned_internal_ldap--client--saml2_client--attributes--attribute_definition--permissions))
+- `properties` (Attributes List) (see [below for nested schema](#nestedatt--content_administered_systems--provisioned_internal_ldap--client--saml2_client--attributes--attribute_definition--properties))
+- `property_handling` (String)
 - `required` (Boolean)
 - `system_definition` (String)
 - `unique` (Boolean)
@@ -4472,6 +4678,17 @@ Read-Only:
 - `instances` (List of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
+
+
+<a id="nestedatt--content_administered_systems--provisioned_internal_ldap--client--saml2_client--attributes--attribute_definition--properties"></a>
+### Nested Schema for `content_administered_systems.provisioned_internal_ldap.client.saml2_client.attributes.attribute_definition.properties`
+
+Read-Only:
+
+- `format` (String)
+- `list` (Boolean)
+- `name` (String)
+- `required` (Boolean)
 
 
 
@@ -4661,6 +4878,8 @@ Read-Only:
 - `list` (Boolean)
 - `name` (String)
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--content_administered_systems--provisioned_ldap_directory--attributes--attribute_definition--permissions))
+- `properties` (Attributes List) (see [below for nested schema](#nestedatt--content_administered_systems--provisioned_ldap_directory--attributes--attribute_definition--properties))
+- `property_handling` (String)
 - `required` (Boolean)
 - `system_definition` (String)
 - `unique` (Boolean)
@@ -4685,6 +4904,17 @@ Read-Only:
 - `instances` (List of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
+
+
+<a id="nestedatt--content_administered_systems--provisioned_ldap_directory--attributes--attribute_definition--properties"></a>
+### Nested Schema for `content_administered_systems.provisioned_ldap_directory.attributes.attribute_definition.properties`
+
+Read-Only:
+
+- `format` (String)
+- `list` (Boolean)
+- `name` (String)
+- `required` (Boolean)
 
 
 
@@ -4918,6 +5148,8 @@ Read-Only:
 - `list` (Boolean)
 - `name` (String)
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--content_administered_systems--provisioned_scim--attributes--attribute_definition--permissions))
+- `properties` (Attributes List) (see [below for nested schema](#nestedatt--content_administered_systems--provisioned_scim--attributes--attribute_definition--properties))
+- `property_handling` (String)
 - `required` (Boolean)
 - `system_definition` (String)
 - `unique` (Boolean)
@@ -4942,6 +5174,17 @@ Read-Only:
 - `instances` (List of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
+
+
+<a id="nestedatt--content_administered_systems--provisioned_scim--attributes--attribute_definition--properties"></a>
+### Nested Schema for `content_administered_systems.provisioned_scim.attributes.attribute_definition.properties`
+
+Read-Only:
+
+- `format` (String)
+- `list` (Boolean)
+- `name` (String)
+- `required` (Boolean)
 
 
 
@@ -5950,6 +6193,8 @@ Read-Only:
 - `list` (Boolean)
 - `name` (String)
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_clients--oauth2_client--attributes--attribute_definition--permissions))
+- `properties` (Attributes List) (see [below for nested schema](#nestedatt--owned_clients--oauth2_client--attributes--attribute_definition--properties))
+- `property_handling` (String)
 - `required` (Boolean)
 - `system_definition` (String)
 - `unique` (Boolean)
@@ -5974,6 +6219,17 @@ Read-Only:
 - `instances` (List of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
+
+
+<a id="nestedatt--owned_clients--oauth2_client--attributes--attribute_definition--properties"></a>
+### Nested Schema for `owned_clients.oauth2_client.attributes.attribute_definition.properties`
+
+Read-Only:
+
+- `format` (String)
+- `list` (Boolean)
+- `name` (String)
+- `required` (Boolean)
 
 
 
@@ -6123,6 +6379,8 @@ Read-Only:
 - `list` (Boolean)
 - `name` (String)
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_clients--saml2_client--attributes--attribute_definition--permissions))
+- `properties` (Attributes List) (see [below for nested schema](#nestedatt--owned_clients--saml2_client--attributes--attribute_definition--properties))
+- `property_handling` (String)
 - `required` (Boolean)
 - `system_definition` (String)
 - `unique` (Boolean)
@@ -6147,6 +6405,17 @@ Read-Only:
 - `instances` (List of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
+
+
+<a id="nestedatt--owned_clients--saml2_client--attributes--attribute_definition--properties"></a>
+### Nested Schema for `owned_clients.saml2_client.attributes.attribute_definition.properties`
+
+Read-Only:
+
+- `format` (String)
+- `list` (Boolean)
+- `name` (String)
+- `required` (Boolean)
 
 
 
@@ -7224,7 +7493,9 @@ Read-Only:
 - `cleanup_period` (Attributes) (see [below for nested schema](#nestedatt--owned_systems--cleanup_period))
 - `content_admin_permissions` (Boolean)
 - `content_administrator` (Attributes) (see [below for nested schema](#nestedatt--owned_systems--content_administrator))
+- `effective_full_sync_interval` (Number)
 - `external_uuid` (String)
+- `full_sync_interval` (Number)
 - `group_on_system_provisioning` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_systems--links))
 - `name` (String)
@@ -7247,6 +7518,7 @@ Read-Only:
 - `self_service_service_accounts` (Boolean)
 - `should_destroy_unknown_accounts` (Boolean)
 - `technical_administrator` (Attributes) (see [below for nested schema](#nestedatt--owned_systems--technical_administrator))
+- `trace_logging_enabled` (Boolean)
 - `type` (String)
 - `username_prefix` (String)
 - `uuid` (String)
@@ -7293,6 +7565,8 @@ Read-Only:
 - `list` (Boolean)
 - `name` (String)
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_systems--abstract_provisioned_ldap--attributes--attribute_definition--permissions))
+- `properties` (Attributes List) (see [below for nested schema](#nestedatt--owned_systems--abstract_provisioned_ldap--attributes--attribute_definition--properties))
+- `property_handling` (String)
 - `required` (Boolean)
 - `system_definition` (String)
 - `unique` (Boolean)
@@ -7317,6 +7591,17 @@ Read-Only:
 - `instances` (List of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
+
+
+<a id="nestedatt--owned_systems--abstract_provisioned_ldap--attributes--attribute_definition--properties"></a>
+### Nested Schema for `owned_systems.abstract_provisioned_ldap.attributes.attribute_definition.properties`
+
+Read-Only:
+
+- `format` (String)
+- `list` (Boolean)
+- `name` (String)
+- `required` (Boolean)
 
 
 
@@ -7929,6 +8214,8 @@ Read-Only:
 - `list` (Boolean)
 - `name` (String)
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_systems--provisioned_internal_ldap--client--oauth2_client--attributes--attribute_definition--permissions))
+- `properties` (Attributes List) (see [below for nested schema](#nestedatt--owned_systems--provisioned_internal_ldap--client--oauth2_client--attributes--attribute_definition--properties))
+- `property_handling` (String)
 - `required` (Boolean)
 - `system_definition` (String)
 - `unique` (Boolean)
@@ -7953,6 +8240,17 @@ Read-Only:
 - `instances` (List of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
+
+
+<a id="nestedatt--owned_systems--provisioned_internal_ldap--client--oauth2_client--attributes--attribute_definition--properties"></a>
+### Nested Schema for `owned_systems.provisioned_internal_ldap.client.oauth2_client.attributes.attribute_definition.properties`
+
+Read-Only:
+
+- `format` (String)
+- `list` (Boolean)
+- `name` (String)
+- `required` (Boolean)
 
 
 
@@ -8102,6 +8400,8 @@ Read-Only:
 - `list` (Boolean)
 - `name` (String)
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_systems--provisioned_internal_ldap--client--saml2_client--attributes--attribute_definition--permissions))
+- `properties` (Attributes List) (see [below for nested schema](#nestedatt--owned_systems--provisioned_internal_ldap--client--saml2_client--attributes--attribute_definition--properties))
+- `property_handling` (String)
 - `required` (Boolean)
 - `system_definition` (String)
 - `unique` (Boolean)
@@ -8126,6 +8426,17 @@ Read-Only:
 - `instances` (List of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
+
+
+<a id="nestedatt--owned_systems--provisioned_internal_ldap--client--saml2_client--attributes--attribute_definition--properties"></a>
+### Nested Schema for `owned_systems.provisioned_internal_ldap.client.saml2_client.attributes.attribute_definition.properties`
+
+Read-Only:
+
+- `format` (String)
+- `list` (Boolean)
+- `name` (String)
+- `required` (Boolean)
 
 
 
@@ -8315,6 +8626,8 @@ Read-Only:
 - `list` (Boolean)
 - `name` (String)
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_systems--provisioned_ldap_directory--attributes--attribute_definition--permissions))
+- `properties` (Attributes List) (see [below for nested schema](#nestedatt--owned_systems--provisioned_ldap_directory--attributes--attribute_definition--properties))
+- `property_handling` (String)
 - `required` (Boolean)
 - `system_definition` (String)
 - `unique` (Boolean)
@@ -8339,6 +8652,17 @@ Read-Only:
 - `instances` (List of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
+
+
+<a id="nestedatt--owned_systems--provisioned_ldap_directory--attributes--attribute_definition--properties"></a>
+### Nested Schema for `owned_systems.provisioned_ldap_directory.attributes.attribute_definition.properties`
+
+Read-Only:
+
+- `format` (String)
+- `list` (Boolean)
+- `name` (String)
+- `required` (Boolean)
 
 
 
@@ -8572,6 +8896,8 @@ Read-Only:
 - `list` (Boolean)
 - `name` (String)
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_systems--provisioned_scim--attributes--attribute_definition--permissions))
+- `properties` (Attributes List) (see [below for nested schema](#nestedatt--owned_systems--provisioned_scim--attributes--attribute_definition--properties))
+- `property_handling` (String)
 - `required` (Boolean)
 - `system_definition` (String)
 - `unique` (Boolean)
@@ -8596,6 +8922,17 @@ Read-Only:
 - `instances` (List of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
+
+
+<a id="nestedatt--owned_systems--provisioned_scim--attributes--attribute_definition--properties"></a>
+### Nested Schema for `owned_systems.provisioned_scim.attributes.attribute_definition.properties`
+
+Read-Only:
+
+- `format` (String)
+- `list` (Boolean)
+- `name` (String)
+- `required` (Boolean)
 
 
 
@@ -9309,7 +9646,6 @@ Read-Only:
 
 Read-Only:
 
-- `account` (Attributes) (see [below for nested schema](#nestedatt--webhooks--account))
 - `active` (Boolean)
 - `all_types` (Boolean)
 - `authentication_scheme` (String)
@@ -9325,6 +9661,7 @@ Read-Only:
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--webhooks--links))
 - `name` (String)
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--webhooks--permissions))
+- `service_account` (Attributes) (see [below for nested schema](#nestedatt--webhooks--service_account))
 - `system` (Attributes) (see [below for nested schema](#nestedatt--webhooks--system))
 - `tls` (String)
 - `trusted_certificate` (Attributes) (see [below for nested schema](#nestedatt--webhooks--trusted_certificate))
@@ -9332,42 +9669,6 @@ Read-Only:
 - `url` (String)
 - `uuid` (String)
 - `verbose_payloads` (Boolean)
-
-<a id="nestedatt--webhooks--account"></a>
-### Nested Schema for `webhooks.account`
-
-Read-Only:
-
-- `display_name` (String)
-- `last_active` (String)
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--webhooks--account--links))
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--webhooks--account--permissions))
-- `username` (String)
-- `uuid` (String)
-- `validity` (String)
-
-<a id="nestedatt--webhooks--account--links"></a>
-### Nested Schema for `webhooks.account.links`
-
-Read-Only:
-
-- `href` (String)
-- `id` (Number)
-- `rel` (String)
-- `type_escaped` (String)
-
-
-<a id="nestedatt--webhooks--account--permissions"></a>
-### Nested Schema for `webhooks.account.permissions`
-
-Read-Only:
-
-- `full` (String)
-- `instances` (List of String)
-- `operations` (Set of String)
-- `type_escaped` (String)
-
-
 
 <a id="nestedatt--webhooks--client"></a>
 ### Nested Schema for `webhooks.client`
@@ -9570,6 +9871,115 @@ Read-Only:
 - `instances` (List of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
+
+
+<a id="nestedatt--webhooks--service_account"></a>
+### Nested Schema for `webhooks.service_account`
+
+Read-Only:
+
+- `active` (Boolean)
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--webhooks--service_account--links))
+- `name` (String)
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--webhooks--service_account--permissions))
+- `system` (Attributes) (see [below for nested schema](#nestedatt--webhooks--service_account--system))
+- `username` (String)
+- `uuid` (String)
+
+<a id="nestedatt--webhooks--service_account--links"></a>
+### Nested Schema for `webhooks.service_account.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--webhooks--service_account--permissions"></a>
+### Nested Schema for `webhooks.service_account.permissions`
+
+Read-Only:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--webhooks--service_account--system"></a>
+### Nested Schema for `webhooks.service_account.system`
+
+Read-Only:
+
+- `active` (Boolean)
+- `admin_permissions` (Boolean)
+- `can_write_accounts` (Boolean)
+- `content_admin_permissions` (Boolean)
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--webhooks--service_account--system--links))
+- `name` (String)
+- `organizational_unit` (Attributes) (see [below for nested schema](#nestedatt--webhooks--service_account--system--organizational_unit))
+- `owner_permissions` (Boolean)
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--webhooks--service_account--system--permissions))
+- `type` (String)
+- `uuid` (String)
+
+<a id="nestedatt--webhooks--service_account--system--links"></a>
+### Nested Schema for `webhooks.service_account.system.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--webhooks--service_account--system--organizational_unit"></a>
+### Nested Schema for `webhooks.service_account.system.organizational_unit`
+
+Read-Only:
+
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--webhooks--service_account--system--organizational_unit--links))
+- `name` (String)
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--webhooks--service_account--system--organizational_unit--permissions))
+- `uuid` (String)
+
+<a id="nestedatt--webhooks--service_account--system--organizational_unit--links"></a>
+### Nested Schema for `webhooks.service_account.system.organizational_unit.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--webhooks--service_account--system--organizational_unit--permissions"></a>
+### Nested Schema for `webhooks.service_account.system.organizational_unit.permissions`
+
+Read-Only:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
+
+<a id="nestedatt--webhooks--service_account--system--permissions"></a>
+### Nested Schema for `webhooks.service_account.system.permissions`
+
+Read-Only:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
 
 
 <a id="nestedatt--webhooks--system"></a>

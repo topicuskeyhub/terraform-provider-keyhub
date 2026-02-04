@@ -37,6 +37,7 @@ description: |-
 - `maximum_audit_interval` (Number)
 - `minimum_nr_managers` (Number)
 - `name` (String)
+- `organizational_unit` (Attributes) (see [below for nested schema](#nestedatt--organizational_unit))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--permissions))
 - `record_trail_required` (Boolean)
 - `required_months` (Set of String)
@@ -71,6 +72,42 @@ Read-Only:
 - `id` (Number)
 - `rel` (String)
 - `type_escaped` (String)
+
+
+<a id="nestedatt--organizational_unit"></a>
+### Nested Schema for `organizational_unit`
+
+Required:
+
+- `uuid` (String)
+
+Read-Only:
+
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--organizational_unit--links))
+- `name` (String)
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--organizational_unit--permissions))
+
+<a id="nestedatt--organizational_unit--links"></a>
+### Nested Schema for `organizational_unit.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--organizational_unit--permissions"></a>
+### Nested Schema for `organizational_unit.permissions`
+
+Read-Only:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
 
 
 <a id="nestedatt--permissions"></a>

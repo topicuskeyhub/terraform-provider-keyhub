@@ -781,6 +781,7 @@ Read-Only:
 
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--groups--classification--links))
 - `name` (String)
+- `organizational_unit` (Attributes) (see [below for nested schema](#nestedatt--groups--classification--organizational_unit))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--groups--classification--permissions))
 - `uuid` (String)
 
@@ -793,6 +794,39 @@ Read-Only:
 - `id` (Number)
 - `rel` (String)
 - `type_escaped` (String)
+
+
+<a id="nestedatt--groups--classification--organizational_unit"></a>
+### Nested Schema for `groups.classification.organizational_unit`
+
+Read-Only:
+
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--groups--classification--organizational_unit--links))
+- `name` (String)
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--groups--classification--organizational_unit--permissions))
+- `uuid` (String)
+
+<a id="nestedatt--groups--classification--organizational_unit--links"></a>
+### Nested Schema for `groups.classification.organizational_unit.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--groups--classification--organizational_unit--permissions"></a>
+### Nested Schema for `groups.classification.organizational_unit.permissions`
+
+Read-Only:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
 
 
 <a id="nestedatt--groups--classification--permissions"></a>
@@ -1078,6 +1112,8 @@ Read-Only:
 - `list` (Boolean)
 - `name` (String)
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--oauth2_client--attributes--attribute_definition--permissions))
+- `properties` (Attributes List) (see [below for nested schema](#nestedatt--oauth2_client--attributes--attribute_definition--properties))
+- `property_handling` (String)
 - `required` (Boolean)
 - `system_definition` (String)
 - `unique` (Boolean)
@@ -1102,6 +1138,17 @@ Read-Only:
 - `instances` (List of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
+
+
+<a id="nestedatt--oauth2_client--attributes--attribute_definition--properties"></a>
+### Nested Schema for `oauth2_client.attributes.attribute_definition.properties`
+
+Read-Only:
+
+- `format` (String)
+- `list` (Boolean)
+- `name` (String)
+- `required` (Boolean)
 
 
 
@@ -1284,6 +1331,8 @@ Read-Only:
 - `list` (Boolean)
 - `name` (String)
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--saml2_client--attributes--attribute_definition--permissions))
+- `properties` (Attributes List) (see [below for nested schema](#nestedatt--saml2_client--attributes--attribute_definition--properties))
+- `property_handling` (String)
 - `required` (Boolean)
 - `system_definition` (String)
 - `unique` (Boolean)
@@ -1308,6 +1357,17 @@ Read-Only:
 - `instances` (List of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
+
+
+<a id="nestedatt--saml2_client--attributes--attribute_definition--properties"></a>
+### Nested Schema for `saml2_client.attributes.attribute_definition.properties`
+
+Read-Only:
+
+- `format` (String)
+- `list` (Boolean)
+- `name` (String)
+- `required` (Boolean)
 
 
 

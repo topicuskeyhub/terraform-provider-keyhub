@@ -924,6 +924,7 @@ func objectAttrsTypeRSGroupGroupClassificationPrimer(recurse bool) map[string]at
 	objectAttrs["links"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeRSRestLink(recurse)}}
 	objectAttrs["permissions"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeRSAuthPermission(recurse)}}
 	objectAttrs["name"] = types.StringType
+	objectAttrs["organizational_unit_uuid"] = types.StringType
 	objectAttrs["uuid"] = types.StringType
 	return objectAttrs
 }
@@ -933,6 +934,7 @@ func objectAttrsTypeRSROGroupGroupClassificationPrimerRO(recurse bool) map[strin
 	objectAttrs["links"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeRSRORestLinkRO(recurse)}}
 	objectAttrs["permissions"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeRSROAuthPermissionRO(recurse)}}
 	objectAttrs["name"] = types.StringType
+	objectAttrs["organizational_unit"] = types.ObjectType{AttrTypes: objectAttrsTypeRSROOrganizationOrganizationalUnitPrimerRO(recurse)}
 	objectAttrs["uuid"] = types.StringType
 	return objectAttrs
 }
@@ -1250,6 +1252,8 @@ func objectAttrsTypeRSIdentityAccountAttributeDefinition(recurse bool) map[strin
 	objectAttrs["freely_useable"] = types.BoolType
 	objectAttrs["list"] = types.BoolType
 	objectAttrs["name"] = types.StringType
+	objectAttrs["properties"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeRSIdentityAccountAttributeDefinitionProperty(false)}}
+	objectAttrs["property_handling"] = types.StringType
 	objectAttrs["required"] = types.BoolType
 	objectAttrs["system_definition"] = types.StringType
 	objectAttrs["unique"] = types.BoolType
@@ -1270,9 +1274,29 @@ func objectAttrsTypeRSROIdentityAccountAttributeDefinitionRO(recurse bool) map[s
 	objectAttrs["freely_useable"] = types.BoolType
 	objectAttrs["list"] = types.BoolType
 	objectAttrs["name"] = types.StringType
+	objectAttrs["properties"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeRSROIdentityAccountAttributeDefinitionPropertyRO(false)}}
+	objectAttrs["property_handling"] = types.StringType
 	objectAttrs["required"] = types.BoolType
 	objectAttrs["system_definition"] = types.StringType
 	objectAttrs["unique"] = types.BoolType
+	return objectAttrs
+}
+
+func objectAttrsTypeRSIdentityAccountAttributeDefinitionProperty(recurse bool) map[string]attr.Type {
+	objectAttrs := make(map[string]attr.Type)
+	objectAttrs["format"] = types.StringType
+	objectAttrs["list"] = types.BoolType
+	objectAttrs["name"] = types.StringType
+	objectAttrs["required"] = types.BoolType
+	return objectAttrs
+}
+
+func objectAttrsTypeRSROIdentityAccountAttributeDefinitionPropertyRO(recurse bool) map[string]attr.Type {
+	objectAttrs := make(map[string]attr.Type)
+	objectAttrs["format"] = types.StringType
+	objectAttrs["list"] = types.BoolType
+	objectAttrs["name"] = types.StringType
+	objectAttrs["required"] = types.BoolType
 	return objectAttrs
 }
 
@@ -1987,6 +2011,7 @@ func objectAttrsTypeRSROProvisioningProvisionedAccountRO(recurse bool) map[strin
 		objectAttrs["audit"] = types.ObjectType{AttrTypes: objectAttrsTypeRSROAuditInfoRO(false)}
 	}
 	objectAttrs["uuid"] = types.StringType
+	objectAttrs["login_name"] = types.StringType
 	objectAttrs["uid"] = types.Int64Type
 	return objectAttrs
 }
@@ -2113,7 +2138,9 @@ func objectAttrsTypeRSROProvisioningProvisionedSystemRO(recurse bool) map[string
 	objectAttrs["account_count"] = types.Int64Type
 	objectAttrs["cleanup_period"] = types.ObjectType{AttrTypes: objectAttrsTypeRSROProvisioningProvisionedSystem_cleanupPeriodRO(false)}
 	objectAttrs["content_administrator"] = types.ObjectType{AttrTypes: objectAttrsTypeRSROGroupGroupPrimerRO(false)}
+	objectAttrs["effective_full_sync_interval"] = types.Int64Type
 	objectAttrs["external_uuid"] = types.StringType
+	objectAttrs["full_sync_interval"] = types.Int64Type
 	objectAttrs["group_on_system_provisioning"] = types.StringType
 	objectAttrs["owner"] = types.ObjectType{AttrTypes: objectAttrsTypeRSROGroupGroupPrimerRO(false)}
 	objectAttrs["self_service_existing_groups"] = types.BoolType
@@ -2122,6 +2149,7 @@ func objectAttrsTypeRSROProvisioningProvisionedSystemRO(recurse bool) map[string
 	objectAttrs["self_service_service_accounts"] = types.BoolType
 	objectAttrs["should_destroy_unknown_accounts"] = types.BoolType
 	objectAttrs["technical_administrator"] = types.ObjectType{AttrTypes: objectAttrsTypeRSROGroupGroupPrimerRO(false)}
+	objectAttrs["trace_logging_enabled"] = types.BoolType
 	objectAttrs["username_prefix"] = types.StringType
 	objectAttrs["abstract_provisioned_ldap"] = types.ObjectType{AttrTypes: objectAttrsTypeRSROProvisioningAbstractProvisionedLDAPRO(false)}
 	objectAttrs["provisioned_a_d"] = types.ObjectType{AttrTypes: objectAttrsTypeRSROProvisioningProvisionedADRO(false)}
@@ -2530,7 +2558,6 @@ func objectAttrsTypeRSROWebhookWebhookRO(recurse bool) map[string]attr.Type {
 	}
 	objectAttrs["links"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeRSRORestLinkRO(recurse)}}
 	objectAttrs["permissions"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeRSROAuthPermissionRO(recurse)}}
-	objectAttrs["account"] = types.ObjectType{AttrTypes: objectAttrsTypeRSROAuthAccountPrimerRO(false)}
 	objectAttrs["active"] = types.BoolType
 	objectAttrs["all_types"] = types.BoolType
 	objectAttrs["authentication_scheme"] = types.StringType
@@ -2544,6 +2571,7 @@ func objectAttrsTypeRSROWebhookWebhookRO(recurse bool) map[string]attr.Type {
 	objectAttrs["directory"] = types.ObjectType{AttrTypes: objectAttrsTypeRSRODirectoryAccountDirectoryPrimerRO(false)}
 	objectAttrs["group"] = types.ObjectType{AttrTypes: objectAttrsTypeRSROGroupGroupPrimerRO(false)}
 	objectAttrs["name"] = types.StringType
+	objectAttrs["service_account"] = types.ObjectType{AttrTypes: objectAttrsTypeRSROServiceaccountServiceAccountPrimerRO(false)}
 	objectAttrs["system"] = types.ObjectType{AttrTypes: objectAttrsTypeRSROProvisioningProvisionedSystemPrimerRO(false)}
 	objectAttrs["tls"] = types.StringType
 	objectAttrs["trusted_certificate"] = types.ObjectType{AttrTypes: objectAttrsTypeRSROCertificateCertificatePrimerRO(false)}

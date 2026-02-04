@@ -937,20 +937,22 @@ var groupGroupClassificationPrimerAttrTypesRS = objectAttrsTypeRSGroupGroupClass
 var groupGroupClassificationPrimerAttrTypesRSRecurse = objectAttrsTypeRSGroupGroupClassificationPrimer(true)
 
 type groupGroupClassificationPrimerDataRS struct {
-	Links       types.List   `tfsdk:"links"`
-	Permissions types.List   `tfsdk:"permissions"`
-	Name        types.String `tfsdk:"name"`
-	UUID        types.String `tfsdk:"uuid"`
+	Links                  types.List   `tfsdk:"links"`
+	Permissions            types.List   `tfsdk:"permissions"`
+	Name                   types.String `tfsdk:"name"`
+	OrganizationalUnitUUID types.String `tfsdk:"organizational_unit_uuid"`
+	UUID                   types.String `tfsdk:"uuid"`
 }
 
 var groupGroupClassificationPrimerAttrTypesRSRO = objectAttrsTypeRSROGroupGroupClassificationPrimerRO(false)
 var groupGroupClassificationPrimerAttrTypesRSRORecurse = objectAttrsTypeRSROGroupGroupClassificationPrimerRO(true)
 
 type groupGroupClassificationPrimerDataRSRO struct {
-	Links       types.List   `tfsdk:"links"`
-	Permissions types.List   `tfsdk:"permissions"`
-	Name        types.String `tfsdk:"name"`
-	UUID        types.String `tfsdk:"uuid"`
+	Links              types.List   `tfsdk:"links"`
+	Permissions        types.List   `tfsdk:"permissions"`
+	Name               types.String `tfsdk:"name"`
+	OrganizationalUnit types.Object `tfsdk:"organizational_unit"`
+	UUID               types.String `tfsdk:"uuid"`
 }
 
 var groupGroupClientAttrTypesRS = objectAttrsTypeRSGroupGroupClient(false)
@@ -1268,6 +1270,8 @@ type identityAccountAttributeDefinitionDataRS struct {
 	FreelyUseable    types.Bool   `tfsdk:"freely_useable"`
 	List             types.Bool   `tfsdk:"list"`
 	Name             types.String `tfsdk:"name"`
+	Properties       types.List   `tfsdk:"properties"`
+	PropertyHandling types.String `tfsdk:"property_handling"`
 	Required         types.Bool   `tfsdk:"required"`
 	SystemDefinition types.String `tfsdk:"system_definition"`
 	Unique           types.Bool   `tfsdk:"unique"`
@@ -1285,9 +1289,31 @@ type identityAccountAttributeDefinitionDataRSRO struct {
 	FreelyUseable    types.Bool   `tfsdk:"freely_useable"`
 	List             types.Bool   `tfsdk:"list"`
 	Name             types.String `tfsdk:"name"`
+	Properties       types.List   `tfsdk:"properties"`
+	PropertyHandling types.String `tfsdk:"property_handling"`
 	Required         types.Bool   `tfsdk:"required"`
 	SystemDefinition types.String `tfsdk:"system_definition"`
 	Unique           types.Bool   `tfsdk:"unique"`
+}
+
+var identityAccountAttributeDefinitionPropertyAttrTypesRS = objectAttrsTypeRSIdentityAccountAttributeDefinitionProperty(false)
+var identityAccountAttributeDefinitionPropertyAttrTypesRSRecurse = objectAttrsTypeRSIdentityAccountAttributeDefinitionProperty(true)
+
+type identityAccountAttributeDefinitionPropertyDataRS struct {
+	Format   types.String `tfsdk:"format"`
+	List     types.Bool   `tfsdk:"list"`
+	Name     types.String `tfsdk:"name"`
+	Required types.Bool   `tfsdk:"required"`
+}
+
+var identityAccountAttributeDefinitionPropertyAttrTypesRSRO = objectAttrsTypeRSROIdentityAccountAttributeDefinitionPropertyRO(false)
+var identityAccountAttributeDefinitionPropertyAttrTypesRSRORecurse = objectAttrsTypeRSROIdentityAccountAttributeDefinitionPropertyRO(true)
+
+type identityAccountAttributeDefinitionPropertyDataRSRO struct {
+	Format   types.String `tfsdk:"format"`
+	List     types.Bool   `tfsdk:"list"`
+	Name     types.String `tfsdk:"name"`
+	Required types.Bool   `tfsdk:"required"`
 }
 
 var identityAccountAttributeDefinition_additionalObjectsAttrTypesRS = objectAttrsTypeRSIdentityAccountAttributeDefinition_additionalObjects(false)
@@ -2010,6 +2036,7 @@ type provisioningProvisionedAccountDataRSRO struct {
 	UUID       types.String `tfsdk:"uuid"`
 	Additional types.List   `tfsdk:"additional"`
 	Audit      types.Object `tfsdk:"audit" tkhao:"audit"`
+	LoginName  types.String `tfsdk:"login_name"`
 	UID        types.Int64  `tfsdk:"uid"`
 }
 
@@ -2142,7 +2169,9 @@ type provisioningProvisionedSystemDataRSRO struct {
 	SupportedGroupTypes                     types.Object `tfsdk:"supported_group_types" tkhao:"supportedGroupTypes"`
 	CleanupPeriod                           types.Object `tfsdk:"cleanup_period"`
 	ContentAdministrator                    types.Object `tfsdk:"content_administrator"`
+	EffectiveFullSyncInterval               types.Int64  `tfsdk:"effective_full_sync_interval"`
 	ExternalUUID                            types.String `tfsdk:"external_uuid"`
+	FullSyncInterval                        types.Int64  `tfsdk:"full_sync_interval"`
 	GroupOnSystemProvisioning               types.String `tfsdk:"group_on_system_provisioning"`
 	Owner                                   types.Object `tfsdk:"owner"`
 	SelfServiceExistingGroups               types.Bool   `tfsdk:"self_service_existing_groups"`
@@ -2151,6 +2180,7 @@ type provisioningProvisionedSystemDataRSRO struct {
 	SelfServiceServiceAccounts              types.Bool   `tfsdk:"self_service_service_accounts"`
 	ShouldDestroyUnknownAccounts            types.Bool   `tfsdk:"should_destroy_unknown_accounts"`
 	TechnicalAdministrator                  types.Object `tfsdk:"technical_administrator"`
+	TraceLoggingEnabled                     types.Bool   `tfsdk:"trace_logging_enabled"`
 	UsernamePrefix                          types.String `tfsdk:"username_prefix"`
 	AbstractProvisionedLDAP                 types.Object `tfsdk:"abstract_provisioned_ldap"`
 	ProvisionedAD                           types.Object `tfsdk:"provisioned_a_d"`
@@ -2572,7 +2602,6 @@ type webhookWebhookDataRSRO struct {
 	Links                types.List   `tfsdk:"links"`
 	Permissions          types.List   `tfsdk:"permissions"`
 	Additional           types.List   `tfsdk:"additional"`
-	Account              types.Object `tfsdk:"account"`
 	Active               types.Bool   `tfsdk:"active"`
 	Audit                types.Object `tfsdk:"audit" tkhao:"audit"`
 	AllTypes             types.Bool   `tfsdk:"all_types"`
@@ -2587,6 +2616,7 @@ type webhookWebhookDataRSRO struct {
 	Directory            types.Object `tfsdk:"directory"`
 	Group                types.Object `tfsdk:"group"`
 	Name                 types.String `tfsdk:"name"`
+	ServiceAccount       types.Object `tfsdk:"service_account"`
 	System               types.Object `tfsdk:"system"`
 	TLS                  types.String `tfsdk:"tls"`
 	TrustedCertificate   types.Object `tfsdk:"trusted_certificate"`

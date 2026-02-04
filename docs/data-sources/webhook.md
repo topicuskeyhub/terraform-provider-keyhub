@@ -25,7 +25,6 @@ description: |-
 
 ### Read-Only
 
-- `account` (Attributes) (see [below for nested schema](#nestedatt--account))
 - `active` (Boolean)
 - `all_types` (Boolean)
 - `audit` (Attributes) (see [below for nested schema](#nestedatt--audit))
@@ -42,48 +41,13 @@ description: |-
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--links))
 - `name` (String)
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--permissions))
+- `service_account` (Attributes) (see [below for nested schema](#nestedatt--service_account))
 - `system` (Attributes) (see [below for nested schema](#nestedatt--system))
 - `tls` (String)
 - `trusted_certificate` (Attributes) (see [below for nested schema](#nestedatt--trusted_certificate))
 - `types` (List of String)
 - `url` (String)
 - `verbose_payloads` (Boolean)
-
-<a id="nestedatt--account"></a>
-### Nested Schema for `account`
-
-Read-Only:
-
-- `display_name` (String)
-- `last_active` (String)
-- `links` (Attributes List) (see [below for nested schema](#nestedatt--account--links))
-- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--account--permissions))
-- `username` (String)
-- `uuid` (String)
-- `validity` (String)
-
-<a id="nestedatt--account--links"></a>
-### Nested Schema for `account.links`
-
-Read-Only:
-
-- `href` (String)
-- `id` (Number)
-- `rel` (String)
-- `type_escaped` (String)
-
-
-<a id="nestedatt--account--permissions"></a>
-### Nested Schema for `account.permissions`
-
-Read-Only:
-
-- `full` (String)
-- `instances` (List of String)
-- `operations` (Set of String)
-- `type_escaped` (String)
-
-
 
 <a id="nestedatt--audit"></a>
 ### Nested Schema for `audit`
@@ -297,6 +261,115 @@ Read-Only:
 - `instances` (List of String)
 - `operations` (Set of String)
 - `type_escaped` (String)
+
+
+<a id="nestedatt--service_account"></a>
+### Nested Schema for `service_account`
+
+Read-Only:
+
+- `active` (Boolean)
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--service_account--links))
+- `name` (String)
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--service_account--permissions))
+- `system` (Attributes) (see [below for nested schema](#nestedatt--service_account--system))
+- `username` (String)
+- `uuid` (String)
+
+<a id="nestedatt--service_account--links"></a>
+### Nested Schema for `service_account.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--service_account--permissions"></a>
+### Nested Schema for `service_account.permissions`
+
+Read-Only:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--service_account--system"></a>
+### Nested Schema for `service_account.system`
+
+Read-Only:
+
+- `active` (Boolean)
+- `admin_permissions` (Boolean)
+- `can_write_accounts` (Boolean)
+- `content_admin_permissions` (Boolean)
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--service_account--system--links))
+- `name` (String)
+- `organizational_unit` (Attributes) (see [below for nested schema](#nestedatt--service_account--system--organizational_unit))
+- `owner_permissions` (Boolean)
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--service_account--system--permissions))
+- `type` (String)
+- `uuid` (String)
+
+<a id="nestedatt--service_account--system--links"></a>
+### Nested Schema for `service_account.system.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--service_account--system--organizational_unit"></a>
+### Nested Schema for `service_account.system.organizational_unit`
+
+Read-Only:
+
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--service_account--system--organizational_unit--links))
+- `name` (String)
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--service_account--system--organizational_unit--permissions))
+- `uuid` (String)
+
+<a id="nestedatt--service_account--system--organizational_unit--links"></a>
+### Nested Schema for `service_account.system.organizational_unit.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--service_account--system--organizational_unit--permissions"></a>
+### Nested Schema for `service_account.system.organizational_unit.permissions`
+
+Read-Only:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
+
+<a id="nestedatt--service_account--system--permissions"></a>
+### Nested Schema for `service_account.system.permissions`
+
+Read-Only:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
 
 
 <a id="nestedatt--system"></a>

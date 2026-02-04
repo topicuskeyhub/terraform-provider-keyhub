@@ -1219,6 +1219,7 @@ func reorderGroupGroupClassificationPrimerRO(state basetypes.ObjectValue, priorS
 		attrs = groupGroupClassificationPrimerAttrTypesRSRO
 	}
 	obj := filterAttributes(state.Attributes(), attrs)
+	obj["organizational_unit"] = reorderOrganizationOrganizationalUnitPrimerRO(state.Attributes()["organizational_unit"].(types.Object), priorState.Attributes()["organizational_unit"].(types.Object), false)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -1738,6 +1739,7 @@ func reorderIdentityAccountAttributeDefinition(state basetypes.ObjectValue, prio
 	if recurse {
 		maps.Copy(obj, reorderIdentityAccountAttributeDefinition_additionalObjects(state, priorState, false).Attributes())
 	}
+	// Reordering not supported for properties with type List
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -1758,6 +1760,37 @@ func reorderIdentityAccountAttributeDefinitionRO(state basetypes.ObjectValue, pr
 	if recurse {
 		maps.Copy(obj, reorderIdentityAccountAttributeDefinition_additionalObjectsRO(state, priorState, false).Attributes())
 	}
+	// Reordering not supported for properties with type List
+
+	return types.ObjectValueMust(attrs, obj)
+}
+
+func reorderIdentityAccountAttributeDefinitionProperty(state basetypes.ObjectValue, priorState basetypes.ObjectValue, recurse bool) basetypes.ObjectValue {
+	if state.IsNull() || state.IsUnknown() || priorState.IsNull() || priorState.IsUnknown() {
+		return state
+	}
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = identityAccountAttributeDefinitionPropertyAttrTypesRSRecurse
+	} else {
+		attrs = identityAccountAttributeDefinitionPropertyAttrTypesRS
+	}
+	obj := filterAttributes(state.Attributes(), attrs)
+
+	return types.ObjectValueMust(attrs, obj)
+}
+
+func reorderIdentityAccountAttributeDefinitionPropertyRO(state basetypes.ObjectValue, priorState basetypes.ObjectValue, recurse bool) basetypes.ObjectValue {
+	if state.IsNull() || state.IsUnknown() || priorState.IsNull() || priorState.IsUnknown() {
+		return state
+	}
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = identityAccountAttributeDefinitionPropertyAttrTypesRSRORecurse
+	} else {
+		attrs = identityAccountAttributeDefinitionPropertyAttrTypesRSRO
+	}
+	obj := filterAttributes(state.Attributes(), attrs)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -3783,11 +3816,11 @@ func reorderWebhookWebhookRO(state basetypes.ObjectValue, priorState basetypes.O
 	if recurse {
 		maps.Copy(obj, reorderWebhookWebhook_additionalObjectsRO(state, priorState, false).Attributes())
 	}
-	obj["account"] = reorderAuthAccountPrimerRO(state.Attributes()["account"].(types.Object), priorState.Attributes()["account"].(types.Object), false)
 	obj["client"] = reorderClientClientApplicationPrimerRO(state.Attributes()["client"].(types.Object), priorState.Attributes()["client"].(types.Object), false)
 	obj["client_certificate"] = reorderCertificateCertificatePrimerRO(state.Attributes()["client_certificate"].(types.Object), priorState.Attributes()["client_certificate"].(types.Object), false)
 	obj["directory"] = reorderDirectoryAccountDirectoryPrimerRO(state.Attributes()["directory"].(types.Object), priorState.Attributes()["directory"].(types.Object), false)
 	obj["group"] = reorderGroupGroupPrimerRO(state.Attributes()["group"].(types.Object), priorState.Attributes()["group"].(types.Object), false)
+	obj["service_account"] = reorderServiceaccountServiceAccountPrimerRO(state.Attributes()["service_account"].(types.Object), priorState.Attributes()["service_account"].(types.Object), false)
 	obj["system"] = reorderProvisioningProvisionedSystemPrimerRO(state.Attributes()["system"].(types.Object), priorState.Attributes()["system"].(types.Object), false)
 	obj["trusted_certificate"] = reorderCertificateCertificatePrimerRO(state.Attributes()["trusted_certificate"].(types.Object), priorState.Attributes()["trusted_certificate"].(types.Object), false)
 
