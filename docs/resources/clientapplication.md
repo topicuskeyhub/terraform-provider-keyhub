@@ -229,6 +229,7 @@ Optional:
 
 Optional:
 
+- `attributes` (Attributes List) (see [below for nested schema](#nestedatt--ldap_client--attributes))
 - `client_certificate_uuid` (String)
 - `share_secret_in_vault` (Boolean)
 
@@ -236,6 +237,79 @@ Read-Only:
 
 - `bind_dn` (String)
 - `shared_secret` (Attributes) (see [below for nested schema](#nestedatt--ldap_client--shared_secret))
+
+<a id="nestedatt--ldap_client--attributes"></a>
+### Nested Schema for `ldap_client.attributes`
+
+Required:
+
+- `name` (String)
+
+Optional:
+
+- `attribute_definition` (Attributes) (see [below for nested schema](#nestedatt--ldap_client--attributes--attribute_definition))
+- `script` (String)
+
+<a id="nestedatt--ldap_client--attributes--attribute_definition"></a>
+### Nested Schema for `ldap_client.attributes.attribute_definition`
+
+Required:
+
+- `format` (String)
+- `name` (String)
+
+Optional:
+
+- `freely_useable` (Boolean)
+- `list` (Boolean)
+- `properties` (Attributes List) (see [below for nested schema](#nestedatt--ldap_client--attributes--attribute_definition--properties))
+- `property_handling` (String)
+- `required` (Boolean)
+- `unique` (Boolean)
+
+Read-Only:
+
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--ldap_client--attributes--attribute_definition--links))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--ldap_client--attributes--attribute_definition--permissions))
+- `system_definition` (String)
+
+<a id="nestedatt--ldap_client--attributes--attribute_definition--properties"></a>
+### Nested Schema for `ldap_client.attributes.attribute_definition.properties`
+
+Required:
+
+- `format` (String)
+- `name` (String)
+
+Optional:
+
+- `list` (Boolean)
+- `required` (Boolean)
+
+
+<a id="nestedatt--ldap_client--attributes--attribute_definition--links"></a>
+### Nested Schema for `ldap_client.attributes.attribute_definition.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--ldap_client--attributes--attribute_definition--permissions"></a>
+### Nested Schema for `ldap_client.attributes.attribute_definition.permissions`
+
+Optional:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
+
 
 <a id="nestedatt--ldap_client--shared_secret"></a>
 ### Nested Schema for `ldap_client.shared_secret`

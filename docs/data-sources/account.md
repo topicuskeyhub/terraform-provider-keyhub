@@ -36,6 +36,7 @@ description: |-
 - `directory_rotating_password` (String)
 - `directory_type` (String)
 - `display_name` (String)
+- `effective_permissions` (Attributes) (see [below for nested schema](#nestedatt--effective_permissions))
 - `email` (String)
 - `groups` (Attributes List) (see [below for nested schema](#nestedatt--groups))
 - `id_in_directory` (String)
@@ -50,8 +51,8 @@ description: |-
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--permissions))
 - `reregistration_required` (Boolean)
 - `settings` (Attributes) (see [below for nested schema](#nestedatt--settings))
-- `stored_attributes` (Attributes) (see [below for nested schema](#nestedatt--stored_attributes))
 - `token_password_enabled` (Boolean)
+- `total_group_count` (Attributes) (see [below for nested schema](#nestedatt--total_group_count))
 - `two_factor_status` (String)
 - `username` (String)
 - `valid_in_directory` (Boolean)
@@ -114,6 +115,22 @@ Read-Only:
 - `operations` (Set of String)
 - `type_escaped` (String)
 
+
+
+<a id="nestedatt--effective_permissions"></a>
+### Nested Schema for `effective_permissions`
+
+Read-Only:
+
+- `decline_reset_requests_allowed` (Boolean)
+- `disable_account_allowed` (Boolean)
+- `disable_two_factor_allowed` (Boolean)
+- `enable_account_allowed` (Boolean)
+- `update_can_request_groups_allowed` (Boolean)
+- `update_license_role_allowed` (Boolean)
+- `update_reregistration_allowed` (Boolean)
+- `view_full_audit_log` (Boolean)
+- `view_groups_and_profiles` (Boolean)
 
 
 <a id="nestedatt--groups"></a>
@@ -343,21 +360,12 @@ Read-Only:
 
 
 
-<a id="nestedatt--stored_attributes"></a>
-### Nested Schema for `stored_attributes`
+<a id="nestedatt--total_group_count"></a>
+### Nested Schema for `total_group_count`
 
 Read-Only:
 
-- `attributes` (Attributes List) (see [below for nested schema](#nestedatt--stored_attributes--attributes))
-
-<a id="nestedatt--stored_attributes--attributes"></a>
-### Nested Schema for `stored_attributes.attributes`
-
-Read-Only:
-
-- `name` (String)
-- `value` (String)
-
+- `count` (Number)
 
 
 <a id="nestedatt--vault"></a>

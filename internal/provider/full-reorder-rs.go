@@ -552,6 +552,7 @@ func reorderClientLdapClient(state basetypes.ObjectValue, priorState basetypes.O
 		attrs = clientLdapClientAttrTypesRS
 	}
 	obj := filterAttributes(state.Attributes(), attrs)
+	// Reordering not supported for attributes with type List
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -567,6 +568,7 @@ func reorderClientLdapClientRO(state basetypes.ObjectValue, priorState basetypes
 		attrs = clientLdapClientAttrTypesRSRO
 	}
 	obj := filterAttributes(state.Attributes(), attrs)
+	// Reordering not supported for attributes with type List
 	obj["client_certificate"] = reorderCertificateCertificatePrimerRO(state.Attributes()["client_certificate"].(types.Object), priorState.Attributes()["client_certificate"].(types.Object), false)
 
 	return types.ObjectValueMust(attrs, obj)
@@ -930,6 +932,7 @@ func reorderDirectoryLDAPDirectoryRO(state basetypes.ObjectValue, priorState bas
 		attrs = directoryLDAPDirectoryAttrTypesRSRO
 	}
 	obj := filterAttributes(state.Attributes(), attrs)
+	// Reordering not supported for attributes with type List
 	obj["client_certificate"] = reorderCertificateCertificatePrimerRO(state.Attributes()["client_certificate"].(types.Object), priorState.Attributes()["client_certificate"].(types.Object), false)
 	obj["failover_trusted_certificate"] = reorderCertificateCertificatePrimerRO(state.Attributes()["failover_trusted_certificate"].(types.Object), priorState.Attributes()["failover_trusted_certificate"].(types.Object), false)
 	obj["trusted_certificate"] = reorderCertificateCertificatePrimerRO(state.Attributes()["trusted_certificate"].(types.Object), priorState.Attributes()["trusted_certificate"].(types.Object), false)
@@ -963,6 +966,7 @@ func reorderDirectoryOIDCDirectoryRO(state basetypes.ObjectValue, priorState bas
 		attrs = directoryOIDCDirectoryAttrTypesRSRO
 	}
 	obj := filterAttributes(state.Attributes(), attrs)
+	// Reordering not supported for attributes with type List
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -1452,6 +1456,22 @@ func reorderGroupGroupPrimerLinkableWrapperRO(state basetypes.ObjectValue, prior
 		attrs = groupGroupPrimerLinkableWrapperAttrTypesRSRORecurse
 	} else {
 		attrs = groupGroupPrimerLinkableWrapperAttrTypesRSRO
+	}
+	obj := filterAttributes(state.Attributes(), attrs)
+	// Reordering not supported for items with type List
+
+	return types.ObjectValueMust(attrs, obj)
+}
+
+func reorderGroupGroupPrimerLinkableWrapperWithCountRO(state basetypes.ObjectValue, priorState basetypes.ObjectValue, recurse bool) basetypes.ObjectValue {
+	if state.IsNull() || state.IsUnknown() || priorState.IsNull() || priorState.IsUnknown() {
+		return state
+	}
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = groupGroupPrimerLinkableWrapperWithCountAttrTypesRSRORecurse
+	} else {
+		attrs = groupGroupPrimerLinkableWrapperWithCountAttrTypesRSRO
 	}
 	obj := filterAttributes(state.Attributes(), attrs)
 	// Reordering not supported for items with type List

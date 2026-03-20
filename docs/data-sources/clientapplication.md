@@ -970,10 +970,72 @@ Read-Only:
 
 Read-Only:
 
+- `attributes` (Attributes List) (see [below for nested schema](#nestedatt--ldap_client--attributes))
 - `bind_dn` (String)
 - `client_certificate` (Attributes) (see [below for nested schema](#nestedatt--ldap_client--client_certificate))
 - `share_secret_in_vault` (Boolean)
 - `shared_secret` (Attributes) (see [below for nested schema](#nestedatt--ldap_client--shared_secret))
+
+<a id="nestedatt--ldap_client--attributes"></a>
+### Nested Schema for `ldap_client.attributes`
+
+Read-Only:
+
+- `attribute_definition` (Attributes) (see [below for nested schema](#nestedatt--ldap_client--attributes--attribute_definition))
+- `name` (String)
+- `script` (String)
+
+<a id="nestedatt--ldap_client--attributes--attribute_definition"></a>
+### Nested Schema for `ldap_client.attributes.attribute_definition`
+
+Read-Only:
+
+- `format` (String)
+- `freely_useable` (Boolean)
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--ldap_client--attributes--attribute_definition--links))
+- `list` (Boolean)
+- `name` (String)
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--ldap_client--attributes--attribute_definition--permissions))
+- `properties` (Attributes List) (see [below for nested schema](#nestedatt--ldap_client--attributes--attribute_definition--properties))
+- `property_handling` (String)
+- `required` (Boolean)
+- `system_definition` (String)
+- `unique` (Boolean)
+
+<a id="nestedatt--ldap_client--attributes--attribute_definition--links"></a>
+### Nested Schema for `ldap_client.attributes.attribute_definition.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--ldap_client--attributes--attribute_definition--permissions"></a>
+### Nested Schema for `ldap_client.attributes.attribute_definition.permissions`
+
+Read-Only:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--ldap_client--attributes--attribute_definition--properties"></a>
+### Nested Schema for `ldap_client.attributes.attribute_definition.properties`
+
+Read-Only:
+
+- `format` (String)
+- `list` (Boolean)
+- `name` (String)
+- `required` (Boolean)
+
+
+
 
 <a id="nestedatt--ldap_client--client_certificate"></a>
 ### Nested Schema for `ldap_client.client_certificate`

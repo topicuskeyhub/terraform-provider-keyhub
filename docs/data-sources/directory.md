@@ -239,7 +239,7 @@ Read-Only:
 
 Read-Only:
 
-- `attributes_to_store` (String)
+- `attributes` (Attributes List) (see [below for nested schema](#nestedatt--ldap_directory--attributes))
 - `base_dn` (String)
 - `client_certificate` (Attributes) (see [below for nested schema](#nestedatt--ldap_directory--client_certificate))
 - `dialect` (String)
@@ -253,6 +253,67 @@ Read-Only:
 - `search_filter` (String)
 - `tls` (String)
 - `trusted_certificate` (Attributes) (see [below for nested schema](#nestedatt--ldap_directory--trusted_certificate))
+
+<a id="nestedatt--ldap_directory--attributes"></a>
+### Nested Schema for `ldap_directory.attributes`
+
+Read-Only:
+
+- `attribute_definition` (Attributes) (see [below for nested schema](#nestedatt--ldap_directory--attributes--attribute_definition))
+- `name` (String)
+- `script` (String)
+
+<a id="nestedatt--ldap_directory--attributes--attribute_definition"></a>
+### Nested Schema for `ldap_directory.attributes.attribute_definition`
+
+Read-Only:
+
+- `format` (String)
+- `freely_useable` (Boolean)
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--ldap_directory--attributes--attribute_definition--links))
+- `list` (Boolean)
+- `name` (String)
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--ldap_directory--attributes--attribute_definition--permissions))
+- `properties` (Attributes List) (see [below for nested schema](#nestedatt--ldap_directory--attributes--attribute_definition--properties))
+- `property_handling` (String)
+- `required` (Boolean)
+- `system_definition` (String)
+- `unique` (Boolean)
+
+<a id="nestedatt--ldap_directory--attributes--attribute_definition--links"></a>
+### Nested Schema for `ldap_directory.attributes.attribute_definition.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--ldap_directory--attributes--attribute_definition--permissions"></a>
+### Nested Schema for `ldap_directory.attributes.attribute_definition.permissions`
+
+Read-Only:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--ldap_directory--attributes--attribute_definition--properties"></a>
+### Nested Schema for `ldap_directory.attributes.attribute_definition.properties`
+
+Read-Only:
+
+- `format` (String)
+- `list` (Boolean)
+- `name` (String)
+- `required` (Boolean)
+
+
+
 
 <a id="nestedatt--ldap_directory--client_certificate"></a>
 ### Nested Schema for `ldap_directory.client_certificate`
@@ -414,7 +475,7 @@ Read-Only:
 Read-Only:
 
 - `acr_values` (String)
-- `attributes_to_store` (String)
+- `attributes` (Attributes List) (see [below for nested schema](#nestedatt--oidc_directory--attributes))
 - `client_id` (String)
 - `client_secret` (String, Sensitive)
 - `domain_restriction` (String)
@@ -424,6 +485,67 @@ Read-Only:
 - `logout_url` (String)
 - `send_login_hint` (Boolean)
 - `vendor_escaped` (String)
+
+<a id="nestedatt--oidc_directory--attributes"></a>
+### Nested Schema for `oidc_directory.attributes`
+
+Read-Only:
+
+- `attribute_definition` (Attributes) (see [below for nested schema](#nestedatt--oidc_directory--attributes--attribute_definition))
+- `name` (String)
+- `script` (String)
+
+<a id="nestedatt--oidc_directory--attributes--attribute_definition"></a>
+### Nested Schema for `oidc_directory.attributes.attribute_definition`
+
+Read-Only:
+
+- `format` (String)
+- `freely_useable` (Boolean)
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--oidc_directory--attributes--attribute_definition--links))
+- `list` (Boolean)
+- `name` (String)
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--oidc_directory--attributes--attribute_definition--permissions))
+- `properties` (Attributes List) (see [below for nested schema](#nestedatt--oidc_directory--attributes--attribute_definition--properties))
+- `property_handling` (String)
+- `required` (Boolean)
+- `system_definition` (String)
+- `unique` (Boolean)
+
+<a id="nestedatt--oidc_directory--attributes--attribute_definition--links"></a>
+### Nested Schema for `oidc_directory.attributes.attribute_definition.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--oidc_directory--attributes--attribute_definition--permissions"></a>
+### Nested Schema for `oidc_directory.attributes.attribute_definition.permissions`
+
+Read-Only:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--oidc_directory--attributes--attribute_definition--properties"></a>
+### Nested Schema for `oidc_directory.attributes.attribute_definition.properties`
+
+Read-Only:
+
+- `format` (String)
+- `list` (Boolean)
+- `name` (String)
+- `required` (Boolean)
+
+
+
 
 
 <a id="nestedatt--pending_accounts_directory"></a>

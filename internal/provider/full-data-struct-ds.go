@@ -19,6 +19,13 @@ type auditInfoDataDSRO struct {
 	LastModifiedBy types.String `tfsdk:"last_modified_by"`
 }
 
+var itemCountAttrTypesDSRO = objectAttrsTypeDSROItemCountRO(false)
+var itemCountAttrTypesDSRORecurse = objectAttrsTypeDSROItemCountRO(true)
+
+type itemCountDataDSRO struct {
+	Count types.Int64 `tfsdk:"count"`
+}
+
 var linkableAttrTypesDS = objectAttrsTypeDSLinkable(false)
 var linkableAttrTypesDSRecurse = objectAttrsTypeDSLinkable(true)
 
@@ -158,10 +165,11 @@ type authAccountDataDS struct {
 	Active                          types.Bool   `tfsdk:"active"`
 	ActiveLogin                     types.Bool   `tfsdk:"active_login" tkhao:"activeLogin"`
 	Audit                           types.Object `tfsdk:"audit" tkhao:"audit"`
+	EffectivePermissions            types.Object `tfsdk:"effective_permissions" tkhao:"effectivePermissions"`
 	Groups                          types.List   `tfsdk:"groups" tkhao:"groups"`
 	PendingRecoveryRequests         types.Object `tfsdk:"pending_recovery_requests" tkhao:"pendingRecoveryRequests"`
 	Settings                        types.Object `tfsdk:"settings" tkhao:"settings"`
-	StoredAttributes                types.Object `tfsdk:"stored_attributes" tkhao:"storedAttributes"`
+	TotalGroupCount                 types.Object `tfsdk:"total_group_count" tkhao:"totalGroupCount"`
 	Vault                           types.Object `tfsdk:"vault" tkhao:"vault"`
 	CanRequestGroups                types.Bool   `tfsdk:"can_request_groups"`
 	Directory                       types.Object `tfsdk:"directory"`
@@ -240,11 +248,27 @@ var authAccount_additionalObjectsAttrTypesDSRecurse = objectAttrsTypeDSAuthAccou
 type authAccount_additionalObjectsDataDS struct {
 	ActiveLogin             types.Bool   `tfsdk:"active_login"`
 	Audit                   types.Object `tfsdk:"audit"`
+	EffectivePermissions    types.Object `tfsdk:"effective_permissions"`
 	Groups                  types.List   `tfsdk:"groups"`
 	PendingRecoveryRequests types.Object `tfsdk:"pending_recovery_requests"`
 	Settings                types.Object `tfsdk:"settings"`
-	StoredAttributes        types.Object `tfsdk:"stored_attributes"`
+	TotalGroupCount         types.Object `tfsdk:"total_group_count"`
 	Vault                   types.Object `tfsdk:"vault"`
+}
+
+var authEffectiveAccountPermissionsAttrTypesDSRO = objectAttrsTypeDSROAuthEffectiveAccountPermissionsRO(false)
+var authEffectiveAccountPermissionsAttrTypesDSRORecurse = objectAttrsTypeDSROAuthEffectiveAccountPermissionsRO(true)
+
+type authEffectiveAccountPermissionsDataDSRO struct {
+	DeclineResetRequestsAllowed   types.Bool `tfsdk:"decline_reset_requests_allowed"`
+	DisableAccountAllowed         types.Bool `tfsdk:"disable_account_allowed"`
+	DisableTwoFactorAllowed       types.Bool `tfsdk:"disable_two_factor_allowed"`
+	EnableAccountAllowed          types.Bool `tfsdk:"enable_account_allowed"`
+	UpdateCanRequestGroupsAllowed types.Bool `tfsdk:"update_can_request_groups_allowed"`
+	UpdateLicenseRoleAllowed      types.Bool `tfsdk:"update_license_role_allowed"`
+	UpdateReregistrationAllowed   types.Bool `tfsdk:"update_reregistration_allowed"`
+	ViewFullAuditLog              types.Bool `tfsdk:"view_full_audit_log"`
+	ViewGroupsAndProfiles         types.Bool `tfsdk:"view_groups_and_profiles"`
 }
 
 var authPermissionAttrTypesDS = objectAttrsTypeDSAuthPermission(false)
@@ -265,21 +289,6 @@ type authPermissionDataDSRO struct {
 	Instances   types.List   `tfsdk:"instances"`
 	Operations  types.Set    `tfsdk:"operations"`
 	TypeEscaped types.String `tfsdk:"type_escaped"`
-}
-
-var authStoredAccountAttributeAttrTypesDSRO = objectAttrsTypeDSROAuthStoredAccountAttributeRO(false)
-var authStoredAccountAttributeAttrTypesDSRORecurse = objectAttrsTypeDSROAuthStoredAccountAttributeRO(true)
-
-type authStoredAccountAttributeDataDSRO struct {
-	Name  types.String `tfsdk:"name"`
-	Value types.String `tfsdk:"value"`
-}
-
-var authStoredAccountAttributesAttrTypesDSRO = objectAttrsTypeDSROAuthStoredAccountAttributesRO(false)
-var authStoredAccountAttributesAttrTypesDSRORecurse = objectAttrsTypeDSROAuthStoredAccountAttributesRO(true)
-
-type authStoredAccountAttributesDataDSRO struct {
-	Attributes types.List `tfsdk:"attributes"`
 }
 
 var certificateCertificateAttrTypesDS = objectAttrsTypeDSCertificateCertificate(false)
@@ -468,6 +477,7 @@ var clientLdapClientAttrTypesDS = objectAttrsTypeDSClientLdapClient(false)
 var clientLdapClientAttrTypesDSRecurse = objectAttrsTypeDSClientLdapClient(true)
 
 type clientLdapClientDataDS struct {
+	Attributes         types.List   `tfsdk:"attributes"`
 	BindDN             types.String `tfsdk:"bind_dn"`
 	ClientCertificate  types.Object `tfsdk:"client_certificate"`
 	ShareSecretInVault types.Bool   `tfsdk:"share_secret_in_vault"`
@@ -478,6 +488,7 @@ var clientLdapClientAttrTypesDSRO = objectAttrsTypeDSROClientLdapClientRO(false)
 var clientLdapClientAttrTypesDSRORecurse = objectAttrsTypeDSROClientLdapClientRO(true)
 
 type clientLdapClientDataDSRO struct {
+	Attributes         types.List   `tfsdk:"attributes"`
 	BindDN             types.String `tfsdk:"bind_dn"`
 	ClientCertificate  types.Object `tfsdk:"client_certificate"`
 	ShareSecretInVault types.Bool   `tfsdk:"share_secret_in_vault"`
@@ -779,7 +790,7 @@ var directoryLDAPDirectoryAttrTypesDS = objectAttrsTypeDSDirectoryLDAPDirectory(
 var directoryLDAPDirectoryAttrTypesDSRecurse = objectAttrsTypeDSDirectoryLDAPDirectory(true)
 
 type directoryLDAPDirectoryDataDS struct {
-	AttributesToStore          types.String `tfsdk:"attributes_to_store"`
+	Attributes                 types.List   `tfsdk:"attributes"`
 	BaseDN                     types.String `tfsdk:"base_dn"`
 	ClientCertificate          types.Object `tfsdk:"client_certificate"`
 	Dialect                    types.String `tfsdk:"dialect"`
@@ -799,7 +810,7 @@ var directoryLDAPDirectoryAttrTypesDSRO = objectAttrsTypeDSRODirectoryLDAPDirect
 var directoryLDAPDirectoryAttrTypesDSRORecurse = objectAttrsTypeDSRODirectoryLDAPDirectoryRO(true)
 
 type directoryLDAPDirectoryDataDSRO struct {
-	AttributesToStore          types.String `tfsdk:"attributes_to_store"`
+	Attributes                 types.List   `tfsdk:"attributes"`
 	BaseDN                     types.String `tfsdk:"base_dn"`
 	ClientCertificate          types.Object `tfsdk:"client_certificate"`
 	Dialect                    types.String `tfsdk:"dialect"`
@@ -832,7 +843,7 @@ var directoryOIDCDirectoryAttrTypesDSRecurse = objectAttrsTypeDSDirectoryOIDCDir
 
 type directoryOIDCDirectoryDataDS struct {
 	AcrValues           types.String `tfsdk:"acr_values"`
-	AttributesToStore   types.String `tfsdk:"attributes_to_store"`
+	Attributes          types.List   `tfsdk:"attributes"`
 	ClientID            types.String `tfsdk:"client_id"`
 	ClientSecret        types.String `tfsdk:"client_secret"`
 	DomainRestriction   types.String `tfsdk:"domain_restriction"`
@@ -849,7 +860,7 @@ var directoryOIDCDirectoryAttrTypesDSRORecurse = objectAttrsTypeDSRODirectoryOID
 
 type directoryOIDCDirectoryDataDSRO struct {
 	AcrValues           types.String `tfsdk:"acr_values"`
-	AttributesToStore   types.String `tfsdk:"attributes_to_store"`
+	Attributes          types.List   `tfsdk:"attributes"`
 	ClientID            types.String `tfsdk:"client_id"`
 	ClientSecret        types.String `tfsdk:"client_secret"`
 	DomainRestriction   types.String `tfsdk:"domain_restriction"`
@@ -930,6 +941,7 @@ type groupGroupDataDS struct {
 	ClientPermissions            types.List   `tfsdk:"client_permissions" tkhao:"clientPermissions"`
 	Clients                      types.List   `tfsdk:"clients" tkhao:"clients"`
 	ContentAdministeredSystems   types.List   `tfsdk:"content_administered_systems" tkhao:"contentAdministeredSystems"`
+	ExcludedGroups               types.List   `tfsdk:"excluded_groups" tkhao:"excludedGroups"`
 	GlobalRoles                  types.Object `tfsdk:"global_roles" tkhao:"globalRoles"`
 	GroupAccessInfo              types.Object `tfsdk:"group_access_info" tkhao:"groupAccessInfo"`
 	Groupauditinginfo            types.Object `tfsdk:"groupauditinginfo" tkhao:"groupauditinginfo"`
@@ -993,6 +1005,7 @@ type groupGroupDataDSRO struct {
 	ClientPermissions            types.List   `tfsdk:"client_permissions" tkhao:"clientPermissions"`
 	Clients                      types.List   `tfsdk:"clients" tkhao:"clients"`
 	ContentAdministeredSystems   types.List   `tfsdk:"content_administered_systems" tkhao:"contentAdministeredSystems"`
+	ExcludedGroups               types.List   `tfsdk:"excluded_groups" tkhao:"excludedGroups"`
 	GlobalRoles                  types.Object `tfsdk:"global_roles" tkhao:"globalRoles"`
 	GroupAccessInfo              types.Object `tfsdk:"group_access_info" tkhao:"groupAccessInfo"`
 	Groupauditinginfo            types.Object `tfsdk:"groupauditinginfo" tkhao:"groupauditinginfo"`
@@ -1370,6 +1383,14 @@ type groupGroupPrimerLinkableWrapperDataDSRO struct {
 	Items types.List `tfsdk:"items"`
 }
 
+var groupGroupPrimerLinkableWrapperWithCountAttrTypesDSRO = objectAttrsTypeDSROGroupGroupPrimerLinkableWrapperWithCountRO(false)
+var groupGroupPrimerLinkableWrapperWithCountAttrTypesDSRORecurse = objectAttrsTypeDSROGroupGroupPrimerLinkableWrapperWithCountRO(true)
+
+type groupGroupPrimerLinkableWrapperWithCountDataDSRO struct {
+	Count types.Int64 `tfsdk:"count"`
+	Items types.List  `tfsdk:"items"`
+}
+
 var groupGroup_additionalObjectsAttrTypesDS = objectAttrsTypeDSGroupGroup_additionalObjects(false)
 var groupGroup_additionalObjectsAttrTypesDSRecurse = objectAttrsTypeDSGroupGroup_additionalObjects(true)
 
@@ -1383,6 +1404,7 @@ type groupGroup_additionalObjectsDataDS struct {
 	ClientPermissions          types.List   `tfsdk:"client_permissions"`
 	Clients                    types.List   `tfsdk:"clients"`
 	ContentAdministeredSystems types.List   `tfsdk:"content_administered_systems"`
+	ExcludedGroups             types.List   `tfsdk:"excluded_groups"`
 	GlobalRoles                types.Object `tfsdk:"global_roles"`
 	GroupAccessInfo            types.Object `tfsdk:"group_access_info"`
 	Groupauditinginfo          types.Object `tfsdk:"groupauditinginfo"`
@@ -1419,6 +1441,7 @@ type groupGroup_additionalObjectsDataDSRO struct {
 	ClientPermissions          types.List   `tfsdk:"client_permissions"`
 	Clients                    types.List   `tfsdk:"clients"`
 	ContentAdministeredSystems types.List   `tfsdk:"content_administered_systems"`
+	ExcludedGroups             types.List   `tfsdk:"excluded_groups"`
 	GlobalRoles                types.Object `tfsdk:"global_roles"`
 	GroupAccessInfo            types.Object `tfsdk:"group_access_info"`
 	Groupauditinginfo          types.Object `tfsdk:"groupauditinginfo"`
@@ -2499,7 +2522,7 @@ var provisioningProvisionedSystemAttrTypesDSRecurse = objectAttrsTypeDSProvision
 type provisioningProvisionedSystemDataDS struct {
 	Links                                   types.List   `tfsdk:"links"`
 	Permissions                             types.List   `tfsdk:"permissions"`
-	Active                                  types.Bool   `tfsdk:"active"`
+	ActiveStatus                            types.String `tfsdk:"active_status"`
 	AdminPermissions                        types.Bool   `tfsdk:"admin_permissions"`
 	CanWriteAccounts                        types.Bool   `tfsdk:"can_write_accounts"`
 	ContentAdminPermissions                 types.Bool   `tfsdk:"content_admin_permissions"`
@@ -2551,7 +2574,7 @@ var provisioningProvisionedSystemAttrTypesDSRORecurse = objectAttrsTypeDSROProvi
 type provisioningProvisionedSystemDataDSRO struct {
 	Links                                   types.List   `tfsdk:"links"`
 	Permissions                             types.List   `tfsdk:"permissions"`
-	Active                                  types.Bool   `tfsdk:"active"`
+	ActiveStatus                            types.String `tfsdk:"active_status"`
 	AdminPermissions                        types.Bool   `tfsdk:"admin_permissions"`
 	CanWriteAccounts                        types.Bool   `tfsdk:"can_write_accounts"`
 	ContentAdminPermissions                 types.Bool   `tfsdk:"content_admin_permissions"`
@@ -2610,7 +2633,7 @@ var provisioningProvisionedSystemPrimerAttrTypesDSRecurse = objectAttrsTypeDSPro
 type provisioningProvisionedSystemPrimerDataDS struct {
 	Links                                   types.List   `tfsdk:"links"`
 	Permissions                             types.List   `tfsdk:"permissions"`
-	Active                                  types.Bool   `tfsdk:"active"`
+	ActiveStatus                            types.String `tfsdk:"active_status"`
 	AdminPermissions                        types.Bool   `tfsdk:"admin_permissions"`
 	CanWriteAccounts                        types.Bool   `tfsdk:"can_write_accounts"`
 	ContentAdminPermissions                 types.Bool   `tfsdk:"content_admin_permissions"`
@@ -2627,7 +2650,7 @@ var provisioningProvisionedSystemPrimerAttrTypesDSRORecurse = objectAttrsTypeDSR
 type provisioningProvisionedSystemPrimerDataDSRO struct {
 	Links                                   types.List   `tfsdk:"links"`
 	Permissions                             types.List   `tfsdk:"permissions"`
-	Active                                  types.Bool   `tfsdk:"active"`
+	ActiveStatus                            types.String `tfsdk:"active_status"`
 	AdminPermissions                        types.Bool   `tfsdk:"admin_permissions"`
 	CanWriteAccounts                        types.Bool   `tfsdk:"can_write_accounts"`
 	ContentAdminPermissions                 types.Bool   `tfsdk:"content_admin_permissions"`

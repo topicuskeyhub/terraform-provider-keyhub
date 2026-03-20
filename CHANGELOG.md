@@ -1,3 +1,9 @@
+## 2.47.0
+* Upgrade API to Topicus KeyHub version 47
+
+## 2.46.0
+* Upgrade API to Topicus KeyHub version 46
+
 ## 2.45.0
 * Upgrade API to Topicus KeyHub version 45
 * Added support for creating launchpad tiles for vault records and client applications

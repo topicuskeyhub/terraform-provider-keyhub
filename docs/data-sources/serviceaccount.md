@@ -170,7 +170,7 @@ Required:
 
 Read-Only:
 
-- `active` (Boolean)
+- `active_status` (String)
 - `admin_permissions` (Boolean)
 - `can_write_accounts` (Boolean)
 - `content_admin_permissions` (Boolean)

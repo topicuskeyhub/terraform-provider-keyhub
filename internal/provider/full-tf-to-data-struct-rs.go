@@ -314,6 +314,7 @@ func fillDataStructFromTFObjectRSROClientClientApplication_additionalObjectsRO(d
 }
 
 func fillDataStructFromTFObjectRSClientLdapClient(data *clientLdapClientDataRS, obj types.Object) {
+	data.Attributes = obj.Attributes()["attributes"].(basetypes.ListValue)
 	data.BindDN = obj.Attributes()["bind_dn"].(basetypes.StringValue)
 	data.ClientCertificateUUID = obj.Attributes()["client_certificate_uuid"].(basetypes.StringValue)
 	data.ShareSecretInVault = obj.Attributes()["share_secret_in_vault"].(basetypes.BoolValue)
@@ -321,6 +322,7 @@ func fillDataStructFromTFObjectRSClientLdapClient(data *clientLdapClientDataRS, 
 }
 
 func fillDataStructFromTFObjectRSROClientLdapClientRO(data *clientLdapClientDataRSRO, obj types.Object) {
+	data.Attributes = obj.Attributes()["attributes"].(basetypes.ListValue)
 	data.BindDN = obj.Attributes()["bind_dn"].(basetypes.StringValue)
 	data.ClientCertificate = obj.Attributes()["client_certificate"].(basetypes.ObjectValue)
 	data.ShareSecretInVault = obj.Attributes()["share_secret_in_vault"].(basetypes.BoolValue)
@@ -502,7 +504,7 @@ func fillDataStructFromTFObjectRSRODirectoryInternalDirectoryRO(data *directoryI
 }
 
 func fillDataStructFromTFObjectRSRODirectoryLDAPDirectoryRO(data *directoryLDAPDirectoryDataRSRO, obj types.Object) {
-	data.AttributesToStore = obj.Attributes()["attributes_to_store"].(basetypes.StringValue)
+	data.Attributes = obj.Attributes()["attributes"].(basetypes.ListValue)
 	data.BaseDN = obj.Attributes()["base_dn"].(basetypes.StringValue)
 	data.ClientCertificate = obj.Attributes()["client_certificate"].(basetypes.ObjectValue)
 	data.Dialect = obj.Attributes()["dialect"].(basetypes.StringValue)
@@ -523,7 +525,7 @@ func fillDataStructFromTFObjectRSRODirectoryMaintenanceDirectoryRO(data *directo
 
 func fillDataStructFromTFObjectRSRODirectoryOIDCDirectoryRO(data *directoryOIDCDirectoryDataRSRO, obj types.Object) {
 	data.AcrValues = obj.Attributes()["acr_values"].(basetypes.StringValue)
-	data.AttributesToStore = obj.Attributes()["attributes_to_store"].(basetypes.StringValue)
+	data.Attributes = obj.Attributes()["attributes"].(basetypes.ListValue)
 	data.ClientID = obj.Attributes()["client_id"].(basetypes.StringValue)
 	data.ClientSecret = obj.Attributes()["client_secret"].(basetypes.StringValue)
 	data.DomainRestriction = obj.Attributes()["domain_restriction"].(basetypes.StringValue)
@@ -555,6 +557,7 @@ func fillDataStructFromTFObjectRSGroupGroup(data *groupGroupDataRS, obj types.Ob
 	data.ClientPermissions = obj.Attributes()["client_permissions"].(basetypes.ListValue)
 	data.Clients = obj.Attributes()["clients"].(basetypes.ListValue)
 	data.ContentAdministeredSystems = obj.Attributes()["content_administered_systems"].(basetypes.ListValue)
+	data.ExcludedGroups = obj.Attributes()["excluded_groups"].(basetypes.ListValue)
 	data.GlobalRoles = obj.Attributes()["global_roles"].(basetypes.ObjectValue)
 	data.GroupAccessInfo = obj.Attributes()["group_access_info"].(basetypes.ObjectValue)
 	data.Groupauditinginfo = obj.Attributes()["groupauditinginfo"].(basetypes.ObjectValue)
@@ -615,6 +618,7 @@ func fillDataStructFromTFObjectRSROGroupGroupRO(data *groupGroupDataRSRO, obj ty
 	data.ClientPermissions = obj.Attributes()["client_permissions"].(basetypes.ListValue)
 	data.Clients = obj.Attributes()["clients"].(basetypes.ListValue)
 	data.ContentAdministeredSystems = obj.Attributes()["content_administered_systems"].(basetypes.ListValue)
+	data.ExcludedGroups = obj.Attributes()["excluded_groups"].(basetypes.ListValue)
 	data.GlobalRoles = obj.Attributes()["global_roles"].(basetypes.ObjectValue)
 	data.GroupAccessInfo = obj.Attributes()["group_access_info"].(basetypes.ObjectValue)
 	data.Groupauditinginfo = obj.Attributes()["groupauditinginfo"].(basetypes.ObjectValue)
@@ -843,6 +847,11 @@ func fillDataStructFromTFObjectRSROGroupGroupPrimerLinkableWrapperRO(data *group
 	data.Items = obj.Attributes()["items"].(basetypes.ListValue)
 }
 
+func fillDataStructFromTFObjectRSROGroupGroupPrimerLinkableWrapperWithCountRO(data *groupGroupPrimerLinkableWrapperWithCountDataRSRO, obj types.Object) {
+	data.Count = obj.Attributes()["count"].(basetypes.Int64Value)
+	data.Items = obj.Attributes()["items"].(basetypes.ListValue)
+}
+
 func fillDataStructFromTFObjectRSGroupGroup_additionalObjects(data *groupGroup_additionalObjectsDataRS, obj types.Object) {
 	data.Accounts = obj.Attributes()["accounts"].(basetypes.ListValue)
 	data.AdministeredClients = obj.Attributes()["administered_clients"].(basetypes.ListValue)
@@ -853,6 +862,7 @@ func fillDataStructFromTFObjectRSGroupGroup_additionalObjects(data *groupGroup_a
 	data.ClientPermissions = obj.Attributes()["client_permissions"].(basetypes.ListValue)
 	data.Clients = obj.Attributes()["clients"].(basetypes.ListValue)
 	data.ContentAdministeredSystems = obj.Attributes()["content_administered_systems"].(basetypes.ListValue)
+	data.ExcludedGroups = obj.Attributes()["excluded_groups"].(basetypes.ListValue)
 	data.GlobalRoles = obj.Attributes()["global_roles"].(basetypes.ObjectValue)
 	data.GroupAccessInfo = obj.Attributes()["group_access_info"].(basetypes.ObjectValue)
 	data.Groupauditinginfo = obj.Attributes()["groupauditinginfo"].(basetypes.ObjectValue)
@@ -886,6 +896,7 @@ func fillDataStructFromTFObjectRSROGroupGroup_additionalObjectsRO(data *groupGro
 	data.ClientPermissions = obj.Attributes()["client_permissions"].(basetypes.ListValue)
 	data.Clients = obj.Attributes()["clients"].(basetypes.ListValue)
 	data.ContentAdministeredSystems = obj.Attributes()["content_administered_systems"].(basetypes.ListValue)
+	data.ExcludedGroups = obj.Attributes()["excluded_groups"].(basetypes.ListValue)
 	data.GlobalRoles = obj.Attributes()["global_roles"].(basetypes.ObjectValue)
 	data.GroupAccessInfo = obj.Attributes()["group_access_info"].(basetypes.ObjectValue)
 	data.Groupauditinginfo = obj.Attributes()["groupauditinginfo"].(basetypes.ObjectValue)
@@ -1612,7 +1623,7 @@ func fillDataStructFromTFObjectRSROProvisioningProvisionedSCIMRO(data *provision
 func fillDataStructFromTFObjectRSROProvisioningProvisionedSystemRO(data *provisioningProvisionedSystemDataRSRO, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
-	data.Active = obj.Attributes()["active"].(basetypes.BoolValue)
+	data.ActiveStatus = obj.Attributes()["active_status"].(basetypes.StringValue)
 	data.AdminPermissions = obj.Attributes()["admin_permissions"].(basetypes.BoolValue)
 	data.CanWriteAccounts = obj.Attributes()["can_write_accounts"].(basetypes.BoolValue)
 	data.ContentAdminPermissions = obj.Attributes()["content_admin_permissions"].(basetypes.BoolValue)
@@ -1665,7 +1676,7 @@ func fillDataStructFromTFObjectRSROProvisioningProvisionedSystemLinkableWrapperR
 func fillDataStructFromTFObjectRSProvisioningProvisionedSystemPrimer(data *provisioningProvisionedSystemPrimerDataRS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
-	data.Active = obj.Attributes()["active"].(basetypes.BoolValue)
+	data.ActiveStatus = obj.Attributes()["active_status"].(basetypes.StringValue)
 	data.AdminPermissions = obj.Attributes()["admin_permissions"].(basetypes.BoolValue)
 	data.CanWriteAccounts = obj.Attributes()["can_write_accounts"].(basetypes.BoolValue)
 	data.ContentAdminPermissions = obj.Attributes()["content_admin_permissions"].(basetypes.BoolValue)
@@ -1679,7 +1690,7 @@ func fillDataStructFromTFObjectRSProvisioningProvisionedSystemPrimer(data *provi
 func fillDataStructFromTFObjectRSROProvisioningProvisionedSystemPrimerRO(data *provisioningProvisionedSystemPrimerDataRSRO, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
-	data.Active = obj.Attributes()["active"].(basetypes.BoolValue)
+	data.ActiveStatus = obj.Attributes()["active_status"].(basetypes.StringValue)
 	data.AdminPermissions = obj.Attributes()["admin_permissions"].(basetypes.BoolValue)
 	data.CanWriteAccounts = obj.Attributes()["can_write_accounts"].(basetypes.BoolValue)
 	data.ContentAdminPermissions = obj.Attributes()["content_admin_permissions"].(basetypes.BoolValue)
