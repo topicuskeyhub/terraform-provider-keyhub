@@ -1130,6 +1130,7 @@ Read-Only:
 Read-Only:
 
 - `account_permissions` (Attributes List) (see [below for nested schema](#nestedatt--oauth2_client--account_permissions))
+- `allow_device_grant` (Boolean)
 - `attributes` (Attributes List) (see [below for nested schema](#nestedatt--oauth2_client--attributes))
 - `callback_uri` (String)
 - `debug_mode` (Boolean)

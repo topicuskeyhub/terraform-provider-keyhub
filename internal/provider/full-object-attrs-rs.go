@@ -410,6 +410,7 @@ func objectAttrsTypeRSROClientLdapClientRO(recurse bool) map[string]attr.Type {
 func objectAttrsTypeRSClientOAuth2Client(recurse bool) map[string]attr.Type {
 	objectAttrs := make(map[string]attr.Type)
 	objectAttrs["account_permissions"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeRSROAuthPermissionRO(recurse)}}
+	objectAttrs["allow_device_grant"] = types.BoolType
 	objectAttrs["attributes"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeRSMiscAttributeCustomization(recurse)}}
 	objectAttrs["callback_uri"] = types.StringType
 	objectAttrs["debug_mode"] = types.BoolType
@@ -428,6 +429,7 @@ func objectAttrsTypeRSClientOAuth2Client(recurse bool) map[string]attr.Type {
 func objectAttrsTypeRSROClientOAuth2ClientRO(recurse bool) map[string]attr.Type {
 	objectAttrs := make(map[string]attr.Type)
 	objectAttrs["account_permissions"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeRSROAuthPermissionRO(recurse)}}
+	objectAttrs["allow_device_grant"] = types.BoolType
 	objectAttrs["attributes"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeRSROMiscAttributeCustomizationRO(recurse)}}
 	objectAttrs["callback_uri"] = types.StringType
 	objectAttrs["debug_mode"] = types.BoolType
@@ -1361,18 +1363,6 @@ func objectAttrsTypeRSROIdentityAccountAttributeRule_additionalObjectsRO(recurse
 	return objectAttrs
 }
 
-func objectAttrsTypeRSROIdentityAccountAttributeValueSummaryRO(recurse bool) map[string]attr.Type {
-	objectAttrs := make(map[string]attr.Type)
-	objectAttrs["attribute"] = types.ObjectType{AttrTypes: objectAttrsTypeRSROIdentityAccountAttributeDefinitionRO(recurse)}
-	objectAttrs["context"] = types.StringType
-	objectAttrs["current_value"] = types.StringType
-	objectAttrs["date"] = types.StringType
-	objectAttrs["expected_value"] = types.StringType
-	objectAttrs["source"] = types.StringType
-	objectAttrs["status"] = types.StringType
-	return objectAttrs
-}
-
 func objectAttrsTypeRSLaunchpadLaunchpadTile(recurse bool) map[string]attr.Type {
 	objectAttrs := make(map[string]attr.Type)
 	if recurse {
@@ -1626,7 +1616,6 @@ func objectAttrsTypeRSROProfileAccessProfileRO(recurse bool) map[string]attr.Typ
 		objectAttrs["additional"] = types.ListType{ElemType: types.StringType}
 	}
 	if recurse {
-		objectAttrs["accounts_with_attributes"] = objectAttrsTypeRSROProfileAccessProfileAccountWithAttributesLinkableWrapperRO(false)["items"]
 		objectAttrs["attribute_rules"] = objectAttrsTypeRSROIdentityAccountAttributeRuleLinkableWrapperRO(false)["items"]
 		objectAttrs["audit"] = types.ObjectType{AttrTypes: objectAttrsTypeRSROAuditInfoRO(false)}
 		objectAttrs["clients"] = objectAttrsTypeRSROProfileAccessProfileClientLinkableWrapperRO(false)["items"]
@@ -1642,47 +1631,6 @@ func objectAttrsTypeRSROProfileAccessProfileRO(recurse bool) map[string]attr.Typ
 	objectAttrs["directory"] = types.ObjectType{AttrTypes: objectAttrsTypeRSRODirectoryAccountDirectoryPrimerRO(false)}
 	objectAttrs["match_rule_script"] = types.StringType
 	objectAttrs["owner"] = types.ObjectType{AttrTypes: objectAttrsTypeRSROGroupGroupPrimerRO(false)}
-	return objectAttrs
-}
-
-func objectAttrsTypeRSROProfileAccessProfileAccountRO(recurse bool) map[string]attr.Type {
-	objectAttrs := make(map[string]attr.Type)
-	if recurse {
-		objectAttrs["additional"] = types.ListType{ElemType: types.StringType}
-	}
-	if recurse {
-		objectAttrs["audit"] = types.ObjectType{AttrTypes: objectAttrsTypeRSROAuditInfoRO(false)}
-	}
-	objectAttrs["uuid"] = types.StringType
-	objectAttrs["activation"] = types.StringType
-	objectAttrs["manual"] = types.BoolType
-	return objectAttrs
-}
-
-func objectAttrsTypeRSROProfileAccessProfileAccountWithAttributesRO(recurse bool) map[string]attr.Type {
-	objectAttrs := make(map[string]attr.Type)
-	if recurse {
-		objectAttrs["additional"] = types.ListType{ElemType: types.StringType}
-	}
-	if recurse {
-		objectAttrs["audit"] = types.ObjectType{AttrTypes: objectAttrsTypeRSROAuditInfoRO(false)}
-	}
-	objectAttrs["uuid"] = types.StringType
-	objectAttrs["activation"] = types.StringType
-	objectAttrs["manual"] = types.BoolType
-	objectAttrs["attributes"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeRSROIdentityAccountAttributeValueSummaryRO(false)}}
-	return objectAttrs
-}
-
-func objectAttrsTypeRSROProfileAccessProfileAccountWithAttributesLinkableWrapperRO(recurse bool) map[string]attr.Type {
-	objectAttrs := make(map[string]attr.Type)
-	objectAttrs["items"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeRSROProfileAccessProfileAccountWithAttributesRO(recurse)}}
-	return objectAttrs
-}
-
-func objectAttrsTypeRSROProfileAccessProfileAccount_additionalObjectsRO(recurse bool) map[string]attr.Type {
-	objectAttrs := make(map[string]attr.Type)
-	objectAttrs["audit"] = types.ObjectType{AttrTypes: objectAttrsTypeRSROAuditInfoRO(recurse)}
 	return objectAttrs
 }
 
@@ -1863,7 +1811,6 @@ func objectAttrsTypeRSROProfileAccessProfileProvisioning_additionalObjectsRO(rec
 
 func objectAttrsTypeRSROProfileAccessProfile_additionalObjectsRO(recurse bool) map[string]attr.Type {
 	objectAttrs := make(map[string]attr.Type)
-	objectAttrs["accounts_with_attributes"] = objectAttrsTypeRSROProfileAccessProfileAccountWithAttributesLinkableWrapperRO(recurse)["items"]
 	objectAttrs["attribute_rules"] = objectAttrsTypeRSROIdentityAccountAttributeRuleLinkableWrapperRO(recurse)["items"]
 	objectAttrs["audit"] = types.ObjectType{AttrTypes: objectAttrsTypeRSROAuditInfoRO(recurse)}
 	objectAttrs["clients"] = objectAttrsTypeRSROProfileAccessProfileClientLinkableWrapperRO(recurse)["items"]
@@ -2054,6 +2001,7 @@ func objectAttrsTypeRSROProvisioningProvisionedAzureSyncLDAPDirectoryRO(recurse 
 
 func objectAttrsTypeRSROProvisioningProvisionedAzureTenantRO(recurse bool) map[string]attr.Type {
 	objectAttrs := make(map[string]attr.Type)
+	objectAttrs["attributes"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeRSROMiscAttributeCustomizationRO(recurse)}}
 	objectAttrs["client_id"] = types.StringType
 	objectAttrs["client_secret"] = types.StringType
 	objectAttrs["idp_domain"] = types.StringType
@@ -2078,6 +2026,8 @@ func objectAttrsTypeRSROProvisioningProvisionedLDAPRO(recurse bool) map[string]a
 
 func objectAttrsTypeRSROProvisioningProvisionedLDAPDirectoryRO(recurse bool) map[string]attr.Type {
 	objectAttrs := make(map[string]attr.Type)
+	objectAttrs["account_matching_attribute"] = types.ObjectType{AttrTypes: objectAttrsTypeRSROIdentityAccountAttributeDefinitionRO(recurse)}
+	objectAttrs["account_matching_attribute_name"] = types.StringType
 	objectAttrs["accounts_writable"] = types.BoolType
 	objectAttrs["attributes"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeRSROMiscAttributeCustomizationRO(recurse)}}
 	objectAttrs["directory"] = types.ObjectType{AttrTypes: objectAttrsTypeRSRODirectoryAccountDirectoryPrimerRO(recurse)}

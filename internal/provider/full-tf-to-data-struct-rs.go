@@ -331,6 +331,7 @@ func fillDataStructFromTFObjectRSROClientLdapClientRO(data *clientLdapClientData
 
 func fillDataStructFromTFObjectRSClientOAuth2Client(data *clientOAuth2ClientDataRS, obj types.Object) {
 	data.AccountPermissions = obj.Attributes()["account_permissions"].(basetypes.ListValue)
+	data.AllowDeviceGrant = obj.Attributes()["allow_device_grant"].(basetypes.BoolValue)
 	data.Attributes = obj.Attributes()["attributes"].(basetypes.ListValue)
 	data.CallbackURI = obj.Attributes()["callback_uri"].(basetypes.StringValue)
 	data.DebugMode = obj.Attributes()["debug_mode"].(basetypes.BoolValue)
@@ -347,6 +348,7 @@ func fillDataStructFromTFObjectRSClientOAuth2Client(data *clientOAuth2ClientData
 
 func fillDataStructFromTFObjectRSROClientOAuth2ClientRO(data *clientOAuth2ClientDataRSRO, obj types.Object) {
 	data.AccountPermissions = obj.Attributes()["account_permissions"].(basetypes.ListValue)
+	data.AllowDeviceGrant = obj.Attributes()["allow_device_grant"].(basetypes.BoolValue)
 	data.Attributes = obj.Attributes()["attributes"].(basetypes.ListValue)
 	data.CallbackURI = obj.Attributes()["callback_uri"].(basetypes.StringValue)
 	data.DebugMode = obj.Attributes()["debug_mode"].(basetypes.BoolValue)
@@ -1071,16 +1073,6 @@ func fillDataStructFromTFObjectRSROIdentityAccountAttributeRule_additionalObject
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
 }
 
-func fillDataStructFromTFObjectRSROIdentityAccountAttributeValueSummaryRO(data *identityAccountAttributeValueSummaryDataRSRO, obj types.Object) {
-	data.Attribute = obj.Attributes()["attribute"].(basetypes.ObjectValue)
-	data.Context = obj.Attributes()["context"].(basetypes.StringValue)
-	data.CurrentValue = obj.Attributes()["current_value"].(basetypes.StringValue)
-	data.Date = obj.Attributes()["date"].(basetypes.StringValue)
-	data.ExpectedValue = obj.Attributes()["expected_value"].(basetypes.StringValue)
-	data.Source = obj.Attributes()["source"].(basetypes.StringValue)
-	data.Status = obj.Attributes()["status"].(basetypes.StringValue)
-}
-
 func fillDataStructFromTFObjectRSLaunchpadLaunchpadTile(data *launchpadLaunchpadTileDataRS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
@@ -1267,7 +1259,6 @@ func fillDataStructFromTFObjectRSROProfileAccessProfileRO(data *profileAccessPro
 	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
 	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.ActivateRuleScript = obj.Attributes()["activate_rule_script"].(basetypes.StringValue)
-	data.AccountsWithAttributes = obj.Attributes()["accounts_with_attributes"].(basetypes.ListValue)
 	data.AttributeRules = obj.Attributes()["attribute_rules"].(basetypes.ListValue)
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
 	data.Clients = obj.Attributes()["clients"].(basetypes.ListValue)
@@ -1277,31 +1268,6 @@ func fillDataStructFromTFObjectRSROProfileAccessProfileRO(data *profileAccessPro
 	data.Directory = obj.Attributes()["directory"].(basetypes.ObjectValue)
 	data.MatchRuleScript = obj.Attributes()["match_rule_script"].(basetypes.StringValue)
 	data.Owner = obj.Attributes()["owner"].(basetypes.ObjectValue)
-}
-
-func fillDataStructFromTFObjectRSROProfileAccessProfileAccountRO(data *profileAccessProfileAccountDataRSRO, obj types.Object) {
-	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
-	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
-	data.Activation = obj.Attributes()["activation"].(basetypes.StringValue)
-	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
-	data.Manual = obj.Attributes()["manual"].(basetypes.BoolValue)
-}
-
-func fillDataStructFromTFObjectRSROProfileAccessProfileAccountWithAttributesRO(data *profileAccessProfileAccountWithAttributesDataRSRO, obj types.Object) {
-	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
-	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
-	data.Activation = obj.Attributes()["activation"].(basetypes.StringValue)
-	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
-	data.Manual = obj.Attributes()["manual"].(basetypes.BoolValue)
-	data.Attributes = obj.Attributes()["attributes"].(basetypes.ListValue)
-}
-
-func fillDataStructFromTFObjectRSROProfileAccessProfileAccountWithAttributesLinkableWrapperRO(data *profileAccessProfileAccountWithAttributesLinkableWrapperDataRSRO, obj types.Object) {
-	data.Items = obj.Attributes()["items"].(basetypes.ListValue)
-}
-
-func fillDataStructFromTFObjectRSROProfileAccessProfileAccount_additionalObjectsRO(data *profileAccessProfileAccount_additionalObjectsDataRSRO, obj types.Object) {
-	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
 }
 
 func fillDataStructFromTFObjectRSProfileAccessProfileClient(data *profileAccessProfileClientDataRS, obj types.Object) {
@@ -1420,7 +1386,6 @@ func fillDataStructFromTFObjectRSROProfileAccessProfileProvisioning_additionalOb
 }
 
 func fillDataStructFromTFObjectRSROProfileAccessProfile_additionalObjectsRO(data *profileAccessProfile_additionalObjectsDataRSRO, obj types.Object) {
-	data.AccountsWithAttributes = obj.Attributes()["accounts_with_attributes"].(basetypes.ListValue)
 	data.AttributeRules = obj.Attributes()["attribute_rules"].(basetypes.ListValue)
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
 	data.Clients = obj.Attributes()["clients"].(basetypes.ListValue)
@@ -1563,6 +1528,7 @@ func fillDataStructFromTFObjectRSROProvisioningProvisionedAzureSyncLDAPDirectory
 }
 
 func fillDataStructFromTFObjectRSROProvisioningProvisionedAzureTenantRO(data *provisioningProvisionedAzureTenantDataRSRO, obj types.Object) {
+	data.Attributes = obj.Attributes()["attributes"].(basetypes.ListValue)
 	data.ClientID = obj.Attributes()["client_id"].(basetypes.StringValue)
 	data.ClientSecret = obj.Attributes()["client_secret"].(basetypes.StringValue)
 	data.IDpDomain = obj.Attributes()["idp_domain"].(basetypes.StringValue)
@@ -1581,6 +1547,8 @@ func fillDataStructFromTFObjectRSROProvisioningProvisionedLDAPRO(data *provision
 }
 
 func fillDataStructFromTFObjectRSROProvisioningProvisionedLDAPDirectoryRO(data *provisioningProvisionedLDAPDirectoryDataRSRO, obj types.Object) {
+	data.AccountMatchingAttribute = obj.Attributes()["account_matching_attribute"].(basetypes.ObjectValue)
+	data.AccountMatchingAttributeName = obj.Attributes()["account_matching_attribute_name"].(basetypes.StringValue)
 	data.AccountsWritable = obj.Attributes()["accounts_writable"].(basetypes.BoolValue)
 	data.Attributes = obj.Attributes()["attributes"].(basetypes.ListValue)
 	data.Directory = obj.Attributes()["directory"].(basetypes.ObjectValue)

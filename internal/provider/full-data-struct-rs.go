@@ -426,6 +426,7 @@ var clientOAuth2ClientAttrTypesRSRecurse = objectAttrsTypeRSClientOAuth2Client(t
 
 type clientOAuth2ClientDataRS struct {
 	AccountPermissions   types.List   `tfsdk:"account_permissions"`
+	AllowDeviceGrant     types.Bool   `tfsdk:"allow_device_grant"`
 	Attributes           types.List   `tfsdk:"attributes"`
 	CallbackURI          types.String `tfsdk:"callback_uri"`
 	DebugMode            types.Bool   `tfsdk:"debug_mode"`
@@ -445,6 +446,7 @@ var clientOAuth2ClientAttrTypesRSRORecurse = objectAttrsTypeRSROClientOAuth2Clie
 
 type clientOAuth2ClientDataRSRO struct {
 	AccountPermissions   types.List   `tfsdk:"account_permissions"`
+	AllowDeviceGrant     types.Bool   `tfsdk:"allow_device_grant"`
 	Attributes           types.List   `tfsdk:"attributes"`
 	CallbackURI          types.String `tfsdk:"callback_uri"`
 	DebugMode            types.Bool   `tfsdk:"debug_mode"`
@@ -1379,19 +1381,6 @@ type identityAccountAttributeRule_additionalObjectsDataRSRO struct {
 	Audit types.Object `tfsdk:"audit"`
 }
 
-var identityAccountAttributeValueSummaryAttrTypesRSRO = objectAttrsTypeRSROIdentityAccountAttributeValueSummaryRO(false)
-var identityAccountAttributeValueSummaryAttrTypesRSRORecurse = objectAttrsTypeRSROIdentityAccountAttributeValueSummaryRO(true)
-
-type identityAccountAttributeValueSummaryDataRSRO struct {
-	Attribute     types.Object `tfsdk:"attribute"`
-	Context       types.String `tfsdk:"context"`
-	CurrentValue  types.String `tfsdk:"current_value"`
-	Date          types.String `tfsdk:"date"`
-	ExpectedValue types.String `tfsdk:"expected_value"`
-	Source        types.String `tfsdk:"source"`
-	Status        types.String `tfsdk:"status"`
-}
-
 var launchpadLaunchpadTileAttrTypesRS = objectAttrsTypeRSLaunchpadLaunchpadTile(false)
 var launchpadLaunchpadTileAttrTypesRSRecurse = objectAttrsTypeRSLaunchpadLaunchpadTile(true)
 
@@ -1653,59 +1642,21 @@ var profileAccessProfileAttrTypesRSRO = objectAttrsTypeRSROProfileAccessProfileR
 var profileAccessProfileAttrTypesRSRORecurse = objectAttrsTypeRSROProfileAccessProfileRO(true)
 
 type profileAccessProfileDataRSRO struct {
-	Links                  types.List   `tfsdk:"links"`
-	Permissions            types.List   `tfsdk:"permissions"`
-	Name                   types.String `tfsdk:"name"`
-	UUID                   types.String `tfsdk:"uuid"`
-	Additional             types.List   `tfsdk:"additional"`
-	ActivateRuleScript     types.String `tfsdk:"activate_rule_script"`
-	AccountsWithAttributes types.List   `tfsdk:"accounts_with_attributes" tkhao:"accountsWithAttributes"`
-	AttributeRules         types.List   `tfsdk:"attribute_rules" tkhao:"attributeRules"`
-	Audit                  types.Object `tfsdk:"audit" tkhao:"audit"`
-	Clients                types.List   `tfsdk:"clients" tkhao:"clients"`
-	Groups                 types.List   `tfsdk:"groups" tkhao:"groups"`
-	Provisioning           types.List   `tfsdk:"provisioning" tkhao:"provisioning"`
-	Description            types.String `tfsdk:"description"`
-	Directory              types.Object `tfsdk:"directory"`
-	MatchRuleScript        types.String `tfsdk:"match_rule_script"`
-	Owner                  types.Object `tfsdk:"owner"`
-}
-
-var profileAccessProfileAccountAttrTypesRSRO = objectAttrsTypeRSROProfileAccessProfileAccountRO(false)
-var profileAccessProfileAccountAttrTypesRSRORecurse = objectAttrsTypeRSROProfileAccessProfileAccountRO(true)
-
-type profileAccessProfileAccountDataRSRO struct {
-	UUID       types.String `tfsdk:"uuid"`
-	Additional types.List   `tfsdk:"additional"`
-	Activation types.String `tfsdk:"activation"`
-	Audit      types.Object `tfsdk:"audit" tkhao:"audit"`
-	Manual     types.Bool   `tfsdk:"manual"`
-}
-
-var profileAccessProfileAccountWithAttributesAttrTypesRSRO = objectAttrsTypeRSROProfileAccessProfileAccountWithAttributesRO(false)
-var profileAccessProfileAccountWithAttributesAttrTypesRSRORecurse = objectAttrsTypeRSROProfileAccessProfileAccountWithAttributesRO(true)
-
-type profileAccessProfileAccountWithAttributesDataRSRO struct {
-	UUID       types.String `tfsdk:"uuid"`
-	Additional types.List   `tfsdk:"additional"`
-	Activation types.String `tfsdk:"activation"`
-	Audit      types.Object `tfsdk:"audit" tkhao:"audit"`
-	Manual     types.Bool   `tfsdk:"manual"`
-	Attributes types.List   `tfsdk:"attributes"`
-}
-
-var profileAccessProfileAccountWithAttributesLinkableWrapperAttrTypesRSRO = objectAttrsTypeRSROProfileAccessProfileAccountWithAttributesLinkableWrapperRO(false)
-var profileAccessProfileAccountWithAttributesLinkableWrapperAttrTypesRSRORecurse = objectAttrsTypeRSROProfileAccessProfileAccountWithAttributesLinkableWrapperRO(true)
-
-type profileAccessProfileAccountWithAttributesLinkableWrapperDataRSRO struct {
-	Items types.List `tfsdk:"items"`
-}
-
-var profileAccessProfileAccount_additionalObjectsAttrTypesRSRO = objectAttrsTypeRSROProfileAccessProfileAccount_additionalObjectsRO(false)
-var profileAccessProfileAccount_additionalObjectsAttrTypesRSRORecurse = objectAttrsTypeRSROProfileAccessProfileAccount_additionalObjectsRO(true)
-
-type profileAccessProfileAccount_additionalObjectsDataRSRO struct {
-	Audit types.Object `tfsdk:"audit"`
+	Links              types.List   `tfsdk:"links"`
+	Permissions        types.List   `tfsdk:"permissions"`
+	Name               types.String `tfsdk:"name"`
+	UUID               types.String `tfsdk:"uuid"`
+	Additional         types.List   `tfsdk:"additional"`
+	ActivateRuleScript types.String `tfsdk:"activate_rule_script"`
+	AttributeRules     types.List   `tfsdk:"attribute_rules" tkhao:"attributeRules"`
+	Audit              types.Object `tfsdk:"audit" tkhao:"audit"`
+	Clients            types.List   `tfsdk:"clients" tkhao:"clients"`
+	Groups             types.List   `tfsdk:"groups" tkhao:"groups"`
+	Provisioning       types.List   `tfsdk:"provisioning" tkhao:"provisioning"`
+	Description        types.String `tfsdk:"description"`
+	Directory          types.Object `tfsdk:"directory"`
+	MatchRuleScript    types.String `tfsdk:"match_rule_script"`
+	Owner              types.Object `tfsdk:"owner"`
 }
 
 var profileAccessProfileClientAttrTypesRS = objectAttrsTypeRSProfileAccessProfileClient(false)
@@ -1887,12 +1838,11 @@ var profileAccessProfile_additionalObjectsAttrTypesRSRO = objectAttrsTypeRSROPro
 var profileAccessProfile_additionalObjectsAttrTypesRSRORecurse = objectAttrsTypeRSROProfileAccessProfile_additionalObjectsRO(true)
 
 type profileAccessProfile_additionalObjectsDataRSRO struct {
-	AccountsWithAttributes types.List   `tfsdk:"accounts_with_attributes"`
-	AttributeRules         types.List   `tfsdk:"attribute_rules"`
-	Audit                  types.Object `tfsdk:"audit"`
-	Clients                types.List   `tfsdk:"clients"`
-	Groups                 types.List   `tfsdk:"groups"`
-	Provisioning           types.List   `tfsdk:"provisioning"`
+	AttributeRules types.List   `tfsdk:"attribute_rules"`
+	Audit          types.Object `tfsdk:"audit"`
+	Clients        types.List   `tfsdk:"clients"`
+	Groups         types.List   `tfsdk:"groups"`
+	Provisioning   types.List   `tfsdk:"provisioning"`
 }
 
 var provisioningAbstractProvisionedLDAPAttrTypesRSRO = objectAttrsTypeRSROProvisioningAbstractProvisionedLDAPRO(false)
@@ -2084,6 +2034,7 @@ var provisioningProvisionedAzureTenantAttrTypesRSRO = objectAttrsTypeRSROProvisi
 var provisioningProvisionedAzureTenantAttrTypesRSRORecurse = objectAttrsTypeRSROProvisioningProvisionedAzureTenantRO(true)
 
 type provisioningProvisionedAzureTenantDataRSRO struct {
+	Attributes   types.List   `tfsdk:"attributes"`
 	ClientID     types.String `tfsdk:"client_id"`
 	ClientSecret types.String `tfsdk:"client_secret"`
 	IDpDomain    types.String `tfsdk:"idp_domain"`
@@ -2111,17 +2062,19 @@ var provisioningProvisionedLDAPDirectoryAttrTypesRSRO = objectAttrsTypeRSROProvi
 var provisioningProvisionedLDAPDirectoryAttrTypesRSRORecurse = objectAttrsTypeRSROProvisioningProvisionedLDAPDirectoryRO(true)
 
 type provisioningProvisionedLDAPDirectoryDataRSRO struct {
-	AccountsWritable     types.Bool   `tfsdk:"accounts_writable"`
-	Attributes           types.List   `tfsdk:"attributes"`
-	Directory            types.Object `tfsdk:"directory"`
-	Gid                  types.Int64  `tfsdk:"gid"`
-	GidNumbering         types.Object `tfsdk:"gid_numbering"`
-	GroupDN              types.String `tfsdk:"group_dn"`
-	HashingScheme        types.String `tfsdk:"hashing_scheme"`
-	Numbering            types.Object `tfsdk:"numbering"`
-	ObjectClasses        types.String `tfsdk:"object_classes"`
-	SamAccountNameScheme types.String `tfsdk:"sam_account_name_scheme"`
-	SshPublicKeySupport  types.String `tfsdk:"ssh_public_key_support"`
+	AccountMatchingAttribute     types.Object `tfsdk:"account_matching_attribute"`
+	AccountMatchingAttributeName types.String `tfsdk:"account_matching_attribute_name"`
+	AccountsWritable             types.Bool   `tfsdk:"accounts_writable"`
+	Attributes                   types.List   `tfsdk:"attributes"`
+	Directory                    types.Object `tfsdk:"directory"`
+	Gid                          types.Int64  `tfsdk:"gid"`
+	GidNumbering                 types.Object `tfsdk:"gid_numbering"`
+	GroupDN                      types.String `tfsdk:"group_dn"`
+	HashingScheme                types.String `tfsdk:"hashing_scheme"`
+	Numbering                    types.Object `tfsdk:"numbering"`
+	ObjectClasses                types.String `tfsdk:"object_classes"`
+	SamAccountNameScheme         types.String `tfsdk:"sam_account_name_scheme"`
+	SshPublicKeySupport          types.String `tfsdk:"ssh_public_key_support"`
 }
 
 var provisioningProvisionedNamespaceAttrTypesRSRO = objectAttrsTypeRSROProvisioningProvisionedNamespaceRO(false)

@@ -1897,22 +1897,6 @@ func reorderIdentityAccountAttributeRule_additionalObjectsRO(state basetypes.Obj
 	return types.ObjectValueMust(attrs, obj)
 }
 
-func reorderIdentityAccountAttributeValueSummaryRO(state basetypes.ObjectValue, priorState basetypes.ObjectValue, recurse bool) basetypes.ObjectValue {
-	if state.IsNull() || state.IsUnknown() || priorState.IsNull() || priorState.IsUnknown() {
-		return state
-	}
-	var attrs map[string]attr.Type
-	if recurse {
-		attrs = identityAccountAttributeValueSummaryAttrTypesRSRORecurse
-	} else {
-		attrs = identityAccountAttributeValueSummaryAttrTypesRSRO
-	}
-	obj := filterAttributes(state.Attributes(), attrs)
-	obj["attribute"] = reorderIdentityAccountAttributeDefinitionRO(state.Attributes()["attribute"].(types.Object), priorState.Attributes()["attribute"].(types.Object), false)
-
-	return types.ObjectValueMust(attrs, obj)
-}
-
 func reorderLaunchpadLaunchpadTile(state basetypes.ObjectValue, priorState basetypes.ObjectValue, recurse bool) basetypes.ObjectValue {
 	if state.IsNull() || state.IsUnknown() || priorState.IsNull() || priorState.IsUnknown() {
 		return state
@@ -2380,77 +2364,6 @@ func reorderProfileAccessProfileRO(state basetypes.ObjectValue, priorState baset
 	}
 	obj["directory"] = reorderDirectoryAccountDirectoryPrimerRO(state.Attributes()["directory"].(types.Object), priorState.Attributes()["directory"].(types.Object), false)
 	obj["owner"] = reorderGroupGroupPrimerRO(state.Attributes()["owner"].(types.Object), priorState.Attributes()["owner"].(types.Object), false)
-
-	return types.ObjectValueMust(attrs, obj)
-}
-
-func reorderProfileAccessProfileAccountRO(state basetypes.ObjectValue, priorState basetypes.ObjectValue, recurse bool) basetypes.ObjectValue {
-	if state.IsNull() || state.IsUnknown() || priorState.IsNull() || priorState.IsUnknown() {
-		return state
-	}
-	var attrs map[string]attr.Type
-	if recurse {
-		attrs = profileAccessProfileAccountAttrTypesRSRORecurse
-	} else {
-		attrs = profileAccessProfileAccountAttrTypesRSRO
-	}
-	obj := filterAttributes(state.Attributes(), attrs)
-	if recurse {
-	}
-	if recurse {
-		maps.Copy(obj, reorderProfileAccessProfileAccount_additionalObjectsRO(state, priorState, false).Attributes())
-	}
-
-	return types.ObjectValueMust(attrs, obj)
-}
-
-func reorderProfileAccessProfileAccountWithAttributesRO(state basetypes.ObjectValue, priorState basetypes.ObjectValue, recurse bool) basetypes.ObjectValue {
-	if state.IsNull() || state.IsUnknown() || priorState.IsNull() || priorState.IsUnknown() {
-		return state
-	}
-	var attrs map[string]attr.Type
-	if recurse {
-		attrs = profileAccessProfileAccountWithAttributesAttrTypesRSRORecurse
-	} else {
-		attrs = profileAccessProfileAccountWithAttributesAttrTypesRSRO
-	}
-	obj := filterAttributes(state.Attributes(), attrs)
-	if recurse {
-	}
-	if recurse {
-		maps.Copy(obj, reorderProfileAccessProfileAccount_additionalObjectsRO(state, priorState, false).Attributes())
-	}
-
-	return types.ObjectValueMust(attrs, obj)
-}
-
-func reorderProfileAccessProfileAccountWithAttributesLinkableWrapperRO(state basetypes.ObjectValue, priorState basetypes.ObjectValue, recurse bool) basetypes.ObjectValue {
-	if state.IsNull() || state.IsUnknown() || priorState.IsNull() || priorState.IsUnknown() {
-		return state
-	}
-	var attrs map[string]attr.Type
-	if recurse {
-		attrs = profileAccessProfileAccountWithAttributesLinkableWrapperAttrTypesRSRORecurse
-	} else {
-		attrs = profileAccessProfileAccountWithAttributesLinkableWrapperAttrTypesRSRO
-	}
-	obj := filterAttributes(state.Attributes(), attrs)
-	// Reordering not supported for items with type List
-
-	return types.ObjectValueMust(attrs, obj)
-}
-
-func reorderProfileAccessProfileAccount_additionalObjectsRO(state basetypes.ObjectValue, priorState basetypes.ObjectValue, recurse bool) basetypes.ObjectValue {
-	if state.IsNull() || state.IsUnknown() || priorState.IsNull() || priorState.IsUnknown() {
-		return state
-	}
-	var attrs map[string]attr.Type
-	if recurse {
-		attrs = profileAccessProfileAccount_additionalObjectsAttrTypesRSRORecurse
-	} else {
-		attrs = profileAccessProfileAccount_additionalObjectsAttrTypesRSRO
-	}
-	obj := filterAttributes(state.Attributes(), attrs)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -3163,6 +3076,7 @@ func reorderProvisioningProvisionedAzureTenantRO(state basetypes.ObjectValue, pr
 		attrs = provisioningProvisionedAzureTenantAttrTypesRSRO
 	}
 	obj := filterAttributes(state.Attributes(), attrs)
+	// Reordering not supported for attributes with type List
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -3211,6 +3125,7 @@ func reorderProvisioningProvisionedLDAPDirectoryRO(state basetypes.ObjectValue, 
 		attrs = provisioningProvisionedLDAPDirectoryAttrTypesRSRO
 	}
 	obj := filterAttributes(state.Attributes(), attrs)
+	obj["account_matching_attribute"] = reorderIdentityAccountAttributeDefinitionRO(state.Attributes()["account_matching_attribute"].(types.Object), priorState.Attributes()["account_matching_attribute"].(types.Object), false)
 	// Reordering not supported for attributes with type List
 	obj["directory"] = reorderDirectoryAccountDirectoryPrimerRO(state.Attributes()["directory"].(types.Object), priorState.Attributes()["directory"].(types.Object), false)
 	obj["gid_numbering"] = reorderProvisioningProvisionNumberSequenceRO(state.Attributes()["gid_numbering"].(types.Object), priorState.Attributes()["gid_numbering"].(types.Object), false)

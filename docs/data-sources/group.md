@@ -356,6 +356,7 @@ Read-Only:
 Read-Only:
 
 - `account_permissions` (Attributes List) (see [below for nested schema](#nestedatt--administered_clients--oauth2_client--account_permissions))
+- `allow_device_grant` (Boolean)
 - `attributes` (Attributes List) (see [below for nested schema](#nestedatt--administered_clients--oauth2_client--attributes))
 - `callback_uri` (String)
 - `debug_mode` (Boolean)
@@ -1251,10 +1252,72 @@ Read-Only:
 
 Read-Only:
 
+- `attributes` (Attributes List) (see [below for nested schema](#nestedatt--administered_systems--provisioned_azure_tenant--attributes))
 - `client_id` (String)
 - `client_secret` (String, Sensitive)
 - `idp_domain` (String)
 - `tenant` (String)
+
+<a id="nestedatt--administered_systems--provisioned_azure_tenant--attributes"></a>
+### Nested Schema for `administered_systems.provisioned_azure_tenant.attributes`
+
+Read-Only:
+
+- `attribute_definition` (Attributes) (see [below for nested schema](#nestedatt--administered_systems--provisioned_azure_tenant--attributes--attribute_definition))
+- `name` (String)
+- `script` (String)
+
+<a id="nestedatt--administered_systems--provisioned_azure_tenant--attributes--attribute_definition"></a>
+### Nested Schema for `administered_systems.provisioned_azure_tenant.attributes.attribute_definition`
+
+Read-Only:
+
+- `format` (String)
+- `freely_useable` (Boolean)
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--administered_systems--provisioned_azure_tenant--attributes--attribute_definition--links))
+- `list` (Boolean)
+- `name` (String)
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--administered_systems--provisioned_azure_tenant--attributes--attribute_definition--permissions))
+- `properties` (Attributes List) (see [below for nested schema](#nestedatt--administered_systems--provisioned_azure_tenant--attributes--attribute_definition--properties))
+- `property_handling` (String)
+- `required` (Boolean)
+- `system_definition` (String)
+- `unique` (Boolean)
+
+<a id="nestedatt--administered_systems--provisioned_azure_tenant--attributes--attribute_definition--links"></a>
+### Nested Schema for `administered_systems.provisioned_azure_tenant.attributes.attribute_definition.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--administered_systems--provisioned_azure_tenant--attributes--attribute_definition--permissions"></a>
+### Nested Schema for `administered_systems.provisioned_azure_tenant.attributes.attribute_definition.permissions`
+
+Read-Only:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--administered_systems--provisioned_azure_tenant--attributes--attribute_definition--properties"></a>
+### Nested Schema for `administered_systems.provisioned_azure_tenant.attributes.attribute_definition.properties`
+
+Read-Only:
+
+- `format` (String)
+- `list` (Boolean)
+- `name` (String)
+- `required` (Boolean)
+
+
+
 
 
 <a id="nestedatt--administered_systems--provisioned_internal_ldap"></a>
@@ -1449,6 +1512,7 @@ Read-Only:
 Read-Only:
 
 - `account_permissions` (Attributes List) (see [below for nested schema](#nestedatt--administered_systems--provisioned_internal_ldap--client--oauth2_client--account_permissions))
+- `allow_device_grant` (Boolean)
 - `attributes` (Attributes List) (see [below for nested schema](#nestedatt--administered_systems--provisioned_internal_ldap--client--oauth2_client--attributes))
 - `callback_uri` (String)
 - `debug_mode` (Boolean)
@@ -1873,6 +1937,8 @@ Read-Only:
 
 Read-Only:
 
+- `account_matching_attribute` (Attributes) (see [below for nested schema](#nestedatt--administered_systems--provisioned_ldap_directory--account_matching_attribute))
+- `account_matching_attribute_name` (String)
 - `accounts_writable` (Boolean)
 - `attributes` (Attributes List) (see [below for nested schema](#nestedatt--administered_systems--provisioned_ldap_directory--attributes))
 - `directory` (Attributes) (see [below for nested schema](#nestedatt--administered_systems--provisioned_ldap_directory--directory))
@@ -1884,6 +1950,57 @@ Read-Only:
 - `object_classes` (String)
 - `sam_account_name_scheme` (String)
 - `ssh_public_key_support` (String)
+
+<a id="nestedatt--administered_systems--provisioned_ldap_directory--account_matching_attribute"></a>
+### Nested Schema for `administered_systems.provisioned_ldap_directory.account_matching_attribute`
+
+Read-Only:
+
+- `format` (String)
+- `freely_useable` (Boolean)
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--administered_systems--provisioned_ldap_directory--account_matching_attribute--links))
+- `list` (Boolean)
+- `name` (String)
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--administered_systems--provisioned_ldap_directory--account_matching_attribute--permissions))
+- `properties` (Attributes List) (see [below for nested schema](#nestedatt--administered_systems--provisioned_ldap_directory--account_matching_attribute--properties))
+- `property_handling` (String)
+- `required` (Boolean)
+- `system_definition` (String)
+- `unique` (Boolean)
+
+<a id="nestedatt--administered_systems--provisioned_ldap_directory--account_matching_attribute--links"></a>
+### Nested Schema for `administered_systems.provisioned_ldap_directory.account_matching_attribute.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--administered_systems--provisioned_ldap_directory--account_matching_attribute--permissions"></a>
+### Nested Schema for `administered_systems.provisioned_ldap_directory.account_matching_attribute.permissions`
+
+Read-Only:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--administered_systems--provisioned_ldap_directory--account_matching_attribute--properties"></a>
+### Nested Schema for `administered_systems.provisioned_ldap_directory.account_matching_attribute.properties`
+
+Read-Only:
+
+- `format` (String)
+- `list` (Boolean)
+- `name` (String)
+- `required` (Boolean)
+
+
 
 <a id="nestedatt--administered_systems--provisioned_ldap_directory--attributes"></a>
 ### Nested Schema for `administered_systems.provisioned_ldap_directory.attributes`
@@ -3295,6 +3412,7 @@ Read-Only:
 Read-Only:
 
 - `account_permissions` (Attributes List) (see [below for nested schema](#nestedatt--client_permissions--client--account_permissions))
+- `allow_device_grant` (Boolean)
 - `attributes` (Attributes List) (see [below for nested schema](#nestedatt--client_permissions--client--attributes))
 - `callback_uri` (String)
 - `debug_mode` (Boolean)
@@ -4411,10 +4529,72 @@ Read-Only:
 
 Read-Only:
 
+- `attributes` (Attributes List) (see [below for nested schema](#nestedatt--content_administered_systems--provisioned_azure_tenant--attributes))
 - `client_id` (String)
 - `client_secret` (String, Sensitive)
 - `idp_domain` (String)
 - `tenant` (String)
+
+<a id="nestedatt--content_administered_systems--provisioned_azure_tenant--attributes"></a>
+### Nested Schema for `content_administered_systems.provisioned_azure_tenant.attributes`
+
+Read-Only:
+
+- `attribute_definition` (Attributes) (see [below for nested schema](#nestedatt--content_administered_systems--provisioned_azure_tenant--attributes--attribute_definition))
+- `name` (String)
+- `script` (String)
+
+<a id="nestedatt--content_administered_systems--provisioned_azure_tenant--attributes--attribute_definition"></a>
+### Nested Schema for `content_administered_systems.provisioned_azure_tenant.attributes.attribute_definition`
+
+Read-Only:
+
+- `format` (String)
+- `freely_useable` (Boolean)
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--content_administered_systems--provisioned_azure_tenant--attributes--attribute_definition--links))
+- `list` (Boolean)
+- `name` (String)
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--content_administered_systems--provisioned_azure_tenant--attributes--attribute_definition--permissions))
+- `properties` (Attributes List) (see [below for nested schema](#nestedatt--content_administered_systems--provisioned_azure_tenant--attributes--attribute_definition--properties))
+- `property_handling` (String)
+- `required` (Boolean)
+- `system_definition` (String)
+- `unique` (Boolean)
+
+<a id="nestedatt--content_administered_systems--provisioned_azure_tenant--attributes--attribute_definition--links"></a>
+### Nested Schema for `content_administered_systems.provisioned_azure_tenant.attributes.attribute_definition.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--content_administered_systems--provisioned_azure_tenant--attributes--attribute_definition--permissions"></a>
+### Nested Schema for `content_administered_systems.provisioned_azure_tenant.attributes.attribute_definition.permissions`
+
+Read-Only:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--content_administered_systems--provisioned_azure_tenant--attributes--attribute_definition--properties"></a>
+### Nested Schema for `content_administered_systems.provisioned_azure_tenant.attributes.attribute_definition.properties`
+
+Read-Only:
+
+- `format` (String)
+- `list` (Boolean)
+- `name` (String)
+- `required` (Boolean)
+
+
+
 
 
 <a id="nestedatt--content_administered_systems--provisioned_internal_ldap"></a>
@@ -4609,6 +4789,7 @@ Read-Only:
 Read-Only:
 
 - `account_permissions` (Attributes List) (see [below for nested schema](#nestedatt--content_administered_systems--provisioned_internal_ldap--client--oauth2_client--account_permissions))
+- `allow_device_grant` (Boolean)
 - `attributes` (Attributes List) (see [below for nested schema](#nestedatt--content_administered_systems--provisioned_internal_ldap--client--oauth2_client--attributes))
 - `callback_uri` (String)
 - `debug_mode` (Boolean)
@@ -5033,6 +5214,8 @@ Read-Only:
 
 Read-Only:
 
+- `account_matching_attribute` (Attributes) (see [below for nested schema](#nestedatt--content_administered_systems--provisioned_ldap_directory--account_matching_attribute))
+- `account_matching_attribute_name` (String)
 - `accounts_writable` (Boolean)
 - `attributes` (Attributes List) (see [below for nested schema](#nestedatt--content_administered_systems--provisioned_ldap_directory--attributes))
 - `directory` (Attributes) (see [below for nested schema](#nestedatt--content_administered_systems--provisioned_ldap_directory--directory))
@@ -5044,6 +5227,57 @@ Read-Only:
 - `object_classes` (String)
 - `sam_account_name_scheme` (String)
 - `ssh_public_key_support` (String)
+
+<a id="nestedatt--content_administered_systems--provisioned_ldap_directory--account_matching_attribute"></a>
+### Nested Schema for `content_administered_systems.provisioned_ldap_directory.account_matching_attribute`
+
+Read-Only:
+
+- `format` (String)
+- `freely_useable` (Boolean)
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--content_administered_systems--provisioned_ldap_directory--account_matching_attribute--links))
+- `list` (Boolean)
+- `name` (String)
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--content_administered_systems--provisioned_ldap_directory--account_matching_attribute--permissions))
+- `properties` (Attributes List) (see [below for nested schema](#nestedatt--content_administered_systems--provisioned_ldap_directory--account_matching_attribute--properties))
+- `property_handling` (String)
+- `required` (Boolean)
+- `system_definition` (String)
+- `unique` (Boolean)
+
+<a id="nestedatt--content_administered_systems--provisioned_ldap_directory--account_matching_attribute--links"></a>
+### Nested Schema for `content_administered_systems.provisioned_ldap_directory.account_matching_attribute.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--content_administered_systems--provisioned_ldap_directory--account_matching_attribute--permissions"></a>
+### Nested Schema for `content_administered_systems.provisioned_ldap_directory.account_matching_attribute.permissions`
+
+Read-Only:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--content_administered_systems--provisioned_ldap_directory--account_matching_attribute--properties"></a>
+### Nested Schema for `content_administered_systems.provisioned_ldap_directory.account_matching_attribute.properties`
+
+Read-Only:
+
+- `format` (String)
+- `list` (Boolean)
+- `name` (String)
+- `required` (Boolean)
+
+
 
 <a id="nestedatt--content_administered_systems--provisioned_ldap_directory--attributes"></a>
 ### Nested Schema for `content_administered_systems.provisioned_ldap_directory.attributes`
@@ -6466,6 +6700,7 @@ Read-Only:
 Read-Only:
 
 - `account_permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_clients--oauth2_client--account_permissions))
+- `allow_device_grant` (Boolean)
 - `attributes` (Attributes List) (see [below for nested schema](#nestedatt--owned_clients--oauth2_client--attributes))
 - `callback_uri` (String)
 - `debug_mode` (Boolean)
@@ -8473,10 +8708,72 @@ Read-Only:
 
 Read-Only:
 
+- `attributes` (Attributes List) (see [below for nested schema](#nestedatt--owned_systems--provisioned_azure_tenant--attributes))
 - `client_id` (String)
 - `client_secret` (String, Sensitive)
 - `idp_domain` (String)
 - `tenant` (String)
+
+<a id="nestedatt--owned_systems--provisioned_azure_tenant--attributes"></a>
+### Nested Schema for `owned_systems.provisioned_azure_tenant.attributes`
+
+Read-Only:
+
+- `attribute_definition` (Attributes) (see [below for nested schema](#nestedatt--owned_systems--provisioned_azure_tenant--attributes--attribute_definition))
+- `name` (String)
+- `script` (String)
+
+<a id="nestedatt--owned_systems--provisioned_azure_tenant--attributes--attribute_definition"></a>
+### Nested Schema for `owned_systems.provisioned_azure_tenant.attributes.attribute_definition`
+
+Read-Only:
+
+- `format` (String)
+- `freely_useable` (Boolean)
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_systems--provisioned_azure_tenant--attributes--attribute_definition--links))
+- `list` (Boolean)
+- `name` (String)
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_systems--provisioned_azure_tenant--attributes--attribute_definition--permissions))
+- `properties` (Attributes List) (see [below for nested schema](#nestedatt--owned_systems--provisioned_azure_tenant--attributes--attribute_definition--properties))
+- `property_handling` (String)
+- `required` (Boolean)
+- `system_definition` (String)
+- `unique` (Boolean)
+
+<a id="nestedatt--owned_systems--provisioned_azure_tenant--attributes--attribute_definition--links"></a>
+### Nested Schema for `owned_systems.provisioned_azure_tenant.attributes.attribute_definition.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--owned_systems--provisioned_azure_tenant--attributes--attribute_definition--permissions"></a>
+### Nested Schema for `owned_systems.provisioned_azure_tenant.attributes.attribute_definition.permissions`
+
+Read-Only:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--owned_systems--provisioned_azure_tenant--attributes--attribute_definition--properties"></a>
+### Nested Schema for `owned_systems.provisioned_azure_tenant.attributes.attribute_definition.properties`
+
+Read-Only:
+
+- `format` (String)
+- `list` (Boolean)
+- `name` (String)
+- `required` (Boolean)
+
+
+
 
 
 <a id="nestedatt--owned_systems--provisioned_internal_ldap"></a>
@@ -8671,6 +8968,7 @@ Read-Only:
 Read-Only:
 
 - `account_permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_systems--provisioned_internal_ldap--client--oauth2_client--account_permissions))
+- `allow_device_grant` (Boolean)
 - `attributes` (Attributes List) (see [below for nested schema](#nestedatt--owned_systems--provisioned_internal_ldap--client--oauth2_client--attributes))
 - `callback_uri` (String)
 - `debug_mode` (Boolean)
@@ -9095,6 +9393,8 @@ Read-Only:
 
 Read-Only:
 
+- `account_matching_attribute` (Attributes) (see [below for nested schema](#nestedatt--owned_systems--provisioned_ldap_directory--account_matching_attribute))
+- `account_matching_attribute_name` (String)
 - `accounts_writable` (Boolean)
 - `attributes` (Attributes List) (see [below for nested schema](#nestedatt--owned_systems--provisioned_ldap_directory--attributes))
 - `directory` (Attributes) (see [below for nested schema](#nestedatt--owned_systems--provisioned_ldap_directory--directory))
@@ -9106,6 +9406,57 @@ Read-Only:
 - `object_classes` (String)
 - `sam_account_name_scheme` (String)
 - `ssh_public_key_support` (String)
+
+<a id="nestedatt--owned_systems--provisioned_ldap_directory--account_matching_attribute"></a>
+### Nested Schema for `owned_systems.provisioned_ldap_directory.account_matching_attribute`
+
+Read-Only:
+
+- `format` (String)
+- `freely_useable` (Boolean)
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_systems--provisioned_ldap_directory--account_matching_attribute--links))
+- `list` (Boolean)
+- `name` (String)
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_systems--provisioned_ldap_directory--account_matching_attribute--permissions))
+- `properties` (Attributes List) (see [below for nested schema](#nestedatt--owned_systems--provisioned_ldap_directory--account_matching_attribute--properties))
+- `property_handling` (String)
+- `required` (Boolean)
+- `system_definition` (String)
+- `unique` (Boolean)
+
+<a id="nestedatt--owned_systems--provisioned_ldap_directory--account_matching_attribute--links"></a>
+### Nested Schema for `owned_systems.provisioned_ldap_directory.account_matching_attribute.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--owned_systems--provisioned_ldap_directory--account_matching_attribute--permissions"></a>
+### Nested Schema for `owned_systems.provisioned_ldap_directory.account_matching_attribute.permissions`
+
+Read-Only:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--owned_systems--provisioned_ldap_directory--account_matching_attribute--properties"></a>
+### Nested Schema for `owned_systems.provisioned_ldap_directory.account_matching_attribute.properties`
+
+Read-Only:
+
+- `format` (String)
+- `list` (Boolean)
+- `name` (String)
+- `required` (Boolean)
+
+
 
 <a id="nestedatt--owned_systems--provisioned_ldap_directory--attributes"></a>
 ### Nested Schema for `owned_systems.provisioned_ldap_directory.attributes`
