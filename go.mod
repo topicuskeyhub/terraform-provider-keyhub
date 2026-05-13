@@ -100,3 +100,6 @@ require (
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
+
+// kin-openapi v0.138.0 calls yaml.UnmarshalWithOriginTree which was removed in oasdiff/yaml v0.1.0.
+replace github.com/oasdiff/yaml => github.com/oasdiff/yaml v0.0.9
