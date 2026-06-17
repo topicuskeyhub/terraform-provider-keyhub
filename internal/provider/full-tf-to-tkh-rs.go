@@ -1187,6 +1187,8 @@ func tfObjectToTKHRSClientClientApplication(ctx context.Context, recurse bool, p
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetPermissions")
 		tkh.SetPermissions(val)
 	}
+	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToBooleanPointer(planAttrValues["active"]))+" using SetActive")
+	tkh.SetActive(tfToBooleanPointer(planAttrValues["active"]))
 	{
 		val, d := parseCastPointer(planAttrValues["type"].(basetypes.StringValue), keyhubmodel.ParseClientClientApplicationType, func(val any) keyhubmodel.ClientClientApplicationType {
 			return *val.(*keyhubmodel.ClientClientApplicationType)
@@ -1307,6 +1309,8 @@ func tfObjectToTKHRSROClientClientApplicationRO(ctx context.Context, recurse boo
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetPermissions")
 		tkh.SetPermissions(val)
 	}
+	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToBooleanPointer(planAttrValues["active"]))+" using SetActive")
+	tkh.SetActive(tfToBooleanPointer(planAttrValues["active"]))
 	{
 		val, d := parseCastPointer(planAttrValues["type"].(basetypes.StringValue), keyhubmodel.ParseClientClientApplicationType, func(val any) keyhubmodel.ClientClientApplicationType {
 			return *val.(*keyhubmodel.ClientClientApplicationType)
@@ -1463,6 +1467,8 @@ func tfObjectToTKHRSClientClientApplicationPrimer(ctx context.Context, recurse b
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetPermissions")
 		tkh.SetPermissions(val)
 	}
+	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToBooleanPointer(planAttrValues["active"]))+" using SetActive")
+	tkh.SetActive(tfToBooleanPointer(planAttrValues["active"]))
 	{
 		val, d := parseCastPointer(planAttrValues["type"].(basetypes.StringValue), keyhubmodel.ParseClientClientApplicationType, func(val any) keyhubmodel.ClientClientApplicationType {
 			return *val.(*keyhubmodel.ClientClientApplicationType)
@@ -1533,6 +1539,8 @@ func tfObjectToTKHRSROClientClientApplicationPrimerRO(ctx context.Context, recur
 		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetPermissions")
 		tkh.SetPermissions(val)
 	}
+	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToBooleanPointer(planAttrValues["active"]))+" using SetActive")
+	tkh.SetActive(tfToBooleanPointer(planAttrValues["active"]))
 	{
 		val, d := parseCastPointer(planAttrValues["type"].(basetypes.StringValue), keyhubmodel.ParseClientClientApplicationType, func(val any) keyhubmodel.ClientClientApplicationType {
 			return *val.(*keyhubmodel.ClientClientApplicationType)
@@ -9210,6 +9218,14 @@ func tfObjectToTKHRSROProvisioningProvisionedAzureOIDCDirectoryRO(ctx context.Co
 	tflog.Trace(ctx, "configAttrValues: "+litter.Sdump(configAttrValues))
 	var tkh keyhubmodel.ProvisioningProvisionedAzureOIDCDirectoryable
 	tkh = keyhubmodel.NewProvisioningProvisionedAzureOIDCDirectory()
+	{
+		val, d := tfObjectToTKHRSROIdentityAccountAttributeDefinitionRO(ctx, recurse, toObjectValue(planAttrValues["account_matching_attribute"]), toObjectValue(configAttrValues["account_matching_attribute"]))
+		diags.Append(d...)
+		tflog.Debug(ctx, "Setting "+litter.Sdump(val)+" using SetAccountMatchingAttribute")
+		tkh.SetAccountMatchingAttribute(val)
+	}
+	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToStringPointer(planAttrValues["account_matching_attribute_name"]))+" using SetAccountMatchingAttributeName")
+	tkh.SetAccountMatchingAttributeName(tfToStringPointer(planAttrValues["account_matching_attribute_name"]))
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToBooleanPointer(planAttrValues["accounts_writable"]))+" using SetAccountsWritable")
 	tkh.SetAccountsWritable(tfToBooleanPointer(planAttrValues["accounts_writable"]))
 	{
@@ -9564,6 +9580,8 @@ func tfObjectToTKHRSROProvisioningProvisionedSCIMRO(ctx context.Context, recurse
 	tkh.SetBearerToken(tfToStringPointer(planAttrValues["bearer_token"]))
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToStringPointer(planAttrValues["connector_configuration"]))+" using SetConnectorConfiguration")
 	tkh.SetConnectorConfiguration(tfToStringPointer(planAttrValues["connector_configuration"]))
+	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToBooleanPointer(planAttrValues["cursor_based_pagination"]))+" using SetCursorBasedPagination")
+	tkh.SetCursorBasedPagination(tfToBooleanPointer(planAttrValues["cursor_based_pagination"]))
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToStringPointer(planAttrValues["custom_header_name"]))+" using SetCustomHeaderName")
 	tkh.SetCustomHeaderName(tfToStringPointer(planAttrValues["custom_header_name"]))
 	tflog.Debug(ctx, "Setting "+litter.Sdump(tfToStringPointer(planAttrValues["custom_header_value"]))+" using SetCustomHeaderValue")

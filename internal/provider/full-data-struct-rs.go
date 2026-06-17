@@ -276,6 +276,7 @@ var clientClientApplicationAttrTypesRSRecurse = objectAttrsTypeRSClientClientApp
 type clientClientApplicationDataRS struct {
 	Links                             types.List   `tfsdk:"links"`
 	Permissions                       types.List   `tfsdk:"permissions"`
+	Active                            types.Bool   `tfsdk:"active"`
 	ClientClientApplicationPrimerType types.String `tfsdk:"type"`
 	ClientID                          types.String `tfsdk:"client_id"`
 	Name                              types.String `tfsdk:"name"`
@@ -307,6 +308,7 @@ var clientClientApplicationAttrTypesRSRORecurse = objectAttrsTypeRSROClientClien
 type clientClientApplicationDataRSRO struct {
 	Links                             types.List   `tfsdk:"links"`
 	Permissions                       types.List   `tfsdk:"permissions"`
+	Active                            types.Bool   `tfsdk:"active"`
 	ClientClientApplicationPrimerType types.String `tfsdk:"type"`
 	ClientID                          types.String `tfsdk:"client_id"`
 	Name                              types.String `tfsdk:"name"`
@@ -345,6 +347,7 @@ var clientClientApplicationPrimerAttrTypesRSRecurse = objectAttrsTypeRSClientCli
 type clientClientApplicationPrimerDataRS struct {
 	Links                             types.List   `tfsdk:"links"`
 	Permissions                       types.List   `tfsdk:"permissions"`
+	Active                            types.Bool   `tfsdk:"active"`
 	ClientClientApplicationPrimerType types.String `tfsdk:"type"`
 	ClientID                          types.String `tfsdk:"client_id"`
 	Name                              types.String `tfsdk:"name"`
@@ -359,6 +362,7 @@ var clientClientApplicationPrimerAttrTypesRSRORecurse = objectAttrsTypeRSROClien
 type clientClientApplicationPrimerDataRSRO struct {
 	Links                             types.List   `tfsdk:"links"`
 	Permissions                       types.List   `tfsdk:"permissions"`
+	Active                            types.Bool   `tfsdk:"active"`
 	ClientClientApplicationPrimerType types.String `tfsdk:"type"`
 	ClientID                          types.String `tfsdk:"client_id"`
 	Name                              types.String `tfsdk:"name"`
@@ -2015,9 +2019,11 @@ var provisioningProvisionedAzureOIDCDirectoryAttrTypesRSRO = objectAttrsTypeRSRO
 var provisioningProvisionedAzureOIDCDirectoryAttrTypesRSRORecurse = objectAttrsTypeRSROProvisioningProvisionedAzureOIDCDirectoryRO(true)
 
 type provisioningProvisionedAzureOIDCDirectoryDataRSRO struct {
-	AccountsWritable types.Bool   `tfsdk:"accounts_writable"`
-	Directory        types.Object `tfsdk:"directory"`
-	Tenant           types.String `tfsdk:"tenant"`
+	AccountMatchingAttribute     types.Object `tfsdk:"account_matching_attribute"`
+	AccountMatchingAttributeName types.String `tfsdk:"account_matching_attribute_name"`
+	AccountsWritable             types.Bool   `tfsdk:"accounts_writable"`
+	Directory                    types.Object `tfsdk:"directory"`
+	Tenant                       types.String `tfsdk:"tenant"`
 }
 
 var provisioningProvisionedAzureSyncLDAPDirectoryAttrTypesRSRO = objectAttrsTypeRSROProvisioningProvisionedAzureSyncLDAPDirectoryRO(false)
@@ -2096,6 +2102,7 @@ type provisioningProvisionedSCIMDataRSRO struct {
 	BasicAuthUsername          types.String `tfsdk:"basic_auth_username"`
 	BearerToken                types.String `tfsdk:"bearer_token"`
 	ConnectorConfiguration     types.String `tfsdk:"connector_configuration"`
+	CursorBasedPagination      types.Bool   `tfsdk:"cursor_based_pagination"`
 	CustomHeaderName           types.String `tfsdk:"custom_header_name"`
 	CustomHeaderValue          types.String `tfsdk:"custom_header_value"`
 	ExternalIDSupported        types.Bool   `tfsdk:"external_id_supported"`

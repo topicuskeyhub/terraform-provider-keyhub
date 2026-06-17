@@ -65,6 +65,7 @@ Read-Only:
 
 Read-Only:
 
+- `active` (Boolean)
 - `client_id` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--client--links))
 - `name` (String)

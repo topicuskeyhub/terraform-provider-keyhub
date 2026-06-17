@@ -871,6 +871,9 @@ func dataSourceSchemaAttrsClientClientApplication(recurse bool) map[string]dssch
 		},
 		Computed: true,
 	}
+	schemaAttrs["active"] = dsschema.BoolAttribute{
+		Computed: true,
+	}
 	schemaAttrs["type"] = dsschema.StringAttribute{
 		Computed: true,
 	}
@@ -969,6 +972,9 @@ func dataSourceSchemaAttrsClientClientApplicationRO(recurse bool) map[string]dss
 		},
 		Computed: true,
 	}
+	schemaAttrs["active"] = dsschema.BoolAttribute{
+		Computed: true,
+	}
 	schemaAttrs["type"] = dsschema.StringAttribute{
 		Computed: true,
 	}
@@ -1062,6 +1068,9 @@ func dataSourceSchemaAttrsClientClientApplicationPrimer(recurse bool) map[string
 		},
 		Computed: true,
 	}
+	schemaAttrs["active"] = dsschema.BoolAttribute{
+		Computed: true,
+	}
 	schemaAttrs["type"] = dsschema.StringAttribute{
 		Computed: true,
 	}
@@ -1100,6 +1109,9 @@ func dataSourceSchemaAttrsClientClientApplicationPrimerRO(recurse bool) map[stri
 		NestedObject: dsschema.NestedAttributeObject{
 			Attributes: dataSourceSchemaAttrsAuthPermissionRO(recurse),
 		},
+		Computed: true,
+	}
+	schemaAttrs["active"] = dsschema.BoolAttribute{
 		Computed: true,
 	}
 	schemaAttrs["type"] = dsschema.StringAttribute{
@@ -6218,6 +6230,17 @@ func dataSourceSchemaAttrsProvisioningProvisionedAccount_additionalObjectsRO(rec
 }
 func dataSourceSchemaAttrsProvisioningProvisionedAzureOIDCDirectory(recurse bool) map[string]dsschema.Attribute {
 	schemaAttrs := make(map[string]dsschema.Attribute)
+	{
+		attr := dsschema.SingleNestedAttribute{
+			Attributes: dataSourceSchemaAttrsIdentityAccountAttributeDefinition(recurse),
+		}
+		attr.Computed = true
+		schemaAttrs["account_matching_attribute"] = attr
+	}
+
+	schemaAttrs["account_matching_attribute_name"] = dsschema.StringAttribute{
+		Computed: true,
+	}
 	schemaAttrs["accounts_writable"] = dsschema.BoolAttribute{
 		Computed: true,
 	}
@@ -6236,6 +6259,17 @@ func dataSourceSchemaAttrsProvisioningProvisionedAzureOIDCDirectory(recurse bool
 }
 func dataSourceSchemaAttrsProvisioningProvisionedAzureOIDCDirectoryRO(recurse bool) map[string]dsschema.Attribute {
 	schemaAttrs := make(map[string]dsschema.Attribute)
+	{
+		attr := dsschema.SingleNestedAttribute{
+			Attributes: dataSourceSchemaAttrsIdentityAccountAttributeDefinitionRO(recurse),
+		}
+		attr.Computed = true
+		schemaAttrs["account_matching_attribute"] = attr
+	}
+
+	schemaAttrs["account_matching_attribute_name"] = dsschema.StringAttribute{
+		Computed: true,
+	}
 	schemaAttrs["accounts_writable"] = dsschema.BoolAttribute{
 		Computed: true,
 	}
@@ -6611,6 +6645,9 @@ func dataSourceSchemaAttrsProvisioningProvisionedSCIM(recurse bool) map[string]d
 	schemaAttrs["connector_configuration"] = dsschema.StringAttribute{
 		Computed: true,
 	}
+	schemaAttrs["cursor_based_pagination"] = dsschema.BoolAttribute{
+		Computed: true,
+	}
 	schemaAttrs["custom_header_name"] = dsschema.StringAttribute{
 		Computed: true,
 	}
@@ -6670,6 +6707,9 @@ func dataSourceSchemaAttrsProvisioningProvisionedSCIMRO(recurse bool) map[string
 		Sensitive: true,
 	}
 	schemaAttrs["connector_configuration"] = dsschema.StringAttribute{
+		Computed: true,
+	}
+	schemaAttrs["cursor_based_pagination"] = dsschema.BoolAttribute{
 		Computed: true,
 	}
 	schemaAttrs["custom_header_name"] = dsschema.StringAttribute{

@@ -3044,6 +3044,7 @@ func reorderProvisioningProvisionedAzureOIDCDirectoryRO(state basetypes.ObjectVa
 		attrs = provisioningProvisionedAzureOIDCDirectoryAttrTypesRSRO
 	}
 	obj := filterAttributes(state.Attributes(), attrs)
+	obj["account_matching_attribute"] = reorderIdentityAccountAttributeDefinitionRO(state.Attributes()["account_matching_attribute"].(types.Object), priorState.Attributes()["account_matching_attribute"].(types.Object), false)
 	obj["directory"] = reorderDirectoryAccountDirectoryPrimerRO(state.Attributes()["directory"].(types.Object), priorState.Attributes()["directory"].(types.Object), false)
 
 	return types.ObjectValueMust(attrs, obj)

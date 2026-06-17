@@ -275,6 +275,7 @@ func fillDataStructFromTFObjectDSCertificateCertificate_additionalObjects(data *
 func fillDataStructFromTFObjectDSClientClientApplication(data *clientClientApplicationDataDS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Active = obj.Attributes()["active"].(basetypes.BoolValue)
 	data.ClientClientApplicationPrimerType = obj.Attributes()["type"].(basetypes.StringValue)
 	data.ClientID = obj.Attributes()["client_id"].(basetypes.StringValue)
 	data.Name = obj.Attributes()["name"].(basetypes.StringValue)
@@ -301,6 +302,7 @@ func fillDataStructFromTFObjectDSClientClientApplication(data *clientClientAppli
 func fillDataStructFromTFObjectDSROClientClientApplicationRO(data *clientClientApplicationDataDSRO, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Active = obj.Attributes()["active"].(basetypes.BoolValue)
 	data.ClientClientApplicationPrimerType = obj.Attributes()["type"].(basetypes.StringValue)
 	data.ClientID = obj.Attributes()["client_id"].(basetypes.StringValue)
 	data.Name = obj.Attributes()["name"].(basetypes.StringValue)
@@ -331,6 +333,7 @@ func fillDataStructFromTFObjectDSROClientClientApplicationLinkableWrapperRO(data
 func fillDataStructFromTFObjectDSClientClientApplicationPrimer(data *clientClientApplicationPrimerDataDS, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Active = obj.Attributes()["active"].(basetypes.BoolValue)
 	data.ClientClientApplicationPrimerType = obj.Attributes()["type"].(basetypes.StringValue)
 	data.ClientID = obj.Attributes()["client_id"].(basetypes.StringValue)
 	data.Name = obj.Attributes()["name"].(basetypes.StringValue)
@@ -342,6 +345,7 @@ func fillDataStructFromTFObjectDSClientClientApplicationPrimer(data *clientClien
 func fillDataStructFromTFObjectDSROClientClientApplicationPrimerRO(data *clientClientApplicationPrimerDataDSRO, obj types.Object) {
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Active = obj.Attributes()["active"].(basetypes.BoolValue)
 	data.ClientClientApplicationPrimerType = obj.Attributes()["type"].(basetypes.StringValue)
 	data.ClientID = obj.Attributes()["client_id"].(basetypes.StringValue)
 	data.Name = obj.Attributes()["name"].(basetypes.StringValue)
@@ -1717,12 +1721,16 @@ func fillDataStructFromTFObjectDSROProvisioningProvisionedAccount_additionalObje
 }
 
 func fillDataStructFromTFObjectDSProvisioningProvisionedAzureOIDCDirectory(data *provisioningProvisionedAzureOIDCDirectoryDataDS, obj types.Object) {
+	data.AccountMatchingAttribute = obj.Attributes()["account_matching_attribute"].(basetypes.ObjectValue)
+	data.AccountMatchingAttributeName = obj.Attributes()["account_matching_attribute_name"].(basetypes.StringValue)
 	data.AccountsWritable = obj.Attributes()["accounts_writable"].(basetypes.BoolValue)
 	data.Directory = obj.Attributes()["directory"].(basetypes.ObjectValue)
 	data.Tenant = obj.Attributes()["tenant"].(basetypes.StringValue)
 }
 
 func fillDataStructFromTFObjectDSROProvisioningProvisionedAzureOIDCDirectoryRO(data *provisioningProvisionedAzureOIDCDirectoryDataDSRO, obj types.Object) {
+	data.AccountMatchingAttribute = obj.Attributes()["account_matching_attribute"].(basetypes.ObjectValue)
+	data.AccountMatchingAttributeName = obj.Attributes()["account_matching_attribute_name"].(basetypes.StringValue)
 	data.AccountsWritable = obj.Attributes()["accounts_writable"].(basetypes.BoolValue)
 	data.Directory = obj.Attributes()["directory"].(basetypes.ObjectValue)
 	data.Tenant = obj.Attributes()["tenant"].(basetypes.StringValue)
@@ -1831,6 +1839,7 @@ func fillDataStructFromTFObjectDSProvisioningProvisionedSCIM(data *provisioningP
 	data.BasicAuthUsername = obj.Attributes()["basic_auth_username"].(basetypes.StringValue)
 	data.BearerToken = obj.Attributes()["bearer_token"].(basetypes.StringValue)
 	data.ConnectorConfiguration = obj.Attributes()["connector_configuration"].(basetypes.StringValue)
+	data.CursorBasedPagination = obj.Attributes()["cursor_based_pagination"].(basetypes.BoolValue)
 	data.CustomHeaderName = obj.Attributes()["custom_header_name"].(basetypes.StringValue)
 	data.CustomHeaderValue = obj.Attributes()["custom_header_value"].(basetypes.StringValue)
 	data.ExternalIDSupported = obj.Attributes()["external_id_supported"].(basetypes.BoolValue)
@@ -1851,6 +1860,7 @@ func fillDataStructFromTFObjectDSROProvisioningProvisionedSCIMRO(data *provision
 	data.BasicAuthUsername = obj.Attributes()["basic_auth_username"].(basetypes.StringValue)
 	data.BearerToken = obj.Attributes()["bearer_token"].(basetypes.StringValue)
 	data.ConnectorConfiguration = obj.Attributes()["connector_configuration"].(basetypes.StringValue)
+	data.CursorBasedPagination = obj.Attributes()["cursor_based_pagination"].(basetypes.BoolValue)
 	data.CustomHeaderName = obj.Attributes()["custom_header_name"].(basetypes.StringValue)
 	data.CustomHeaderValue = obj.Attributes()["custom_header_value"].(basetypes.StringValue)
 	data.ExternalIDSupported = obj.Attributes()["external_id_supported"].(basetypes.BoolValue)

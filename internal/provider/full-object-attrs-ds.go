@@ -355,6 +355,7 @@ func objectAttrsTypeDSClientClientApplication(recurse bool) map[string]attr.Type
 	}
 	objectAttrs["links"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSRestLink(recurse)}}
 	objectAttrs["permissions"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSAuthPermission(recurse)}}
+	objectAttrs["active"] = types.BoolType
 	objectAttrs["type"] = types.StringType
 	objectAttrs["client_id"] = types.StringType
 	objectAttrs["name"] = types.StringType
@@ -387,6 +388,7 @@ func objectAttrsTypeDSROClientClientApplicationRO(recurse bool) map[string]attr.
 	}
 	objectAttrs["links"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSRORestLinkRO(recurse)}}
 	objectAttrs["permissions"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSROAuthPermissionRO(recurse)}}
+	objectAttrs["active"] = types.BoolType
 	objectAttrs["type"] = types.StringType
 	objectAttrs["client_id"] = types.StringType
 	objectAttrs["name"] = types.StringType
@@ -412,6 +414,7 @@ func objectAttrsTypeDSClientClientApplicationPrimer(recurse bool) map[string]att
 	objectAttrs := make(map[string]attr.Type)
 	objectAttrs["links"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSRestLink(recurse)}}
 	objectAttrs["permissions"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSAuthPermission(recurse)}}
+	objectAttrs["active"] = types.BoolType
 	objectAttrs["type"] = types.StringType
 	objectAttrs["client_id"] = types.StringType
 	objectAttrs["name"] = types.StringType
@@ -425,6 +428,7 @@ func objectAttrsTypeDSROClientClientApplicationPrimerRO(recurse bool) map[string
 	objectAttrs := make(map[string]attr.Type)
 	objectAttrs["links"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSRORestLinkRO(recurse)}}
 	objectAttrs["permissions"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSROAuthPermissionRO(recurse)}}
+	objectAttrs["active"] = types.BoolType
 	objectAttrs["type"] = types.StringType
 	objectAttrs["client_id"] = types.StringType
 	objectAttrs["name"] = types.StringType
@@ -2232,6 +2236,8 @@ func objectAttrsTypeDSROProvisioningProvisionedAccount_additionalObjectsRO(recur
 
 func objectAttrsTypeDSProvisioningProvisionedAzureOIDCDirectory(recurse bool) map[string]attr.Type {
 	objectAttrs := make(map[string]attr.Type)
+	objectAttrs["account_matching_attribute"] = types.ObjectType{AttrTypes: objectAttrsTypeDSIdentityAccountAttributeDefinition(recurse)}
+	objectAttrs["account_matching_attribute_name"] = types.StringType
 	objectAttrs["accounts_writable"] = types.BoolType
 	objectAttrs["directory"] = types.ObjectType{AttrTypes: objectAttrsTypeDSDirectoryAccountDirectoryPrimer(recurse)}
 	objectAttrs["tenant"] = types.StringType
@@ -2240,6 +2246,8 @@ func objectAttrsTypeDSProvisioningProvisionedAzureOIDCDirectory(recurse bool) ma
 
 func objectAttrsTypeDSROProvisioningProvisionedAzureOIDCDirectoryRO(recurse bool) map[string]attr.Type {
 	objectAttrs := make(map[string]attr.Type)
+	objectAttrs["account_matching_attribute"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROIdentityAccountAttributeDefinitionRO(recurse)}
+	objectAttrs["account_matching_attribute_name"] = types.StringType
 	objectAttrs["accounts_writable"] = types.BoolType
 	objectAttrs["directory"] = types.ObjectType{AttrTypes: objectAttrsTypeDSRODirectoryAccountDirectoryPrimerRO(recurse)}
 	objectAttrs["tenant"] = types.StringType
@@ -2374,6 +2382,7 @@ func objectAttrsTypeDSProvisioningProvisionedSCIM(recurse bool) map[string]attr.
 	objectAttrs["basic_auth_username"] = types.StringType
 	objectAttrs["bearer_token"] = types.StringType
 	objectAttrs["connector_configuration"] = types.StringType
+	objectAttrs["cursor_based_pagination"] = types.BoolType
 	objectAttrs["custom_header_name"] = types.StringType
 	objectAttrs["custom_header_value"] = types.StringType
 	objectAttrs["external_id_supported"] = types.BoolType
@@ -2396,6 +2405,7 @@ func objectAttrsTypeDSROProvisioningProvisionedSCIMRO(recurse bool) map[string]a
 	objectAttrs["basic_auth_username"] = types.StringType
 	objectAttrs["bearer_token"] = types.StringType
 	objectAttrs["connector_configuration"] = types.StringType
+	objectAttrs["cursor_based_pagination"] = types.BoolType
 	objectAttrs["custom_header_name"] = types.StringType
 	objectAttrs["custom_header_value"] = types.StringType
 	objectAttrs["external_id_supported"] = types.BoolType

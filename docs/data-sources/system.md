@@ -418,6 +418,7 @@ Read-Only:
 
 Read-Only:
 
+- `active` (Boolean)
 - `client_id` (String)
 - `last_modified_at` (String)
 - `ldap_client` (Attributes) (see [below for nested schema](#nestedatt--issued_permissions--client--ldap_client))
@@ -1271,9 +1272,62 @@ Read-Only:
 
 Read-Only:
 
+- `account_matching_attribute` (Attributes) (see [below for nested schema](#nestedatt--provisioned_azure_oidc_directory--account_matching_attribute))
+- `account_matching_attribute_name` (String)
 - `accounts_writable` (Boolean)
 - `directory` (Attributes) (see [below for nested schema](#nestedatt--provisioned_azure_oidc_directory--directory))
 - `tenant` (String)
+
+<a id="nestedatt--provisioned_azure_oidc_directory--account_matching_attribute"></a>
+### Nested Schema for `provisioned_azure_oidc_directory.account_matching_attribute`
+
+Read-Only:
+
+- `format` (String)
+- `freely_useable` (Boolean)
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--provisioned_azure_oidc_directory--account_matching_attribute--links))
+- `list` (Boolean)
+- `name` (String)
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--provisioned_azure_oidc_directory--account_matching_attribute--permissions))
+- `properties` (Attributes List) (see [below for nested schema](#nestedatt--provisioned_azure_oidc_directory--account_matching_attribute--properties))
+- `property_handling` (String)
+- `required` (Boolean)
+- `system_definition` (String)
+- `unique` (Boolean)
+
+<a id="nestedatt--provisioned_azure_oidc_directory--account_matching_attribute--links"></a>
+### Nested Schema for `provisioned_azure_oidc_directory.account_matching_attribute.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--provisioned_azure_oidc_directory--account_matching_attribute--permissions"></a>
+### Nested Schema for `provisioned_azure_oidc_directory.account_matching_attribute.permissions`
+
+Read-Only:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--provisioned_azure_oidc_directory--account_matching_attribute--properties"></a>
+### Nested Schema for `provisioned_azure_oidc_directory.account_matching_attribute.properties`
+
+Read-Only:
+
+- `format` (String)
+- `list` (Boolean)
+- `name` (String)
+- `required` (Boolean)
+
+
 
 <a id="nestedatt--provisioned_azure_oidc_directory--directory"></a>
 ### Nested Schema for `provisioned_azure_oidc_directory.directory`
@@ -1993,6 +2047,7 @@ Read-Only:
 - `basic_auth_username` (String)
 - `bearer_token` (String, Sensitive)
 - `connector_configuration` (String)
+- `cursor_based_pagination` (Boolean)
 - `custom_header_name` (String)
 - `custom_header_value` (String, Sensitive)
 - `external_id_supported` (Boolean)

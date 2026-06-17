@@ -24,6 +24,7 @@ description: |-
 > **NOTE**: [Write-only arguments](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments) are supported in Terraform 1.11 and later.
 
 - `accessprofileclients` (Attributes List) (see [below for nested schema](#nestedatt--accessprofileclients))
+- `active` (Boolean)
 - `additional` (List of String)
 - `client_id` (String)
 - `delete_tile` (Boolean, [Write-only](https://developer.hashicorp.com/terraform/language/resources/ephemeral#write-only-arguments))
@@ -73,6 +74,7 @@ Required:
 
 Optional:
 
+- `active` (Boolean)
 - `client_id` (String)
 - `scopes` (List of String)
 
@@ -167,6 +169,7 @@ Required:
 
 Optional:
 
+- `active` (Boolean)
 - `client_id` (String)
 - `scopes` (List of String)
 

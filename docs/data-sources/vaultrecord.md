@@ -341,6 +341,7 @@ Read-Only:
 
 Read-Only:
 
+- `active` (Boolean)
 - `client_id` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--tile--sso_application_launchpad_tile--application--links))
 - `name` (String)

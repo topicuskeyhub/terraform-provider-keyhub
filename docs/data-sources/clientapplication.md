@@ -26,6 +26,7 @@ description: |-
 ### Read-Only
 
 - `accessprofileclients` (Attributes List) (see [below for nested schema](#nestedatt--accessprofileclients))
+- `active` (Boolean)
 - `audit` (Attributes) (see [below for nested schema](#nestedatt--audit))
 - `client_id` (String)
 - `groupclients` (Attributes List) (see [below for nested schema](#nestedatt--groupclients))
@@ -95,6 +96,7 @@ Read-Only:
 
 Read-Only:
 
+- `active` (Boolean)
 - `client_id` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--accessprofileclients--client--links))
 - `name` (String)
@@ -179,6 +181,7 @@ Read-Only:
 
 Read-Only:
 
+- `active` (Boolean)
 - `client_id` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--groupclients--client--links))
 - `name` (String)
@@ -1639,6 +1642,7 @@ Read-Only:
 
 Read-Only:
 
+- `active` (Boolean)
 - `client_id` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--tile--sso_application_launchpad_tile--application--links))
 - `name` (String)

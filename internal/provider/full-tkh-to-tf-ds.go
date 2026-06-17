@@ -1078,6 +1078,7 @@ func tkhToTFObjectDSClientClientApplication(recurse bool, tkh keyhubmodel.Client
 		diags.Append(d...)
 		obj["permissions"] = val
 	}
+	obj["active"] = types.BoolPointerValue(tkh.GetActive())
 	obj["type"] = stringerToTF(tkh.GetClientClientApplicationPrimerType())
 	obj["client_id"] = types.StringPointerValue(tkh.GetClientId())
 	obj["name"] = types.StringPointerValue(tkh.GetName())
@@ -1169,6 +1170,7 @@ func tkhToTFObjectDSROClientClientApplicationRO(recurse bool, tkh keyhubmodel.Cl
 		diags.Append(d...)
 		obj["permissions"] = val
 	}
+	obj["active"] = types.BoolPointerValue(tkh.GetActive())
 	obj["type"] = stringerToTF(tkh.GetClientClientApplicationPrimerType())
 	obj["client_id"] = types.StringPointerValue(tkh.GetClientId())
 	obj["name"] = types.StringPointerValue(tkh.GetName())
@@ -1279,6 +1281,7 @@ func tkhToTFObjectDSClientClientApplicationPrimer(recurse bool, tkh keyhubmodel.
 		diags.Append(d...)
 		obj["permissions"] = val
 	}
+	obj["active"] = types.BoolPointerValue(tkh.GetActive())
 	obj["type"] = stringerToTF(tkh.GetClientClientApplicationPrimerType())
 	obj["client_id"] = types.StringPointerValue(tkh.GetClientId())
 	obj["name"] = types.StringPointerValue(tkh.GetName())
@@ -1331,6 +1334,7 @@ func tkhToTFObjectDSROClientClientApplicationPrimerRO(recurse bool, tkh keyhubmo
 		diags.Append(d...)
 		obj["permissions"] = val
 	}
+	obj["active"] = types.BoolPointerValue(tkh.GetActive())
 	obj["type"] = stringerToTF(tkh.GetClientClientApplicationPrimerType())
 	obj["client_id"] = types.StringPointerValue(tkh.GetClientId())
 	obj["name"] = types.StringPointerValue(tkh.GetName())
@@ -7711,6 +7715,12 @@ func tkhToTFObjectDSProvisioningProvisionedAzureOIDCDirectory(recurse bool, tkh 
 	}
 
 	obj := make(map[string]attr.Value)
+	{
+		val, d := tkhToTFObjectDSIdentityAccountAttributeDefinition(recurse, tkh.GetAccountMatchingAttribute())
+		diags.Append(d...)
+		obj["account_matching_attribute"] = val
+	}
+	obj["account_matching_attribute_name"] = types.StringPointerValue(tkh.GetAccountMatchingAttributeName())
 	obj["accounts_writable"] = types.BoolPointerValue(tkh.GetAccountsWritable())
 	{
 		val, d := tkhToTFObjectDSDirectoryAccountDirectoryPrimer(recurse, tkh.GetDirectory())
@@ -7737,6 +7747,12 @@ func tkhToTFObjectDSROProvisioningProvisionedAzureOIDCDirectoryRO(recurse bool, 
 	}
 
 	obj := make(map[string]attr.Value)
+	{
+		val, d := tkhToTFObjectDSROIdentityAccountAttributeDefinitionRO(recurse, tkh.GetAccountMatchingAttribute())
+		diags.Append(d...)
+		obj["account_matching_attribute"] = val
+	}
+	obj["account_matching_attribute_name"] = types.StringPointerValue(tkh.GetAccountMatchingAttributeName())
 	obj["accounts_writable"] = types.BoolPointerValue(tkh.GetAccountsWritable())
 	{
 		val, d := tkhToTFObjectDSRODirectoryAccountDirectoryPrimerRO(recurse, tkh.GetDirectory())
@@ -8174,6 +8190,7 @@ func tkhToTFObjectDSProvisioningProvisionedSCIM(recurse bool, tkh keyhubmodel.Pr
 	obj["basic_auth_username"] = types.StringPointerValue(tkh.GetBasicAuthUsername())
 	obj["bearer_token"] = types.StringPointerValue(tkh.GetBearerToken())
 	obj["connector_configuration"] = types.StringPointerValue(tkh.GetConnectorConfiguration())
+	obj["cursor_based_pagination"] = types.BoolPointerValue(tkh.GetCursorBasedPagination())
 	obj["custom_header_name"] = types.StringPointerValue(tkh.GetCustomHeaderName())
 	obj["custom_header_value"] = types.StringPointerValue(tkh.GetCustomHeaderValue())
 	obj["external_id_supported"] = types.BoolPointerValue(tkh.GetExternalIdSupported())
@@ -8219,6 +8236,7 @@ func tkhToTFObjectDSROProvisioningProvisionedSCIMRO(recurse bool, tkh keyhubmode
 	obj["basic_auth_username"] = types.StringPointerValue(tkh.GetBasicAuthUsername())
 	obj["bearer_token"] = types.StringPointerValue(tkh.GetBearerToken())
 	obj["connector_configuration"] = types.StringPointerValue(tkh.GetConnectorConfiguration())
+	obj["cursor_based_pagination"] = types.BoolPointerValue(tkh.GetCursorBasedPagination())
 	obj["custom_header_name"] = types.StringPointerValue(tkh.GetCustomHeaderName())
 	obj["custom_header_value"] = types.StringPointerValue(tkh.GetCustomHeaderValue())
 	obj["external_id_supported"] = types.BoolPointerValue(tkh.GetExternalIdSupported())

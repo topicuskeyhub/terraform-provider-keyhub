@@ -711,6 +711,11 @@ func resourceSchemaAttrsClientClientApplication(recurse bool) map[string]rsschem
 		Computed:      true,
 		PlanModifiers: []planmodifier.List{listplanmodifier.UseStateForUnknown()},
 	}
+	schemaAttrs["active"] = rsschema.BoolAttribute{
+		Computed: true,
+		Optional: true,
+		Default:  booldefault.StaticBool(true),
+	}
 	schemaAttrs["type"] = rsschema.StringAttribute{
 		Computed:      true,
 		PlanModifiers: []planmodifier.String{stringplanmodifier.UseStateForUnknown()},
@@ -815,6 +820,11 @@ func resourceSchemaAttrsClientClientApplicationRO(recurse bool) map[string]rssch
 		Computed:      true,
 		PlanModifiers: []planmodifier.List{listplanmodifier.UseStateForUnknown()},
 	}
+	schemaAttrs["active"] = rsschema.BoolAttribute{
+		Computed: true,
+		Optional: true,
+		Default:  booldefault.StaticBool(true),
+	}
 	schemaAttrs["type"] = rsschema.StringAttribute{
 		Computed:      true,
 		PlanModifiers: []planmodifier.String{stringplanmodifier.UseStateForUnknown()},
@@ -918,6 +928,11 @@ func resourceSchemaAttrsClientClientApplicationPrimer(recurse bool) map[string]r
 		Computed:      true,
 		PlanModifiers: []planmodifier.List{listplanmodifier.UseStateForUnknown()},
 	}
+	schemaAttrs["active"] = rsschema.BoolAttribute{
+		Computed: true,
+		Optional: true,
+		Default:  booldefault.StaticBool(true),
+	}
 	schemaAttrs["type"] = rsschema.StringAttribute{
 		Computed:      true,
 		PlanModifiers: []planmodifier.String{stringplanmodifier.UseStateForUnknown()},
@@ -965,6 +980,11 @@ func resourceSchemaAttrsClientClientApplicationPrimerRO(recurse bool) map[string
 		},
 		Computed:      true,
 		PlanModifiers: []planmodifier.List{listplanmodifier.UseStateForUnknown()},
+	}
+	schemaAttrs["active"] = rsschema.BoolAttribute{
+		Computed: true,
+		Optional: true,
+		Default:  booldefault.StaticBool(true),
 	}
 	schemaAttrs["type"] = rsschema.StringAttribute{
 		Computed:      true,
@@ -6066,6 +6086,20 @@ func resourceSchemaAttrsProvisioningProvisionedAccount_additionalObjectsRO(recur
 }
 func resourceSchemaAttrsProvisioningProvisionedAzureOIDCDirectoryRO(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsIdentityAccountAttributeDefinitionRO(recurse),
+		}
+		attr.Optional = true
+		schemaAttrs["account_matching_attribute"] = attr
+	}
+
+	schemaAttrs["account_matching_attribute_name"] = rsschema.StringAttribute{
+		Optional: true,
+		Validators: []validator.String{
+			stringvalidator.UTF8LengthBetween(0, 255),
+		},
+	}
 	schemaAttrs["accounts_writable"] = rsschema.BoolAttribute{
 		Computed: true,
 		Optional: true,
@@ -6166,10 +6200,12 @@ func resourceSchemaAttrsProvisioningProvisionedLDAPRO(recurse bool) map[string]r
 	}
 
 	schemaAttrs["hashing_scheme"] = rsschema.StringAttribute{
-		Required: true,
+		Computed: true,
+		Optional: true,
+		Default:  stringdefault.StaticString("ARGON2ID"),
 		Validators: []validator.String{
 			stringvalidator.OneOf(
-				"SSHA", "PBKDF2",
+				"SSHA", "PBKDF2", "ARGON2ID",
 			),
 		},
 	}
@@ -6240,10 +6276,10 @@ func resourceSchemaAttrsProvisioningProvisionedLDAPDirectoryRO(recurse bool) map
 	schemaAttrs["hashing_scheme"] = rsschema.StringAttribute{
 		Computed: true,
 		Optional: true,
-		Default:  stringdefault.StaticString("PBKDF2"),
+		Default:  stringdefault.StaticString("ARGON2ID"),
 		Validators: []validator.String{
 			stringvalidator.OneOf(
-				"SSHA", "PBKDF2",
+				"SSHA", "PBKDF2", "ARGON2ID",
 			),
 		},
 	}
@@ -6341,6 +6377,11 @@ func resourceSchemaAttrsProvisioningProvisionedSCIMRO(recurse bool) map[string]r
 	}
 	schemaAttrs["connector_configuration"] = rsschema.StringAttribute{
 		Optional: true,
+	}
+	schemaAttrs["cursor_based_pagination"] = rsschema.BoolAttribute{
+		Computed: true,
+		Optional: true,
+		Default:  booldefault.StaticBool(false),
 	}
 	schemaAttrs["custom_header_name"] = rsschema.StringAttribute{
 		Optional: true,
