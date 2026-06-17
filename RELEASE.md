@@ -22,8 +22,7 @@ go get -u
 go mod tidy
 ```
 
-Check to see if sanity-io/litter has disappeared from the dependencies in go.mod, if so run the following to add it back in
-Check if the replace for github.com/oasdiff/yaml is still needed (check against the version used by https://github.com/getkin/kin-openapi).
+Check to see if sanity-io/litter has disappeared from the dependencies in go.mod, if so run the following to add it back in.
 
 ```Shell
 go get github.com/sanity-io/litter
