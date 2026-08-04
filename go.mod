@@ -7,7 +7,7 @@ require (
 	github.com/hashicorp/terraform-plugin-docs v0.25.0
 	github.com/hashicorp/terraform-plugin-framework v1.19.0
 	github.com/hashicorp/terraform-plugin-framework-validators v0.19.0
-	github.com/hashicorp/terraform-plugin-log v0.10.0
+	github.com/hashicorp/terraform-plugin-log v0.11.0
 	github.com/microsoft/kiota-abstractions-go v1.9.4
 	github.com/sanity-io/litter v1.5.8
 	github.com/topicuskeyhub/sdk-go v0.49.0
