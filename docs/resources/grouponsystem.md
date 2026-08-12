@@ -17,7 +17,6 @@ description: |-
 
 ### Required
 
-- `name_in_system` (String)
 - `owner_uuid` (String)
 - `provisioned_system_uuid` (String)
 - `type` (String)
@@ -27,13 +26,14 @@ description: |-
 - `access_profile_provisioning` (Attributes List) (see [below for nested schema](#nestedatt--access_profile_provisioning))
 - `account_provisioning` (String)
 - `additional` (List of String)
+- `display_name` (String)
+- `name_in_system` (String)
 - `provgroups` (Attributes List) (see [below for nested schema](#nestedatt--provgroups))
 - `service_accounts_uuid` (Set of String)
 
 ### Read-Only
 
 - `audit` (Attributes) (see [below for nested schema](#nestedatt--audit))
-- `display_name` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--links))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--permissions))
 - `short_name_in_system` (String)
@@ -90,17 +90,17 @@ Optional:
 
 Required:
 
-- `name_in_system` (String)
 - `owner` (Attributes) (see [below for nested schema](#nestedatt--access_profile_provisioning--group_on_system--owner))
 - `type` (String)
 
 Optional:
 
 - `account_provisioning` (String)
+- `display_name` (String)
+- `name_in_system` (String)
 
 Read-Only:
 
-- `display_name` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--access_profile_provisioning--group_on_system--links))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--access_profile_provisioning--group_on_system--permissions))
 - `short_name_in_system` (String)
@@ -251,17 +251,17 @@ Read-Only:
 
 Required:
 
-- `name_in_system` (String)
 - `owner` (Attributes) (see [below for nested schema](#nestedatt--provgroups--group_on_system--owner))
 - `type` (String)
 
 Optional:
 
 - `account_provisioning` (String)
+- `display_name` (String)
+- `name_in_system` (String)
 
 Read-Only:
 
-- `display_name` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--provgroups--group_on_system--links))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--provgroups--group_on_system--permissions))
 - `short_name_in_system` (String)

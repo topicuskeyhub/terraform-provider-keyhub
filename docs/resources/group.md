@@ -7852,17 +7852,17 @@ Read-Only:
 
 Required:
 
-- `name_in_system` (String)
 - `owner` (Attributes) (see [below for nested schema](#nestedatt--owned_groups_on_system--items--owner))
 - `type` (String)
 
 Optional:
 
 - `account_provisioning` (String)
+- `display_name` (String)
+- `name_in_system` (String)
 
 Read-Only:
 
-- `display_name` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--owned_groups_on_system--items--links))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--owned_groups_on_system--items--permissions))
 - `short_name_in_system` (String)
@@ -11030,17 +11030,17 @@ Optional:
 
 Required:
 
-- `name_in_system` (String)
 - `owner` (Attributes) (see [below for nested schema](#nestedatt--systems--group_on_system--owner))
 - `type` (String)
 
 Optional:
 
 - `account_provisioning` (String)
+- `display_name` (String)
+- `name_in_system` (String)
 
 Read-Only:
 
-- `display_name` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--systems--group_on_system--links))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--systems--group_on_system--permissions))
 - `short_name_in_system` (String)
