@@ -41,6 +41,7 @@ description: |-
 - `activation_status` (Attributes) (see [below for nested schema](#nestedatt--activation_status))
 - `audit` (Attributes) (see [below for nested schema](#nestedatt--audit))
 - `derived` (Boolean)
+- `last_read_at` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--links))
 - `parent` (Attributes) (see [below for nested schema](#nestedatt--parent))
 - `password_metadata` (Attributes) (see [below for nested schema](#nestedatt--password_metadata))
@@ -178,6 +179,7 @@ Optional:
 
 Read-Only:
 
+- `last_read_at` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--parent--links))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--parent--permissions))
 - `share_end_time` (String)
@@ -273,6 +275,7 @@ Optional:
 
 Read-Only:
 
+- `last_read_at` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--shares--links))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--shares--permissions))
 - `share_end_time` (String)

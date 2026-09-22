@@ -3699,6 +3699,19 @@ func dataSourceSchemaAttrsGroupGroupPrimerLinkableWrapperRO(recurse bool) map[st
 	}
 	return schemaAttrs
 }
+func dataSourceSchemaAttrsGroupGroupPrimerLinkableWrapperWithCount(recurse bool) map[string]dsschema.Attribute {
+	schemaAttrs := make(map[string]dsschema.Attribute)
+	schemaAttrs["count"] = dsschema.Int64Attribute{
+		Computed: true,
+	}
+	schemaAttrs["items"] = dsschema.ListNestedAttribute{
+		NestedObject: dsschema.NestedAttributeObject{
+			Attributes: dataSourceSchemaAttrsGroupGroupPrimer(recurse),
+		},
+		Computed: true,
+	}
+	return schemaAttrs
+}
 func dataSourceSchemaAttrsGroupGroupPrimerLinkableWrapperWithCountRO(recurse bool) map[string]dsschema.Attribute {
 	schemaAttrs := make(map[string]dsschema.Attribute)
 	schemaAttrs["count"] = dsschema.Int64Attribute{
@@ -3772,7 +3785,7 @@ func dataSourceSchemaAttrsGroupGroup_additionalObjects(recurse bool) map[string]
 	}
 
 	{
-		attr := dataSourceSchemaAttrsGroupGroupPrimerLinkableWrapperWithCountRO(recurse)["items"].(dsschema.ListNestedAttribute)
+		attr := dataSourceSchemaAttrsGroupGroupPrimerLinkableWrapperWithCount(recurse)["items"].(dsschema.ListNestedAttribute)
 		attr.Computed = true
 		schemaAttrs["excluded_groups"] = attr
 	}
@@ -6303,6 +6316,14 @@ func dataSourceSchemaAttrsProvisioningProvisionedAzureSyncLDAPDirectory(recurse 
 		schemaAttrs["directory"] = attr
 	}
 
+	{
+		attr := dsschema.SingleNestedAttribute{
+			Attributes: dataSourceSchemaAttrsDirectoryAccountDirectoryPrimer(recurse),
+		}
+		attr.Computed = true
+		schemaAttrs["oidc_directory"] = attr
+	}
+
 	schemaAttrs["tenant"] = dsschema.StringAttribute{
 		Computed: true,
 	}
@@ -6323,6 +6344,14 @@ func dataSourceSchemaAttrsProvisioningProvisionedAzureSyncLDAPDirectoryRO(recurs
 		}
 		attr.Computed = true
 		schemaAttrs["directory"] = attr
+	}
+
+	{
+		attr := dsschema.SingleNestedAttribute{
+			Attributes: dataSourceSchemaAttrsDirectoryAccountDirectoryPrimerRO(recurse),
+		}
+		attr.Computed = true
+		schemaAttrs["oidc_directory"] = attr
 	}
 
 	schemaAttrs["tenant"] = dsschema.StringAttribute{
@@ -6474,12 +6503,44 @@ func dataSourceSchemaAttrsProvisioningProvisionedLDAPDirectory(recurse bool) map
 		},
 		Computed: true,
 	}
+	schemaAttrs["base_dn"] = dsschema.StringAttribute{
+		Computed: true,
+	}
+	schemaAttrs["bind_dn"] = dsschema.StringAttribute{
+		Computed: true,
+	}
+	schemaAttrs["bind_password"] = dsschema.StringAttribute{
+		Computed:  true,
+		Sensitive: true,
+	}
+	{
+		attr := dsschema.SingleNestedAttribute{
+			Attributes: dataSourceSchemaAttrsCertificateCertificatePrimer(recurse),
+		}
+		attr.Computed = true
+		schemaAttrs["client_certificate"] = attr
+	}
+
+	schemaAttrs["dialect"] = dsschema.StringAttribute{
+		Computed: true,
+	}
 	{
 		attr := dsschema.SingleNestedAttribute{
 			Attributes: dataSourceSchemaAttrsDirectoryAccountDirectoryPrimer(recurse),
 		}
 		attr.Computed = true
 		schemaAttrs["directory"] = attr
+	}
+
+	schemaAttrs["failover_host"] = dsschema.StringAttribute{
+		Computed: true,
+	}
+	{
+		attr := dsschema.SingleNestedAttribute{
+			Attributes: dataSourceSchemaAttrsCertificateCertificatePrimer(recurse),
+		}
+		attr.Computed = true
+		schemaAttrs["failover_trusted_certificate"] = attr
 	}
 
 	schemaAttrs["gid"] = dsschema.Int64Attribute{
@@ -6499,6 +6560,9 @@ func dataSourceSchemaAttrsProvisioningProvisionedLDAPDirectory(recurse bool) map
 	schemaAttrs["hashing_scheme"] = dsschema.StringAttribute{
 		Computed: true,
 	}
+	schemaAttrs["host"] = dsschema.StringAttribute{
+		Computed: true,
+	}
 	{
 		attr := dsschema.SingleNestedAttribute{
 			Attributes: dataSourceSchemaAttrsProvisioningProvisionNumberSequence(recurse),
@@ -6510,12 +6574,34 @@ func dataSourceSchemaAttrsProvisioningProvisionedLDAPDirectory(recurse bool) map
 	schemaAttrs["object_classes"] = dsschema.StringAttribute{
 		Computed: true,
 	}
+	{
+		attr := dsschema.SingleNestedAttribute{
+			Attributes: dataSourceSchemaAttrsDirectoryAccountDirectoryPrimer(recurse),
+		}
+		attr.Computed = true
+		schemaAttrs["oidc_directory"] = attr
+	}
+
+	schemaAttrs["port"] = dsschema.Int64Attribute{
+		Computed: true,
+	}
 	schemaAttrs["sam_account_name_scheme"] = dsschema.StringAttribute{
 		Computed: true,
 	}
 	schemaAttrs["ssh_public_key_support"] = dsschema.StringAttribute{
 		Computed: true,
 	}
+	schemaAttrs["tls"] = dsschema.StringAttribute{
+		Computed: true,
+	}
+	{
+		attr := dsschema.SingleNestedAttribute{
+			Attributes: dataSourceSchemaAttrsCertificateCertificatePrimer(recurse),
+		}
+		attr.Computed = true
+		schemaAttrs["trusted_certificate"] = attr
+	}
+
 	return schemaAttrs
 }
 func dataSourceSchemaAttrsProvisioningProvisionedLDAPDirectoryRO(recurse bool) map[string]dsschema.Attribute {
@@ -6540,12 +6626,44 @@ func dataSourceSchemaAttrsProvisioningProvisionedLDAPDirectoryRO(recurse bool) m
 		},
 		Computed: true,
 	}
+	schemaAttrs["base_dn"] = dsschema.StringAttribute{
+		Computed: true,
+	}
+	schemaAttrs["bind_dn"] = dsschema.StringAttribute{
+		Computed: true,
+	}
+	schemaAttrs["bind_password"] = dsschema.StringAttribute{
+		Computed:  true,
+		Sensitive: true,
+	}
+	{
+		attr := dsschema.SingleNestedAttribute{
+			Attributes: dataSourceSchemaAttrsCertificateCertificatePrimerRO(recurse),
+		}
+		attr.Computed = true
+		schemaAttrs["client_certificate"] = attr
+	}
+
+	schemaAttrs["dialect"] = dsschema.StringAttribute{
+		Computed: true,
+	}
 	{
 		attr := dsschema.SingleNestedAttribute{
 			Attributes: dataSourceSchemaAttrsDirectoryAccountDirectoryPrimerRO(recurse),
 		}
 		attr.Computed = true
 		schemaAttrs["directory"] = attr
+	}
+
+	schemaAttrs["failover_host"] = dsschema.StringAttribute{
+		Computed: true,
+	}
+	{
+		attr := dsschema.SingleNestedAttribute{
+			Attributes: dataSourceSchemaAttrsCertificateCertificatePrimerRO(recurse),
+		}
+		attr.Computed = true
+		schemaAttrs["failover_trusted_certificate"] = attr
 	}
 
 	schemaAttrs["gid"] = dsschema.Int64Attribute{
@@ -6565,6 +6683,9 @@ func dataSourceSchemaAttrsProvisioningProvisionedLDAPDirectoryRO(recurse bool) m
 	schemaAttrs["hashing_scheme"] = dsschema.StringAttribute{
 		Computed: true,
 	}
+	schemaAttrs["host"] = dsschema.StringAttribute{
+		Computed: true,
+	}
 	{
 		attr := dsschema.SingleNestedAttribute{
 			Attributes: dataSourceSchemaAttrsProvisioningProvisionNumberSequenceRO(recurse),
@@ -6576,12 +6697,34 @@ func dataSourceSchemaAttrsProvisioningProvisionedLDAPDirectoryRO(recurse bool) m
 	schemaAttrs["object_classes"] = dsschema.StringAttribute{
 		Computed: true,
 	}
+	{
+		attr := dsschema.SingleNestedAttribute{
+			Attributes: dataSourceSchemaAttrsDirectoryAccountDirectoryPrimerRO(recurse),
+		}
+		attr.Computed = true
+		schemaAttrs["oidc_directory"] = attr
+	}
+
+	schemaAttrs["port"] = dsschema.Int64Attribute{
+		Computed: true,
+	}
 	schemaAttrs["sam_account_name_scheme"] = dsschema.StringAttribute{
 		Computed: true,
 	}
 	schemaAttrs["ssh_public_key_support"] = dsschema.StringAttribute{
 		Computed: true,
 	}
+	schemaAttrs["tls"] = dsschema.StringAttribute{
+		Computed: true,
+	}
+	{
+		attr := dsschema.SingleNestedAttribute{
+			Attributes: dataSourceSchemaAttrsCertificateCertificatePrimerRO(recurse),
+		}
+		attr.Computed = true
+		schemaAttrs["trusted_certificate"] = attr
+	}
+
 	return schemaAttrs
 }
 func dataSourceSchemaAttrsProvisioningProvisionedNamespace(recurse bool) map[string]dsschema.Attribute {
@@ -6661,7 +6804,16 @@ func dataSourceSchemaAttrsProvisioningProvisionedSCIM(recurse bool) map[string]d
 	schemaAttrs["filter_active_users_supported"] = dsschema.BoolAttribute{
 		Computed: true,
 	}
+	schemaAttrs["filter_group_members_supported"] = dsschema.BoolAttribute{
+		Computed: true,
+	}
+	schemaAttrs["group_members_in_list_response"] = dsschema.BoolAttribute{
+		Computed: true,
+	}
 	schemaAttrs["groups_supported"] = dsschema.BoolAttribute{
+		Computed: true,
+	}
+	schemaAttrs["lower_case_filter_comparators"] = dsschema.BoolAttribute{
 		Computed: true,
 	}
 	schemaAttrs["page_size"] = dsschema.Int64Attribute{
@@ -6725,7 +6877,16 @@ func dataSourceSchemaAttrsProvisioningProvisionedSCIMRO(recurse bool) map[string
 	schemaAttrs["filter_active_users_supported"] = dsschema.BoolAttribute{
 		Computed: true,
 	}
+	schemaAttrs["filter_group_members_supported"] = dsschema.BoolAttribute{
+		Computed: true,
+	}
+	schemaAttrs["group_members_in_list_response"] = dsschema.BoolAttribute{
+		Computed: true,
+	}
 	schemaAttrs["groups_supported"] = dsschema.BoolAttribute{
+		Computed: true,
+	}
+	schemaAttrs["lower_case_filter_comparators"] = dsschema.BoolAttribute{
 		Computed: true,
 	}
 	schemaAttrs["page_size"] = dsschema.Int64Attribute{
@@ -7985,6 +8146,9 @@ func dataSourceSchemaAttrsVaultVaultRecord(recurse bool) map[string]dsschema.Att
 	schemaAttrs["color"] = dsschema.StringAttribute{
 		Computed: true,
 	}
+	schemaAttrs["last_read_at"] = dsschema.StringAttribute{
+		Computed: true,
+	}
 	schemaAttrs["name"] = dsschema.StringAttribute{
 		Computed: true,
 	}
@@ -8058,6 +8222,9 @@ func dataSourceSchemaAttrsVaultVaultRecordRO(recurse bool) map[string]dsschema.A
 	schemaAttrs["color"] = dsschema.StringAttribute{
 		Computed: true,
 	}
+	schemaAttrs["last_read_at"] = dsschema.StringAttribute{
+		Computed: true,
+	}
 	schemaAttrs["name"] = dsschema.StringAttribute{
 		Computed: true,
 	}
@@ -8116,6 +8283,9 @@ func dataSourceSchemaAttrsVaultVaultRecordPrimer(recurse bool) map[string]dssche
 	schemaAttrs["color"] = dsschema.StringAttribute{
 		Computed: true,
 	}
+	schemaAttrs["last_read_at"] = dsschema.StringAttribute{
+		Computed: true,
+	}
 	schemaAttrs["name"] = dsschema.StringAttribute{
 		Computed: true,
 	}
@@ -8147,6 +8317,9 @@ func dataSourceSchemaAttrsVaultVaultRecordPrimerRO(recurse bool) map[string]dssc
 		Computed: true,
 	}
 	schemaAttrs["color"] = dsschema.StringAttribute{
+		Computed: true,
+	}
+	schemaAttrs["last_read_at"] = dsschema.StringAttribute{
 		Computed: true,
 	}
 	schemaAttrs["name"] = dsschema.StringAttribute{

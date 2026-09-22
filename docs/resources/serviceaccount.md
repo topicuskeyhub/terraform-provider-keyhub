@@ -130,6 +130,7 @@ Optional:
 
 Read-Only:
 
+- `last_read_at` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--password--links))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--password--permissions))
 - `share_end_time` (String)

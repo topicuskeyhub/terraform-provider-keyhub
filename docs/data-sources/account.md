@@ -411,6 +411,7 @@ Read-Only:
 - `derived` (Boolean)
 - `end_date` (String)
 - `filename` (String)
+- `last_read_at` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--vault--records--links))
 - `name` (String)
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--vault--records--permissions))

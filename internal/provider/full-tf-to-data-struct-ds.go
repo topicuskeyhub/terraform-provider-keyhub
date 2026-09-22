@@ -1078,6 +1078,11 @@ func fillDataStructFromTFObjectDSROGroupGroupPrimerLinkableWrapperRO(data *group
 	data.Items = obj.Attributes()["items"].(basetypes.ListValue)
 }
 
+func fillDataStructFromTFObjectDSGroupGroupPrimerLinkableWrapperWithCount(data *groupGroupPrimerLinkableWrapperWithCountDataDS, obj types.Object) {
+	data.Count = obj.Attributes()["count"].(basetypes.Int64Value)
+	data.Items = obj.Attributes()["items"].(basetypes.ListValue)
+}
+
 func fillDataStructFromTFObjectDSROGroupGroupPrimerLinkableWrapperWithCountRO(data *groupGroupPrimerLinkableWrapperWithCountDataDSRO, obj types.Object) {
 	data.Count = obj.Attributes()["count"].(basetypes.Int64Value)
 	data.Items = obj.Attributes()["items"].(basetypes.ListValue)
@@ -1740,6 +1745,7 @@ func fillDataStructFromTFObjectDSProvisioningProvisionedAzureSyncLDAPDirectory(d
 	data.ClientID = obj.Attributes()["client_id"].(basetypes.StringValue)
 	data.ClientSecret = obj.Attributes()["client_secret"].(basetypes.StringValue)
 	data.Directory = obj.Attributes()["directory"].(basetypes.ObjectValue)
+	data.OIDCDirectory = obj.Attributes()["oidc_directory"].(basetypes.ObjectValue)
 	data.Tenant = obj.Attributes()["tenant"].(basetypes.StringValue)
 }
 
@@ -1747,6 +1753,7 @@ func fillDataStructFromTFObjectDSROProvisioningProvisionedAzureSyncLDAPDirectory
 	data.ClientID = obj.Attributes()["client_id"].(basetypes.StringValue)
 	data.ClientSecret = obj.Attributes()["client_secret"].(basetypes.StringValue)
 	data.Directory = obj.Attributes()["directory"].(basetypes.ObjectValue)
+	data.OIDCDirectory = obj.Attributes()["oidc_directory"].(basetypes.ObjectValue)
 	data.Tenant = obj.Attributes()["tenant"].(basetypes.StringValue)
 }
 
@@ -1793,15 +1800,27 @@ func fillDataStructFromTFObjectDSProvisioningProvisionedLDAPDirectory(data *prov
 	data.AccountMatchingAttributeName = obj.Attributes()["account_matching_attribute_name"].(basetypes.StringValue)
 	data.AccountsWritable = obj.Attributes()["accounts_writable"].(basetypes.BoolValue)
 	data.Attributes = obj.Attributes()["attributes"].(basetypes.ListValue)
+	data.BaseDN = obj.Attributes()["base_dn"].(basetypes.StringValue)
+	data.BindDN = obj.Attributes()["bind_dn"].(basetypes.StringValue)
+	data.BindPassword = obj.Attributes()["bind_password"].(basetypes.StringValue)
+	data.ClientCertificate = obj.Attributes()["client_certificate"].(basetypes.ObjectValue)
+	data.Dialect = obj.Attributes()["dialect"].(basetypes.StringValue)
 	data.Directory = obj.Attributes()["directory"].(basetypes.ObjectValue)
+	data.FailoverHost = obj.Attributes()["failover_host"].(basetypes.StringValue)
+	data.FailoverTrustedCertificate = obj.Attributes()["failover_trusted_certificate"].(basetypes.ObjectValue)
 	data.Gid = obj.Attributes()["gid"].(basetypes.Int64Value)
 	data.GidNumbering = obj.Attributes()["gid_numbering"].(basetypes.ObjectValue)
 	data.GroupDN = obj.Attributes()["group_dn"].(basetypes.StringValue)
 	data.HashingScheme = obj.Attributes()["hashing_scheme"].(basetypes.StringValue)
+	data.Host = obj.Attributes()["host"].(basetypes.StringValue)
 	data.Numbering = obj.Attributes()["numbering"].(basetypes.ObjectValue)
 	data.ObjectClasses = obj.Attributes()["object_classes"].(basetypes.StringValue)
+	data.OIDCDirectory = obj.Attributes()["oidc_directory"].(basetypes.ObjectValue)
+	data.Port = obj.Attributes()["port"].(basetypes.Int64Value)
 	data.SamAccountNameScheme = obj.Attributes()["sam_account_name_scheme"].(basetypes.StringValue)
 	data.SshPublicKeySupport = obj.Attributes()["ssh_public_key_support"].(basetypes.StringValue)
+	data.TLS = obj.Attributes()["tls"].(basetypes.StringValue)
+	data.TrustedCertificate = obj.Attributes()["trusted_certificate"].(basetypes.ObjectValue)
 }
 
 func fillDataStructFromTFObjectDSROProvisioningProvisionedLDAPDirectoryRO(data *provisioningProvisionedLDAPDirectoryDataDSRO, obj types.Object) {
@@ -1809,15 +1828,27 @@ func fillDataStructFromTFObjectDSROProvisioningProvisionedLDAPDirectoryRO(data *
 	data.AccountMatchingAttributeName = obj.Attributes()["account_matching_attribute_name"].(basetypes.StringValue)
 	data.AccountsWritable = obj.Attributes()["accounts_writable"].(basetypes.BoolValue)
 	data.Attributes = obj.Attributes()["attributes"].(basetypes.ListValue)
+	data.BaseDN = obj.Attributes()["base_dn"].(basetypes.StringValue)
+	data.BindDN = obj.Attributes()["bind_dn"].(basetypes.StringValue)
+	data.BindPassword = obj.Attributes()["bind_password"].(basetypes.StringValue)
+	data.ClientCertificate = obj.Attributes()["client_certificate"].(basetypes.ObjectValue)
+	data.Dialect = obj.Attributes()["dialect"].(basetypes.StringValue)
 	data.Directory = obj.Attributes()["directory"].(basetypes.ObjectValue)
+	data.FailoverHost = obj.Attributes()["failover_host"].(basetypes.StringValue)
+	data.FailoverTrustedCertificate = obj.Attributes()["failover_trusted_certificate"].(basetypes.ObjectValue)
 	data.Gid = obj.Attributes()["gid"].(basetypes.Int64Value)
 	data.GidNumbering = obj.Attributes()["gid_numbering"].(basetypes.ObjectValue)
 	data.GroupDN = obj.Attributes()["group_dn"].(basetypes.StringValue)
 	data.HashingScheme = obj.Attributes()["hashing_scheme"].(basetypes.StringValue)
+	data.Host = obj.Attributes()["host"].(basetypes.StringValue)
 	data.Numbering = obj.Attributes()["numbering"].(basetypes.ObjectValue)
 	data.ObjectClasses = obj.Attributes()["object_classes"].(basetypes.StringValue)
+	data.OIDCDirectory = obj.Attributes()["oidc_directory"].(basetypes.ObjectValue)
+	data.Port = obj.Attributes()["port"].(basetypes.Int64Value)
 	data.SamAccountNameScheme = obj.Attributes()["sam_account_name_scheme"].(basetypes.StringValue)
 	data.SshPublicKeySupport = obj.Attributes()["ssh_public_key_support"].(basetypes.StringValue)
+	data.TLS = obj.Attributes()["tls"].(basetypes.StringValue)
+	data.TrustedCertificate = obj.Attributes()["trusted_certificate"].(basetypes.ObjectValue)
 }
 
 func fillDataStructFromTFObjectDSProvisioningProvisionedNamespace(data *provisioningProvisionedNamespaceDataDS, obj types.Object) {
@@ -1844,7 +1875,10 @@ func fillDataStructFromTFObjectDSProvisioningProvisionedSCIM(data *provisioningP
 	data.CustomHeaderValue = obj.Attributes()["custom_header_value"].(basetypes.StringValue)
 	data.ExternalIDSupported = obj.Attributes()["external_id_supported"].(basetypes.BoolValue)
 	data.FilterActiveUsersSupported = obj.Attributes()["filter_active_users_supported"].(basetypes.BoolValue)
+	data.FilterGroupMembersSupported = obj.Attributes()["filter_group_members_supported"].(basetypes.BoolValue)
+	data.GroupMembersInListResponse = obj.Attributes()["group_members_in_list_response"].(basetypes.BoolValue)
 	data.GroupsSupported = obj.Attributes()["groups_supported"].(basetypes.BoolValue)
+	data.LowerCaseFilterComparators = obj.Attributes()["lower_case_filter_comparators"].(basetypes.BoolValue)
 	data.PageSize = obj.Attributes()["page_size"].(basetypes.Int64Value)
 	data.PasswordSupported = obj.Attributes()["password_supported"].(basetypes.BoolValue)
 	data.UpdateStrategy = obj.Attributes()["update_strategy"].(basetypes.StringValue)
@@ -1865,7 +1899,10 @@ func fillDataStructFromTFObjectDSROProvisioningProvisionedSCIMRO(data *provision
 	data.CustomHeaderValue = obj.Attributes()["custom_header_value"].(basetypes.StringValue)
 	data.ExternalIDSupported = obj.Attributes()["external_id_supported"].(basetypes.BoolValue)
 	data.FilterActiveUsersSupported = obj.Attributes()["filter_active_users_supported"].(basetypes.BoolValue)
+	data.FilterGroupMembersSupported = obj.Attributes()["filter_group_members_supported"].(basetypes.BoolValue)
+	data.GroupMembersInListResponse = obj.Attributes()["group_members_in_list_response"].(basetypes.BoolValue)
 	data.GroupsSupported = obj.Attributes()["groups_supported"].(basetypes.BoolValue)
+	data.LowerCaseFilterComparators = obj.Attributes()["lower_case_filter_comparators"].(basetypes.BoolValue)
 	data.PageSize = obj.Attributes()["page_size"].(basetypes.Int64Value)
 	data.PasswordSupported = obj.Attributes()["password_supported"].(basetypes.BoolValue)
 	data.UpdateStrategy = obj.Attributes()["update_strategy"].(basetypes.StringValue)
@@ -2184,6 +2221,7 @@ func fillDataStructFromTFObjectDSVaultVaultRecord(data *vaultVaultRecordDataDS, 
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
 	data.Color = obj.Attributes()["color"].(basetypes.StringValue)
+	data.LastReadAt = obj.Attributes()["last_read_at"].(basetypes.StringValue)
 	data.Name = obj.Attributes()["name"].(basetypes.StringValue)
 	data.ShareEndTime = obj.Attributes()["share_end_time"].(basetypes.StringValue)
 	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
@@ -2211,6 +2249,7 @@ func fillDataStructFromTFObjectDSROVaultVaultRecordRO(data *vaultVaultRecordData
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
 	data.Color = obj.Attributes()["color"].(basetypes.StringValue)
+	data.LastReadAt = obj.Attributes()["last_read_at"].(basetypes.StringValue)
 	data.Name = obj.Attributes()["name"].(basetypes.StringValue)
 	data.ShareEndTime = obj.Attributes()["share_end_time"].(basetypes.StringValue)
 	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
@@ -2238,6 +2277,7 @@ func fillDataStructFromTFObjectDSVaultVaultRecordPrimer(data *vaultVaultRecordPr
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
 	data.Color = obj.Attributes()["color"].(basetypes.StringValue)
+	data.LastReadAt = obj.Attributes()["last_read_at"].(basetypes.StringValue)
 	data.Name = obj.Attributes()["name"].(basetypes.StringValue)
 	data.ShareEndTime = obj.Attributes()["share_end_time"].(basetypes.StringValue)
 	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
@@ -2247,6 +2287,7 @@ func fillDataStructFromTFObjectDSROVaultVaultRecordPrimerRO(data *vaultVaultReco
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
 	data.Color = obj.Attributes()["color"].(basetypes.StringValue)
+	data.LastReadAt = obj.Attributes()["last_read_at"].(basetypes.StringValue)
 	data.Name = obj.Attributes()["name"].(basetypes.StringValue)
 	data.ShareEndTime = obj.Attributes()["share_end_time"].(basetypes.StringValue)
 	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)

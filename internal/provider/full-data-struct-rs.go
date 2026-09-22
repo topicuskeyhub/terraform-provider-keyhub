@@ -246,6 +246,7 @@ type clientApplicationVaultVaultRecordDataRS struct {
 	Links                 types.List   `tfsdk:"links"`
 	Permissions           types.List   `tfsdk:"permissions"`
 	Color                 types.String `tfsdk:"color"`
+	LastReadAt            types.String `tfsdk:"last_read_at"`
 	Name                  types.String `tfsdk:"name"`
 	ShareEndTime          types.String `tfsdk:"share_end_time"`
 	UUID                  types.String `tfsdk:"uuid"`
@@ -730,7 +731,7 @@ type groupGroupDataRS struct {
 	ClientPermissions                types.List   `tfsdk:"client_permissions" tkhao:"clientPermissions"`
 	Clients                          types.List   `tfsdk:"clients" tkhao:"clients"`
 	ContentAdministeredSystems       types.List   `tfsdk:"content_administered_systems" tkhao:"contentAdministeredSystems"`
-	ExcludedGroups                   types.List   `tfsdk:"excluded_groups" tkhao:"excludedGroups"`
+	ExcludedGroupsUUID               types.Set    `tfsdk:"excluded_groups_uuid" tkhao:"excludedGroups"`
 	GlobalRoles                      types.Object `tfsdk:"global_roles" tkhao:"globalRoles"`
 	GroupAccessInfo                  types.Object `tfsdk:"group_access_info" tkhao:"groupAccessInfo"`
 	Groupauditinginfo                types.Object `tfsdk:"groupauditinginfo" tkhao:"groupauditinginfo"`
@@ -1101,6 +1102,14 @@ type groupGroupPrimerLinkableWrapperDataRSRO struct {
 	Items types.List `tfsdk:"items"`
 }
 
+var groupGroupPrimerLinkableWrapperWithCountAttrTypesRS = objectAttrsTypeRSGroupGroupPrimerLinkableWrapperWithCount(false)
+var groupGroupPrimerLinkableWrapperWithCountAttrTypesRSRecurse = objectAttrsTypeRSGroupGroupPrimerLinkableWrapperWithCount(true)
+
+type groupGroupPrimerLinkableWrapperWithCountDataRS struct {
+	Count types.Int64 `tfsdk:"count"`
+	Items types.Set   `tfsdk:"items"`
+}
+
 var groupGroupPrimerLinkableWrapperWithCountAttrTypesRSRO = objectAttrsTypeRSROGroupGroupPrimerLinkableWrapperWithCountRO(false)
 var groupGroupPrimerLinkableWrapperWithCountAttrTypesRSRORecurse = objectAttrsTypeRSROGroupGroupPrimerLinkableWrapperWithCountRO(true)
 
@@ -1122,7 +1131,7 @@ type groupGroup_additionalObjectsDataRS struct {
 	ClientPermissions          types.List   `tfsdk:"client_permissions"`
 	Clients                    types.List   `tfsdk:"clients"`
 	ContentAdministeredSystems types.List   `tfsdk:"content_administered_systems"`
-	ExcludedGroups             types.List   `tfsdk:"excluded_groups"`
+	ExcludedGroupsUUID         types.Set    `tfsdk:"excluded_groups_uuid"`
 	GlobalRoles                types.Object `tfsdk:"global_roles"`
 	GroupAccessInfo            types.Object `tfsdk:"group_access_info"`
 	Groupauditinginfo          types.Object `tfsdk:"groupauditinginfo"`
@@ -1254,6 +1263,7 @@ type groupVaultVaultRecordDataRS struct {
 	Links            types.List   `tfsdk:"links"`
 	Permissions      types.List   `tfsdk:"permissions"`
 	Color            types.String `tfsdk:"color"`
+	LastReadAt       types.String `tfsdk:"last_read_at"`
 	Name             types.String `tfsdk:"name"`
 	ShareEndTime     types.String `tfsdk:"share_end_time"`
 	UUID             types.String `tfsdk:"uuid"`
@@ -2030,10 +2040,11 @@ var provisioningProvisionedAzureSyncLDAPDirectoryAttrTypesRSRO = objectAttrsType
 var provisioningProvisionedAzureSyncLDAPDirectoryAttrTypesRSRORecurse = objectAttrsTypeRSROProvisioningProvisionedAzureSyncLDAPDirectoryRO(true)
 
 type provisioningProvisionedAzureSyncLDAPDirectoryDataRSRO struct {
-	ClientID     types.String `tfsdk:"client_id"`
-	ClientSecret types.String `tfsdk:"client_secret"`
-	Directory    types.Object `tfsdk:"directory"`
-	Tenant       types.String `tfsdk:"tenant"`
+	ClientID      types.String `tfsdk:"client_id"`
+	ClientSecret  types.String `tfsdk:"client_secret"`
+	Directory     types.Object `tfsdk:"directory"`
+	OIDCDirectory types.Object `tfsdk:"oidc_directory"`
+	Tenant        types.String `tfsdk:"tenant"`
 }
 
 var provisioningProvisionedAzureTenantAttrTypesRSRO = objectAttrsTypeRSROProvisioningProvisionedAzureTenantRO(false)
@@ -2072,15 +2083,27 @@ type provisioningProvisionedLDAPDirectoryDataRSRO struct {
 	AccountMatchingAttributeName types.String `tfsdk:"account_matching_attribute_name"`
 	AccountsWritable             types.Bool   `tfsdk:"accounts_writable"`
 	Attributes                   types.List   `tfsdk:"attributes"`
+	BaseDN                       types.String `tfsdk:"base_dn"`
+	BindDN                       types.String `tfsdk:"bind_dn"`
+	BindPassword                 types.String `tfsdk:"bind_password"`
+	ClientCertificate            types.Object `tfsdk:"client_certificate"`
+	Dialect                      types.String `tfsdk:"dialect"`
 	Directory                    types.Object `tfsdk:"directory"`
+	FailoverHost                 types.String `tfsdk:"failover_host"`
+	FailoverTrustedCertificate   types.Object `tfsdk:"failover_trusted_certificate"`
 	Gid                          types.Int64  `tfsdk:"gid"`
 	GidNumbering                 types.Object `tfsdk:"gid_numbering"`
 	GroupDN                      types.String `tfsdk:"group_dn"`
 	HashingScheme                types.String `tfsdk:"hashing_scheme"`
+	Host                         types.String `tfsdk:"host"`
 	Numbering                    types.Object `tfsdk:"numbering"`
 	ObjectClasses                types.String `tfsdk:"object_classes"`
+	OIDCDirectory                types.Object `tfsdk:"oidc_directory"`
+	Port                         types.Int64  `tfsdk:"port"`
 	SamAccountNameScheme         types.String `tfsdk:"sam_account_name_scheme"`
 	SshPublicKeySupport          types.String `tfsdk:"ssh_public_key_support"`
+	TLS                          types.String `tfsdk:"tls"`
+	TrustedCertificate           types.Object `tfsdk:"trusted_certificate"`
 }
 
 var provisioningProvisionedNamespaceAttrTypesRSRO = objectAttrsTypeRSROProvisioningProvisionedNamespaceRO(false)
@@ -2096,24 +2119,27 @@ var provisioningProvisionedSCIMAttrTypesRSRO = objectAttrsTypeRSROProvisioningPr
 var provisioningProvisionedSCIMAttrTypesRSRORecurse = objectAttrsTypeRSROProvisioningProvisionedSCIMRO(true)
 
 type provisioningProvisionedSCIMDataRSRO struct {
-	Attributes                 types.List   `tfsdk:"attributes"`
-	AuthenticationScheme       types.String `tfsdk:"authentication_scheme"`
-	BasicAuthPassword          types.String `tfsdk:"basic_auth_password"`
-	BasicAuthUsername          types.String `tfsdk:"basic_auth_username"`
-	BearerToken                types.String `tfsdk:"bearer_token"`
-	ConnectorConfiguration     types.String `tfsdk:"connector_configuration"`
-	CursorBasedPagination      types.Bool   `tfsdk:"cursor_based_pagination"`
-	CustomHeaderName           types.String `tfsdk:"custom_header_name"`
-	CustomHeaderValue          types.String `tfsdk:"custom_header_value"`
-	ExternalIDSupported        types.Bool   `tfsdk:"external_id_supported"`
-	FilterActiveUsersSupported types.Bool   `tfsdk:"filter_active_users_supported"`
-	GroupsSupported            types.Bool   `tfsdk:"groups_supported"`
-	PageSize                   types.Int64  `tfsdk:"page_size"`
-	PasswordSupported          types.Bool   `tfsdk:"password_supported"`
-	UpdateStrategy             types.String `tfsdk:"update_strategy"`
-	URL                        types.String `tfsdk:"url"`
-	UseSCIMJsonMimetype        types.Bool   `tfsdk:"use_scim_json_mimetype"`
-	VendorEscaped              types.String `tfsdk:"vendor_escaped"`
+	Attributes                  types.List   `tfsdk:"attributes"`
+	AuthenticationScheme        types.String `tfsdk:"authentication_scheme"`
+	BasicAuthPassword           types.String `tfsdk:"basic_auth_password"`
+	BasicAuthUsername           types.String `tfsdk:"basic_auth_username"`
+	BearerToken                 types.String `tfsdk:"bearer_token"`
+	ConnectorConfiguration      types.String `tfsdk:"connector_configuration"`
+	CursorBasedPagination       types.Bool   `tfsdk:"cursor_based_pagination"`
+	CustomHeaderName            types.String `tfsdk:"custom_header_name"`
+	CustomHeaderValue           types.String `tfsdk:"custom_header_value"`
+	ExternalIDSupported         types.Bool   `tfsdk:"external_id_supported"`
+	FilterActiveUsersSupported  types.Bool   `tfsdk:"filter_active_users_supported"`
+	FilterGroupMembersSupported types.Bool   `tfsdk:"filter_group_members_supported"`
+	GroupMembersInListResponse  types.Bool   `tfsdk:"group_members_in_list_response"`
+	GroupsSupported             types.Bool   `tfsdk:"groups_supported"`
+	LowerCaseFilterComparators  types.Bool   `tfsdk:"lower_case_filter_comparators"`
+	PageSize                    types.Int64  `tfsdk:"page_size"`
+	PasswordSupported           types.Bool   `tfsdk:"password_supported"`
+	UpdateStrategy              types.String `tfsdk:"update_strategy"`
+	URL                         types.String `tfsdk:"url"`
+	UseSCIMJsonMimetype         types.Bool   `tfsdk:"use_scim_json_mimetype"`
+	VendorEscaped               types.String `tfsdk:"vendor_escaped"`
 }
 
 var provisioningProvisionedSystemAttrTypesRSRO = objectAttrsTypeRSROProvisioningProvisionedSystemRO(false)
@@ -2444,6 +2470,7 @@ type vaultVaultRecordDataRSRO struct {
 	Links            types.List   `tfsdk:"links"`
 	Permissions      types.List   `tfsdk:"permissions"`
 	Color            types.String `tfsdk:"color"`
+	LastReadAt       types.String `tfsdk:"last_read_at"`
 	Name             types.String `tfsdk:"name"`
 	ShareEndTime     types.String `tfsdk:"share_end_time"`
 	UUID             types.String `tfsdk:"uuid"`
@@ -2475,6 +2502,7 @@ type vaultVaultRecordPrimerDataRS struct {
 	Links        types.List   `tfsdk:"links"`
 	Permissions  types.List   `tfsdk:"permissions"`
 	Color        types.String `tfsdk:"color"`
+	LastReadAt   types.String `tfsdk:"last_read_at"`
 	Name         types.String `tfsdk:"name"`
 	ShareEndTime types.String `tfsdk:"share_end_time"`
 	UUID         types.String `tfsdk:"uuid"`
@@ -2487,6 +2515,7 @@ type vaultVaultRecordPrimerDataRSRO struct {
 	Links        types.List   `tfsdk:"links"`
 	Permissions  types.List   `tfsdk:"permissions"`
 	Color        types.String `tfsdk:"color"`
+	LastReadAt   types.String `tfsdk:"last_read_at"`
 	Name         types.String `tfsdk:"name"`
 	ShareEndTime types.String `tfsdk:"share_end_time"`
 	UUID         types.String `tfsdk:"uuid"`

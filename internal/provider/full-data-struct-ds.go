@@ -1389,6 +1389,14 @@ type groupGroupPrimerLinkableWrapperDataDSRO struct {
 	Items types.List `tfsdk:"items"`
 }
 
+var groupGroupPrimerLinkableWrapperWithCountAttrTypesDS = objectAttrsTypeDSGroupGroupPrimerLinkableWrapperWithCount(false)
+var groupGroupPrimerLinkableWrapperWithCountAttrTypesDSRecurse = objectAttrsTypeDSGroupGroupPrimerLinkableWrapperWithCount(true)
+
+type groupGroupPrimerLinkableWrapperWithCountDataDS struct {
+	Count types.Int64 `tfsdk:"count"`
+	Items types.List  `tfsdk:"items"`
+}
+
 var groupGroupPrimerLinkableWrapperWithCountAttrTypesDSRO = objectAttrsTypeDSROGroupGroupPrimerLinkableWrapperWithCountRO(false)
 var groupGroupPrimerLinkableWrapperWithCountAttrTypesDSRORecurse = objectAttrsTypeDSROGroupGroupPrimerLinkableWrapperWithCountRO(true)
 
@@ -2294,20 +2302,22 @@ var provisioningProvisionedAzureSyncLDAPDirectoryAttrTypesDS = objectAttrsTypeDS
 var provisioningProvisionedAzureSyncLDAPDirectoryAttrTypesDSRecurse = objectAttrsTypeDSProvisioningProvisionedAzureSyncLDAPDirectory(true)
 
 type provisioningProvisionedAzureSyncLDAPDirectoryDataDS struct {
-	ClientID     types.String `tfsdk:"client_id"`
-	ClientSecret types.String `tfsdk:"client_secret"`
-	Directory    types.Object `tfsdk:"directory"`
-	Tenant       types.String `tfsdk:"tenant"`
+	ClientID      types.String `tfsdk:"client_id"`
+	ClientSecret  types.String `tfsdk:"client_secret"`
+	Directory     types.Object `tfsdk:"directory"`
+	OIDCDirectory types.Object `tfsdk:"oidc_directory"`
+	Tenant        types.String `tfsdk:"tenant"`
 }
 
 var provisioningProvisionedAzureSyncLDAPDirectoryAttrTypesDSRO = objectAttrsTypeDSROProvisioningProvisionedAzureSyncLDAPDirectoryRO(false)
 var provisioningProvisionedAzureSyncLDAPDirectoryAttrTypesDSRORecurse = objectAttrsTypeDSROProvisioningProvisionedAzureSyncLDAPDirectoryRO(true)
 
 type provisioningProvisionedAzureSyncLDAPDirectoryDataDSRO struct {
-	ClientID     types.String `tfsdk:"client_id"`
-	ClientSecret types.String `tfsdk:"client_secret"`
-	Directory    types.Object `tfsdk:"directory"`
-	Tenant       types.String `tfsdk:"tenant"`
+	ClientID      types.String `tfsdk:"client_id"`
+	ClientSecret  types.String `tfsdk:"client_secret"`
+	Directory     types.Object `tfsdk:"directory"`
+	OIDCDirectory types.Object `tfsdk:"oidc_directory"`
+	Tenant        types.String `tfsdk:"tenant"`
 }
 
 var provisioningProvisionedAzureTenantAttrTypesDS = objectAttrsTypeDSProvisioningProvisionedAzureTenant(false)
@@ -2374,15 +2384,27 @@ type provisioningProvisionedLDAPDirectoryDataDS struct {
 	AccountMatchingAttributeName types.String `tfsdk:"account_matching_attribute_name"`
 	AccountsWritable             types.Bool   `tfsdk:"accounts_writable"`
 	Attributes                   types.List   `tfsdk:"attributes"`
+	BaseDN                       types.String `tfsdk:"base_dn"`
+	BindDN                       types.String `tfsdk:"bind_dn"`
+	BindPassword                 types.String `tfsdk:"bind_password"`
+	ClientCertificate            types.Object `tfsdk:"client_certificate"`
+	Dialect                      types.String `tfsdk:"dialect"`
 	Directory                    types.Object `tfsdk:"directory"`
+	FailoverHost                 types.String `tfsdk:"failover_host"`
+	FailoverTrustedCertificate   types.Object `tfsdk:"failover_trusted_certificate"`
 	Gid                          types.Int64  `tfsdk:"gid"`
 	GidNumbering                 types.Object `tfsdk:"gid_numbering"`
 	GroupDN                      types.String `tfsdk:"group_dn"`
 	HashingScheme                types.String `tfsdk:"hashing_scheme"`
+	Host                         types.String `tfsdk:"host"`
 	Numbering                    types.Object `tfsdk:"numbering"`
 	ObjectClasses                types.String `tfsdk:"object_classes"`
+	OIDCDirectory                types.Object `tfsdk:"oidc_directory"`
+	Port                         types.Int64  `tfsdk:"port"`
 	SamAccountNameScheme         types.String `tfsdk:"sam_account_name_scheme"`
 	SshPublicKeySupport          types.String `tfsdk:"ssh_public_key_support"`
+	TLS                          types.String `tfsdk:"tls"`
+	TrustedCertificate           types.Object `tfsdk:"trusted_certificate"`
 }
 
 var provisioningProvisionedLDAPDirectoryAttrTypesDSRO = objectAttrsTypeDSROProvisioningProvisionedLDAPDirectoryRO(false)
@@ -2393,15 +2415,27 @@ type provisioningProvisionedLDAPDirectoryDataDSRO struct {
 	AccountMatchingAttributeName types.String `tfsdk:"account_matching_attribute_name"`
 	AccountsWritable             types.Bool   `tfsdk:"accounts_writable"`
 	Attributes                   types.List   `tfsdk:"attributes"`
+	BaseDN                       types.String `tfsdk:"base_dn"`
+	BindDN                       types.String `tfsdk:"bind_dn"`
+	BindPassword                 types.String `tfsdk:"bind_password"`
+	ClientCertificate            types.Object `tfsdk:"client_certificate"`
+	Dialect                      types.String `tfsdk:"dialect"`
 	Directory                    types.Object `tfsdk:"directory"`
+	FailoverHost                 types.String `tfsdk:"failover_host"`
+	FailoverTrustedCertificate   types.Object `tfsdk:"failover_trusted_certificate"`
 	Gid                          types.Int64  `tfsdk:"gid"`
 	GidNumbering                 types.Object `tfsdk:"gid_numbering"`
 	GroupDN                      types.String `tfsdk:"group_dn"`
 	HashingScheme                types.String `tfsdk:"hashing_scheme"`
+	Host                         types.String `tfsdk:"host"`
 	Numbering                    types.Object `tfsdk:"numbering"`
 	ObjectClasses                types.String `tfsdk:"object_classes"`
+	OIDCDirectory                types.Object `tfsdk:"oidc_directory"`
+	Port                         types.Int64  `tfsdk:"port"`
 	SamAccountNameScheme         types.String `tfsdk:"sam_account_name_scheme"`
 	SshPublicKeySupport          types.String `tfsdk:"ssh_public_key_support"`
+	TLS                          types.String `tfsdk:"tls"`
+	TrustedCertificate           types.Object `tfsdk:"trusted_certificate"`
 }
 
 var provisioningProvisionedNamespaceAttrTypesDS = objectAttrsTypeDSProvisioningProvisionedNamespace(false)
@@ -2426,48 +2460,54 @@ var provisioningProvisionedSCIMAttrTypesDS = objectAttrsTypeDSProvisioningProvis
 var provisioningProvisionedSCIMAttrTypesDSRecurse = objectAttrsTypeDSProvisioningProvisionedSCIM(true)
 
 type provisioningProvisionedSCIMDataDS struct {
-	Attributes                 types.List   `tfsdk:"attributes"`
-	AuthenticationScheme       types.String `tfsdk:"authentication_scheme"`
-	BasicAuthPassword          types.String `tfsdk:"basic_auth_password"`
-	BasicAuthUsername          types.String `tfsdk:"basic_auth_username"`
-	BearerToken                types.String `tfsdk:"bearer_token"`
-	ConnectorConfiguration     types.String `tfsdk:"connector_configuration"`
-	CursorBasedPagination      types.Bool   `tfsdk:"cursor_based_pagination"`
-	CustomHeaderName           types.String `tfsdk:"custom_header_name"`
-	CustomHeaderValue          types.String `tfsdk:"custom_header_value"`
-	ExternalIDSupported        types.Bool   `tfsdk:"external_id_supported"`
-	FilterActiveUsersSupported types.Bool   `tfsdk:"filter_active_users_supported"`
-	GroupsSupported            types.Bool   `tfsdk:"groups_supported"`
-	PageSize                   types.Int64  `tfsdk:"page_size"`
-	PasswordSupported          types.Bool   `tfsdk:"password_supported"`
-	UpdateStrategy             types.String `tfsdk:"update_strategy"`
-	URL                        types.String `tfsdk:"url"`
-	UseSCIMJsonMimetype        types.Bool   `tfsdk:"use_scim_json_mimetype"`
-	VendorEscaped              types.String `tfsdk:"vendor_escaped"`
+	Attributes                  types.List   `tfsdk:"attributes"`
+	AuthenticationScheme        types.String `tfsdk:"authentication_scheme"`
+	BasicAuthPassword           types.String `tfsdk:"basic_auth_password"`
+	BasicAuthUsername           types.String `tfsdk:"basic_auth_username"`
+	BearerToken                 types.String `tfsdk:"bearer_token"`
+	ConnectorConfiguration      types.String `tfsdk:"connector_configuration"`
+	CursorBasedPagination       types.Bool   `tfsdk:"cursor_based_pagination"`
+	CustomHeaderName            types.String `tfsdk:"custom_header_name"`
+	CustomHeaderValue           types.String `tfsdk:"custom_header_value"`
+	ExternalIDSupported         types.Bool   `tfsdk:"external_id_supported"`
+	FilterActiveUsersSupported  types.Bool   `tfsdk:"filter_active_users_supported"`
+	FilterGroupMembersSupported types.Bool   `tfsdk:"filter_group_members_supported"`
+	GroupMembersInListResponse  types.Bool   `tfsdk:"group_members_in_list_response"`
+	GroupsSupported             types.Bool   `tfsdk:"groups_supported"`
+	LowerCaseFilterComparators  types.Bool   `tfsdk:"lower_case_filter_comparators"`
+	PageSize                    types.Int64  `tfsdk:"page_size"`
+	PasswordSupported           types.Bool   `tfsdk:"password_supported"`
+	UpdateStrategy              types.String `tfsdk:"update_strategy"`
+	URL                         types.String `tfsdk:"url"`
+	UseSCIMJsonMimetype         types.Bool   `tfsdk:"use_scim_json_mimetype"`
+	VendorEscaped               types.String `tfsdk:"vendor_escaped"`
 }
 
 var provisioningProvisionedSCIMAttrTypesDSRO = objectAttrsTypeDSROProvisioningProvisionedSCIMRO(false)
 var provisioningProvisionedSCIMAttrTypesDSRORecurse = objectAttrsTypeDSROProvisioningProvisionedSCIMRO(true)
 
 type provisioningProvisionedSCIMDataDSRO struct {
-	Attributes                 types.List   `tfsdk:"attributes"`
-	AuthenticationScheme       types.String `tfsdk:"authentication_scheme"`
-	BasicAuthPassword          types.String `tfsdk:"basic_auth_password"`
-	BasicAuthUsername          types.String `tfsdk:"basic_auth_username"`
-	BearerToken                types.String `tfsdk:"bearer_token"`
-	ConnectorConfiguration     types.String `tfsdk:"connector_configuration"`
-	CursorBasedPagination      types.Bool   `tfsdk:"cursor_based_pagination"`
-	CustomHeaderName           types.String `tfsdk:"custom_header_name"`
-	CustomHeaderValue          types.String `tfsdk:"custom_header_value"`
-	ExternalIDSupported        types.Bool   `tfsdk:"external_id_supported"`
-	FilterActiveUsersSupported types.Bool   `tfsdk:"filter_active_users_supported"`
-	GroupsSupported            types.Bool   `tfsdk:"groups_supported"`
-	PageSize                   types.Int64  `tfsdk:"page_size"`
-	PasswordSupported          types.Bool   `tfsdk:"password_supported"`
-	UpdateStrategy             types.String `tfsdk:"update_strategy"`
-	URL                        types.String `tfsdk:"url"`
-	UseSCIMJsonMimetype        types.Bool   `tfsdk:"use_scim_json_mimetype"`
-	VendorEscaped              types.String `tfsdk:"vendor_escaped"`
+	Attributes                  types.List   `tfsdk:"attributes"`
+	AuthenticationScheme        types.String `tfsdk:"authentication_scheme"`
+	BasicAuthPassword           types.String `tfsdk:"basic_auth_password"`
+	BasicAuthUsername           types.String `tfsdk:"basic_auth_username"`
+	BearerToken                 types.String `tfsdk:"bearer_token"`
+	ConnectorConfiguration      types.String `tfsdk:"connector_configuration"`
+	CursorBasedPagination       types.Bool   `tfsdk:"cursor_based_pagination"`
+	CustomHeaderName            types.String `tfsdk:"custom_header_name"`
+	CustomHeaderValue           types.String `tfsdk:"custom_header_value"`
+	ExternalIDSupported         types.Bool   `tfsdk:"external_id_supported"`
+	FilterActiveUsersSupported  types.Bool   `tfsdk:"filter_active_users_supported"`
+	FilterGroupMembersSupported types.Bool   `tfsdk:"filter_group_members_supported"`
+	GroupMembersInListResponse  types.Bool   `tfsdk:"group_members_in_list_response"`
+	GroupsSupported             types.Bool   `tfsdk:"groups_supported"`
+	LowerCaseFilterComparators  types.Bool   `tfsdk:"lower_case_filter_comparators"`
+	PageSize                    types.Int64  `tfsdk:"page_size"`
+	PasswordSupported           types.Bool   `tfsdk:"password_supported"`
+	UpdateStrategy              types.String `tfsdk:"update_strategy"`
+	URL                         types.String `tfsdk:"url"`
+	UseSCIMJsonMimetype         types.Bool   `tfsdk:"use_scim_json_mimetype"`
+	VendorEscaped               types.String `tfsdk:"vendor_escaped"`
 }
 
 var provisioningProvisionedSystemAttrTypesDS = objectAttrsTypeDSProvisioningProvisionedSystem(false)
@@ -2861,6 +2901,7 @@ type vaultVaultRecordDataDS struct {
 	Links            types.List   `tfsdk:"links"`
 	Permissions      types.List   `tfsdk:"permissions"`
 	Color            types.String `tfsdk:"color"`
+	LastReadAt       types.String `tfsdk:"last_read_at"`
 	Name             types.String `tfsdk:"name"`
 	ShareEndTime     types.String `tfsdk:"share_end_time"`
 	UUID             types.String `tfsdk:"uuid"`
@@ -2891,6 +2932,7 @@ type vaultVaultRecordDataDSRO struct {
 	Links            types.List   `tfsdk:"links"`
 	Permissions      types.List   `tfsdk:"permissions"`
 	Color            types.String `tfsdk:"color"`
+	LastReadAt       types.String `tfsdk:"last_read_at"`
 	Name             types.String `tfsdk:"name"`
 	ShareEndTime     types.String `tfsdk:"share_end_time"`
 	UUID             types.String `tfsdk:"uuid"`
@@ -2921,6 +2963,7 @@ type vaultVaultRecordPrimerDataDS struct {
 	Links        types.List   `tfsdk:"links"`
 	Permissions  types.List   `tfsdk:"permissions"`
 	Color        types.String `tfsdk:"color"`
+	LastReadAt   types.String `tfsdk:"last_read_at"`
 	Name         types.String `tfsdk:"name"`
 	ShareEndTime types.String `tfsdk:"share_end_time"`
 	UUID         types.String `tfsdk:"uuid"`
@@ -2933,6 +2976,7 @@ type vaultVaultRecordPrimerDataDSRO struct {
 	Links        types.List   `tfsdk:"links"`
 	Permissions  types.List   `tfsdk:"permissions"`
 	Color        types.String `tfsdk:"color"`
+	LastReadAt   types.String `tfsdk:"last_read_at"`
 	Name         types.String `tfsdk:"name"`
 	ShareEndTime types.String `tfsdk:"share_end_time"`
 	UUID         types.String `tfsdk:"uuid"`

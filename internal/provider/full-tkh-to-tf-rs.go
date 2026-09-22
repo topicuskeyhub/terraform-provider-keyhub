@@ -684,7 +684,7 @@ func tkhToTFObjectRSCertificateCertificatePrimer(recurse bool, tkh keyhubmodel.C
 	}
 	obj["alias"] = types.StringPointerValue(tkh.GetAlias())
 	obj["type"] = stringerToTF(tkh.GetCertificateCertificatePrimerType())
-	obj["certificate_data"] = byteArrayToTfBase64(tkh.GetCertificateData())
+	obj["certificate_data"] = types.StringPointerValue(tkh.GetCertificateData())
 	obj["expiration"] = timePointerToTF(tkh.GetExpiration())
 	obj["fingerprint_sha1"] = types.StringPointerValue(tkh.GetFingerprintSha1())
 	obj["fingerprint_sha256"] = types.StringPointerValue(tkh.GetFingerprintSha256())
@@ -732,7 +732,7 @@ func tkhToTFObjectRSROCertificateCertificatePrimerRO(recurse bool, tkh keyhubmod
 	}
 	obj["alias"] = types.StringPointerValue(tkh.GetAlias())
 	obj["type"] = stringerToTF(tkh.GetCertificateCertificatePrimerType())
-	obj["certificate_data"] = byteArrayToTfBase64(tkh.GetCertificateData())
+	obj["certificate_data"] = types.StringPointerValue(tkh.GetCertificateData())
 	obj["expiration"] = timePointerToTF(tkh.GetExpiration())
 	obj["fingerprint_sha1"] = types.StringPointerValue(tkh.GetFingerprintSha1())
 	obj["fingerprint_sha256"] = types.StringPointerValue(tkh.GetFingerprintSha256())
@@ -790,6 +790,7 @@ func tkhToTFObjectRSClientApplicationVaultVaultRecord(recurse bool, tkh keyhubmo
 		obj["permissions"] = val
 	}
 	obj["color"] = stringerToTF(tkh.GetColor())
+	obj["last_read_at"] = timePointerToTF(tkh.GetLastReadAt())
 	obj["name"] = types.StringPointerValue(tkh.GetName())
 	obj["share_end_time"] = timePointerToTF(tkh.GetShareEndTime())
 	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
@@ -3451,6 +3452,34 @@ func tkhToTFObjectRSROGroupGroupPrimerLinkableWrapperRO(recurse bool, tkh keyhub
 	return objVal, diags
 }
 
+func tkhToTFObjectRSGroupGroupPrimerLinkableWrapperWithCount(recurse bool, tkh keyhubmodel.GroupGroupPrimerLinkableWrapperWithCountable) (types.Object, diag.Diagnostics) {
+	var diags diag.Diagnostics
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = groupGroupPrimerLinkableWrapperWithCountAttrTypesRSRecurse
+	} else {
+		attrs = groupGroupPrimerLinkableWrapperWithCountAttrTypesRS
+	}
+	if tkh == nil {
+		return types.ObjectNull(attrs), diags
+	}
+
+	obj := make(map[string]attr.Value)
+	obj["count"] = types.Int64PointerValue(tkh.GetCount())
+	{
+		elemType := attrs["items"].(types.SetType).ElemType
+		val, d := sliceToTFSet(elemType, tkh.GetItems(), func(tkh keyhubmodel.GroupGroupPrimerable, diags *diag.Diagnostics) attr.Value {
+			return withUuidToTF(tkh)
+		})
+		diags.Append(d...)
+		obj["items"] = val
+	}
+
+	objVal, d := types.ObjectValue(attrs, obj)
+	diags.Append(d...)
+	return objVal, diags
+}
+
 func tkhToTFObjectRSROGroupGroupPrimerLinkableWrapperWithCountRO(recurse bool, tkh keyhubmodel.GroupGroupPrimerLinkableWrapperWithCountable) (types.Object, diag.Diagnostics) {
 	var diags diag.Diagnostics
 	var attrs map[string]attr.Type
@@ -3540,9 +3569,9 @@ func tkhToTFObjectRSGroupGroup_additionalObjects(recurse bool, tkh keyhubmodel.G
 		obj["content_administered_systems"] = getItemsAttr(val, attrs["content_administered_systems"])
 	}
 	{
-		val, d := tkhToTFObjectRSROGroupGroupPrimerLinkableWrapperWithCountRO(recurse, tkh.GetExcludedGroups())
+		val, d := tkhToTFObjectRSGroupGroupPrimerLinkableWrapperWithCount(recurse, tkh.GetExcludedGroups())
 		diags.Append(d...)
-		obj["excluded_groups"] = getItemsAttr(val, attrs["excluded_groups"])
+		obj["excluded_groups_uuid"] = getItemsAttr(val, attrs["excluded_groups_uuid"])
 	}
 	{
 		val, d := tkhToTFObjectRSROGroupGroupGlobalRoleInfoRO(recurse, tkh.GetGlobalRoles())
@@ -4119,6 +4148,7 @@ func tkhToTFObjectRSGroupVaultVaultRecord(recurse bool, tkh keyhubmodel.VaultVau
 		obj["permissions"] = val
 	}
 	obj["color"] = stringerToTF(tkh.GetColor())
+	obj["last_read_at"] = timePointerToTF(tkh.GetLastReadAt())
 	obj["name"] = types.StringPointerValue(tkh.GetName())
 	obj["share_end_time"] = timePointerToTF(tkh.GetShareEndTime())
 	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
@@ -4533,7 +4563,7 @@ func tkhToTFObjectRSLaunchpadLaunchpadTile(recurse bool, tkh keyhubmodel.Launchp
 	}
 	obj["identicon_code"] = types.Int64PointerValue(int32PToInt64P(tkh.GetIdenticonCode()))
 	obj["launchpad_launchpad_tile_type"] = stringerToTF(tkh.GetLaunchpadLaunchpadTileType())
-	obj["logo"] = byteArrayToTfBase64(tkh.GetLogo())
+	obj["logo"] = types.StringPointerValue(tkh.GetLogo())
 	{
 		tkhCast, _ := tkh.(keyhubmodel.LaunchpadManualLaunchpadTileable)
 		val, d := tkhToTFObjectRSLaunchpadManualLaunchpadTile(false, tkhCast)
@@ -4603,7 +4633,7 @@ func tkhToTFObjectRSROLaunchpadLaunchpadTileRO(recurse bool, tkh keyhubmodel.Lau
 	}
 	obj["identicon_code"] = types.Int64PointerValue(int32PToInt64P(tkh.GetIdenticonCode()))
 	obj["launchpad_launchpad_tile_type"] = stringerToTF(tkh.GetLaunchpadLaunchpadTileType())
-	obj["logo"] = byteArrayToTfBase64(tkh.GetLogo())
+	obj["logo"] = types.StringPointerValue(tkh.GetLogo())
 	{
 		tkhCast, _ := tkh.(keyhubmodel.LaunchpadManualLaunchpadTileable)
 		val, d := tkhToTFObjectRSROLaunchpadManualLaunchpadTileRO(false, tkhCast)
@@ -6847,6 +6877,11 @@ func tkhToTFObjectRSROProvisioningProvisionedAzureSyncLDAPDirectoryRO(recurse bo
 		diags.Append(d...)
 		obj["directory"] = val
 	}
+	{
+		val, d := tkhToTFObjectRSRODirectoryAccountDirectoryPrimerRO(recurse, tkh.GetOidcDirectory())
+		diags.Append(d...)
+		obj["oidc_directory"] = val
+	}
 	obj["tenant"] = types.StringPointerValue(tkh.GetTenant())
 
 	objVal, d := types.ObjectValue(attrs, obj)
@@ -6972,10 +7007,25 @@ func tkhToTFObjectRSROProvisioningProvisionedLDAPDirectoryRO(recurse bool, tkh k
 		diags.Append(d...)
 		obj["attributes"] = val
 	}
+	obj["base_dn"] = types.StringPointerValue(tkh.GetBaseDN())
+	obj["bind_dn"] = types.StringPointerValue(tkh.GetBindDN())
+	obj["bind_password"] = types.StringPointerValue(tkh.GetBindPassword())
+	{
+		val, d := tkhToTFObjectRSROCertificateCertificatePrimerRO(recurse, tkh.GetClientCertificate())
+		diags.Append(d...)
+		obj["client_certificate"] = val
+	}
+	obj["dialect"] = stringerToTF(tkh.GetDialect())
 	{
 		val, d := tkhToTFObjectRSRODirectoryAccountDirectoryPrimerRO(recurse, tkh.GetDirectory())
 		diags.Append(d...)
 		obj["directory"] = val
+	}
+	obj["failover_host"] = types.StringPointerValue(tkh.GetFailoverHost())
+	{
+		val, d := tkhToTFObjectRSROCertificateCertificatePrimerRO(recurse, tkh.GetFailoverTrustedCertificate())
+		diags.Append(d...)
+		obj["failover_trusted_certificate"] = val
 	}
 	obj["gid"] = types.Int64PointerValue(tkh.GetGid())
 	{
@@ -6985,14 +7035,27 @@ func tkhToTFObjectRSROProvisioningProvisionedLDAPDirectoryRO(recurse bool, tkh k
 	}
 	obj["group_dn"] = types.StringPointerValue(tkh.GetGroupDN())
 	obj["hashing_scheme"] = stringerToTF(tkh.GetHashingScheme())
+	obj["host"] = types.StringPointerValue(tkh.GetHost())
 	{
 		val, d := tkhToTFObjectRSROProvisioningProvisionNumberSequenceRO(recurse, tkh.GetNumbering())
 		diags.Append(d...)
 		obj["numbering"] = val
 	}
 	obj["object_classes"] = types.StringPointerValue(tkh.GetObjectClasses())
+	{
+		val, d := tkhToTFObjectRSRODirectoryAccountDirectoryPrimerRO(recurse, tkh.GetOidcDirectory())
+		diags.Append(d...)
+		obj["oidc_directory"] = val
+	}
+	obj["port"] = types.Int64PointerValue(int32PToInt64P(tkh.GetPort()))
 	obj["sam_account_name_scheme"] = stringerToTF(tkh.GetSamAccountNameScheme())
 	obj["ssh_public_key_support"] = stringerToTF(tkh.GetSshPublicKeySupport())
+	obj["tls"] = stringerToTF(tkh.GetTls())
+	{
+		val, d := tkhToTFObjectRSROCertificateCertificatePrimerRO(recurse, tkh.GetTrustedCertificate())
+		diags.Append(d...)
+		obj["trusted_certificate"] = val
+	}
 
 	objVal, d := types.ObjectValue(attrs, obj)
 	diags.Append(d...)
@@ -7058,7 +7121,10 @@ func tkhToTFObjectRSROProvisioningProvisionedSCIMRO(recurse bool, tkh keyhubmode
 	obj["custom_header_value"] = types.StringPointerValue(tkh.GetCustomHeaderValue())
 	obj["external_id_supported"] = types.BoolPointerValue(tkh.GetExternalIdSupported())
 	obj["filter_active_users_supported"] = types.BoolPointerValue(tkh.GetFilterActiveUsersSupported())
+	obj["filter_group_members_supported"] = types.BoolPointerValue(tkh.GetFilterGroupMembersSupported())
+	obj["group_members_in_list_response"] = types.BoolPointerValue(tkh.GetGroupMembersInListResponse())
 	obj["groups_supported"] = types.BoolPointerValue(tkh.GetGroupsSupported())
+	obj["lower_case_filter_comparators"] = types.BoolPointerValue(tkh.GetLowerCaseFilterComparators())
 	obj["page_size"] = types.Int64PointerValue(int32PToInt64P(tkh.GetPageSize()))
 	obj["password_supported"] = types.BoolPointerValue(tkh.GetPasswordSupported())
 	obj["update_strategy"] = stringerToTF(tkh.GetUpdateStrategy())
@@ -8154,6 +8220,7 @@ func tkhToTFObjectRSROVaultVaultRecordRO(recurse bool, tkh keyhubmodel.VaultVaul
 		obj["permissions"] = val
 	}
 	obj["color"] = stringerToTF(tkh.GetColor())
+	obj["last_read_at"] = timePointerToTF(tkh.GetLastReadAt())
 	obj["name"] = types.StringPointerValue(tkh.GetName())
 	obj["share_end_time"] = timePointerToTF(tkh.GetShareEndTime())
 	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
@@ -8212,6 +8279,7 @@ func tkhToTFObjectRSVaultVaultRecordPrimer(recurse bool, tkh keyhubmodel.VaultVa
 		obj["permissions"] = val
 	}
 	obj["color"] = stringerToTF(tkh.GetColor())
+	obj["last_read_at"] = timePointerToTF(tkh.GetLastReadAt())
 	obj["name"] = types.StringPointerValue(tkh.GetName())
 	obj["share_end_time"] = timePointerToTF(tkh.GetShareEndTime())
 	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())
@@ -8255,6 +8323,7 @@ func tkhToTFObjectRSROVaultVaultRecordPrimerRO(recurse bool, tkh keyhubmodel.Vau
 		obj["permissions"] = val
 	}
 	obj["color"] = stringerToTF(tkh.GetColor())
+	obj["last_read_at"] = timePointerToTF(tkh.GetLastReadAt())
 	obj["name"] = types.StringPointerValue(tkh.GetName())
 	obj["share_end_time"] = timePointerToTF(tkh.GetShareEndTime())
 	obj["uuid"] = types.StringPointerValue(tkh.GetUuid())

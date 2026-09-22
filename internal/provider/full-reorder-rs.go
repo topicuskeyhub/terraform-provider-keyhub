@@ -1463,6 +1463,21 @@ func reorderGroupGroupPrimerLinkableWrapperRO(state basetypes.ObjectValue, prior
 	return types.ObjectValueMust(attrs, obj)
 }
 
+func reorderGroupGroupPrimerLinkableWrapperWithCount(state basetypes.ObjectValue, priorState basetypes.ObjectValue, recurse bool) basetypes.ObjectValue {
+	if state.IsNull() || state.IsUnknown() || priorState.IsNull() || priorState.IsUnknown() {
+		return state
+	}
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = groupGroupPrimerLinkableWrapperWithCountAttrTypesRSRecurse
+	} else {
+		attrs = groupGroupPrimerLinkableWrapperWithCountAttrTypesRS
+	}
+	obj := filterAttributes(state.Attributes(), attrs)
+
+	return types.ObjectValueMust(attrs, obj)
+}
+
 func reorderGroupGroupPrimerLinkableWrapperWithCountRO(state basetypes.ObjectValue, priorState basetypes.ObjectValue, recurse bool) basetypes.ObjectValue {
 	if state.IsNull() || state.IsUnknown() || priorState.IsNull() || priorState.IsUnknown() {
 		return state
@@ -1598,6 +1613,20 @@ func reorderGroupGroup_additionalObjectsRO(state basetypes.ObjectValue, priorSta
 				"value",
 			}, reorderClientOAuth2ClientPermissionWithClientRO)
 			obj["client_permissions"] = types.ListValueMust(attrs["client_permissions"].(types.ListType).ElemType, newAttrState)
+		}
+	}
+	{
+		attrState := state.Attributes()["excluded_groups"]
+		attrPriorState := priorState.Attributes()["excluded_groups"]
+		if attrState.IsNull() || attrState.IsUnknown() || attrPriorState.IsNull() || attrPriorState.IsUnknown() {
+			obj["excluded_groups"] = attrState
+		} else {
+			attrStateEl := (attrState.(types.List)).Elements()
+			attrPriorStateEl := (attrPriorState.(types.List)).Elements()
+			newAttrState := reorderList(attrStateEl, attrPriorStateEl, recurse, []string{
+				"name",
+			}, reorderGroupGroupPrimerRO)
+			obj["excluded_groups"] = types.ListValueMust(attrs["excluded_groups"].(types.ListType).ElemType, newAttrState)
 		}
 	}
 
@@ -3062,6 +3091,7 @@ func reorderProvisioningProvisionedAzureSyncLDAPDirectoryRO(state basetypes.Obje
 	}
 	obj := filterAttributes(state.Attributes(), attrs)
 	obj["directory"] = reorderDirectoryAccountDirectoryPrimerRO(state.Attributes()["directory"].(types.Object), priorState.Attributes()["directory"].(types.Object), false)
+	obj["oidc_directory"] = reorderDirectoryAccountDirectoryPrimerRO(state.Attributes()["oidc_directory"].(types.Object), priorState.Attributes()["oidc_directory"].(types.Object), false)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -3128,9 +3158,13 @@ func reorderProvisioningProvisionedLDAPDirectoryRO(state basetypes.ObjectValue, 
 	obj := filterAttributes(state.Attributes(), attrs)
 	obj["account_matching_attribute"] = reorderIdentityAccountAttributeDefinitionRO(state.Attributes()["account_matching_attribute"].(types.Object), priorState.Attributes()["account_matching_attribute"].(types.Object), false)
 	// Reordering not supported for attributes with type List
+	obj["client_certificate"] = reorderCertificateCertificatePrimerRO(state.Attributes()["client_certificate"].(types.Object), priorState.Attributes()["client_certificate"].(types.Object), false)
 	obj["directory"] = reorderDirectoryAccountDirectoryPrimerRO(state.Attributes()["directory"].(types.Object), priorState.Attributes()["directory"].(types.Object), false)
+	obj["failover_trusted_certificate"] = reorderCertificateCertificatePrimerRO(state.Attributes()["failover_trusted_certificate"].(types.Object), priorState.Attributes()["failover_trusted_certificate"].(types.Object), false)
 	obj["gid_numbering"] = reorderProvisioningProvisionNumberSequenceRO(state.Attributes()["gid_numbering"].(types.Object), priorState.Attributes()["gid_numbering"].(types.Object), false)
 	obj["numbering"] = reorderProvisioningProvisionNumberSequenceRO(state.Attributes()["numbering"].(types.Object), priorState.Attributes()["numbering"].(types.Object), false)
+	obj["oidc_directory"] = reorderDirectoryAccountDirectoryPrimerRO(state.Attributes()["oidc_directory"].(types.Object), priorState.Attributes()["oidc_directory"].(types.Object), false)
+	obj["trusted_certificate"] = reorderCertificateCertificatePrimerRO(state.Attributes()["trusted_certificate"].(types.Object), priorState.Attributes()["trusted_certificate"].(types.Object), false)
 
 	return types.ObjectValueMust(attrs, obj)
 }

@@ -627,6 +627,9 @@ func resourceSchemaAttrsClientApplicationVaultVaultRecord(recurse bool) map[stri
 			),
 		},
 	}
+	schemaAttrs["last_read_at"] = rsschema.StringAttribute{
+		Computed: true,
+	}
 	schemaAttrs["name"] = rsschema.StringAttribute{
 		Required: true,
 		Validators: []validator.String{
@@ -2075,6 +2078,9 @@ func resourceSchemaAttrsDirectoryLDAPDirectoryRO(recurse bool) map[string]rssche
 		Computed: true,
 		Optional: true,
 		Default:  int64default.StaticInt64(0),
+		Validators: []validator.Int64{
+			int64validator.Between(1, 65535),
+		},
 	}
 	schemaAttrs["search_bind_dn"] = rsschema.StringAttribute{
 		Optional: true,
@@ -3251,6 +3257,22 @@ func resourceSchemaAttrsGroupGroupPrimerLinkableWrapperRO(recurse bool) map[stri
 	}
 	return schemaAttrs
 }
+func resourceSchemaAttrsGroupGroupPrimerLinkableWrapperWithCount(recurse bool) map[string]rsschema.Attribute {
+	schemaAttrs := make(map[string]rsschema.Attribute)
+	schemaAttrs["count"] = rsschema.Int64Attribute{
+		Computed: true,
+	}
+	schemaAttrs["items"] = rsschema.SetAttribute{
+		ElementType: types.StringType,
+		Optional:    true,
+		Validators: []validator.Set{
+			setvalidator.ValueStringsAre(
+				stringvalidator.RegexMatches(regexp.MustCompile("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"), "The value must be a valid UUID"),
+			),
+		},
+	}
+	return schemaAttrs
+}
 func resourceSchemaAttrsGroupGroupPrimerLinkableWrapperWithCountRO(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	schemaAttrs["count"] = rsschema.Int64Attribute{
@@ -3324,9 +3346,9 @@ func resourceSchemaAttrsGroupGroup_additionalObjects(recurse bool) map[string]rs
 	}
 
 	{
-		attr := resetListNestedAttributeFlags(resourceSchemaAttrsGroupGroupPrimerLinkableWrapperWithCountRO(recurse)["items"].(rsschema.ListNestedAttribute))
-		attr.Computed = true
-		schemaAttrs["excluded_groups"] = attr
+		attr := resetSetAttributeFlags(resourceSchemaAttrsGroupGroupPrimerLinkableWrapperWithCount(recurse)["items"].(rsschema.SetAttribute))
+		attr.Optional = true
+		schemaAttrs["excluded_groups_uuid"] = attr
 	}
 
 	{
@@ -3533,7 +3555,7 @@ func resourceSchemaAttrsGroupGroup_additionalObjectsRO(recurse bool) map[string]
 
 	{
 		attr := resetListNestedAttributeFlags(resourceSchemaAttrsGroupGroupPrimerLinkableWrapperWithCountRO(recurse)["items"].(rsschema.ListNestedAttribute))
-		attr.Computed = true
+		attr.Optional = true
 		schemaAttrs["excluded_groups"] = attr
 	}
 
@@ -3895,6 +3917,9 @@ func resourceSchemaAttrsGroupVaultVaultRecord(recurse bool) map[string]rsschema.
 				"NONE", "GREEN", "RED", "BLUE", "DARK", "PINK_LAVENDER", "CRIMSON_RED", "MIDDLE_YELLOW", "ANDROID_GREEN", "SAGE", "ARTICHOKE",
 			),
 		},
+	}
+	schemaAttrs["last_read_at"] = rsschema.StringAttribute{
+		Computed: true,
 	}
 	schemaAttrs["name"] = rsschema.StringAttribute{
 		Required: true,
@@ -5653,6 +5678,9 @@ func resourceSchemaAttrsProvisioningAbstractProvisionedLDAPRO(recurse bool) map[
 		Computed: true,
 		Optional: true,
 		Default:  int64default.StaticInt64(0),
+		Validators: []validator.Int64{
+			int64validator.Between(1, 65535),
+		},
 	}
 	schemaAttrs["service_account_dn"] = rsschema.StringAttribute{
 		Optional: true,
@@ -6141,21 +6169,29 @@ func resourceSchemaAttrsProvisioningProvisionedAzureOIDCDirectoryRO(recurse bool
 func resourceSchemaAttrsProvisioningProvisionedAzureSyncLDAPDirectoryRO(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	schemaAttrs["client_id"] = rsschema.StringAttribute{
-		Required: true,
+		Optional: true,
 		Validators: []validator.String{
 			stringvalidator.UTF8LengthBetween(0, 255),
 		},
 	}
 	schemaAttrs["client_secret"] = rsschema.StringAttribute{
-		Required:  true,
+		Optional:  true,
 		Sensitive: true,
 	}
 	{
 		attr := rsschema.SingleNestedAttribute{
 			Attributes: resourceSchemaAttrsDirectoryAccountDirectoryPrimerRO(recurse),
 		}
-		attr.Required = true
+		attr.Optional = true
 		schemaAttrs["directory"] = attr
+	}
+
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsDirectoryAccountDirectoryPrimerRO(recurse),
+		}
+		attr.Optional = true
+		schemaAttrs["oidc_directory"] = attr
 	}
 
 	schemaAttrs["tenant"] = rsschema.StringAttribute{
@@ -6266,12 +6302,60 @@ func resourceSchemaAttrsProvisioningProvisionedLDAPDirectoryRO(recurse bool) map
 		},
 		Optional: true,
 	}
+	schemaAttrs["base_dn"] = rsschema.StringAttribute{
+		Optional: true,
+		Validators: []validator.String{
+			stringvalidator.UTF8LengthBetween(0, 255),
+		},
+	}
+	schemaAttrs["bind_dn"] = rsschema.StringAttribute{
+		Optional: true,
+		Validators: []validator.String{
+			stringvalidator.UTF8LengthBetween(0, 255),
+		},
+	}
+	schemaAttrs["bind_password"] = rsschema.StringAttribute{
+		Optional: true,
+		Validators: []validator.String{
+			stringvalidator.UTF8LengthBetween(0, 128),
+		},
+		Sensitive: true,
+	}
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsCertificateCertificatePrimerRO(recurse),
+		}
+		attr.Optional = true
+		schemaAttrs["client_certificate"] = attr
+	}
+
+	schemaAttrs["dialect"] = rsschema.StringAttribute{
+		Computed: true,
+		Optional: true,
+		Default:  stringdefault.StaticString("ACTIVE_DIRECTORY"),
+		Validators: []validator.String{
+			stringvalidator.OneOf(
+				"ACTIVE_DIRECTORY", "OPENLDAP",
+			),
+		},
+	}
 	{
 		attr := rsschema.SingleNestedAttribute{
 			Attributes: resourceSchemaAttrsDirectoryAccountDirectoryPrimerRO(recurse),
 		}
-		attr.Required = true
+		attr.Optional = true
 		schemaAttrs["directory"] = attr
+	}
+
+	schemaAttrs["failover_host"] = rsschema.StringAttribute{
+		Optional: true,
+	}
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsCertificateCertificatePrimerRO(recurse),
+		}
+		attr.Optional = true
+		schemaAttrs["failover_trusted_certificate"] = attr
 	}
 
 	schemaAttrs["gid"] = rsschema.Int64Attribute{
@@ -6303,6 +6387,12 @@ func resourceSchemaAttrsProvisioningProvisionedLDAPDirectoryRO(recurse bool) map
 			),
 		},
 	}
+	schemaAttrs["host"] = rsschema.StringAttribute{
+		Optional: true,
+		Validators: []validator.String{
+			stringvalidator.UTF8LengthBetween(0, 255),
+		},
+	}
 	{
 		attr := rsschema.SingleNestedAttribute{
 			Attributes: resourceSchemaAttrsProvisioningProvisionNumberSequenceRO(recurse),
@@ -6315,6 +6405,22 @@ func resourceSchemaAttrsProvisioningProvisionedLDAPDirectoryRO(recurse bool) map
 		Optional: true,
 		Validators: []validator.String{
 			stringvalidator.UTF8LengthBetween(0, 255),
+		},
+	}
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsDirectoryAccountDirectoryPrimerRO(recurse),
+		}
+		attr.Optional = true
+		schemaAttrs["oidc_directory"] = attr
+	}
+
+	schemaAttrs["port"] = rsschema.Int64Attribute{
+		Computed: true,
+		Optional: true,
+		Default:  int64default.StaticInt64(0),
+		Validators: []validator.Int64{
+			int64validator.Between(0, 65535),
 		},
 	}
 	schemaAttrs["sam_account_name_scheme"] = rsschema.StringAttribute{
@@ -6337,6 +6443,22 @@ func resourceSchemaAttrsProvisioningProvisionedLDAPDirectoryRO(recurse bool) map
 			),
 		},
 	}
+	schemaAttrs["tls"] = rsschema.StringAttribute{
+		Optional: true,
+		Validators: []validator.String{
+			stringvalidator.OneOf(
+				"VERIFIED_PINNED", "VERIFIED", "SECURE_PINNED", "SECURE", "ENCRYPTED", "UNSECURE",
+			),
+		},
+	}
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsCertificateCertificatePrimerRO(recurse),
+		}
+		attr.Optional = true
+		schemaAttrs["trusted_certificate"] = attr
+	}
+
 	return schemaAttrs
 }
 func resourceSchemaAttrsProvisioningProvisionedNamespaceRO(recurse bool) map[string]rsschema.Attribute {
@@ -6423,7 +6545,22 @@ func resourceSchemaAttrsProvisioningProvisionedSCIMRO(recurse bool) map[string]r
 		Optional: true,
 		Default:  booldefault.StaticBool(true),
 	}
+	schemaAttrs["filter_group_members_supported"] = rsschema.BoolAttribute{
+		Computed: true,
+		Optional: true,
+		Default:  booldefault.StaticBool(true),
+	}
+	schemaAttrs["group_members_in_list_response"] = rsschema.BoolAttribute{
+		Computed: true,
+		Optional: true,
+		Default:  booldefault.StaticBool(false),
+	}
 	schemaAttrs["groups_supported"] = rsschema.BoolAttribute{
+		Computed: true,
+		Optional: true,
+		Default:  booldefault.StaticBool(false),
+	}
+	schemaAttrs["lower_case_filter_comparators"] = rsschema.BoolAttribute{
 		Computed: true,
 		Optional: true,
 		Default:  booldefault.StaticBool(false),
@@ -6465,7 +6602,7 @@ func resourceSchemaAttrsProvisioningProvisionedSCIMRO(recurse bool) map[string]r
 		Default:  stringdefault.StaticString("DEFAULT"),
 		Validators: []validator.String{
 			stringvalidator.OneOf(
-				"DEFAULT", "AWS", "KEYSTONE", "TOPICUS_KEYHUB_CONNECTOR", "CUSTOM",
+				"DEFAULT", "ATLASSIAN", "AWS", "KEYSTONE", "TOPICUS_KEYHUB_CONNECTOR", "CUSTOM",
 			),
 		},
 	}
@@ -7563,6 +7700,9 @@ func resourceSchemaAttrsVaultVaultRecordRO(recurse bool) map[string]rsschema.Att
 			),
 		},
 	}
+	schemaAttrs["last_read_at"] = rsschema.StringAttribute{
+		Computed: true,
+	}
 	schemaAttrs["name"] = rsschema.StringAttribute{
 		Required: true,
 		Validators: []validator.String{
@@ -7642,6 +7782,9 @@ func resourceSchemaAttrsVaultVaultRecordPrimer(recurse bool) map[string]rsschema
 			),
 		},
 	}
+	schemaAttrs["last_read_at"] = rsschema.StringAttribute{
+		Computed: true,
+	}
 	schemaAttrs["name"] = rsschema.StringAttribute{
 		Required: true,
 		Validators: []validator.String{
@@ -7683,6 +7826,9 @@ func resourceSchemaAttrsVaultVaultRecordPrimerRO(recurse bool) map[string]rssche
 				"NONE", "GREEN", "RED", "BLUE", "DARK", "PINK_LAVENDER", "CRIMSON_RED", "MIDDLE_YELLOW", "ANDROID_GREEN", "SAGE", "ARTICHOKE",
 			),
 		},
+	}
+	schemaAttrs["last_read_at"] = rsschema.StringAttribute{
+		Computed: true,
 	}
 	schemaAttrs["name"] = rsschema.StringAttribute{
 		Required: true,

@@ -920,7 +920,7 @@ func objectAttrsTypeDSGroupGroup(recurse bool) map[string]attr.Type {
 		objectAttrs["client_permissions"] = objectAttrsTypeDSClientOAuth2ClientPermissionWithClientLinkableWrapper(false)["items"]
 		objectAttrs["clients"] = objectAttrsTypeDSROGroupGroupClientLinkableWrapperRO(false)["items"]
 		objectAttrs["content_administered_systems"] = objectAttrsTypeDSROProvisioningProvisionedSystemLinkableWrapperRO(false)["items"]
-		objectAttrs["excluded_groups"] = objectAttrsTypeDSROGroupGroupPrimerLinkableWrapperWithCountRO(false)["items"]
+		objectAttrs["excluded_groups"] = objectAttrsTypeDSGroupGroupPrimerLinkableWrapperWithCount(false)["items"]
 		objectAttrs["global_roles"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROGroupGroupGlobalRoleInfoRO(false)}
 		objectAttrs["group_access_info"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROGroupGroupAccessInfoRO(false)}
 		objectAttrs["groupauditinginfo"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROGroupGroupAuditingInfoRO(false)}
@@ -1366,6 +1366,13 @@ func objectAttrsTypeDSROGroupGroupPrimerLinkableWrapperRO(recurse bool) map[stri
 	return objectAttrs
 }
 
+func objectAttrsTypeDSGroupGroupPrimerLinkableWrapperWithCount(recurse bool) map[string]attr.Type {
+	objectAttrs := make(map[string]attr.Type)
+	objectAttrs["count"] = types.Int64Type
+	objectAttrs["items"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSGroupGroupPrimer(recurse)}}
+	return objectAttrs
+}
+
 func objectAttrsTypeDSROGroupGroupPrimerLinkableWrapperWithCountRO(recurse bool) map[string]attr.Type {
 	objectAttrs := make(map[string]attr.Type)
 	objectAttrs["count"] = types.Int64Type
@@ -1384,7 +1391,7 @@ func objectAttrsTypeDSGroupGroup_additionalObjects(recurse bool) map[string]attr
 	objectAttrs["client_permissions"] = objectAttrsTypeDSClientOAuth2ClientPermissionWithClientLinkableWrapper(recurse)["items"]
 	objectAttrs["clients"] = objectAttrsTypeDSROGroupGroupClientLinkableWrapperRO(recurse)["items"]
 	objectAttrs["content_administered_systems"] = objectAttrsTypeDSROProvisioningProvisionedSystemLinkableWrapperRO(recurse)["items"]
-	objectAttrs["excluded_groups"] = objectAttrsTypeDSROGroupGroupPrimerLinkableWrapperWithCountRO(recurse)["items"]
+	objectAttrs["excluded_groups"] = objectAttrsTypeDSGroupGroupPrimerLinkableWrapperWithCount(recurse)["items"]
 	objectAttrs["global_roles"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROGroupGroupGlobalRoleInfoRO(recurse)}
 	objectAttrs["group_access_info"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROGroupGroupAccessInfoRO(recurse)}
 	objectAttrs["groupauditinginfo"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROGroupGroupAuditingInfoRO(recurse)}
@@ -2259,6 +2266,7 @@ func objectAttrsTypeDSProvisioningProvisionedAzureSyncLDAPDirectory(recurse bool
 	objectAttrs["client_id"] = types.StringType
 	objectAttrs["client_secret"] = types.StringType
 	objectAttrs["directory"] = types.ObjectType{AttrTypes: objectAttrsTypeDSDirectoryAccountDirectoryPrimer(recurse)}
+	objectAttrs["oidc_directory"] = types.ObjectType{AttrTypes: objectAttrsTypeDSDirectoryAccountDirectoryPrimer(recurse)}
 	objectAttrs["tenant"] = types.StringType
 	return objectAttrs
 }
@@ -2268,6 +2276,7 @@ func objectAttrsTypeDSROProvisioningProvisionedAzureSyncLDAPDirectoryRO(recurse 
 	objectAttrs["client_id"] = types.StringType
 	objectAttrs["client_secret"] = types.StringType
 	objectAttrs["directory"] = types.ObjectType{AttrTypes: objectAttrsTypeDSRODirectoryAccountDirectoryPrimerRO(recurse)}
+	objectAttrs["oidc_directory"] = types.ObjectType{AttrTypes: objectAttrsTypeDSRODirectoryAccountDirectoryPrimerRO(recurse)}
 	objectAttrs["tenant"] = types.StringType
 	return objectAttrs
 }
@@ -2328,15 +2337,27 @@ func objectAttrsTypeDSProvisioningProvisionedLDAPDirectory(recurse bool) map[str
 	objectAttrs["account_matching_attribute_name"] = types.StringType
 	objectAttrs["accounts_writable"] = types.BoolType
 	objectAttrs["attributes"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSMiscAttributeCustomization(recurse)}}
+	objectAttrs["base_dn"] = types.StringType
+	objectAttrs["bind_dn"] = types.StringType
+	objectAttrs["bind_password"] = types.StringType
+	objectAttrs["client_certificate"] = types.ObjectType{AttrTypes: objectAttrsTypeDSCertificateCertificatePrimer(recurse)}
+	objectAttrs["dialect"] = types.StringType
 	objectAttrs["directory"] = types.ObjectType{AttrTypes: objectAttrsTypeDSDirectoryAccountDirectoryPrimer(recurse)}
+	objectAttrs["failover_host"] = types.StringType
+	objectAttrs["failover_trusted_certificate"] = types.ObjectType{AttrTypes: objectAttrsTypeDSCertificateCertificatePrimer(recurse)}
 	objectAttrs["gid"] = types.Int64Type
 	objectAttrs["gid_numbering"] = types.ObjectType{AttrTypes: objectAttrsTypeDSProvisioningProvisionNumberSequence(recurse)}
 	objectAttrs["group_dn"] = types.StringType
 	objectAttrs["hashing_scheme"] = types.StringType
+	objectAttrs["host"] = types.StringType
 	objectAttrs["numbering"] = types.ObjectType{AttrTypes: objectAttrsTypeDSProvisioningProvisionNumberSequence(recurse)}
 	objectAttrs["object_classes"] = types.StringType
+	objectAttrs["oidc_directory"] = types.ObjectType{AttrTypes: objectAttrsTypeDSDirectoryAccountDirectoryPrimer(recurse)}
+	objectAttrs["port"] = types.Int64Type
 	objectAttrs["sam_account_name_scheme"] = types.StringType
 	objectAttrs["ssh_public_key_support"] = types.StringType
+	objectAttrs["tls"] = types.StringType
+	objectAttrs["trusted_certificate"] = types.ObjectType{AttrTypes: objectAttrsTypeDSCertificateCertificatePrimer(recurse)}
 	return objectAttrs
 }
 
@@ -2346,15 +2367,27 @@ func objectAttrsTypeDSROProvisioningProvisionedLDAPDirectoryRO(recurse bool) map
 	objectAttrs["account_matching_attribute_name"] = types.StringType
 	objectAttrs["accounts_writable"] = types.BoolType
 	objectAttrs["attributes"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSROMiscAttributeCustomizationRO(recurse)}}
+	objectAttrs["base_dn"] = types.StringType
+	objectAttrs["bind_dn"] = types.StringType
+	objectAttrs["bind_password"] = types.StringType
+	objectAttrs["client_certificate"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROCertificateCertificatePrimerRO(recurse)}
+	objectAttrs["dialect"] = types.StringType
 	objectAttrs["directory"] = types.ObjectType{AttrTypes: objectAttrsTypeDSRODirectoryAccountDirectoryPrimerRO(recurse)}
+	objectAttrs["failover_host"] = types.StringType
+	objectAttrs["failover_trusted_certificate"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROCertificateCertificatePrimerRO(recurse)}
 	objectAttrs["gid"] = types.Int64Type
 	objectAttrs["gid_numbering"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROProvisioningProvisionNumberSequenceRO(recurse)}
 	objectAttrs["group_dn"] = types.StringType
 	objectAttrs["hashing_scheme"] = types.StringType
+	objectAttrs["host"] = types.StringType
 	objectAttrs["numbering"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROProvisioningProvisionNumberSequenceRO(recurse)}
 	objectAttrs["object_classes"] = types.StringType
+	objectAttrs["oidc_directory"] = types.ObjectType{AttrTypes: objectAttrsTypeDSRODirectoryAccountDirectoryPrimerRO(recurse)}
+	objectAttrs["port"] = types.Int64Type
 	objectAttrs["sam_account_name_scheme"] = types.StringType
 	objectAttrs["ssh_public_key_support"] = types.StringType
+	objectAttrs["tls"] = types.StringType
+	objectAttrs["trusted_certificate"] = types.ObjectType{AttrTypes: objectAttrsTypeDSROCertificateCertificatePrimerRO(recurse)}
 	return objectAttrs
 }
 
@@ -2387,7 +2420,10 @@ func objectAttrsTypeDSProvisioningProvisionedSCIM(recurse bool) map[string]attr.
 	objectAttrs["custom_header_value"] = types.StringType
 	objectAttrs["external_id_supported"] = types.BoolType
 	objectAttrs["filter_active_users_supported"] = types.BoolType
+	objectAttrs["filter_group_members_supported"] = types.BoolType
+	objectAttrs["group_members_in_list_response"] = types.BoolType
 	objectAttrs["groups_supported"] = types.BoolType
+	objectAttrs["lower_case_filter_comparators"] = types.BoolType
 	objectAttrs["page_size"] = types.Int64Type
 	objectAttrs["password_supported"] = types.BoolType
 	objectAttrs["update_strategy"] = types.StringType
@@ -2410,7 +2446,10 @@ func objectAttrsTypeDSROProvisioningProvisionedSCIMRO(recurse bool) map[string]a
 	objectAttrs["custom_header_value"] = types.StringType
 	objectAttrs["external_id_supported"] = types.BoolType
 	objectAttrs["filter_active_users_supported"] = types.BoolType
+	objectAttrs["filter_group_members_supported"] = types.BoolType
+	objectAttrs["group_members_in_list_response"] = types.BoolType
 	objectAttrs["groups_supported"] = types.BoolType
+	objectAttrs["lower_case_filter_comparators"] = types.BoolType
 	objectAttrs["page_size"] = types.Int64Type
 	objectAttrs["password_supported"] = types.BoolType
 	objectAttrs["update_strategy"] = types.StringType
@@ -2817,6 +2856,7 @@ func objectAttrsTypeDSVaultVaultRecord(recurse bool) map[string]attr.Type {
 	objectAttrs["links"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSRestLink(recurse)}}
 	objectAttrs["permissions"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSAuthPermission(recurse)}}
 	objectAttrs["color"] = types.StringType
+	objectAttrs["last_read_at"] = types.StringType
 	objectAttrs["name"] = types.StringType
 	objectAttrs["share_end_time"] = types.StringType
 	objectAttrs["uuid"] = types.StringType
@@ -2850,6 +2890,7 @@ func objectAttrsTypeDSROVaultVaultRecordRO(recurse bool) map[string]attr.Type {
 	objectAttrs["links"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSRORestLinkRO(recurse)}}
 	objectAttrs["permissions"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSROAuthPermissionRO(recurse)}}
 	objectAttrs["color"] = types.StringType
+	objectAttrs["last_read_at"] = types.StringType
 	objectAttrs["name"] = types.StringType
 	objectAttrs["share_end_time"] = types.StringType
 	objectAttrs["uuid"] = types.StringType
@@ -2869,6 +2910,7 @@ func objectAttrsTypeDSVaultVaultRecordPrimer(recurse bool) map[string]attr.Type 
 	objectAttrs["links"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSRestLink(recurse)}}
 	objectAttrs["permissions"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSAuthPermission(recurse)}}
 	objectAttrs["color"] = types.StringType
+	objectAttrs["last_read_at"] = types.StringType
 	objectAttrs["name"] = types.StringType
 	objectAttrs["share_end_time"] = types.StringType
 	objectAttrs["uuid"] = types.StringType
@@ -2880,6 +2922,7 @@ func objectAttrsTypeDSROVaultVaultRecordPrimerRO(recurse bool) map[string]attr.T
 	objectAttrs["links"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSRORestLinkRO(recurse)}}
 	objectAttrs["permissions"] = types.ListType{ElemType: types.ObjectType{AttrTypes: objectAttrsTypeDSROAuthPermissionRO(recurse)}}
 	objectAttrs["color"] = types.StringType
+	objectAttrs["last_read_at"] = types.StringType
 	objectAttrs["name"] = types.StringType
 	objectAttrs["share_end_time"] = types.StringType
 	objectAttrs["uuid"] = types.StringType

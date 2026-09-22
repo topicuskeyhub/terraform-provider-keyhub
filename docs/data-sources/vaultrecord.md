@@ -32,6 +32,7 @@ description: |-
 - `derived` (Boolean)
 - `end_date` (String)
 - `filename` (String)
+- `last_read_at` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--links))
 - `name` (String)
 - `parent` (Attributes) (see [below for nested schema](#nestedatt--parent))
@@ -85,6 +86,7 @@ Read-Only:
 Read-Only:
 
 - `color` (String)
+- `last_read_at` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--parent--links))
 - `name` (String)
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--parent--permissions))
@@ -185,6 +187,7 @@ Read-Only:
 Read-Only:
 
 - `color` (String)
+- `last_read_at` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--shares--links))
 - `name` (String)
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--shares--permissions))
@@ -388,6 +391,7 @@ Read-Only:
 Read-Only:
 
 - `color` (String)
+- `last_read_at` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--tile--vault_record_launchpad_tile--vault_record--links))
 - `name` (String)
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--tile--vault_record_launchpad_tile--vault_record--permissions))

@@ -13,7 +13,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
-	"github.com/sanity-io/litter"
 	keyhubmodels "github.com/topicuskeyhub/sdk-go/models"
 	keyhubreq "github.com/topicuskeyhub/sdk-go/serviceaccount"
 )
@@ -71,17 +70,11 @@ func (r *serviceaccountResource) Create(ctx context.Context, req resource.Create
 		return
 	}
 
-	litter.Config.HidePrivateFields = false
-
-	tflog.Trace(ctx, "planData: "+litter.Sdump(planData))
-
 	var configData serviceaccountServiceAccountDataRS
 	resp.Diagnostics.Append(req.Config.Get(ctx, &configData)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
-
-	tflog.Trace(ctx, "configData: "+litter.Sdump(configData))
 
 	ctx = context.WithValue(ctx, keyHubClientKey, r.providerData.Client)
 	planValues, diags := types.ObjectValueFrom(ctx, serviceaccountServiceAccountAttrTypesRSRecurse, planData)
