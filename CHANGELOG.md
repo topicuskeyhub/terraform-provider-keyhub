@@ -1,6 +1,6 @@
 ## 2.51.0
 * Upgrade API to Topicus KeyHub version 51
-* Prevent logging sensitive values
+* Prevent logging sensitive values (reported by kta1kri)
 
 ## 2.50.0
 * Upgrade API to Topicus KeyHub version 50
