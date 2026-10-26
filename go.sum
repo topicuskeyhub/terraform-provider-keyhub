@@ -146,8 +146,8 @@ github.com/mattn/go-isatty v0.0.24 h1:tGZZoVgT/KiqK1c8ocVLeDS8BSWMRd47J3Lbz7vsRe
 github.com/mattn/go-isatty v0.0.24/go.mod h1:nMCL3Zebbrt45jsMDgnfIwz6ydEQApk5oEI3HqDio6A=
 github.com/mattn/go-runewidth v0.0.16 h1:E5ScNMtiwvlvB5paMFdw9p4kSQzbXFikJ5SQO6TULQc=
 github.com/mattn/go-runewidth v0.0.16/go.mod h1:Jdepj2loyihRzMpdS35Xk/zdY8IAYHsh153qUoGf23w=
-github.com/microsoft/kiota-abstractions-go v1.11.3 h1:XSbbT2Vo5jbUxcPGyaCwt6hyFBI1aKB/b21PwduKtac=
-github.com/microsoft/kiota-abstractions-go v1.11.3/go.mod h1:/F3nXKnU9udY8ZQ1A8FFgr5OoBXlruUGZ3jgrBCQ0tc=
+github.com/microsoft/kiota-abstractions-go v1.11.4 h1:zYWRDtOrOYwp56UIkMR5B6703wYXlsKiBZYJlHJJpRI=
+github.com/microsoft/kiota-abstractions-go v1.11.4/go.mod h1:/F3nXKnU9udY8ZQ1A8FFgr5OoBXlruUGZ3jgrBCQ0tc=
 github.com/microsoft/kiota-http-go v1.5.6 h1:KBdk7sxWYXZnRRExLjIcNt4I7LoOfh/XQJWWid4zBKE=
 github.com/microsoft/kiota-http-go v1.5.6/go.mod h1:bpJkXfBAcnmiXRg03GXdnb/vF3Sqk3+EgLvXXjmzzQM=
 github.com/microsoft/kiota-serialization-json-go v1.1.4 h1:XAhsBjxiunPgsPLLHEbuvAe81Q3wD1pNOE22Dq2CD3k=
