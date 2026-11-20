@@ -1926,6 +1926,143 @@ func reorderIdentityAccountAttributeRule_additionalObjectsRO(state basetypes.Obj
 	return types.ObjectValueMust(attrs, obj)
 }
 
+func reorderItsmItsmSystemRO(state basetypes.ObjectValue, priorState basetypes.ObjectValue, recurse bool) basetypes.ObjectValue {
+	if state.IsNull() || state.IsUnknown() || priorState.IsNull() || priorState.IsUnknown() {
+		return state
+	}
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = itsmItsmSystemAttrTypesRSRORecurse
+	} else {
+		attrs = itsmItsmSystemAttrTypesRSRO
+	}
+	obj := filterAttributes(state.Attributes(), attrs)
+	if recurse {
+	}
+	if recurse {
+		maps.Copy(obj, reorderItsmItsmSystem_additionalObjectsRO(state, priorState, false).Attributes())
+	}
+	obj["organizational_unit"] = reorderOrganizationOrganizationalUnitPrimerRO(state.Attributes()["organizational_unit"].(types.Object), priorState.Attributes()["organizational_unit"].(types.Object), false)
+	obj["owner"] = reorderGroupGroupPrimerRO(state.Attributes()["owner"].(types.Object), priorState.Attributes()["owner"].(types.Object), false)
+	obj["technical_administrator"] = reorderGroupGroupPrimerRO(state.Attributes()["technical_administrator"].(types.Object), priorState.Attributes()["technical_administrator"].(types.Object), false)
+	obj["trusted_certificate"] = reorderCertificateCertificatePrimerRO(state.Attributes()["trusted_certificate"].(types.Object), priorState.Attributes()["trusted_certificate"].(types.Object), false)
+
+	return types.ObjectValueMust(attrs, obj)
+}
+
+func reorderItsmItsmSystemLinkableWrapperRO(state basetypes.ObjectValue, priorState basetypes.ObjectValue, recurse bool) basetypes.ObjectValue {
+	if state.IsNull() || state.IsUnknown() || priorState.IsNull() || priorState.IsUnknown() {
+		return state
+	}
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = itsmItsmSystemLinkableWrapperAttrTypesRSRORecurse
+	} else {
+		attrs = itsmItsmSystemLinkableWrapperAttrTypesRSRO
+	}
+	obj := filterAttributes(state.Attributes(), attrs)
+	// Reordering not supported for items with type List
+
+	return types.ObjectValueMust(attrs, obj)
+}
+
+func reorderItsmItsmSystemPrimerRO(state basetypes.ObjectValue, priorState basetypes.ObjectValue, recurse bool) basetypes.ObjectValue {
+	if state.IsNull() || state.IsUnknown() || priorState.IsNull() || priorState.IsUnknown() {
+		return state
+	}
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = itsmItsmSystemPrimerAttrTypesRSRORecurse
+	} else {
+		attrs = itsmItsmSystemPrimerAttrTypesRSRO
+	}
+	obj := filterAttributes(state.Attributes(), attrs)
+	obj["organizational_unit"] = reorderOrganizationOrganizationalUnitPrimerRO(state.Attributes()["organizational_unit"].(types.Object), priorState.Attributes()["organizational_unit"].(types.Object), false)
+
+	return types.ObjectValueMust(attrs, obj)
+}
+
+func reorderItsmItsmSystem_additionalObjectsRO(state basetypes.ObjectValue, priorState basetypes.ObjectValue, recurse bool) basetypes.ObjectValue {
+	if state.IsNull() || state.IsUnknown() || priorState.IsNull() || priorState.IsUnknown() {
+		return state
+	}
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = itsmItsmSystem_additionalObjectsAttrTypesRSRORecurse
+	} else {
+		attrs = itsmItsmSystem_additionalObjectsAttrTypesRSRO
+	}
+	obj := filterAttributes(state.Attributes(), attrs)
+
+	return types.ObjectValueMust(attrs, obj)
+}
+
+func reorderItsmItsmWorkflowTypeRO(state basetypes.ObjectValue, priorState basetypes.ObjectValue, recurse bool) basetypes.ObjectValue {
+	if state.IsNull() || state.IsUnknown() || priorState.IsNull() || priorState.IsUnknown() {
+		return state
+	}
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = itsmItsmWorkflowTypeAttrTypesRSRORecurse
+	} else {
+		attrs = itsmItsmWorkflowTypeAttrTypesRSRO
+	}
+	obj := filterAttributes(state.Attributes(), attrs)
+	if recurse {
+	}
+	if recurse {
+		maps.Copy(obj, reorderItsmItsmWorkflowType_additionalObjectsRO(state, priorState, false).Attributes())
+	}
+
+	return types.ObjectValueMust(attrs, obj)
+}
+
+func reorderItsmItsmWorkflowTypeLinkableWrapperRO(state basetypes.ObjectValue, priorState basetypes.ObjectValue, recurse bool) basetypes.ObjectValue {
+	if state.IsNull() || state.IsUnknown() || priorState.IsNull() || priorState.IsUnknown() {
+		return state
+	}
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = itsmItsmWorkflowTypeLinkableWrapperAttrTypesRSRORecurse
+	} else {
+		attrs = itsmItsmWorkflowTypeLinkableWrapperAttrTypesRSRO
+	}
+	obj := filterAttributes(state.Attributes(), attrs)
+	// Reordering not supported for items with type List
+
+	return types.ObjectValueMust(attrs, obj)
+}
+
+func reorderItsmItsmWorkflowTypePrimerRO(state basetypes.ObjectValue, priorState basetypes.ObjectValue, recurse bool) basetypes.ObjectValue {
+	if state.IsNull() || state.IsUnknown() || priorState.IsNull() || priorState.IsUnknown() {
+		return state
+	}
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = itsmItsmWorkflowTypePrimerAttrTypesRSRORecurse
+	} else {
+		attrs = itsmItsmWorkflowTypePrimerAttrTypesRSRO
+	}
+	obj := filterAttributes(state.Attributes(), attrs)
+
+	return types.ObjectValueMust(attrs, obj)
+}
+
+func reorderItsmItsmWorkflowType_additionalObjectsRO(state basetypes.ObjectValue, priorState basetypes.ObjectValue, recurse bool) basetypes.ObjectValue {
+	if state.IsNull() || state.IsUnknown() || priorState.IsNull() || priorState.IsUnknown() {
+		return state
+	}
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = itsmItsmWorkflowType_additionalObjectsAttrTypesRSRORecurse
+	} else {
+		attrs = itsmItsmWorkflowType_additionalObjectsAttrTypesRSRO
+	}
+	obj := filterAttributes(state.Attributes(), attrs)
+
+	return types.ObjectValueMust(attrs, obj)
+}
+
 func reorderLaunchpadLaunchpadTile(state basetypes.ObjectValue, priorState basetypes.ObjectValue, recurse bool) basetypes.ObjectValue {
 	if state.IsNull() || state.IsUnknown() || priorState.IsNull() || priorState.IsUnknown() {
 		return state
@@ -2567,6 +2704,57 @@ func reorderProfileAccessProfileGroup_additionalObjectsRO(state basetypes.Object
 	return types.ObjectValueMust(attrs, obj)
 }
 
+func reorderProfileAccessProfileItsmWorkflowTypeRO(state basetypes.ObjectValue, priorState basetypes.ObjectValue, recurse bool) basetypes.ObjectValue {
+	if state.IsNull() || state.IsUnknown() || priorState.IsNull() || priorState.IsUnknown() {
+		return state
+	}
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = profileAccessProfileItsmWorkflowTypeAttrTypesRSRORecurse
+	} else {
+		attrs = profileAccessProfileItsmWorkflowTypeAttrTypesRSRO
+	}
+	obj := filterAttributes(state.Attributes(), attrs)
+	if recurse {
+	}
+	if recurse {
+		maps.Copy(obj, reorderProfileAccessProfileItsmWorkflowType_additionalObjectsRO(state, priorState, false).Attributes())
+	}
+
+	return types.ObjectValueMust(attrs, obj)
+}
+
+func reorderProfileAccessProfileItsmWorkflowTypeLinkableWrapperRO(state basetypes.ObjectValue, priorState basetypes.ObjectValue, recurse bool) basetypes.ObjectValue {
+	if state.IsNull() || state.IsUnknown() || priorState.IsNull() || priorState.IsUnknown() {
+		return state
+	}
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = profileAccessProfileItsmWorkflowTypeLinkableWrapperAttrTypesRSRORecurse
+	} else {
+		attrs = profileAccessProfileItsmWorkflowTypeLinkableWrapperAttrTypesRSRO
+	}
+	obj := filterAttributes(state.Attributes(), attrs)
+	// Reordering not supported for items with type List
+
+	return types.ObjectValueMust(attrs, obj)
+}
+
+func reorderProfileAccessProfileItsmWorkflowType_additionalObjectsRO(state basetypes.ObjectValue, priorState basetypes.ObjectValue, recurse bool) basetypes.ObjectValue {
+	if state.IsNull() || state.IsUnknown() || priorState.IsNull() || priorState.IsUnknown() {
+		return state
+	}
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = profileAccessProfileItsmWorkflowType_additionalObjectsAttrTypesRSRORecurse
+	} else {
+		attrs = profileAccessProfileItsmWorkflowType_additionalObjectsAttrTypesRSRO
+	}
+	obj := filterAttributes(state.Attributes(), attrs)
+
+	return types.ObjectValueMust(attrs, obj)
+}
+
 func reorderProfileAccessProfileLinkableWrapperRO(state basetypes.ObjectValue, priorState basetypes.ObjectValue, recurse bool) basetypes.ObjectValue {
 	if state.IsNull() || state.IsUnknown() || priorState.IsNull() || priorState.IsUnknown() {
 		return state
@@ -3197,6 +3385,7 @@ func reorderProvisioningProvisionedSCIMRO(state basetypes.ObjectValue, priorStat
 	}
 	obj := filterAttributes(state.Attributes(), attrs)
 	// Reordering not supported for attributes with type List
+	obj["trusted_certificate"] = reorderCertificateCertificatePrimerRO(state.Attributes()["trusted_certificate"].(types.Object), priorState.Attributes()["trusted_certificate"].(types.Object), false)
 
 	return types.ObjectValueMust(attrs, obj)
 }
@@ -3670,6 +3859,37 @@ func reorderVaultVaultRecordPrimerLinkableWrapperRO(state basetypes.ObjectValue,
 	}
 	obj := filterAttributes(state.Attributes(), attrs)
 	// Reordering not supported for items with type List
+
+	return types.ObjectValueMust(attrs, obj)
+}
+
+func reorderVaultVaultRecordSecretHistoryRO(state basetypes.ObjectValue, priorState basetypes.ObjectValue, recurse bool) basetypes.ObjectValue {
+	if state.IsNull() || state.IsUnknown() || priorState.IsNull() || priorState.IsUnknown() {
+		return state
+	}
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = vaultVaultRecordSecretHistoryAttrTypesRSRORecurse
+	} else {
+		attrs = vaultVaultRecordSecretHistoryAttrTypesRSRO
+	}
+	obj := filterAttributes(state.Attributes(), attrs)
+	// Reordering not supported for versions with type List
+
+	return types.ObjectValueMust(attrs, obj)
+}
+
+func reorderVaultVaultRecordSecretVersionRO(state basetypes.ObjectValue, priorState basetypes.ObjectValue, recurse bool) basetypes.ObjectValue {
+	if state.IsNull() || state.IsUnknown() || priorState.IsNull() || priorState.IsUnknown() {
+		return state
+	}
+	var attrs map[string]attr.Type
+	if recurse {
+		attrs = vaultVaultRecordSecretVersionAttrTypesRSRORecurse
+	} else {
+		attrs = vaultVaultRecordSecretVersionAttrTypesRSRO
+	}
+	obj := filterAttributes(state.Attributes(), attrs)
 
 	return types.ObjectValueMust(attrs, obj)
 }

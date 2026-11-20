@@ -587,7 +587,7 @@ func resourceSchemaAttrsClientApplicationVaultVaultRecord(recurse bool) map[stri
 			Optional:    true,
 			Validators: []validator.List{
 				listvalidator.ValueStringsAre(stringvalidator.OneOf(
-					"activationStatus", "audit", "parent", "passwordMetadata", "secret", "shareSummary", "shares", "tile", "vaultholder",
+					"activationStatus", "audit", "parent", "passwordMetadata", "secret", "secretHistory", "shareSummary", "shares", "tile", "vaultholder",
 				)),
 			},
 		}
@@ -626,6 +626,9 @@ func resourceSchemaAttrsClientApplicationVaultVaultRecord(recurse bool) map[stri
 				"NONE", "GREEN", "RED", "BLUE", "DARK", "PINK_LAVENDER", "CRIMSON_RED", "MIDDLE_YELLOW", "ANDROID_GREEN", "SAGE", "ARTICHOKE",
 			),
 		},
+	}
+	schemaAttrs["deleted_at"] = rsschema.StringAttribute{
+		Computed: true,
 	}
 	schemaAttrs["last_read_at"] = rsschema.StringAttribute{
 		Computed: true,
@@ -2201,7 +2204,7 @@ func resourceSchemaAttrsGroupGroup(recurse bool) map[string]rsschema.Attribute {
 			Optional:    true,
 			Validators: []validator.List{
 				listvalidator.ValueStringsAre(stringvalidator.OneOf(
-					"accounts", "administeredClients", "administeredSystems", "admins", "audit", "authorizedGroups", "clientPermissions", "clients", "contentAdministeredSystems", "excludedGroups", "globalRoles", "groupAccessInfo", "groupauditinginfo", "groupinfo", "helpdesk", "markers", "myaccount", "mydelegatedaccount", "nestedGroups", "ownedAccessProfiles", "ownedClients", "ownedDirectories", "ownedGroupsOnSystem", "ownedOrganizationalUnits", "ownedSystems", "recentAudits", "requeststatus", "serviceAccounts", "systems", "vault", "webhooks",
+					"accounts", "administeredClients", "administeredItsmSystems", "administeredSystems", "admins", "audit", "authorizedGroups", "clientPermissions", "clients", "contentAdministeredSystems", "excludedGroups", "globalRoles", "groupAccessInfo", "groupauditinginfo", "groupinfo", "helpdesk", "markers", "myaccount", "mydelegatedaccount", "nestedGroups", "ownedAccessProfiles", "ownedClients", "ownedDirectories", "ownedGroupsOnSystem", "ownedItsmSystems", "ownedItsmWorkflowTypes", "ownedOrganizationalUnits", "ownedSystems", "recentAudits", "requeststatus", "serviceAccounts", "systems", "vault", "webhooks",
 				)),
 			},
 		}
@@ -2371,7 +2374,7 @@ func resourceSchemaAttrsGroupGroupRO(recurse bool) map[string]rsschema.Attribute
 			Optional:    true,
 			Validators: []validator.List{
 				listvalidator.ValueStringsAre(stringvalidator.OneOf(
-					"accounts", "administeredClients", "administeredSystems", "admins", "audit", "authorizedGroups", "clientPermissions", "clients", "contentAdministeredSystems", "excludedGroups", "globalRoles", "groupAccessInfo", "groupauditinginfo", "groupinfo", "helpdesk", "markers", "myaccount", "mydelegatedaccount", "nestedGroups", "ownedAccessProfiles", "ownedClients", "ownedDirectories", "ownedGroupsOnSystem", "ownedOrganizationalUnits", "ownedSystems", "recentAudits", "requeststatus", "serviceAccounts", "systems", "vault", "webhooks",
+					"accounts", "administeredClients", "administeredItsmSystems", "administeredSystems", "admins", "audit", "authorizedGroups", "clientPermissions", "clients", "contentAdministeredSystems", "excludedGroups", "globalRoles", "groupAccessInfo", "groupauditinginfo", "groupinfo", "helpdesk", "markers", "myaccount", "mydelegatedaccount", "nestedGroups", "ownedAccessProfiles", "ownedClients", "ownedDirectories", "ownedGroupsOnSystem", "ownedItsmSystems", "ownedItsmWorkflowTypes", "ownedOrganizationalUnits", "ownedSystems", "recentAudits", "requeststatus", "serviceAccounts", "systems", "vault", "webhooks",
 				)),
 			},
 		}
@@ -3301,6 +3304,12 @@ func resourceSchemaAttrsGroupGroup_additionalObjects(recurse bool) map[string]rs
 	}
 
 	{
+		attr := resetListNestedAttributeFlags(resourceSchemaAttrsItsmItsmSystemLinkableWrapperRO(recurse)["items"].(rsschema.ListNestedAttribute))
+		attr.Computed = true
+		schemaAttrs["administered_itsm_systems"] = attr
+	}
+
+	{
 		attr := resetListNestedAttributeFlags(resourceSchemaAttrsProvisioningProvisionedSystemLinkableWrapperRO(recurse)["items"].(rsschema.ListNestedAttribute))
 		attr.Computed = true
 		schemaAttrs["administered_systems"] = attr
@@ -3446,6 +3455,18 @@ func resourceSchemaAttrsGroupGroup_additionalObjects(recurse bool) map[string]rs
 	}
 
 	{
+		attr := resetListNestedAttributeFlags(resourceSchemaAttrsItsmItsmSystemLinkableWrapperRO(recurse)["items"].(rsschema.ListNestedAttribute))
+		attr.Computed = true
+		schemaAttrs["owned_itsm_systems"] = attr
+	}
+
+	{
+		attr := resetListNestedAttributeFlags(resourceSchemaAttrsItsmItsmWorkflowTypeLinkableWrapperRO(recurse)["items"].(rsschema.ListNestedAttribute))
+		attr.Computed = true
+		schemaAttrs["owned_itsm_workflow_types"] = attr
+	}
+
+	{
 		attr := resetListNestedAttributeFlags(resourceSchemaAttrsOrganizationOrganizationalUnitLinkableWrapperRO(recurse)["items"].(rsschema.ListNestedAttribute))
 		attr.Computed = true
 		schemaAttrs["owned_organizational_units"] = attr
@@ -3506,6 +3527,12 @@ func resourceSchemaAttrsGroupGroup_additionalObjectsRO(recurse bool) map[string]
 		attr := resetListNestedAttributeFlags(resourceSchemaAttrsClientClientApplicationLinkableWrapperRO(recurse)["items"].(rsschema.ListNestedAttribute))
 		attr.Computed = true
 		schemaAttrs["administered_clients"] = attr
+	}
+
+	{
+		attr := resetListNestedAttributeFlags(resourceSchemaAttrsItsmItsmSystemLinkableWrapperRO(recurse)["items"].(rsschema.ListNestedAttribute))
+		attr.Computed = true
+		schemaAttrs["administered_itsm_systems"] = attr
 	}
 
 	{
@@ -3651,6 +3678,18 @@ func resourceSchemaAttrsGroupGroup_additionalObjectsRO(recurse bool) map[string]
 		}
 		attr.Computed = true
 		schemaAttrs["owned_groups_on_system"] = attr
+	}
+
+	{
+		attr := resetListNestedAttributeFlags(resourceSchemaAttrsItsmItsmSystemLinkableWrapperRO(recurse)["items"].(rsschema.ListNestedAttribute))
+		attr.Computed = true
+		schemaAttrs["owned_itsm_systems"] = attr
+	}
+
+	{
+		attr := resetListNestedAttributeFlags(resourceSchemaAttrsItsmItsmWorkflowTypeLinkableWrapperRO(recurse)["items"].(rsschema.ListNestedAttribute))
+		attr.Computed = true
+		schemaAttrs["owned_itsm_workflow_types"] = attr
 	}
 
 	{
@@ -3878,7 +3917,7 @@ func resourceSchemaAttrsGroupVaultVaultRecord(recurse bool) map[string]rsschema.
 			Optional:    true,
 			Validators: []validator.List{
 				listvalidator.ValueStringsAre(stringvalidator.OneOf(
-					"activationStatus", "audit", "parent", "passwordMetadata", "secret", "shareSummary", "shares", "tile", "vaultholder",
+					"activationStatus", "audit", "parent", "passwordMetadata", "secret", "secretHistory", "shareSummary", "shares", "tile", "vaultholder",
 				)),
 			},
 		}
@@ -3917,6 +3956,9 @@ func resourceSchemaAttrsGroupVaultVaultRecord(recurse bool) map[string]rsschema.
 				"NONE", "GREEN", "RED", "BLUE", "DARK", "PINK_LAVENDER", "CRIMSON_RED", "MIDDLE_YELLOW", "ANDROID_GREEN", "SAGE", "ARTICHOKE",
 			),
 		},
+	}
+	schemaAttrs["deleted_at"] = rsschema.StringAttribute{
+		Computed: true,
 	}
 	schemaAttrs["last_read_at"] = rsschema.StringAttribute{
 		Computed: true,
@@ -4320,6 +4362,314 @@ func resourceSchemaAttrsIdentityAccountAttributeRuleLinkableWrapperRO(recurse bo
 	return schemaAttrs
 }
 func resourceSchemaAttrsIdentityAccountAttributeRule_additionalObjectsRO(recurse bool) map[string]rsschema.Attribute {
+	schemaAttrs := make(map[string]rsschema.Attribute)
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsAuditInfoRO(recurse),
+		}
+		attr.Computed = true
+		schemaAttrs["audit"] = attr
+	}
+
+	return schemaAttrs
+}
+func resourceSchemaAttrsItsmItsmSystemRO(recurse bool) map[string]rsschema.Attribute {
+	schemaAttrs := make(map[string]rsschema.Attribute)
+	if recurse {
+		schemaAttrs["additional"] = rsschema.ListAttribute{
+			ElementType: types.StringType,
+			Optional:    true,
+			Validators: []validator.List{
+				listvalidator.ValueStringsAre(stringvalidator.OneOf(
+					"audit",
+				)),
+			},
+		}
+	}
+	if recurse {
+		maps.Copy(schemaAttrs, resourceSchemaAttrsItsmItsmSystem_additionalObjectsRO(false))
+
+	}
+	schemaAttrs["links"] = rsschema.ListNestedAttribute{
+		NestedObject: rsschema.NestedAttributeObject{
+			Attributes: resourceSchemaAttrsRestLinkRO(recurse),
+		},
+		Computed:      true,
+		PlanModifiers: []planmodifier.List{listplanmodifier.UseStateForUnknown()},
+	}
+	schemaAttrs["permissions"] = rsschema.ListNestedAttribute{
+		NestedObject: rsschema.NestedAttributeObject{
+			Attributes: resourceSchemaAttrsAuthPermissionRO(recurse),
+		},
+		Computed:      true,
+		PlanModifiers: []planmodifier.List{listplanmodifier.UseStateForUnknown()},
+	}
+	schemaAttrs["active"] = rsschema.BoolAttribute{
+		Computed: true,
+		Optional: true,
+		Default:  booldefault.StaticBool(true),
+	}
+	schemaAttrs["admin_permissions"] = rsschema.BoolAttribute{
+		Computed: true,
+	}
+	schemaAttrs["name"] = rsschema.StringAttribute{
+		Required: true,
+		Validators: []validator.String{
+			stringvalidator.UTF8LengthBetween(0, 255),
+		},
+	}
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsOrganizationOrganizationalUnitPrimerRO(recurse),
+		}
+		attr.Optional = true
+		attr.Computed = true
+		schemaAttrs["organizational_unit"] = attr
+	}
+
+	schemaAttrs["owner_permissions"] = rsschema.BoolAttribute{
+		Computed: true,
+	}
+	schemaAttrs["uuid"] = rsschema.StringAttribute{
+		Computed:      true,
+		PlanModifiers: []planmodifier.String{stringplanmodifier.UseStateForUnknown()},
+	}
+	schemaAttrs["connector_authentication"] = rsschema.StringAttribute{
+		Required:  true,
+		Sensitive: true,
+	}
+	schemaAttrs["connector_configuration"] = rsschema.StringAttribute{
+		Required: true,
+	}
+	schemaAttrs["connector_target_url"] = rsschema.StringAttribute{
+		Required: true,
+		Validators: []validator.String{
+			stringvalidator.UTF8LengthBetween(0, 512),
+		},
+	}
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsGroupGroupPrimerRO(false),
+		}
+		attr.Required = true
+		schemaAttrs["owner"] = attr
+	}
+
+	schemaAttrs["provider"] = rsschema.StringAttribute{
+		Required: true,
+		Validators: []validator.String{
+			stringvalidator.OneOf(
+				"TOPDESK",
+			),
+		},
+	}
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsGroupGroupPrimerRO(false),
+		}
+		attr.Required = true
+		schemaAttrs["technical_administrator"] = attr
+	}
+
+	schemaAttrs["tls"] = rsschema.StringAttribute{
+		Computed: true,
+		Optional: true,
+		Default:  stringdefault.StaticString("SECURE"),
+		Validators: []validator.String{
+			stringvalidator.OneOf(
+				"VERIFIED_PINNED", "VERIFIED", "SECURE_PINNED", "SECURE", "ENCRYPTED", "UNSECURE",
+			),
+		},
+	}
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsCertificateCertificatePrimerRO(false),
+		}
+		attr.Optional = true
+		schemaAttrs["trusted_certificate"] = attr
+	}
+
+	return schemaAttrs
+}
+func resourceSchemaAttrsItsmItsmSystemLinkableWrapperRO(recurse bool) map[string]rsschema.Attribute {
+	schemaAttrs := make(map[string]rsschema.Attribute)
+	schemaAttrs["items"] = rsschema.ListNestedAttribute{
+		NestedObject: rsschema.NestedAttributeObject{
+			Attributes: resourceSchemaAttrsItsmItsmSystemRO(recurse),
+		},
+		Optional: true,
+	}
+	return schemaAttrs
+}
+func resourceSchemaAttrsItsmItsmSystemPrimerRO(recurse bool) map[string]rsschema.Attribute {
+	schemaAttrs := make(map[string]rsschema.Attribute)
+	schemaAttrs["links"] = rsschema.ListNestedAttribute{
+		NestedObject: rsschema.NestedAttributeObject{
+			Attributes: resourceSchemaAttrsRestLinkRO(recurse),
+		},
+		Computed:      true,
+		PlanModifiers: []planmodifier.List{listplanmodifier.UseStateForUnknown()},
+	}
+	schemaAttrs["permissions"] = rsschema.ListNestedAttribute{
+		NestedObject: rsschema.NestedAttributeObject{
+			Attributes: resourceSchemaAttrsAuthPermissionRO(recurse),
+		},
+		Computed:      true,
+		PlanModifiers: []planmodifier.List{listplanmodifier.UseStateForUnknown()},
+	}
+	schemaAttrs["active"] = rsschema.BoolAttribute{
+		Computed: true,
+		Optional: true,
+		Default:  booldefault.StaticBool(true),
+	}
+	schemaAttrs["admin_permissions"] = rsschema.BoolAttribute{
+		Computed: true,
+	}
+	schemaAttrs["name"] = rsschema.StringAttribute{
+		Required: true,
+		Validators: []validator.String{
+			stringvalidator.UTF8LengthBetween(0, 255),
+		},
+	}
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsOrganizationOrganizationalUnitPrimerRO(recurse),
+		}
+		attr.Optional = true
+		attr.Computed = true
+		schemaAttrs["organizational_unit"] = attr
+	}
+
+	schemaAttrs["owner_permissions"] = rsschema.BoolAttribute{
+		Computed: true,
+	}
+	schemaAttrs["uuid"] = rsschema.StringAttribute{
+		Computed:      true,
+		PlanModifiers: []planmodifier.String{stringplanmodifier.UseStateForUnknown()},
+	}
+	return schemaAttrs
+}
+func resourceSchemaAttrsItsmItsmSystem_additionalObjectsRO(recurse bool) map[string]rsschema.Attribute {
+	schemaAttrs := make(map[string]rsschema.Attribute)
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsAuditInfoRO(recurse),
+		}
+		attr.Computed = true
+		schemaAttrs["audit"] = attr
+	}
+
+	return schemaAttrs
+}
+func resourceSchemaAttrsItsmItsmWorkflowTypeRO(recurse bool) map[string]rsschema.Attribute {
+	schemaAttrs := make(map[string]rsschema.Attribute)
+	if recurse {
+		schemaAttrs["additional"] = rsschema.ListAttribute{
+			ElementType: types.StringType,
+			Optional:    true,
+			Validators: []validator.List{
+				listvalidator.ValueStringsAre(stringvalidator.OneOf(
+					"audit",
+				)),
+			},
+		}
+	}
+	if recurse {
+		maps.Copy(schemaAttrs, resourceSchemaAttrsItsmItsmWorkflowType_additionalObjectsRO(false))
+
+	}
+	schemaAttrs["links"] = rsschema.ListNestedAttribute{
+		NestedObject: rsschema.NestedAttributeObject{
+			Attributes: resourceSchemaAttrsRestLinkRO(recurse),
+		},
+		Computed:      true,
+		PlanModifiers: []planmodifier.List{listplanmodifier.UseStateForUnknown()},
+	}
+	schemaAttrs["permissions"] = rsschema.ListNestedAttribute{
+		NestedObject: rsschema.NestedAttributeObject{
+			Attributes: resourceSchemaAttrsAuthPermissionRO(recurse),
+		},
+		Computed:      true,
+		PlanModifiers: []planmodifier.List{listplanmodifier.UseStateForUnknown()},
+	}
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsItsmItsmSystemPrimerRO(recurse),
+		}
+		attr.Computed = true
+		schemaAttrs["itsm_system"] = attr
+	}
+
+	schemaAttrs["name"] = rsschema.StringAttribute{
+		Computed: true,
+	}
+	schemaAttrs["type_id"] = rsschema.StringAttribute{
+		Computed: true,
+	}
+	schemaAttrs["uuid"] = rsschema.StringAttribute{
+		Computed:      true,
+		PlanModifiers: []planmodifier.String{stringplanmodifier.UseStateForUnknown()},
+	}
+	schemaAttrs["missing_since"] = rsschema.StringAttribute{
+		Computed: true,
+	}
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsGroupGroupPrimerRO(false),
+		}
+		attr.Computed = true
+		schemaAttrs["owner"] = attr
+	}
+
+	return schemaAttrs
+}
+func resourceSchemaAttrsItsmItsmWorkflowTypeLinkableWrapperRO(recurse bool) map[string]rsschema.Attribute {
+	schemaAttrs := make(map[string]rsschema.Attribute)
+	schemaAttrs["items"] = rsschema.ListNestedAttribute{
+		NestedObject: rsschema.NestedAttributeObject{
+			Attributes: resourceSchemaAttrsItsmItsmWorkflowTypeRO(recurse),
+		},
+		Optional: true,
+	}
+	return schemaAttrs
+}
+func resourceSchemaAttrsItsmItsmWorkflowTypePrimerRO(recurse bool) map[string]rsschema.Attribute {
+	schemaAttrs := make(map[string]rsschema.Attribute)
+	schemaAttrs["links"] = rsschema.ListNestedAttribute{
+		NestedObject: rsschema.NestedAttributeObject{
+			Attributes: resourceSchemaAttrsRestLinkRO(recurse),
+		},
+		Computed:      true,
+		PlanModifiers: []planmodifier.List{listplanmodifier.UseStateForUnknown()},
+	}
+	schemaAttrs["permissions"] = rsschema.ListNestedAttribute{
+		NestedObject: rsschema.NestedAttributeObject{
+			Attributes: resourceSchemaAttrsAuthPermissionRO(recurse),
+		},
+		Computed:      true,
+		PlanModifiers: []planmodifier.List{listplanmodifier.UseStateForUnknown()},
+	}
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsItsmItsmSystemPrimerRO(recurse),
+		}
+		attr.Computed = true
+		schemaAttrs["itsm_system"] = attr
+	}
+
+	schemaAttrs["name"] = rsschema.StringAttribute{
+		Computed: true,
+	}
+	schemaAttrs["type_id"] = rsschema.StringAttribute{
+		Computed: true,
+	}
+	schemaAttrs["uuid"] = rsschema.StringAttribute{
+		Computed:      true,
+		PlanModifiers: []planmodifier.String{stringplanmodifier.UseStateForUnknown()},
+	}
+	return schemaAttrs
+}
+func resourceSchemaAttrsItsmItsmWorkflowType_additionalObjectsRO(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	{
 		attr := rsschema.SingleNestedAttribute{
@@ -4748,7 +5098,7 @@ func resourceSchemaAttrsNestedProvisioningGroupOnSystem(recurse bool) map[string
 		Required: true,
 		Validators: []validator.String{
 			stringvalidator.OneOf(
-				"POSIX_GROUP", "GROUP_OF_NAMES", "GROUP_OF_UNIQUE_NAMES", "GROUP_GLOBAL_SECURITY", "GROUP_LOCAL_SECURITY", "GROUP_UNIVERSAL_SECURITY", "GROUP_UNKNOWN", "AZURE_ROLE", "AZURE_UNIFIED_GROUP", "AZURE_SECURITY_GROUP", "AZURE_DYNAMIC_UNIFIED_GROUP", "AZURE_DYNAMIC_SECURITY_GROUP", "SCIM", "ACCOUNT_ONLY",
+				"POSIX_GROUP", "GROUP_OF_NAMES", "GROUP_OF_UNIQUE_NAMES", "GROUP_GLOBAL_SECURITY", "GROUP_LOCAL_SECURITY", "GROUP_UNIVERSAL_SECURITY", "GROUP_UNKNOWN", "AZURE_ROLE", "AZURE_UNIFIED_GROUP", "AZURE_SECURITY_GROUP", "AZURE_DYNAMIC_UNIFIED_GROUP", "AZURE_DYNAMIC_SECURITY_GROUP", "SCIM", "ACCOUNT_ONLY", "AZURE_TEAM", "AZURE_DYNAMIC_TEAM",
 			),
 		},
 	}
@@ -5055,7 +5405,7 @@ func resourceSchemaAttrsProfileAccessProfileRO(recurse bool) map[string]rsschema
 			Optional:    true,
 			Validators: []validator.List{
 				listvalidator.ValueStringsAre(stringvalidator.OneOf(
-					"attributeRules", "audit", "clients", "groups", "provisioning",
+					"attributeRules", "audit", "clients", "groups", "itsmWorkflowTypes", "provisioning",
 				)),
 			},
 		}
@@ -5346,6 +5696,79 @@ func resourceSchemaAttrsProfileAccessProfileGroup_additionalObjectsRO(recurse bo
 
 	return schemaAttrs
 }
+func resourceSchemaAttrsProfileAccessProfileItsmWorkflowTypeRO(recurse bool) map[string]rsschema.Attribute {
+	schemaAttrs := make(map[string]rsschema.Attribute)
+	if recurse {
+		schemaAttrs["additional"] = rsschema.ListAttribute{
+			ElementType: types.StringType,
+			Optional:    true,
+			Validators: []validator.List{
+				listvalidator.ValueStringsAre(stringvalidator.OneOf(
+					"audit",
+				)),
+			},
+		}
+	}
+	if recurse {
+		maps.Copy(schemaAttrs, resourceSchemaAttrsProfileAccessProfileItsmWorkflowType_additionalObjectsRO(false))
+
+	}
+	schemaAttrs["links"] = rsschema.ListNestedAttribute{
+		NestedObject: rsschema.NestedAttributeObject{
+			Attributes: resourceSchemaAttrsRestLinkRO(recurse),
+		},
+		Computed:      true,
+		PlanModifiers: []planmodifier.List{listplanmodifier.UseStateForUnknown()},
+	}
+	schemaAttrs["permissions"] = rsschema.ListNestedAttribute{
+		NestedObject: rsschema.NestedAttributeObject{
+			Attributes: resourceSchemaAttrsAuthPermissionRO(recurse),
+		},
+		Computed:      true,
+		PlanModifiers: []planmodifier.List{listplanmodifier.UseStateForUnknown()},
+	}
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsProfileAccessProfilePrimerRO(false),
+		}
+		attr.Computed = true
+		attr.PlanModifiers = []planmodifier.Object{objectplanmodifier.UseStateForUnknown()}
+		schemaAttrs["access_profile"] = attr
+	}
+
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsItsmItsmWorkflowTypeRO(false),
+		}
+		attr.Computed = true
+		attr.PlanModifiers = []planmodifier.Object{objectplanmodifier.UseStateForUnknown()}
+		schemaAttrs["workflow_type"] = attr
+	}
+
+	return schemaAttrs
+}
+func resourceSchemaAttrsProfileAccessProfileItsmWorkflowTypeLinkableWrapperRO(recurse bool) map[string]rsschema.Attribute {
+	schemaAttrs := make(map[string]rsschema.Attribute)
+	schemaAttrs["items"] = rsschema.ListNestedAttribute{
+		NestedObject: rsschema.NestedAttributeObject{
+			Attributes: resourceSchemaAttrsProfileAccessProfileItsmWorkflowTypeRO(recurse),
+		},
+		Optional: true,
+	}
+	return schemaAttrs
+}
+func resourceSchemaAttrsProfileAccessProfileItsmWorkflowType_additionalObjectsRO(recurse bool) map[string]rsschema.Attribute {
+	schemaAttrs := make(map[string]rsschema.Attribute)
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsAuditInfoRO(recurse),
+		}
+		attr.Computed = true
+		schemaAttrs["audit"] = attr
+	}
+
+	return schemaAttrs
+}
 func resourceSchemaAttrsProfileAccessProfileLinkableWrapperRO(recurse bool) map[string]rsschema.Attribute {
 	schemaAttrs := make(map[string]rsschema.Attribute)
 	schemaAttrs["items"] = rsschema.ListNestedAttribute{
@@ -5603,6 +6026,12 @@ func resourceSchemaAttrsProfileAccessProfile_additionalObjectsRO(recurse bool) m
 	}
 
 	{
+		attr := resetListNestedAttributeFlags(resourceSchemaAttrsProfileAccessProfileItsmWorkflowTypeLinkableWrapperRO(recurse)["items"].(rsschema.ListNestedAttribute))
+		attr.Computed = true
+		schemaAttrs["itsm_workflow_types"] = attr
+	}
+
+	{
 		attr := resetListNestedAttributeFlags(resourceSchemaAttrsProfileAccessProfileProvisioningLinkableWrapperRO(recurse)["items"].(rsschema.ListNestedAttribute))
 		attr.Computed = true
 		schemaAttrs["provisioning"] = attr
@@ -5787,7 +6216,7 @@ func resourceSchemaAttrsProvisioningGroupOnSystemRO(recurse bool) map[string]rss
 		Required: true,
 		Validators: []validator.String{
 			stringvalidator.OneOf(
-				"POSIX_GROUP", "GROUP_OF_NAMES", "GROUP_OF_UNIQUE_NAMES", "GROUP_GLOBAL_SECURITY", "GROUP_LOCAL_SECURITY", "GROUP_UNIVERSAL_SECURITY", "GROUP_UNKNOWN", "AZURE_ROLE", "AZURE_UNIFIED_GROUP", "AZURE_SECURITY_GROUP", "AZURE_DYNAMIC_UNIFIED_GROUP", "AZURE_DYNAMIC_SECURITY_GROUP", "SCIM", "ACCOUNT_ONLY",
+				"POSIX_GROUP", "GROUP_OF_NAMES", "GROUP_OF_UNIQUE_NAMES", "GROUP_GLOBAL_SECURITY", "GROUP_LOCAL_SECURITY", "GROUP_UNIVERSAL_SECURITY", "GROUP_UNKNOWN", "AZURE_ROLE", "AZURE_UNIFIED_GROUP", "AZURE_SECURITY_GROUP", "AZURE_DYNAMIC_UNIFIED_GROUP", "AZURE_DYNAMIC_SECURITY_GROUP", "SCIM", "ACCOUNT_ONLY", "AZURE_TEAM", "AZURE_DYNAMIC_TEAM",
 			),
 		},
 	}
@@ -5862,7 +6291,7 @@ func resourceSchemaAttrsProvisioningGroupOnSystemPrimer(recurse bool) map[string
 		Required: true,
 		Validators: []validator.String{
 			stringvalidator.OneOf(
-				"POSIX_GROUP", "GROUP_OF_NAMES", "GROUP_OF_UNIQUE_NAMES", "GROUP_GLOBAL_SECURITY", "GROUP_LOCAL_SECURITY", "GROUP_UNIVERSAL_SECURITY", "GROUP_UNKNOWN", "AZURE_ROLE", "AZURE_UNIFIED_GROUP", "AZURE_SECURITY_GROUP", "AZURE_DYNAMIC_UNIFIED_GROUP", "AZURE_DYNAMIC_SECURITY_GROUP", "SCIM", "ACCOUNT_ONLY",
+				"POSIX_GROUP", "GROUP_OF_NAMES", "GROUP_OF_UNIQUE_NAMES", "GROUP_GLOBAL_SECURITY", "GROUP_LOCAL_SECURITY", "GROUP_UNIVERSAL_SECURITY", "GROUP_UNKNOWN", "AZURE_ROLE", "AZURE_UNIFIED_GROUP", "AZURE_SECURITY_GROUP", "AZURE_DYNAMIC_UNIFIED_GROUP", "AZURE_DYNAMIC_SECURITY_GROUP", "SCIM", "ACCOUNT_ONLY", "AZURE_TEAM", "AZURE_DYNAMIC_TEAM",
 			),
 		},
 	}
@@ -5909,7 +6338,7 @@ func resourceSchemaAttrsProvisioningGroupOnSystemPrimerRO(recurse bool) map[stri
 		Required: true,
 		Validators: []validator.String{
 			stringvalidator.OneOf(
-				"POSIX_GROUP", "GROUP_OF_NAMES", "GROUP_OF_UNIQUE_NAMES", "GROUP_GLOBAL_SECURITY", "GROUP_LOCAL_SECURITY", "GROUP_UNIVERSAL_SECURITY", "GROUP_UNKNOWN", "AZURE_ROLE", "AZURE_UNIFIED_GROUP", "AZURE_SECURITY_GROUP", "AZURE_DYNAMIC_UNIFIED_GROUP", "AZURE_DYNAMIC_SECURITY_GROUP", "SCIM", "ACCOUNT_ONLY",
+				"POSIX_GROUP", "GROUP_OF_NAMES", "GROUP_OF_UNIQUE_NAMES", "GROUP_GLOBAL_SECURITY", "GROUP_LOCAL_SECURITY", "GROUP_UNIVERSAL_SECURITY", "GROUP_UNKNOWN", "AZURE_ROLE", "AZURE_UNIFIED_GROUP", "AZURE_SECURITY_GROUP", "AZURE_DYNAMIC_UNIFIED_GROUP", "AZURE_DYNAMIC_SECURITY_GROUP", "SCIM", "ACCOUNT_ONLY", "AZURE_TEAM", "AZURE_DYNAMIC_TEAM",
 			),
 		},
 	}
@@ -5930,7 +6359,7 @@ func resourceSchemaAttrsProvisioningGroupOnSystemTypesRO(recurse bool) map[strin
 		Validators: []validator.List{
 			listvalidator.ValueStringsAre(
 				stringvalidator.OneOf(
-					"POSIX_GROUP", "GROUP_OF_NAMES", "GROUP_OF_UNIQUE_NAMES", "GROUP_GLOBAL_SECURITY", "GROUP_LOCAL_SECURITY", "GROUP_UNIVERSAL_SECURITY", "GROUP_UNKNOWN", "AZURE_ROLE", "AZURE_UNIFIED_GROUP", "AZURE_SECURITY_GROUP", "AZURE_DYNAMIC_UNIFIED_GROUP", "AZURE_DYNAMIC_SECURITY_GROUP", "SCIM", "ACCOUNT_ONLY",
+					"POSIX_GROUP", "GROUP_OF_NAMES", "GROUP_OF_UNIQUE_NAMES", "GROUP_GLOBAL_SECURITY", "GROUP_LOCAL_SECURITY", "GROUP_UNIVERSAL_SECURITY", "GROUP_UNKNOWN", "AZURE_ROLE", "AZURE_UNIFIED_GROUP", "AZURE_SECURITY_GROUP", "AZURE_DYNAMIC_UNIFIED_GROUP", "AZURE_DYNAMIC_SECURITY_GROUP", "SCIM", "ACCOUNT_ONLY", "AZURE_TEAM", "AZURE_DYNAMIC_TEAM",
 				),
 			),
 		},
@@ -6517,8 +6946,18 @@ func resourceSchemaAttrsProvisioningProvisionedSCIMRO(recurse bool) map[string]r
 		Optional:  true,
 		Sensitive: true,
 	}
+	schemaAttrs["connector_authentication"] = rsschema.StringAttribute{
+		Optional:  true,
+		Sensitive: true,
+	}
 	schemaAttrs["connector_configuration"] = rsschema.StringAttribute{
 		Optional: true,
+	}
+	schemaAttrs["connector_target_url"] = rsschema.StringAttribute{
+		Optional: true,
+		Validators: []validator.String{
+			stringvalidator.UTF8LengthBetween(0, 512),
+		},
 	}
 	schemaAttrs["cursor_based_pagination"] = rsschema.BoolAttribute{
 		Computed: true,
@@ -6575,6 +7014,24 @@ func resourceSchemaAttrsProvisioningProvisionedSCIMRO(recurse bool) map[string]r
 		Optional: true,
 		Default:  booldefault.StaticBool(true),
 	}
+	schemaAttrs["tls"] = rsschema.StringAttribute{
+		Computed: true,
+		Optional: true,
+		Default:  stringdefault.StaticString("SECURE"),
+		Validators: []validator.String{
+			stringvalidator.OneOf(
+				"VERIFIED_PINNED", "VERIFIED", "SECURE_PINNED", "SECURE", "ENCRYPTED", "UNSECURE",
+			),
+		},
+	}
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsCertificateCertificatePrimerRO(recurse),
+		}
+		attr.Optional = true
+		schemaAttrs["trusted_certificate"] = attr
+	}
+
 	schemaAttrs["update_strategy"] = rsschema.StringAttribute{
 		Computed: true,
 		Optional: true,
@@ -6702,19 +7159,8 @@ func resourceSchemaAttrsProvisioningProvisionedSystemRO(recurse bool) map[string
 		schemaAttrs["content_administrator"] = attr
 	}
 
-	schemaAttrs["effective_full_sync_interval"] = rsschema.Int64Attribute{
-		Computed: true,
-	}
 	schemaAttrs["external_uuid"] = rsschema.StringAttribute{
 		Computed: true,
-	}
-	schemaAttrs["full_sync_interval"] = rsschema.Int64Attribute{
-		Computed: true,
-		Optional: true,
-		Default:  int64default.StaticInt64(0),
-		Validators: []validator.Int64{
-			int64validator.Between(0, 24),
-		},
 	}
 	schemaAttrs["group_on_system_provisioning"] = rsschema.StringAttribute{
 		Computed: true,
@@ -6725,6 +7171,9 @@ func resourceSchemaAttrsProvisioningProvisionedSystemRO(recurse bool) map[string
 				"ALWAYS_PROVISIONED", "PROVISIONED_BY_DEFAULT_CAN_ONLY_BE_ENABLED", "NOT_PROVISIONED_BY_DEFAULT_CAN_ONLY_BE_ENABLED", "PROVISIONED_BY_DEFAULT", "NOT_PROVISIONED_BY_DEFAULT",
 			),
 		},
+	}
+	schemaAttrs["max_verification_interval"] = rsschema.StringAttribute{
+		Required: true,
 	}
 	{
 		attr := rsschema.SingleNestedAttribute{
@@ -7321,7 +7770,7 @@ func resourceSchemaAttrsServiceaccountServiceAccountGroupRO(recurse bool) map[st
 		Required: true,
 		Validators: []validator.String{
 			stringvalidator.OneOf(
-				"POSIX_GROUP", "GROUP_OF_NAMES", "GROUP_OF_UNIQUE_NAMES", "GROUP_GLOBAL_SECURITY", "GROUP_LOCAL_SECURITY", "GROUP_UNIVERSAL_SECURITY", "GROUP_UNKNOWN", "AZURE_ROLE", "AZURE_UNIFIED_GROUP", "AZURE_SECURITY_GROUP", "AZURE_DYNAMIC_UNIFIED_GROUP", "AZURE_DYNAMIC_SECURITY_GROUP", "SCIM", "ACCOUNT_ONLY",
+				"POSIX_GROUP", "GROUP_OF_NAMES", "GROUP_OF_UNIQUE_NAMES", "GROUP_GLOBAL_SECURITY", "GROUP_LOCAL_SECURITY", "GROUP_UNIVERSAL_SECURITY", "GROUP_UNKNOWN", "AZURE_ROLE", "AZURE_UNIFIED_GROUP", "AZURE_SECURITY_GROUP", "AZURE_DYNAMIC_UNIFIED_GROUP", "AZURE_DYNAMIC_SECURITY_GROUP", "SCIM", "ACCOUNT_ONLY", "AZURE_TEAM", "AZURE_DYNAMIC_TEAM",
 			),
 		},
 	}
@@ -7667,7 +8116,7 @@ func resourceSchemaAttrsVaultVaultRecordRO(recurse bool) map[string]rsschema.Att
 			Optional:    true,
 			Validators: []validator.List{
 				listvalidator.ValueStringsAre(stringvalidator.OneOf(
-					"activationStatus", "audit", "parent", "passwordMetadata", "secret", "shareSummary", "shares", "tile", "vaultholder",
+					"activationStatus", "audit", "parent", "passwordMetadata", "secret", "secretHistory", "shareSummary", "shares", "tile", "vaultholder",
 				)),
 			},
 		}
@@ -7699,6 +8148,9 @@ func resourceSchemaAttrsVaultVaultRecordRO(recurse bool) map[string]rsschema.Att
 				"NONE", "GREEN", "RED", "BLUE", "DARK", "PINK_LAVENDER", "CRIMSON_RED", "MIDDLE_YELLOW", "ANDROID_GREEN", "SAGE", "ARTICHOKE",
 			),
 		},
+	}
+	schemaAttrs["deleted_at"] = rsschema.StringAttribute{
+		Computed: true,
 	}
 	schemaAttrs["last_read_at"] = rsschema.StringAttribute{
 		Computed: true,
@@ -7782,6 +8234,9 @@ func resourceSchemaAttrsVaultVaultRecordPrimer(recurse bool) map[string]rsschema
 			),
 		},
 	}
+	schemaAttrs["deleted_at"] = rsschema.StringAttribute{
+		Computed: true,
+	}
 	schemaAttrs["last_read_at"] = rsschema.StringAttribute{
 		Computed: true,
 	}
@@ -7827,6 +8282,9 @@ func resourceSchemaAttrsVaultVaultRecordPrimerRO(recurse bool) map[string]rssche
 			),
 		},
 	}
+	schemaAttrs["deleted_at"] = rsschema.StringAttribute{
+		Computed: true,
+	}
 	schemaAttrs["last_read_at"] = rsschema.StringAttribute{
 		Computed: true,
 	}
@@ -7853,6 +8311,35 @@ func resourceSchemaAttrsVaultVaultRecordPrimerLinkableWrapperRO(recurse bool) ma
 			Attributes: resourceSchemaAttrsVaultVaultRecordPrimerRO(recurse),
 		},
 		Optional: true,
+	}
+	return schemaAttrs
+}
+func resourceSchemaAttrsVaultVaultRecordSecretHistoryRO(recurse bool) map[string]rsschema.Attribute {
+	schemaAttrs := make(map[string]rsschema.Attribute)
+	schemaAttrs["versions"] = rsschema.ListNestedAttribute{
+		NestedObject: rsschema.NestedAttributeObject{
+			Attributes: resourceSchemaAttrsVaultVaultRecordSecretVersionRO(recurse),
+		},
+		Optional: true,
+	}
+	return schemaAttrs
+}
+func resourceSchemaAttrsVaultVaultRecordSecretVersionRO(recurse bool) map[string]rsschema.Attribute {
+	schemaAttrs := make(map[string]rsschema.Attribute)
+	schemaAttrs["filename"] = rsschema.StringAttribute{
+		Computed: true,
+	}
+	schemaAttrs["id"] = rsschema.Int64Attribute{
+		Computed: true,
+	}
+	schemaAttrs["replaced_at"] = rsschema.StringAttribute{
+		Computed: true,
+	}
+	schemaAttrs["replaced_by"] = rsschema.StringAttribute{
+		Computed: true,
+	}
+	schemaAttrs["vault_vault_record_secret_version_type"] = rsschema.StringAttribute{
+		Computed: true,
 	}
 	return schemaAttrs
 }
@@ -7987,6 +8474,14 @@ func resourceSchemaAttrsVaultVaultRecord_additionalObjects(recurse bool) map[str
 
 	{
 		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsVaultVaultRecordSecretHistoryRO(recurse),
+		}
+		attr.Computed = true
+		schemaAttrs["secret_history"] = attr
+	}
+
+	{
+		attr := rsschema.SingleNestedAttribute{
 			Attributes: resourceSchemaAttrsVaultVaultRecordShareSummaryRO(recurse),
 		}
 		attr.Computed = true
@@ -8061,6 +8556,14 @@ func resourceSchemaAttrsVaultVaultRecord_additionalObjectsRO(recurse bool) map[s
 		}
 		attr.Optional = true
 		schemaAttrs["secret"] = attr
+	}
+
+	{
+		attr := rsschema.SingleNestedAttribute{
+			Attributes: resourceSchemaAttrsVaultVaultRecordSecretHistoryRO(recurse),
+		}
+		attr.Computed = true
+		schemaAttrs["secret_history"] = attr
 	}
 
 	{
@@ -8248,7 +8751,7 @@ func resourceSchemaAttrsWebhookWebhookRO(recurse bool) map[string]rsschema.Attri
 		Validators: []validator.List{
 			listvalidator.ValueStringsAre(
 				stringvalidator.OneOf(
-					"ACCESS_PROFILE_CREATED", "ACCESS_PROFILE_LIFECYCLE_EVENT_CANCELLED", "ACCESS_PROFILE_LIFECYCLE_EVENT_FAILED", "ACCESS_PROFILE_LIFECYCLE_EVENT_FIRED", "ACCESS_PROFILE_MODIFIED", "ACCESS_PROFILE_REMOVED", "ACCOUNT_2FA_DISABLED", "ACCOUNT_2FA_ENABLED", "ACCOUNT_ACCESS_PROFILE_DEPROVISIONED", "ACCOUNT_ACCESS_PROFILE_PROVISIONED", "ACCOUNT_ACTIVATED_FOR_ACCESS_PROFILE", "ACCOUNT_ACTIVATION_CODE_USED", "ACCOUNT_ADDED_TO_ACCESS_PROFILE", "ACCOUNT_ADDED_TO_GROUP", "ACCOUNT_ADDED_TO_ORGANIZATIONAL_UNIT", "ACCOUNT_CREATED", "ACCOUNT_DEACTIVATED_FOR_ACCESS_PROFILE", "ACCOUNT_DEPROVISIONED", "ACCOUNT_DISABLED", "ACCOUNT_ENABLED", "ACCOUNT_GROUP_ACTIVATED", "ACCOUNT_GROUP_ACTIVATION_REASON", "ACCOUNT_GROUP_ACTIVATION_GRANT_REVOKED", "ACCOUNT_GROUP_DEPROVISIONED", "ACCOUNT_GROUP_PROVISIONED", "ACCOUNT_LOGIN", "ACCOUNT_LOGIN_FAILED", "ACCOUNT_MODIFIED_FOR_ACCESS_PROFILE", "ACCOUNT_MODIFIED_FOR_GROUP", "ACCOUNT_PASSWORD_CHANGED", "ACCOUNT_PROVISIONED", "ACCOUNT_PROVISIONING_DESTROYED", "ACCOUNT_PROVISIONING_INITED", "ACCOUNT_PROVISIONING_MOVED", "ACCOUNT_PROVISIONING_SETUP", "ACCOUNT_REMOVED", "ACCOUNT_REMOVED_FROM_ACCESS_PROFILE", "ACCOUNT_REMOVED_FROM_GROUP", "ACCOUNT_REMOVED_FROM_ORGANIZATIONAL_UNIT", "ACCOUNT_REREGISTERED", "ACCOUNT_SSH_PUBLIC_KEY_MODIFIED", "ACCOUNT_TOKEN_SIGNED", "ACCOUNT_TOTP_OFFSET_CHANGED", "ACCOUNT_VAULT_UNLOCKED", "ADD_GROUP_ADMIN_ACCEPTED", "ADD_GROUP_ADMIN_DECLINED", "ADD_GROUP_ADMIN_REQUESTED", "ADD_GROUP_TO_ACCESS_PROFILE_ACCEPTED", "ADD_GROUP_TO_ACCESS_PROFILE_DECLINED", "ADD_GROUP_TO_ACCESS_PROFILE_REQUESTED", "AUDITOR_EXPORT_GENERATED", "CERTIFICATE_CREATED", "CERTIFICATE_MODIFIED", "CERTIFICATE_REMOVED", "CLIENT_ADDED_TO_ACCESS_PROFILE", "CLIENT_ADDED_TO_GROUP", "CLIENT_ADDED_TO_ORGANIZATIONAL_UNIT", "CLIENT_CREATED", "CLIENT_MODIFIED", "CLIENT_MODIFIED_FOR_GROUP", "CLIENT_PERMISSION_GRANTED", "CLIENT_PERMISSION_REVOKED", "CLIENT_REMOVED", "CLIENT_REMOVED_FROM_ACCESS_PROFILE", "CLIENT_REMOVED_FROM_GROUP", "CLIENT_REMOVED_FROM_ORGANIZATIONAL_UNIT", "CLIENT_SECRET_ROTATED", "CREATE_GROUP_ACCEPTED", "CREATE_GROUP_DECLINED", "CREATE_GROUP_REQUESTED", "CREATE_GROUP_ON_SYSTEM_ACCEPTED", "CREATE_GROUP_ON_SYSTEM_DECLINED", "CREATE_GROUP_ON_SYSTEM_REQUESTED", "CREATE_PROVISIONED_NAMESPACE_ACCEPTED", "CREATE_PROVISIONED_NAMESPACE_DECLINED", "CREATE_PROVISIONED_NAMESPACE_REQUESTED", "CREATE_SERVICE_ACCOUNT_ACCEPTED", "CREATE_SERVICE_ACCOUNT_DECLINED", "CREATE_SERVICE_ACCOUNT_REQUESTED", "DEVICE_CODE_ISSUED", "DEVICE_CODE_REJECTED", "DEVICE_CODE_VERIFIED", "DIRECTORY_CREATED", "DIRECTORY_HELPDESK_MODIFIED", "DIRECTORY_MODIFIED", "DIRECTORY_REMOVED", "DISABLE_2FA_ACCEPTED", "DISABLE_2FA_DECLINED", "DISABLE_2FA_REQUESTED", "ENABLE_PROFILE_ADMINISTRATION_ACCEPTED", "ENABLE_PROFILE_ADMINISTRATION_DECLINED", "ENABLE_PROFILE_ADMINISTRATION_REQUESTED", "ENABLE_TECHNICAL_ADMINISTRATION_ACCEPTED", "ENABLE_TECHNICAL_ADMINISTRATION_DECLINED", "ENABLE_TECHNICAL_ADMINISTRATION_REQUESTED", "EXTENDED_ACCESS_ACCEPTED", "EXTENDED_ACCESS_DECLINED", "EXTENDED_ACCESS_REQUESTED", "GRANT_ACCESS_ACCEPTED", "GRANT_ACCESS_DECLINED", "GRANT_ACCESS_REQUESTED", "GRANT_APPLICATION_ACCEPTED", "GRANT_APPLICATION_DECLINED", "GRANT_APPLICATION_REQUESTED", "GRANT_CLIENT_PERMISSION_ACCEPTED", "GRANT_CLIENT_PERMISSION_DECLINED", "GRANT_CLIENT_PERMISSION_REQUESTED", "GRANT_GROUP_ON_SYSTEM_ACCEPTED", "GRANT_GROUP_ON_SYSTEM_DECLINED", "GRANT_GROUP_ON_SYSTEM_REQUESTED", "GRANT_GROUP_ON_SYSTEM_REQUEST_ACCEPTED", "GRANT_GROUP_ON_SYSTEM_REQUEST_DECLINED", "GRANT_GROUP_ON_SYSTEM_REQUEST_REQUESTED", "GRANT_SERVICE_ACCOUNT_GROUP_ACCEPTED", "GRANT_SERVICE_ACCOUNT_GROUP_DECLINED", "GRANT_SERVICE_ACCOUNT_GROUP_REQUESTED", "GROUP_ADDED_TO_ACCESS_PROFILE", "GROUP_AUDIT_CREATED", "GROUP_AUDIT_REQUESTED", "GROUP_AUTHORIZATION_CONNECTED", "GROUP_AUTHORIZATION_DISCONNECTED", "GROUP_CLASSIFICATION_ASSIGNED", "GROUP_CLASSIFICATION_CREATED", "GROUP_CLASSIFICATION_MODIFIED", "GROUP_CLASSIFICATION_REMOVED", "GROUP_CREATED", "GROUP_EXCLUSION_CREATED", "GROUP_EXCLUSION_REMOVED", "GROUP_MODIFIED", "GROUP_MOVED", "GROUP_NESTING_CONNECTED", "GROUP_NESTING_DISCONNECTED", "GROUP_ON_SYSTEM_MODIFIED", "GROUP_ON_SYSTEM_DEPROVISIONED", "GROUP_ON_SYSTEM_CREATED", "GROUP_ON_SYSTEM_PROVISIONED", "GROUP_ON_SYSTEM_REMOVED", "GROUP_REMOVED", "GROUP_REMOVED_FROM_ACCESS_PROFILE", "IDENTITY_SOURCE_CREATED", "IDENTITY_SOURCE_MODIFIED", "IDENTITY_SOURCE_REMOVED", "INTERNAL_ACCOUNT_ACTIVATED", "INTERNAL_ACCOUNT_CREATED", "INTERNAL_ACCOUNT_MODIFIED", "INTERNAL_ACCOUNT_REMOVED", "INVALID_SIGNATURE_DETECTED", "JOIN_GROUP_ACCEPTED", "JOIN_GROUP_DECLINED", "JOIN_GROUP_REQUESTED", "JOIN_VAULT_ACCEPTED", "JOIN_VAULT_DECLINED", "JOIN_VAULT_REQUESTED", "LICENSE_KEY_UPLOADED", "LINK_DIRECTORY_TO_ACCESS_PROFILE_ACCEPTED", "LINK_DIRECTORY_TO_ACCESS_PROFILE_DECLINED", "LINK_DIRECTORY_TO_ACCESS_PROFILE_REQUESTED", "MOVE_GROUPS_ACCEPTED", "MOVE_GROUPS_DECLINED", "MOVE_GROUPS_REQUESTED", "ORGANIZATIONAL_UNIT_CREATED", "ORGANIZATIONAL_UNIT_MODIFIED", "ORGANIZATIONAL_UNIT_REMOVED", "PROVISIONED_SYSTEM_ADDED_TO_ACCESS_PROFILE", "PROVISIONED_SYSTEM_ADDED_TO_GROUP", "PROVISIONED_SYSTEM_CREATED", "PROVISIONED_SYSTEM_MODIFIED", "PROVISIONED_SYSTEM_MODIFIED_FOR_GROUP", "PROVISIONED_SYSTEM_REMOVED", "PROVISIONED_SYSTEM_REMOVED_FROM_ACCESS_PROFILE", "PROVISIONED_SYSTEM_REMOVED_FROM_GROUP", "PROVISIONED_SYSTEM_UNKNOWN_ACCOUNT_DESTROYED", "REMOVE_ACCESS_PROFILE_ACCEPTED", "REMOVE_ACCESS_PROFILE_DECLINED", "REMOVE_ACCESS_PROFILE_REQUESTED", "REMOVE_GROUP_ACCEPTED", "REMOVE_GROUP_DECLINED", "REMOVE_GROUP_REQUESTED", "REMOVE_ORGANIZATIONAL_UNIT_ACCEPTED", "REMOVE_ORGANIZATIONAL_UNIT_DECLINED", "REMOVE_ORGANIZATIONAL_UNIT_REQUESTED", "REMOVE_PROVISIONED_SYSTEM_ACCEPTED", "REMOVE_PROVISIONED_SYSTEM_DECLINED", "REMOVE_PROVISIONED_SYSTEM_REQUESTED", "RESET_PASSWORD_ACCEPTED", "RESET_PASSWORD_DECLINED", "RESET_PASSWORD_FINISHED", "RESET_PASSWORD_REQUESTED", "REVIEW_AUDIT_ACCEPTED", "REVIEW_AUDIT_DECLINED", "REVIEW_AUDIT_REQUESTED", "REVOKE_ADMIN_ACCEPTED", "REVOKE_ADMIN_DECLINED", "REVOKE_ADMIN_REQUESTED", "SERVICE_ACCOUNT_ADDED_TO_GROUP", "SERVICE_ACCOUNT_CREATED", "SERVICE_ACCOUNT_DEPROVISIONED", "SERVICE_ACCOUNT_GROUP_DEPROVISIONED", "SERVICE_ACCOUNT_GROUP_PROVISIONED", "SERVICE_ACCOUNT_MODIFIED", "SERVICE_ACCOUNT_PASSWORD_ROTATED", "SERVICE_ACCOUNT_PROVISIONED", "SERVICE_ACCOUNT_PROVISIONING_DESTROYED", "SERVICE_ACCOUNT_PROVISIONING_INITED", "SERVICE_ACCOUNT_REMOVED", "SERVICE_ACCOUNT_REMOVED_FROM_GROUP", "SETTING_MODIFIED", "SETUP_AUTHORIZING_GROUP_CONNECT_ACCEPTED", "SETUP_AUTHORIZING_GROUP_CONNECT_DECLINED", "SETUP_AUTHORIZING_GROUP_CONNECT_REQUESTED", "SETUP_AUTHORIZING_GROUP_DISCONNECT_ACCEPTED", "SETUP_AUTHORIZING_GROUP_DISCONNECT_DECLINED", "SETUP_AUTHORIZING_GROUP_DISCONNECT_REQUESTED", "SETUP_GROUP_EXCLUSION_CONNECT_ACCEPTED", "SETUP_GROUP_EXCLUSION_CONNECT_DECLINED", "SETUP_GROUP_EXCLUSION_CONNECT_REQUESTED", "SETUP_GROUP_EXCLUSION_DISCONNECT_ACCEPTED", "SETUP_GROUP_EXCLUSION_DISCONNECT_DECLINED", "SETUP_GROUP_EXCLUSION_DISCONNECT_REQUESTED", "SETUP_NESTED_GROUP_CONNECT_ACCEPTED", "SETUP_NESTED_GROUP_CONNECT_DECLINED", "SETUP_NESTED_GROUP_CONNECT_REQUESTED", "SETUP_NESTED_GROUP_DISCONNECT_ACCEPTED", "SETUP_NESTED_GROUP_DISCONNECT_DECLINED", "SETUP_NESTED_GROUP_DISCONNECT_REQUESTED", "TRANSFER_ACCESS_PROFILE_OWNERSHIP_ACCEPTED", "TRANSFER_ACCESS_PROFILE_OWNERSHIP_DECLINED", "TRANSFER_ACCESS_PROFILE_OWNERSHIP_REQUESTED", "TRANSFER_APPLICATION_ADMINISTRATION_ACCEPTED", "TRANSFER_APPLICATION_ADMINISTRATION_DECLINED", "TRANSFER_APPLICATION_ADMINISTRATION_REQUESTED", "TRANSFER_APPLICATION_OWNERSHIP_ACCEPTED", "TRANSFER_APPLICATION_OWNERSHIP_DECLINED", "TRANSFER_APPLICATION_OWNERSHIP_REQUESTED", "TRANSFER_GROUP_ON_SYSTEM_OWNERSHIP_ACCEPTED", "TRANSFER_GROUP_ON_SYSTEM_OWNERSHIP_DECLINED", "TRANSFER_GROUP_ON_SYSTEM_OWNERSHIP_REQUESTED", "TRANSFER_ORGANIZATIONAL_UNIT_OWNERSHIP_ACCEPTED", "TRANSFER_ORGANIZATIONAL_UNIT_OWNERSHIP_DECLINED", "TRANSFER_ORGANIZATIONAL_UNIT_OWNERSHIP_REQUESTED", "TRANSFER_PROVISIONED_SYSTEM_ADMINISTRATION_ACCEPTED", "TRANSFER_PROVISIONED_SYSTEM_ADMINISTRATION_DECLINED", "TRANSFER_PROVISIONED_SYSTEM_ADMINISTRATION_REQUESTED", "TRANSFER_PROVISIONED_SYSTEM_CONTENT_ADMINISTRATION_ACCEPTED", "TRANSFER_PROVISIONED_SYSTEM_CONTENT_ADMINISTRATION_DECLINED", "TRANSFER_PROVISIONED_SYSTEM_CONTENT_ADMINISTRATION_REQUESTED", "TRANSFER_PROVISIONED_SYSTEM_OWNERSHIP_ACCEPTED", "TRANSFER_PROVISIONED_SYSTEM_OWNERSHIP_DECLINED", "TRANSFER_PROVISIONED_SYSTEM_OWNERSHIP_REQUESTED", "TRANSFER_SERVICE_ACCOUNT_ADMINISTRATION_ACCEPTED", "TRANSFER_SERVICE_ACCOUNT_ADMINISTRATION_DECLINED", "TRANSFER_SERVICE_ACCOUNT_ADMINISTRATION_REQUESTED", "UPDATE_GROUP_MEMBERSHIP_ACCEPTED", "UPDATE_GROUP_MEMBERSHIP_DECLINED", "UPDATE_GROUP_MEMBERSHIP_REQUESTED", "UPDATE_LICENSE_ACCEPTED", "UPDATE_LICENSE_DECLINED", "UPDATE_LICENSE_REQUESTED", "VAULT_ACCESS_RESTORED", "VAULT_EXPORTED", "VAULT_PERSONAL_RESET", "VAULT_PERSONAL_SETUP", "VAULT_RECORD_CREATED", "VAULT_RECORD_MODIFIED", "VAULT_RECORD_MOVED_COPIED_SHARED", "VAULT_RECORD_READ", "VAULT_RECORD_REMOVED", "VAULT_RECOVERED", "VERIFY_INTERNAL_ACCOUNT_ACCEPTED", "VERIFY_INTERNAL_ACCOUNT_DECLINED", "VERIFY_INTERNAL_ACCOUNT_REQUESTED", "WEBHOOK_CREATED", "WEBHOOK_MODIFIED", "WEBHOOK_REMOVED",
+					"ACCESS_PROFILE_CREATED", "ACCESS_PROFILE_LIFECYCLE_EVENT_CANCELLED", "ACCESS_PROFILE_LIFECYCLE_EVENT_FAILED", "ACCESS_PROFILE_LIFECYCLE_EVENT_FIRED", "ACCESS_PROFILE_LIFECYCLE_EVENT_WAITING", "ACCESS_PROFILE_MODIFIED", "ACCESS_PROFILE_REMOVED", "ACCOUNT_2FA_DISABLED", "ACCOUNT_2FA_ENABLED", "ACCOUNT_ACCESS_PROFILE_DEPROVISIONED", "ACCOUNT_ACCESS_PROFILE_PROVISIONED", "ACCOUNT_ACTIVATED_FOR_ACCESS_PROFILE", "ACCOUNT_ACTIVATION_CODE_USED", "ACCOUNT_ADDED_TO_ACCESS_PROFILE", "ACCOUNT_ADDED_TO_GROUP", "ACCOUNT_ADDED_TO_ORGANIZATIONAL_UNIT", "ACCOUNT_CREATED", "ACCOUNT_DEACTIVATED_FOR_ACCESS_PROFILE", "ACCOUNT_DEPROVISIONED", "ACCOUNT_DISABLED", "ACCOUNT_ENABLED", "ACCOUNT_GROUP_ACTIVATED", "ACCOUNT_GROUP_ACTIVATION_REASON", "ACCOUNT_GROUP_ACTIVATION_GRANT_REVOKED", "ACCOUNT_GROUP_DEPROVISIONED", "ACCOUNT_GROUP_PROVISIONED", "ACCOUNT_LOGIN", "ACCOUNT_LOGIN_FAILED", "ACCOUNT_MODIFIED_FOR_ACCESS_PROFILE", "ACCOUNT_MODIFIED_FOR_GROUP", "ACCOUNT_PASSWORD_CHANGED", "ACCOUNT_PROVISIONED", "ACCOUNT_PROVISIONING_DESTROYED", "ACCOUNT_PROVISIONING_INITED", "ACCOUNT_PROVISIONING_MOVED", "ACCOUNT_PROVISIONING_SETUP", "ACCOUNT_REMOVED", "ACCOUNT_REMOVED_FROM_ACCESS_PROFILE", "ACCOUNT_REMOVED_FROM_GROUP", "ACCOUNT_REMOVED_FROM_ORGANIZATIONAL_UNIT", "ACCOUNT_REREGISTERED", "ACCOUNT_SSH_PUBLIC_KEY_MODIFIED", "ACCOUNT_TOKEN_SIGNED", "ACCOUNT_TOTP_OFFSET_CHANGED", "ACCOUNT_VAULT_UNLOCKED", "ADD_GROUP_ADMIN_ACCEPTED", "ADD_GROUP_ADMIN_DECLINED", "ADD_GROUP_ADMIN_REQUESTED", "ADD_GROUP_TO_ACCESS_PROFILE_ACCEPTED", "ADD_GROUP_TO_ACCESS_PROFILE_DECLINED", "ADD_GROUP_TO_ACCESS_PROFILE_REQUESTED", "AUDITOR_EXPORT_GENERATED", "CERTIFICATE_CREATED", "CERTIFICATE_MODIFIED", "CERTIFICATE_REMOVED", "CLIENT_ADDED_TO_ACCESS_PROFILE", "CLIENT_ADDED_TO_GROUP", "CLIENT_ADDED_TO_ORGANIZATIONAL_UNIT", "CLIENT_CREATED", "CLIENT_MODIFIED", "CLIENT_MODIFIED_FOR_GROUP", "CLIENT_PERMISSION_GRANTED", "CLIENT_PERMISSION_REVOKED", "CLIENT_REMOVED", "CLIENT_REMOVED_FROM_ACCESS_PROFILE", "CLIENT_REMOVED_FROM_GROUP", "CLIENT_REMOVED_FROM_ORGANIZATIONAL_UNIT", "CLIENT_SECRET_ROTATED", "CREATE_GROUP_ACCEPTED", "CREATE_GROUP_DECLINED", "CREATE_GROUP_REQUESTED", "CREATE_GROUP_ON_SYSTEM_ACCEPTED", "CREATE_GROUP_ON_SYSTEM_DECLINED", "CREATE_GROUP_ON_SYSTEM_REQUESTED", "CREATE_PROVISIONED_NAMESPACE_ACCEPTED", "CREATE_PROVISIONED_NAMESPACE_DECLINED", "CREATE_PROVISIONED_NAMESPACE_REQUESTED", "CREATE_SERVICE_ACCOUNT_ACCEPTED", "CREATE_SERVICE_ACCOUNT_DECLINED", "CREATE_SERVICE_ACCOUNT_REQUESTED", "DEVICE_CODE_ISSUED", "DEVICE_CODE_REJECTED", "DEVICE_CODE_VERIFIED", "DIRECTORY_CREATED", "DIRECTORY_HELPDESK_MODIFIED", "DIRECTORY_MODIFIED", "DIRECTORY_REMOVED", "DISABLE_2FA_ACCEPTED", "DISABLE_2FA_DECLINED", "DISABLE_2FA_REQUESTED", "ENABLE_PROFILE_ADMINISTRATION_ACCEPTED", "ENABLE_PROFILE_ADMINISTRATION_DECLINED", "ENABLE_PROFILE_ADMINISTRATION_REQUESTED", "ENABLE_TECHNICAL_ADMINISTRATION_ACCEPTED", "ENABLE_TECHNICAL_ADMINISTRATION_DECLINED", "ENABLE_TECHNICAL_ADMINISTRATION_REQUESTED", "EXTENDED_ACCESS_ACCEPTED", "EXTENDED_ACCESS_DECLINED", "EXTENDED_ACCESS_REQUESTED", "GRANT_ACCESS_ACCEPTED", "GRANT_ACCESS_DECLINED", "GRANT_ACCESS_REQUESTED", "GRANT_APPLICATION_ACCEPTED", "GRANT_APPLICATION_DECLINED", "GRANT_APPLICATION_REQUESTED", "GRANT_CLIENT_PERMISSION_ACCEPTED", "GRANT_CLIENT_PERMISSION_DECLINED", "GRANT_CLIENT_PERMISSION_REQUESTED", "GRANT_GROUP_ON_SYSTEM_ACCEPTED", "GRANT_GROUP_ON_SYSTEM_DECLINED", "GRANT_GROUP_ON_SYSTEM_REQUESTED", "GRANT_GROUP_ON_SYSTEM_REQUEST_ACCEPTED", "GRANT_GROUP_ON_SYSTEM_REQUEST_DECLINED", "GRANT_GROUP_ON_SYSTEM_REQUEST_REQUESTED", "GRANT_ITSM_WORKFLOW_TYPE_ACCEPTED", "GRANT_ITSM_WORKFLOW_TYPE_DECLINED", "GRANT_ITSM_WORKFLOW_TYPE_REQUESTED", "GRANT_SERVICE_ACCOUNT_GROUP_ACCEPTED", "GRANT_SERVICE_ACCOUNT_GROUP_DECLINED", "GRANT_SERVICE_ACCOUNT_GROUP_REQUESTED", "GROUP_ADDED_TO_ACCESS_PROFILE", "GROUP_AUDIT_CREATED", "GROUP_AUDIT_REQUESTED", "GROUP_AUTHORIZATION_CONNECTED", "GROUP_AUTHORIZATION_DISCONNECTED", "GROUP_CLASSIFICATION_ASSIGNED", "GROUP_CLASSIFICATION_CREATED", "GROUP_CLASSIFICATION_MODIFIED", "GROUP_CLASSIFICATION_REMOVED", "GROUP_CREATED", "GROUP_EXCLUSION_CREATED", "GROUP_EXCLUSION_REMOVED", "GROUP_MODIFIED", "GROUP_MOVED", "GROUP_NESTING_CONNECTED", "GROUP_NESTING_DISCONNECTED", "GROUP_ON_SYSTEM_MODIFIED", "GROUP_ON_SYSTEM_DEPROVISIONED", "GROUP_ON_SYSTEM_CREATED", "GROUP_ON_SYSTEM_PROVISIONED", "GROUP_ON_SYSTEM_REMOVED", "GROUP_REMOVED", "GROUP_REMOVED_FROM_ACCESS_PROFILE", "IDENTITY_SOURCE_CREATED", "IDENTITY_SOURCE_MODIFIED", "IDENTITY_SOURCE_REMOVED", "INTERNAL_ACCOUNT_ACTIVATED", "INTERNAL_ACCOUNT_CREATED", "INTERNAL_ACCOUNT_MODIFIED", "INTERNAL_ACCOUNT_REMOVED", "INVALID_SIGNATURE_DETECTED", "ITSM_SYSTEM_CREATED", "ITSM_SYSTEM_MODIFIED", "ITSM_SYSTEM_REMOVED", "ITSM_WORKFLOW_TYPE_ADDED_TO_ACCESS_PROFILE", "ITSM_WORKFLOW_TYPE_CREATED", "ITSM_WORKFLOW_TYPE_MISSING", "ITSM_WORKFLOW_TYPE_MODIFIED", "ITSM_WORKFLOW_TYPE_REMOVED", "ITSM_WORKFLOW_TYPE_REMOVED_FROM_ACCESS_PROFILE", "JOIN_GROUP_ACCEPTED", "JOIN_GROUP_DECLINED", "JOIN_GROUP_REQUESTED", "JOIN_VAULT_ACCEPTED", "JOIN_VAULT_DECLINED", "JOIN_VAULT_REQUESTED", "LICENSE_KEY_UPLOADED", "LINK_DIRECTORY_TO_ACCESS_PROFILE_ACCEPTED", "LINK_DIRECTORY_TO_ACCESS_PROFILE_DECLINED", "LINK_DIRECTORY_TO_ACCESS_PROFILE_REQUESTED", "MOVE_GROUPS_ACCEPTED", "MOVE_GROUPS_DECLINED", "MOVE_GROUPS_REQUESTED", "ORGANIZATIONAL_UNIT_CREATED", "ORGANIZATIONAL_UNIT_MODIFIED", "ORGANIZATIONAL_UNIT_REMOVED", "PROVISIONED_SYSTEM_ADDED_TO_ACCESS_PROFILE", "PROVISIONED_SYSTEM_ADDED_TO_GROUP", "PROVISIONED_SYSTEM_AZURE_TEAM_OWNER_CREATED", "PROVISIONED_SYSTEM_AZURE_TEAM_OWNER_DESTROYED", "PROVISIONED_SYSTEM_CREATED", "PROVISIONED_SYSTEM_MODIFIED", "PROVISIONED_SYSTEM_MODIFIED_FOR_GROUP", "PROVISIONED_SYSTEM_REMOVED", "PROVISIONED_SYSTEM_REMOVED_FROM_ACCESS_PROFILE", "PROVISIONED_SYSTEM_REMOVED_FROM_GROUP", "PROVISIONED_SYSTEM_UNKNOWN_ACCOUNT_DESTROYED", "REMOVE_ACCESS_PROFILE_ACCEPTED", "REMOVE_ACCESS_PROFILE_DECLINED", "REMOVE_ACCESS_PROFILE_REQUESTED", "REMOVE_GROUP_ACCEPTED", "REMOVE_GROUP_DECLINED", "REMOVE_GROUP_REQUESTED", "REMOVE_ITSM_SYSTEM_ACCEPTED", "REMOVE_ITSM_SYSTEM_DECLINED", "REMOVE_ITSM_SYSTEM_REQUESTED", "REMOVE_ORGANIZATIONAL_UNIT_ACCEPTED", "REMOVE_ORGANIZATIONAL_UNIT_DECLINED", "REMOVE_ORGANIZATIONAL_UNIT_REQUESTED", "REMOVE_PROVISIONED_SYSTEM_ACCEPTED", "REMOVE_PROVISIONED_SYSTEM_DECLINED", "REMOVE_PROVISIONED_SYSTEM_REQUESTED", "RESET_PASSWORD_ACCEPTED", "RESET_PASSWORD_DECLINED", "RESET_PASSWORD_FINISHED", "RESET_PASSWORD_REQUESTED", "REVIEW_AUDIT_ACCEPTED", "REVIEW_AUDIT_DECLINED", "REVIEW_AUDIT_REQUESTED", "REVOKE_ADMIN_ACCEPTED", "REVOKE_ADMIN_DECLINED", "REVOKE_ADMIN_REQUESTED", "SERVICE_ACCOUNT_ADDED_TO_GROUP", "SERVICE_ACCOUNT_CREATED", "SERVICE_ACCOUNT_DEPROVISIONED", "SERVICE_ACCOUNT_GROUP_DEPROVISIONED", "SERVICE_ACCOUNT_GROUP_PROVISIONED", "SERVICE_ACCOUNT_MODIFIED", "SERVICE_ACCOUNT_PASSWORD_ROTATED", "SERVICE_ACCOUNT_PROVISIONED", "SERVICE_ACCOUNT_PROVISIONING_DESTROYED", "SERVICE_ACCOUNT_PROVISIONING_INITED", "SERVICE_ACCOUNT_REMOVED", "SERVICE_ACCOUNT_REMOVED_FROM_GROUP", "SETTING_MODIFIED", "SETUP_AUTHORIZING_GROUP_CONNECT_ACCEPTED", "SETUP_AUTHORIZING_GROUP_CONNECT_DECLINED", "SETUP_AUTHORIZING_GROUP_CONNECT_REQUESTED", "SETUP_AUTHORIZING_GROUP_DISCONNECT_ACCEPTED", "SETUP_AUTHORIZING_GROUP_DISCONNECT_DECLINED", "SETUP_AUTHORIZING_GROUP_DISCONNECT_REQUESTED", "SETUP_GROUP_EXCLUSION_CONNECT_ACCEPTED", "SETUP_GROUP_EXCLUSION_CONNECT_DECLINED", "SETUP_GROUP_EXCLUSION_CONNECT_REQUESTED", "SETUP_GROUP_EXCLUSION_DISCONNECT_ACCEPTED", "SETUP_GROUP_EXCLUSION_DISCONNECT_DECLINED", "SETUP_GROUP_EXCLUSION_DISCONNECT_REQUESTED", "SETUP_NESTED_GROUP_CONNECT_ACCEPTED", "SETUP_NESTED_GROUP_CONNECT_DECLINED", "SETUP_NESTED_GROUP_CONNECT_REQUESTED", "SETUP_NESTED_GROUP_DISCONNECT_ACCEPTED", "SETUP_NESTED_GROUP_DISCONNECT_DECLINED", "SETUP_NESTED_GROUP_DISCONNECT_REQUESTED", "TRANSFER_ACCESS_PROFILE_OWNERSHIP_ACCEPTED", "TRANSFER_ACCESS_PROFILE_OWNERSHIP_DECLINED", "TRANSFER_ACCESS_PROFILE_OWNERSHIP_REQUESTED", "TRANSFER_APPLICATION_ADMINISTRATION_ACCEPTED", "TRANSFER_APPLICATION_ADMINISTRATION_DECLINED", "TRANSFER_APPLICATION_ADMINISTRATION_REQUESTED", "TRANSFER_APPLICATION_OWNERSHIP_ACCEPTED", "TRANSFER_APPLICATION_OWNERSHIP_DECLINED", "TRANSFER_APPLICATION_OWNERSHIP_REQUESTED", "TRANSFER_GROUP_ON_SYSTEM_OWNERSHIP_ACCEPTED", "TRANSFER_GROUP_ON_SYSTEM_OWNERSHIP_DECLINED", "TRANSFER_GROUP_ON_SYSTEM_OWNERSHIP_REQUESTED", "TRANSFER_ITSM_SYSTEM_ADMINISTRATION_ACCEPTED", "TRANSFER_ITSM_SYSTEM_ADMINISTRATION_DECLINED", "TRANSFER_ITSM_SYSTEM_ADMINISTRATION_REQUESTED", "TRANSFER_ITSM_SYSTEM_OWNERSHIP_ACCEPTED", "TRANSFER_ITSM_SYSTEM_OWNERSHIP_DECLINED", "TRANSFER_ITSM_SYSTEM_OWNERSHIP_REQUESTED", "TRANSFER_ITSM_WORKFLOW_TYPE_OWNERSHIP_ACCEPTED", "TRANSFER_ITSM_WORKFLOW_TYPE_OWNERSHIP_DECLINED", "TRANSFER_ITSM_WORKFLOW_TYPE_OWNERSHIP_REQUESTED", "TRANSFER_ORGANIZATIONAL_UNIT_OWNERSHIP_ACCEPTED", "TRANSFER_ORGANIZATIONAL_UNIT_OWNERSHIP_DECLINED", "TRANSFER_ORGANIZATIONAL_UNIT_OWNERSHIP_REQUESTED", "TRANSFER_PROVISIONED_SYSTEM_ADMINISTRATION_ACCEPTED", "TRANSFER_PROVISIONED_SYSTEM_ADMINISTRATION_DECLINED", "TRANSFER_PROVISIONED_SYSTEM_ADMINISTRATION_REQUESTED", "TRANSFER_PROVISIONED_SYSTEM_CONTENT_ADMINISTRATION_ACCEPTED", "TRANSFER_PROVISIONED_SYSTEM_CONTENT_ADMINISTRATION_DECLINED", "TRANSFER_PROVISIONED_SYSTEM_CONTENT_ADMINISTRATION_REQUESTED", "TRANSFER_PROVISIONED_SYSTEM_OWNERSHIP_ACCEPTED", "TRANSFER_PROVISIONED_SYSTEM_OWNERSHIP_DECLINED", "TRANSFER_PROVISIONED_SYSTEM_OWNERSHIP_REQUESTED", "TRANSFER_SERVICE_ACCOUNT_ADMINISTRATION_ACCEPTED", "TRANSFER_SERVICE_ACCOUNT_ADMINISTRATION_DECLINED", "TRANSFER_SERVICE_ACCOUNT_ADMINISTRATION_REQUESTED", "UPDATE_GROUP_MEMBERSHIP_ACCEPTED", "UPDATE_GROUP_MEMBERSHIP_DECLINED", "UPDATE_GROUP_MEMBERSHIP_REQUESTED", "UPDATE_LICENSE_ACCEPTED", "UPDATE_LICENSE_DECLINED", "UPDATE_LICENSE_REQUESTED", "VAULT_ACCESS_RESTORED", "VAULT_EXPORTED", "VAULT_PERSONAL_RESET", "VAULT_PERSONAL_SETUP", "VAULT_RECORD_CREATED", "VAULT_RECORD_MARKED_FOR_DELETION", "VAULT_RECORD_MODIFIED", "VAULT_RECORD_MOVED_COPIED_SHARED", "VAULT_RECORD_READ", "VAULT_RECORD_REMOVED", "VAULT_RECORD_RESTORED", "VAULT_RECORD_SECRET_REVERTED", "VAULT_RECOVERED", "VERIFY_INTERNAL_ACCOUNT_ACCEPTED", "VERIFY_INTERNAL_ACCOUNT_DECLINED", "VERIFY_INTERNAL_ACCOUNT_REQUESTED", "WEBHOOK_CREATED", "WEBHOOK_MODIFIED", "WEBHOOK_REMOVED",
 				),
 			),
 		},

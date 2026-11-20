@@ -130,6 +130,7 @@ Optional:
 
 Read-Only:
 
+- `deleted_at` (String)
 - `last_read_at` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--password--links))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--password--permissions))

@@ -41,6 +41,7 @@ description: |-
 - `groups` (Attributes List) (see [below for nested schema](#nestedatt--groups))
 - `id_in_directory` (String)
 - `identity` (Attributes) (see [below for nested schema](#nestedatt--identity))
+- `identity_sources` (Attributes) (see [below for nested schema](#nestedatt--identity_sources))
 - `key_hub_password_change_required` (Boolean)
 - `last_active` (String)
 - `last_modified_at` (String)
@@ -51,6 +52,7 @@ description: |-
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--permissions))
 - `reregistration_required` (Boolean)
 - `settings` (Attributes) (see [below for nested schema](#nestedatt--settings))
+- `theme` (String)
 - `token_password_enabled` (Boolean)
 - `total_group_count` (Attributes) (see [below for nested schema](#nestedatt--total_group_count))
 - `two_factor_status` (String)
@@ -277,6 +279,38 @@ Read-Only:
 
 
 
+<a id="nestedatt--identity_sources"></a>
+### Nested Schema for `identity_sources`
+
+Read-Only:
+
+- `items` (Attributes List) (see [below for nested schema](#nestedatt--identity_sources--items))
+
+<a id="nestedatt--identity_sources--items"></a>
+### Nested Schema for `identity_sources.items`
+
+Read-Only:
+
+- `active` (Boolean)
+- `employments` (Attributes List) (see [below for nested schema](#nestedatt--identity_sources--items--employments))
+- `external_id` (String)
+- `identity_source_name` (String)
+- `identity_source_uuid` (String)
+- `last_seen_at` (String)
+- `missing_since` (String)
+
+<a id="nestedatt--identity_sources--items--employments"></a>
+### Nested Schema for `identity_sources.items.employments`
+
+Read-Only:
+
+- `code` (String)
+- `end_date` (String)
+- `start_date` (String)
+
+
+
+
 <a id="nestedatt--links"></a>
 ### Nested Schema for `links`
 
@@ -408,6 +442,7 @@ Read-Only:
 
 - `additional_urls` (String)
 - `color` (String)
+- `deleted_at` (String)
 - `derived` (Boolean)
 - `end_date` (String)
 - `filename` (String)

@@ -35,15 +35,14 @@ description: |-
 - `cleanup_period` (Attributes) (see [below for nested schema](#nestedatt--cleanup_period))
 - `content_admin_permissions` (Boolean)
 - `content_administrator` (Attributes) (see [below for nested schema](#nestedatt--content_administrator))
-- `effective_full_sync_interval` (Number)
 - `external_uuid` (String)
-- `full_sync_interval` (Number)
 - `group_on_system_provisioning` (String)
 - `issued_permissions` (Attributes List) (see [below for nested schema](#nestedatt--issued_permissions))
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--links))
 - `login_name` (String, Deprecated)
 - `management_permissions` (Attributes) (see [below for nested schema](#nestedatt--management_permissions))
 - `markers` (Attributes) (see [below for nested schema](#nestedatt--markers))
+- `max_verification_interval` (String)
 - `name` (String)
 - `organizational_unit` (Attributes) (see [below for nested schema](#nestedatt--organizational_unit))
 - `owner` (Attributes) (see [below for nested schema](#nestedatt--owner))
@@ -552,6 +551,7 @@ Read-Only:
 Read-Only:
 
 - `color` (String)
+- `deleted_at` (String)
 - `last_read_at` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--issued_permissions--client--ldap_client--shared_secret--links))
 - `name` (String)
@@ -692,6 +692,7 @@ Read-Only:
 Read-Only:
 
 - `color` (String)
+- `deleted_at` (String)
 - `last_read_at` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--issued_permissions--client--oauth2_client--shared_secret--links))
 - `name` (String)
@@ -1650,6 +1651,7 @@ Read-Only:
 Read-Only:
 
 - `color` (String)
+- `deleted_at` (String)
 - `last_read_at` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--provisioned_internal_ldap--client--shared_secret--links))
 - `name` (String)
@@ -2254,7 +2256,9 @@ Read-Only:
 - `basic_auth_password` (String, Sensitive)
 - `basic_auth_username` (String)
 - `bearer_token` (String, Sensitive)
+- `connector_authentication` (String, Sensitive)
 - `connector_configuration` (String)
+- `connector_target_url` (String)
 - `cursor_based_pagination` (Boolean)
 - `custom_header_name` (String)
 - `custom_header_value` (String, Sensitive)
@@ -2266,6 +2270,8 @@ Read-Only:
 - `lower_case_filter_comparators` (Boolean)
 - `page_size` (Number)
 - `password_supported` (Boolean)
+- `tls` (String)
+- `trusted_certificate` (Attributes) (see [below for nested schema](#nestedatt--provisioned_scim--trusted_certificate))
 - `update_strategy` (String)
 - `url` (String)
 - `use_scim_json_mimetype` (Boolean)
@@ -2329,6 +2335,46 @@ Read-Only:
 - `name` (String)
 - `required` (Boolean)
 
+
+
+
+<a id="nestedatt--provisioned_scim--trusted_certificate"></a>
+### Nested Schema for `provisioned_scim.trusted_certificate`
+
+Read-Only:
+
+- `alias` (String)
+- `certificate_data` (String)
+- `expiration` (String)
+- `fingerprint_sha1` (String)
+- `fingerprint_sha256` (String)
+- `global` (Boolean)
+- `links` (Attributes List) (see [below for nested schema](#nestedatt--provisioned_scim--trusted_certificate--links))
+- `permissions` (Attributes List) (see [below for nested schema](#nestedatt--provisioned_scim--trusted_certificate--permissions))
+- `subject_dn` (String)
+- `type` (String)
+- `uuid` (String)
+
+<a id="nestedatt--provisioned_scim--trusted_certificate--links"></a>
+### Nested Schema for `provisioned_scim.trusted_certificate.links`
+
+Read-Only:
+
+- `href` (String)
+- `id` (Number)
+- `rel` (String)
+- `type_escaped` (String)
+
+
+<a id="nestedatt--provisioned_scim--trusted_certificate--permissions"></a>
+### Nested Schema for `provisioned_scim.trusted_certificate.permissions`
+
+Read-Only:
+
+- `full` (String)
+- `instances` (List of String)
+- `operations` (Set of String)
+- `type_escaped` (String)
 
 
 

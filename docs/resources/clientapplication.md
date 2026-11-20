@@ -327,6 +327,7 @@ Optional:
 
 Read-Only:
 
+- `deleted_at` (String)
 - `last_read_at` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--ldap_client--shared_secret--links))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--ldap_client--shared_secret--permissions))
@@ -477,6 +478,7 @@ Optional:
 
 Read-Only:
 
+- `deleted_at` (String)
 - `last_read_at` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--oauth2_client--shared_secret--links))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--oauth2_client--shared_secret--permissions))

@@ -29,6 +29,7 @@ description: |-
 - `additional_urls` (String)
 - `audit` (Attributes) (see [below for nested schema](#nestedatt--audit))
 - `color` (String)
+- `deleted_at` (String)
 - `derived` (Boolean)
 - `end_date` (String)
 - `filename` (String)
@@ -39,6 +40,7 @@ description: |-
 - `password_metadata` (Attributes) (see [below for nested schema](#nestedatt--password_metadata))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--permissions))
 - `secret` (Attributes) (see [below for nested schema](#nestedatt--secret))
+- `secret_history` (Attributes) (see [below for nested schema](#nestedatt--secret_history))
 - `share_end_time` (String)
 - `share_summary` (Attributes) (see [below for nested schema](#nestedatt--share_summary))
 - `shares` (Attributes List) (see [below for nested schema](#nestedatt--shares))
@@ -86,6 +88,7 @@ Read-Only:
 Read-Only:
 
 - `color` (String)
+- `deleted_at` (String)
 - `last_read_at` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--parent--links))
 - `name` (String)
@@ -154,6 +157,26 @@ Read-Only:
 - `totp` (String, Sensitive)
 
 
+<a id="nestedatt--secret_history"></a>
+### Nested Schema for `secret_history`
+
+Read-Only:
+
+- `versions` (Attributes List) (see [below for nested schema](#nestedatt--secret_history--versions))
+
+<a id="nestedatt--secret_history--versions"></a>
+### Nested Schema for `secret_history.versions`
+
+Read-Only:
+
+- `filename` (String)
+- `id` (Number)
+- `replaced_at` (String)
+- `replaced_by` (String)
+- `vault_vault_record_secret_version_type` (String)
+
+
+
 <a id="nestedatt--share_summary"></a>
 ### Nested Schema for `share_summary`
 
@@ -187,6 +210,7 @@ Read-Only:
 Read-Only:
 
 - `color` (String)
+- `deleted_at` (String)
 - `last_read_at` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--shares--links))
 - `name` (String)
@@ -391,6 +415,7 @@ Read-Only:
 Read-Only:
 
 - `color` (String)
+- `deleted_at` (String)
 - `last_read_at` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--tile--vault_record_launchpad_tile--vault_record--links))
 - `name` (String)

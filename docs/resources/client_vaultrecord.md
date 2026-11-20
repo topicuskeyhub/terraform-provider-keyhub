@@ -40,12 +40,14 @@ description: |-
 
 - `activation_status` (Attributes) (see [below for nested schema](#nestedatt--activation_status))
 - `audit` (Attributes) (see [below for nested schema](#nestedatt--audit))
+- `deleted_at` (String)
 - `derived` (Boolean)
 - `last_read_at` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--links))
 - `parent` (Attributes) (see [below for nested schema](#nestedatt--parent))
 - `password_metadata` (Attributes) (see [below for nested schema](#nestedatt--password_metadata))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--permissions))
+- `secret_history` (Attributes) (see [below for nested schema](#nestedatt--secret_history))
 - `share_end_time` (String)
 - `share_summary` (Attributes) (see [below for nested schema](#nestedatt--share_summary))
 - `shares` (Attributes List) (see [below for nested schema](#nestedatt--shares))
@@ -179,6 +181,7 @@ Optional:
 
 Read-Only:
 
+- `deleted_at` (String)
 - `last_read_at` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--parent--links))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--parent--permissions))
@@ -235,6 +238,26 @@ Optional:
 - `type_escaped` (String)
 
 
+<a id="nestedatt--secret_history"></a>
+### Nested Schema for `secret_history`
+
+Optional:
+
+- `versions` (Attributes List) (see [below for nested schema](#nestedatt--secret_history--versions))
+
+<a id="nestedatt--secret_history--versions"></a>
+### Nested Schema for `secret_history.versions`
+
+Read-Only:
+
+- `filename` (String)
+- `id` (Number)
+- `replaced_at` (String)
+- `replaced_by` (String)
+- `vault_vault_record_secret_version_type` (String)
+
+
+
 <a id="nestedatt--share_summary"></a>
 ### Nested Schema for `share_summary`
 
@@ -275,6 +298,7 @@ Optional:
 
 Read-Only:
 
+- `deleted_at` (String)
 - `last_read_at` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--shares--links))
 - `permissions` (Attributes List) (see [below for nested schema](#nestedatt--shares--permissions))

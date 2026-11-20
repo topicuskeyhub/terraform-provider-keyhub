@@ -105,6 +105,7 @@ Read-Only:
 Read-Only:
 
 - `color` (String)
+- `deleted_at` (String)
 - `last_read_at` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--password--links))
 - `name` (String)

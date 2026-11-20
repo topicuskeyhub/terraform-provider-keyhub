@@ -1086,6 +1086,7 @@ Read-Only:
 Read-Only:
 
 - `color` (String)
+- `deleted_at` (String)
 - `last_read_at` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--ldap_client--shared_secret--links))
 - `name` (String)
@@ -1226,6 +1227,7 @@ Read-Only:
 Read-Only:
 
 - `color` (String)
+- `deleted_at` (String)
 - `last_read_at` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--oauth2_client--shared_secret--links))
 - `name` (String)
@@ -1691,6 +1693,7 @@ Read-Only:
 Read-Only:
 
 - `color` (String)
+- `deleted_at` (String)
 - `last_read_at` (String)
 - `links` (Attributes List) (see [below for nested schema](#nestedatt--tile--vault_record_launchpad_tile--vault_record--links))
 - `name` (String)

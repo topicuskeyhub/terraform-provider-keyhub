@@ -181,6 +181,7 @@ func fillDataStructFromTFObjectRSClientApplicationVaultVaultRecord(data *clientA
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
 	data.Color = obj.Attributes()["color"].(basetypes.StringValue)
+	data.DeletedAt = obj.Attributes()["deleted_at"].(basetypes.StringValue)
 	data.LastReadAt = obj.Attributes()["last_read_at"].(basetypes.StringValue)
 	data.Name = obj.Attributes()["name"].(basetypes.StringValue)
 	data.ShareEndTime = obj.Attributes()["share_end_time"].(basetypes.StringValue)
@@ -192,6 +193,7 @@ func fillDataStructFromTFObjectRSClientApplicationVaultVaultRecord(data *clientA
 	data.Parent = obj.Attributes()["parent"].(basetypes.ObjectValue)
 	data.PasswordMetadata = obj.Attributes()["password_metadata"].(basetypes.ObjectValue)
 	data.Secret = obj.Attributes()["secret"].(basetypes.ObjectValue)
+	data.SecretHistory = obj.Attributes()["secret_history"].(basetypes.ObjectValue)
 	data.ShareSummary = obj.Attributes()["share_summary"].(basetypes.ObjectValue)
 	data.Shares = obj.Attributes()["shares"].(basetypes.ListValue)
 	data.Tile = obj.Attributes()["tile"].(basetypes.ObjectValue)
@@ -557,6 +559,7 @@ func fillDataStructFromTFObjectRSGroupGroup(data *groupGroupDataRS, obj types.Ob
 	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.Accounts = obj.Attributes()["accounts"].(basetypes.ListValue)
 	data.AdministeredClients = obj.Attributes()["administered_clients"].(basetypes.ListValue)
+	data.AdministeredItsmSystems = obj.Attributes()["administered_itsm_systems"].(basetypes.ListValue)
 	data.AdministeredSystems = obj.Attributes()["administered_systems"].(basetypes.ListValue)
 	data.Admins = obj.Attributes()["admins"].(basetypes.ListValue)
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
@@ -578,6 +581,8 @@ func fillDataStructFromTFObjectRSGroupGroup(data *groupGroupDataRS, obj types.Ob
 	data.OwnedClients = obj.Attributes()["owned_clients"].(basetypes.ListValue)
 	data.OwnedDirectories = obj.Attributes()["owned_directories"].(basetypes.ListValue)
 	data.OwnedGroupsOnSystem = obj.Attributes()["owned_groups_on_system"].(basetypes.ObjectValue)
+	data.OwnedItsmSystems = obj.Attributes()["owned_itsm_systems"].(basetypes.ListValue)
+	data.OwnedItsmWorkflowTypes = obj.Attributes()["owned_itsm_workflow_types"].(basetypes.ListValue)
 	data.OwnedOrganizationalUnits = obj.Attributes()["owned_organizational_units"].(basetypes.ListValue)
 	data.OwnedSystems = obj.Attributes()["owned_systems"].(basetypes.ListValue)
 	data.RecentAudits = obj.Attributes()["recent_audits"].(basetypes.ListValue)
@@ -618,6 +623,7 @@ func fillDataStructFromTFObjectRSROGroupGroupRO(data *groupGroupDataRSRO, obj ty
 	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
 	data.Accounts = obj.Attributes()["accounts"].(basetypes.ListValue)
 	data.AdministeredClients = obj.Attributes()["administered_clients"].(basetypes.ListValue)
+	data.AdministeredItsmSystems = obj.Attributes()["administered_itsm_systems"].(basetypes.ListValue)
 	data.AdministeredSystems = obj.Attributes()["administered_systems"].(basetypes.ListValue)
 	data.Admins = obj.Attributes()["admins"].(basetypes.ListValue)
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
@@ -639,6 +645,8 @@ func fillDataStructFromTFObjectRSROGroupGroupRO(data *groupGroupDataRSRO, obj ty
 	data.OwnedClients = obj.Attributes()["owned_clients"].(basetypes.ListValue)
 	data.OwnedDirectories = obj.Attributes()["owned_directories"].(basetypes.ListValue)
 	data.OwnedGroupsOnSystem = obj.Attributes()["owned_groups_on_system"].(basetypes.ObjectValue)
+	data.OwnedItsmSystems = obj.Attributes()["owned_itsm_systems"].(basetypes.ListValue)
+	data.OwnedItsmWorkflowTypes = obj.Attributes()["owned_itsm_workflow_types"].(basetypes.ListValue)
 	data.OwnedOrganizationalUnits = obj.Attributes()["owned_organizational_units"].(basetypes.ListValue)
 	data.OwnedSystems = obj.Attributes()["owned_systems"].(basetypes.ListValue)
 	data.RecentAudits = obj.Attributes()["recent_audits"].(basetypes.ListValue)
@@ -867,6 +875,7 @@ func fillDataStructFromTFObjectRSROGroupGroupPrimerLinkableWrapperWithCountRO(da
 func fillDataStructFromTFObjectRSGroupGroup_additionalObjects(data *groupGroup_additionalObjectsDataRS, obj types.Object) {
 	data.Accounts = obj.Attributes()["accounts"].(basetypes.ListValue)
 	data.AdministeredClients = obj.Attributes()["administered_clients"].(basetypes.ListValue)
+	data.AdministeredItsmSystems = obj.Attributes()["administered_itsm_systems"].(basetypes.ListValue)
 	data.AdministeredSystems = obj.Attributes()["administered_systems"].(basetypes.ListValue)
 	data.Admins = obj.Attributes()["admins"].(basetypes.ListValue)
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
@@ -888,6 +897,8 @@ func fillDataStructFromTFObjectRSGroupGroup_additionalObjects(data *groupGroup_a
 	data.OwnedClients = obj.Attributes()["owned_clients"].(basetypes.ListValue)
 	data.OwnedDirectories = obj.Attributes()["owned_directories"].(basetypes.ListValue)
 	data.OwnedGroupsOnSystem = obj.Attributes()["owned_groups_on_system"].(basetypes.ObjectValue)
+	data.OwnedItsmSystems = obj.Attributes()["owned_itsm_systems"].(basetypes.ListValue)
+	data.OwnedItsmWorkflowTypes = obj.Attributes()["owned_itsm_workflow_types"].(basetypes.ListValue)
 	data.OwnedOrganizationalUnits = obj.Attributes()["owned_organizational_units"].(basetypes.ListValue)
 	data.OwnedSystems = obj.Attributes()["owned_systems"].(basetypes.ListValue)
 	data.RecentAudits = obj.Attributes()["recent_audits"].(basetypes.ListValue)
@@ -901,6 +912,7 @@ func fillDataStructFromTFObjectRSGroupGroup_additionalObjects(data *groupGroup_a
 func fillDataStructFromTFObjectRSROGroupGroup_additionalObjectsRO(data *groupGroup_additionalObjectsDataRSRO, obj types.Object) {
 	data.Accounts = obj.Attributes()["accounts"].(basetypes.ListValue)
 	data.AdministeredClients = obj.Attributes()["administered_clients"].(basetypes.ListValue)
+	data.AdministeredItsmSystems = obj.Attributes()["administered_itsm_systems"].(basetypes.ListValue)
 	data.AdministeredSystems = obj.Attributes()["administered_systems"].(basetypes.ListValue)
 	data.Admins = obj.Attributes()["admins"].(basetypes.ListValue)
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
@@ -922,6 +934,8 @@ func fillDataStructFromTFObjectRSROGroupGroup_additionalObjectsRO(data *groupGro
 	data.OwnedClients = obj.Attributes()["owned_clients"].(basetypes.ListValue)
 	data.OwnedDirectories = obj.Attributes()["owned_directories"].(basetypes.ListValue)
 	data.OwnedGroupsOnSystem = obj.Attributes()["owned_groups_on_system"].(basetypes.ObjectValue)
+	data.OwnedItsmSystems = obj.Attributes()["owned_itsm_systems"].(basetypes.ListValue)
+	data.OwnedItsmWorkflowTypes = obj.Attributes()["owned_itsm_workflow_types"].(basetypes.ListValue)
 	data.OwnedOrganizationalUnits = obj.Attributes()["owned_organizational_units"].(basetypes.ListValue)
 	data.OwnedSystems = obj.Attributes()["owned_systems"].(basetypes.ListValue)
 	data.RecentAudits = obj.Attributes()["recent_audits"].(basetypes.ListValue)
@@ -979,6 +993,7 @@ func fillDataStructFromTFObjectRSGroupVaultVaultRecord(data *groupVaultVaultReco
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
 	data.Color = obj.Attributes()["color"].(basetypes.StringValue)
+	data.DeletedAt = obj.Attributes()["deleted_at"].(basetypes.StringValue)
 	data.LastReadAt = obj.Attributes()["last_read_at"].(basetypes.StringValue)
 	data.Name = obj.Attributes()["name"].(basetypes.StringValue)
 	data.ShareEndTime = obj.Attributes()["share_end_time"].(basetypes.StringValue)
@@ -990,6 +1005,7 @@ func fillDataStructFromTFObjectRSGroupVaultVaultRecord(data *groupVaultVaultReco
 	data.Parent = obj.Attributes()["parent"].(basetypes.ObjectValue)
 	data.PasswordMetadata = obj.Attributes()["password_metadata"].(basetypes.ObjectValue)
 	data.Secret = obj.Attributes()["secret"].(basetypes.ObjectValue)
+	data.SecretHistory = obj.Attributes()["secret_history"].(basetypes.ObjectValue)
 	data.ShareSummary = obj.Attributes()["share_summary"].(basetypes.ObjectValue)
 	data.Shares = obj.Attributes()["shares"].(basetypes.ListValue)
 	data.Tile = obj.Attributes()["tile"].(basetypes.ObjectValue)
@@ -1081,6 +1097,76 @@ func fillDataStructFromTFObjectRSROIdentityAccountAttributeRuleLinkableWrapperRO
 }
 
 func fillDataStructFromTFObjectRSROIdentityAccountAttributeRule_additionalObjectsRO(data *identityAccountAttributeRule_additionalObjectsDataRSRO, obj types.Object) {
+	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
+}
+
+func fillDataStructFromTFObjectRSROItsmItsmSystemRO(data *itsmItsmSystemDataRSRO, obj types.Object) {
+	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
+	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Active = obj.Attributes()["active"].(basetypes.BoolValue)
+	data.AdminPermissions = obj.Attributes()["admin_permissions"].(basetypes.BoolValue)
+	data.Name = obj.Attributes()["name"].(basetypes.StringValue)
+	data.OrganizationalUnit = obj.Attributes()["organizational_unit"].(basetypes.ObjectValue)
+	data.OwnerPermissions = obj.Attributes()["owner_permissions"].(basetypes.BoolValue)
+	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
+	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
+	data.ConnectorAuthentication = obj.Attributes()["connector_authentication"].(basetypes.StringValue)
+	data.ConnectorConfiguration = obj.Attributes()["connector_configuration"].(basetypes.StringValue)
+	data.ConnectorTargetURL = obj.Attributes()["connector_target_url"].(basetypes.StringValue)
+	data.Owner = obj.Attributes()["owner"].(basetypes.ObjectValue)
+	data.Provider = obj.Attributes()["provider"].(basetypes.StringValue)
+	data.TechnicalAdministrator = obj.Attributes()["technical_administrator"].(basetypes.ObjectValue)
+	data.TLS = obj.Attributes()["tls"].(basetypes.StringValue)
+	data.TrustedCertificate = obj.Attributes()["trusted_certificate"].(basetypes.ObjectValue)
+}
+
+func fillDataStructFromTFObjectRSROItsmItsmSystemLinkableWrapperRO(data *itsmItsmSystemLinkableWrapperDataRSRO, obj types.Object) {
+	data.Items = obj.Attributes()["items"].(basetypes.ListValue)
+}
+
+func fillDataStructFromTFObjectRSROItsmItsmSystemPrimerRO(data *itsmItsmSystemPrimerDataRSRO, obj types.Object) {
+	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
+	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Active = obj.Attributes()["active"].(basetypes.BoolValue)
+	data.AdminPermissions = obj.Attributes()["admin_permissions"].(basetypes.BoolValue)
+	data.Name = obj.Attributes()["name"].(basetypes.StringValue)
+	data.OrganizationalUnit = obj.Attributes()["organizational_unit"].(basetypes.ObjectValue)
+	data.OwnerPermissions = obj.Attributes()["owner_permissions"].(basetypes.BoolValue)
+	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
+}
+
+func fillDataStructFromTFObjectRSROItsmItsmSystem_additionalObjectsRO(data *itsmItsmSystem_additionalObjectsDataRSRO, obj types.Object) {
+	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
+}
+
+func fillDataStructFromTFObjectRSROItsmItsmWorkflowTypeRO(data *itsmItsmWorkflowTypeDataRSRO, obj types.Object) {
+	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
+	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.ItsmSystem = obj.Attributes()["itsm_system"].(basetypes.ObjectValue)
+	data.Name = obj.Attributes()["name"].(basetypes.StringValue)
+	data.TypeID = obj.Attributes()["type_id"].(basetypes.StringValue)
+	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
+	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
+	data.MissingSince = obj.Attributes()["missing_since"].(basetypes.StringValue)
+	data.Owner = obj.Attributes()["owner"].(basetypes.ObjectValue)
+}
+
+func fillDataStructFromTFObjectRSROItsmItsmWorkflowTypeLinkableWrapperRO(data *itsmItsmWorkflowTypeLinkableWrapperDataRSRO, obj types.Object) {
+	data.Items = obj.Attributes()["items"].(basetypes.ListValue)
+}
+
+func fillDataStructFromTFObjectRSROItsmItsmWorkflowTypePrimerRO(data *itsmItsmWorkflowTypePrimerDataRSRO, obj types.Object) {
+	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
+	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.ItsmSystem = obj.Attributes()["itsm_system"].(basetypes.ObjectValue)
+	data.Name = obj.Attributes()["name"].(basetypes.StringValue)
+	data.TypeID = obj.Attributes()["type_id"].(basetypes.StringValue)
+	data.UUID = obj.Attributes()["uuid"].(basetypes.StringValue)
+}
+
+func fillDataStructFromTFObjectRSROItsmItsmWorkflowType_additionalObjectsRO(data *itsmItsmWorkflowType_additionalObjectsDataRSRO, obj types.Object) {
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
 }
 
@@ -1274,6 +1360,7 @@ func fillDataStructFromTFObjectRSROProfileAccessProfileRO(data *profileAccessPro
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
 	data.Clients = obj.Attributes()["clients"].(basetypes.ListValue)
 	data.Groups = obj.Attributes()["groups"].(basetypes.ListValue)
+	data.ItsmWorkflowTypes = obj.Attributes()["itsm_workflow_types"].(basetypes.ListValue)
 	data.Provisioning = obj.Attributes()["provisioning"].(basetypes.ListValue)
 	data.Description = obj.Attributes()["description"].(basetypes.StringValue)
 	data.Directory = obj.Attributes()["directory"].(basetypes.ObjectValue)
@@ -1335,6 +1422,23 @@ func fillDataStructFromTFObjectRSROProfileAccessProfileGroupLinkableWrapperRO(da
 }
 
 func fillDataStructFromTFObjectRSROProfileAccessProfileGroup_additionalObjectsRO(data *profileAccessProfileGroup_additionalObjectsDataRSRO, obj types.Object) {
+	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
+}
+
+func fillDataStructFromTFObjectRSROProfileAccessProfileItsmWorkflowTypeRO(data *profileAccessProfileItsmWorkflowTypeDataRSRO, obj types.Object) {
+	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
+	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
+	data.Additional = obj.Attributes()["additional"].(basetypes.ListValue)
+	data.AccessProfile = obj.Attributes()["access_profile"].(basetypes.ObjectValue)
+	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
+	data.WorkflowType = obj.Attributes()["workflow_type"].(basetypes.ObjectValue)
+}
+
+func fillDataStructFromTFObjectRSROProfileAccessProfileItsmWorkflowTypeLinkableWrapperRO(data *profileAccessProfileItsmWorkflowTypeLinkableWrapperDataRSRO, obj types.Object) {
+	data.Items = obj.Attributes()["items"].(basetypes.ListValue)
+}
+
+func fillDataStructFromTFObjectRSROProfileAccessProfileItsmWorkflowType_additionalObjectsRO(data *profileAccessProfileItsmWorkflowType_additionalObjectsDataRSRO, obj types.Object) {
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
 }
 
@@ -1401,6 +1505,7 @@ func fillDataStructFromTFObjectRSROProfileAccessProfile_additionalObjectsRO(data
 	data.Audit = obj.Attributes()["audit"].(basetypes.ObjectValue)
 	data.Clients = obj.Attributes()["clients"].(basetypes.ListValue)
 	data.Groups = obj.Attributes()["groups"].(basetypes.ListValue)
+	data.ItsmWorkflowTypes = obj.Attributes()["itsm_workflow_types"].(basetypes.ListValue)
 	data.Provisioning = obj.Attributes()["provisioning"].(basetypes.ListValue)
 }
 
@@ -1600,7 +1705,9 @@ func fillDataStructFromTFObjectRSROProvisioningProvisionedSCIMRO(data *provision
 	data.BasicAuthPassword = obj.Attributes()["basic_auth_password"].(basetypes.StringValue)
 	data.BasicAuthUsername = obj.Attributes()["basic_auth_username"].(basetypes.StringValue)
 	data.BearerToken = obj.Attributes()["bearer_token"].(basetypes.StringValue)
+	data.ConnectorAuthentication = obj.Attributes()["connector_authentication"].(basetypes.StringValue)
 	data.ConnectorConfiguration = obj.Attributes()["connector_configuration"].(basetypes.StringValue)
+	data.ConnectorTargetURL = obj.Attributes()["connector_target_url"].(basetypes.StringValue)
 	data.CursorBasedPagination = obj.Attributes()["cursor_based_pagination"].(basetypes.BoolValue)
 	data.CustomHeaderName = obj.Attributes()["custom_header_name"].(basetypes.StringValue)
 	data.CustomHeaderValue = obj.Attributes()["custom_header_value"].(basetypes.StringValue)
@@ -1612,6 +1719,8 @@ func fillDataStructFromTFObjectRSROProvisioningProvisionedSCIMRO(data *provision
 	data.LowerCaseFilterComparators = obj.Attributes()["lower_case_filter_comparators"].(basetypes.BoolValue)
 	data.PageSize = obj.Attributes()["page_size"].(basetypes.Int64Value)
 	data.PasswordSupported = obj.Attributes()["password_supported"].(basetypes.BoolValue)
+	data.TLS = obj.Attributes()["tls"].(basetypes.StringValue)
+	data.TrustedCertificate = obj.Attributes()["trusted_certificate"].(basetypes.ObjectValue)
 	data.UpdateStrategy = obj.Attributes()["update_strategy"].(basetypes.StringValue)
 	data.URL = obj.Attributes()["url"].(basetypes.StringValue)
 	data.UseSCIMJsonMimetype = obj.Attributes()["use_scim_json_mimetype"].(basetypes.BoolValue)
@@ -1642,10 +1751,9 @@ func fillDataStructFromTFObjectRSROProvisioningProvisionedSystemRO(data *provisi
 	data.SupportedGroupTypes = obj.Attributes()["supported_group_types"].(basetypes.ObjectValue)
 	data.CleanupPeriod = obj.Attributes()["cleanup_period"].(basetypes.ObjectValue)
 	data.ContentAdministrator = obj.Attributes()["content_administrator"].(basetypes.ObjectValue)
-	data.EffectiveFullSyncInterval = obj.Attributes()["effective_full_sync_interval"].(basetypes.Int64Value)
 	data.ExternalUUID = obj.Attributes()["external_uuid"].(basetypes.StringValue)
-	data.FullSyncInterval = obj.Attributes()["full_sync_interval"].(basetypes.Int64Value)
 	data.GroupOnSystemProvisioning = obj.Attributes()["group_on_system_provisioning"].(basetypes.StringValue)
+	data.MaxVerificationInterval = obj.Attributes()["max_verification_interval"].(basetypes.StringValue)
 	data.Owner = obj.Attributes()["owner"].(basetypes.ObjectValue)
 	data.SelfServiceExistingGroups = obj.Attributes()["self_service_existing_groups"].(basetypes.BoolValue)
 	data.SelfServiceNewGroups = obj.Attributes()["self_service_new_groups"].(basetypes.BoolValue)
@@ -1871,6 +1979,7 @@ func fillDataStructFromTFObjectRSROVaultVaultRecordRO(data *vaultVaultRecordData
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
 	data.Color = obj.Attributes()["color"].(basetypes.StringValue)
+	data.DeletedAt = obj.Attributes()["deleted_at"].(basetypes.StringValue)
 	data.LastReadAt = obj.Attributes()["last_read_at"].(basetypes.StringValue)
 	data.Name = obj.Attributes()["name"].(basetypes.StringValue)
 	data.ShareEndTime = obj.Attributes()["share_end_time"].(basetypes.StringValue)
@@ -1882,6 +1991,7 @@ func fillDataStructFromTFObjectRSROVaultVaultRecordRO(data *vaultVaultRecordData
 	data.Parent = obj.Attributes()["parent"].(basetypes.ObjectValue)
 	data.PasswordMetadata = obj.Attributes()["password_metadata"].(basetypes.ObjectValue)
 	data.Secret = obj.Attributes()["secret"].(basetypes.ObjectValue)
+	data.SecretHistory = obj.Attributes()["secret_history"].(basetypes.ObjectValue)
 	data.ShareSummary = obj.Attributes()["share_summary"].(basetypes.ObjectValue)
 	data.Shares = obj.Attributes()["shares"].(basetypes.ListValue)
 	data.Tile = obj.Attributes()["tile"].(basetypes.ObjectValue)
@@ -1900,6 +2010,7 @@ func fillDataStructFromTFObjectRSVaultVaultRecordPrimer(data *vaultVaultRecordPr
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
 	data.Color = obj.Attributes()["color"].(basetypes.StringValue)
+	data.DeletedAt = obj.Attributes()["deleted_at"].(basetypes.StringValue)
 	data.LastReadAt = obj.Attributes()["last_read_at"].(basetypes.StringValue)
 	data.Name = obj.Attributes()["name"].(basetypes.StringValue)
 	data.ShareEndTime = obj.Attributes()["share_end_time"].(basetypes.StringValue)
@@ -1910,6 +2021,7 @@ func fillDataStructFromTFObjectRSROVaultVaultRecordPrimerRO(data *vaultVaultReco
 	data.Links = obj.Attributes()["links"].(basetypes.ListValue)
 	data.Permissions = obj.Attributes()["permissions"].(basetypes.ListValue)
 	data.Color = obj.Attributes()["color"].(basetypes.StringValue)
+	data.DeletedAt = obj.Attributes()["deleted_at"].(basetypes.StringValue)
 	data.LastReadAt = obj.Attributes()["last_read_at"].(basetypes.StringValue)
 	data.Name = obj.Attributes()["name"].(basetypes.StringValue)
 	data.ShareEndTime = obj.Attributes()["share_end_time"].(basetypes.StringValue)
@@ -1918,6 +2030,18 @@ func fillDataStructFromTFObjectRSROVaultVaultRecordPrimerRO(data *vaultVaultReco
 
 func fillDataStructFromTFObjectRSROVaultVaultRecordPrimerLinkableWrapperRO(data *vaultVaultRecordPrimerLinkableWrapperDataRSRO, obj types.Object) {
 	data.Items = obj.Attributes()["items"].(basetypes.ListValue)
+}
+
+func fillDataStructFromTFObjectRSROVaultVaultRecordSecretHistoryRO(data *vaultVaultRecordSecretHistoryDataRSRO, obj types.Object) {
+	data.Versions = obj.Attributes()["versions"].(basetypes.ListValue)
+}
+
+func fillDataStructFromTFObjectRSROVaultVaultRecordSecretVersionRO(data *vaultVaultRecordSecretVersionDataRSRO, obj types.Object) {
+	data.Filename = obj.Attributes()["filename"].(basetypes.StringValue)
+	data.ID = obj.Attributes()["id"].(basetypes.Int64Value)
+	data.ReplacedAt = obj.Attributes()["replaced_at"].(basetypes.StringValue)
+	data.ReplacedBy = obj.Attributes()["replaced_by"].(basetypes.StringValue)
+	data.VaultVaultRecordSecretVersionType = obj.Attributes()["vault_vault_record_secret_version_type"].(basetypes.StringValue)
 }
 
 func fillDataStructFromTFObjectRSVaultVaultRecordSecrets(data *vaultVaultRecordSecretsDataRS, obj types.Object) {
@@ -1953,6 +2077,7 @@ func fillDataStructFromTFObjectRSVaultVaultRecord_additionalObjects(data *vaultV
 	data.Parent = obj.Attributes()["parent"].(basetypes.ObjectValue)
 	data.PasswordMetadata = obj.Attributes()["password_metadata"].(basetypes.ObjectValue)
 	data.Secret = obj.Attributes()["secret"].(basetypes.ObjectValue)
+	data.SecretHistory = obj.Attributes()["secret_history"].(basetypes.ObjectValue)
 	data.ShareSummary = obj.Attributes()["share_summary"].(basetypes.ObjectValue)
 	data.Shares = obj.Attributes()["shares"].(basetypes.ListValue)
 	data.Tile = obj.Attributes()["tile"].(basetypes.ObjectValue)
@@ -1966,6 +2091,7 @@ func fillDataStructFromTFObjectRSROVaultVaultRecord_additionalObjectsRO(data *va
 	data.Parent = obj.Attributes()["parent"].(basetypes.ObjectValue)
 	data.PasswordMetadata = obj.Attributes()["password_metadata"].(basetypes.ObjectValue)
 	data.Secret = obj.Attributes()["secret"].(basetypes.ObjectValue)
+	data.SecretHistory = obj.Attributes()["secret_history"].(basetypes.ObjectValue)
 	data.ShareSummary = obj.Attributes()["share_summary"].(basetypes.ObjectValue)
 	data.Shares = obj.Attributes()["shares"].(basetypes.ListValue)
 	data.Tile = obj.Attributes()["tile"].(basetypes.ObjectValue)
